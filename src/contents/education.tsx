@@ -2,12 +2,12 @@ import { Inspirations, InspirationLink } from "../components/Inspirations";
 
 export function Education() {
   const links: InspirationLink[] = [
-    { year: 2024, teamName: "CityU-HongKong", pageName: "education" },
-    { year: 2024, teamName: "CJUH-JLU-China", pageName: "education" },
-    { year: 2024, teamName: "Keystone", pageName: "education" },
-    { year: 2024, teamName: "Stanford", pageName: "education" },
-    { year: 2024, teamName: "GEMS-Taiwan", pageName: "education" },
-    { year: 2024, teamName: "Heidelberg", pageName: "education" },
+    { year: 2025, teamName: "Heidelberg", pageName: "education" },
+    { year: 2025, teamName: "Queens-Canada", pageName: "education" },
+    { year: 2025, teamName: "GreatBay-SCIE", pageName: "education" },
+    { year: 2025, teamName: "BNU-China", pageName: "education" },
+    { year: 2025, teamName: "Leiden", pageName: "education" },
+    { year: 2025, teamName: "JLU-CP", pageName: "education" },
   ];
 
   return (
@@ -17,22 +17,19 @@ export function Education() {
           <div className="bd-callout bd-callout-info">
             <h4>Best Education</h4>
             <p>
-              Innovative educational tools and outreach activities have the
-              ability to establish a two-way dialogue with new communities by
-              discussing public values and the science behind synthetic biology.
-              How have you developed new opportunities to include more people in
-              shaping synthetic biology? Education activities do not have to be
-              directly related to your project but may look at wider issues of
-              iGEM or synthetic biology. Education activities must promote
-              scientific learning and avoid simply proselytizing or marketing
-              synthetic biology and/or iGEM. Document your approach, and what
-              was learned by everyone involved, to compete for this award.
+              Innovative educational and outreach activities open a two-way
+              dialogue with new communities about the science and public values
+              behind synthetic biology. Activities do not have to relate
+              directly to your project; they can address wider issues in iGEM or
+              synthetic biology. The only requirement is that they promote
+              scientific learning rather than market iGEM or synthetic biology.
+              Document your approach and what everyone involved learned.
             </p>
             <hr />
             <p>
               Visit the{" "}
-              <a href="https://competition.igem.org/judging/special-prizes">
-                Special Prizes page
+              <a href="https://competition.igem.org/judging/awards/special">
+                Special Awards page
               </a>{" "}
               for more information.
             </p>

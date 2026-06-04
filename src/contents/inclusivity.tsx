@@ -2,12 +2,12 @@ import { Inspirations, InspirationLink } from "../components/Inspirations";
 
 export function Inclusivity() {
   const links: InspirationLink[] = [
-    { year: 2024, teamName: "Patras-Med", pageName: "inclusivity" },
-    { year: 2024, teamName: "Fudan", pageName: "inclusivity" },
-    { year: 2023, teamName: "UniMuenster", pageName: "inclusivity" },
-    { year: 2023, teamName: "UGM-Indonesia", pageName: "inclusivity" },
-    { year: 2023, teamName: "Vilnius-Lithuania", pageName: "inclusivity" },
-    { year: 2023, teamName: "NIS-Kazakhstan", pageName: "inclusivity" },
+    { year: 2025, teamName: "USP-Brazil", pageName: "inclusivity" },
+    { year: 2025, teamName: "SUSTech-BIO", pageName: "inclusivity" },
+    { year: 2025, teamName: "DBHS-CA", pageName: "inclusivity" },
+    { year: 2025, teamName: "Fudan", pageName: "inclusivity" },
+    { year: 2025, teamName: "Technion-Israel", pageName: "inclusivity" },
+    { year: 2025, teamName: "Thessaloniki", pageName: "inclusivity" },
   ];
 
   return (
@@ -17,21 +17,19 @@ export function Inclusivity() {
           <div className="bd-callout bd-callout-info">
             <h4>Inclusivity Award</h4>
             <p>
-              The Inclusivity Award recognizes exceptional efforts to include
-              people with diverse identities in scientific research. Who is
-              allowed to have a voice in iGEM, synthetic biology and science
-              more broadly? How have you developed new opportunities to
-              eliminate barriers and allow more people to contribute to,
-              participate in and/or be represented by these communities? To
-              compete for this prize, activities do not have to be directly
-              related to your team’s project. Document your approach, how you
-              improved inclusivity and what was learned.
+              This award recognizes exceptional efforts to include people with
+              diverse identities in scientific research. Who gets a voice in
+              iGEM, synthetic biology, and science more broadly? How have you
+              created new opportunities to remove barriers and let more people
+              contribute, participate, or be represented? Activities do not have
+              to relate directly to your team's project. Document your approach,
+              how you improved inclusivity, and what was learned.
             </p>
             <hr />
             <p>
               Visit the{" "}
-              <a href="https://competition.igem.org/judging/special-prizes">
-                Special Prizes page
+              <a href="https://competition.igem.org/judging/awards/special">
+                Special Awards page
               </a>{" "}
               for more information.
             </p>

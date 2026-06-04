@@ -2,12 +2,12 @@ import { Inspirations, InspirationLink } from "../components/Inspirations";
 
 export function Description() {
   const links: InspirationLink[] = [
-    { year: 2024, teamName: "Heidelberg", pageName: "description" },
+    { year: 2025, teamName: "Heidelberg", pageName: "description" },
+    { year: 2025, teamName: "McGill", pageName: "description" },
+    { year: 2025, teamName: "IZJU-China", pageName: "description" },
+    { year: 2025, teamName: "GreatBay-SCIE", pageName: "description" },
     { year: 2024, teamName: "Marburg", pageName: "description" },
     { year: 2024, teamName: "EPFL", pageName: "description" },
-    { year: 2024, teamName: "JU-Krakow", pageName: "description" },
-    { year: 2024, teamName: "UToronto", pageName: "description" },
-    { year: 2023, teamName: "Estonia-TUIT", pageName: "description" },
   ];
 
   return (
@@ -20,7 +20,7 @@ export function Description() {
             <hr />
             <p>
               Visit the{" "}
-              <a href="https://competition.igem.org/judging/medals">
+              <a href="https://competition.igem.org/judging/awards/medals">
                 Medals page
               </a>{" "}
               for more information.

@@ -2,16 +2,16 @@ import { Inspirations, InspirationLink } from "../components/Inspirations";
 
 export function Home() {
   const links: InspirationLink[] = [
-    { year: 2024, teamName: "JU-Krakow", pageName: "" },
-    { year: 2024, teamName: "GEMS-Taiwan", pageName: "" },
-    { year: 2024, teamName: "Heidelberg", pageName: "" },
-    { year: 2024, teamName: "Marburg", pageName: "" },
-    { year: 2024, teamName: "Sydney-Australia", pageName: "" },
-    { year: 2024, teamName: "Toulouse-INSA-UPS", pageName: "" },
-    { year: 2024, teamName: "BNDS-China", pageName: "" },
-    { year: 2024, teamName: "Vilnius-Lithuania", pageName: "" },
-    { year: 2024, teamName: "BNUZH-China", pageName: "" },
-    { year: 2024, teamName: "XMU-China", pageName: "" },
+    { year: 2025, teamName: "Brno Czech Republic", pageName: "" },
+    { year: 2025, teamName: "McGill", pageName: "" },
+    { year: 2025, teamName: "GreatBay-SCIE", pageName: "" },
+    { year: 2025, teamName: "EPFL", pageName: "" },
+    { year: 2025, teamName: "Heidelberg", pageName: "" },
+    { year: 2025, teamName: "Uprize-I", pageName: "" },
+    { year: 2025, teamName: "IZJU-China", pageName: "" },
+    { year: 2025, teamName: "Marburg", pageName: "" },
+    { year: 2025, teamName: "Munich", pageName: "" },
+    { year: 2025, teamName: "WageningenUR", pageName: "" },
   ];
 
   return (
@@ -28,7 +28,7 @@ export function Home() {
             <li>
               Carefully review the{" "}
               <a
-                href="https://competition.igem.org/deliverables/team-wiki"
+                href="https://teams.igem.org/go/deliverables/wiki"
                 target="_blank"
               >
                 Wiki Requirements page
@@ -40,7 +40,7 @@ export function Home() {
               Understand the criteria and required wiki pages for Gold, Silver,
               and Bronze Medals on the{" "}
               <a
-                href="https://competition.igem.org/judging/medals"
+                href="https://competition.igem.org/judging/awards/medals"
                 target="_blank"
               >
                 Medals page
@@ -48,24 +48,24 @@ export function Home() {
               .
             </li>
             <li>
-              Explore the various Project Prizes and their corresponding wiki
+              Explore the various Project Awards and their corresponding wiki
               requirements on the{" "}
               <a
-                href="https://competition.igem.org/judging/project-prizes"
+                href="https://competition.igem.org/judging/awards/project"
                 target="_blank"
               >
-                Project Prizes Page
+                Project Awards Page
               </a>
               .
             </li>
             <li>
               Discover the eligibility criteria and wiki requirements for
-              Special Prizes on the{" "}
+              Special Awards on the{" "}
               <a
-                href="https://competition.igem.org/judging/special-prizes"
+                href="https://competition.igem.org/judging/awards/special"
                 target="_blank"
               >
-                Special Prizes Page
+                Special Awards Page
               </a>
               .
             </li>
@@ -101,7 +101,10 @@ export function Home() {
             <li>
               <b>Prepare for Deadlines</b>: Stay up-to-date with important
               deadlines and events by checking the{" "}
-              <a href="https://competition.igem.org/calendar" target="_blank">
+              <a
+                href="https://competition.igem.org/about/calendar"
+                target="_blank"
+              >
                 iGEM Competition Calendar
               </a>
               .

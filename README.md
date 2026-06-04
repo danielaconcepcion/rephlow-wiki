@@ -1,4 +1,4 @@
-# Team TeamName 2025 Wiki
+# iGEM TeamName Wiki
 
 This repository uses `TypeScript` and `React` to manage the wikis.
 
@@ -6,11 +6,22 @@ This repository **MUST** contain all coding assets to generate your team's wiki
 (HTML, CSS, JavaScript, TypeScript, Python, etc).
 
 Images, photos, icons and fonts **MUST** be stored on `static.igem.wiki` using
-[tools.igem.org](https://tools.igem.org), and Videos **must** be embedded
-from [iGEM Video Universe](https://video.igem.org).
+[the uploads tool](https://teams.igem.org/go/deliverables/wiki/uploads), and Videos **must** be embedded
+from [iGEM Video Universe](https://video.igem.org); see [the Video & Audio page](https://teams.igem.org/go/deliverables/wiki/videos-and-audios) for guidance on adding video and audio.
+
+**Everything your wiki loads (CSS, JavaScript, fonts, images) must be served from
+iGEM infrastructure.** Do not link to external or third-party CDNs (for example
+Google Fonts, jsDelivr, cdnjs) — upload the files you need via
+[the uploads tool](https://teams.igem.org/go/deliverables/wiki/uploads) and reference them from `static.igem.wiki`
+instead.
 
 For up-to-date requirements, resources, help and guidance, visit
-[competition.igem.org/deliverables/team-wiki](https://competition.igem.org/deliverables/team-wiki).
+[teams.igem.org/go/deliverables/wiki](https://teams.igem.org/go/deliverables/wiki).
+
+> **Using an AI assistant (e.g. Claude Code)?** Please read
+> [.claude/RESPONSIBLE_AI_USE.md](.claude/RESPONSIBLE_AI_USE.md) first. You remain
+> fully responsible for everything you publish: never fabricate scientific
+> results, data, or citations.
 
 ## Getting Started
 
@@ -30,8 +41,8 @@ for web development.
 
    ### Important:
 
-   Ensure you are using Node.js version `^18.18.0 or >=20.0.0` to mostly avoid compatibility issues. Node `v18.20.0` is
-   recommended for this project. You can check your Node version by running `node -v` in your terminal.
+   Ensure you are using Node.js version `>=20.19.0` (Node 22 LTS recommended) to avoid compatibility issues.
+   You can check your Node version by running `node -v` in your terminal.
 
 3. Start the development server:
    ```bash

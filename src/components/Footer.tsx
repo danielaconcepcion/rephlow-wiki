@@ -52,7 +52,7 @@ export function Footer() {
           <div className="col">
             <p className="mb-0">
               <small>
-                © 2025 - Content on this site is licensed under a{" "}
+                © {teamYear} - Content on this site is licensed under a{" "}
                 <a
                   className="subfoot"
                   href="https://creativecommons.org/licenses/by/4.0/"

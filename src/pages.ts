@@ -1,5 +1,4 @@
 import {
-  Attributions,
   Contribution,
   Description,
   Engineering,
@@ -16,7 +15,7 @@ import {
   Inclusivity,
   Measurement,
   Model,
-  Plant,
+  AlternativePlatform,
   Software,
   Sustainability,
 } from "./contents";
@@ -48,22 +47,10 @@ const Pages: (Page | Folder)[] = [
   },
   {
     name: "Team",
-    folder: [
-      {
-        name: "Members",
-        title: "Meet Our Team",
-        path: "/team",
-        component: Members,
-        lead: "This page is dedicated to introducing the individuals who made our iGEM project possible. Here, you'll find information about our team members, instructors, and advisors.",
-      },
-      {
-        name: "Attributions",
-        title: "Attributions",
-        path: "/attributions",
-        component: Attributions,
-        lead: "Accurate attribution is essential in the iGEM Competition. It ensures that the judges can properly assess your team's contributions and recognize the support provided by external collaborators. This page is dedicated to fulfilling the Attributions requirement for judging.",
-      },
-    ],
+    title: "Meet Our Team",
+    path: "/team",
+    component: Members,
+    lead: "This page is dedicated to introducing the individuals who made our iGEM project possible. Here, you'll find information about our team members, instructors, and advisors.",
   },
   {
     name: "Project",
@@ -123,11 +110,11 @@ const Pages: (Page | Folder)[] = [
         lead: "Synthetic Biology needs great measurement approaches for characterizing parts, and efficient new methods for characterizing many parts at once. Describe your measurement approaches on this page.",
       },
       {
-        name: "Plant",
-        title: "Plant",
-        path: "/plant",
-        component: Plant,
-        lead: "This award is designed to celebrate exemplary work done in plant synthetic biology.",
+        name: "Alternative Platform",
+        title: "Alternative Platform",
+        path: "/alternative-platform",
+        component: AlternativePlatform,
+        lead: "This award is designed to celebrate exemplary work done in alternative platforms, and covers anything that is not E. coli, S. cerevisiae, and B. subtilis.",
       },
       {
         name: "Safety and Security",
@@ -172,7 +159,7 @@ const Pages: (Page | Folder)[] = [
         title: "Entrepreneurship",
         path: "/entrepreneurship",
         component: Entrepreneurship,
-        lead: "The entrepreneurship prize recognizes exceptional effort to build a business case and commercialize an iGEM project.",
+        lead: "The entrepreneurship award recognizes exceptional effort to build a business case and commercialize an iGEM project.",
       },
       {
         name: "Human Practices",

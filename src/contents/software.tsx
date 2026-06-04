@@ -2,8 +2,11 @@ import { Inspirations, InspirationLink } from "../components/Inspirations";
 
 export function Software() {
   const links: InspirationLink[] = [
-    { year: 2024, teamName: "Vilnius-Lithuania", pageName: "software" },
-    { year: 2023, teamName: "Fudan", pageName: "software" },
+    { year: 2025, teamName: "Marburg", pageName: "software" },
+    { year: 2025, teamName: "Munich", pageName: "software" },
+    { year: 2025, teamName: "EPFL", pageName: "software" },
+    { year: 2025, teamName: "Lambert-GA", pageName: "software" },
+    { year: 2025, teamName: "BIT-China", pageName: "software" },
   ];
 
   return (
@@ -11,24 +14,37 @@ export function Software() {
       <div className="row mt-4">
         <div className="col">
           <div className="bd-callout bd-callout-info">
-            <h4>Best Software Tool</h4>
+            <h4>Best Software</h4>
             <p>
-              Regardless of what the topic is, iGEM projects often create or
-              adapt computational tools to move their overall project forward.
-              Because they are born out of a direct practical need, these
-              software tools (or new computational methods) can even prove
-              surprisingly useful for others. Without necessarily being big or
-              complex, they can make the crucial difference to a project's
-              success. This award tries to find and honor such "nuggets" of
-              computational work. To be eligible, your software has to be
-              documented and made available under an OSI-approved open-source
-              license.
+              iGEM projects often build or adapt computational tools to move
+              their work forward. Born out of practical need, these tools can be
+              surprisingly useful for others, and they don't have to be large or
+              complex to make a real difference. This award finds and honors
+              such "nuggets" of computational work.
             </p>
+            <p>To be eligible:</p>
+            <ul>
+              <li>
+                Your software must be documented and released under an
+                OSI-approved open-source license.
+              </li>
+              <li>
+                The source code must be hosted on the dedicated repository in
+                iGEM's GitLab. See the{" "}
+                <a href="https://teams.igem.org/go/deliverables/software">
+                  Software Project
+                </a>{" "}
+                page for full requirements.
+              </li>
+              <li>
+                Software &amp; AI Village teams are not eligible for this award.
+              </li>
+            </ul>
             <hr />
             <p>
               Visit the{" "}
-              <a href="https://competition.igem.org/judging/special-prizes">
-                Special Prizes page
+              <a href="https://competition.igem.org/judging/awards/special">
+                Special Awards page
               </a>{" "}
               for more information.
             </p>

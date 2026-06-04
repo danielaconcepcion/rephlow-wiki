@@ -2,17 +2,12 @@ import { Inspirations, InspirationLink } from "../components/Inspirations";
 
 export function Results() {
   const links: InspirationLink[] = [
-    { year: 2024, teamName: "Heidelberg", pageName: "results" },
-    { year: 2024, teamName: "Marburg", pageName: "results" },
-    { year: 2024, teamName: "EPFL", pageName: "results" },
-    { year: 2024, teamName: "UToronto", pageName: "results" },
-    { year: 2024, teamName: "Marburg", pageName: "results" },
-    { year: 2024, teamName: "Sydney-Australia", pageName: "results" },
-    { year: 2024, teamName: "Toulouse-INSA-UPS", pageName: "results" },
-    { year: 2024, teamName: "BNDS-China", pageName: "results" },
-    { year: 2024, teamName: "Vilnius-Lithuania", pageName: "results" },
-    { year: 2024, teamName: "XMU-China", pageName: "results" },
-    { year: 2023, teamName: "Estonia-TUIT", pageName: "results" },
+    { year: 2025, teamName: "Heidelberg", pageName: "results" },
+    { year: 2025, teamName: "McGill", pageName: "results" },
+    { year: 2025, teamName: "EPFL", pageName: "results" },
+    { year: 2025, teamName: "Marburg", pageName: "results" },
+    { year: 2025, teamName: "Munich", pageName: "results" },
+    { year: 2025, teamName: "Freiburg", pageName: "results" },
   ];
 
   return (

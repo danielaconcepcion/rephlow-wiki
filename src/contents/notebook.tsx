@@ -2,7 +2,8 @@ import { Inspirations, InspirationLink } from "../components/Inspirations";
 
 export function Notebook() {
   const links: InspirationLink[] = [
-    { year: 2024, teamName: "EPFL", pageName: "notebook" },
+    { year: 2025, teamName: "EPFL", pageName: "notebook" },
+    { year: 2025, teamName: "WageningenUR", pageName: "notebook" },
     { year: 2024, teamName: "JU-Krakow", pageName: "notebook" },
   ];
 

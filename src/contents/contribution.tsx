@@ -12,7 +12,7 @@ export function Contribution() {
             <hr />
             <p>
               Visit the{" "}
-              <a href="https://competition.igem.org/judging/medals">
+              <a href="https://competition.igem.org/judging/awards/medals">
                 Medals page
               </a>{" "}
               for more information.
