@@ -10,7 +10,7 @@ import { stringToSlug } from "./src/utils/stringToSlug";
 export default () => {
   const env = loadEnv("dev", process.cwd());
   return defineConfig({
-    base: `/${stringToSlug(env.VITE_TEAM_NAME)}/`,
+    base: "/rephlow-wiki/",
     plugins: [react()],
   });
 };
