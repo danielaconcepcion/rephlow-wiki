@@ -63,6 +63,23 @@
   border-left-color: var(--ink);
 }
 
+/* Subsections: indented, visually secondary, shown only under the
+   currently active top-level section (see PageSectionNav.tsx). */
+.page-section-nav__sublist {
+  list-style: none;
+  margin: 2px 0 6px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.page-section-nav__link--sub {
+  padding: 6px 16px 6px 28px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
 /* --- 600px and below: horizontal in-page navigation, scrolls with the page ---
    position/top/z-index are explicitly reset here — CSS resolves those
    properties independently, so leaving them undeclared would allow the
@@ -115,5 +132,10 @@
     border-left-color: transparent;
     background: var(--ink);
     color: var(--paper);
+  }
+
+  /* Top-level-only nav at this width — subsections are desktop-only. */
+  .page-section-nav__sublist {
+    display: none;
   }
 }
