@@ -75,6 +75,7 @@ export function Navbar() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const triggerRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const touchHandledRef = useRef(false);
 
   // Close whichever dropdown is open whenever the route changes.
   useEffect(() => {
@@ -123,6 +124,7 @@ export function Navbar() {
             (item) => item.primary !== false && item.path === pathname,
           );
           const triggerHref = group.items[0].path;
+          const submenuId = `navbar-submenu-${group.label.toLowerCase().replace(/\s+/g, "-")}`;
 
           return (
             <div
@@ -134,19 +136,30 @@ export function Navbar() {
                 to={triggerHref}
                 aria-haspopup="true"
                 aria-expanded={isOpen}
+                aria-controls={submenuId}
                 aria-current={triggerActive ? "page" : undefined}
                 ref={(el) => {
                   triggerRefs.current[group.label] = el;
                 }}
-                onTouchStart={() => {}}
+                onPointerUp={(e) => {
+                  if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
+                  e.preventDefault();
+                  touchHandledRef.current = true;
+                  toggleGroup(group.label);
+                }}
                 onClick={(e) => {
                   e.preventDefault();
+                  if (touchHandledRef.current) {
+                    touchHandledRef.current = false;
+                    return;
+                  }
                   toggleGroup(group.label);
                 }}
               >
                 {group.label}
               </Link>
               <div
+                id={submenuId}
                 className="navbar__dropdown"
                 aria-label={`${group.label} submenu`}
               >
@@ -158,6 +171,7 @@ export function Navbar() {
                       className={`navbar__dropdown-link${active ? " is-active" : ""}`}
                       to={item.path}
                       aria-current={active ? "page" : undefined}
+                      onClick={() => setOpenGroup(null)}
                     >
                       {item.label}
                     </Link>
