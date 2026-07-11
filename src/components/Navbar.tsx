@@ -162,7 +162,10 @@ export function Navbar() {
                       className={`navbar__dropdown-link${active ? " is-active" : ""}`}
                       to={item.path}
                       aria-current={active ? "page" : undefined}
-                      onClick={() => setOpenGroup(null)}
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        setOpenGroup(null);
+                      }}
                     >
                       {item.label}
                     </Link>
