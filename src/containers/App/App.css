@@ -215,6 +215,34 @@ img { max-width: 100%; display: block; }
   }
 }
 
+/* Touch-layout dropdown, rendered through a React portal straight onto
+   <body> (see Navbar.tsx) instead of nested in .navbar__item. Not scoped to
+   a viewport-width media query — it only ever exists in the DOM when JS's
+   coarse-pointer/no-hover check is true, independent of viewport width.
+   Reuses .navbar__dropdown's visuals (background, blur, padding, radius,
+   shadow, z-index); only what depends on the old nested position changes:
+   no ancestor to size/place it via `top: 100%`/`left: 50%`, no .is-open
+   parent to toggle visibility, no enter-transform.
+   Selector chains both classes (rather than just `--portal`) so this wins
+   over the ≤640px `.navbar__dropdown` rule below on margin-top/transform —
+   same specificity, but that rule comes later in the file and would
+   otherwise win the cascade and reintroduce a small unwanted offset. */
+.navbar__dropdown.navbar__dropdown--portal {
+  position: fixed;
+  left: 4vw;
+  right: 4vw;
+  margin-top: 0;
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  max-height: 60vh;
+  overflow-y: auto;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+}
+
 .navbar__dropdown-link {
   padding: 9px 14px;
   border-radius: 10px;
