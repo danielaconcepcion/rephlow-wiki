@@ -1,24 +1,25 @@
-export { Home } from "./home.tsx";
-// Team
-export { Members } from "./members.tsx";
+export { Home } from "./Home.tsx";
+export { Team } from "./Team/Team.tsx";
+export { Medals } from "./Medals.tsx";
 // Project
-export { Description } from "./description.tsx";
-export { Engineering } from "./engineering.tsx";
-export { Results } from "./results.tsx";
-export { Contribution } from "./contribution.tsx";
-// Wet Lab
-export { Experiments } from "./experiments.tsx";
-export { Notebook } from "./notebook.tsx";
-export { Measurement } from "./measurement.tsx";
-export { AlternativePlatform } from "./alternative-platform.tsx";
-export { SafetyAndSecurity } from "./safety-and-security.tsx";
-// Dry Lab
-export { Model } from "./model.tsx";
-export { Software } from "./software.tsx";
-export { Hardware } from "./hardware.tsx";
+export { ProjectDescription } from "./ProjectDescription.tsx";
+export { Design } from "./Design.tsx";
+export { Engineering } from "./Engineering.tsx";
+export { Model } from "./Model.tsx";
+export { Hardware } from "./Hardware.tsx";
+// Laboratory
+export { Experiments } from "./Experiments.tsx";
+export { Measurements } from "./Measurements.tsx";
+export { Protocols } from "./Protocols.tsx";
+export { Results } from "./Results.tsx";
+export { Safety } from "./Safety.tsx";
 // Engagement
-export { Entrepreneurship } from "./entrepreneurship.tsx";
-export { HumanPractices } from "./human-practices.tsx";
-export { Education } from "./education.tsx";
-export { Inclusivity } from "./inclusivity.tsx";
-export { Sustainability } from "./sustainability.tsx";
+export { HumanPractices } from "./HumanPractices.tsx";
+export { CollaborationPartnership } from "./CollaborationPartnership.tsx";
+export { EducationCommunication } from "./EducationCommunication.tsx";
+export { Entrepreneurship } from "./Entrepreneurship.tsx";
+export { Sustainability } from "./Sustainability.tsx";
+export { Contribution } from "./Contribution.tsx";
+// Team
+export { Attributions } from "./Attributions.tsx";
+export { Sponsors } from "./Sponsors.tsx";

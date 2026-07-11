@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local assets pending upload to static.igem.wiki
+public/assets/

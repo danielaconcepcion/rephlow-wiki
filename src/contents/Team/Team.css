@@ -1,0 +1,351 @@
+/* ==========================================================================
+   rePhlow — Team Page
+   Reuses tokens (colors, radii, shadows, fonts) defined in styles.css :root
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. PAGE HEADER — title + section tabs
+   -------------------------------------------------------------------------- */
+.team-hero {
+  padding: 140px 24px 40px;
+  text-align: center;
+}
+
+.team-hero__title {
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+
+.team-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  box-shadow: var(--shadow-card);
+}
+
+.team-tabs__btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  padding: 9px 20px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.team-tabs__btn:hover { color: var(--ink); background: rgba(27, 35, 64, 0.05); }
+
+.team-tabs__btn.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.team-tabs__btn:focus-visible,
+.team-card:focus-visible,
+.team-modal__close:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   2. PANELS — fade + slide transition between sections
+   -------------------------------------------------------------------------- */
+.team-main {
+  padding-bottom: 10vh;
+}
+
+.team-panel {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.team-panel.is-entering {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
+.team-panel.is-leaving {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* --------------------------------------------------------------------------
+   3. GRID
+   -------------------------------------------------------------------------- */
+.team-grid {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+@media (max-width: 1100px) {
+  .team-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 800px) {
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .team-grid { grid-template-columns: 1fr; }
+  .team-hero { padding-top: 120px; }
+  .team-tabs { max-width: 92vw; }
+  .team-tabs__btn { padding: 9px 12px; font-size: 0.74rem; white-space: nowrap; }
+}
+
+/* --------------------------------------------------------------------------
+   4. CARDS — soft glass tint, colored per faculty/area
+   -------------------------------------------------------------------------- */
+.team-card {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 14px 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(16px) saturate(1.3);
+  -webkit-backdrop-filter: blur(16px) saturate(1.3);
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(27, 35, 64, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.team-card--pink   { background: linear-gradient(160deg, rgba(255, 214, 224, 0.62), rgba(255, 214, 224, 0.28)); }
+.team-card--green  { background: linear-gradient(160deg, rgba(214, 234, 210, 0.62), rgba(214, 234, 210, 0.28)); }
+.team-card--blue   { background: linear-gradient(160deg, rgba(206, 229, 244, 0.62), rgba(206, 229, 244, 0.28)); }
+.team-card--yellow { background: linear-gradient(160deg, rgba(255, 240, 199, 0.62), rgba(255, 240, 199, 0.28)); }
+.team-card--gray   { background: linear-gradient(160deg, rgba(228, 229, 233, 0.62), rgba(228, 229, 233, 0.28)); }
+
+.team-card--placeholder {
+  border-style: dashed;
+  border-color: rgba(27, 35, 64, 0.18);
+}
+
+.team-card--placeholder .team-card__name {
+  color: rgba(27, 35, 64, 0.45);
+  font-style: italic;
+}
+
+.team-card__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.45);
+}
+
+.team-card__img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-card__img-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(27, 35, 64, 0.25);
+}
+
+.team-card__img-fallback svg { width: 38%; height: 38%; }
+
+.team-card__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.98rem;
+  line-height: 1.2;
+  text-align: center;
+  color: var(--ink);
+}
+
+.team-card__education {
+  display: none;
+}
+
+.team-card__role {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   5. MODAL
+   -------------------------------------------------------------------------- */
+body.modal-open { overflow: hidden; }
+
+.team-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.team-modal[hidden] { display: none; }
+
+.team-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(27, 35, 64, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.team-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: min(440px, 100%);
+  max-height: 86vh;
+  overflow-y: auto;
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow: 0 30px 60px rgba(27, 35, 64, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  animation: modal-in 0.22s ease;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.team-modal__close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(27, 35, 64, 0.06);
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.team-modal__close:hover { background: rgba(27, 35, 64, 0.12); color: var(--ink); }
+.team-modal__close svg { width: 16px; height: 16px; }
+
+.team-modal__media {
+  position: relative;
+  width: 128px;
+  height: 128px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(27, 35, 64, 0.06);
+}
+
+.team-modal__img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.team-modal__img-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(27, 35, 64, 0.25);
+}
+
+.team-modal__img-fallback svg { width: 42%; height: 42%; }
+
+.team-modal__name {
+  text-align: center;
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.team-modal__education {
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+.team-modal__role {
+  text-align: center;
+  margin-top: 6px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba(27, 35, 64, 0.55);
+}
+
+.team-modal__section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.team-modal__section h3 {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(27, 35, 64, 0.5);
+  margin-bottom: 8px;
+}
+
+.team-modal__section p {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.team-modal__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.team-modal__links a {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(27, 35, 64, 0.06);
+  transition: background 0.2s ease;
+}
+
+.team-modal__links a:hover { background: rgba(27, 35, 64, 0.12); }
+
+@media (max-width: 480px) {
+  .team-modal__dialog { padding: 26px 20px; }
+}

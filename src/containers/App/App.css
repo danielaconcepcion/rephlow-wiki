@@ -1,65 +1,1240 @@
+/* ==========================================================================
+   rePhlow — Wiki Homepage
+   Sistema de diseño: agua limpia -> agua eutrofizada -> solución
+   ========================================================================== */
+
+/* Space Grotesk (500/600/700) and Inter (400/500/600) are bundled from
+   @fontsource (see main.tsx) instead of loaded from fonts.googleapis.com,
+   so the build has no third-party runtime font request. Same families,
+   same weights, same rendering — only the hosting changed. */
+
+/* --------------------------------------------------------------------------
+   1. TOKENS — cambia aquí la paleta, tipografía y alturas globales
+   -------------------------------------------------------------------------- */
+:root {
+  /* Paleta de agua: de limpia a eutrofizada */
+  --water-clear:   #EAF6FA;   /* agua limpia, hero */
+  --water-light:   #BFE3EE;   /* inicio de "The Problem" */
+  --water-mid:     #9CC9B8;   /* transición azul -> verde */
+  --algae:         #7C9A4E;   /* proliferación de algas */
+  --eutrophic:     #3E4A2A;   /* agua eutrofizada, colapso */
+  --eutrophic-deep:#2C3520;   /* punto más oscuro, justo antes de "Our Solution" */
+
+  /* Acentos científicos (de la ilustración de referencia) */
+  --phosphate:  #E2542D;  /* fosfato: rojo-naranja */
+  --microbe:    #6E5A96;  /* microorganismos: morado */
+  --oxygen:     #F4FAF9;  /* oxígeno: blanco-azulado */
+
+  /* Neutros / texto */
+  --ink:        #1B2340;  /* azul marino oscuro, titulares */
+  --ink-soft:   #4A5170;  /* texto secundario */
+  --paper:      #FFFFFF;
+  --paper-soft: #F7FAFB;
+  --line:       rgba(27, 35, 64, 0.08);
+
+  /* Tipografía */
+  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+
+  /* Alturas de las secciones — AJUSTA AQUÍ el "recorrido" del problema.
+     Más alto = scroll más lento y dramático. */
+  --problem-height: 340vh;
+  --beat-gap: 18vh; /* separación vertical entre cada paso de la narrativa */
+  --beat-row-height: 64vh; /* altura de cada franja narrativa: más alto = steps más separados */
+
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --shadow-soft: 0 12px 40px rgba(27, 35, 64, 0.08);
+  --shadow-card: 0 8px 24px rgba(27, 35, 64, 0.06);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
 body {
-  padding-top: 56px;
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
 }
 
-.left-aligned {
+h1, h2, h3 {
+  font-family: var(--font-display);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+p { margin: 0; line-height: 1.6; }
+
+a { color: inherit; text-decoration: none; }
+
+img { max-width: 100%; display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   2. NAVBAR — píldora flotante centrada
+   -------------------------------------------------------------------------- */
+.navbar {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  box-shadow: var(--shadow-soft);
+}
+
+.navbar__link {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  padding: 8px 16px;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
+  white-space: nowrap;
+}
+
+/* Guarded to real hover-capable pointers only. Unguarded :hover on a touch
+   device makes iOS/Safari require a "dead" first tap just to simulate hover
+   before a second tap actually fires click — which looks exactly like a tap
+   that gets stuck grey and does nothing. */
+@media (hover: hover) {
+  .navbar__link:hover { color: var(--ink); background: rgba(27, 35, 64, 0.05); }
+}
+
+.navbar__link.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.navbar__search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: var(--ink-soft);
+  flex-shrink: 0;
+}
+.navbar__search svg { width: 16px; height: 16px; }
+
+/* Wrapper around the actual links. display:contents removes it from the box
+   tree entirely on desktop, so .navbar's own flex row lays out Home / each
+   .navbar__item / search exactly as before (zero visual change). On mobile
+   this same wrapper becomes a real block we can show/hide as one unit. */
+.navbar__links {
+  display: contents;
+}
+
+/* --- Dropdown submenus (Project / Laboratory / Engagement / Team / Judging) --- */
+.navbar__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Invisible hover-bridge: plugs the gap between the trigger link and the
+   dropdown (which sits margin-top: 8px below it) so the pointer stays over
+   a hoverable box the whole way from one to the other. Without this, the
+   pointer crosses dead space, :hover drops, pointer-events:none re-engages
+   instantly, and the dropdown can never be hovered back open. Invisible and
+   sized to match the dropdown's own footprint, so it changes no visuals. */
+.navbar__item::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 8px;
+}
+
+.navbar__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: 8px;
+  min-width: 240px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(4px);
+  /* visibility is intentionally NOT transitioned: Safari's handling of an
+     animated visibility flip alongside backdrop-filter is inconsistent and
+     is the main source of the "unstable in Safari" behavior. Opacity +
+     pointer-events already fully gate visibility and interactivity, so
+     visibility only needs to flip instantly, in sync with them. */
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 101;
+}
+
+.navbar__item:focus-within .navbar__dropdown,
+.navbar__item.is-open .navbar__dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Same reasoning as .navbar__link:hover above: only apply the hover-opens-
+   dropdown behavior on devices that actually have a mouse. On touch, opening
+   is driven purely by .is-open (via navbar.js), never by :hover. */
+@media (hover: hover) {
+  .navbar__item:hover .navbar__dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.navbar__dropdown-link {
+  padding: 9px 14px;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.navbar__dropdown-link:focus-visible {
+  background: rgba(27, 35, 64, 0.06);
+  color: var(--ink);
+}
+
+@media (hover: hover) {
+  .navbar__dropdown-link:hover {
+    background: rgba(27, 35, 64, 0.06);
+    color: var(--ink);
+  }
+}
+
+.navbar__dropdown-link.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+/* --------------------------------------------------------------------------
+   3. HERO — agua limpia, punto de partida
+   -------------------------------------------------------------------------- */
+.hero {
+  min-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px 100px;
+  background: linear-gradient(to bottom, #ffffff 0%, var(--water-clear) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/*.hero__eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}*/
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto 30px;
+  padding: 0.62rem 1rem;
+  border-radius: 18px;
+
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(91, 74, 20, 0.82);
+
+  background: rgba(255, 229, 122, 0.36);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(180, 137, 20, 0.10),
+    0 10px 28px rgba(129, 104, 32, 0.10);
+
+  backdrop-filter: blur(16px) saturate(1.25);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+}
+
+.hero__title {
+  font-size: clamp(3.2rem, 10vw, 6.5rem);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1;
+}
+
+.hero__subtitle {
+  margin-top: 22px;
+  max-width: 520px;
+  font-size: 1.08rem;
+  color: var(--ink-soft);
+}
+
+.hero__scroll-cue {
+  position: absolute;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.hero__scroll-cue span.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--water-mid);
+  animation: sink 1.8s ease-in-out infinite;
+}
+
+@keyframes sink {
+  0%   { transform: translateY(0);   opacity: 1; }
+  100% { transform: translateY(14px); opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   4. THE PROBLEM — descenso al agua eutrofizada
+   Un único contenedor alto con gradiente vertical continuo.
+   -------------------------------------------------------------------------- */
+.problem {
+  position: relative;
+  min-height: var(--problem-height);
+  background: linear-gradient(
+    to bottom,
+    var(--water-light)   0%,
+    var(--water-mid)     30%,
+    var(--algae)         62%,
+    var(--eutrophic)     85%,
+    var(--eutrophic-deep) 100%
+  );
+  overflow: hidden;
+  padding-bottom: 12vh;
+}
+
+.problem__header {
+  padding: 10vh 24px 4vh;
+  text-align: center;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.problem__eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(27, 35, 64, 0.65);
+}
+
+.problem__title {
+  margin-top: 10px;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  color: var(--ink);
+}
+
+/* Eje científico — elemento firma: sigue el descenso con lecturas reales */
+.gauge {
+  position: absolute;
+  left: 8%;
+  top: 26vh;
+  bottom: 10vh;
+  width: 2px;
+  background: linear-gradient(to bottom, rgba(27,35,64,0.35), rgba(255,255,255,0.5));
+  z-index: 1;
+}
+.gauge::before,
+.gauge::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--paper);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.35);
+}
+.gauge::before { top: -4px; }
+.gauge::after { bottom: -4px; }
+
+.gauge__mark {
+  position: absolute;
+  left: 8%;
+  transform: translate(18px, -50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.gauge__mark .gauge__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 4px rgba(255,255,255,0.25);
+}
+.gauge__mark .gauge__reading {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.92);
+  white-space: nowrap;
+}
+
+/* Cada "beat" narrativo de la historia */
+.beat {
+  position: relative;
+  z-index: 2;
+  /*max-width: 460px;
+  margin: 0 8vw 0 auto;
+  padding: 0 6vw;
+  margin-bottom: var(--beat-gap);*/
+  padding-top: 16vh;
+  padding-bottom: 12vh;
+}
+
+.beat-row {
+  min-height: var(--beat-row-height);
+  display: flex;
+  align-items: center;
+}
+
+.beat-row--01 {
+  align-items: flex-start;
+  padding-top: 7vh;
+}
+
+.beat-row--04 {
+  align-items: flex-end;
+}
+
+/* Cada "beat" narrativo de la historia */
+.beat {
+  max-width: 550px;
+  padding: 0 6vw;
+}
+
+.beat--left {
+  margin-left: 12vw;
+  margin-right: auto;
+}
+
+.beat--right {
   margin-left: auto;
+  margin-right: 8vw;
 }
 
-.bg-dark {
-  background-color: #343a40 !important;
+.beat__step {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  opacity: 0.75;
+  margin-bottom: 10px;
+  color: rgba(255,255,255,0.85);
 }
 
-.bg-hero {
-  background-color: #45b06cff;
+.beat__text {
+  font-size: clamp(1.4rem, 3.4vw, 2rem);
+  font-weight: 600;
+  color: var(--paper);
+  line-height: 1.25;
 }
 
-/* CALLOUT */
-.bd-callout {
-  padding: 1.25rem;
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-  border: 1px solid #e9ecef;
-  border-left-width: 0.25rem;
-  border-radius: 0.25rem;
+.beat__body {
+  margin-top: 2rem;
+  max-width: 34rem;
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.82);
 }
 
-.bd-callout h4 {
-  margin-bottom: 0.25rem;
+
+
+.beat--dark .beat__text,
+.beat--dark .beat__step {
+  color: var(--ink);
 }
 
-.bd-callout p:last-child {
-  margin-bottom: 0;
+.beat--dark .beat__body {
+  color: rgba(27, 35, 64, 0.78);
 }
 
-.bd-callout code {
-  border-radius: 0.25rem;
+/* Colapso final: centrado, máximo peso visual */
+.beat--collapse {
+  max-width: 640px;
+  margin-inline: auto;
+  text-align: center;
+  padding: 0 24px;
 }
 
-.bd-callout + .bd-callout {
-  margin-top: -0.25rem;
+
+/* --- Elementos flotantes decorativos --- */
+.decor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.bd-callout-info {
-  border-left-color: #5bc0de;
+.bubble {
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.05));
+  filter: blur(0.2px);
 }
 
-.bd-callout-warning {
-  border-left-color: #f0ad4e;
+.molecule-wrap {
+  position: absolute;
+  right: 8%;
+  top: 55vh;
+  width: clamp(190px, 16vw, 300px);
+  height: clamp(190px, 16vw, 300px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.bd-callout-danger {
-  border-left-color: #d9534f;
+.molecule-wrap .molecule-fallback {
+  position: absolute;
+  inset: 0;
 }
 
-/* footer */
-footer a {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
+.phosphate-img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-footer a:hover {
-  color: white;
+.algae-blob {
+  border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.18), transparent 60%), var(--algae);
+  opacity: 0.55;
+}
+
+.microbe {
+  border-radius: 50%;
+  background: var(--microbe);
+  opacity: 0.7;
+}
+
+.algae-wrap {
+  left: 14%;
+  top: 38%;
+  width: clamp(450px, 27vw, 500px);
+  transform: rotate(-13deg);
+}
+
+/* --- Parallax drift (JS sets --px/--py via requestAnimationFrame) --- */
+.parallax-decor {
+  --px: 0px;
+  --py: 0px;
+  transform: translate3d(var(--px), var(--py), 0);
+}
+
+/* Higher specificity than .algae-wrap so the drift composes with,
+   instead of replacing, its existing rotation. */
+.algae-wrap.parallax-decor {
+  transform: translate3d(var(--px), var(--py), 0) rotate(-13deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .parallax-decor { transform: none !important; }
+  .algae-wrap.parallax-decor { transform: rotate(-13deg) !important; }
+}
+
+/* --------------------------------------------------------------------------
+   5. TRANSITION WAVE — de "eutrophic-deep" a blanco
+   -------------------------------------------------------------------------- */
+.wave-transition {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: -2px; /* evita línea de 1px entre secciones */
+}
+
+/* --------------------------------------------------------------------------
+   6. OUR SOLUTION — salida limpia y esperanzadora
+   -------------------------------------------------------------------------- */
+.solution {
+  background: linear-gradient(to bottom, var(--paper) 0%, var(--paper-soft) 100%);
+  padding: 4vh 24px 10vh;
+  text-align: center;
+  position: relative;
+}
+
+.solution__eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.solution__title {
+  margin-top: 10px;
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  color: var(--ink);
+}
+
+.solution__lede {
+  max-width: 620px;
+  margin: 22px auto 0;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+/* La "corriente limpia" — barra de flujo que simboliza el agua ya tratada */
+.clean-stream {
+  max-width: 560px;
+  height: 10px;
+  margin: 44px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--eutrophic) 0%,
+    var(--algae) 30%,
+    var(--water-mid) 60%,
+    var(--water-light) 80%,
+    var(--water-clear) 100%
+  );
+  position: relative;
+}
+.clean-stream::after {
+  /* content: 'contaminated → treated';*/
+  content: ' → ';
+  position: absolute;
+  top: 16px;
+  right: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* --------------------------------------------------------------------------
+   7. EXPLORE rePhlow! — índice visual de la wiki
+   -------------------------------------------------------------------------- */
+.explore {
+  background: var(--paper-soft);
+  padding: 8vh 24px 12vh;
+}
+
+.explore__title {
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  color: var(--ink);
+  margin-bottom: 6vh;
+}
+
+.card-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(27, 35, 64, 0.1);
+}
+
+.card__icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card__icon svg { width: 30px; height: 30px; }
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* Colores por categoría — coherentes con la paleta científica */
+.card__icon--model      { background: rgba(110, 90, 150, 0.12); color: var(--microbe); }
+.card__icon--sustain     { background: rgba(124, 154, 78, 0.14); color: var(--algae); }
+.card__icon--hardware    { background: rgba(226, 84, 45, 0.12); color: var(--phosphate); }
+.card__icon--hp          { background: rgba(110, 90, 150, 0.12); color: var(--microbe); }
+.card__icon--protocols   { background: rgba(74, 81, 112, 0.1);  color: var(--ink-soft); }
+.card__icon--results     { background: rgba(226, 84, 45, 0.12); color: var(--phosphate); }
+.card__icon--design      { background: rgba(159, 201, 184, 0.25); color: #3E6B57; }
+.card__icon--safety      { background: rgba(74, 81, 112, 0.1);  color: var(--ink-soft); }
+.card__icon--team        { background: rgba(124, 154, 78, 0.14); color: var(--algae); }
+.card__icon--project        { background: rgba(74, 81, 112, 0.1);   color: var(--ink-soft); }
+.card__icon--engineering    { background: rgba(110, 90, 150, 0.12); color: var(--microbe); }
+.card__icon--experiments    { background: rgba(226, 84, 45, 0.12);  color: var(--phosphate); }
+.card__icon--measurements   { background: rgba(74, 81, 112, 0.1);   color: var(--ink-soft); }
+.card__icon--collab         { background: rgba(124, 154, 78, 0.14); color: var(--algae); }
+.card__icon--education      { background: rgba(110, 90, 150, 0.12); color: var(--microbe); }
+.card__icon--entrepreneurship { background: rgba(226, 84, 45, 0.12); color: var(--phosphate); }
+.card__icon--contribution   { background: rgba(74, 81, 112, 0.1);   color: var(--ink-soft); }
+.card__icon--attributions   { background: rgba(74, 81, 112, 0.1);   color: var(--ink-soft); }
+.card__icon--sponsors       { background: rgba(226, 84, 45, 0.12);  color: var(--phosphate); }
+.card__icon--medals         { background: rgba(244, 211, 94, 0.3);  color: #8A6D1A; }
+
+/* --- Grouped card sections in "Explore rePhlow!" --- */
+.explore__group { margin-bottom: 6vh; }
+.explore__group:last-child { margin-bottom: 0; }
+
+.explore__group-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink-soft);
+  margin-bottom: 2.4vh;
+}
+
+/* --------------------------------------------------------------------------
+   8. FOOTER
+   -------------------------------------------------------------------------- */
+.site-footer {
+  position: relative;
+  overflow: hidden;
+  padding: 64px 24px 40px;
+  background: var(--paper-soft);
+  border-top: 1px solid var(--line);
+}
+
+.site-footer__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.site-footer__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+}
+
+.site-footer__blob--green {
+  width: 260px;
+  height: 220px;
+  left: -60px;
+  top: -50px;
+  background: var(--algae);
+  opacity: 0.35;
+}
+
+.site-footer__blob--blue {
+  width: 320px;
+  height: 260px;
+  right: -90px;
+  top: -70px;
+  background: var(--ink);
+  opacity: 0.14;
+}
+
+.site-footer__blob--paleblue {
+  width: 260px;
+  height: 210px;
+  left: 32%;
+  bottom: -110px;
+  background: var(--water-mid);
+  opacity: 0.35;
+}
+
+.site-footer__blob--yellow {
+  width: 150px;
+  height: 130px;
+  right: 18%;
+  bottom: -50px;
+  background: #F4D35E;
+  opacity: 0.28;
+}
+
+.site-footer__panel {
+  position: relative;
+  z-index: 1;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 32px 36px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.site-footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.site-footer__logo {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.site-footer__logo img {
+  display: block;
+  height: 42px;
+  width: auto;
+}
+
+.site-footer__contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.site-footer__address {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  text-align: right;
+}
+
+.site-footer__socials {
+  display: flex;
+  gap: 10px;
+}
+
+.site-footer__social {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--line);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.site-footer__social svg { width: 17px; height: 17px; }
+
+.site-footer__social:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+
+.site-footer__legal {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  font-size: 0.75rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.site-footer__legal a {
+  color: var(--ink-soft);
   text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.site-footer__legal a:hover { color: var(--ink); }
+
+@media (max-width: 640px) {
+  .site-footer { padding: 48px 16px 32px; }
+  .site-footer__panel { padding: 28px 20px; }
+  .site-footer__inner { flex-direction: column; text-align: center; gap: 20px; }
+  .site-footer__contact { align-items: center; }
+  .site-footer__address { text-align: center; }
+}
+
+/* --------------------------------------------------------------------------
+   9. PAGE SHELL — shared placeholder-page layout
+   -------------------------------------------------------------------------- */
+.page-shell {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #ffffff 0%, var(--paper-soft) 100%);
+}
+
+.page-hero {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 160px 24px 80px;
+  text-align: center;
+}
+
+.page-hero__title {
+  margin-top: 10px;
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  color: var(--ink);
+}
+
+.page-hero__lede {
+  margin-top: 18px;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
+/* --------------------------------------------------------------------------
+   10. RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .card-grid { grid-template-columns: repeat(2, 1fr); }
+  .gauge { left: 6%; }
+  .gauge__mark { left: 6%; transform: translate(14px, -50%); }
+  .gauge__mark .gauge__reading { font-size: 0.62rem; }
+  .molecule-wrap { width: 130px; height: 130px; right: 4%; }
+}
+
+/* --------------------------------------------------------------------------
+   11. MEDALS PAGE — judge-facing evidence hub
+   Reuses global tokens (--ink, --paper, --line, --radius-*, --shadow-*).
+   Bronze/Silver read as a simple divided list; Gold (3 candidate Special
+   Awards) is the one place that still uses a card grid. The only new
+   reusable primitive is .medals-link-btn, since links are this page's
+   main function and deserve to look like an intentional action.
+   -------------------------------------------------------------------------- */
+:root {
+  --medal-bronze: #A9764A;
+  --medal-silver: #7C8798;
+  --medal-gold:   #A67C1E;
+}
+
+.medals-hero.page-hero { padding-bottom: 40px; }
+
+/* --- Medal index: a real, clickable mini-nav — separated from the hero
+   above and the panels below by its own border rules, not just spacing. --- */
+.medals-index {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.medals-index__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  box-shadow: var(--shadow-card);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+.medals-index__item svg { width: 16px; height: 16px; }
+.medals-index__item:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(27, 35, 64, 0.12);
+}
+@media (hover: hover) {
+  .medals-index__item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(27, 35, 64, 0.12);
+  }
+}
+.medals-index__item--bronze svg { color: var(--medal-bronze); }
+.medals-index__item--silver svg { color: var(--medal-silver); }
+.medals-index__item--gold svg   { color: var(--medal-gold); }
+@media (hover: hover) {
+  .medals-index__item--bronze:hover { border-color: var(--medal-bronze); }
+  .medals-index__item--silver:hover { border-color: var(--medal-silver); }
+  .medals-index__item--gold:hover   { border-color: var(--medal-gold); }
+}
+
+/* --- Panels: one wide, softly tinted container per tier, so Bronze /
+   Silver / Gold read as clearly separate blocks rather than bands that
+   touch each other. --- */
+.medals-panels { padding: 6vh 20px 10vh; }
+
+.medals-panel {
+  max-width: 1120px;
+  margin: 0 auto 32px;
+  padding: 6vh 40px;
+  border-radius: var(--radius-lg);
+}
+.medals-panel:last-child { margin-bottom: 0; }
+
+.medals-panel--bronze { background: rgba(169, 118, 74, 0.07); }
+.medals-panel--silver { background: rgba(124, 135, 152, 0.08); }
+.medals-panel--gold   { background: rgba(244, 211, 94, 0.16); }
+
+.medals-panel__inner { max-width: 880px; margin: 0 auto; }
+
+.medals-tier__head { text-align: center; margin-bottom: 5vh; }
+
+/* The tier badge doubles as the section heading — no separate title or
+   subtitle repeating what it already says. */
+.medals-tier-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.medals-tier-badge svg { width: 14px; height: 14px; }
+.medals-tier-badge--bronze { color: var(--medal-bronze); background: rgba(169, 118, 74, 0.14); }
+.medals-tier-badge--silver { color: var(--medal-silver); background: rgba(124, 135, 152, 0.14); }
+.medals-tier-badge--gold   { color: var(--medal-gold);   background: rgba(244, 211, 94, 0.32); }
+
+/* Gold's Special-Award mechanism is the one bit of framing that isn't
+   already said by the badge, so it keeps a short explanatory note. */
+.medals-gold-note {
+  max-width: 700px;
+  margin: 16px auto 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+
+/* --- Bronze / Silver: a divided list, not a grid of cards --- */
+.medals-list { display: flex; flex-direction: column; }
+
+.medals-item {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 24px;
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+}
+.medals-item:last-child { border-bottom: 1px solid var(--line); }
+
+.medals-item__index {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.medals-item__title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.medals-item__body {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  max-width: 60ch;
+}
+
+/* --- Links: the page's main function, styled as clear pill buttons --- */
+.medals-links {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.medals-link-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+@media (hover: hover) {
+  .medals-link-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+}
+
+/* --- Gold: three candidate Special Award cards --- */
+.medals-award-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 6vh;
+}
+
+.medals-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 26px 24px;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.medals-card__category {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.medals-card__title {
+  font-family: var(--font-display);
+  font-size: 1.04rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.medals-card__body {
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.medals-card .medals-links { margin-top: auto; padding-top: 6px; }
+
+@media (max-width: 900px) {
+  .medals-award-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .medals-award-grid { grid-template-columns: 1fr; }
+  .medals-item { grid-template-columns: 1fr; gap: 6px; }
+  .medals-item__index { font-size: 1.1rem; }
+  .medals-panel { padding: 5vh 20px; border-radius: var(--radius-md); }
+  .medals-index { padding: 24px 16px; gap: 10px; }
+  .medals-index__item { padding: 9px 14px; font-size: 0.82rem; }
+}
+
+/* --------------------------------------------------------------------------
+   12. RESPONSIVE
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+  :root {
+    --problem-height: 285vh;
+    --beat-row-height: 55vh;
+  }
+  /* --- Mobile nav: no hamburger. The top-level row stays a single line and
+     scrolls horizontally; tapping a parent item drops its submenu down as a
+     panel anchored to the whole pill (see .navbar__dropdown below). --- */
+  .navbar {
+    max-width: 92vw;
+    padding: 6px;
+  }
+
+  .navbar__links {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  .navbar__links::-webkit-scrollbar { display: none; } /* Chrome / Safari */
+
+  .navbar__link { padding: 7px 12px; font-size: 0.78rem; white-space: nowrap; }
+
+  /* The invisible hover-bridge only matters for the absolutely-positioned
+     desktop dropdown; there is no hover on touch, so it's just dead weight. */
+  .navbar__item::after { display: none; }
+
+  /* .navbar has `transform`, which makes it the containing block for any
+     position:fixed descendant — including this dropdown. That lets the open
+     submenu escape .navbar__links' overflow-x:auto (which, per spec, forces
+     overflow-y to clip too) instead of being cut off or trapped behind a
+     vertical scrollbar inside the horizontally-scrolling row. `top: 100%` on
+     that shared containing block places it right under the whole pill. */
+  .navbar__dropdown {
+    position: fixed;
+    left: 4vw;
+    right: 4vw;
+    margin-top: 8px;
+    width: auto;
+    min-width: 0;
+    max-width: none;
+    max-height: 60vh;
+    overflow-y: auto;
+    transform: translateY(4px);
+  }
+
+  .navbar__item.is-open .navbar__dropdown { transform: translateY(0); }
+
+  .navbar__dropdown-link { white-space: normal; }
+
+  .card-grid { grid-template-columns: 1fr; }
+  .beats { padding-top: 10vh; padding-bottom: 10vh; }
+  .beat-row { min-height: var(--beat-row-height); }
+  .beat, .beat--left, .beat--right { margin-left: auto; margin-right: auto; max-width: 90vw; padding: 0 20px; }
+  .gauge__mark .gauge__reading { display: none; } /* en móvil solo se ven los puntos, sin etiquetas */
+  .molecule-wrap { position: relative; right: auto; top: auto; margin: 0 auto 20px; width: 110px; height: 110px; }
 }

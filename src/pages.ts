@@ -1,195 +1,215 @@
 import {
-  Contribution,
-  Description,
-  Engineering,
-  Experiments,
   Home,
-  HumanPractices,
-  Notebook,
-  Results,
-  SafetyAndSecurity,
-  Members,
-  Education,
-  Entrepreneurship,
-  Hardware,
-  Inclusivity,
-  Measurement,
+  Team,
+  Medals,
+  ProjectDescription,
+  Design,
+  Engineering,
   Model,
-  AlternativePlatform,
-  Software,
+  Hardware,
+  Experiments,
+  Measurements,
+  Protocols,
+  Results,
+  Safety,
+  HumanPractices,
+  CollaborationPartnership,
+  EducationCommunication,
+  Entrepreneurship,
   Sustainability,
+  Contribution,
+  Attributions,
+  Sponsors,
 } from "./contents";
 
-interface Base {
-  name: string | undefined;
+export interface Page {
+  name: string;
+  /** Rendered by Header as the page-hero title (generic pages only). */
+  title: string;
+  /** Rendered by Header as the page-hero lede (generic pages only). */
+  lead: string;
+  path: string;
+  component: React.FC;
+  /** Exact <title> text from the original static page. */
+  docTitle: string;
+  /**
+   * Home / Team / Medals render their own bespoke hero markup, so the
+   * shared generic Header (page-shell > page-hero) is skipped for them.
+   */
+  hideHeader?: boolean;
 }
 
-class Folder implements Base {
-  name: string | undefined;
-  folder: Page[] | undefined;
-}
-
-class Page implements Base {
-  name: string | undefined;
-  title: string | undefined;
-  path: string | undefined;
-  component: React.FC | undefined;
-  lead: string | undefined;
-}
-
-const Pages: (Page | Folder)[] = [
+const Pages: Page[] = [
   {
     name: "Home",
-    title: "Home",
+    title: "rePhlow",
+    lead: "Make water flow. Make value grow. Choose rePhlow.",
     path: "/",
     component: Home,
-    lead: "Your iGEM Journey Begins Here! We wish you a successful and rewarding season!",
+    docTitle: "rePhlow — iGEM Wiki",
+    hideHeader: true,
+  },
+  {
+    name: "Project Description",
+    title: "Project Description",
+    lead: "An overview of the problem, motivation, and goals behind rePhlow.",
+    path: "/project-description",
+    component: ProjectDescription,
+    docTitle: "Project Description — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Design",
+    title: "Design",
+    lead: "A space for the design principles and decisions behind our biological system.",
+    path: "/design",
+    component: Design,
+    docTitle: "Design — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Engineering",
+    title: "Engineering",
+    lead: "A space for documenting the engineering cycle behind the project.",
+    path: "/engineering",
+    component: Engineering,
+    docTitle: "Engineering — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Model",
+    title: "Model",
+    lead: "A space for the computational and mathematical modelling work developed.",
+    path: "/model",
+    component: Model,
+    docTitle: "Model — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Hardware",
+    title: "Hardware",
+    lead: "A space for the hardware concepts, devices, or physical systems associated with the project.",
+    path: "/hardware",
+    component: Hardware,
+    docTitle: "Hardware — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Experiments",
+    title: "Experiments",
+    lead: "A space for the experimental work carried out throughout the project.",
+    path: "/experiments",
+    component: Experiments,
+    docTitle: "Experiments — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Measurements",
+    title: "Measurements",
+    lead: "A space for the measurements, characterization, and data collected during the project.",
+    path: "/measurements",
+    component: Measurements,
+    docTitle: "Measurements — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Protocols",
+    title: "Protocols",
+    lead: "A space for the laboratory protocols and procedures used by the team.",
+    path: "/protocols",
+    component: Protocols,
+    docTitle: "Protocols — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Results",
+    title: "Results",
+    lead: "A space for presenting the main results and observations from the project.",
+    path: "/results",
+    component: Results,
+    docTitle: "Results — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Safety",
+    title: "Safety",
+    lead: "A space for safety considerations, risk assessment, and responsible laboratory practices.",
+    path: "/safety",
+    component: Safety,
+    docTitle: "Safety — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Human practices",
+    title: "Human Practices",
+    lead: "A space for the social, ethical, and stakeholder-oriented dimensions of the project.",
+    path: "/human-practices",
+    component: HumanPractices,
+    docTitle: "Human Practices — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Collaboration and Partnership",
+    title: "Collaboration and Partnership",
+    lead: "A space for documenting collaborations and partnerships with other teams or institutions.",
+    path: "/collaboration-partnership",
+    component: CollaborationPartnership,
+    docTitle: "Collaboration and Partnership — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Education and Communication",
+    title: "Education and Communication",
+    lead: "A space for outreach, education, and communication activities.",
+    path: "/education-communication",
+    component: EducationCommunication,
+    docTitle: "Education and Communication — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Entrepreneurship",
+    title: "Entrepreneurship",
+    lead: "A space for exploring the potential implementation and value of the project beyond the laboratory.",
+    path: "/entrepreneurship",
+    component: Entrepreneurship,
+    docTitle: "Entrepreneurship — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Sustainability",
+    title: "Sustainability",
+    lead: "A space for the sustainability context and environmental relevance of rePhlow.",
+    path: "/sustainability",
+    component: Sustainability,
+    docTitle: "Sustainability — rePhlow iGEM Wiki",
+  },
+  {
+    name: "Contribution",
+    title: "Contribution",
+    lead: "A space for materials, tools, or knowledge that may be useful to future iGEM teams.",
+    path: "/contribution",
+    component: Contribution,
+    docTitle: "Contribution — rePhlow iGEM Wiki",
   },
   {
     name: "Team",
-    title: "Meet Our Team",
+    title: "Team",
+    lead: "",
     path: "/team",
-    component: Members,
-    lead: "This page is dedicated to introducing the individuals who made our iGEM project possible. Here, you'll find information about our team members, instructors, and advisors.",
+    component: Team,
+    docTitle: "Team — rePhlow iGEM Wiki",
+    hideHeader: true,
   },
   {
-    name: "Project",
-    folder: [
-      {
-        name: "Description",
-        title: "Project Description",
-        path: "/description",
-        component: Description,
-        lead: "Describe how and why you chose your iGEM project.",
-      },
-      {
-        name: "Engineering",
-        title: "Engineering Success",
-        path: "/engineering",
-        component: Engineering,
-        lead: "Demonstrate engineering success in a technical aspect of your project by going through at least one iteration of the engineering design cycle.",
-      },
-      {
-        name: "Results",
-        title: "Results",
-        path: "/results",
-        component: Results,
-        lead: "Present the results of your project, along with a detailed analysis and discussion of their significance. Also outline future plans and reflections on the impact of your project.",
-      },
-      {
-        name: "Contribution",
-        title: "Contribution",
-        path: "/contribution",
-        component: Contribution,
-        lead: "Make a useful contribution for future iGEM teams and document it on this page.",
-      },
-    ],
+    name: "Attributions",
+    title: "Attributions",
+    lead: "A space for acknowledging the work and responsibilities of team members and contributors.",
+    path: "/attributions",
+    component: Attributions,
+    docTitle: "Attributions — rePhlow iGEM Wiki",
   },
   {
-    name: "Wet Lab",
-    folder: [
-      {
-        name: "Experiments",
-        title: "Experiments",
-        path: "/experiments",
-        component: Experiments,
-        lead: "Describe the research, experiments, and protocols you used in your project. It is designed to provide sufficient information for other teams to replicate our work.",
-      },
-      {
-        name: "Notebook",
-        title: "Notebook",
-        path: "/notebook",
-        component: Notebook,
-        lead: "This serves as a chronological record of your team's progress throughout the season. It documents your daily activities, experiments, discussions, and decisions.",
-      },
-      {
-        name: "Measurement",
-        title: "Measurement",
-        path: "/measurement",
-        component: Measurement,
-        lead: "Synthetic Biology needs great measurement approaches for characterizing parts, and efficient new methods for characterizing many parts at once. Describe your measurement approaches on this page.",
-      },
-      {
-        name: "Alternative Platform",
-        title: "Alternative Platform",
-        path: "/alternative-platform",
-        component: AlternativePlatform,
-        lead: "This award is designed to celebrate exemplary work done in alternative platforms, and covers anything that is not E. coli, S. cerevisiae, and B. subtilis.",
-      },
-      {
-        name: "Safety and Security",
-        title: "Safety and Security",
-        path: "/safety-and-security",
-        component: SafetyAndSecurity,
-        lead: "Detail the safety and security considerations of your project, adressing potential risks and outlining the measures taken to mitigate them.",
-      },
-    ],
+    name: "Sponsors",
+    title: "Sponsors",
+    lead: "A space for acknowledging the support received from sponsors and institutions.",
+    path: "/sponsors",
+    component: Sponsors,
+    docTitle: "Sponsors — rePhlow iGEM Wiki",
   },
   {
-    name: "Dry Lab",
-    folder: [
-      {
-        name: "Model",
-        title: "Model",
-        path: "/model",
-        component: Model,
-        lead: "Explain your model's assumptions, data, parameters, and results in a way that anyone could understand.",
-      },
-      {
-        name: "Software",
-        title: "Software",
-        path: "/software",
-        component: Software,
-        lead: "Software in iGEM should make synthetic biology based on standard parts easier, faster, better or more accessible to our community.",
-      },
-      {
-        name: "Hardware",
-        title: "Hardware",
-        path: "/hardware",
-        component: Hardware,
-        lead: "Hardware in iGEM should make synthetic biology based on standard parts easier, faster, better, or more accessible to our community.",
-      },
-    ],
-  },
-  {
-    name: "Engagement",
-    folder: [
-      {
-        name: "Entrepreneurship",
-        title: "Entrepreneurship",
-        path: "/entrepreneurship",
-        component: Entrepreneurship,
-        lead: "The entrepreneurship award recognizes exceptional effort to build a business case and commercialize an iGEM project.",
-      },
-      {
-        name: "Human Practices",
-        title: "Human Practices",
-        path: "/human-practices",
-        component: HumanPractices,
-        lead: "We ask every team to think deeply and creatively about whether their project is responsible and good for the world. Consider how the world affects your work and how your work affects the world.",
-      },
-      {
-        name: "Education",
-        title: "Education",
-        path: "/education",
-        component: Education,
-        lead: "Innovative educational tools and outreach activities have the ability to establish a two-way dialogue with new communities by discussing public values and the science behind synthetic biology.",
-      },
-      {
-        name: "Inclusivity",
-        title: "Diversity and Inclusion",
-        path: "/inclusivity",
-        component: Inclusivity,
-        lead: "Every individual, regardless of background or experience, should have an equal opportunity to engage with scientific knowledge and technological development.",
-      },
-      {
-        name: "Sustainability",
-        title: "Sustainability",
-        path: "/sustainability",
-        component: Sustainability,
-        lead: "Describe how you have evaluated your project ideas against one or more of the SDGs.",
-      },
-    ],
+    name: "Medals",
+    title: "Medals",
+    lead: "",
+    path: "/medals",
+    component: Medals,
+    docTitle: "Medals — rePhlow iGEM Wiki",
+    hideHeader: true,
   },
 ];
 

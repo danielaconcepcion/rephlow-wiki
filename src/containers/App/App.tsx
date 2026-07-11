@@ -1,6 +1,5 @@
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { getPathMapping, stringToSlug } from "../../utils";
 import { useEffect } from "react";
 import { Navbar } from "../../components/Navbar";
@@ -10,57 +9,45 @@ import { Footer } from "../../components/Footer";
 
 const App = () => {
   const pathMapping = getPathMapping();
+  // useLocation (not the bare `location` global) so App re-renders — and
+  // the title effect below re-runs — on every client-side navigation.
+  const { pathname } = useLocation();
   const currentPath =
-    location.pathname
+    pathname
       .split(`${stringToSlug(import.meta.env.VITE_TEAM_NAME)}`)
       .pop() || "/";
 
-  // Set Page Title
-  const title =
-    currentPath in pathMapping ? pathMapping[currentPath].title : "Not Found";
+  const docTitle =
+    currentPath in pathMapping
+      ? pathMapping[currentPath].docTitle
+      : "Not Found — rePhlow iGEM Wiki";
 
   useEffect(() => {
-    document.title = `${title || ""} | ${import.meta.env.VITE_TEAM_NAME} - iGEM ${import.meta.env.VITE_TEAM_YEAR}`;
-  }, [title]);
+    document.title = docTitle;
+  }, [docTitle]);
 
   return (
     <>
-      {/* Navigation */}
       <Navbar />
 
-      {/* Header and PageContent */}
       <Routes>
         {Object.entries(pathMapping).map(
-          ([path, { title, lead, component: Component }]) => (
+          ([path, { title, lead, hideHeader, component: Component }]) => (
             <Route
               key={path}
               path={path}
               element={
                 <>
-                  <Header title={title || ""} lead={lead || ""} />
-                  <div className="container">
-                    <Component />
-                  </div>
+                  {!hideHeader && <Header title={title} lead={lead} />}
+                  <Component />
                 </>
               }
             />
           ),
         )}
-        <Route
-          path="*"
-          element={
-            <>
-              <Header
-                title="Not Found"
-                lead="The requested URL was not found on this server."
-              />
-              <NotFound />
-            </>
-          }
-        />
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {/* Footer */}
       {/* MUST mention license AND have a link to team wiki's repository on gitlab.igem.org */}
       <Footer />
     </>
