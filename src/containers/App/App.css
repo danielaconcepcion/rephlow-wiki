@@ -967,57 +967,14 @@ img { max-width: 100%; display: block; }
 
 .medals-hero.page-hero { padding-bottom: 40px; }
 
-/* --- Medal index: a real, clickable mini-nav — separated from the hero
-   above and the panels below by its own border rules, not just spacing. --- */
-.medals-index {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 14px;
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 32px 24px;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.medals-index__item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: var(--paper);
-  box-shadow: var(--shadow-card);
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--ink);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-}
-.medals-index__item svg { width: 16px; height: 16px; }
-.medals-index__item:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 24px rgba(27, 35, 64, 0.12);
-}
-@media (hover: hover) {
-  .medals-index__item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(27, 35, 64, 0.12);
-  }
-}
-.medals-index__item--bronze svg { color: var(--medal-bronze); }
-.medals-index__item--silver svg { color: var(--medal-silver); }
-.medals-index__item--gold svg   { color: var(--medal-gold); }
-@media (hover: hover) {
-  .medals-index__item--bronze:hover { border-color: var(--medal-bronze); }
-  .medals-index__item--silver:hover { border-color: var(--medal-silver); }
-  .medals-index__item--gold:hover   { border-color: var(--medal-gold); }
-}
+/* The old horizontal jump bar (Bronze/Silver/Gold pills) that used to live
+   here has been replaced by the reusable PageSectionNav sidebar — see
+   src/components/PageSectionNav.tsx and its co-located PageSectionNav.css. */
 
 /* --- Panels: one wide, softly tinted container per tier, so Bronze /
    Silver / Gold read as clearly separate blocks rather than bands that
-   touch each other. --- */
+   touch each other. Scroll-margin-top keeps a jumped-to panel's heading
+   clear of the floating main navbar. --- */
 .medals-panels { padding: 6vh 20px 10vh; }
 
 .medals-panel {
@@ -1025,6 +982,7 @@ img { max-width: 100%; display: block; }
   margin: 0 auto 32px;
   padding: 6vh 40px;
   border-radius: var(--radius-lg);
+  scroll-margin-top: var(--section-nav-offset);
 }
 .medals-panel:last-child { margin-bottom: 0; }
 

@@ -1,0 +1,119 @@
+/* --------------------------------------------------------------------------
+   PageSectionNav — reusable in-page section nav (backs PageSectionNav.tsx)
+   Purely a secondary, page-local "on this page" nav (currently used on
+   Medals) — independent of, and never touches, .navbar. Any page can adopt
+   it: wrap the page's main content in .page-with-section-nav, render
+   <PageSectionNav> as the first child, and add
+   `scroll-margin-top: var(--section-nav-offset)` to whatever element
+   carries each section's id (see .medals-panel in App.css).
+   -------------------------------------------------------------------------- */
+:root {
+  /* Clears the floating .navbar pill (top: 20px + ~52px tall) with some
+     breathing room, both for scroll-margin-top and for this nav's own
+     sticky offset. */
+  --section-nav-offset: 110px;
+}
+
+.page-with-section-nav {
+  display: grid;
+  grid-template-columns: clamp(130px, 16vw, 200px) minmax(0, 1fr);
+  align-items: start;
+  gap: 40px;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* --- Above 600px: vertical sticky sidebar --- */
+.page-section-nav {
+  position: sticky;
+  top: var(--section-nav-offset);
+  align-self: start;
+}
+
+.page-section-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 2px solid var(--line);
+}
+
+.page-section-nav__link {
+  display: block;
+  padding: 8px 16px;
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+@media (hover: hover) {
+  .page-section-nav__link:hover { color: var(--ink); }
+}
+.page-section-nav__link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.page-section-nav__link.is-active {
+  color: var(--ink);
+  border-left-color: var(--ink);
+}
+
+/* --- 600px and below: horizontal in-page navigation, scrolls with the page ---
+   position/top/z-index are explicitly reset here — CSS resolves those
+   properties independently, so leaving them undeclared would allow the
+   desktop sticky rule to remain active at this width. */
+@media (max-width: 600px) {
+  .page-with-section-nav {
+    display: block;
+    max-width: none;
+    padding: 0;
+  }
+
+  .page-section-nav {
+    position: static;
+    top: auto;
+    z-index: auto;
+    display: block;
+    padding: 16px 20px;
+    background: transparent;
+  }
+
+  .page-section-nav__list {
+    flex-direction: row;
+    gap: 4px;
+    border-left: none;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .page-section-nav__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .page-section-nav__link {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    margin-left: 0;
+    border-left: none;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .page-section-nav__link.is-active {
+    border-left-color: transparent;
+    background: var(--ink);
+    color: var(--paper);
+  }
+}
