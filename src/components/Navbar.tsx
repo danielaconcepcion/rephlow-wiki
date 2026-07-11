@@ -75,7 +75,6 @@ export function Navbar() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const triggerRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-  const touchHandledRef = useRef(false);
 
   // Close whichever dropdown is open whenever the route changes.
   useEffect(() => {
@@ -141,18 +140,10 @@ export function Navbar() {
                 ref={(el) => {
                   triggerRefs.current[group.label] = el;
                 }}
-                onPointerUp={(e) => {
-                  if (e.pointerType !== "touch" && e.pointerType !== "pen") return;
-                  e.preventDefault();
-                  touchHandledRef.current = true;
-                  toggleGroup(group.label);
-                }}
                 onClick={(e) => {
+                  const isTouchLayout = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+                  if (!isTouchLayout) return;
                   e.preventDefault();
-                  if (touchHandledRef.current) {
-                    touchHandledRef.current = false;
-                    return;
-                  }
                   toggleGroup(group.label);
                 }}
               >
