@@ -123,6 +123,7 @@ export function Navbar() {
             (item) => item.primary !== false && item.path === pathname,
           );
           const triggerHref = group.items[0].path;
+          const submenuId = `navbar-submenu-${group.label.toLowerCase().replace(/\s+/g, "-")}`;
 
           return (
             <div
@@ -130,16 +131,18 @@ export function Navbar() {
               key={group.label}
             >
               <Link
-                className={`navbar__link${triggerActive ? " is-active" : ""}`}
+                className={`navbar__link${triggerActive || isOpen ? " is-active" : ""}`}
                 to={triggerHref}
                 aria-haspopup="true"
                 aria-expanded={isOpen}
+                aria-controls={submenuId}
                 aria-current={triggerActive ? "page" : undefined}
                 ref={(el) => {
                   triggerRefs.current[group.label] = el;
                 }}
-                onTouchStart={() => {}}
                 onClick={(e) => {
+                  const isTouchLayout = window.matchMedia("(hover: none), (pointer: coarse)").matches;
+                  if (!isTouchLayout) return;
                   e.preventDefault();
                   toggleGroup(group.label);
                 }}
@@ -147,6 +150,7 @@ export function Navbar() {
                 {group.label}
               </Link>
               <div
+                id={submenuId}
                 className="navbar__dropdown"
                 aria-label={`${group.label} submenu`}
               >
@@ -158,6 +162,10 @@ export function Navbar() {
                       className={`navbar__dropdown-link${active ? " is-active" : ""}`}
                       to={item.path}
                       aria-current={active ? "page" : undefined}
+                      onClick={(e) => {
+                        e.currentTarget.blur();
+                        setOpenGroup(null);
+                      }}
                     >
                       {item.label}
                     </Link>
