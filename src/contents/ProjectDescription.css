@@ -1,0 +1,102 @@
+/* --------------------------------------------------------------------------
+   PROJECT DESCRIPTION — page content + drafting callouts
+   Page-specific styles for src/contents/ProjectDescription.tsx. Reuses
+   global tokens (--ink, --ink-soft, --paper-soft, --line, --radius-md,
+   --phosphate, --microbe, --section-nav-offset, --font-body) — no new
+   colors, typography scale, or design system introduced.
+   -------------------------------------------------------------------------- */
+.pd-content-wrap {
+  padding: 6vh 20px 10vh;
+}
+
+.pd-content {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.pd-content p {
+  margin-top: 12px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.pd-content ul {
+  margin: 12px 0 0;
+  padding-left: 22px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.pd-content li { margin-bottom: 6px; }
+.pd-content li:last-child { margin-bottom: 0; }
+
+.pd-section {
+  margin-top: 64px;
+  scroll-margin-top: var(--section-nav-offset);
+}
+.pd-section:first-child { margin-top: 40px; }
+
+.pd-section > h2 {
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+  color: var(--ink);
+}
+
+.pd-subsection {
+  margin-top: 32px;
+  scroll-margin-top: var(--section-nav-offset);
+}
+
+.pd-subsection > h3 {
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+/* --- Drafting callouts: internal working aids, not final page content ---
+   Kept deliberately plain — a label + tinted panel, no icons, gradients,
+   or shadows — so they read as editorial scaffolding, not as part of the
+   scientific text itself. */
+.pd-callout {
+  margin: 20px 0;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+.pd-callout p,
+.pd-callout ul {
+  margin-top: 4px;
+}
+.pd-callout p:first-of-type,
+.pd-callout ul:first-of-type {
+  margin-top: 0;
+}
+
+.pd-callout__label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Neutral grey — "Purpose of the page". */
+.pd-callout--purpose {
+  background: var(--paper-soft);
+}
+.pd-callout--purpose .pd-callout__label { color: var(--ink-soft); }
+
+/* Muted red — "To review" / "Editorial note" / "References to include":
+   things the team still needs to act on before this is final content. */
+.pd-callout--editorial {
+  background: rgba(226, 84, 45, 0.06);
+  border-color: rgba(226, 84, 45, 0.22);
+}
+.pd-callout--editorial .pd-callout__label { color: var(--phosphate); }
+
+/* Distinct third color — "Suggested visual(s)". */
+.pd-callout--visual {
+  background: rgba(110, 90, 150, 0.06);
+  border-color: rgba(110, 90, 150, 0.22);
+}
+.pd-callout--visual .pd-callout__label { color: var(--microbe); }

@@ -3,17 +3,19 @@ interface HeaderProps {
   lead: string;
 }
 
+/**
+ * Shared hero for the generic content pages — reproduces the
+ * `page-shell > page-hero` markup that was duplicated across every
+ * placeholder .html page in the static site.
+ */
 export function Header({ title, lead }: HeaderProps) {
   return (
-    <header className="bg-hero py-5 mb-5">
-      <div className="container h-100">
-        <div className="row h-100 align-items-center">
-          <div className="col-lg-12">
-            <h1 className="display-4 text-white mt-5 mb-2">{title}</h1>
-            <p className="lead mb-5 text-white-50">{lead}</p>
-          </div>
-        </div>
-      </div>
-    </header>
+    <main className="page-shell">
+      <section className="page-hero">
+        <p className="hero__eyebrow">Web page currently under construction!</p>
+        <h1 className="page-hero__title">{title}</h1>
+        <p className="page-hero__lede">{lead}</p>
+      </section>
+    </main>
   );
 }
