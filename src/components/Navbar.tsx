@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 
 interface NavItem {
@@ -70,11 +71,30 @@ const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
+function getSubmenuId(label: string) {
+  return `navbar-submenu-${label.toLowerCase().replace(/\s+/g, "-")}`;
+}
+
 export function Navbar() {
   const { pathname } = useLocation();
   const [openGroup, setOpenGroup] = useState<string | null>(null);
+  const [isTouchLayout, setIsTouchLayout] = useState(false);
+  const [dropdownTop, setDropdownTop] = useState(0);
   const navRef = useRef<HTMLElement>(null);
+  const portalRef = useRef<HTMLDivElement>(null);
   const triggerRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+
+  // Coarse-pointer / no-hover devices (phones, most tablets) get a tap-to-open
+  // dropdown rendered through a portal — see the big comment near the portal
+  // render below for why. Kept in state (not just read inline on click) so
+  // the portal's render condition and the click handler always agree.
+  useEffect(() => {
+    const mql = window.matchMedia("(hover: none), (pointer: coarse)");
+    const update = () => setIsTouchLayout(mql.matches);
+    update();
+    mql.addEventListener("change", update);
+    return () => mql.removeEventListener("change", update);
+  }, []);
 
   // Close whichever dropdown is open whenever the route changes.
   useEffect(() => {
@@ -83,9 +103,10 @@ export function Navbar() {
 
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
-      if (navRef.current && !navRef.current.contains(e.target as Node)) {
-        setOpenGroup(null);
-      }
+      const target = e.target as Node;
+      if (navRef.current?.contains(target)) return;
+      if (portalRef.current?.contains(target)) return;
+      setOpenGroup(null);
     }
     function onDocKeydown(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
@@ -102,9 +123,51 @@ export function Navbar() {
     };
   }, []);
 
+  // The portaled dropdown is positioned from the navbar pill's own measured
+  // bottom edge (it has no positioned ancestor to anchor `top: 100%` to
+  // once it's rendered into <body> — see below), re-measured whenever it
+  // opens or the viewport changes.
+  useLayoutEffect(() => {
+    if (!isTouchLayout || !openGroup) return;
+    function measure() {
+      if (navRef.current) {
+        setDropdownTop(navRef.current.getBoundingClientRect().bottom + 8);
+      }
+    }
+    measure();
+    window.addEventListener("resize", measure);
+    window.addEventListener("orientationchange", measure);
+    return () => {
+      window.removeEventListener("resize", measure);
+      window.removeEventListener("orientationchange", measure);
+    };
+  }, [isTouchLayout, openGroup]);
+
   function toggleGroup(label: string) {
     setOpenGroup((current) => (current === label ? null : label));
   }
+
+  function renderDropdownLinks(group: NavGroup) {
+    return group.items.map((item) => {
+      const active = item.path === pathname;
+      return (
+        <Link
+          key={item.path}
+          className={`navbar__dropdown-link${active ? " is-active" : ""}`}
+          to={item.path}
+          aria-current={active ? "page" : undefined}
+          onClick={(e) => {
+            e.currentTarget.blur();
+            setOpenGroup(null);
+          }}
+        >
+          {item.label}
+        </Link>
+      );
+    });
+  }
+
+  const openNavGroup = NAV_GROUPS.find((group) => group.label === openGroup);
 
   return (
     <nav className="navbar" aria-label="Main navigation" ref={navRef}>
@@ -123,7 +186,7 @@ export function Navbar() {
             (item) => item.primary !== false && item.path === pathname,
           );
           const triggerHref = group.items[0].path;
-          const submenuId = `navbar-submenu-${group.label.toLowerCase().replace(/\s+/g, "-")}`;
+          const submenuId = getSubmenuId(group.label);
 
           return (
             <div
@@ -141,7 +204,6 @@ export function Navbar() {
                   triggerRefs.current[group.label] = el;
                 }}
                 onClick={(e) => {
-                  const isTouchLayout = window.matchMedia("(hover: none), (pointer: coarse)").matches;
                   if (!isTouchLayout) return;
                   e.preventDefault();
                   toggleGroup(group.label);
@@ -149,29 +211,20 @@ export function Navbar() {
               >
                 {group.label}
               </Link>
-              <div
-                id={submenuId}
-                className="navbar__dropdown"
-                aria-label={`${group.label} submenu`}
-              >
-                {group.items.map((item) => {
-                  const active = item.path === pathname;
-                  return (
-                    <Link
-                      key={item.path}
-                      className={`navbar__dropdown-link${active ? " is-active" : ""}`}
-                      to={item.path}
-                      aria-current={active ? "page" : undefined}
-                      onClick={(e) => {
-                        e.currentTarget.blur();
-                        setOpenGroup(null);
-                      }}
-                    >
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </div>
+
+              {/* Desktop only (hover-driven, unchanged). On touch layouts
+                  the equivalent content is rendered through the portal
+                  below instead, so this is intentionally left unmounted
+                  there rather than just hidden — see the portal comment. */}
+              {!isTouchLayout && (
+                <div
+                  id={submenuId}
+                  className="navbar__dropdown"
+                  aria-label={`${group.label} submenu`}
+                >
+                  {renderDropdownLinks(group)}
+                </div>
+              )}
             </div>
           );
         })}
@@ -189,6 +242,34 @@ export function Navbar() {
           </svg>
         </a>
       </div>
+
+      {/*
+        Real touch browsers (this reproduces on-device; Chrome's desktop-based
+        mobile emulator does not) clip a `position: fixed` dropdown here even
+        though its containing block is redefined to the (transformed) .navbar
+        pill via the usual CSS trick — because .navbar__links carries
+        `-webkit-overflow-scrolling: touch` for momentum scrolling, and on
+        real mobile engines that promotes it to a scrolling compositing layer
+        that clips fixed-position descendants regardless of their containing
+        block. The emulator never creates that layer, so the bug never shows
+        up there. Rendering the open dropdown through a portal straight onto
+        <body> removes it from that DOM subtree entirely, sidestepping the
+        clipping regardless of how any given browser implements it.
+      */}
+      {isTouchLayout &&
+        openNavGroup &&
+        createPortal(
+          <div
+            id={getSubmenuId(openNavGroup.label)}
+            className="navbar__dropdown navbar__dropdown--portal"
+            style={{ top: dropdownTop }}
+            aria-label={`${openNavGroup.label} submenu`}
+            ref={portalRef}
+          >
+            {renderDropdownLinks(openNavGroup)}
+          </div>,
+          document.body,
+        )}
     </nav>
   );
 }
