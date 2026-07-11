@@ -131,7 +131,7 @@ export function Navbar() {
               key={group.label}
             >
               <Link
-                className={`navbar__link${triggerActive ? " is-active" : ""}`}
+                className={`navbar__link${triggerActive || isOpen ? " is-active" : ""}`}
                 to={triggerHref}
                 aria-haspopup="true"
                 aria-expanded={isOpen}
