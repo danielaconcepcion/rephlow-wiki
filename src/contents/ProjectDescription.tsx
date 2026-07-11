@@ -44,12 +44,12 @@ function Callout({
   children,
 }: {
   kind: "purpose" | "editorial" | "visual";
-  label: string;
+  label?: string;
   children: ReactNode;
 }) {
   return (
     <div className={`pd-callout pd-callout--${kind}`}>
-      <span className="pd-callout__label">{label}</span>
+      {label && <span className="pd-callout__label">{label}</span>}
       {children}
     </div>
   );
@@ -181,7 +181,7 @@ export function ProjectDescription() {
               </p>
             </div>
 
-            <Callout kind="editorial" label="To review">
+            <Callout kind="editorial">
               <p>
                 Expand this section using the information and evidence
                 included in the congress paper.
@@ -190,10 +190,10 @@ export function ProjectDescription() {
 
             <Callout kind="visual" label="Suggested visual">
               <ul>
-                <li>a map of Spain highlighting the Mar Menor;</li>
-                <li>a photograph of the lagoon;</li>
+                <li>a map of Spain highlighting the Mar Menor</li>
+                <li>a photograph of the lagoon</li>
                 <li>
-                  optionally, a small diagram showing the main nutrient
+                  a small diagram showing the main nutrient
                   inputs affecting the area.
                 </li>
               </ul>
@@ -228,7 +228,7 @@ export function ProjectDescription() {
               effective nutrient removal and recovery remain necessary.
             </p>
 
-            <Callout kind="editorial" label="References to include">
+            <Callout kind="editorial">
               <ul>
                 <li>Nitrates Directive: 91/676/EEC</li>
                 <li>Water Framework Directive: 2000/60/EC</li>
@@ -236,7 +236,7 @@ export function ProjectDescription() {
               </ul>
             </Callout>
 
-            <Callout kind="editorial" label="Editorial note">
+            <Callout kind="editorial">
               <p>
                 Replace the outdated reference to Directive 91/271/EEC with
                 the newer Directive (EU) 2024/3019, while mentioning the
