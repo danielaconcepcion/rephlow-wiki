@@ -23,5 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
+.yarn
+.yarn*
+*.lock
+
 # Local assets pending upload to static.igem.wiki
 public/assets/
