@@ -52,7 +52,8 @@ const Pages: Page[] = [
   {
     name: "Project Description",
     title: "Project Description",
-    lead: "An overview of the problem, motivation, and goals behind rePhlow.",
+    lead: "Phosphorus: from waste to value.",
+    /*An overview of the problem, motivation, and goals behind rePhlow.*/
     path: "/project-description",
     component: ProjectDescription,
     docTitle: "Project Description — rePhlow iGEM Wiki",
@@ -68,7 +69,8 @@ const Pages: Page[] = [
   {
     name: "Engineering",
     title: "Engineering",
-    lead: "A space for documenting the engineering cycle behind the project.",
+    lead: "Design. Build. Test. Learn.",
+    /*A space for documenting the engineering cycle behind the project.*/
     path: "/engineering",
     component: Engineering,
     docTitle: "Engineering — rePhlow iGEM Wiki",
@@ -100,7 +102,8 @@ const Pages: Page[] = [
   {
     name: "Measurements",
     title: "Measurements",
-    lead: "A space for the measurements, characterization, and data collected during the project.",
+    lead: "Measure. Understand. Improve.",
+    /*A space for the measurements, characterization, and data collected during the project.*/
     path: "/measurements",
     component: Measurements,
     docTitle: "Measurements — rePhlow iGEM Wiki",
@@ -124,7 +127,8 @@ const Pages: Page[] = [
   {
     name: "Safety",
     title: "Safety",
-    lead: "A space for safety considerations, risk assessment, and responsible laboratory practices.",
+    lead: "Responsible research.",
+    /*A space for safety considerations, risk assessment, and responsible laboratory practices.*/
     path: "/safety",
     component: Safety,
     docTitle: "Safety — rePhlow iGEM Wiki",
@@ -132,7 +136,8 @@ const Pages: Page[] = [
   {
     name: "Human practices",
     title: "Human Practices",
-    lead: "A space for the social, ethical, and stakeholder-oriented dimensions of the project.",
+    lead: "Science shaped by society.",
+    /*A space for the social, ethical, and stakeholder-oriented dimensions of the project.*/
     path: "/human-practices",
     component: HumanPractices,
     docTitle: "Human Practices — rePhlow iGEM Wiki",
@@ -148,7 +153,8 @@ const Pages: Page[] = [
   {
     name: "Education and Communication",
     title: "Education and Communication",
-    lead: "A space for outreach, education, and communication activities.",
+    lead: "Learn. Share. Inspire.",
+    /*A space for outreach, education, and communication activities.*/
     path: "/education-communication",
     component: EducationCommunication,
     docTitle: "Education and Communication — rePhlow iGEM Wiki",
@@ -180,7 +186,7 @@ const Pages: Page[] = [
   {
     name: "Team",
     title: "Team",
-    lead: "",
+    lead: "Many backgrounds. One goal.",
     path: "/team",
     component: Team,
     docTitle: "Team — rePhlow iGEM Wiki",
