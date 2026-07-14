@@ -17,7 +17,8 @@ interface Person {
   facultyColor: string;
   image: string;
   bio: string;
-  funFact: string;
+  strength: string;
+  weakness: string;
   links: PersonLink[];
 }
 
@@ -27,69 +28,92 @@ const TEAM_DATA: Person[] = [
     id: "m1", category: "members", isPlaceholder: false,
     name: "María Gómez Gómez", education: "4th year Chemistry & Biochemistry student", role: "General coordinator",
     facultyColor: "pink", image: "assets/team/maria.jpg",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   },
   {
     id: "m2", category: "members", isPlaceholder: false,
     name: "Marta Gil Alarcón", education: "4th year Biochemistry student", role: "Entrepreneurship coordinator",
     facultyColor: "pink", image: "assets/team/marta.jpg",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   },
   {
     id: "m3", category: "members", isPlaceholder: false,
     name: "Diego Villa Lázaro", education: "BSc in Biochemistry. MSc student in Translational Medicine.", role: "Laboratory coordinator",
     facultyColor: "pink", image: "assets/team/diego.jpg",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   },
   {
     id: "m4", category: "members", isPlaceholder: false,
     name: "Adriana Cuadro López", education: "4th year Biochemistry student", role: "Human Practices coordinator",
     facultyColor: "pink", image: "assets/team/adriana.jpg",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   },
   {
     id: "m5", category: "members", isPlaceholder: false,
     name: "Irene Fiol Vega", education: "4th year Biochemistry student", role: "Finance coordinator",
     facultyColor: "pink", image: "assets/team/irene.jpg",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.",
+    links: [{ label: "LinkedIn", url: "https://www.linkedin.com/in/irene-fiol-vega/" }],
   },
   {
     id: "m6", category: "members", isPlaceholder: false,
     name: "Ángel Vilar Martín", education: "BSc in Biology. MSc student in Biophysics.", role: "Coordinator",
     facultyColor: "green", image: "assets/team/angel.jpg",
-    bio: "Add a short bio.", funFact: "Add a fun fact.",
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.",
     links: [{ label: "LinkedIn", url: "https://www.linkedin.com/in/angelvilarmartin/" }],
   },
   {
     id: "m7", category: "members", isPlaceholder: false,
     name: "Martina Grudsky Rojas", education: "4th year Biology student", role: "Outreach coordinator",
     facultyColor: "green", image: "assets/team/martina.jpg",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   },
   {
     id: "m8", category: "members", isPlaceholder: false,
     name: "Marina Delfa Lalaguna", education: "BSc in Chemistry & Biochemistry. MSc in Biotechnology.", role: "Experimental",
     facultyColor: "green", image: "assets/team/marina-delfa-laguna.png",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   },
   {
     id: "m10", category: "members", isPlaceholder: false,
     name: "Daniela Concepción Castanedo", education: "BSc in Physics. MSc student in Biophysics.", role: "Modelling coordinator",
     facultyColor: "blue", image: "assets/team/daniela-concepcion-castanedo.png",
-    bio: "Add a short bio.", funFact: "Add a fun fact.",
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.",
     links: [{ label: "LinkedIn", url: "https://www.linkedin.com/in/daniela-concepción-castanedo-696b55284/" }],
   },
   {
     id: "m9", category: "members", isPlaceholder: false,
     name: "Santiago Rodríguez Aranguren", education: "4th year Materials Engineering student", role: "Hardware coordinator",
     facultyColor: "blue", image: "assets/team/santiago.jpg",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   },
   {
     id: "m11", category: "members", isPlaceholder: false,
     name: "Silvia Yan García Velasco", education: "BSc in Design.", role: "Designer",
     facultyColor: "yellow", image: "assets/team/silvia.jpg",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   },
 
   /* ---------- Advisors ---------- */
@@ -97,7 +121,9 @@ const TEAM_DATA: Person[] = [
     id: `a${i + 1}`, category: "advisors", isPlaceholder: true,
     name: "Add name", education: "Add institution / department", role: "Advisor",
     facultyColor: "gray", image: "assets/team/advisor-placeholder.png",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   })),
 
   /* ---------- Mentors ---------- */
@@ -105,7 +131,9 @@ const TEAM_DATA: Person[] = [
     id: `me${i + 1}`, category: "mentors", isPlaceholder: true,
     name: "Add name", education: "Add institution / department", role: "Mentor",
     facultyColor: "gray", image: "assets/team/mentor-placeholder.png",
-    bio: "Add a short bio.", funFact: "Add a fun fact.", links: [],
+    bio: "Add a short bio.",
+    strength: "Add a strength.",
+    weakness: "Add a weakness.", links: [],
   })),
 ];
 
