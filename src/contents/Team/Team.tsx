@@ -391,9 +391,14 @@ export function Team() {
               <p>{selectedPerson.bio}</p>
             </div>
 
-            <div className="team-modal__section" hidden={!selectedPerson.funFact}>
-              <h3>Fun fact</h3>
-              <p>{selectedPerson.funFact}</p>
+            <div className="team-modal__section" hidden={!selectedPerson.strength}>
+              <h3>Strength</h3>
+              <p>{selectedPerson.strength}</p>
+            </div>
+            
+            <div className="team-modal__section" hidden={!selectedPerson.weakness}>
+              <h3>Weakness</h3>
+              <p>{selectedPerson.weakness}</p>
             </div>
 
             <div className="team-modal__links">
