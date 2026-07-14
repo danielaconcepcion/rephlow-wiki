@@ -25,3 +25,8 @@ dist-ssr
 
 # Local assets pending upload to static.igem.wiki
 public/assets/
+
+# Generated at dev/build time by scripts/generate-metabolic-network.mjs
+# from the committed source in data/ — not committed itself, so the build
+# always regenerates it from source (see package.json).
+public/generated/

@@ -1,5 +1,5 @@
-import type { ReactNode } from "react";
 import { PageSectionNav, type PageSection } from "../components/PageSectionNav";
+import { Callout } from "../components/Callout";
 import "./ProjectDescription.css";
 
 const PROJECT_DESCRIPTION_SECTIONS: PageSection[] = [
@@ -37,23 +37,6 @@ const PROJECT_DESCRIPTION_SECTIONS: PageSection[] = [
     label: "Project objectives",
   },
 ];
-
-function Callout({
-  kind,
-  label,
-  children,
-}: {
-  kind: "purpose" | "editorial" | "visual";
-  label?: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className={`pd-callout pd-callout--${kind}`}>
-      {label && <span className="pd-callout__label">{label}</span>}
-      {children}
-    </div>
-  );
-}
 
 export function ProjectDescription() {
   return (

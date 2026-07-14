@@ -968,6 +968,20 @@ img { max-width: 100%; display: block; }
   color: var(--ink-soft);
 }
 
+/* Generic content wrapper for simple content pages that are otherwise just
+   the shared Header hero plus a bit of body content (currently used by
+   Hardware/Measurements/Sustainability/Engineering) — the same
+   padding/max-width pattern used ad hoc on richer pages like
+   ProjectDescription, pulled out here since these pages have no other
+   page-specific styling of their own yet. */
+.content-page {
+  padding: 6vh 20px 10vh;
+}
+.content-page__inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
 /* --------------------------------------------------------------------------
    10. RESPONSIVE
    -------------------------------------------------------------------------- */
