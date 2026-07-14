@@ -52,7 +52,8 @@ const Pages: Page[] = [
   {
     name: "Project Description",
     title: "Project Description",
-    lead: "An overview of the problem, motivation, and goals behind rePhlow.",
+    lead: "Phosphorus: from waste to value.",
+    /*An overview of the problem, motivation, and goals behind rePhlow.*/
     path: "/project-description",
     component: ProjectDescription,
     docTitle: "Project Description — rePhlow iGEM Wiki",
@@ -60,7 +61,8 @@ const Pages: Page[] = [
   {
     name: "Design",
     title: "Design",
-    lead: "A space for the design principles and decisions behind our biological system.",
+    lead: "Blueprints for biology.",
+    /*A space for the design principles and decisions behind our biological system.*/
     path: "/design",
     component: Design,
     docTitle: "Design — rePhlow iGEM Wiki",
@@ -68,7 +70,8 @@ const Pages: Page[] = [
   {
     name: "Engineering",
     title: "Engineering",
-    lead: "A space for documenting the engineering cycle behind the project.",
+    lead: "Design. Build. Test. Learn.",
+    /*A space for documenting the engineering cycle behind the project.*/
     path: "/engineering",
     component: Engineering,
     docTitle: "Engineering — rePhlow iGEM Wiki",
@@ -76,7 +79,8 @@ const Pages: Page[] = [
   {
     name: "Model",
     title: "Model",
-    lead: "A space for the computational and mathematical modelling work developed.",
+    lead: "Predict. Simulate. Refine.",
+    /*A space for the computational and mathematical modelling work developed.*/
     path: "/model",
     component: Model,
     docTitle: "Model — rePhlow iGEM Wiki",
@@ -84,7 +88,8 @@ const Pages: Page[] = [
   {
     name: "Hardware",
     title: "Hardware",
-    lead: "A space for the hardware concepts, devices, or physical systems associated with the project.",
+    lead: "From concept to device.",
+    /*A space for the hardware concepts, devices, or physical systems associated with the project.*/
     path: "/hardware",
     component: Hardware,
     docTitle: "Hardware — rePhlow iGEM Wiki",
@@ -92,7 +97,8 @@ const Pages: Page[] = [
   {
     name: "Experiments",
     title: "Experiments",
-    lead: "A space for the experimental work carried out throughout the project.",
+    lead: "Hypotheses into evidence.",
+    /*A space for the experimental work carried out throughout the project.*/
     path: "/experiments",
     component: Experiments,
     docTitle: "Experiments — rePhlow iGEM Wiki",
@@ -100,7 +106,8 @@ const Pages: Page[] = [
   {
     name: "Measurements",
     title: "Measurements",
-    lead: "A space for the measurements, characterization, and data collected during the project.",
+    lead: "Measure. Understand. Improve.",
+    /*A space for the measurements, characterization, and data collected during the project.*/
     path: "/measurements",
     component: Measurements,
     docTitle: "Measurements — rePhlow iGEM Wiki",
@@ -108,7 +115,8 @@ const Pages: Page[] = [
   {
     name: "Protocols",
     title: "Protocols",
-    lead: "A space for the laboratory protocols and procedures used by the team.",
+    lead: "Reliable. Repeatable. Reproducible.",
+    /*A space for the laboratory protocols and procedures used by the team.*/
     path: "/protocols",
     component: Protocols,
     docTitle: "Protocols — rePhlow iGEM Wiki",
@@ -116,7 +124,8 @@ const Pages: Page[] = [
   {
     name: "Results",
     title: "Results",
-    lead: "A space for presenting the main results and observations from the project.",
+    lead: "Discover. Analyse. Explain.",
+    /*A space for presenting the main results and observations from the project.*/
     path: "/results",
     component: Results,
     docTitle: "Results — rePhlow iGEM Wiki",
@@ -124,7 +133,8 @@ const Pages: Page[] = [
   {
     name: "Safety",
     title: "Safety",
-    lead: "A space for safety considerations, risk assessment, and responsible laboratory practices.",
+    lead: "Responsible research.",
+    /*A space for safety considerations, risk assessment, and responsible laboratory practices.*/
     path: "/safety",
     component: Safety,
     docTitle: "Safety — rePhlow iGEM Wiki",
@@ -132,7 +142,8 @@ const Pages: Page[] = [
   {
     name: "Human practices",
     title: "Human Practices",
-    lead: "A space for the social, ethical, and stakeholder-oriented dimensions of the project.",
+    lead: "Science shaped by society.",
+    /*A space for the social, ethical, and stakeholder-oriented dimensions of the project.*/
     path: "/human-practices",
     component: HumanPractices,
     docTitle: "Human Practices — rePhlow iGEM Wiki",
@@ -140,7 +151,8 @@ const Pages: Page[] = [
   {
     name: "Collaboration and Partnership",
     title: "Collaboration and Partnership",
-    lead: "A space for documenting collaborations and partnerships with other teams or institutions.",
+    lead: "Better together.",
+    /*A space for documenting collaborations and partnerships with other teams or institutions.*/
     path: "/collaboration-partnership",
     component: CollaborationPartnership,
     docTitle: "Collaboration and Partnership — rePhlow iGEM Wiki",
@@ -148,7 +160,8 @@ const Pages: Page[] = [
   {
     name: "Education and Communication",
     title: "Education and Communication",
-    lead: "A space for outreach, education, and communication activities.",
+    lead: "Learn. Share. Inspire.",
+    /*A space for outreach, education, and communication activities.*/
     path: "/education-communication",
     component: EducationCommunication,
     docTitle: "Education and Communication — rePhlow iGEM Wiki",
@@ -156,7 +169,8 @@ const Pages: Page[] = [
   {
     name: "Entrepreneurship",
     title: "Entrepreneurship",
-    lead: "A space for exploring the potential implementation and value of the project beyond the laboratory.",
+    lead: "From lab to market.",
+    /*A space for exploring the potential implementation and value of the project beyond the laboratory.*/
     path: "/entrepreneurship",
     component: Entrepreneurship,
     docTitle: "Entrepreneurship — rePhlow iGEM Wiki",
@@ -164,7 +178,8 @@ const Pages: Page[] = [
   {
     name: "Sustainability",
     title: "Sustainability",
-    lead: "A space for the sustainability context and environmental relevance of rePhlow.",
+    lead: "Closing the loop.",
+    /*A space for the sustainability context and environmental relevance of rePhlow.*/
     path: "/sustainability",
     component: Sustainability,
     docTitle: "Sustainability — rePhlow iGEM Wiki",
@@ -172,7 +187,8 @@ const Pages: Page[] = [
   {
     name: "Contribution",
     title: "Contribution",
-    lead: "A space for materials, tools, or knowledge that may be useful to future iGEM teams.",
+    lead: "Knowledge that lasts.",
+    /*A space for materials, tools, or knowledge that may be useful to future iGEM teams.*/
     path: "/contribution",
     component: Contribution,
     docTitle: "Contribution — rePhlow iGEM Wiki",
@@ -180,7 +196,7 @@ const Pages: Page[] = [
   {
     name: "Team",
     title: "Team",
-    lead: "",
+    lead: "Many backgrounds. One goal.",
     path: "/team",
     component: Team,
     docTitle: "Team — rePhlow iGEM Wiki",
@@ -189,7 +205,8 @@ const Pages: Page[] = [
   {
     name: "Attributions",
     title: "Attributions",
-    lead: "A space for acknowledging the work and responsibilities of team members and contributors.",
+    lead: "Credit where it's due.",
+    /*A space for acknowledging the work and responsibilities of team members and contributors.*/
     path: "/attributions",
     component: Attributions,
     docTitle: "Attributions — rePhlow iGEM Wiki",
@@ -197,7 +214,8 @@ const Pages: Page[] = [
   {
     name: "Sponsors",
     title: "Sponsors",
-    lead: "A space for acknowledging the support received from sponsors and institutions.",
+    lead: "Made possible together.",
+    /*A space for acknowledging the support received from sponsors and institutions.*/
     path: "/sponsors",
     component: Sponsors,
     docTitle: "Sponsors — rePhlow iGEM Wiki",
