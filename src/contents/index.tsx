@@ -5,7 +5,7 @@ export { Medals } from "./Medals.tsx";
 export { ProjectDescription } from "./ProjectDescription.tsx";
 export { Design } from "./Design.tsx";
 export { Engineering } from "./Engineering.tsx";
-export { Model } from "./Model.tsx";
+export { Model } from "./Model/Model.tsx";
 export { Hardware } from "./Hardware.tsx";
 // Laboratory
 export { Experiments } from "./Experiments.tsx";

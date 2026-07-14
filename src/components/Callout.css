@@ -1,0 +1,56 @@
+/* --------------------------------------------------------------------------
+   CALLOUT — internal drafting aid, not final page content
+   Shared by any page draft (ProjectDescription, Hardware, Measurements,
+   Sustainability, Engineering, ...). Reuses global tokens (--ink-soft,
+   --paper-soft, --line, --radius-md, --phosphate, --microbe, --font-body)
+   — no new colors, typography scale, or design system introduced. Kept
+   deliberately plain — a label + tinted panel, no icons, gradients, or
+   shadows — so it reads as editorial scaffolding, not as part of the
+   scientific text itself.
+   -------------------------------------------------------------------------- */
+.callout {
+  margin: 20px 0;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  font-size: 0.9rem;
+}
+.callout p,
+.callout ul {
+  margin-top: 4px;
+}
+.callout p:first-of-type,
+.callout ul:first-of-type {
+  margin-top: 0;
+}
+
+.callout__label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Neutral grey — "Purpose of the page". */
+.callout--purpose {
+  background: var(--paper-soft);
+}
+.callout--purpose .callout__label { color: var(--ink-soft); }
+
+/* Muted red — "To review" / "Editorial note" / "References to include":
+   things the team still needs to act on before this is final content. */
+.callout--editorial {
+  background: rgba(226, 84, 45, 0.06);
+  border-color: rgba(226, 84, 45, 0.22);
+}
+.callout--editorial .callout__label { color: var(--phosphate); }
+
+/* Distinct third color — "Suggested visual(s)". */
+.callout--visual {
+  background: rgba(110, 90, 150, 0.06);
+  border-color: rgba(110, 90, 150, 0.22);
+}
+.callout--visual .callout__label { color: var(--microbe); }
