@@ -108,7 +108,7 @@ const Pages: Page[] = [
     title: "Measurements",
     lead: "Measure. Understand. Improve.",
     /*A space for the measurements, characterization, and data collected during the project.*/
-    path: "/measurements",
+    path: "/measurement",
     component: Measurements,
     docTitle: "Measurements — rePhlow iGEM Wiki",
   },
@@ -135,7 +135,7 @@ const Pages: Page[] = [
     title: "Safety",
     lead: "Responsible research.",
     /*A space for safety considerations, risk assessment, and responsible laboratory practices.*/
-    path: "/safety",
+    path: "/safety-and-security",
     component: Safety,
     docTitle: "Safety — rePhlow iGEM Wiki",
   },
@@ -162,7 +162,7 @@ const Pages: Page[] = [
     title: "Education and Communication",
     lead: "Learn. Share. Inspire.",
     /*A space for outreach, education, and communication activities.*/
-    path: "/education-communication",
+    path: "/education",
     component: EducationCommunication,
     docTitle: "Education and Communication — rePhlow iGEM Wiki",
   },

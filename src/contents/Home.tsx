@@ -704,7 +704,7 @@ export function Home() {
               <p className="card__title">Results</p>
             </Link>
 
-            <Link className="card" to="/safety">
+            <Link className="card" to="/safety-and-security">
               <div className="card__icon card__icon--safety">
                 <svg
                   viewBox="0 0 24 24"
@@ -758,7 +758,7 @@ export function Home() {
               <p className="card__title">Collaboration and Partnership</p>
             </Link>
 
-            <Link className="card" to="/education-communication">
+            <Link className="card" to="/education">
               <div className="card__icon card__icon--education">
                 <svg
                   viewBox="0 0 24 24"
