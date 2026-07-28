@@ -49,3 +49,24 @@
   font-size: 1.1rem;
   color: var(--ink);
 }
+
+/* Our Solution visual index — own wider wrapper, sibling of .pd-content so
+   the 760px prose column above/below it is never touched. Sized relative to
+   .pd-content-wrap (itself inside the page grid's minmax(0,1fr) track), not
+   the viewport. */
+.vsi-wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* Second .pd-content block (the 6 detail sections + references): body
+   paragraphs are justified, scoped to this block only so the original
+   prose above stays untouched. */
+.vsi-details .pd-section p {
+  text-align: justify;
+  hyphens: auto;
+}
+
+.vsi-ref {
+  scroll-margin-top: var(--section-nav-offset);
+}
