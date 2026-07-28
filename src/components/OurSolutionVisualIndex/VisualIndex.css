@@ -1,0 +1,323 @@
+/* --------------------------------------------------------------------------
+   VisualIndex — annotated diagram for ProjectDescription's "Our Solution"
+   visual index. Reuses global tokens (--ink, --ink-soft, --paper-soft,
+   --radius-lg/md, --shadow-soft/card, --font-display/body) — no new colors
+   or typography scale introduced. Reduced motion is handled by the global
+   `@media (prefers-reduced-motion: reduce)` rule in App.css, which already
+   collapses every transition/animation declared here — nothing extra needed.
+   -------------------------------------------------------------------------- */
+
+/* --- Illustration + overlays --- */
+
+.vsi {
+  margin-top: 32px;
+}
+
+.vsi-illustration {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  aspect-ratio: 2360 / 1640;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--paper-soft);
+  box-shadow: var(--shadow-soft);
+}
+
+.vsi-base-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transition: filter 0.35s ease;
+}
+
+.vsi-illustration.is-active .vsi-base-img {
+  filter: saturate(0.88) brightness(0.93);
+}
+
+/* Resting state: layers are perfectly still (no animation) and only carry a
+   faint, silhouette-aware lift off the base illustration. Movement/scale is
+   reserved entirely for the active state. */
+.vsi-layer {
+  position: absolute;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(20, 20, 30, 0.08));
+}
+
+.vsi-layer.is-active {
+  transform: scale(1.025) translateY(-3px);
+  filter: drop-shadow(0 6px 10px rgba(20, 20, 30, 0.12));
+  filter: drop-shadow(0 10px 16px color-mix(in srgb, var(--vsi-accent) 28%, transparent))
+    drop-shadow(0 3px 6px color-mix(in srgb, var(--vsi-accent) 20%, transparent));
+}
+
+/* Set on blocks where the base illustration already shows this component in
+   place, so lifting it upward would reveal a duplicate underneath — scale +
+   shadow communicate "active" instead, no translateY. */
+.vsi-layer.is-active.no-lift {
+  transform: scale(1.025);
+}
+
+.vsi-hitbox {
+  position: absolute;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.vsi-hitbox:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* --- Floating labels --- */
+
+.vsi-label {
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 32px;
+  padding: 0 13px;
+  border-radius: 11px;
+  cursor: pointer;
+  white-space: nowrap;
+  font: 600 12.5px/1 var(--font-display);
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  box-shadow: 0 2px 8px rgba(20, 20, 30, 0.1);
+  backdrop-filter: blur(2px);
+  z-index: 50;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease,
+    transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.vsi-label:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.vsi-label.is-active {
+  background: color-mix(in srgb, var(--vsi-accent) 16%, white);
+  border-color: var(--vsi-accent);
+  color: var(--vsi-accent);
+  transform: translateY(-2px);
+  z-index: 60;
+}
+
+.vsi-label__badge {
+  font: 700 10.5px/1 var(--font-body);
+  color: var(--ink-soft);
+  opacity: 0.75;
+}
+
+.vsi-label.is-active .vsi-label__badge {
+  color: var(--vsi-accent);
+  opacity: 1;
+}
+
+/* Below the same width the info card docks to a bottom sheet (see
+   useVisualIndex's isNarrow), the label pills' text no longer fits without
+   overlapping each other or clipping against the illustration's rounded-corner
+   overflow:hidden edge — their fixed content width only ever had room at
+   desktop widths. Collapse to a compact numbered badge instead; the title
+   stays available to assistive tech via aria-label. */
+.vsi-illustration.is-narrow .vsi-label {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  gap: 0;
+  justify-content: center;
+}
+
+.vsi-illustration.is-narrow .vsi-label__title {
+  display: none;
+}
+
+/* --- Info card --- */
+
+.vsi-card {
+  position: absolute;
+  width: 250px;
+  background: var(--paper);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-soft);
+  z-index: 100;
+}
+
+.vsi-card--sheet {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  width: auto;
+}
+
+.vsi-card__eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.vsi-card__dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--vsi-accent);
+  flex: none;
+}
+
+.vsi-card__eyebrow {
+  font: 700 11px/1 var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vsi-accent);
+}
+
+.vsi-card__desc {
+  font: 400 14px/1.5 var(--font-body);
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+
+.vsi-card__cta {
+  font: 600 12px/1 var(--font-body);
+  color: var(--vsi-accent);
+  background: color-mix(in srgb, var(--vsi-accent) 16%, transparent);
+  border: none;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.vsi-card__cta:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* --- Detail sections: paired figure + paragraph, wikilinks, citations --- */
+
+.vsi-back-link {
+  font: 600 12px/1 var(--font-body);
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+
+.vsi-pair {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  align-items: flex-start;
+  margin: 20px 0;
+}
+
+.vsi-pair--reverse {
+  flex-direction: row-reverse;
+}
+
+.vsi-pair > p {
+  flex: 1 1 260px;
+  margin-top: 0;
+  text-align: justify;
+  hyphens: auto;
+}
+
+.vsi-figure {
+  margin: 0;
+  flex: 0 0 240px;
+}
+
+/* Standalone figures span the editorial column and need more separation
+   than figures paired with a paragraph. */
+.pd-subsection > .vsi-figure {
+  margin: 32px 0;
+}
+
+.vsi-details .pd-section > .vsi-figure {
+  margin: 32px 0;
+}
+
+.vsi-figure--full {
+  flex-basis: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.vsi-details .pd-section > .vsi-figure--full {
+  margin: 32px auto;
+}
+
+.vsi-figure img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: var(--paper-soft);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 10px;
+  display: block;
+}
+
+.vsi-figure--placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 2px dashed var(--line);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
+  font: 500 13px/1.4 var(--font-body);
+  text-align: center;
+  padding: 16px;
+}
+
+.vsi-figure__caption {
+  font: 400 12px/1.4 var(--font-body);
+  color: var(--ink-soft);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.vsi-wikilink {
+  color: #557a46;
+  text-decoration: none;
+  font-weight: 600;
+  background-image: linear-gradient(rgba(172, 201, 156, 0.45), rgba(172, 201, 156, 0.45));
+  background-repeat: no-repeat;
+  background-size: 100% 45%;
+  background-position: 0 100%;
+  transition: background-size 0.22s ease;
+}
+
+.vsi-wikilink:hover,
+.vsi-wikilink:focus-visible {
+  background-size: 100% 100%;
+}
+
+.vsi-wikilink:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.vsi-citation {
+  color: #557a46;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.vsi-citation:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
