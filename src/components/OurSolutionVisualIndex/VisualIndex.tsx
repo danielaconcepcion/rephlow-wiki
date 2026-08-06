@@ -36,7 +36,7 @@ export function VisualIndex() {
       >
         <img
           className="vsi-base-img"
-          src={asset("assets/our-solution/esquema-fondo-blanco.png")}
+          src={asset("assets/our-solution/esquema-fondo-blanco.webp")}
           alt="RePhlow system diagram: wastewater enters a bioreactor of alginate-encapsulated bacteria, passes through a filtration module, and recovered phosphate is revalorised into higher-value compounds."
         />
 
