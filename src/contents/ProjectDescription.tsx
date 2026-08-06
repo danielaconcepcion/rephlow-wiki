@@ -850,8 +850,7 @@ export function ProjectDescription() {
                 broad-host-range pSEVA vectors<Cite group="genetic" numbers={[17]} />.
               </p>
               <Figure
-                src="engineered-phosphorus-pathway.svg"
-                fallbackSrc="engineered-phosphorus-pathway.png"
+                src="engineered-phosphorus-pathway.original.png"
                 alt="Engineered phosphate uptake and polyphosphate storage pathway in Pseudomonas putida"
                 caption={<><strong>Figure 3.</strong> Engineered phosphorus-accumulation pathway in <em>P. putida</em> KT2440. Green modules are expressed heterologously; red modules are functionally inactivated.</>}
                 className="pd-figure--pathway"
