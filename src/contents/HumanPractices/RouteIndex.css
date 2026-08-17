@@ -1,0 +1,143 @@
+/* Graphic index before section 0. Each card reproduces a lighter cut of
+   the gradient of the section it links to (blue: section 1, purple:
+   section 2, green: section 3, amber: section 4, rust: section 5) and a
+   thumbnail of that section's own decorative object, rendered through
+   the very same components used in the header (see HeroObjects.tsx).
+   Complements PageSectionNav — not a replacement. */
+
+.hp-route-index {
+  display: block;
+}
+
+.hp-route-index__head {
+  max-width: 790px;
+  margin: 0 auto 22px;
+  text-align: center;
+}
+.hp-route-index__head h2 {
+  margin: 0 0 6px;
+  font-size: clamp(1.55rem, 2.6vw, 2.05rem);
+  line-height: 1.15;
+}
+.hp-route-index__head p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+}
+
+.hp-route-index__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.hp-route-index__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 4 / 5;
+  max-width: 300px;
+  margin-inline: auto;
+  padding: 18px 18px 16px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease;
+}
+.hp-route-index__card:hover,
+.hp-route-index__card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-soft);
+}
+.hp-route-index__card:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Lighter cuts of each section's own hero gradient — same chromatic
+   identity, just not dark enough at either end to read as near-black at
+   card size, and with the light end doing most of the work so the card
+   feels brighter than the header while the title corner stays dark
+   enough for white text to hold contrast. */
+.hp-route-index__card--blue {
+  background: linear-gradient(135deg, #1c4a63, #58b3ac);
+}
+.hp-route-index__card--purple {
+  background: linear-gradient(135deg, #3a2c5c, #a091c4);
+}
+.hp-route-index__card--green {
+  background: linear-gradient(135deg, #1f4f45, #5cad8d);
+}
+.hp-route-index__card--amber {
+  background: linear-gradient(135deg, #6b4e1c, #e0bf6e);
+}
+.hp-route-index__card--rust {
+  background: linear-gradient(135deg, #5c2c1c, #e08055);
+}
+
+.hp-route-index__title {
+  flex: none;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.96rem;
+  line-height: 1.3;
+  color: #fff;
+}
+.hp-route-index__number {
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+/* Reserves the lower half of the card, right-aligned, for the object —
+   large enough to read as the actual header object in miniature, not a
+   corner pictogram. */
+.hp-route-index__icon {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+.hp-route-index__icon > .hp-compass-glyph,
+.hp-route-index__icon > .hp-voice-network-glyph,
+.hp-route-index__icon > .hp-route-progress-glyph,
+.hp-route-index__icon > .hp-passport,
+.hp-route-index__icon > .hp-card-fan {
+  width: 88px;
+  max-width: 100%;
+}
+
+/* The network and mountain SVGs carry more intentional whitespace in
+   their viewBoxes than the compact passport. Give them a little more
+   room here so the objects have comparable visual weight in the index. */
+.hp-route-index__card--purple .hp-route-index__icon > .hp-voice-network-glyph {
+  width: 132px;
+}
+.hp-route-index__card--amber .hp-route-index__icon > .hp-route-progress-glyph {
+  width: 118px;
+}
+
+@media (min-width: 420px) {
+  .hp-route-index__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hp-route-index__card {
+    max-width: none;
+    margin-inline: 0;
+  }
+}
+
+@media (min-width: 700px) {
+  .hp-route-index__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1000px) {
+  .hp-route-index__grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

@@ -143,10 +143,10 @@ const Pages: Page[] = [
     name: "Human practices",
     title: "Human Practices",
     lead: "Science shaped by society.",
-    /*A space for the social, ethical, and stakeholder-oriented dimensions of the project.*/
+    hideHeader: true,
     path: "/human-practices",
     component: HumanPractices,
-    docTitle: "Human Practices — rePhlow iGEM Wiki",
+    docTitle: "Human Practices — The Phosphorus Route — rePhlow iGEM Wiki",
   },
   {
     name: "Collaboration and Partnership",

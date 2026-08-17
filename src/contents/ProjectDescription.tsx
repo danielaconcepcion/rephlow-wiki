@@ -971,18 +971,11 @@ export function ProjectDescription() {
                 BcPPK2-III from <em>Burkholderia cenocepacia</em> because it accepts AMP and ADP and
                 remains active across a broad pH range<Cite group="revalorisation" numbers={[5]} />.
               </p>
-              <div className="pd-figure-pair">
-                <Figure
-                  src="atp-regeneration-module.png"
-                  alt="Polyphosphate kinase regenerating ATP to support an ATP-dependent phosphorylation reaction"
-                  caption={<><strong>Figure 4a.</strong> Coupling polyphosphate-driven ATP regeneration to an ATP-dependent kinase.</>}
-                />
-                <Figure
-                  src="atp-regeneration-cascade.png"
-                  alt="Alternative schematic of polyphosphate-driven ATP regeneration coupled to phosphorylation"
-                  caption={<><strong>Figure 4b.</strong> The same coupled architecture shown as two connected functional modules.</>}
-                />
-              </div>
+              <Figure
+                src="atp-regeneration-module.png"
+                alt="Polyphosphate kinase regenerating ATP to support an ATP-dependent phosphorylation reaction"
+                caption={<><strong>Figure 4.</strong> Coupling polyphosphate-driven ATP regeneration to an ATP-dependent kinase.</>}
+              />
             </div>
 
             <div className="pd-subsection">

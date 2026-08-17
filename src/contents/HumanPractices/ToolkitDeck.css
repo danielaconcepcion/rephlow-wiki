@@ -1,0 +1,413 @@
+/* Section 5.3 — "Tools other teams can reuse". Identity: a fanned hand of
+   playing cards (what_route_revealed.html, "Aces up our sleeve") — ported
+   directly: same fan-geometry formula (spread/step/ty), same dark-gradient
+   card front with corner marks, same cream card back. Palette kept close
+   to the prototype's own petrol/green/cream (a deliberate, distinct
+   identity per section, not the wiki's water palette) — only the body
+   font is swapped for Inter/Space Grotesk (no serif, per the wiki's
+   typography rule) and the modal is restyled for this page's own
+   composition rather than reusing image-caption chrome that clipped here. */
+
+.hp-toolkit {
+  margin-top: 40px;
+  scroll-margin-top: var(--section-nav-offset);
+  --tk-petrol: #315066;
+  --tk-petrol-light: #4a6579;
+  --tk-green: #7fae52;
+  --tk-green-soft: #5c8a3f;
+  --tk-cream: #f4f6f2;
+  --tk-ink: #22332f;
+}
+.hp-toolkit h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+  color: var(--tk-petrol);
+}
+.hp-toolkit > p {
+  color: var(--ink-soft);
+  max-width: 66ch;
+  margin: 0 auto 10px;
+  text-align: center;
+}
+
+/* --- Fanned hand: ported geometry --- */
+.hp-toolkit__table {
+  position: relative;
+  height: 460px;
+  margin-top: 56px;
+  perspective: 1800px;
+}
+
+.hp-toolkit__card {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 184px;
+  aspect-ratio: 5 / 7.2;
+  transform-origin: 50% 680px;
+  transform: translateX(-50%) translateY(var(--ty, 0)) rotate(var(--a, 0deg));
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), z-index 0s;
+  cursor: pointer;
+  z-index: var(--z, 1);
+  outline: none;
+}
+.hp-toolkit__card:hover {
+  transform: translateX(-50%) translateY(calc(var(--ty, 0) - 26px))
+    rotate(var(--a, 0)) scale(1.03);
+  z-index: 40;
+}
+.hp-toolkit__card:focus-visible .hp-toolkit__face {
+  box-shadow: 0 0 0 3px var(--tk-green), 0 14px 26px rgba(49, 80, 102, 0.28);
+}
+
+.hp-toolkit__card-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+/* Decorative-only flip on hover/focus, per the approved review — it never
+   gates opening the modal, which fires from the outer .hp-toolkit__card's
+   own click/Enter/Space handler regardless of flip state. */
+@media (hover: hover) {
+  .hp-toolkit__card:hover .hp-toolkit__card-inner,
+  .hp-toolkit__card:focus-within .hp-toolkit__card-inner {
+    transform: rotateY(180deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hp-toolkit__card,
+  .hp-toolkit__card-inner {
+    transition: none;
+  }
+}
+
+.hp-toolkit__face {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 14px 26px rgba(49, 80, 102, 0.28);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+.hp-toolkit__face--front {
+  background:
+    repeating-linear-gradient(45deg, rgba(156, 197, 110, 0.1) 0 2px, transparent 2px 14px),
+    linear-gradient(160deg, #17262e, #223c4c);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px;
+}
+.hp-toolkit__frame {
+  position: absolute;
+  inset: 7px;
+  border: 1px solid rgba(195, 223, 164, 0.4);
+  border-radius: 7px;
+  pointer-events: none;
+}
+.hp-toolkit__suit-glyph {
+  font-size: 38px;
+  color: var(--tk-green);
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+}
+.hp-toolkit__ace-label {
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 10px;
+  color: var(--tk-green-soft);
+  opacity: 0.9;
+  text-align: center;
+}
+.hp-toolkit__corner {
+  position: absolute;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--tk-green-soft);
+  line-height: 1;
+  opacity: 0.9;
+}
+.hp-toolkit__corner--tl { top: 12px; left: 12px; }
+.hp-toolkit__corner--br { bottom: 12px; right: 12px; transform: rotate(180deg); }
+
+.hp-toolkit__face--back {
+  transform: rotateY(180deg);
+  background: var(--tk-cream);
+  color: var(--tk-ink);
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.hp-toolkit__top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  flex-shrink: 0;
+}
+.hp-toolkit__suit-mini { font-size: 15px; color: var(--tk-petrol); }
+.hp-toolkit__num {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(28, 43, 38, 0.5);
+}
+.hp-toolkit__card-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+  line-height: 1.24;
+  margin: 0 0 8px;
+  color: var(--tk-petrol);
+  flex-shrink: 0;
+}
+.hp-toolkit__card-gist {
+  font-size: 11.5px;
+  line-height: 1.42;
+  color: #2b2b2b;
+  margin: 0;
+}
+
+.hp-toolkit__hand-note {
+  text-align: center;
+  margin-top: 60px;
+  font-size: 0.82rem;
+  color: rgba(34, 51, 47, 0.7);
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+.hp-toolkit__hand-note strong { color: var(--tk-petrol); }
+
+@media (max-width: 760px) {
+  .hp-toolkit__table {
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 36px;
+    perspective: 1400px;
+  }
+  .hp-toolkit__card {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+    transform: none !important;
+  }
+  .hp-toolkit__card:hover { transform: scale(1.03) !important; }
+}
+@media (max-width: 420px) {
+  .hp-toolkit__table { grid-template-columns: 1fr; }
+}
+
+/* --- Modal: original chrome for this composition (not FactorExplorer's
+   image-caption nav, which clipped when force-fit around a text header). --- */
+.hp-toolkit-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.hp-toolkit-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 18, 22, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.hp-toolkit-modal__dialog {
+  position: relative;
+  width: min(700px, 100%);
+  max-height: 86vh;
+  background: var(--tk-cream);
+  color: var(--tk-ink);
+  border-radius: 14px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Circular nav buttons anchored to the dialog's own edges, vertically
+   centred — decoupled from the header so neither clips the other. */
+.hp-toolkit-modal__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--tk-petrol);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+  z-index: 10;
+}
+.hp-toolkit-modal__arrow svg { width: 11px; height: 17px; }
+.hp-toolkit-modal__arrow:hover { background: var(--tk-green); color: #173318; }
+.hp-toolkit-modal__arrow:focus-visible {
+  outline: 2px solid var(--tk-green);
+  outline-offset: 2px;
+}
+.hp-toolkit-modal__arrow--prev { left: -20px; }
+.hp-toolkit-modal__arrow--next { right: -20px; }
+
+.hp-toolkit-modal__head {
+  background: var(--tk-petrol);
+  color: var(--tk-cream);
+  padding: 20px 52px 20px 22px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.hp-toolkit-modal__suit-big {
+  font-size: 22px;
+  color: var(--tk-green);
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+.hp-toolkit-modal__head-text { min-width: 0; flex: 1; }
+.hp-toolkit-modal__head h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  margin: 0;
+  line-height: 1.25;
+  color: #fff;
+}
+.hp-toolkit-modal__subline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  color: var(--tk-green-soft);
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+.hp-toolkit-modal__counter {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--tk-cream);
+  font-weight: 600;
+}
+.hp-toolkit-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: var(--tk-cream);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.75;
+  padding: 2px 6px;
+}
+.hp-toolkit-modal__close:hover { opacity: 1; }
+
+.hp-toolkit-modal__panes {
+  display: grid;
+  grid-template-columns: 32% 1px 1fr;
+  gap: 20px;
+  padding: 20px 22px;
+  overflow-y: auto;
+}
+.hp-toolkit-modal__divider { background: rgba(49, 80, 102, 0.15); }
+.hp-toolkit-modal__pane h3 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: var(--tk-petrol);
+}
+.hp-toolkit-modal__pane--how p {
+  color: #2b2b2b;
+  line-height: 1.65;
+  font-size: 0.92rem;
+  margin-bottom: 10px;
+}
+.hp-toolkit-modal__flow {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--tk-green-soft);
+  background: rgba(156, 197, 110, 0.14);
+  border-left: 3px solid var(--tk-green);
+  padding: 9px 12px;
+  line-height: 1.5;
+}
+
+.hp-toolkit-modal__hint {
+  font-size: 0.8rem;
+  color: #3f4f4a;
+  margin-bottom: 8px;
+}
+.hp-toolkit-modal__textarea {
+  width: 100%;
+  min-height: 260px;
+  resize: vertical;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(49, 80, 102, 0.25);
+  background: #fdfdfb;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12.3px;
+  line-height: 1.55;
+  color: #1c2b26;
+}
+.hp-toolkit-modal__textarea:focus-visible {
+  outline: none;
+  border-color: var(--tk-green);
+  box-shadow: 0 0 0 3px rgba(156, 197, 110, 0.25);
+}
+
+.hp-toolkit-modal__actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.hp-toolkit-modal__btn {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 7px;
+  padding: 9px 16px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+.hp-toolkit-modal__btn--primary { background: var(--tk-green); color: #173318; }
+.hp-toolkit-modal__btn--primary:hover { background: #8ab85d; }
+.hp-toolkit-modal__btn--secondary {
+  background: none;
+  border-color: rgba(49, 80, 102, 0.35);
+  color: var(--tk-petrol);
+}
+.hp-toolkit-modal__btn--secondary:hover { background: rgba(49, 80, 102, 0.08); }
+
+@media (max-width: 720px) {
+  .hp-toolkit-modal__panes {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1px auto;
+  }
+  .hp-toolkit-modal__divider { height: 1px; }
+  .hp-toolkit-modal__arrow--prev { left: 6px; }
+  .hp-toolkit-modal__arrow--next { right: 6px; }
+  .hp-toolkit-modal__head { padding-top: 44px; }
+}
