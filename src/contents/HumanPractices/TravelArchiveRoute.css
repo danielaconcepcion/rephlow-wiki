@@ -1,0 +1,682 @@
+/* Section 3 — "Travel Archive". Identity: a passport/field-journal — a
+   dark-green hero framing a tilted passport card, rotated date stamps,
+   numbered timeline stops with field-journal disclosures, pull quotes and
+   a route-progress bar (rePhlow_Travel_Archive_v2.html) — ported directly
+   rather than genericised. Dark greens/pale greens below are Travel
+   Archive's own accent system, not reused site tokens. */
+
+.travel-archive {
+  --ta-accent: #2f7d5f;
+  --ta-accent-soft: #86b39e;
+  --ta-rust: #a85d43;
+  --ta-paper: #f6f3ea;
+  --ta-sand: #eadfca;
+  --ta-hero-dark: #12352e;
+  --ta-hero-mid: #2f6a58;
+}
+
+/* --- Hero: dark-green container framing the section header + passport.
+   The h2/lede keep the exact size, max-width and margins the rest of
+   Human Practices uses for its section headers — only recoloured for the
+   dark background — so position and hierarchy stay unchanged. --- */
+.ta-hero {
+  position: relative;
+  margin: 4px 0 40px;
+  padding: clamp(32px, 5vw, 56px) clamp(24px, 5vw, 56px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(120deg, var(--ta-hero-dark), var(--ta-hero-mid));
+  box-shadow: var(--shadow-soft);
+}
+.ta-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+.ta-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+
+.ta-hero__intro h2 {
+  max-width: 790px;
+  margin: 0 0 6px;
+  font-size: clamp(2.05rem, 3.6vw, 3.2rem);
+  line-height: 1.08;
+  color: #fff;
+}
+.ta-hero__lede {
+  max-width: 790px;
+  margin: 6px 0 0;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: #dcece6;
+  text-align: justify;
+  hyphens: none;
+}
+
+/* Sizing/positioning only — the passport's own look (shape, colour,
+   stamp) lives in HeroObjects.css as .hp-passport, shared with its
+   RouteIndex thumbnail. */
+.ta-hero .hp-passport {
+  z-index: 1;
+  justify-self: end;
+}
+
+/* --- Intro --- */
+.ta-intro {
+  max-width: 860px;
+  margin: 0 auto 34px;
+  text-align: center;
+}
+.ta-intro h3 {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.ta-intro p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.hp-route-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--line);
+  margin: 6px 0 26px;
+  overflow: hidden;
+}
+.hp-route-progress__fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--ta-accent), var(--ta-rust));
+  transition: width 0.1s linear;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hp-route-progress__fill { transition: none; }
+}
+
+/* --- Local "route stops" index: secondary and page-local, entirely
+   separate from the shared PageSectionNav rendered in HumanPractices.tsx
+   (that one keeps controlling the site-wide "Jump to section" list). --- */
+.hp-route-select { display: none; }
+.hp-route-select__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.hp-route-select select {
+  width: 100%;
+  padding: 13px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 700;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+}
+
+.hp-route-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 30px;
+  align-items: start;
+}
+
+.hp-route-nav {
+  position: sticky;
+  top: calc(var(--section-nav-offset) + 8px);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  box-shadow: var(--shadow-card);
+}
+.hp-route-nav h3 {
+  margin: 0;
+  padding: 4px 8px 10px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+.hp-route-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.hp-route-nav a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 10px;
+  border-radius: 10px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--ink-soft);
+}
+.hp-route-nav a:hover,
+.hp-route-nav a.is-active {
+  background: rgba(47, 125, 95, 0.1);
+  color: var(--ink);
+}
+.hp-route-nav__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line);
+  flex: none;
+}
+.hp-route-nav a.is-active .hp-route-nav__dot {
+  background: var(--ta-accent);
+}
+
+.hp-route {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.hp-route::before {
+  content: "";
+  position: absolute;
+  left: 27px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 99px;
+  background: linear-gradient(
+    var(--ta-accent),
+    var(--ta-accent-soft),
+    var(--ta-sand),
+    var(--ta-accent)
+  );
+}
+
+.hp-stop {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  padding: 26px 0;
+  scroll-margin-top: var(--section-nav-offset);
+}
+
+.hp-stop__marker {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--ta-paper);
+  border: 2px solid var(--ta-accent);
+  color: var(--ta-accent);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hp-stop__content {
+  background: var(--ta-paper);
+  border-radius: var(--radius-lg);
+  padding: 22px 26px;
+  box-shadow: var(--shadow-card);
+}
+
+.hp-stop__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+.hp-stop__head h3 { font-size: 1.25rem; }
+
+.hp-stop__stamp {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 12px;
+  border: 2px solid var(--ta-rust);
+  border-radius: 8px;
+  color: var(--ta-rust);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transform: rotate(-4deg);
+  white-space: nowrap;
+}
+.hp-stop__stamp.is-pending {
+  border-style: dashed;
+  opacity: 0.85;
+}
+.hp-stop__date-note {
+  margin-top: 3px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  opacity: 0.85;
+  white-space: normal;
+  text-align: center;
+}
+
+/* --- Photos: one or two per stop; two use the prototype's asymmetric
+   large+small composition, with the caption overlaid on the image itself
+   (or on the placeholder texture, when no real photo exists yet). --- */
+.hp-stop__photo-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.hp-stop__photo-grid--single {
+  grid-template-columns: 1fr;
+}
+
+/* Larger real photo sets (San Juan, CEDEX: 3 photos; Beehives: 4): a
+   compact mosaic with one fixed total height, rather than a lead photo
+   plus a full-width strip underneath — that kept making the card taller
+   than the surrounding prose needed. min-height:0 overrides the base
+   .hp-stop__photo rule below so grid track sizing (not that min-height)
+   controls each cell's height. */
+.hp-stop__photo-mosaic {
+  display: grid;
+  gap: 4px;
+  height: 360px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.hp-stop__photo-mosaic .hp-stop__photo {
+  min-height: 0;
+}
+.hp-stop__photo-mosaic--3 {
+  grid-template-columns: 1.3fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+}
+.hp-stop__photo-mosaic--3 > :first-child {
+  grid-row: 1 / 3;
+}
+@media (min-width: 641px) {
+  #s3-cedex .hp-stop__photo-mosaic--3 {
+    grid-template-rows: 1.2fr 0.8fr;
+  }
+}
+.hp-stop__photo-mosaic--4 {
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+.hp-stop__photo {
+  position: relative;
+  margin: 0;
+  min-height: 190px;
+  background: linear-gradient(135deg, rgba(23, 53, 47, 0.05), rgba(47, 125, 105, 0.12)), var(--ta-sand);
+}
+.hp-stop__photo--large {
+  min-height: 260px;
+}
+.hp-stop__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.hp-stop__photo--placeholder {
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(47, 125, 95, 0.07),
+      rgba(47, 125, 95, 0.07) 10px,
+      rgba(47, 125, 95, 0.12) 10px,
+      rgba(47, 125, 95, 0.12) 20px
+    ),
+    var(--ta-sand);
+}
+.hp-stop__photo figcaption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+.hp-stop__photo-caption {
+  background: rgba(255, 253, 247, 0.92);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.hp-stop__photo-pending {
+  background: rgba(255, 253, 247, 0.85);
+  padding: 3px 9px;
+  border-radius: 7px;
+  font-size: 0.66rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.hp-stop__content p { line-height: 1.65; margin-bottom: 12px; color: var(--ink); }
+
+/* --- "What we saw / Why it mattered / What it opened" --- */
+.hp-stop__scan-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+.hp-stop__scan {
+  background: var(--paper);
+  border: 1px solid rgba(47, 125, 95, 0.18);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.hp-stop__scan b {
+  display: block;
+  color: var(--ta-accent);
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hp-stop__scan span { font-size: 0.86rem; line-height: 1.5; color: var(--ink-soft); }
+
+/* --- Evidence blocks (row of three, or a single standalone item) --- */
+.hp-stop__evidence-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+.hp-stop__evidence {
+  margin: 16px 0;
+  background: rgba(47, 125, 95, 0.06);
+  border: 1px solid rgba(47, 125, 95, 0.16);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+}
+.hp-stop__evidence-row > .hp-stop__evidence { margin: 0; }
+.hp-stop__evidence b {
+  display: block;
+  color: var(--ta-accent);
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hp-stop__evidence span { font-size: 0.86rem; line-height: 1.5; color: var(--ink-soft); }
+
+/* --- Pull quotes: pale-green field-journal callouts --- */
+.hp-stop__pullquote {
+  margin: 20px 0;
+  padding: 20px 22px;
+  border-left: 4px solid var(--ta-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: linear-gradient(135deg, rgba(47, 125, 95, 0.1), rgba(47, 125, 95, 0.03));
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* --- Context / evidence-boundary disclosures (AccordionSection, skinned) --- */
+.hp-stop__details.hp-accordion {
+  margin: 18px 0;
+  padding: 2px 18px;
+  border: 1px solid rgba(47, 125, 95, 0.2);
+  border-radius: var(--radius-md);
+  background: rgba(255, 253, 247, 0.6);
+}
+.hp-stop__details .hp-accordion__title { font-size: 0.98rem; }
+
+/* --- Cross-links to Stakeholders & Voices --- */
+.hp-stop__crosslink {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  margin: 20px 0;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  background: var(--ta-hero-dark);
+}
+.hp-stop__crosslink p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #e6f0ed;
+}
+.hp-stop__crosslink a {
+  flex-shrink: 0;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #fff;
+}
+.hp-stop__crosslink a:hover,
+.hp-stop__crosslink a:focus-visible {
+  text-decoration: underline;
+}
+
+/* --- Question chain (Repsol) --- */
+.hp-stop__question-chain {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 22px 0;
+}
+.hp-stop__question {
+  background: var(--ta-hero-dark);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  min-height: 130px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hp-stop__question small {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #a9c9c0;
+}
+.hp-stop__question p {
+  margin: 12px 0 0;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* --- The two narrative milestones: mid-route turn and end-of-route close.
+   Both are direct children of .hp-route, so the timeline line already
+   runs behind them; the left margin only aligns their content with the
+   stop cards' own content column (56px marker + 20px gap). --- */
+.hp-route-break {
+  margin: 8px 0 8px 76px;
+  padding: 28px 30px;
+  border-radius: var(--radius-lg);
+  color: #fff;
+  background: linear-gradient(120deg, #244d44, #426e62);
+  box-shadow: var(--shadow-soft);
+}
+.hp-route-break h3 {
+  margin: 0 0 8px;
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  color: #fff;
+}
+.hp-route-break p {
+  margin: 0;
+  max-width: 720px;
+  color: #e8f3f0;
+  line-height: 1.7;
+}
+
+/* End of route: a marker in the same slot the numbered stops use, so it
+   reads as part of the same timeline — but it carries no number and is
+   visually distinct (solid, not outlined) so it never reads as "stop 07". */
+.hp-route-final-wrap {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  margin: 24px 0 4px;
+}
+.hp-route-final__marker {
+  position: relative;
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  align-self: start;
+  border-radius: 50%;
+  background: var(--ta-hero-dark);
+  border: 2px solid var(--ta-hero-dark);
+  color: var(--ta-paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 16px rgba(18, 53, 46, 0.28);
+}
+
+.hp-route-final {
+  padding: clamp(30px, 5vw, 56px);
+  border-radius: var(--radius-lg);
+  background: var(--ta-hero-dark);
+  color: #fff;
+  text-align: center;
+  box-shadow: var(--shadow-soft);
+}
+.hp-route-final small {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  color: #9fc5ba;
+  font-size: 0.75rem;
+}
+.hp-route-final h2 {
+  margin: 14px auto;
+  max-width: 680px;
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  line-height: 1.15;
+  color: #fff;
+}
+.hp-route-final p {
+  margin: 0 auto;
+  max-width: 560px;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: #dcebe7;
+}
+
+@media (max-width: 980px) {
+  .ta-hero__grid {
+    grid-template-columns: 1fr;
+  }
+  .ta-hero .hp-passport {
+    justify-self: start;
+    width: min(280px, 70%);
+    margin-top: 26px;
+  }
+  .hp-route-layout {
+    grid-template-columns: 1fr;
+  }
+  .hp-route-nav {
+    display: none;
+  }
+  .hp-route-select {
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ta-hero {
+    padding: 28px 20px;
+    border-radius: 22px;
+  }
+  .ta-hero .hp-passport {
+    width: 100%;
+    max-width: 260px;
+  }
+  .ta-hero .hp-passport__title { font-size: 1.7rem; }
+
+  .hp-stop { grid-template-columns: 40px 1fr; gap: 12px; }
+  .hp-stop__marker { width: 40px; height: 40px; font-size: 0.9rem; }
+  .hp-stop__content { padding: 18px 18px; }
+  .hp-stop__head { flex-direction: column; }
+  .hp-stop__stamp { align-items: flex-start; }
+
+  .hp-route::before { left: 19px; }
+  .hp-route-break { margin-left: 52px; }
+  .hp-route-final-wrap {
+    grid-template-columns: 40px 1fr;
+    gap: 12px;
+  }
+  .hp-route-final__marker { width: 40px; height: 40px; }
+  .hp-route-final__marker svg { width: 15px; height: 15px; }
+
+  .hp-stop__photo-grid,
+  .hp-stop__photo-grid--single,
+  .hp-stop__scan-row,
+  .hp-stop__evidence-row,
+  .hp-stop__question-chain {
+    grid-template-columns: 1fr;
+  }
+
+  /* Every gallery becomes one ordered vertical sequence, and photos fall
+     back to their own natural aspect ratio instead of a forced crop —
+     a fixed mosaic height only makes sense in a multi-column layout, and
+     cropping a portrait photo down to a short landscape slot is exactly
+     the "recorte raro" this is avoiding. */
+  .hp-stop__photo-mosaic {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    height: auto;
+  }
+  .hp-stop__photo-mosaic--3 > :first-child {
+    grid-row: auto;
+  }
+  .hp-stop__photo-mosaic .hp-stop__photo img {
+    height: auto;
+    object-fit: initial;
+  }
+
+  .hp-stop__crosslink { flex-direction: column; align-items: flex-start; }
+}
