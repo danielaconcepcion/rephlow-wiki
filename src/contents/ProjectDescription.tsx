@@ -521,7 +521,7 @@ export function ProjectDescription() {
               <p>
                 Immobilisation also facilitates bacterial recovery and reuse, allowing the same
                 biological material to operate across multiple treatment cycles. It increases
-                operational stability and makes the biological module compatible with the
+                operational stability and makes the biological module compatible with the 
                 <SectionLink href="#hardware">rotating-bed hardware</SectionLink>.
               </p>
             </div>
@@ -588,12 +588,12 @@ export function ProjectDescription() {
                 a liquid core surrounded by a solid shell. This provides a clearer physical barrier,
                 retains the bacteria in a recoverable compartment and creates an outer surface that
                 can be functionalised with the enzymes described in the
-                <SectionLink href="#enzyme"> enzyme immobilisation block</SectionLink>.
+                <SectionLink href="#enzyme"> enzyme immobilisation section</SectionLink>.
               </p>
               <Figure
                 src="encapsulation-comparison.svg"
                 alt="Comparison between bacteria immobilised throughout an alginate bead and bacteria confined inside an alginate core-shell capsule"
-                caption={<><strong>Figure 1.</strong> Conventional alginate bead (left) and the core-shell architecture selected for RePhlow (right).</>}
+                caption={<><strong>Figure 1.</strong> Conventional alginate bead (left) and the core-shell architecture selected for rePhlow (right).</>}
                 className="pd-figure--wide"
               />
             </div>
@@ -635,8 +635,8 @@ export function ProjectDescription() {
             <div className="pd-subsection">
               <h3>Why the bacteria cannot do it alone</h3>
               <p>
-                The engineered <em>Pseudomonas putida</em> described in the
-                <SectionLink href="#genetic"> genetic engineering block</SectionLink> imports
+                The engineered <em>Pseudomonas putida</em> described in the 
+                <SectionLink href="#genetic">genetic engineering section</SectionLink> imports
                 phosphorus as free orthophosphate. Acid degumming, however, produces partially
                 hydrolysed phospholipids, phytate and other phosphoesters in which phosphorus
                 remains covalently bound to organic matter and is therefore invisible to a
@@ -651,7 +651,7 @@ export function ProjectDescription() {
               <Figure
                 src="enzyme-workflow.png"
                 alt="Six-stage workflow from enzyme mining and cloning to expression, purification, characterisation and immobilisation"
-                caption={<><strong>Figure 2.</strong> Workflow of the enzyme immobilisation block. Stages 1–5 are detailed in <WikiLink to="/engineering">Engineering</WikiLink> and <WikiLink to="/experiments">Experiments</WikiLink>; stage 6 addresses the immobilisation chemistry.</>}
+                caption={<><strong>Figure 2.</strong> Workflow of the enzyme immobilisation section. Stages 1–5 are detailed in <WikiLink to="/engineering">Engineering</WikiLink> and <WikiLink to="/experiments">Experiments</WikiLink>; stage 6 addresses the immobilisation chemistry.</>}
                 className="pd-figure--wide"
               />
             </div>
@@ -705,8 +705,8 @@ export function ProjectDescription() {
             <div className="pd-subsection">
               <h3>A model system for the capsule surface</h3>
               <p>
-                The final support is the alginate–chitosan–genipin capsule described in the
-                <SectionLink href="#encapsulation"> encapsulation block</SectionLink>. To develop
+                The final support is the alginate–chitosan–genipin capsule described in the 
+                <SectionLink href="#encapsulation">encapsulation section</SectionLink>. To develop
                 the chemistry without confounding it with capsule variability, we used
                 <strong> MANAE-agarose</strong> as a surrogate aminated support and glutaraldehyde
                 as a crosslinker<Cite group="enzyme" numbers={[13]} />.
@@ -804,10 +804,10 @@ export function ProjectDescription() {
               <p>
                 Published metatranscriptomic studies showed that the high-affinity Pst system is
                 induced as extracellular phosphate becomes limiting
-                <Cite group="genetic" numbers={[3, 10]} />. Together with the central role of
-                <em> ppk1</em>, this supported the selection of <em>pstSCAB</em> and <em>ppk1</em>
-                to reinforce uptake and synthesis. The endogenous <em>ppx</em>, <em>ppkB</em> and
-                <em> pitB</em> genes were selected for functional inactivation because they
+                <Cite group="genetic" numbers={[3, 10]} />. Together with the central role of 
+                <em>ppk1</em>, this supported the selection of <em>pstSCAB</em> and <em>ppk1</em> 
+                to reinforce uptake and synthesis. The endogenous <em>ppx</em>, <em>ppkB</em> and 
+                <em>pitB</em> genes were selected for functional inactivation because they
                 contribute to polyphosphate degradation, consumption and potential phosphate
                 efflux<Cite group="genetic" numbers={[9, 13, 14, 15]} />.
               </p>
@@ -944,7 +944,7 @@ export function ProjectDescription() {
               <h3>From stored phosphate to a useful donor</h3>
               <p>
                 In the complete system, recovered beads are lysed to release a concentrated stock
-                of inorganic polyphosphate. For module-level experiments we decoupled this block
+                of inorganic polyphosphate. For module-level experiments we decoupled this section
                 from upstream bead recovery and used commercial polyphosphate, allowing the
                 conversion biochemistry to be characterised independently before full integration.
               </p>
@@ -960,8 +960,8 @@ export function ProjectDescription() {
                 the accumulated reserve deliberately.
               </p>
               <p>
-                This is the opposite role to the endogenous <em>ppk2</em> deletion in the
-                <SectionLink href="#genetic"> genetic engineering block</SectionLink>. PPK2 is
+                This is the opposite role to the endogenous <em>ppk2</em> deletion in the 
+                <SectionLink href="#genetic">genetic engineering section</SectionLink>. PPK2 is
                 suppressed inside the living cell to retain polyphosphate, but added later in vitro
                 to release its chemical potential.
               </p>
@@ -1009,7 +1009,7 @@ export function ProjectDescription() {
                 DHAK from <em>Citrobacter freundii</em> is strongly inhibited by ADP
                 <Cite group="revalorisation" numbers={[8]} />. As DHAK consumes ATP, the PPK2 module
                 regenerates it from polyphosphate and simultaneously removes the ADP that would
-                otherwise stall the reaction. The performance of the coupled system is reported in
+                otherwise stall the reaction. The performance of the coupled system is reported in 
                 <WikiLink to="/results">Results</WikiLink>.
               </p>
             </div>
