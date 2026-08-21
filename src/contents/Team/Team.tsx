@@ -29,7 +29,7 @@ const TEAM_DATA: Person[] = [
     name: "María Gómez Gómez", education: "4th year Chemistry & Biochemistry student", role: "General coordinator",
     facultyColor: "pink", image: "assets/team/maria.jpg",
     bio: "Add a short bio.",
-    strength: "Add a strength.",
+    strength: "Add a strength. ",
     weakness: "Add a weakness.",
     links: [{ label: "LinkedIn", url: "https://www.linkedin.com/in/maria-gomez-gomez-67a191363/" }],
   },
