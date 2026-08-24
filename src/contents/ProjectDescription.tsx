@@ -534,7 +534,7 @@ export function ProjectDescription() {
             </a>
             <h2>Hardware</h2>
             <BlockIntro
-              image="assets/our-solution/hardware-clean.png"
+              image="assets/our-solution/hardware-clean.webp"
               alt="Illustration of the rotating-bed bioreactor and filtration system"
             >
               A modular <strong>rotating-bed bioreactor</strong> and filtration
@@ -570,7 +570,7 @@ export function ProjectDescription() {
             <div className="pd-subsection pd-subsection--with-float">
               <h3>Rotating-bed design</h3>
               <InlineFigure
-                image="assets/our-solution/biorreactor-filtro.png"
+                image="assets/our-solution/biorreactor-filtro.webp"
                 alt="Bioreactor vessel containing a permeable rotating basket"
                 caption="Permeable rotating basket."
               />
@@ -603,7 +603,7 @@ export function ProjectDescription() {
             <div className="pd-subsection pd-subsection--with-float">
               <h3>Why a second filtration barrier?</h3>
               <InlineFigure
-                image="assets/our-solution/depuradora.png"
+                image="assets/our-solution/depuradora.webp"
                 alt="Illustration of the second filtration unit"
                 caption="Second filtration barrier."
               />
@@ -652,7 +652,7 @@ export function ProjectDescription() {
             </a>
             <h2>Bacterial encapsulation</h2>
             <BlockIntro
-              image="assets/our-solution/bacteria-encapsulada.png"
+              image="assets/our-solution/bacteria-encapsulada.webp"
               alt="Illustration of an engineered bacterium encapsulated inside an alginate core-shell"
             >
               Design, optimisation and validation of{" "}
@@ -805,7 +805,7 @@ export function ProjectDescription() {
             </a>
             <h2>Enzyme immobilisation</h2>
             <BlockIntro
-              image="assets/our-solution/enzima-clean.png"
+              image="assets/our-solution/enzima-clean.webp"
               alt="Illustration of immobilised enzymes releasing phosphate from an organic substrate"
             >
               Optimised immobilisation of{" "}
@@ -1037,7 +1037,7 @@ export function ProjectDescription() {
             </a>
             <h2>Genetic engineering</h2>
             <BlockIntro
-              image="assets/our-solution/bacteria-genetic.png"
+              image="assets/our-solution/bacteria-genetic.webp"
               alt="Illustration of the engineered Pseudomonas putida cell"
             >
               Redesigning <em>Pseudomonas putida</em> KT2440 to enhance
@@ -1354,7 +1354,7 @@ export function ProjectDescription() {
             </a>
             <h2>Revalorisation</h2>
             <BlockIntro
-              image="assets/our-solution/revalorizacion-callout-icon.png"
+              image="assets/our-solution/revalorizacion-callout-icon.webp"
               alt="Illustration of the phosphate revalorisation workflow"
             >
               A multi-enzyme system that uses recovered polyphosphate to
