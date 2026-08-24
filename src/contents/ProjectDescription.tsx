@@ -252,7 +252,7 @@ export function ProjectDescription() {
             </p>
 
             <Figure
-              src="eutrophication-illustration.jpg"
+              src="eutrophication-illustration.webp"
               alt="Illustration showing nutrients entering a water body, an algal bloom blocking sunlight and oxygen depletion during decomposition"
               className="pd-problem-card pd-problem-illustration"
               caption={
@@ -839,7 +839,7 @@ export function ProjectDescription() {
                 </strong>
               </p>
               <Figure
-                src="enzyme-workflow.png"
+                src="enzyme-workflow.webp"
                 alt="Six-stage workflow from enzyme mining and cloning to expression, purification, characterisation and immobilisation"
                 caption={
                   <>
@@ -1232,7 +1232,7 @@ export function ProjectDescription() {
                 <Cite group="genetic" numbers={[17]} />.
               </p>
               <Figure
-                src="engineered-phosphorus-pathway.original.png"
+                src="engineered-phosphorus-pathway.original.webp"
                 alt="Engineered phosphate uptake and polyphosphate storage pathway in Pseudomonas putida"
                 caption={
                   <>
@@ -1404,7 +1404,7 @@ export function ProjectDescription() {
                 <Cite group="revalorisation" numbers={[5]} />.
               </p>
               <Figure
-                src="atp-regeneration-module.png"
+                src="atp-regeneration-module.webp"
                 alt="Polyphosphate kinase regenerating ATP to support an ATP-dependent phosphorylation reaction"
                 className="pd-figure--compact"
                 caption={
@@ -1442,7 +1442,7 @@ export function ProjectDescription() {
                 enable access to rare sugars and iminosugars.
               </p>
               <Figure
-                src="dhak-cascade.png"
+                src="dhak-cascade.webp"
                 alt="Dihydroxyacetone kinase reaction coupled to polyphosphate-driven ATP regeneration"
                 caption={
                   <>

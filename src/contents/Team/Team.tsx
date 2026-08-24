@@ -117,7 +117,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m9", category: "members", isPlaceholder: false,
     name: "Santiago Rodríguez Aranguren", education: "Materials Engineering student at Universidad Complutense de Madrid", role: "Hardware Prototyping Specialist",
-    facultyColor: "blue", image: "assets/team/santiago.jpg",
+    facultyColor: "blue", image: "assets/team/santiago.webp",
     bio: "Santiago studies Materials Engineering at Universidad Complutense de Madrid and still uses the calculator for simple operations. He is not much of a talker, but he still cracks jokes in the lab to relieve stress and lighten the mood. Outside the lab he has an artistic side: he plays several instruments, such as the drums and guitar, and likes to paint in his free time.",
     strength: "Quick problem solver, proving to be the team’s resident MacGyver.",
     weakness: "Hey there! I am using WhatsApp.",
@@ -142,8 +142,8 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0003-4983-5730" }],
     institutions: [
-      { label: "Department of Biochemistry and Molecular Biology (BBM)", image: "assets/team/institutions/bbm-transparent.png" },
-      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.png" },
+      { label: "Department of Biochemistry and Molecular Biology (BBM)", image: "assets/team/institutions/bbm-transparent.webp" },
+      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.webp" },
     ],
   },
   {
@@ -154,8 +154,8 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0001-5740-5584" }],
     institutions: [
-      { label: "CBM–CSIC", image: "assets/team/institutions/cbm-csic-lockup.png" },
-      { label: "Universidad Autónoma de Madrid", image: "assets/team/institutions/uam.png" },
+      { label: "CBM–CSIC", image: "assets/team/institutions/cbm-csic-lockup.webp" },
+      { label: "Universidad Autónoma de Madrid", image: "assets/team/institutions/uam.webp" },
     ],
   },
   {
@@ -166,7 +166,7 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0001-6719-5082" }],
     institutions: [
-      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.png" },
+      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.webp" },
     ],
   },
   {
@@ -185,7 +185,7 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0009-0000-8343-6042" }],
     institutions: [
-      { label: "CIB Margarita Salas–CSIC", image: "assets/team/institutions/cib-csic-lockup.png" },
+      { label: "CIB Margarita Salas–CSIC", image: "assets/team/institutions/cib-csic-lockup.webp" },
     ],
   },
   {
@@ -196,8 +196,8 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0002-3417-1006" }],
     institutions: [
-      { label: "Department of Biochemistry and Molecular Biology (BBM)", image: "assets/team/institutions/bbm-transparent.png" },
-      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.png" },
+      { label: "Department of Biochemistry and Molecular Biology (BBM)", image: "assets/team/institutions/bbm-transparent.webp" },
+      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.webp" },
     ],
   },
   {
@@ -210,7 +210,7 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0002-6809-3907" }],
     institutions: [
-      { label: "Faculty of Physical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-fisicas-ucm-transparent.png" },
+      { label: "Faculty of Physical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-fisicas-ucm-transparent.webp" },
     ],
   },
   {
@@ -223,7 +223,7 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0002-9366-2630" }],
     institutions: [
-      { label: "Faculty of Physical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-fisicas-ucm-transparent.png" },
+      { label: "Faculty of Physical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-fisicas-ucm-transparent.webp" },
     ],
   },
   {
@@ -234,7 +234,7 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0002-0227-8298" }],
     institutions: [
-      { label: "ICP–CSIC", image: "assets/team/institutions/icp-csic-lockup.png" },
+      { label: "ICP–CSIC", image: "assets/team/institutions/icp-csic-lockup.webp" },
     ],
   },
   {
@@ -245,7 +245,7 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0001-9184-9445" }],
     institutions: [
-      { label: "IQOG–CSIC", image: "assets/team/institutions/iqog-csic-lockup.png" },
+      { label: "IQOG–CSIC", image: "assets/team/institutions/iqog-csic-lockup.webp" },
     ],
   },
   {
@@ -257,8 +257,8 @@ const TEAM_DATA: Person[] = [
     </>,
     strength: "", weakness: "", links: [],
     institutions: [
-      { label: "Department of Biochemistry and Molecular Biology (BBM)", image: "assets/team/institutions/bbm-transparent.png" },
-      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.png" },
+      { label: "Department of Biochemistry and Molecular Biology (BBM)", image: "assets/team/institutions/bbm-transparent.webp" },
+      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.webp" },
     ],
   },
   {
@@ -269,7 +269,7 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "",
     links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0002-2344-8743" }],
     institutions: [
-      { label: "IQOG–CSIC", image: "assets/team/institutions/iqog-csic-lockup.png" },
+      { label: "IQOG–CSIC", image: "assets/team/institutions/iqog-csic-lockup.webp" },
     ],
   },
   {
@@ -279,7 +279,7 @@ const TEAM_DATA: Person[] = [
     bio: "PhD from Universidad Complutense de Madrid with the thesis ‘Analysis of the interaction between heavy metals (Cd, Zn, Cu) and ciliated protozoa: toxicological evaluation, bioaccumulation and metallothioneins’ (2003). Researcher at MICROESTRES: Microbial stress and environmental pollution. Department of Genetics, Physiology and Microbiology at the Faculty of Biological Sciences.",
     strength: "", weakness: "", links: [],
     institutions: [
-      { label: "Faculty of Biological Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-biologicas-ucm.png" },
+      { label: "Faculty of Biological Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-biologicas-ucm.webp" },
     ],
   },
 
