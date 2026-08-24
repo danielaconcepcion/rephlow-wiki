@@ -39,6 +39,12 @@
   flex-direction: column;
   gap: 2px;
   border-left: 2px solid var(--line);
+  /* Same floating-glass surface as .navbar (App.css): translucent white +
+     blurred backdrop. Only the fill is shared — no padding/margin/border/
+     size change, so the column keeps its existing footprint exactly. */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .page-section-nav__link {
