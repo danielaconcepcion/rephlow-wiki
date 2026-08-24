@@ -46,7 +46,8 @@
   margin-top: 40px;
 }
 
-.pd-section > h2 {
+.pd-section > h2,
+.pd-section > .pd-content > h2 {
   color: var(--ink);
   font-size: clamp(1.5rem, 3.2vw, 2rem);
 }
@@ -161,7 +162,13 @@
 /* The existing VisualIndex retains its own component, assets and behaviour. */
 .vsi-wrap {
   max-width: 1120px;
-  margin: 0 auto;
+  margin: 36px auto 0;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+
+#our-solution-visual-index.pd-section {
+  margin-top: 0;
 }
 
 .vsi-intro {
@@ -202,24 +209,59 @@
   max-width: 720px;
 }
 
-.pd-figure-pair {
+.pd-problem-comparison {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 350px);
   gap: 22px;
   align-items: start;
   margin-top: 28px;
 }
 
-.pd-figure-pair .vsi-figure {
+.pd-problem-comparison .vsi-figure {
+  width: 100%;
+  max-width: none;
   margin-top: 0;
 }
 
-/* Figures 4a and 4b have the same near-square source ratio, so their cards
-   can follow the artwork itself while retaining an effectively equal height. */
-.pd-figure-pair .pd-figure img {
-  aspect-ratio: auto;
+.pd-problem-comparison .pd-figure img {
+  width: 100%;
+  height: clamp(220px, 22vw, 280px);
+  object-fit: cover;
+}
+
+.pd-problem-comparison .pd-problem-card--contain img {
+  object-fit: cover;
+}
+
+.pd-problem-card img {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.pd-problem-illustration {
+  width: 100%;
+  max-width: 720px;
+}
+
+.pd-problem-illustration img {
+  height: auto;
+  background: #dbe9ef;
   object-fit: contain;
-  padding: 0;
+}
+
+.pd-figure--albufera {
+  max-width: 880px;
+}
+
+.pd-figure--albufera img {
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  object-position: center;
+}
+
+.pd-figure--compact {
+  width: 100%;
+  max-width: 480px;
 }
 
 .pd-monomer-grid {
@@ -317,9 +359,13 @@
     text-align: left;
   }
 
-  .pd-figure-pair,
-  .pd-monomer-grid {
+  .pd-monomer-grid,
+  .pd-problem-comparison {
     grid-template-columns: 1fr;
+  }
+
+  .pd-problem-comparison .pd-figure img {
+    height: auto;
   }
 
   .pd-monomer {

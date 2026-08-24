@@ -4,6 +4,14 @@ import "./PageSectionNav.css";
 export interface PageSubsection {
   id: string;
   label: string;
+  /** Optional. Called when this subsection link is clicked, in addition to
+   * the normal highlight/scroll behaviour — for a leaf that isn't itself a
+   * distinct scroll target (e.g. Experiments' individual experiments, which
+   * all share one on-page slot and are switched by re-triggering their own
+   * folder-tab button; see Experiments.tsx). Leave unset for a real,
+   * independently-scrollable subsection — the default href/scroll already
+   * handles that case. */
+  onSelect?: () => void;
 }
 
 export interface PageSection {
@@ -13,6 +21,9 @@ export interface PageSection {
    * for the currently active section, and only above the 600px
    * breakpoint (see PageSectionNav.css). */
   children?: PageSubsection[];
+  /** See PageSubsection.onSelect — same click-not-scroll leaf behaviour,
+   * for a top-level section that isn't itself a distinct scroll target. */
+  onSelect?: () => void;
 }
 
 interface PageSectionNavProps {
@@ -88,12 +99,19 @@ export function PageSectionNav({
     // children (unchanged from before — e.g. Medals), or its children's
     // ids when it does. Observing a parent section element as well would
     // make its (much taller) bounding box dominate the "topmost" pick
-    // below for as long as any of its subsections are in view.
-    const ids = sections.flatMap((section) =>
-      section.children && section.children.length > 0
-        ? section.children.map((child) => child.id)
-        : [section.id],
-    );
+    // below for as long as any of its subsections are in view — *unless*
+    // none of its children actually correspond to a real, independently
+    // scrollable element (e.g. Experiments' individual experiments, which
+    // are selected via onSelect rather than scrolled to; see
+    // PageSubsection.onSelect above). In that case there is nothing else to
+    // observe, so the section itself is the correct, and only, fallback.
+    const ids = sections.flatMap((section) => {
+      if (!section.children || section.children.length === 0) return [section.id];
+      const realChildIds = section.children
+        .map((child) => child.id)
+        .filter((id) => document.getElementById(id) !== null);
+      return realChildIds.length > 0 ? realChildIds : [section.id];
+    });
     const elements = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
@@ -153,7 +171,11 @@ export function PageSectionNav({
                 className={`page-section-nav__link${isActiveSection ? " is-active" : ""}`}
                 href={`#${section.id}`}
                 aria-current={isActiveSection ? "true" : undefined}
-                onClick={() => handleNavClick(section.id)}
+                onClick={(event) => {
+                  if (section.onSelect) event.preventDefault();
+                  handleNavClick(section.id);
+                  section.onSelect?.();
+                }}
               >
                 {section.label}
               </a>
@@ -168,7 +190,15 @@ export function PageSectionNav({
                           className={`page-section-nav__link page-section-nav__link--sub${activeChild ? " is-active" : ""}`}
                           href={`#${child.id}`}
                           aria-current={activeChild ? "true" : undefined}
-                          onClick={() => handleNavClick(child.id)}
+                          onClick={(event) => {
+                            // A leaf with onSelect has no real element to
+                            // scroll to (see PageSubsection.onSelect) — skip
+                            // the default hash-jump and let onSelect do the
+                            // actual work (e.g. re-triggering a folder tab).
+                            if (child.onSelect) event.preventDefault();
+                            handleNavClick(child.id);
+                            child.onSelect?.();
+                          }}
                         >
                           {child.label}
                         </a>
