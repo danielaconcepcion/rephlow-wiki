@@ -699,8 +699,8 @@ export function ProjectDescription() {
                 material by FTIR before design work to understand its M/G
                 composition and the expected hydrogel behaviour. The
                 corresponding experimental work is described in{" "}
-                <WikiLink to="/experiments">Experiments</WikiLink> and
-                <WikiLink to="/results"> Results</WikiLink>.
+                <WikiLink to="/experiments">Experiments</WikiLink> and 
+                <WikiLink to="/results">Results</WikiLink>.
               </p>
 
               <div className="pd-monomer-grid">
@@ -752,7 +752,7 @@ export function ProjectDescription() {
                 functionalised with the enzymes described in the
                 <SectionLink href="#enzyme">
                   {" "}
-                  enzyme immobilisation block
+                  enzyme immobilisation section
                 </SectionLink>
                 .
               </p>
@@ -762,7 +762,7 @@ export function ProjectDescription() {
                 caption={
                   <>
                     <strong>Figure 1.</strong> Conventional alginate bead (left)
-                    and the core-shell architecture selected for RePhlow
+                    and the core-shell architecture selected for rePhlow
                     (right).
                   </>
                 }
@@ -790,11 +790,11 @@ export function ProjectDescription() {
                 integrity under compression. TGA-DSC and SEM further
                 characterised thermal behaviour, water content, surface
                 morphology and microstructure. The design-build-test cycle is
-                documented in
-                <WikiLink to="/engineering"> Engineering</WikiLink>, with
-                validation in
-                <WikiLink to="/experiments"> Experiments</WikiLink> and
-                <WikiLink to="/results"> Results</WikiLink>.
+                documented in 
+                <WikiLink to="/engineering">Engineering</WikiLink>, with
+                validation in 
+                <WikiLink to="/experiments">Experiments</WikiLink> and 
+                <WikiLink to="/results">Results</WikiLink>.
               </p>
             </div>
           </section>
@@ -819,7 +819,7 @@ export function ProjectDescription() {
                 The engineered <em>Pseudomonas putida</em> described in the
                 <SectionLink href="#genetic">
                   {" "}
-                  genetic engineering block
+                  genetic engineering section
                 </SectionLink>{" "}
                 imports phosphorus as free orthophosphate. Acid degumming,
                 however, produces partially hydrolysed phospholipids, phytate
@@ -844,7 +844,7 @@ export function ProjectDescription() {
                 caption={
                   <>
                     <strong>Figure 2.</strong> Workflow of the enzyme
-                    immobilisation block. Stages 1–5 are detailed in{" "}
+                    immobilisation section. Stages 1–5 are detailed in{" "}
                     <WikiLink to="/engineering">Engineering</WikiLink> and{" "}
                     <WikiLink to="/experiments">Experiments</WikiLink>; stage 6
                     addresses the immobilisation chemistry.
@@ -984,7 +984,7 @@ export function ProjectDescription() {
                 described in the
                 <SectionLink href="#encapsulation">
                   {" "}
-                  encapsulation block
+                  encapsulation section
                 </SectionLink>
                 . To develop the chemistry without confounding it with capsule
                 variability, we used
@@ -1367,7 +1367,7 @@ export function ProjectDescription() {
               <p>
                 In the complete system, recovered beads are lysed to release a
                 concentrated stock of inorganic polyphosphate. For module-level
-                experiments we decoupled this block from upstream bead recovery
+                experiments we decoupled this section from upstream bead recovery
                 and used commercial polyphosphate, allowing the conversion
                 biochemistry to be characterised independently before full
                 integration.
@@ -1389,7 +1389,7 @@ export function ProjectDescription() {
                 deletion in the
                 <SectionLink href="#genetic">
                   {" "}
-                  genetic engineering block
+                  genetic engineering section
                 </SectionLink>
                 . PPK2 is suppressed inside the living cell to retain
                 polyphosphate, but added later in vitro to release its chemical
