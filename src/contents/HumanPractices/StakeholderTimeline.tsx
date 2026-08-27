@@ -20,9 +20,14 @@ const CATEGORY_COLOR: Record<Category, string> = {
   Entrepreneurship: "#c4932e",
 };
 
+const INITIAL_CATEGORY: Category = "Industry";
+const INITIAL_EVENT =
+  EVENTS.find((event) => event.category === INITIAL_CATEGORY) ?? EVENTS[0];
+
 export function StakeholderTimeline() {
-  const [activeId, setActiveId] = useState<string>(EVENTS[0].id);
-  const [activeCategory, setActiveCategory] = useState<Category | null>(null);
+  const [activeId, setActiveId] = useState<string>(INITIAL_EVENT.id);
+  const [activeCategory, setActiveCategory] =
+    useState<Category | null>(INITIAL_CATEGORY);
   const [readMoreOpen, setReadMoreOpen] = useState(false);
   const active = EVENTS.find((event) => event.id === activeId)!;
 
@@ -221,7 +226,7 @@ export function StakeholderTimeline() {
         <h4>Pending stakeholder entries</h4>
         <p className="hp-timeline-pending__note">
           These entries are referenced in our records but are missing a
-          confirmed date, name or full write-up — flagged here rather than
+          confirmed date, name or full write-up. Flagged here rather than
           filled in.
         </p>
         <ul>
@@ -322,7 +327,7 @@ export function StakeholderTimeline() {
             </p>
           </AccordionSection>
           <AccordionSection
-            title="Who uses rePhlow — and who carries its consequences"
+            title="Who uses rePhlow and who carries its consequences"
             className="hp-users__network-accordion"
           >
             <p>

@@ -5,8 +5,11 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
+import { Link } from "react-router-dom";
 import { AccordionSection } from "./AccordionSection";
 import { RouteProgressGlyph } from "./HeroObjects";
+import { ProjectBlockLink } from "./ProjectBlockLink";
+import type { BlockId } from "../../components/OurSolutionVisualIndex/blocks";
 import "./ImplementationCheckpoints.css";
 
 /**
@@ -32,12 +35,12 @@ const CHECKPOINTS: Checkpoint[] = [
   {
     id: "lab-validation",
     label: "Lab validation",
-    body: "Confirms the biological foundations of the system: the chassis, the engineered genes, the enzymatic activity, and the capacity of the PAO bacteria to recover phosphorus under controlled conditions. Nothing moves forward until this stage shows the biology itself works as intended — one shouldn't start building a house by the roof.",
+    body: "Confirms the biological foundations of the system: the chassis, the engineered genes, the enzymatic activity, and the capacity of the PAO bacteria to recover phosphorus under controlled conditions. Nothing moves forward until this stage shows the biology itself works as intended, one shouldn't start building a house by the roof.",
   },
   {
     id: "simulated-wastewater",
     label: "Simulated wastewater",
-    body: "Where we stop testing in ideal conditions and start testing in representative ones: variable pH, oxygen availability, phosphorus concentration, organic load and competing ions — the same variability real industrial effluents present, without yet risking a real partner's process.",
+    body: "Where we stop testing in ideal conditions and start testing in representative ones: variable pH, oxygen availability, phosphorus concentration, organic load and competing ions, the same variability real industrial effluents present, without yet risking a real partner's process.",
   },
   {
     id: "closed-reactor",
@@ -47,7 +50,7 @@ const CHECKPOINTS: Checkpoint[] = [
   {
     id: "industrial-pilot",
     label: "Industrial pilot",
-    body: "Where rePhlow meets reality: the system is tested with controlled effluents from a real user — an essential and deliberately late step, justified only once earlier checkpoints have shown the system is safe and functional.",
+    body: "Where rePhlow meets reality: the system is tested with controlled effluents from a real user, an essential and deliberately late step, justified only once earlier checkpoints have shown the system is safe and functional.",
   },
   {
     id: "revalorisation",
@@ -60,10 +63,14 @@ const STOP_CONDITIONS = [
   {
     title: "Persistent underperformance",
     body: "Revisit the design rather than advertise around it.",
+    detail:
+      "If pilot-scale testing showed phosphorus recovery consistently falling below a meaningful efficiency threshold, not just one underperforming batch: we would treat that as a signal to revisit the design, not as an acceptable trade-off to promote.",
   },
   {
     title: "Secondary pollution",
     body: "Evaluate any new byproduct on its own terms.",
+    detail:
+      "If the process generated a byproduct of its own (for example, from capsule degradation, enzymatic activity, or the revalorisation step), we would evaluate that byproduct on its own terms before calling the system safe. Some byproducts could fit within the same circular-economy logic that drives rePhlow; others could represent exactly the kind of secondary pollution we set out to avoid.",
   },
   {
     title: "Unknown consequences",
@@ -168,7 +175,7 @@ const RISK_CARDS: RiskCard[] = [
           architecture reduces mechanical stress and provides an additional
           retention step. We also developed methods to characterise the
           containment system rather than assuming a spherical capsule was
-          sufficient — visualisation of the core-shell structure using magnetite
+          sufficient. Visualisation of the core-shell structure using magnetite
           as a contrast agent, cryo-sectioning to measure shell thickness, and
           preliminary leakage assessment using magnetite particles smaller than
           the bacteria, as well as a leakage and viability assessment using{" "}
@@ -225,9 +232,12 @@ const RISK_CARDS: RiskCard[] = [
           theoretical downstream membrane-polishing stage so the water leaving
           the reactor is genuinely clean, and by an encapsulation strategy that
           protects the reactor itself, not only the environment. As Eduardo
-          García Junceda's group at IQOG-CSIC helped us establish (see
-          Stakeholders &amp; Voices → Science), the revalorisation module
-          recovers stored polyphosphate via a PPK2–DHAK pathway — this changed
+          García Junceda's group at IQOG-CSIC helped us establish (see{" "}
+          <a className="vsi-wikilink" href="#hp-timeline-event-eduardo">
+            Stakeholders &amp; Voices → Science
+          </a>
+          ), the revalorisation module
+          recovers stored polyphosphate via a PPK2–DHAK pathway. This changed
           the purpose of rePhlow from removal-only to maintaining phosphorus
           within a recoverable material cycle.
         </p>
@@ -365,7 +375,7 @@ const RISK_CARDS: RiskCard[] = [
     whyMattered: (
       <p>
         Choosing the first place a technology is developed or deployed is not
-        neutral — it determines whose needs shape the design, who receives the
+        neutral. It determines whose needs shape the design, who receives the
         earliest benefits and which communities remain outside the initial
         scope.
       </p>
@@ -373,8 +383,8 @@ const RISK_CARDS: RiskCard[] = [
     response: (
       <>
         <p>
-          We deliberately selected phosphorus-rich industrial wastewater —
-          vegetable-oil degumming streams — as the first implementation
+          We deliberately selected phosphorus-rich industrial wastewater,
+          vegetable-oil degumming streams, as the first implementation
           scenario, based on safety and experimental tractability:
         </p>
         <ul>
@@ -398,8 +408,8 @@ const RISK_CARDS: RiskCard[] = [
           effluents while responding to increasingly demanding European
           environmental requirements, and invited us to explore whether
           synthetic biology could provide a tangible and complementary solution.
-          Crucially, Bio-Oils did not only describe the problem in general terms
-          — they shared information about their wastewater streams, including
+          Crucially, Bio-Oils did not only describe the problem in general terms.
+          They shared information about their wastewater streams, including
           relevant process conditions and operational constraints, which allowed
           us to move away from an idealised model of industrial wastewater and
           begin designing against a real use case.
@@ -474,7 +484,7 @@ const RISK_CARDS: RiskCard[] = [
           physical containment, strain retention, leakage and escape testing,
           biological-waste treatment, and honest documentation of the editing
           system. We did not use the low apparent dual-use potential as a reason
-          to ignore safety or withhold documentation — instead, we focused
+          to ignore safety or withhold documentation. Instead, we focused
           mitigation effort on the risk most directly connected to the proposed
           application.
         </p>
@@ -483,7 +493,7 @@ const RISK_CARDS: RiskCard[] = [
     remains: (
       <p>
         This is a project-level assessment, not proof the technology has no
-        possible unintended use — any substantial change in chassis, genetic
+        possible unintended use. Any substantial change in chassis, genetic
         function, environmental application or scale would require the dual-use
         assessment to be revisited.
       </p>
@@ -510,7 +520,11 @@ const RISK_CARDS: RiskCard[] = [
     response: (
       <>
         <p>
-          As CEDEX explained (see Stakeholders &amp; Voices → Industry), we
+          As CEDEX explained (see{" "}
+          <a className="vsi-wikilink" href="#hp-timeline-event-cedex">
+            Stakeholders &amp; Voices → Industry
+          </a>
+          ), we
           stopped presenting rePhlow as a replacement for complete treatment
           systems and repositioned it as a complementary phosphorus-removal and
           recovery module. Directive (EU) 2024/3019 reinforces the wider
@@ -540,7 +554,7 @@ const RISK_CARDS: RiskCard[] = [
     ),
     remains: (
       <p>
-        The Directive concerns urban wastewater treatment — it should not be
+        The Directive concerns urban wastewater treatment. It should not be
         presented as direct proof the Bio-Oils degumming stream is legally
         required to meet those exact limits. The precise obligations affecting
         an industrial discharge depend on its permit, discharge route, national
@@ -575,18 +589,20 @@ const RISK_CARDS: RiskCard[] = [
         <p>We introduced a clear four-level distinction:</p>
         <ul>
           <li>
-            <strong>Designed</strong> — a justified technical proposal exists.
+            <strong>Designed</strong>, meaning that a justified technical
+            proposal exists.
           </li>
           <li>
-            <strong>Built</strong> — a component has been physically assembled.
+            <strong>Built</strong>, meaning that a component has been
+            physically assembled.
           </li>
           <li>
-            <strong>Tested</strong> — data have been generated under stated
-            conditions.
+            <strong>Tested</strong>, meaning that data have been generated
+            under stated conditions.
           </li>
           <li>
-            <strong>Validated</strong> — the evidence is sufficiently robust for
-            the claim being made.
+            <strong>Validated</strong>, meaning that the evidence is
+            sufficiently robust for the claim being made.
           </li>
         </ul>
         <p>
@@ -597,7 +613,7 @@ const RISK_CARDS: RiskCard[] = [
     ),
     remains: (
       <p>
-        Honest communication does not replace technical validation — future
+        Honest communication does not replace technical validation. Future
         claims about removal efficiency, final water quality, containment,
         affordability or industrial readiness will require stronger evidence and
         recognised analytical methods. However, defining these boundaries
@@ -671,9 +687,6 @@ function ImplementationRoute({ checkpoints }: { checkpoints: Checkpoint[] }) {
         ))}
       </div>
       <div className="hp-route-map__panel">
-        <span className="hp-route-map__eyebrow">
-          Checkpoint {String(activeIndex + 1).padStart(2, "0")}
-        </span>
         <h4>{active.label}</h4>
         <p>{active.body}</p>
       </div>
@@ -683,7 +696,11 @@ function ImplementationRoute({ checkpoints }: { checkpoints: Checkpoint[] }) {
 
 /** 4.2 (left) — the three stop conditions as road barriers along a trail
  * rather than achievement-like flags or generic cards. */
-function StopRoute({ stops }: { stops: { title: string; body: string }[] }) {
+function StopRoute({
+  stops,
+}: {
+  stops: { title: string; body: string; detail?: string }[];
+}) {
   return (
     <div className="hp-stop-route">
       {stops.map((s) => (
@@ -719,6 +736,7 @@ function StopRoute({ stops }: { stops: { title: string; body: string }[] }) {
           <div className="hp-stop-route__text">
             <strong>{s.title}</strong>
             <p>{s.body}</p>
+            {s.detail && <p className="hp-stop-route__detail">{s.detail}</p>}
           </div>
         </div>
       ))}
@@ -803,6 +821,8 @@ function SequenceRoute({
 function ContainmentRings({ labels }: { labels: string[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const lastSpawnRef = useRef(0);
+  const lastTrailPointRef = useRef<{ x: number; y: number } | null>(null);
+  const trailSideRef = useRef<1 | -1>(1);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -812,16 +832,39 @@ function ContainmentRings({ labels }: { labels: string[] }) {
     const container = containerRef.current;
     if (!container) return;
     const rect = container.getBoundingClientRect();
-    const dot = document.createElement("span");
-    dot.className = "hp-rings__trail-dot";
-    dot.style.left = `${e.clientX - rect.left}px`;
-    dot.style.top = `${e.clientY - rect.top}px`;
-    container.appendChild(dot);
-    dot.addEventListener("animationend", () => dot.remove());
+    const point = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    const previous = lastTrailPointRef.current;
+    const dx = previous ? point.x - previous.x : 0;
+    const dy = previous ? point.y - previous.y : -1;
+    const distance = Math.hypot(dx, dy) || 1;
+    const side = trailSideRef.current;
+    const offset = 6;
+    const step = document.createElement("span");
+
+    step.className = "hp-rings__trail-step";
+    step.style.left = `${point.x + (-dy / distance) * offset * side}px`;
+    step.style.top = `${point.y + (dx / distance) * offset * side}px`;
+    step.style.setProperty(
+      "--trail-angle",
+      `${(Math.atan2(dy, dx) * 180) / Math.PI + 90}deg`,
+    );
+    step.style.setProperty("--trail-mirror", `${side}`);
+    container.appendChild(step);
+    step.addEventListener("animationend", () => step.remove());
+
+    lastTrailPointRef.current = point;
+    trailSideRef.current = side === 1 ? -1 : 1;
   }
 
   return (
-    <div className="hp-rings" ref={containerRef} onMouseMove={handleMouseMove}>
+    <div
+      className="hp-rings"
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => {
+        lastTrailPointRef.current = null;
+      }}
+    >
       <svg
         className="hp-rings__svg"
         viewBox="0 0 320 320"
@@ -917,6 +960,49 @@ function ContainmentRings({ labels }: { labels: string[] }) {
         </g>
       </svg>
     </div>
+  );
+}
+
+const RELATED_BLOCKS: Record<string, BlockId> = {
+  Hardware: "hardware",
+  "Bacterial encapsulation": "encapsulation",
+  "Enzyme immobilisation": "enzyme",
+  "Genetic engineering": "genetic",
+  Revalorisation: "revalorisation",
+  Model: "model",
+};
+
+const RELATED_PAGES: Record<string, string> = {
+  Safety: "/safety",
+  Entrepreneurship: "/entrepreneurship",
+  "Project description": "/project-description",
+  Measurement: "/measurements",
+  Engineering: "/engineering",
+  Results: "/results",
+};
+
+function RelatedPages({ value }: { value: string }) {
+  return (
+    <>
+      {value.split(" · ").map((label, index) => {
+        const blockId = RELATED_BLOCKS[label];
+        const page = RELATED_PAGES[label];
+        return (
+          <Fragment key={label}>
+            {index > 0 && " · "}
+            {blockId ? (
+              <ProjectBlockLink blockId={blockId}>{label}</ProjectBlockLink>
+            ) : page ? (
+              <Link className="vsi-wikilink" to={page}>
+                {label}
+              </Link>
+            ) : (
+              label
+            )}
+          </Fragment>
+        );
+      })}
+    </>
   );
 }
 
@@ -1047,7 +1133,8 @@ function ResponsibilityBoard({ risks }: { risks: RiskCard[] }) {
                   {card.statusNote}
                 </p>
                 <p className="hp-risk-entry__related">
-                  <strong>Related pages:</strong> {card.related}
+                  <strong>Related pages:</strong>{" "}
+                  <RelatedPages value={card.related} />
                 </p>
               </AccordionSection>
             </div>
@@ -1103,25 +1190,17 @@ export function ImplementationCheckpoints() {
           <article className="hp-boundary-panel">
             <h4>What we consider irrenounceable</h4>
             <p>
-              Following this route also forced us to define our own limits — not
-              only technical targets, but conditions that, if unmet, would mean
-              rethinking rePhlow rather than pushing it forward regardless. If
-              pilot-scale testing showed phosphorus recovery consistently
-              falling below a meaningful efficiency threshold, rather than being
-              an isolated underperforming batch, we would treat that as a signal
-              to revisit the design, not an acceptable trade-off to advertise
-              around. Similarly, if the process generated a byproduct of its own
-              — from capsule degradation, enzymatic activity, or the
-              revalorisation step — we would need to evaluate that byproduct on
-              its own terms before considering the overall system safe: some
-              byproducts might be manageable within the same circular logic that
-              drives rePhlow, while others would represent exactly the kind of
-              secondary pollution we set out to avoid. This is, in essence, the
-              same discipline the AREA framework introduced into our design
-              process: anticipating consequences instead of waiting to discover
-              them after deployment.
+              Following this route also forced us to define our own limits,
+              not only technical targets, but conditions that, if unmet, would
+              mean rethinking rePhlow rather than pushing it forward
+              regardless.
             </p>
             <StopRoute stops={STOP_CONDITIONS} />
+            <p>
+              This is, in essence, the same discipline the AREA framework
+              introduced into our design process: anticipating consequences
+              instead of waiting to discover them after deployment.
+            </p>
           </article>
 
           <article className="hp-boundary-panel">
@@ -1136,7 +1215,7 @@ export function ImplementationCheckpoints() {
               laboratory efficiency figures as if they already represented real
               industrial performance. This is also why revalorisation, the final
               destination, is presented as the last step rather than the
-              headline promise — it becomes credible only once removal,
+              headline promise: it becomes credible only once removal,
               containment and recovery have been proven at each earlier
               checkpoint.
             </p>
@@ -1159,7 +1238,7 @@ export function ImplementationCheckpoints() {
             <p>
               We imagine rePhlow not as an organism introduced into an
               ecosystem, but as a contained biotechnological barrier positioned
-              before phosphorus ever reaches nature — intercepting the problem
+              before phosphorus ever reaches nature, intercepting the problem
               at the industrial stage, exactly where our route first began.
             </p>
           </div>
@@ -1207,7 +1286,7 @@ export function ImplementationCheckpoints() {
           be considered responsible.
         </p>
         <p className="hp-checkpoint__legend">
-          A green checkpoint does not mean "risk eliminated" — it means that,
+          A green checkpoint does not mean "risk eliminated". It means that,
           within the boundaries of our project, we have responded to the concern
           transparently and can justify the next responsible step.
         </p>
@@ -1219,13 +1298,13 @@ export function ImplementationCheckpoints() {
         <h3>What this checkpoint taught us</h3>
         <p>
           Responsibility did not mean finding a design with no uncertainty or
-          risk — at our stage of development, such a claim would itself be
+          risk. At our stage of development, such a claim would itself be
           irresponsible. For rePhlow, responsibility meant:
         </p>
         <LessonSheet lessons={LESSONS} />
         <p>
           The checkpoint therefore remains active. Yellow and red questions are
-          not failures of Human Practices — they define the evidence that must
+          not failures of Human Practices; they define the evidence that must
           be generated before rePhlow can move responsibly from a laboratory
           project towards real-world implementation.
         </p>

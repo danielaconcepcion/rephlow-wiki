@@ -1,0 +1,174 @@
+/* "The impact" — one route, one accent (--wrr-accent, this section's own
+   colour, already used on the closing pull-quote below). Four stops share
+   a single icon language and a single connecting line; only their
+   selected state differs, so they read as one system rather than four
+   unrelated feature cards. */
+.hp-impact-route {
+  margin: 22px 0 8px;
+  padding: clamp(20px, 3vw, 30px);
+  border: 1px solid color-mix(in srgb, var(--wrr-accent) 28%, var(--line));
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--wrr-accent) 8%, var(--paper));
+}
+
+.hp-impact-route__stops {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+
+.hp-impact-route__stops::before {
+  content: "";
+  position: absolute;
+  top: 27px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 1px;
+  background: var(--line);
+  z-index: 0;
+}
+
+.hp-impact-route__stop {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 6px 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.hp-impact-route__icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--line);
+  color: var(--ink-soft);
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.hp-impact-route__icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hp-impact-route__stop:hover .hp-impact-route__icon {
+  border-color: var(--wrr-accent);
+  color: var(--wrr-accent);
+}
+
+.hp-impact-route__label {
+  padding-bottom: 6px;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  transition: color 0.2s ease;
+}
+
+.hp-impact-route__stop.is-active .hp-impact-route__icon {
+  background: var(--wrr-accent);
+  border-color: var(--wrr-accent);
+  color: #fff;
+  transform: scale(1.12);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--wrr-accent) 22%, transparent);
+}
+
+.hp-impact-route__stop.is-active .hp-impact-route__label {
+  color: var(--wrr-accent);
+}
+
+.hp-impact-route__stop:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.hp-impact-route__panel {
+  margin-top: 26px;
+  padding: 20px clamp(20px, 4vw, 30px);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  box-shadow: var(--shadow-card);
+  animation: hp-impact-reveal 0.32s ease both;
+}
+
+.hp-impact-route__title {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.hp-impact-route__panel p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.hp-impact-route__panel strong {
+  color: var(--ink);
+}
+
+@keyframes hp-impact-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-impact-route__panel {
+    animation: none;
+  }
+  .hp-impact-route__icon,
+  .hp-impact-route__label {
+    transition: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hp-impact-route {
+    padding: 20px 14px;
+  }
+  .hp-impact-route__stops {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 8px;
+  }
+  .hp-impact-route__stops::before {
+    display: none;
+  }
+  .hp-impact-route__icon {
+    width: 46px;
+    height: 46px;
+  }
+  .hp-impact-route__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .hp-impact-route__label {
+    font-size: 0.8rem;
+  }
+}

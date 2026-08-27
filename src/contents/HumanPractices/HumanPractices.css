@@ -21,6 +21,28 @@
   border-top: 1px solid var(--line);
 }
 
+.hp-project-block-link {
+  color: var(--hp-block-color);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--hp-block-color) 45%, transparent);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.hp-project-block-link:hover,
+.hp-project-block-link:focus-visible {
+  color: color-mix(in srgb, var(--hp-block-color) 78%, var(--ink));
+  border-bottom-color: currentColor;
+}
+
+.hp-project-block-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
 /* :first-of-type (not :first-child) so this still targets whichever
    .hp-section is visually first even with the RouteIndex block, which is
    not itself a .hp-section, preceding it in the DOM. */

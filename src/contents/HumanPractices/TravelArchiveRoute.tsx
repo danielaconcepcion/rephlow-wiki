@@ -656,7 +656,7 @@ export function TravelArchiveRoute() {
               collected and the environments in which we tried to understand
               the phosphorus problem beyond the laboratory. It complements
               Stakeholders &amp; Voices, which contains what external
-              interlocutors told us — where a field visit was also
+              interlocutors told us. Where a field visit was also
               associated with a stakeholder conversation, we document here
               what we physically saw and link to the corresponding interview
               rather than repeating it. Together, these stops became a route

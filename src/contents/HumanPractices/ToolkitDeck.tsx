@@ -233,7 +233,7 @@ export function ToolkitDeck() {
     <div className="hp-toolkit" id="s5-toolkit">
       <h3>Tools other teams can reuse</h3>
       <p>
-        RePhlow did not only produce a technology — it produced a method. These
+        RePhlow did not only produce a technology; it produced a method. These
         eight tools were already applied and tested inside our own project,
         portable regardless of organism, problem or stage of development. Click
         a card to open it.
