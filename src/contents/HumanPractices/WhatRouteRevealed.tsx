@@ -1,5 +1,6 @@
 import { CardFanGlyph } from "./HeroObjects";
 import { ToolkitDeck } from "./ToolkitDeck";
+import { ImpactRoute } from "./ImpactRoute";
 import "./WhatRouteRevealed.css";
 
 /**
@@ -23,7 +24,7 @@ export function WhatRouteRevealed() {
               phosphorus had taken us from an industrial degumming tank in
               Huelva to a collapsing lagoon in Murcia, from a reservoir
               supplying Madrid to a beehive in the countryside, from laboratory
-              advisors to schoolchildren — phosphorus stopped being an abstract
+              advisors to schoolchildren. Phosphorus stopped being an abstract
               chemical element and became something we could trace through very
               different systems. This diversity of stops is what convinced us
               that rePhlow needed to be designed around{" "}
@@ -42,7 +43,7 @@ export function WhatRouteRevealed() {
       <div className="hp-route-revealed__prose" id="s5-goals">
         <h3>Did we reach our initial goals, or did we have to adjust them?</h3>
         <p>
-          Following the phosphorus route did not just generate evidence — it
+          Following the phosphorus route did not just generate evidence, it
           repeatedly forced us to revise what rePhlow was supposed to be. Being
           honest about that here matters as much as describing what we built.
         </p>
@@ -50,8 +51,14 @@ export function WhatRouteRevealed() {
           We did not begin with the project we ended with. Our original concept
           was a <strong>multi-organism consortium</strong>, chosen for
           biological ambition rather than experimental tractability.
-          Consultations captured in the Design Compass (Scientific robustness
-          and integrity), with Molpeceres, Díaz del Toro, Hidalgo and Mateos,
+          Consultations captured in the Design Compass (
+          <a
+            className="vsi-wikilink"
+            href="#s1-value-scientific-robustness"
+          >
+            Scientific robustness and integrity
+          </a>
+          ), with Molpeceres, Díaz del Toro, Hidalgo and Mateos,
           made clear that a consortium combining several organisms and functions
           would be extremely difficult to characterise reproducibly within the
           time we had, and would make it hard to attribute any observed
@@ -75,7 +82,7 @@ export function WhatRouteRevealed() {
           In both cases, the adjustment came from the same discipline: when new
           evidence contradicted an assumption we had made early on, we treated
           that as a signal to change the project, not as a problem to work
-          around. We did not reach our initial goals unchanged — we reached a
+          around. We did not reach our initial goals unchanged, we reached a
           narrower, more defensible version of them, and consider that the more
           honest outcome of the two.
         </p>
@@ -90,25 +97,7 @@ export function WhatRouteRevealed() {
           safety expectations and circular-economy needs. What this route
           revealed was not a single impact, but four connected ones.
         </p>
-        <p>
-          The route confirmed the <strong>environmental</strong>,{" "}
-          <strong>industrial</strong> and <strong>circular</strong> impact
-          already established through the Design Compass.
-        </p>
-        <p>
-          <strong>Social impact</strong>, however, does not live anywhere else
-          in this narrative and deserves its own space here. Talking with
-          schoolchildren and members of the public taught us that impact is not
-          only technical — rePhlow's social impact lies in improving public
-          understanding of phosphorus, eutrophication and safe synthetic
-          biology, replacing abstraction, and at times wariness of GMOs, with a
-          clearer picture of what the technology does and why it matters. We
-          engaged this community through outreach talks in primary and secondary
-          schools, a hands-on laboratory workshop for children, and a talk at
-          the Museo Nacional de Ciencias Naturales. These conversations were not
-          just about the impact rePhlow could have, but about whether it would
-          be trusted enough to be adopted at all.
-        </p>
+        <ImpactRoute />
       </div>
 
       <ToolkitDeck />
@@ -118,24 +107,33 @@ export function WhatRouteRevealed() {
         <p>
           To avoid impact remaining a set of good intentions, we structured the
           evidence of our route into categories with a destination, not a
-          summary of what was said — the content itself already lives, in full,
+          summary of what was said, the content itself already lives, in full,
           elsewhere on this page.
         </p>
         <dl className="hp-impact-list">
           <div>
             <dt>Expert testimony</dt>
             <dd>
-              See Stakeholders &amp; Voices for the full interviews (Bio-Oils,
-              Repsol, CEDEX, IQOG-CSIC, UCM advisors, chassis-selection
-              consultations).
+              See{" "}
+              <a className="vsi-wikilink" href="#stakeholders">
+                Stakeholders &amp; Voices
+              </a>{" "}
+              for the full interviews (Bio-Oils, Repsol, CEDEX, IQOG-CSIC, UCM
+              advisors, chassis-selection consultations).
             </dd>
           </div>
           <div>
             <dt>Team reflections</dt>
             <dd>
-              See the Design Compass's "Reflect" entries under each of the six
-              values, and the Responsibility Checkpoint's "What remains open"
-              fields.
+              See the{" "}
+              <a className="vsi-wikilink" href="#s1-compass">
+                Design Compass&apos;s
+              </a>{" "}
+              "Reflect" entries under each of the six values, and the{" "}
+              <a className="vsi-wikilink" href="#s4-responsibility">
+                Responsibility Checkpoint&apos;s
+              </a>{" "}
+              "What remains open" fields.
             </dd>
           </div>
           <div>
@@ -170,14 +168,21 @@ export function WhatRouteRevealed() {
           <div>
             <dt>Lessons learned</dt>
             <dd>
-              See "What this checkpoint taught us" in From Design to
-              Implementation, and "Did we reach our initial goals?" above.
+              See{" "}
+              <a className="vsi-wikilink" href="#s4-lessons">
+                What this checkpoint taught us
+              </a>{" "}
+              in From Design to Implementation, and{" "}
+              <a className="vsi-wikilink" href="#s5-goals">
+                Did we reach our initial goals?
+              </a>{" "}
+              above.
             </dd>
           </div>
         </dl>
         <p className="hp-route-revealed__closing">
           Human Practices gave us the map of the problem. Integrated Human
-          Practices changed the route of the project — turning every stop, every
+          Practices changed the route of the project, turning every stop, every
           conversation, and every piece of evidence gathered along the way into
           a design decision, not just a story to tell afterwards.
         </p>

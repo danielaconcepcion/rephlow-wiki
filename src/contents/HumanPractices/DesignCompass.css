@@ -103,6 +103,18 @@
   margin-bottom: 16px;
 }
 
+/* "Why we needed a framework" only (not the References accordion below it,
+   which shares .hp-compass__accordion) — a blue outline equivalent to
+   WhyPhosphorus.css's .hp-why__reflection green one (same recipe: 1px solid,
+   color-mix at 24% over transparent), using --ink rather than --water-light
+   since --ink is the site's actual navy/blue token and reads at a
+   comparable weight against this card's own pale tinted background,
+   whereas --water-light is close enough to white that the same mix would
+   barely show. */
+#s1-framework.hp-accordion {
+  border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+}
+
 .hp-framework-sequence {
   margin-top: 2px;
   padding: 20px 18px 0;
@@ -428,24 +440,16 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #fff;
-  background: linear-gradient(145deg, var(--ink), var(--dc-accent));
+  padding: 20px;
+  background: var(--paper);
   border: 7px solid rgba(255, 255, 255, 0.96);
   z-index: 8;
   box-shadow: 0 16px 34px rgba(27, 35, 64, 0.24);
 }
-.hp-compass-center strong {
-  font-family: var(--font-display);
-  color: #fff;
-  font-size: 1.08rem;
-  font-weight: 600;
-  line-height: 1.15;
-}
-.hp-compass-center span {
-  font-size: 0.68rem;
-  opacity: 0.8;
-  margin-top: 8px;
-  letter-spacing: 0.03em;
+.hp-compass-center__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .hp-compass-needle {
@@ -557,35 +561,12 @@
   margin: 0 auto;
 }
 
-@media (min-width: 1280px) {
-  .hp-compass-layout {
-    display: grid;
-    grid-template-columns: minmax(0, 545px) minmax(385px, 1fr);
-    gap: clamp(22px, 2.5vw, 38px);
-    align-items: start;
-    margin: 18px 0 36px;
-  }
-
-  .hp-compass-layout .hp-compass-wrap {
-    margin-top: 0;
-  }
-
-  .hp-compass-layout .hp-compass-stage {
-    width: min(545px, 100%);
-  }
-
-  .hp-compass-layout .hp-compass-helper {
-    margin-bottom: 0;
-  }
-
-  .hp-compass-layout .hp-compass__values {
-    max-width: none;
-    margin: 0;
-  }
-}
+/* Compass explanations render below the dial (not beside it) at every
+   width, so the compass itself stays visually centred as its own row. */
 
 .hp-compass__value.hp-accordion {
   border-bottom: 1px solid var(--line);
+  scroll-margin-top: calc(var(--section-nav-offset) + 16px);
 }
 .hp-compass__value.hp-accordion:last-child {
   border-bottom: none;
@@ -772,7 +753,13 @@
   border: 1px solid rgba(90, 78, 55, 0.16);
   background-color: #faf8f1;
   background-image:
-    radial-gradient(circle at 28px 50%, rgba(90, 78, 55, 0.05) 3.4px, rgba(90, 78, 55, 0.32) 3.4px, rgba(90, 78, 55, 0.32) 4px, transparent 4.4px),
+    radial-gradient(
+      circle at 28px 50%,
+      rgba(90, 78, 55, 0.05) 3.4px,
+      rgba(90, 78, 55, 0.32) 3.4px,
+      rgba(90, 78, 55, 0.32) 4px,
+      transparent 4.4px
+    ),
     linear-gradient(rgba(90, 78, 55, 0.09) 1px, transparent 1px),
     linear-gradient(90deg, rgba(90, 78, 55, 0.09) 1px, transparent 1px);
   background-size:
@@ -780,7 +767,10 @@
     22px 22px,
     22px 22px;
   background-repeat: repeat-y, repeat, repeat;
-  background-position: 0 18px, 0 0, 0 0;
+  background-position:
+    0 18px,
+    0 0,
+    0 0;
   box-shadow: 0 3px 10px rgba(36, 27, 61, 0.07);
   transform: rotate(-0.6deg);
 }
@@ -838,7 +828,10 @@
 @media (max-width: 720px) {
   .hp-question-sheet {
     padding: 20px 16px 20px 46px;
-    background-position: 0 14px, 0 0, 0 0;
+    background-position:
+      0 14px,
+      0 0,
+      0 0;
     /* A tilted sheet reads fine at full width but risks clipping its own
        corners/text against the narrower column here, so the tilt drops
        and only the paper identity (grid + holes) carries over. */
@@ -1093,7 +1086,7 @@
 }
 
 .design-compass .hp-compass-center {
-  background: linear-gradient(145deg, var(--dc-proto-navy), #1c5361);
+  background: var(--paper);
   box-shadow: 0 16px 34px rgba(16, 43, 61, 0.22);
 }
 

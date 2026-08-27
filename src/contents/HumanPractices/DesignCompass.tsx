@@ -1,6 +1,16 @@
-import { useState, type CSSProperties, type ReactNode } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
+import { Link } from "react-router-dom";
 import { AccordionSection } from "./AccordionSection";
 import { CompassGlyph } from "./HeroObjects";
+import { ProjectBlockLink } from "./ProjectBlockLink";
+import type { BlockId } from "../../components/OurSolutionVisualIndex/blocks";
+import { asset } from "../../utils/asset";
 import "./DesignCompass.css";
 
 type StepStyle = CSSProperties & { "--step-i": number };
@@ -97,7 +107,7 @@ const COMPASS_VALUES: CompassValue[] = [
     anticipate:
       "We considered whether reducing phosphate inside the bioreactor would necessarily translate into meaningful environmental improvement. A successful biological uptake result would have limited value if the final water still contained residual phosphate, biomass or other components preventing responsible discharge or reuse.",
     reflect:
-      "Our initial design implicitly treated the bioreactor as the endpoint of the system — if the bacteria accumulated phosphate, we considered the treatment successful. This revealed that our definition of success was centred on one biological module rather than on the quality of the final effluent.",
+      "Our initial design implicitly treated the bioreactor as the endpoint of the system, if the bacteria accumulated phosphate, we considered the treatment successful. This revealed that our definition of success was centred on one biological module rather than on the quality of the final effluent.",
     engage:
       "Environmental sampling and the industrial information provided by Bio-Oils helped us connect laboratory phosphate uptake with the wider objective of treating a real effluent.",
     act: "Final effluent quality became a system-level design criterion.",
@@ -117,7 +127,7 @@ const COMPASS_VALUES: CompassValue[] = [
     meaning:
       "Treat phosphorus as a finite but recoverable resource, rather than only as a contaminant that must be removed.",
     anticipate:
-      "We considered what would happen if phosphorus were removed from water but transferred into another unusable waste stream — a system based only on removal could reduce immediate environmental pressure while maintaining a linear pattern of extraction, use and disposal.",
+      "We considered what would happen if phosphorus were removed from water but transferred into another unusable waste stream, a system based only on removal could reduce immediate environmental pressure while maintaining a linear pattern of extraction, use and disposal.",
     reflect:
       "Our initial framing focused predominantly on phosphorus as a pollutant, overlooking its importance as an essential and finite resource. Removal efficiency alone was not an adequate measure of circularity.",
     engage:
@@ -255,6 +265,54 @@ const COMPASS_VALUES: CompassValue[] = [
   },
 ];
 
+const EVIDENCE_BLOCKS: Record<string, BlockId> = {
+  Hardware: "hardware",
+  "Bacterial encapsulation": "encapsulation",
+  "Enzyme immobilisation": "enzyme",
+  "Genetic engineering": "genetic",
+  Revalorisation: "revalorisation",
+  Model: "model",
+};
+
+const EVIDENCE_PAGES: Record<string, string> = {
+  "Travel Archive": "#travel-archive",
+  "Stakeholders and Voices": "#stakeholders",
+  Entrepreneurship: "/entrepreneurship",
+  Experiments: "/experiments",
+};
+
+function EvidenceDestination({ label }: { label: string }) {
+  const blockId = EVIDENCE_BLOCKS[label];
+  if (blockId) {
+    return <ProjectBlockLink blockId={blockId}>{label}</ProjectBlockLink>;
+  }
+
+  const href = EVIDENCE_PAGES[label];
+  if (!href) return <>{label}</>;
+
+  return href.startsWith("#") ? (
+    <a className="vsi-wikilink" href={href}>
+      {label}
+    </a>
+  ) : (
+    <Link className="vsi-wikilink" to={href}>
+      {label}
+    </Link>
+  );
+}
+
+function EvidenceTrail({ value }: { value: string }) {
+  const [source, destination] = value.split(" → ");
+  if (!destination) return <EvidenceDestination label={source} />;
+
+  return (
+    <>
+      {source} <span aria-hidden="true">→</span>{" "}
+      <EvidenceDestination label={destination} />
+    </>
+  );
+}
+
 /** Matches the prototype's own p0…p5 absolute-position classes exactly
  * (top-centre, upper-right, lower-right, bottom-centre, lower-left,
  * upper-left) — see DesignCompass.css. */
@@ -355,7 +413,7 @@ const PERSPECTIVE_VOICES: PerspectiveVoice[] = [
     text: "Prioritised tractability, reproducibility and interpretability.",
   },
   {
-    name: "Inmaculada",
+    name: "Local People",
     text: "Highlighted the distance between technical measurements and how environmental change is experienced by local communities.",
   },
 ];
@@ -406,8 +464,57 @@ const LOOP_STAGES: LoopStage[] = [
 ];
 
 export function DesignCompass() {
-  const [activeId, setActiveId] = useState<string>(COMPASS_VALUES[0].id);
-  const active = COMPASS_VALUES.find((v) => v.id === activeId)!;
+  const [selectedId, setSelectedId] = useState<string>(COMPASS_VALUES[0].id);
+  const [openId, setOpenId] = useState<string | null>(COMPASS_VALUES[0].id);
+  const pendingScrollId = useRef<string | null>(null);
+  const active = COMPASS_VALUES.find((v) => v.id === selectedId)!;
+
+  function toggleValue(id: string) {
+    const nextOpenId = openId === id ? null : id;
+
+    setSelectedId(id);
+    setOpenId(nextOpenId);
+    pendingScrollId.current = nextOpenId;
+  }
+
+  useEffect(() => {
+    if (!openId || pendingScrollId.current !== openId) return;
+
+    const firstFrame = requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document
+          .getElementById(`s1-value-${openId}`)
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        pendingScrollId.current = null;
+      });
+    });
+
+    return () => cancelAnimationFrame(firstFrame);
+  }, [openId]);
+
+  useEffect(() => {
+    function focusValueFromHash() {
+      const prefix = "#s1-value-";
+      if (!window.location.hash.startsWith(prefix)) return;
+
+      const id = window.location.hash.slice(prefix.length);
+      if (!COMPASS_VALUES.some((value) => value.id === id)) return;
+
+      setSelectedId(id);
+      setOpenId(id);
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          document
+            .getElementById(`s1-value-${id}`)
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+    }
+
+    focusValueFromHash();
+    window.addEventListener("hashchange", focusValueFromHash);
+    return () => window.removeEventListener("hashchange", focusValueFromHash);
+  }, []);
 
   return (
     <section className="hp-section design-compass" id="design-compass">
@@ -572,20 +679,20 @@ export function DesignCompass() {
                 aria-hidden="true"
               />
               <div className="hp-compass-center" aria-hidden="true">
-                <strong>
-                  Guiding
-                  <br />
-                  Compass
-                </strong>
-                <span>AREA in practice</span>
+                <img
+                  className="hp-compass-center__logo"
+                  src={asset("assets/human-practices/phlowi.webp")}
+                  alt=""
+                  loading="lazy"
+                />
               </div>
               {COMPASS_VALUES.map((v, i) => (
                 <button
                   key={v.id}
                   type="button"
-                  className={`hp-compass-point ${POSITION_CLASSES[i]}${v.id === activeId ? " is-active" : ""}`}
-                  onClick={() => setActiveId(v.id)}
-                  aria-pressed={v.id === activeId}
+                  className={`hp-compass-point ${POSITION_CLASSES[i]}${v.id === selectedId ? " is-active" : ""}`}
+                  onClick={() => toggleValue(v.id)}
+                  aria-pressed={v.id === selectedId}
                 >
                   <span className="num">{v.number}</span>
                   <span className="label">{v.title}</span>
@@ -605,8 +712,8 @@ export function DesignCompass() {
               key={v.id}
               id={`s1-value-${v.id}`}
               title={`${v.number}. ${v.title}`}
-              isOpen={v.id === activeId}
-              onToggle={() => setActiveId(v.id === activeId ? activeId : v.id)}
+              isOpen={v.id === openId}
+              onToggle={() => toggleValue(v.id)}
               className="hp-compass__value"
             >
               <div className="hp-value-meaning">
@@ -646,7 +753,9 @@ export function DesignCompass() {
                 <span className="hp-evidence-trail__label">Evidence trail</span>
                 <ul>
                   {v.evidenceTrail.map((e) => (
-                    <li key={e}>{e}</li>
+                    <li key={e}>
+                      <EvidenceTrail value={e} />
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -659,13 +768,13 @@ export function DesignCompass() {
         <h3>From values to a decision-making framework</h3>
         <p>
           The six Compass values were not selected because they sounded
-          desirable — we considered them appropriate because they repeatedly
+          desirable. We considered them appropriate because they repeatedly
           emerged from real design decisions, changed the direction of rePhlow
           and could be linked to evidence.
         </p>
         <p>
           Each value influenced traceable choices across the project: replacing
-          the original microbial consortium, selecting <em>P. putida</em>
+          the original microbial consortium, selecting <em>P. putida</em>{" "}
           KT2440, narrowing the genetic strategy, adopting CRISPR base editing,
           developing core-shell encapsulation and physical retention, moving
           towards a modular architecture, incorporating phosphorus recovery and
@@ -739,7 +848,7 @@ export function DesignCompass() {
         </p>
         <p>
           Responsibility was not about making the correct decision at the first
-          attempt — it was about maintaining the ability to change direction
+          attempt. It was about maintaining the ability to change direction
           when stronger evidence, a better argument or an overlooked risk
           emerged. Several decisions made rePhlow narrower rather than more
           ambitious, but also more interpretable, testable and defensible.
@@ -767,8 +876,11 @@ export function DesignCompass() {
           ))}
         </div>
         <p>
-          We did not force these perspectives into a single artificial
-          consensus. Instead, we treated them as complementary conditions that
+          <strong>
+            We did not force these perspectives into a single artificial
+            consensus
+          </strong>
+          . Instead, we treated them as complementary conditions that
           responsible implementation would need to satisfy. Biological
           performance would not be sufficient without containment; containment
           would be difficult to defend without reliable measurement; and
@@ -778,9 +890,11 @@ export function DesignCompass() {
         </p>
         <p>
           This is where our Human Practices moved from consultation to
-          integration: stakeholder knowledge did not simply accompany rePhlow;
-          it changed what we designed, how we tested it and how we defined
-          success.
+          integration: stakeholder knowledge did not simply accompany rePhlow;{" "}
+          <strong>
+            it changed what we designed, how we tested it and how we defined
+            success.
+          </strong>
         </p>
       </div>
 

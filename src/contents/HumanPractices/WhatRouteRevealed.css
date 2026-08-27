@@ -117,8 +117,9 @@
 .hp-route-revealed__closing {
   margin-top: 24px;
   padding: 20px 24px;
-  border-left: 3px solid var(--wrr-accent);
-  background: var(--paper-soft);
+  border: 1px solid color-mix(in srgb, var(--wrr-accent) 28%, var(--line));
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--wrr-accent) 8%, var(--paper));
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 1.1rem;
