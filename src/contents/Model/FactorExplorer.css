@@ -1,0 +1,356 @@
+/* --------------------------------------------------------------------------
+   FactorExplorer — the Phase B sensitivity "factor explorer" (Model.tsx,
+   section 2.2). The selector and the active panel (title, figure, text) are
+   wrapped in one card (.factor-explorer__frame) so they read as a single
+   unit that changes together. Inside it, the selector stays quiet: unselected
+   factors are plain text with no pill/border, the active factor gets a soft
+   ink-tinted pill, and the two groups are separated by space rather than a
+   divider rule. Reuses global tokens only (--ink, --ink-soft, --paper,
+   --paper-soft, --line, --radius-lg, --radius-md, --shadow-card,
+   --shadow-soft, --font-display, --font-body, --section-nav-offset) — no new
+   colors or a second visual language.
+   -------------------------------------------------------------------------- */
+
+.factor-explorer {
+  max-width: 900px;
+  margin: 32px auto 0;
+}
+
+/* Single frame around the selector + active panel, so the two read as one
+   unit that changes together — same "tinted panel, no shadow" language as
+   Callout.css, just sized for a page section rather than a marginal note. */
+.factor-explorer__frame {
+  padding: 28px 32px 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper-soft);
+}
+
+/* --- Selector: two loosely grouped clusters, separated by space instead of
+   a divider rule. Wraps freely at every width instead of relying on a
+   mobile-only horizontal-scroll fallback, so nothing overflows the column
+   regardless of how long a label ("ATP maintenance") gets. --- */
+.factor-explorer__tablist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  column-gap: 40px;
+  row-gap: 18px;
+}
+
+.factor-explorer__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.factor-explorer__group-label {
+  font: 600 0.72rem var(--font-body);
+  color: var(--ink-soft);
+}
+
+.factor-explorer__group-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Unselected: no pill, no border, just quiet ink-soft text — a soft wash on
+   hover is the only cue that it's interactive. Selected: a soft ink-tinted
+   pill (not the previous navy fill) with dark ink text. */
+.factor-explorer__tab {
+  padding: 7px 14px;
+  margin: 0;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  font: 600 0.85rem var(--font-body);
+  color: var(--ink-soft);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.factor-explorer__tab:hover {
+  background: rgba(27, 35, 64, 0.05);
+  color: var(--ink);
+}
+.factor-explorer__tab:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.factor-explorer__tab.is-active {
+  background: rgba(27, 35, 64, 0.1);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* --- Panel: swaps entirely per factor --- */
+.factor-explorer__panel {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  animation: factor-panel-in-forward 240ms ease-out;
+}
+.factor-explorer__panel[data-direction="backward"] {
+  animation-name: factor-panel-in-backward;
+}
+@keyframes factor-panel-in-forward {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+}
+@keyframes factor-panel-in-backward {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+}
+.factor-explorer__panel:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.factor-explorer__title {
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin: 0;
+  scroll-margin-top: var(--section-nav-offset);
+}
+/* Programmatically focused after arrow/story-nav navigation (never reached
+   by Tab — tabIndex is -1) so assistive technology lands on the new
+   analysis. The heading is not an interactive control, so this focus stays
+   visually quiet. */
+.factor-explorer__title:focus {
+  outline: none;
+}
+
+.factor-explorer__question {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.factor-explorer__figure {
+  margin: 20px 0 0;
+}
+
+/* Row of [prev arrow][image][next arrow]. Negative margins on the arrows
+   pull them over the image's edge instead of positioning them absolutely,
+   so the overlap stays correct at any width without extra math. */
+.factor-explorer__figure-nav {
+  display: flex;
+  align-items: center;
+}
+
+.factor-explorer__image-wrap {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.factor-explorer__image-wrap img,
+.factor-explorer__figure > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+}
+
+.factor-explorer__counter {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-soft);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.factor-explorer__arrow {
+  flex: 0 0 auto;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-soft);
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
+}
+.factor-explorer__arrowhead {
+  display: block;
+  width: 9px;
+  height: 14px;
+  flex: 0 0 auto;
+}
+.factor-explorer__arrow--prev {
+  margin-right: -18px;
+}
+.factor-explorer__arrow--next {
+  margin-left: -18px;
+}
+.factor-explorer__arrow:hover:not(:disabled) {
+  background: var(--paper);
+  transform: scale(1.06);
+}
+.factor-explorer__arrow:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.factor-explorer__arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.factor-explorer__figure figcaption {
+  max-width: 680px;
+  margin: 10px auto 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: center;
+}
+.factor-explorer__figure figcaption strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+.factor-explorer__body {
+  max-width: 680px;
+  margin: 20px auto 0;
+}
+.factor-explorer__body p {
+  color: var(--ink-soft);
+  line-height: 1.65;
+  text-align: justify;
+  hyphens: none;
+}
+.factor-explorer__body p + p {
+  margin-top: 12px;
+}
+.factor-explorer__body code {
+  font-size: 0.9em;
+  background: var(--paper);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+/* --- Ammonium's extra "closer look" section --- */
+.factor-explorer__closer-look {
+  max-width: 680px;
+  margin: 32px auto 0;
+  padding-top: 24px;
+  border-top: 1px dashed var(--line);
+}
+.factor-explorer__closer-look h4 {
+  font-size: 1rem;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+.factor-explorer__closer-look .factor-explorer__figure,
+.factor-explorer__closer-look p {
+  max-width: none;
+}
+.factor-explorer__closer-look p + p {
+  margin-top: 12px;
+}
+.factor-explorer__closer-look p {
+  color: var(--ink-soft);
+  line-height: 1.65;
+  text-align: justify;
+  hyphens: none;
+}
+
+/* --- Contextual "keep reading" nav at the end of every panel --- */
+.factor-explorer__story-nav {
+  display: flex;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.factor-explorer__story-nav-slot {
+  flex: 1 1 0;
+  display: flex;
+  min-width: 0;
+}
+.factor-explorer__story-nav-slot--prev {
+  justify-content: flex-start;
+}
+.factor-explorer__story-nav-slot--next {
+  justify-content: flex-end;
+}
+.factor-explorer__story-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 2px;
+  border: none;
+  background: none;
+  font: 600 0.88rem var(--font-body);
+  color: var(--ink-soft);
+  cursor: pointer;
+  max-width: 100%;
+}
+.factor-explorer__story-link:hover {
+  color: var(--ink);
+}
+.factor-explorer__story-link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.factor-explorer__story-nav-slot--next .factor-explorer__story-link {
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .factor-explorer__frame {
+    padding: 20px 18px 24px;
+  }
+  .factor-explorer__arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+  .factor-explorer__arrow--prev {
+    margin-right: -12px;
+  }
+  .factor-explorer__arrow--next {
+    margin-left: -12px;
+  }
+  .factor-explorer__story-nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .factor-explorer__story-nav-slot--next {
+    justify-content: flex-start;
+  }
+  .factor-explorer__story-nav-slot--next .factor-explorer__story-link {
+    text-align: left;
+  }
+  .factor-explorer__tablist {
+    column-gap: 24px;
+  }
+}

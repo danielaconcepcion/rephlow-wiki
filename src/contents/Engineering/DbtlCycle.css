@@ -1,0 +1,848 @@
+/* Engineering — scroll-driven Design/Build/Test/Learn cycle. Reuses the
+   wiki's own tokens throughout (--ink, --ink-soft, --paper, --line,
+   --radius-*, --shadow-*, --font-display/--font-body) rather than
+   introducing a parallel palette; the only new values are the iteration
+   colour scale itself (teal → --microbe purple, see iterationColor() in
+   DbtlCycle.tsx) and the sticky panel's own layout numbers.
+
+   There is one sticky viewport for the whole cycle (.dbtl-cycle__sticky),
+   not one per iteration — all five loops are paths in a single SVG, and
+   the .dbtl-cycle__loop svg clips to its viewBox (overflow: hidden) so the
+   inner <g>'s per-frame transform genuinely acts as a panning camera
+   across one continuous drawing, rather than showing all five stacked
+   loops at once. Colour comes from one gradient spanning that whole
+   stack (#dbtl-loop-gradient, defined in the component), so it blends
+   between iterations instead of stepping at a boundary.
+
+   Each loop's dim track (.dbtl-cycle__track, one continuous path — no
+   internal joins) is grouped with its still-dim joint arrows under a
+   single .dbtl-cycle__loop-dim so the browser flattens them into one
+   shape before applying the translucent opacity — real alpha is kept,
+   but two parts of the SAME loop no longer stack their transparency into
+   a stain where they meet. Different loops are separate groups, so an
+   authentic overlap between two of them still double-blends for real.
+
+   The loop geometry is the reference spiral's own coordinates (viewBox
+   1547x945 per loop) verbatim, so .dbtl-cycle__loop breaks out of the
+   page's centred column to span the full viewport width — it's the one
+   element in this component not constrained by .dbtl-cycle's max-width. */
+
+.dbtl-cycle {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+/* --- Left sidebar: one nav for the whole block, same visual language --
+   AND now the same structural mounting -- as the site's shared
+   PageSectionNav (src/components/PageSectionNav.css): border-left indent
+   list, ink/ink-soft colours, active border-left indicator, sticky in a
+   grid column rather than fixed+opacity-toggled -- replacing what used to
+   be two separate rails (a left "which iteration" dot list and a right
+   "which phase" button stack), and before that a fixed-position panel
+   whose visibility was a bespoke JS scroll signal. Rebuilt locally rather
+   than the shared component itself, since its active-state
+   IntersectionObserver watches real DOM anchors and this panel has none
+   (one sticky viewport whose content swaps via the scroll-fraction state
+   in the component) — see DbtlCycle.tsx/DbtlSectionNav's own doc
+   comments for the click/active-state wiring.
+
+   Rendered by Engineering.tsx as the first child of its own
+   .engineering-nav-layout grid (see Engineering.css) — the same
+   .page-with-section-nav shape Experiments/Project Description use, with
+   .engineering-content-wrap as the second column. This nav's own width
+   comes entirely from that grid's first column track (no width set here
+   at all, same as .page-section-nav itself); `position: sticky` +
+   `align-self: start` is what keeps it pinned at --section-nav-offset for
+   as long as .engineering-content-wrap (however tall — a block can hold
+   one or two full DBTL spirals) is still in view, releasing on its own
+   once that column runs out — no IntersectionObserver, no visibility
+   prop, native layout doing all of it.
+
+   Rendered once per block by DbtlSectionNav (see DbtlCycle.tsx), not once
+   per spiral — a block with sub-blocks (e.g. Enzymatic immobilisation's
+   two threads) gets one .dbtl-cycle__section-nav-group per thread, each
+   with its own heading, inside this single nav, rather than two navs that
+   swap in and out of visibility as the reader passes from one spiral to
+   the next.
+
+   Translucency now carries the hierarchy: this outer nav is a light,
+   barely-there wash (visible mostly as a soft separation from page
+   content behind it); Iteration rows and group headings sit on their own
+   heavier glass layer on top of that, reading as the more prominent tier;
+   the Design/Build/Test/Learn sublist adds no layer of its own at all, so
+   it shows only the light base straight through — quieter and less
+   blurred than the Iteration row it hangs off. Both layers have been
+   pulled down decisively from the original values (0.22—0.08 alpha and
+   6—3px blur here; 0.46—0.22 alpha and 10—5px blur on the heavier
+   layer below), specifically so the "foggy" glass reads as a much
+   cleaner, near-transparent wash rather than a subtle tint — while the
+   heavier layer stays proportionally further above this one, so the
+   hierarchy is, if anything, easier to read than before, just at a much
+   lower overall opacity. */
+.dbtl-cycle__section-nav {
+  position: sticky;
+  top: var(--section-nav-offset, 110px);
+  align-self: start;
+  padding: 8px 0;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.dbtl-cycle__section-nav-group + .dbtl-cycle__section-nav-group {
+  margin-top: 20px;
+}
+.dbtl-cycle__section-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 2px solid var(--line);
+}
+.dbtl-cycle__section-nav-link {
+  display: block;
+  padding: 8px 16px;
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  transition:
+    color 0.15s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+/* The added glass layer that gives Iteration rows (and the sub-block
+   heading level, below) more presence than the plain wash behind them —
+   explicitly excluded from the nested Design/Build/Test/Learn rows (--sub)
+   further down, which stay on the light base only (see
+   .dbtl-cycle__section-nav's own comment above for the current alpha/blur
+   values on both layers, and for why they were pulled down further). */
+.dbtl-cycle__section-nav-link:not(.dbtl-cycle__section-nav-link--sub) {
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+/* The sub-block heading level ("1. Enzyme production" / "2. Immobilisation
+   chemistry") — a real, clickable nav item now (see DbtlSectionNav.tsx),
+   sharing .dbtl-cycle__section-nav-link's own padding/border-left/active
+   plumbing rather than a separate static-label rule. Sized to match
+   PageSectionNav's own top-level link (0.85rem/700) directly, since this
+   is now genuinely that same tier — the topmost one visible in this
+   nav — one notch above the Iteration label below it. Its own
+   --iter-color is hardcoded to var(--ink) from the component (a group
+   spans many iterations' worth of hue, so no single accent represents it
+   the way one does an Iteration/Phase row), which is what the shared
+   .is-active/border-left-color rule below resolves against.
+   The base .dbtl-cycle__section-nav-link's `margin-left: -2px` exists to
+   cancel .dbtl-cycle__section-nav-list's own 2px border-left rail (the
+   link's border-left sits exactly on top of it) — but a heading is a
+   direct child of the plain, unbordered .dbtl-cycle__section-nav-group
+   div, not that list, so there's no rail for it to cancel. Zeroing it
+   back out here is what lines this heading's own active border-left up
+   with the Iteration/Phase markers below it instead of sitting 2px
+   further left than them. */
+.dbtl-cycle__section-nav-link--heading {
+  margin-bottom: 4px;
+  margin-left: 0;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+.dbtl-cycle__section-nav-link--heading.is-active {
+  color: var(--ink);
+}
+@media (hover: hover) {
+  .dbtl-cycle__section-nav-link--heading:hover {
+    color: var(--ink);
+  }
+}
+.dbtl-cycle__section-nav-label {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  transition: color 0.2s ease;
+}
+.dbtl-cycle__section-nav-title {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--ink-soft);
+  opacity: 0.65;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+.dbtl-cycle__section-nav-link.is-active {
+  border-left-color: var(--iter-color);
+}
+.dbtl-cycle__section-nav-link.is-active .dbtl-cycle__section-nav-label {
+  color: var(--iter-color);
+}
+.dbtl-cycle__section-nav-link.is-active .dbtl-cycle__section-nav-title {
+  color: var(--iter-color);
+  opacity: 0.85;
+}
+@media (hover: hover) {
+  .dbtl-cycle__section-nav-link:hover .dbtl-cycle__section-nav-label,
+  .dbtl-cycle__section-nav-link:hover .dbtl-cycle__section-nav-title {
+    color: var(--ink);
+  }
+}
+.dbtl-cycle__section-nav-link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Subsections: Design/Build/Test/Learn, shown only under the currently
+   active iteration of the currently active branch (see DbtlNavGroup's own
+   isActiveBranch doc comment) — same convention as PageSectionNav's
+   children, and the same type scale (0.78rem) as its own sub-level link.
+   Deliberately carries no background/blur of its own (see the big comment
+   above .dbtl-cycle__section-nav) — letting the outer nav's light base
+   wash show straight through is what reads this tier as lighter and less
+   blurred than the Iteration row it's nested under. */
+.dbtl-cycle__section-nav-sublist {
+  list-style: none;
+  margin: 2px 0 6px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.dbtl-cycle__section-nav-link--sub {
+  padding: 6px 16px 6px 28px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.dbtl-cycle__section-nav-link--sub.is-active {
+  color: var(--iter-color);
+  border-left-color: var(--iter-color);
+}
+
+/* "Back to top" -- matches the shared PageSectionNav's own
+   .page-section-nav__top exactly (see PageSectionNav.css): a step quieter
+   than even the Phase rows above it, with its own thin divider, so it
+   reads as a secondary utility rather than another level of the
+   hierarchy. */
+.dbtl-cycle__section-nav-top {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  margin-left: -2px;
+  padding: 10px 16px 0;
+  border: none;
+  border-top: 1px solid var(--line);
+  border-left: 2px solid transparent;
+  background: none;
+  font: inherit;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+  opacity: 0.7;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    opacity 0.15s ease;
+}
+@media (hover: hover) {
+  .dbtl-cycle__section-nav-top:hover {
+    color: var(--ink);
+    opacity: 1;
+  }
+}
+.dbtl-cycle__section-nav-top:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* --- The one pinned panel, held for the whole scroll length --- */
+.dbtl-cycle__scroller {
+  position: relative;
+  /* height set inline (total iterations × --dbtl-iter-vh) */
+}
+
+.dbtl-cycle__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 620px;
+  overflow: visible;
+}
+
+/* The bleed below is a uniform scale(1.06) — deliberately, to keep the
+   loop's own aspect ratio untouched — which overflows its box by ~27px on
+   every edge, not just the sides (horizontally this lands harmlessly in
+   the "meet" letterboxing margin, so only top/bottom ever risk clipping
+   real geometry). .dbtl-cycle__loop's own clip boundary is extended 40px
+   on BOTH top and bottom to give that overflow room to render instead of
+   being cut by overflow:hidden — the highest point of the whole path sits
+   right at the top edge on the very first loop, and a loop's Build path
+   sits just as close to the bottom edge, so both needed the same margin
+   (an earlier version only extended the top, which left a loop's lowest
+   geometry clipped — most visible once a spiral's sticky panel is no
+   longer glued to the viewport and its own natural top/bottom margins are
+   genuinely on screen, e.g. handing off into a following spiral). The svg
+   is offset back down by the same 40px inside the now-taller box so its
+   rendered position doesn't move at all — this only opens up clipping
+   headroom, it doesn't change what's visible anywhere else. */
+.dbtl-cycle__loop {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  width: 100vw;
+  height: calc(100% + 80px);
+  transform: translateX(-50%);
+  overflow: hidden;
+  pointer-events: none;
+}
+.dbtl-cycle__loop svg {
+  position: absolute;
+  top: 40px;
+  width: 100%;
+  height: calc(100% - 80px);
+  /* Clips to the viewBox, so the inner <g>'s pan transform reveals one
+     loop's worth of the stacked drawing at a time instead of showing all
+     iterations overlaid. preserveAspectRatio (set on the element, from
+     the component: "meet" on desktop, "none" below 900px) decides whether
+     the loop keeps its own ratio or stretches to fill a narrow viewport. */
+  overflow: hidden;
+  /* "meet" already fits the whole loop with no cropping; this small extra
+     uniform scale is the "let it bleed a little past the edges" —
+     .dbtl-cycle__loop's own overflow:hidden above caps it, so it never
+     grows a scrollbar. Removed at the mobile breakpoint below, where
+     preserveAspectRatio="none" already fills edge-to-edge on its own. */
+  transform: scale(1.06);
+}
+
+/* This group's opacity is what makes the track (and its still-dim joint
+   arrows below) translucent — never set opacity on .dbtl-cycle__track or
+   .dbtl-cycle__joint-arrow directly, or their overlap at each phase
+   boundary goes back to double-blending into a stain. */
+.dbtl-cycle__loop-dim {
+  opacity: 0.34;
+}
+/* Desktop keeps the reference's own bold stroke-width (36, in the same
+   viewBox units as the path data) with no vector-effect — "meet" scales
+   the whole loop uniformly there, so a plain user-space width already
+   renders as one consistent, imposing thickness all the way around,
+   nothing needed to correct for. Mobile overrides both further down: a
+   smaller value so it doesn't overwhelm a narrow screen, and
+   non-scaling-stroke because preserveAspectRatio="none" stretches x and y
+   unevenly there, which would otherwise make the same width render
+   thicker in one direction than another. */
+/* stroke/fill are set inline per element from the component (a unique,
+   per-instance gradient id — see gradientId in DbtlCycle.tsx), not here:
+   two <DbtlCycle> instances on one page (e.g. Enzymatic immobilisation's
+   two spirals) each need their own <linearGradient>, and a class-level
+   hardcoded url(#id) can't vary per instance the way an inline style can. */
+.dbtl-cycle__track {
+  fill: none;
+  stroke-width: 36;
+  stroke-linecap: round;
+}
+.dbtl-cycle__progress {
+  fill: none;
+  stroke-width: 36;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.08s linear;
+}
+/* .dbtl-cycle__joint-arrow itself carries no rule here — its fill is set
+   inline (see above) and, by design, no opacity/transition ever touches
+   it: which copy of a joint arrow renders (dim, inside
+   .dbtl-cycle__loop-dim, or this fully-opaque one) is decided by React
+   conditional rendering, so the swap is a plain mount/unmount in one
+   commit — animating opacity here would reintroduce the flicker (dim
+   copy gone before the lit one finishes fading in). */
+
+/* --- Centred explanatory content: fixed in place, no slide/carousel —
+   title and copy simply swap on scroll; only .copy's own scrollTop moves,
+   per phase progress (see the component). Opacity/transform are set
+   directly from scroll math each frame (see contentRef/incomingContentRef
+   in apply()) for the transition fade — never a CSS transition here, so
+   there's nothing to declare in this rule beyond the resting position. --- */
+.dbtl-cycle__content {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  /* % (not vw) deliberately: this element's containing block is
+     .dbtl-cycle__sticky, which is capped at 1120px (.dbtl-cycle's own
+     max-width) regardless of viewport — a vw-based width kept growing
+     past that cap on a wide monitor and collided with the old right-side
+     phase nav, which was positioned relative to that same, capped sticky
+     box (that nav is gone now, folded into the left sidebar, but the %
+     containing-block logic still applies to whatever cap is chosen here). */
+  width: min(820px, 62%);
+  text-align: center;
+}
+/* The incoming preview sits in the exact same spot as the real content
+   (same class, same positioning rules above) — pointer-events:none since
+   it's a transient visual double, never meant to receive clicks/selection,
+   even during the brief window it's at nonzero opacity. */
+.dbtl-cycle__content--incoming {
+  pointer-events: none;
+}
+.dbtl-cycle__eyebrow {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--iter-color);
+}
+
+/* --- Phase-to-phase transition (Design — Build — Test — Learn), within
+   one iteration only. .dbtl-cycle__content above never moves, resizes or
+   shifts — it is the fixed viewport, and its own dimensions/position stay
+   put; only these two layered "slide" panes translate inside it. The
+   iteration-to-iteration handoff (contentRef/incomingContentRef, driven
+   per scroll frame above) is a separate mechanism and is untouched. */
+.dbtl-cycle__phase-viewport {
+  position: relative;
+  overflow: hidden;
+}
+.dbtl-cycle__phase-slide {
+  width: 100%;
+}
+/* Pure transform, no opacity -- exit and enter share the exact same
+   duration/easing and their translateX keyframes are exact mirrors of one
+   another (0 — -100% vs 100% — 0, or the reverse for --back), so the
+   trailing edge of the outgoing pane and the leading edge of the incoming
+   one stay glued together at every instant: a clean push handoff, never a
+   cross-fade, never a frame where both panes' text overlaps. Each pane
+   travels its own full width, so it reads unambiguously as one section
+   leaving and the next entering rather than a small nudge. */
+.dbtl-cycle__phase-slide--enter {
+  position: relative;
+  z-index: 2;
+  animation: dbtl-phase-enter-fwd 0.28s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.dbtl-cycle__phase-slide--enter.dbtl-cycle__phase-slide--back {
+  animation-name: dbtl-phase-enter-back;
+}
+.dbtl-cycle__phase-slide--exit {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  animation: dbtl-phase-exit-fwd 0.28s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.dbtl-cycle__phase-slide--exit.dbtl-cycle__phase-slide--back {
+  animation-name: dbtl-phase-exit-back;
+}
+@keyframes dbtl-phase-enter-fwd {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes dbtl-phase-enter-back {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes dbtl-phase-exit-fwd {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+@keyframes dbtl-phase-exit-back {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.dbtl-cycle__phase-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.dbtl-cycle__copy {
+  margin: 18px auto 0;
+  max-width: 820px;
+  /* max-height (not a fixed height): the scroll-driven reveal below still
+     needs a cap to measure read-progress against for a long phase, but a
+     fixed height reserved that much blank space even for a short one,
+     pushing the pips down and leaving a visible gap under the text. With
+     max-height, a short phase's box simply shrinks to fit; scrollHeight
+     still exceeds clientHeight for the ones that need scrolling. */
+  max-height: min(54vh, 420px);
+  overflow-y: hidden;
+  /* Clears the bottom mask-fade band (18px, see mask-image below) once
+     scrolled to the true end, so .dbtl-cycle__end-mark sits fully solid
+     there instead of getting caught in the "more below" fade itself. */
+  padding-bottom: 28px;
+  text-align: left;
+  font-family: var(--font-body);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  /* Top edge is fully opaque now (no fade-in-from-nothing at the start of
+     a phase's text) — only the bottom still fades, signalling there's
+     more to scroll to when a phase's text exceeds the box (the true end,
+     past the padding above, always reads solid — see .dbtl-cycle__end-mark). */
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 18px),
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0,
+    #000 calc(100% - 18px),
+    transparent 100%
+  );
+}
+/* Requested reading-column format: justified, with hyphenation so a
+   justified narrow column doesn't get rivers of loose word-spacing.
+   (Applied to .dbtl-cycle__copy, this file's actual iteration-content
+   container — there is no .dbtl-iteration-content class in this component.) */
+.dbtl-cycle__copy p,
+.dbtl-cycle__copy ul,
+.dbtl-cycle__copy li {
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+.dbtl-cycle__copy p {
+  margin: 0 0 12px;
+}
+.dbtl-cycle__copy p:last-child {
+  margin-bottom: 4px;
+}
+/* Reached-the-end marker: the true last thing in a phase's scrollable
+   copy, in the current phase/iteration colour. .dbtl-cycle__copy's own
+   bottom padding (above) keeps it clear of the bottom mask-fade band, so
+   it reads fully solid once a reader has scrolled all the way down —
+   distinct from that fade, which signals "more below" partway through. */
+.dbtl-cycle__end-mark {
+  width: 40px;
+  height: 2px;
+  margin: 22px 0 2px;
+  border-radius: 2px;
+  background: var(--iter-color);
+  opacity: 0.8;
+}
+.dbtl-cycle__copy strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+/* A bracketed placeholder the team flagged as still pending — kept
+   distinct from plain bold rather than styled as emphasis, matching how
+   the source document itself set it apart with a red highlight. */
+.dbtl-cycle__pending {
+  color: #b0492f;
+  background: rgba(176, 73, 47, 0.1);
+  border-radius: 4px;
+  padding: 0 3px;
+  font-size: 0.85em;
+}
+
+.dbtl-cycle__list {
+  margin: 0 0 12px;
+  padding-left: 1.1em;
+}
+.dbtl-cycle__list li {
+  margin-bottom: 4px;
+}
+.dbtl-cycle__list li::marker {
+  color: var(--iter-color);
+}
+
+/* Tables ride along in the same scroll-paced flow as the paragraphs
+   around them (a longer phase just takes more of that phase's read
+   budget to reveal) rather than opening in a separate panel — but a wide
+   table still needs its own horizontal scroll so it never forces the
+   narrow copy column wider than the sticky composition around it.
+   Sized/coloured to match Experiments' own .record-table (see
+   LabFolders.css) rather than a bespoke DBTL treatment — same padding,
+   font size, border weight, header/caption colour, and (since long
+   prose-heavy cells, e.g. a Learn phase's "Failure / Change / Learning"
+   table, need to wrap rather than force a wide horizontal scroll) the
+   same non-nowrap cell behaviour. Two values stay genuinely DBTL-specific
+   because .record-table's own equivalents (--lab-line, --folder-accent)
+   are custom properties scoped to .lab-folders and not in scope here: the
+   border colour is the same concrete hairline .record-table resolves to,
+   and the header tint uses this spiral's own --iter-color in place of
+   Experiments' per-block --folder-accent, so a Genetic engineering table
+   tints green and an Enzymatic immobilisation one tints violet, the same
+   way a Genetic engineering record-table would tint green in Experiments. */
+.dbtl-cycle__table-wrap {
+  margin: 4px 0 14px;
+  overflow-x: auto;
+}
+.dbtl-cycle__table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 360px;
+  font-size: 0.85rem;
+}
+.dbtl-cycle__table th,
+.dbtl-cycle__table td {
+  border: 1px solid rgba(27, 35, 64, 0.22);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.dbtl-cycle__table th {
+  font-weight: 600;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--iter-color) 26%, var(--paper));
+}
+.dbtl-cycle__table td {
+  color: var(--ink-soft);
+}
+.dbtl-cycle__cell--good {
+  color: #1f7a4d;
+  background: rgba(31, 122, 77, 0.1);
+  font-weight: 600;
+}
+.dbtl-cycle__cell--bad {
+  color: #b0402f;
+  background: rgba(176, 64, 47, 0.1);
+  font-weight: 600;
+}
+.dbtl-cycle__table-caption {
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* Inline links within phase copy (see renderRich's own doc comment in
+   DbtlCycle.tsx) — the SAME "wikilink" visual language used everywhere
+   else on the site (.vsi-wikilink in VisualIndex.css, .lab-wikilink in
+   LabFolders.css): bold text, no underline, and a translucent highlighter
+   bar under the lower half that fills to full height on hover/focus,
+   rather than a bespoke Engineering-only treatment. Accent-driven off
+   this spiral's own --iter-color instead of a fixed brand colour, the
+   same way .lab-wikilink is driven by --folder-accent rather than
+   .vsi-wikilink's fixed green — each block's links pick up its own
+   colour instead of one colour borrowed from a different page. A pending
+   link (no real destination yet) keeps that same bold weight and
+   colour family so it still reads as "a link", just visibly unresolved:
+   muted ink-soft text with a dotted underline and a title tooltip
+   explaining why, closer in spirit to .dbtl-cycle__pending's own
+   "flagged, not finished" treatment than to a clickable control, and it
+   renders as a <span>, not an <a>, so it isn't keyboard-focusable as if
+   it were interactive. */
+.dbtl-cycle__link {
+  color: var(--iter-color);
+  text-decoration: none;
+  font-weight: 600;
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--iter-color) 32%, transparent),
+    color-mix(in srgb, var(--iter-color) 32%, transparent)
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 45%;
+  background-position: 0 100%;
+  transition: background-size 0.22s ease;
+}
+@media (hover: hover) {
+  .dbtl-cycle__link:hover {
+    background-size: 100% 100%;
+  }
+}
+.dbtl-cycle__link:focus-visible {
+  background-size: 100% 100%;
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.dbtl-cycle__link--pending {
+  color: var(--ink-soft);
+  font-weight: 600;
+  text-decoration: underline dotted;
+  text-decoration-color: currentColor;
+  text-underline-offset: 2px;
+  cursor: help;
+}
+
+/* Figure placeholder within phase copy — same "clearly-labelled stand-in"
+   visual language as Experiments' own .record-figure__placeholder (see
+   LabFolders.css), sized for this narrow scrolling copy column instead of
+   the wider paired text+figure layout that composition sits in over
+   there: .experiment-card__pair's two-column split has no room to work
+   with inside .dbtl-cycle__copy, so this always renders as the single,
+   stacked column that same composition already falls back to on narrow
+   screens (see .experiment-card__pair's own responsive breakpoint) —
+   the same placeholder, its responsive variant, not a new design. */
+.dbtl-cycle__figure {
+  margin: 10px 0 16px;
+}
+.dbtl-cycle__figure-placeholder {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed rgba(27, 35, 64, 0.22);
+  border-radius: 4px;
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-family: ui-monospace, "SFMono-Regular", "Courier New", monospace;
+  font-size: 0.76rem;
+}
+.dbtl-cycle__figure figcaption {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.dbtl-cycle__pips {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 20px;
+}
+.dbtl-cycle__pip {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--line);
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+.dbtl-cycle__pip.is-active {
+  background: var(--iter-color);
+  transform: scale(1.4);
+}
+
+.dbtl-cycle__scroll-cue {
+  position: absolute;
+  z-index: 15;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: 0.6;
+  transition: opacity 0.15s ease;
+}
+.dbtl-cycle__scroll-cue span {
+  display: block;
+  margin-top: 4px;
+  font-size: 1rem;
+  animation: dbtl-cycle-bob 1.6s ease-in-out infinite;
+}
+@keyframes dbtl-cycle-bob {
+  50% {
+    transform: translateY(4px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dbtl-cycle__scroll-cue span {
+    animation: none;
+  }
+  .dbtl-cycle__phase-slide--enter {
+    animation: none;
+  }
+  .dbtl-cycle__phase-slide--exit {
+    display: none;
+  }
+}
+
+/* On a wide monitor there's real room to spare around the sidebar now
+   that there's no right-side nav to balance against. .dbtl-cycle__content's
+   own width is already self-limiting (a % of .dbtl-cycle__sticky, not vw
+   — see its rule above), so widening it further here means giving sticky
+   itself more room first (.dbtl-cycle's max-width), then letting content
+   claim more of that. The sidebar's own width is no longer set here at
+   all — it comes entirely from .engineering-nav-layout's grid column
+   (see Engineering.css), same as the shared PageSectionNav, so it isn't
+   this breakpoint's concern any more either. */
+@media (min-width: 1500px) {
+  .dbtl-cycle {
+    max-width: 1360px;
+  }
+  .dbtl-cycle__content {
+    width: min(1000px, 74%);
+  }
+  .dbtl-cycle__copy {
+    max-width: 940px;
+    max-height: min(58vh, 460px);
+  }
+}
+
+/* Below this width the sidebar steps aside entirely (see
+   .engineering-nav-layout's own matching collapse to a plain block in
+   Engineering.css — the two breakpoints must stay in lock-step, since a
+   reserved grid column with nothing sticking in it would just be dead
+   space). */
+@media (max-width: 980px) {
+  .dbtl-cycle__section-nav {
+    display: none;
+  }
+  .dbtl-cycle__content {
+    width: 58vw;
+  }
+}
+
+/* Matches the JS breakpoint that switches preserveAspectRatio to "none" —
+   that already stretches the loop edge-to-edge, so the extra desktop
+   "bleed" scale would just distort it further on top of the stretch. */
+@media (max-width: 900px) {
+  .dbtl-cycle__loop svg {
+    transform: none;
+  }
+  /* "none" stretches x and y by different factors, which would make a
+     plain user-space stroke-width render thicker in one direction than
+     another — non-scaling-stroke locks it to one constant screen-pixel
+     width regardless of that stretch, and a smaller value keeps it
+     proportionate to the narrower viewport instead of desktop's bold 36. */
+  .dbtl-cycle__track,
+  .dbtl-cycle__progress {
+    stroke-width: 6px;
+    vector-effect: non-scaling-stroke;
+  }
+}
+
+@media (max-width: 700px) {
+  .dbtl-cycle__content {
+    width: 76vw;
+  }
+  .dbtl-cycle__copy {
+    font-size: 0.88rem;
+  }
+  .dbtl-cycle__phase-title {
+    font-size: 1.7rem;
+  }
+  .dbtl-cycle__scroll-cue {
+    display: none;
+  }
+}

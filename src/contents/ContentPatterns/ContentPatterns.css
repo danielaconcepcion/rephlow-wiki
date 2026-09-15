@@ -1,0 +1,763 @@
+/* ==========================================================================
+   Content Patterns — internal reference page.
+
+   Horizontal geometry and vertical rhythm are copied number-for-number
+   from ProjectDescription (.pd-content-wrap/.pd-content/.vsi-wrap in
+   ProjectDescription.css) rather than approximated:
+     - ONE padded wrap (.cp-content-column, the .pd-content-wrap role) —
+       `padding: 6vh 20px 10vh`, `padding-inline: 16px` under 760px —
+       carrying the grid column's entire gutter, once. .cp-content and
+       .cp-section--wide are plain width/centering utilities *inside* it
+       (max-width + margin: 0 auto, no padding of their own), the same
+       relationship .pd-content and .vsi-wrap have to .pd-content-wrap.
+       Nesting a second full wrap per section (as this file used to do)
+       silently doubles the vertical padding around whichever section
+       sits at the seam — this structure can't do that, because there is
+       only one wrap on the whole page.
+     - 72px section→section, 38px subsection→subsection, 14px heading→
+       paragraph, 14px paragraph→paragraph — Project Description's own
+       scale. 28px prose→embedded-block is kept (it already matches PD's
+       figure spacing and LabFolders' card row-gap).
+   Heading *sizes* still step down hard on purpose (H2 ≫ H3 > paragraph-
+   heading) — only the margins were ever the odd one out. No card in this
+   file uses a coloured band/stripe/edge — colour, where used at all, is a
+   soft fill + a faintly tinted outline, the same device Human Practices'
+   .hp-framework-sequence__choice uses.
+   ========================================================================== */
+
+.cp-hero__eyebrow {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--phosphate) 10%, var(--paper-soft));
+  color: var(--phosphate);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* -- The one padded wrap for the whole column — see the file banner. -- */
+.cp-content-column {
+  padding: 6vh 20px 10vh;
+}
+@media (max-width: 760px) {
+  .cp-content-column {
+    padding-inline: 16px;
+  }
+}
+
+/* -- Content measure: centering only, no padding — matches .pd-content. -- */
+.cp-content {
+  max-width: 790px;
+  min-width: 0;
+  margin: 0 auto;
+}
+/* A section that needs more than prose width for one composition (the
+   Model-style wide comparison) — same idea as ProjectDescription's own
+   .vsi-wrap / Model's .model-network__wide: a sibling of the narrow
+   .cp-content blocks, at the width the (padded) column actually has,
+   rather than fighting a 790px ancestor with negative margins. 1120px
+   matches .vsi-wrap's own max-width exactly; in practice the column is
+   never that wide, so the real ceiling is the column's own width minus
+   .cp-content-column's 20px/16px side padding. */
+.cp-section--wide {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+/* Utility for a narrow measure of prose *inside* a wide section. */
+.cp-measure {
+  max-width: 790px;
+  margin: 0 auto;
+}
+
+/* -- Section: the big title. -- */
+.cp-section {
+  margin-top: 72px;
+  scroll-margin-top: var(--section-nav-offset);
+}
+.cp-section--first {
+  margin-top: 40px;
+}
+.cp-section > h2,
+.cp-measure > h2 {
+  color: var(--ink);
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
+}
+
+/* -- Subsection: visibly substantial, a real division — bigger jump than
+   just "smaller h2" in *size*, on Project Description's own margin. -- */
+.cp-subsection {
+  margin-top: 38px;
+  scroll-margin-top: var(--section-nav-offset);
+}
+.cp-subsection > h3,
+.cp-measure > h3 {
+  color: var(--ink);
+  font-size: clamp(1.3rem, 2.6vw, 1.55rem);
+  font-weight: 600;
+}
+/* -- Smaller paragraph-level heading — reuses LabFolders' .record-heading
+   (the same class Experiments/Results use for "Materials"/"Aim") for the
+   quietest tier, rather than a fourth invented style. -- */
+.cp-detail-heading {
+  margin-top: 32px;
+}
+
+/* -- The prose rhythm itself, Project Description's own numbers. General
+   rules first; the heading-adjacency exception is declared after, so it
+   wins the specificity tie on purpose (both are one-class-plus-one-type
+   selectors). -- */
+.cp-section > p,
+.cp-subsection > p,
+.cp-measure > p {
+  margin-top: 14px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+.cp-embed {
+  margin-top: 28px;
+}
+.cp-section > h2 + p,
+.cp-subsection > h3 + p,
+.cp-measure > h2 + p,
+.cp-measure > h3 + p {
+  margin-top: 14px;
+}
+
+/* -- Dividers: sparing, generous breathing room, used once. -- */
+.cp-hr {
+  margin: 56px 0;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+
+/* --------------------------------------------------------------------------
+   Callouts — no icon, no coloured edge. A soft two-stop gradient fill (the
+   same device as Human Practices' .hp-framework-sequence__choice) plus a
+   faintly tinted border in the same hue; three variants differ only in
+   which hue tints the fill. The bold lead-in word (matching the wiki-wide
+   blockquote-callout convention) carries the "this is a note" cue instead
+   of an icon.
+   -------------------------------------------------------------------------- */
+.cp-note {
+  padding: 20px 24px;
+  border-radius: 14px;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--cp-note-hue, var(--water-mid)) 12%, var(--paper)),
+    var(--paper-soft)
+  );
+  border: 1px solid
+    color-mix(in srgb, var(--cp-note-hue, var(--water-mid)) 20%, transparent);
+}
+.cp-note + .cp-note {
+  margin-top: 16px;
+}
+.cp-note p {
+  margin: 0;
+}
+.cp-note p + p {
+  margin-top: 8px;
+}
+.cp-note--warning {
+  --cp-note-hue: var(--phosphate);
+}
+.cp-note--idea {
+  --cp-note-hue: var(--microbe);
+}
+
+/* -- Figures -- */
+.cp-figure-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: center;
+}
+.cp-figure-pair img {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+}
+.cp-figure-pair p {
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .cp-figure-pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+.cp-figure-full {
+  /* Only reset the sides .cp-embed doesn't already govern — leaving
+     margin-top alone means the cascade doesn't have two rules of equal
+     specificity fighting over the same longhand. */
+  margin-inline: 0;
+  margin-bottom: 0;
+}
+.cp-figure-full img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+}
+.cp-figure-full figcaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.cp-figure-credit {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.76rem;
+  color: color-mix(in srgb, var(--ink-soft) 80%, transparent);
+}
+
+/* -- Tables: reproduces the real Experiments/Results table treatment.
+   .record-table/.record-table-wrap/.record-table-caption (LabFolders.css)
+   read two custom properties, --lab-line and --folder-accent, that are
+   normally set inline per page/block (see Experiments.tsx, Results.tsx —
+   `style={{ "--folder-accent": activeBlock.accent }}`) — without them the
+   table silently loses its borders and header tint. .cp-lab-tokens
+   reproduces the same two values locally so the table (and the Model-style
+   comparison below, which depends on the same tokens) render exactly as
+   they do on Experiments/Results/Model, without pulling in that page's own
+   layout. */
+.cp-lab-tokens {
+  --lab-line: rgba(27, 35, 64, 0.22);
+  --folder-accent: var(--phosphate);
+}
+.cp-lab-tokens + .cp-lab-tokens {
+  margin-top: 18px;
+}
+
+/* Stand-in for a real figure inside a reused .factor-explorer__image-wrap
+   (see the Factor Explorer demo below) — same box (padding, radius,
+   shadow) as the real <img>, so swapping in placeholder content doesn't
+   also require re-deriving its sizing. */
+.cp-factor-figure-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  background: var(--paper);
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+  color: var(--ink-soft);
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas,
+    monospace;
+  font-size: 0.76rem;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------------------
+   Editorial info card — deliberately the quietest of the four: no border,
+   just a soft fill, closer to a set-apart aside than a UI component.
+   -------------------------------------------------------------------------- */
+.cp-aside {
+  padding: 22px 26px;
+  border-radius: 14px;
+  background: var(--paper-soft);
+}
+.cp-aside__title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+.cp-aside p {
+  margin-top: 10px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.cp-aside p:first-of-type {
+  margin-top: 10px;
+}
+.cp-aside__link {
+  display: inline-block;
+  margin-top: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Section summary — a distinct, substantial editorial block, not a
+   metadata card: real synthesis prose, no labelled fields. A thin wave
+   traces the top edge instead of a straight rule or a coloured band — the
+   one place on this page that nods, restrained, at rePhlow's own "flow"
+   language. Soft two-stop fill, same device as .cp-note, tuned a shade
+   deeper so it reads as a closing beat rather than another aside.
+   -------------------------------------------------------------------------- */
+.cp-summary {
+  position: relative;
+  padding: 30px 30px 28px;
+  border-radius: 4px 28px 4px 28px;
+  background: linear-gradient(
+    150deg,
+    color-mix(in srgb, var(--water-mid) 16%, var(--paper)),
+    color-mix(in srgb, var(--algae) 8%, var(--paper-soft))
+  );
+  border: 1px solid color-mix(in srgb, var(--water-mid) 24%, transparent);
+}
+.cp-summary__wave {
+  display: block;
+  width: 72px;
+  height: 10px;
+  margin-bottom: 14px;
+  color: color-mix(in srgb, var(--water-mid) 70%, var(--ink));
+  opacity: 0.7;
+}
+.cp-summary__title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 0;
+}
+.cp-summary p {
+  margin-top: 12px;
+  color: var(--ink);
+  line-height: 1.65;
+  max-width: 62ch;
+}
+.cp-summary p:first-of-type {
+  margin-top: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Result / findings card — the Model page's own wide comparison treatment
+   (.model-network__compare*, reused verbatim from Model.css, imported
+   below), not LabFolders' .result-card: two panels, a divider between
+   them, a shared reading below each figure, and a synthesis paragraph
+   closing the pair. Lives inside .cp-section--wide so it can actually be
+   wider than the prose column, like it is on Model.
+   -------------------------------------------------------------------------- */
+
+/* -- Image card — image-led, no shared card frame, its own quieter
+   language: a bordered photo (the same "photo on paper" treatment as
+   LabFolders' .record-figure-group__photo) with a plain caption beneath. -- */
+.cp-image-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cp-image-card__photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 10px;
+}
+.cp-image-card__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--ink);
+  margin: 0;
+}
+.cp-image-card__desc {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+.cp-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* -- Blockquote / pull-quote. -- */
+.cp-quote {
+  margin-inline: 0;
+  margin-bottom: 0;
+  padding: 4px 0 4px 22px;
+  border-left: 3px solid var(--microbe);
+  font-family: var(--font-display);
+  font-size: 1.18rem;
+  font-style: italic;
+  color: var(--ink);
+}
+.cp-quote cite {
+  display: block;
+  margin-top: 10px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+/* -- Related / adjacent navigation demo strip. -- */
+.cp-related-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 22px;
+  font-size: 0.98rem;
+}
+
+/* ==========================================================================
+   rePhlow identity — LOCAL TO THIS PAGE ONLY.
+
+   Tokens translated from the Canva/social identity (blue→green gradient,
+   #314f65 / #9cc66f / #fffaf1 / #ceeaff), scoped to .cp-content-column so
+   nothing here leaks into shared components or other pages. Three motifs
+   recur, each in more than one form:
+     1. the water drop — a corner wash in the hero, a droplet-clipped image
+        frame (§9), a droplet bullet marker (§4);
+     2. a thin flowing/wave line — a ripple divider variant, and a hover
+        interaction on .cp-wave-link that "fills in" like a current rather
+        than a generic underline;
+     3. a simplified PO4 motif — a bullet glyph, marginal "PO₄³⁻" notation,
+        and the molecule photography itself, bleeding into the gutter
+        beside dense sections rather than sitting in a box.
+   ========================================================================== */
+.cp-content-column {
+  --rp-blue: #86b1d1;
+  --rp-green: #9cc66f;
+  --rp-ink-deep: #314f65;
+  --rp-paper-warm: #fffaf1;
+  --rp-water-pale: #ceeaff;
+  --rp-gradient: linear-gradient(135deg, #86b1d1, #9dc76f);
+}
+
+/* -- Hero wash: one deliberate use of the primary gradient, low-opacity,
+   behind the existing hero content — not a glossy UI gradient, closer to
+   the layered Canva treatment. .cp-hero is additive to .page-hero (a
+   second class on the same element), so .page-hero itself is untouched
+   for every other page. -- */
+.cp-hero {
+  position: relative;
+  overflow: hidden;
+}
+.cp-hero-wash {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 130%;
+  background: var(--rp-gradient);
+  opacity: 0.1;
+  filter: blur(2px);
+  pointer-events: none;
+  z-index: 0;
+}
+.cp-hero-drop {
+  position: absolute;
+  top: -18px;
+  right: 6%;
+  width: 84px;
+  height: auto;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 0;
+}
+.cp-hero > .cp-hero__eyebrow,
+.cp-hero > .page-hero__title,
+.cp-hero > .page-hero__lede {
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 700px) {
+  .cp-hero-drop {
+    width: 52px;
+    right: 4%;
+  }
+}
+
+/* -- Droplet bullet: a small inline mark, not an icon-in-a-box — used
+   sparingly as a list marker, never repeated next to headings/cards. -- */
+.cp-drop-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cp-drop-list li {
+  position: relative;
+  padding-left: 26px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.cp-drop-list li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 4px;
+  width: 11px;
+  height: 11px;
+  background: var(--rp-blue);
+  border-radius: 50% 50% 50% 4%;
+  transform: rotate(-45deg);
+  opacity: 0.75;
+}
+
+/* -- PO4 glyph: a bullet/mark, not a repeated icon system. -- */
+.cp-po4-glyph {
+  color: var(--rp-ink-deep);
+  flex: none;
+  vertical-align: -3px;
+}
+
+/* -- Marginal molecular notation ("PO₄³⁻") and the molecule photography,
+   stacked in one column anchored to the *wide* column's own right edge
+   (never to the viewport) — "partially outside the content column" means
+   outside the 790px prose measure, not outside the page. The gutter this
+   sits in grows only slowly with viewport width (gutter ≈ (viewport −
+   1110) / 2 once the nav column hits its own 200px cap, since the wide
+   section's own 1120px max-width is never actually reached — the page's
+   overall 1360px cap binds first) — so the breakpoint here is deliberately
+   conservative, chosen from that formula rather than eyeballed, to
+   guarantee real clearance from the prose text rather than a near-miss. */
+.cp-margin-decor-host {
+  position: relative;
+}
+.cp-margin-decor {
+  display: none;
+}
+@media (min-width: 1400px) {
+  .cp-margin-decor {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 108px;
+    pointer-events: none;
+  }
+  .cp-margin-decor img {
+    width: 84px;
+    opacity: 0.5;
+  }
+  .cp-margin-decor .cp-marginalia {
+    display: block;
+    width: 100%;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.74rem;
+    line-height: 1.5;
+    text-align: right;
+    color: var(--rp-ink-deep);
+    opacity: 0.65;
+  }
+}
+.cp-marginalia {
+  display: none;
+}
+
+/* -- Ripple divider: an alternative to the plain .cp-hr, for the one or
+   two places a straight rule would feel too clinical against the water
+   language established elsewhere. Still used sparingly. -- */
+.cp-ripple-divider {
+  display: flex;
+  justify-content: center;
+  margin: 56px 0;
+  color: color-mix(in srgb, var(--rp-blue) 70%, var(--ink-soft));
+  opacity: 0.6;
+}
+
+/* -- Wave-hover link: same underline idea as .vsi-wikilink, but the mark
+   "flows in" like a current instead of a highlighter bar filling — used
+   in the one or two spots that lean into the water language rather than
+   as a blanket link replacement. -- */
+.cp-wave-link {
+  position: relative;
+  color: var(--rp-ink-deep);
+  font-weight: 600;
+  text-decoration: none;
+  padding-bottom: 3px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='6' viewBox='0 0 20 6'%3E%3Cpath d='M0 3 C 2.5 0, 7.5 0, 10 3 C 12.5 6, 17.5 6, 20 3' fill='none' stroke='%2386b1d1' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: -20px 100%;
+  background-size: 20px 6px;
+  transition: background-position 0.5s ease;
+}
+.cp-wave-link:hover,
+.cp-wave-link:focus-visible {
+  background-position: 0 100%;
+}
+
+/* -- Droplet-framed image: a teardrop crop (rotated square, asymmetric
+   radius) — a motif that changes the actual shape of a card, not just
+   its colour. -- */
+.cp-droplet-frame {
+  width: 100%;
+  max-width: 200px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+  border-radius: 50% 50% 50% 6%;
+  overflow: hidden;
+  transform: rotate(-45deg);
+  box-shadow: var(--shadow-card);
+}
+.cp-droplet-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: rotate(45deg) scale(1.55);
+}
+
+/* --------------------------------------------------------------------------
+   Additional component variations — still local to this page. Different
+   purposes keep different visual languages; none of these join .cp-card's
+   plain frame or one another's.
+   -------------------------------------------------------------------------- */
+
+/* Icon-led card, two scales: a compact inline "tag" and a larger feature
+   card. Kept distinct from .cp-card's family — this one is icon-led, so
+   the icon sets the layout instead of sitting beside a title. */
+.cp-icon-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.cp-icon-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px 7px 8px;
+  border-radius: 999px;
+  background: var(--paper-soft);
+  border: 1px solid var(--line);
+  font-size: 0.86rem;
+  color: var(--ink);
+}
+.cp-icon-tag img {
+  width: 22px;
+  height: 22px;
+}
+
+.cp-icon-feature {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 16px;
+  align-items: start;
+  padding: 20px 22px;
+  border-radius: 14px;
+  background: var(--rp-water-pale);
+  background: color-mix(in srgb, var(--rp-water-pale) 55%, var(--paper));
+}
+.cp-icon-feature img {
+  width: 64px;
+  height: 64px;
+}
+.cp-icon-feature h4 {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--rp-ink-deep);
+}
+.cp-icon-feature p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+/* Expressive callout — an additional, more colourful variant alongside
+   .cp-note (which stays exactly as it was: no icon, no band). This one
+   leans into the gradient identity deliberately, for the rare moment a
+   page wants more presence than a quiet aside. */
+.cp-note--expressive {
+  position: relative;
+  padding: 22px 26px;
+  border-radius: 6px 22px 6px 22px;
+  background: var(--rp-gradient);
+  color: var(--rp-paper-warm);
+}
+.cp-note--expressive p {
+  margin: 0;
+  line-height: 1.6;
+}
+.cp-note--expressive strong {
+  color: var(--rp-paper-warm);
+}
+
+/* Warm editorial card — a second, quieter register than .cp-aside, using
+   the identity's warm paper tone rather than the wiki's cool paper-soft. */
+.cp-aside--warm {
+  background: var(--rp-paper-warm);
+  border: 1px solid color-mix(in srgb, var(--rp-ink-deep) 12%, transparent);
+}
+
+/* Colourful wide finding — an alternate to the Model-style compare (§9):
+   same wide-column idea, but leaning fully into the gradient identity for
+   a denser, more visual data page. Kept as its own visual language, not
+   merged into .model-network__compare. */
+.cp-finding-wide {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+.cp-finding-wide__figure {
+  position: relative;
+  background: var(--rp-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  min-height: 220px;
+}
+.cp-finding-wide__figure img {
+  width: 100%;
+  max-width: 280px;
+  filter: drop-shadow(0 8px 18px rgba(49, 79, 101, 0.25));
+}
+.cp-finding-wide__body {
+  padding: 30px 34px;
+  background: var(--rp-paper-warm);
+}
+.cp-finding-wide__eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rp-ink-deep);
+  opacity: 0.7;
+}
+.cp-finding-wide__body h4 {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--rp-ink-deep);
+}
+.cp-finding-wide__body p {
+  margin: 0;
+  color: color-mix(in srgb, var(--rp-ink-deep) 82%, var(--ink-soft));
+  line-height: 1.6;
+}
+.cp-finding-wide__body p + p {
+  margin-top: 10px;
+}
+@media (max-width: 760px) {
+  .cp-finding-wide {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Accordion with an icon-led trigger — a denser variant of
+   AccordionSection for content where the icon genuinely helps scanning
+   (a small set of lab techniques), not a blanket replacement. */
+.cp-accordion-icon-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cp-accordion-icon-row img {
+  width: 28px;
+  height: 28px;
+  flex: none;
+}

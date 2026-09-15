@@ -1,0 +1,285 @@
+/* --------------------------------------------------------------------------
+   FBAPrimer — the "how FBA works" visual walkthrough that opens the Model
+   page's metabolic-modelling content. One fixed coordinate system whose
+   feasible-region shape is reshaped in place across five stages; see
+   FBAPrimer.tsx for the geometry. Reuses global tokens only (--ink,
+   --ink-soft, --line, --paper, --paper-soft, --radius-lg, --radius-md,
+   --shadow-card, --font-display, --font-body). The cyan/blue and red used
+   for the polytope and the objective are local to this component (no
+   existing token maps to "FBA feasible region" or "objective/optimum").
+   -------------------------------------------------------------------------- */
+
+.fba-primer {
+  --fba-axis: var(--ink);
+  --fba-blue: #3b6fa0;
+  --fba-blue-fill: rgba(59, 111, 160, 0.16);
+  --fba-red: #b23a2e;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  column-gap: 40px;
+  row-gap: 20px;
+  align-items: center;
+  max-width: 1000px;
+  margin: 28px auto 0;
+}
+
+.fba-primer__figure {
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-card);
+  padding: 12px;
+  outline: none;
+  touch-action: pan-y;
+}
+
+.fba-primer__figure:focus-visible {
+  box-shadow:
+    var(--shadow-card),
+    0 0 0 2px var(--fba-blue);
+}
+
+.fba-primer__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fba-primer__axes line {
+  stroke: var(--fba-axis);
+  stroke-width: 1.4;
+}
+
+.fba-primer__axis-arrow {
+  fill: var(--fba-axis);
+}
+
+.fba-primer__axis-label {
+  fill: var(--fba-axis);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-style: italic;
+}
+
+.fba-primer__dash {
+  stroke: var(--fba-blue);
+  stroke-width: 1.2;
+  stroke-dasharray: 5 4;
+  transition: opacity 0.25s ease;
+}
+
+.fba-primer__dash-arrow {
+  fill: var(--fba-blue);
+}
+
+.fba-primer__shape {
+  fill: var(--fba-blue-fill);
+  stroke: none;
+}
+
+.fba-primer__shape-edge {
+  fill: none;
+  stroke: var(--fba-blue);
+  stroke-width: 1.3;
+  stroke-linejoin: round;
+}
+
+.fba-primer__opt-edge {
+  stroke: var(--fba-red);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  transition: opacity 0.3s ease;
+}
+
+.fba-primer__opt-drop {
+  stroke: var(--fba-red);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 3;
+  transition: opacity 0.3s ease;
+}
+
+.fba-primer__opt-point {
+  fill: var(--fba-red);
+  transition: opacity 0.3s ease;
+}
+
+.fba-primer__panel {
+  min-width: 0;
+}
+
+.fba-primer__text {
+  min-height: 210px;
+}
+
+.fba-primer__title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+.fba-primer__question {
+  margin: 6px 0 12px;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.fba-primer__text p {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  text-align: justify;
+  hyphens: none;
+}
+
+.fba-primer__equation {
+  margin: 14px 0 0;
+  padding: 8px 0 8px 14px;
+  border-left: 2px solid var(--line);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.fba-primer__equation sub,
+.fba-primer__equation sup {
+  font-size: 0.7em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fba-primer__text--fwd {
+    animation: fba-slide-fwd 0.32s ease both;
+  }
+  .fba-primer__text--back {
+    animation: fba-slide-back 0.32s ease both;
+  }
+}
+
+@keyframes fba-slide-fwd {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fba-slide-back {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fba-primer__toggle {
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+}
+
+.fba-primer__toggle button {
+  border: none;
+  background: none;
+  padding: 0;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 3px;
+  transition:
+    color 0.15s ease,
+    text-decoration-color 0.15s ease;
+}
+
+.fba-primer__toggle button:hover {
+  color: var(--ink);
+}
+
+.fba-primer__toggle button.is-active {
+  color: var(--ink);
+  font-family: var(--font-display);
+  text-decoration-color: var(--fba-red);
+}
+
+.fba-primer__toggle-sep {
+  color: var(--line);
+}
+
+.fba-primer__nav {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 4px;
+}
+
+.fba-primer__arrow {
+  border: none;
+  background: none;
+  padding: 4px 8px;
+  color: var(--ink-soft);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: color 0.15s ease;
+}
+
+.fba-primer__arrow:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.fba-primer__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.fba-primer__dots {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.fba-primer__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 1px solid var(--ink-soft);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.fba-primer__dot:hover {
+  border-color: var(--ink);
+}
+
+.fba-primer__dot.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  transform: scale(1.2);
+}
+
+@media (max-width: 760px) {
+  .fba-primer {
+    grid-template-columns: 1fr;
+  }
+  .fba-primer__text {
+    min-height: 0;
+  }
+}

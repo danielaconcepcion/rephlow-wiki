@@ -1,0 +1,162 @@
+/* Human Practices — shared shell only (hero, section rhythm, heading
+   hierarchy). Each section's own CSS file (WhyPhosphorus.css,
+   DesignCompass.css, etc.) owns its visual identity. */
+
+.human-practices-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  width: 100%;
+  min-width: 0;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 6vh 20px 12vh;
+}
+
+.hp-section {
+  width: 100%;
+  min-width: 0;
+  scroll-margin-top: var(--section-nav-offset);
+  padding-top: 64px;
+  border-top: 1px solid var(--line);
+}
+
+/* .hp-project-block-link moved to src/components/ProjectBlockLink.css as
+   the generic .related-page-link (see ProjectBlockLink.tsx). */
+
+/* :first-of-type (not :first-child) so this still targets whichever
+   .hp-section is visually first even with the RouteIndex block, which is
+   not itself a .hp-section, preceding it in the DOM. */
+.hp-section:first-of-type {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.hp-section > h2 {
+  max-width: 790px;
+  margin-inline: auto;
+  font-size: clamp(2.05rem, 3.6vw, 3.2rem);
+  line-height: 1.08;
+  margin-bottom: 6px;
+}
+
+.hp-section-lede {
+  font-size: 1.02rem;
+  color: var(--ink-soft);
+  max-width: 790px;
+  margin: 6px auto 26px;
+  line-height: 1.65;
+  text-align: justify;
+  hyphens: none;
+}
+
+/* Shared editorial rhythm. Section 0 already uses 19px between narrative
+   paragraphs; keep the same cadence in the other long-form sections while
+   leaving cards, tables and interactive component copy untouched. */
+.hp-compass__prose > p,
+.hp-users > p,
+.hp-checkpoints__prose > p,
+.hp-route-revealed__prose > p,
+.hp-toolkit > p {
+  margin-block: 0;
+}
+
+.hp-compass__prose > p + p,
+.hp-users > p + p,
+.hp-checkpoints__prose > p + p,
+.hp-route-revealed__prose > p + p,
+.hp-toolkit > p + p {
+  margin-top: 19px;
+}
+
+.hp-users > h3,
+.hp-users > h4 {
+  margin-bottom: 8px;
+}
+
+/* Keep the same 790px editorial measure used by Project Description and
+   Model. Interactive compositions deliberately remain in the wider 1120px
+   page canvas below and therefore preserve each prototype's own layout. */
+.hp-why__header,
+.hp-why__subsection > h3,
+.hp-why__prose,
+.hp-central-question,
+.hp-why__reflection.hp-accordion,
+.hp-why__alternative.hp-accordion,
+.hp-references.hp-accordion,
+.hp-compass__accordion.hp-accordion,
+.hp-compass__area > h3,
+.hp-compass__area > p:not(.hp-central-question),
+.hp-compass__intro,
+.hp-compass__prose,
+.hp-timeline-pending,
+.hp-users > h3,
+.hp-users > h4,
+.hp-users > p,
+.hp-stepper > h3,
+.hp-stepper > p,
+.hp-checkpoints__prose,
+.hp-boundaries > h3,
+.hp-containment > h3,
+.hp-checkpoint > h3,
+.hp-checkpoint > p,
+.hp-checkpoint > .hp-sequence-route,
+.hp-route-revealed__prose,
+.hp-toolkit > h3,
+.hp-toolkit > p {
+  width: 100%;
+  max-width: 790px;
+  margin-inline: auto;
+}
+
+/* Justification belongs to narrative copy, not to labels or text inside
+   interactive controls. It is intentionally scoped to editorial blocks. */
+.hp-why__prose p,
+.hp-accordion__content > p,
+.hp-compass__area > p:not(.hp-central-question),
+.hp-compass__intro > p,
+.hp-compass__prose > p,
+.hp-timeline__panel
+  > p:not(.hp-timeline__question):not(.hp-timeline__panel-meta),
+.hp-timeline__readmore p,
+.hp-timeline-pending__note,
+.hp-users > p,
+.hp-stop__content > p:not(.hp-stop__evidence-boundary):not(.hp-stop__crosslink),
+.hp-stepper > p,
+.hp-route-map__panel > p,
+.hp-checkpoints__prose > p,
+.hp-checkpoint > p:not(.hp-checkpoint__legend),
+.hp-route-revealed__prose > p,
+.hp-toolkit > p {
+  text-align: justify;
+  hyphens: none;
+}
+
+@media (max-width: 640px) {
+  .human-practices-sections {
+    gap: 56px;
+    padding-inline: 16px;
+  }
+
+  .hp-section-lede,
+  .hp-why__prose p,
+  .hp-accordion__content > p,
+  .hp-compass__area > p:not(.hp-central-question),
+  .hp-compass__intro > p,
+  .hp-compass__prose > p,
+  .hp-timeline__panel
+    > p:not(.hp-timeline__question):not(.hp-timeline__panel-meta),
+  .hp-timeline__readmore p,
+  .hp-timeline-pending__note,
+  .hp-users > p,
+  .hp-stop__content
+    > p:not(.hp-stop__evidence-boundary):not(.hp-stop__crosslink),
+  .hp-stepper > p,
+  .hp-route-map__panel > p,
+  .hp-checkpoints__prose > p,
+  .hp-checkpoint > p:not(.hp-checkpoint__legend),
+  .hp-route-revealed__prose > p,
+  .hp-toolkit > p {
+    text-align: left;
+  }
+}

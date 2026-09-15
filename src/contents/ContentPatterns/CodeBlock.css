@@ -1,0 +1,98 @@
+/* ==========================================================================
+   CodeBlock — a new pattern (nothing like it existed on the wiki yet).
+   Reuses --radius-lg/--shadow-card for shape, and --eutrophic-deep (the
+   darkest stop of the site's own water→algae→eutrophic palette, see
+   App.css) as the surface, rather than a generic "code editor" grey —
+   so it still reads as this wiki's own colour system, at its most
+   concentrated point, not a bolted-on widget.
+   ========================================================================== */
+
+.code-inline {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas,
+    monospace;
+  font-size: 0.88em;
+  padding: 0.12em 0.4em;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--microbe) 10%, var(--paper-soft));
+  color: var(--ink);
+}
+
+.code-block {
+  --code-fg: #eef3ef;
+  --code-comment: #8fae95;
+  --code-string: #f2c88f;
+  --code-number: #bfe3ee;
+  --code-keyword: #ff9f80;
+  --code-call: #d9c9f7;
+
+  margin: 28px 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--eutrophic-deep);
+  box-shadow: var(--shadow-card);
+}
+
+.code-block__bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.code-block__dots {
+  display: flex;
+  gap: 6px;
+}
+.code-block__dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.code-block__filename {
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas,
+    monospace;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.code-block__pre {
+  margin: 0;
+  padding: 20px 22px;
+  overflow-x: auto;
+}
+
+.code-block__pre code {
+  display: block;
+  font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas,
+    monospace;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--code-fg);
+  white-space: pre;
+}
+
+.code-block__line {
+  display: inline;
+}
+
+.code-tok--comment {
+  color: var(--code-comment);
+  font-style: italic;
+}
+.code-tok--string {
+  color: var(--code-string);
+}
+.code-tok--number {
+  color: var(--code-number);
+}
+.code-tok--keyword {
+  color: var(--code-keyword);
+  font-weight: 600;
+}
+.code-tok--call {
+  color: var(--code-call);
+}

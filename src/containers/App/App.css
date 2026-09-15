@@ -968,6 +968,16 @@ img { max-width: 100%; display: block; }
   color: var(--ink-soft);
 }
 
+/* Engineering/Experiments: no eyebrow banner, and a visual index sits
+   immediately below the header, so the hero collapses to just clear the
+   fixed navbar instead of centering in a tall 60vh shell. */
+.page-shell--compact {
+  min-height: 0;
+}
+.page-hero--compact {
+  padding: 190px 24px 85px;
+}
+
 /* Generic content wrapper for simple content pages that are otherwise just
    the shared Header hero plus a bit of body content (currently used by
    Hardware/Measurements/Sustainability/Engineering) — the same

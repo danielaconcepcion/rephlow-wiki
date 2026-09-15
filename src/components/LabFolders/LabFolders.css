@@ -1,0 +1,1132 @@
+/* ==========================================================================
+   LAB FOLDERS — shared "layered folder" record system
+   Backs src/components/LabFolders/*.tsx, used by both Experiments and
+   Results (src/contents/Experiments, src/contents/Results). Reuses global
+   tokens (--ink, --ink-soft, --paper, --paper-soft, --font-display,
+   --font-body, --phosphate) — the only new tokens are the block accents
+   and --lab-line below, scoped to .lab-folders rather than :root, since
+   they only mean something on these two pages.
+
+   Design language on purpose: a real stack of folders, not a tab bar. The
+   active folder's tab fuses straight into its own card (no seam); up to
+   two other folders stay visible behind it, offset and shadowed, so the
+   depth reads from actual overlapping planes — never from glow or gloss.
+   Record content underneath stays a plain, high-contrast document: bordered
+   tables, ruled section headings, no callout boxes.
+   ========================================================================== */
+.lab-folders {
+  padding: 6vh 20px 10vh;
+  --lab-enzyme: #6b4e9a;
+  --lab-encapsulation: #146b78;
+  --lab-genetic: #3f7d4a;
+  --lab-revalorisation: var(--phosphate);
+  --lab-protocols: #4b5563;
+  /* A stronger hairline than the global --line (0.08) — this system needs
+     borders and rules that read clearly, not just barely-there dividers. */
+  --lab-line: rgba(27, 35, 64, 0.22);
+}
+
+.lab-folders__inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* Experiments' compact hero (see App.css .page-hero--compact) already
+   provides its own breathing room above the ecosystem map — .lab-folders'
+   own 6vh top padding on top of that left an oversized header→index gap.
+   Scoped to "the map is the very first thing in .lab-folders" so this
+   doesn't reach any other .lab-folders usage (e.g. Results.tsx). */
+.lab-folders > .ecosystem-map:first-child {
+  margin-top: -40px;
+}
+
+/* --------------------------------------------------------------------------
+   MOSTAZA PALETTE — a scoped colour re-skin for a duplicated preview deck
+   (currently only Revalorisation, see Experiments.tsx). Every folder/card
+   visual reads its colours from --paper, --paper-soft, --folder-accent
+   (plus --folder-accent-strong, added above for the one spot a plain
+   accent swap isn't enough: white-text-on-accent circles need a deeper
+   shade than the pale primary yellow itself) — so re-declaring just those
+   tokens on this wrapper re-skins the whole deck without touching any
+   other block's colours or duplicating a single component/rule.
+   Card outlines and the Download PDF button are deliberately NOT part of
+   this override — every other block leaves --lab-line and the download
+   pill at their shared neutral-ink default rather than tinting them to
+   its own accent, so this palette keeps that same behaviour instead of
+   introducing a one-off exception.
+   Values match the approved "Paleta mostaza" swatch exactly:
+   surface #fff8e6, tint #fdf0c8, table head #fbe6ae, idle tab #f8dc93,
+   primary #fed353, deep accent #b8790a. */
+.lab-block--mostaza {
+  --paper: #fff8e6;
+  --paper-soft: #fdf0c8;
+  --folder-accent: #fed353;
+  --folder-accent-strong: #b8790a;
+}
+.lab-block--mostaza .record-table th {
+  background: #fbe6ae;
+}
+.lab-mostaza-label {
+  margin: 0 0 14px;
+  font-family: ui-monospace, "SFMono-Regular", "Courier New", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a5c05;
+}
+
+/* --------------------------------------------------------------------------
+   1a. IN-BLOCK PAGE NAV (Experiments only) — the top pill row (below,
+   .lab-folders__menu/.section-tabs) still picks which of the 4 experiment
+   blocks is shown, exactly as before; only ONE block is ever mounted at a
+   time. What sits *inside* the active block is where the standard wiki
+   side-nav (PageSectionNav / .page-with-section-nav) comes in: it tracks
+   that block's own sub-blocks (real, always-mounted, scroll-anchored
+   sections — Level 1) and, nested under whichever sub-block is active, its
+   individual experiments (Level 2 — these aren't separate scroll targets,
+   since FolderStack only ever mounts the one active experiment's card;
+   clicking one instead re-triggers that experiment's own folder-tab button,
+   see Experiments.tsx). Results.tsx still uses the older flat .lab-folders
+   shell with no side-nav at all and is untouched by anything in this block.
+   -------------------------------------------------------------------------- */
+.lab-content-wrap {
+  padding: 4vh 20px 10vh;
+}
+
+/* Narrow, centered prose column — strictly copies ProjectDescription's own
+   .pd-content container (max-width 790px, margin: 0 auto) for whatever
+   editorial text (block/sub-block intros, the promoted sub-block heading)
+   sits outside the folder cards. The cards themselves stay at the wider
+   .lab-content-wrap column width — see .folder-stack below — so this class
+   is only ever applied to the prose wrapper, never to the card deck. */
+.lab-prose {
+  max-width: 790px;
+  margin: 0 auto;
+}
+
+.lab-subblock {
+  scroll-margin-top: var(--section-nav-offset);
+}
+
+@media (max-width: 760px) {
+  .lab-content-wrap {
+    padding-inline: 16px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   1. SECTION TABS — top-level contextual menu (the 4 experiment blocks:
+   Alginate encapsulation / Enzymatic immobilisation / Genetic engineering /
+   Revalorisation). Same pill-tab visual language as Team's category tabs
+   (see ../../contents/Team/Team.css .team-tabs), centered the same way.
+   -------------------------------------------------------------------------- */
+.lab-folders__menu {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.section-tabs {
+  display: inline-flex;
+  gap: 4px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.section-tabs__btn {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  padding: 9px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.section-tabs__btn:hover { color: var(--ink); background: rgba(27, 35, 64, 0.05); }
+.section-tabs__btn.is-active { background: var(--ink); color: var(--paper); }
+.section-tabs__btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* --------------------------------------------------------------------------
+   2. BLOCK — one colour-scoped layout per contextual-menu block. The block
+   sets --folder-accent (see Experiments.tsx / Results.tsx); every folder
+   tab and record primitive below reads it. The Protocols folder overrides
+   it back to --lab-protocols on its own panel and back-cards (see
+   FolderStack.tsx), so it always reads as a distinct, consistent folder
+   type across every block.
+   -------------------------------------------------------------------------- */
+.lab-block {
+  animation: lab-block-in 0.2s ease;
+}
+@keyframes lab-block-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Reuses ProjectDescription's own Figure look (the vsi-figure/pd-figure
+   classes — see that page's local Figure component, and Experiments.tsx's
+   own copy of it for the shared pathway diagram). .lab-prose is a
+   different ancestor than ProjectDescription's .pd-content, so its two
+   scoped overrides (raw image, no boxed card) are replicated here instead
+   of relying on .pd-content being present. */
+.lab-prose .vsi-figure {
+  margin: 28px auto 20px;
+}
+.lab-prose .pd-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  padding: 0;
+}
+.lab-figure--pathway {
+  max-width: 720px;
+}
+
+/* "The five parts of the system" sits between the block intro/figure and
+   the two workflow sub-blocks (see Experiments.tsx) — a subtitle-level
+   heading, one size down from the promoted h2 sub-block headings ("1.
+   Cloning" etc.), since it introduces a single visual rather than a whole
+   numbered section. Extra bottom margin gives the card below it more room
+   than a sub-block heading needs before its own intro paragraph. */
+.lab-block__subtitle {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin: 0 0 24px;
+}
+
+.lab-block__intro {
+  margin: 0 0 16px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  text-align: justify;
+  hyphens: none;
+}
+.lab-block__intro:last-of-type { margin-bottom: 32px; }
+
+@media (max-width: 760px) {
+  .lab-block__intro,
+  .lab-subblock__intro,
+  .lab-subblock__outro,
+  .experiment-card__desc {
+    text-align: left;
+  }
+}
+
+/* One labelled sub-section within a block (see ExperimentSubBlock in
+   types.ts) — same font tokens as the rest of the system (--font-display/
+   --ink), just a size a step above .record-heading, since this sits one
+   tier above the folder-tab row it introduces. */
+.lab-subblock + .lab-subblock {
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid var(--lab-line);
+}
+/* Promoted to the page's real section heading (h2 — see Experiments.tsx)
+   now that the redundant block-level title is gone, so it takes the same
+   size/weight as ProjectDescription's own h2 (.pd-section > h2). */
+.lab-subblock__heading {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.lab-subblock__intro {
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin: 0 0 20px;
+  text-align: justify;
+  hyphens: none;
+}
+.lab-subblock__intro:last-of-type { margin-bottom: 28px; }
+
+/* A closing synthesis for the whole sub-block, sitting below its folder
+   deck (see ExperimentSubBlock.outro) — same prose look as .lab-subblock__
+   intro, just spaced off the deck above instead of the heading above. */
+.lab-subblock__outro {
+  color: var(--ink-soft);
+  line-height: 1.65;
+  margin: 32px 0 0;
+  text-align: justify;
+  hyphens: none;
+}
+
+/* Reference lists above the card level: a sub-block's own intro citations
+   (.lab-subblock__references — e.g. Genetic engineering's Closing section)
+   and a whole block's shared list (.lab-block__references — see
+   ExperimentBlockData.references). No bullet marker — every entry already
+   opens with its own "[n]", so a disc bullet as well just doubled up —
+   and generously spaced entries. This is deliberately NOT applied to an
+   experiment's own footer list inside its card (.record-references,
+   below) — that one keeps its original bullet + tight spacing on
+   request. */
+.lab-subblock__references,
+.lab-block__references {
+  padding-left: 0;
+  list-style: none;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.lab-subblock__references { margin: 0 0 28px; }
+.lab-block__references { margin: 0; }
+
+.lab-subblock__references li,
+.lab-block__references li {
+  margin-bottom: 16px;
+  scroll-margin-top: var(--section-nav-offset);
+}
+.lab-subblock__references li:last-child,
+.lab-block__references li:last-child {
+  margin-bottom: 0;
+}
+
+/* A block-level reference list's own heading spacing, matching
+   ProjectDescription's own "References" section break (.pd-section's
+   margin-top before, generous room after the heading before the list
+   starts — see .pd-references/.pd-reference-group). */
+.lab-block__references-heading {
+  margin: 0 0 24px;
+}
+
+/* Cross-reference links — an internal jump to another part of this same
+   block (a sub-block, an experiment) or to a numbered citation. Coloured
+   with the block's own --folder-accent rather than a fixed brand colour,
+   so it always reads as "this page's own accent", not a colour that could
+   clash with whichever block is currently active — matching the
+   .vsi-wikilink / .vsi-citation pattern used elsewhere in the wiki
+   (see ProjectDescription), just accent-driven instead of fixed green. */
+.lab-wikilink {
+  color: var(--folder-accent);
+  text-decoration: none;
+  font-weight: 600;
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--folder-accent) 32%, transparent),
+    color-mix(in srgb, var(--folder-accent) 32%, transparent)
+  );
+  background-repeat: no-repeat;
+  background-size: 100% 45%;
+  background-position: 0 100%;
+  transition: background-size 0.22s ease;
+}
+.lab-wikilink:hover,
+.lab-wikilink:focus-visible {
+  background-size: 100% 100%;
+}
+.lab-wikilink:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* An inline "[n]" citation marker — same accent colour as .lab-wikilink,
+   without the highlighter bar (a citation is a small numeral, not a
+   phrase, so a full highlight would be too heavy). */
+.lab-citation {
+  color: var(--folder-accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+.lab-citation:hover { text-decoration: underline; }
+.lab-citation:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* The DOI/URL portion of an entry in a reference list — deliberately
+   *not* accent-coloured like .lab-wikilink/.lab-citation: a bibliography
+   entry isn't a cross-reference to this page's own content, so it stays
+   a quiet, neutral grey that won't clash with whichever block's accent
+   is currently active. */
+.record-reference-link {
+  color: var(--ink-soft);
+  text-decoration: none;
+  word-break: break-all;
+  background-image: linear-gradient(rgba(27, 35, 64, 0.12), rgba(27, 35, 64, 0.12));
+  background-repeat: no-repeat;
+  background-size: 100% 45%;
+  background-position: 0 100%;
+  transition: background-size 0.2s ease;
+}
+.record-reference-link:hover,
+.record-reference-link:focus-visible {
+  background-size: 100% 100%;
+}
+.record-reference-link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   3. FOLDER STACK — a real stack, not a tab bar
+   The tab row picks any folder. The deck below renders the active folder's
+   full card on top, seamlessly fused to its own tab (matching background,
+   no border between them), with up to two other folders' cards peeking out
+   from behind — offset down-and-right, their own tint, a hint of shadow —
+   so the object reads as filed folders, not a flat panel with labels.
+   -------------------------------------------------------------------------- */
+.folder-stack {
+  position: relative;
+  padding-bottom: 22px;
+}
+
+/* Hidden probe for the single-row-vs-two-row decision (see FolderStack.tsx)
+   — an unwrapped copy of the tab row, absolutely positioned (so it never
+   affects layout or height) and hidden from sight/AT, purely so its
+   scrollWidth reports the tabs' true unwrapped width. width: max-content is
+   required, not cosmetic: a plain width:auto abspos box's shrink-to-fit
+   sizing is capped at its containing block's own available width (CSS2.1
+   §10.3.7), so without this the box — and therefore its nowrap flex
+   children, which then shrink to fit it — could never measure wider than
+   the container it's supposed to be compared against, silently reporting
+   scrollWidth === clientWidth at every viewport width. */
+.folder-stack__tabs-measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  visibility: hidden;
+  pointer-events: none;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+/* Tabs are full folder silhouettes, not pill chips: rounded top corners
+   only, a shared bottom baseline, and a height that steps up for whichever
+   is active. Inactive folders keep a fixed, index-based tint — darker than
+   the active tab — so neighbours stay distinguishable and read as sitting
+   behind it; the active tab itself is a lighter, singled-out shade, and its
+   panel is lighter again than that tab (each step down in saturation reads
+   as a step forward in the stack). Small negative margins let neighbouring
+   folders overlap slightly, like real folders fanned in a drawer. */
+.folder-stack__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+/* The tab's actual silhouette (flat top, soft bezier-curved shoulders) is
+   drawn by FolderTabShape.tsx — a live SVG path that grows/shrinks its
+   flat middle run to fit the label while keeping both shoulder curves at
+   fixed, undistorted geometry (see that file for why plain viewBox
+   scaling can't do this). This rule is just the button's own box: no
+   background/border-radius of its own, position:relative so the shape
+   (absolutely positioned, filling it) and the label (sitting above it)
+   both anchor correctly. min-width guards against a very short label
+   ("SEM") leaving too little room for both shoulders to fit side by side. */
+.folder-tab {
+  position: relative;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8rem;
+  color: var(--ink);
+  height: 32px;
+  /* Must clear the two shoulder curves' own combined width at this height
+     (~84px at 32px tall, ~116px at 44px active — see buildTabPath in
+     FolderTabShape.tsx) with real room left over for the flat run the
+     label (and, when present, the order number before it) sits on, or a
+     short label ("FTIR", "SEM") leaves the shoulders touching with no
+     flat top between them at all. */
+  min-width: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  /* em, not px, so padding scales with the tab's own font-size — the
+     active state's larger text (1rem vs 0.8rem) used to keep this fixed
+     pixel padding, which read as proportionally tighter once everything
+     else about the tab had grown. */
+  padding: 0 3.4em;
+  cursor: pointer;
+  margin-right: -18px;
+  filter: drop-shadow(1px 2px 3px rgba(27, 35, 64, 0.1));
+}
+.folder-tab:last-child { margin-right: 0; }
+.folder-tab:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; z-index: 999 !important; }
+
+.folder-tab__shape {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.folder-tab__shape path {
+  fill: color-mix(in srgb, var(--folder-accent) var(--tab-shade, 34%), var(--paper));
+  stroke: var(--lab-line);
+  stroke-width: 1px;
+}
+.folder-tab__label {
+  position: relative;
+  z-index: 1;
+}
+
+/* Small, subtle order marker — a translucent wash of --paper (not a fixed
+   brand colour) so the circle reads as a lighter patch of whatever shade
+   the tab currently has, active or not, rather than needing to know that
+   shade's exact value. The number keeps the tab's own text colour. Sized
+   in em so it scales with the active tab's larger font-size automatically. */
+.folder-tab__number {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35em;
+  height: 1.35em;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--paper) 55%, transparent);
+  color: inherit;
+  font-size: 0.68em;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The active tab is a lighter, singled-out shade — visibly brighter than
+   the darker inactive tabs beside it — and its panel below is lighter
+   again, so the surface gets paler as it steps forward from tab to body. */
+.folder-tab.is-active {
+  height: 44px;
+  min-width: 190px;
+  font-size: 1rem;
+  filter: none;
+}
+.folder-tab.is-active .folder-tab__shape path {
+  fill: color-mix(in srgb, var(--folder-accent) 22%, var(--paper));
+}
+
+.folder-tab--protocols .folder-tab__shape path {
+  fill: color-mix(in srgb, var(--lab-protocols) var(--tab-shade, 34%), var(--paper));
+}
+.folder-tab--protocols.is-active .folder-tab__shape path {
+  fill: color-mix(in srgb, var(--lab-protocols) 22%, var(--paper));
+}
+
+@media (max-width: 640px) {
+  .folder-tab { padding: 0 2.5em; font-size: 0.74rem; height: 28px; min-width: 126px; margin-right: -12px; }
+  .folder-tab.is-active { height: 40px; min-width: 168px; font-size: 0.9rem; }
+}
+
+/* --------------------------------------------------------------------------
+   3a. TWO-ROW TAB DECK — "row swap" layout for blocks whose tabs would
+   otherwise wrap accidentally mid-label (see FolderStack.tsx's overflow
+   measurement, which decides this from the tabs' real rendered width, not
+   from folder count). Two fixed rows of folders each
+   keep their own .folder-stack__tabs row exactly as above — no tab ever
+   changes size — but only one row is ever "front" (flush against the
+   panel) at a time; clicking a tab in the other row swaps which row holds
+   that position. .folder-stack__row-wrap is positioned absolutely so the
+   swap is a plain `top`/`z-index` transition on existing DOM nodes, never
+   a reflow or a remount.
+
+   Heights below are the fixed sums of .folder-tab's own constants (32px
+   inactive / 44px active desktop, 28px / 40px mobile) plus an 8px gap
+   between rows — the back row never holds the active tab, so its height
+   is always the *inactive* constant. If those tab heights ever change,
+   these must change with them.
+   -------------------------------------------------------------------------- */
+.folder-stack__tabgroup {
+  position: relative;
+  height: 84px; /* 32 (back, inactive) + 8 (gap) + 44 (front, active) */
+}
+
+.folder-stack__row-wrap {
+  position: absolute;
+  left: 0;
+  transition: top 0.32s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.folder-stack__row-wrap.is-back {
+  top: 0;
+  z-index: 1;
+}
+.folder-stack__row-wrap.is-front {
+  top: 40px; /* 32 (back row height) + 8 (gap) */
+  z-index: 2;
+}
+
+/* Bridges the gap under the back row down to the content panel — it does
+   NOT sit behind the back row's own tabs (top: 100% starts it exactly at
+   that row's bottom edge, nothing above), it only fills the empty space
+   between the two rows and reaches through to be flush against the panel
+   even at the front row's tallest (active) state. Sized and positioned
+   purely relative to .folder-stack__row-wrap's own shrink-to-fit box, so
+   it automatically matches whichever row is currently "the back row"
+   without any JS measurement. Square on every edge that actually touches
+   something else — left (flush with the row itself), bottom-left and
+   bottom-right (flush against the panel below) — the top-right is the
+   only corner that's genuinely floating in open background, so it's the
+   only one that gets to be round. */
+.folder-stack__row-backdrop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: -10px;
+  height: 52px; /* 8 (gap) + 44 (front row, active) — see tabgroup height above */
+  background: color-mix(in srgb, var(--folder-accent) 55%, var(--ink-soft));
+  border-radius: 0 8px 0 0;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.folder-stack__row-wrap.is-back .folder-stack__row-backdrop {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folder-stack__row-wrap { transition: none; }
+  .folder-stack__row-backdrop { transition: none; }
+}
+
+@media (max-width: 640px) {
+  .folder-stack__tabgroup {
+    height: 76px; /* 28 (back, inactive) + 8 (gap) + 40 (front, active) */
+  }
+  .folder-stack__row-wrap.is-front {
+    top: 36px; /* 28 (back row height) + 8 (gap) */
+  }
+  .folder-stack__row-backdrop {
+    right: -8px;
+    height: 48px; /* 8 (gap) + 40 (front row, active) */
+  }
+}
+
+.folder-stack__deck {
+  position: relative;
+}
+
+.folder-stack__panel {
+  position: relative;
+  z-index: 3;
+  border: 1px solid var(--lab-line);
+  border-radius: 0 6px 6px 6px;
+  background: color-mix(in srgb, var(--folder-accent) 8%, var(--paper));
+}
+
+/* Decorative-but-clickable folders peeking out from behind the front card —
+   clicking the exposed edge brings that folder forward, same as its tab. */
+.folder-stack__back {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 1px solid var(--lab-line);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(27, 35, 64, 0.14);
+  cursor: pointer;
+}
+.folder-stack__back:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.folder-stack__back--0 {
+  z-index: 2;
+  transform: translate(10px, 14px);
+  background: color-mix(in srgb, var(--folder-accent) 32%, var(--paper));
+}
+.folder-stack__back--1 {
+  z-index: 1;
+  transform: translate(19px, 26px);
+  background: color-mix(in srgb, var(--folder-accent) 44%, var(--paper));
+}
+
+@media (max-width: 640px) {
+  .folder-stack__back--0 { transform: translate(6px, 10px); }
+  .folder-stack__back--1 { transform: translate(11px, 18px); }
+}
+
+/* --------------------------------------------------------------------------
+   4. SHARED RECORD PRIMITIVES
+   Tables, checklists, protocol steps, notes, figures and downloads — shared
+   by ExperimentCard and ResultCard so both record types read as the same
+   family of plain, structured, high-contrast record sheet.
+   -------------------------------------------------------------------------- */
+.record-heading {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+/* A heading with a ruled edge instead of a tinted box — used for Aim
+   (rule below, in the folder's own colour) and Discussion (rule above,
+   in ink, see the modifier). Reads as a section break in a record, not a
+   decorative callout card. */
+.record-rule-heading {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--folder-accent);
+}
+.record-rule-heading--discussion {
+  border-bottom: none;
+  padding-bottom: 0;
+  padding-top: 18px;
+  margin-top: 2px;
+  border-top: 2px solid var(--ink);
+}
+
+/* experiment-card__tables is a direct grid child of .experiment-card, so
+   it's the one that needs grid-column — .record-table-wrap inside it just
+   handles the actual scrolling. A wide data matrix (e.g. a full screening
+   table) must never force the card's own grid wider than its column. */
+.experiment-card__tables {
+  grid-column: 1 / -1;
+}
+
+/* A short setup/parameter table (≤4 columns, no materials/protocol already
+   filling the card's own two-column grid, no wide matrix) pairs directly
+   with the experiment's own description paragraph(s) instead of stretching
+   across the card with the text stacked above it — a real two-column grid,
+   not a floated/isolated aside, so the table adapts to its own column
+   without squeezing the text (see ExperimentCard.tsx's canPairTable). */
+.experiment-card__pair {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 1fr);
+  gap: 28px 36px;
+  align-items: start;
+}
+.experiment-card__pair .experiment-card__tables {
+  grid-column: auto;
+}
+.experiment-card__pair .experiment-card__desc:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .experiment-card__pair {
+    grid-template-columns: 1fr;
+  }
+}
+
+.record-table-wrap {
+  overflow-x: auto;
+}
+.record-table-wrap + .record-table-wrap {
+  margin-top: 18px;
+}
+.record-table-caption {
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.record-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+/* Only the new generic/wide tables (inside the scrollable wrap above) need
+   to keep their natural column widths instead of squeezing to 100% — the
+   original materials table (used bare, no wrap) is untouched. */
+.record-table-wrap .record-table {
+  width: auto;
+  min-width: 100%;
+}
+.record-table th,
+.record-table td {
+  border: 1px solid var(--lab-line);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.record-table th {
+  font-weight: 600;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--folder-accent) 26%, var(--paper));
+}
+.record-table td { color: var(--ink-soft); }
+
+.record-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.record-checklist li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.record-checklist li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--folder-accent);
+}
+
+.record-protocol {
+  list-style: none;
+  counter-reset: step;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.record-protocol li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 36px;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  min-height: 24px;
+}
+.record-protocol li u { color: var(--ink); }
+.record-protocol li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  /* --folder-accent-strong lets a pale accent (e.g. the mostaza palette's
+     primary yellow) hand off to a deeper, still-on-brand shade here
+     specifically — a light accent behind white text reads as no contrast
+     at all. Unset by default, so every other block keeps using its own
+     --folder-accent unchanged (see .lab-block--mostaza below for the one
+     block that actually sets it). */
+  background: var(--folder-accent-strong, var(--folder-accent));
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.76rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.record-notes {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.record-note {
+  margin: 0;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.record-note strong { color: var(--ink); }
+
+.record-references {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.record-references li { margin-bottom: 4px; scroll-margin-top: var(--section-nav-offset); }
+
+.record-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(27, 35, 64, 0.06);
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+.record-download:hover { background: rgba(27, 35, 64, 0.12); }
+
+/* The named protocols an experiment actually used — one small download
+   pill per protocol, wrapping onto as many lines as it needs, under a
+   plain-text "Protocols:" label (not a heading — this sits alongside
+   notes/references as one more footer field, not a new section). */
+.record-protocols {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+.record-protocols__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.record-protocols__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.record-download--compact {
+  padding: 5px 12px;
+  font-size: 0.74rem;
+}
+
+.record-figure { margin: 0; }
+.record-figure__placeholder {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--lab-line);
+  border-radius: 4px;
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-family: ui-monospace, "SFMono-Regular", "Courier New", monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  padding: 12px;
+}
+.record-figure figcaption {
+  margin-top: 8px;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.record-figure-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 14px;
+}
+
+/* A real photo, single or grouped — the site's first actual (non-
+   placeholder) figures. Same quiet "photo on paper" card language as
+   ProjectDescription's own figures (padding, soft border, no forced
+   aspect-ratio so a portrait gel and a wide diagram both sit naturally). */
+.record-figure__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-md, 8px);
+  padding: 6px;
+}
+
+/* Several real photos cropped from one composite source figure (e.g. a
+   4-panel SDS-PAGE plate) — each keeps its own printed sub-title directly
+   above it (not a figcaption below, which would visually detach the label
+   from the image it names), with one shared caption for the whole group
+   below everything. Always full-width (see isWideResource in
+   ExperimentCard.tsx) so the grid has room to actually be responsive
+   rather than squeezed into a narrow paired column. */
+.record-figure-group {
+  margin: 0;
+}
+.record-figure-group__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+.record-figure-group__item {
+  min-width: 0;
+}
+.record-figure-group__item-title {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.82rem;
+  color: var(--ink);
+}
+.record-figure-group__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-md, 8px);
+  padding: 6px;
+}
+.record-figure-group__caption {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* A bespoke component dropped in place of an image (e.g. SelectionFunnel)
+   — no placeholder chrome, just room for the component and, optionally,
+   its own caption below. */
+.record-figure--custom {
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. EXPERIMENT CARD
+   Stable grid: header full-width, materials middle-left, protocol
+   middle/right (or full-width when there are no materials), figure and
+   footer full-width.
+   -------------------------------------------------------------------------- */
+.experiment-card {
+  padding: 28px 28px 26px;
+  display: grid;
+  grid-template-columns: minmax(240px, 340px) minmax(0, 1fr);
+  gap: 28px 36px;
+}
+
+.experiment-card__header { grid-column: 1 / -1; }
+.experiment-card__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--ink);
+  margin: 0;
+}
+/* No max-width here on purpose: the description sits in a header that
+   spans the card's full width (grid-column: 1 / -1), so capping it at a
+   fixed character count left a large, unbalanced empty gap on the right
+   whenever the card was wider than that cap — it now fills the same width
+   as everything else in the card (tables, protocol), with justify keeping
+   the paragraph's own right edge even instead of ragged. */
+.experiment-card__desc {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  text-align: justify;
+  hyphens: none;
+}
+
+.experiment-card__figure { grid-column: 1 / -1; max-width: 480px; }
+
+/* One block of a richer, per-paragraph-paired write-up (see
+   ExperimentData.body / BodyBlock in ExperimentCard.tsx). Full-width by
+   default — .experiment-card__pair (already grid-column: 1 / -1) handles
+   the local two-column case when a block pairs with a table or figure.
+   The card's own row-gap already spaces consecutive blocks, so this only
+   needs to claim the full row. */
+.experiment-card__block { grid-column: 1 / -1; }
+.experiment-card__block .experiment-card__desc:first-child { margin-top: 0; }
+
+.experiment-card__footer {
+  grid-column: 1 / -1;
+  padding-top: 18px;
+  margin-top: 2px;
+  border-top: 1px solid var(--lab-line);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+@media (max-width: 760px) {
+  .experiment-card {
+    grid-template-columns: 1fr;
+    padding: 22px 20px;
+    gap: 24px;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. RESULT CARD
+   One continuous scientific record, no collapsible sections: title and
+   description, ruled Aim, optional Background, one or more result
+   sections (each free to mix body text, figures, and tables, closed with
+   Observation/Interpretation), and a ruled Discussion at the end.
+   -------------------------------------------------------------------------- */
+.result-card {
+  padding: 28px 28px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.result-card__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--ink);
+  margin: 0;
+}
+.result-card__desc {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+.result-card__aim p { margin: 0; color: var(--ink); line-height: 1.6; }
+
+.result-card__background h4 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.result-card__background p { margin-top: 8px; color: var(--ink-soft); line-height: 1.6; }
+.result-card__background p:first-of-type { margin-top: 0; }
+
+.result-card__subsections {
+  display: flex;
+  flex-direction: column;
+}
+
+.result-subsection:not(:first-child) {
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid var(--lab-line);
+}
+
+.result-subsection h4 {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+.result-subsection p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.6; }
+.result-subsection p:first-of-type { margin-top: 0; }
+
+.result-subsection__field h5 {
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 16px 0 4px;
+}
+.result-subsection__field p { margin-top: 0; }
+
+.result-card__discussion p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.65; }
+.result-card__discussion p:first-of-type { margin-top: 0; }
+
+@media (max-width: 640px) {
+  .result-card { padding: 22px 20px; }
+}
+
+/* --------------------------------------------------------------------------
+   7. PDF VIEWER — "Protocols" folder content
+   -------------------------------------------------------------------------- */
+.pdf-viewer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.pdf-viewer__frame {
+  width: 100%;
+  height: 70vh;
+  min-height: 420px;
+  border: 1px solid var(--lab-line);
+  border-radius: 6px;
+  background: var(--paper);
+}
+.pdf-viewer__fallback {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+.pdf-viewer__download { align-self: flex-start; }

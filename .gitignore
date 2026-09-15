@@ -33,3 +33,13 @@ public/assets/
 # from the committed source in data/ — not committed itself, so the build
 # always regenerates it from source (see package.json).
 public/generated/
+
+# design-sync (claude.ai/design) — staged converter scripts + their own
+# node_modules, generated build output, and machine-local sync state.
+# The durable set (config.json, NOTES.md, conventions.md, previews/,
+# overrides/) is committed; everything below is not.
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules

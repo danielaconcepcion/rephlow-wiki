@@ -1,0 +1,317 @@
+/* Engineering's index between blocks is the shared EcosystemMap component
+   (see src/components/EcosystemMap.tsx) — same visual language and
+   behaviour as Experiments' own. A plain divider marks where the index
+   ends and the active block's content begins, matching the quiet rules
+   used elsewhere in the wiki rather than a heavy card border.
+
+   .content-page's own 6vh top padding (shared with every other simple
+   content page) is redundant here: the compact hero right above it
+   already provides its own breathing room, so stacking both left an
+   oversized gap before the map. Scoped to "directly follows the compact
+   hero and the map is the first thing in it" so no other .content-page
+   user is affected. */
+.content-page > .ecosystem-map:first-child {
+  margin-top: -40px;
+}
+
+.engineering-map-divider {
+  max-width: 1280px;
+  margin: 0 auto 84px;
+  border: none;
+  border-top: 1px solid var(--line);
+}
+
+/* Shown in place of a block's content until one is actually selected (see
+   Engineering.tsx) -- plain centred prose, no card/border, so an empty
+   selection still reads as a calm, intentional resting state rather than
+   a missing panel. */
+.engineering-empty-state {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 72px 20px 104px;
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Structural layout for a selected block's own content — the lateral
+   DbtlSectionNav plus everything it navigates (the intro paragraph,
+   thread titles, and each DbtlCycle spiral). Deliberately the exact same
+   grid shape as the shared PageSectionNav's own .page-with-section-nav
+   (see PageSectionNav.css): a narrow sticky nav column, then a content
+   column beside it, one row, so the nav's `position: sticky` (see
+   .dbtl-cycle__section-nav in DbtlCycle.css) stays pinned for exactly as
+   long as .engineering-content-wrap — however tall, one or two full DBTL
+   spirals included — is on screen, and releases on its own once that
+   column runs out. No JS visibility state on either side, matching
+   Experiments/Project Description's own structural nav exactly (see
+   Engineering.tsx's own doc comment above this grid's render).
+   grid-template-columns/gap/max-width/padding are copied verbatim from
+   .page-with-section-nav rather than just visually matched, so the two
+   navs -- and, just as importantly, the two content columns -- land at
+   identical widths and identical horizontal positions across the wiki. */
+.engineering-nav-layout {
+  --engineering-nav-col: clamp(130px, 16vw, 200px);
+  --engineering-nav-gap: 40px;
+  --engineering-grid-max: 1360px;
+  --engineering-grid-pad: 20px;
+  display: grid;
+  grid-template-columns: var(--engineering-nav-col) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--engineering-nav-gap);
+  max-width: var(--engineering-grid-max);
+  margin: 0 auto;
+  padding: 0 var(--engineering-grid-pad);
+}
+
+/* The grid's second column — same role as .pd-content-wrap/
+   .lab-content-wrap, holding everything the nav points into. Its own
+   horizontal padding (not the grid's) is what survives once the grid
+   itself collapses to a plain block below 980px (see that breakpoint
+   below), same pattern PageSectionNav's own content wrappers use at
+   their own (600px) breakpoint. */
+.engineering-content-wrap {
+  padding: 4vh 20px 10vh;
+}
+
+/* Enzymatic immobilisation's real write-up is two threads, each its own
+   DbtlCycle spiral (see Engineering.tsx) — everything below is page-level
+   layout around those spirals, not inside either of them.
+
+   Both the intro paragraph and each thread's title match Project
+   Description's own long-form text system exactly, not just loosely (see
+   ProjectDescription.css's .pd-content p / .pd-section > h2): same
+   790px column, same 1rem/1.65 body-copy size, same justify+no-hyphens
+   (dropped to left-aligned below 760px, same breakpoint PD uses), same
+   ink-soft paragraph / ink heading colours, same clamp(1.5rem,3.2vw,2rem)
+   heading scale. Just as important as the typography match: this 790px
+   column is now centred within .engineering-content-wrap — the grid's
+   own content column, right of the nav — not against the full page
+   width, so its left edge actually lines up with .pd-content/.lab-prose's
+   own on other pages, instead of sitting further left by roughly half the
+   nav column's own width the way it did before this nav became a real
+   grid column. Spacing mirrors PD's own rhythm too: 72px between major
+   heading-led sections (PD's .pd-section margin-top) reused both for the
+   intro-to-first-thread gap and between the two threads themselves, and a
+   smaller ~28px heading-to-content gap (PD's own figure-after-heading
+   scale, e.g. .vsi-figure) between a thread's title and its spiral, in
+   place of the plain 14px PD uses before a paragraph -- a whole spiral is
+   a much bigger visual block than the next line of body text. */
+.engineering-threads__intro {
+  max-width: 790px;
+  margin: 0 auto 72px;
+  font-family: var(--font-body);
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.65;
+  text-align: justify;
+  hyphens: none;
+}
+.engineering-thread + .engineering-thread {
+  margin-top: 72px;
+}
+.engineering-thread__title {
+  max-width: 790px;
+  margin: 0 auto 28px;
+  color: var(--ink);
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+}
+
+/* Each DbtlCycle spiral needs to keep its own true-viewport-centred,
+   full-bleed geometry (.dbtl-cycle/.dbtl-cycle__loop in DbtlCycle.css,
+   untouched by any of this) even though it's mounted as a normal-flow
+   child of .engineering-content-wrap -- the grid's own (necessarily
+   off-centre, since only the left column carries the nav)
+   content column, not the true page centre. Left alone, .dbtl-cycle's own
+   `margin: 0 auto` would centre it within that off-centre column instead,
+   shifting the spiral -- and its full-bleed SVG, which breaks out relative
+   to it -- away from true centre by roughly half the nav column's own
+   width. This wrapper cancels exactly that: it stretches to the true
+   viewport width (100vw) and shifts itself left by precisely
+   .engineering-content-wrap's own distance from the true left edge of the
+   viewport (the grid's own centred max-width margin, its horizontal
+   padding, the nav column, and the gap between them -- every term the
+   grid actually adds), so .dbtl-cycle -- unmodified, still just
+   `max-width: 1120px; margin: 0 auto` -- ends up centred on this now
+   viewport-wide box exactly as it would centred directly on .content-page
+   itself. Staying in normal flow (never absolute/fixed) is what lets the
+   spiral's real height still count toward .engineering-content-wrap's own
+   height -- which is what keeps the nav beside it sticky for the whole
+   scroll, not just while the short intro/heading text is on screen. */
+.engineering-cycle-bleed {
+  width: 100vw;
+  margin-left: calc(
+    -1 *
+      (
+        max(0px, (100vw - var(--engineering-grid-max)) / 2) +
+          var(--engineering-grid-pad) + var(--engineering-nav-col) +
+          var(--engineering-nav-gap)
+      )
+  );
+}
+
+@media (max-width: 760px) {
+  .engineering-threads__intro {
+    text-align: left;
+  }
+}
+
+/* Below this width the nav steps aside entirely (see
+   .dbtl-cycle__section-nav's own matching display: none in DbtlCycle.css)
+   -- the grid collapses to a plain block so .engineering-content-wrap
+   reclaims the full width rather than being left in a now-nav-less
+   second column, and .engineering-cycle-bleed's breakout resets to a
+   no-op so .dbtl-cycle just centres on .engineering-content-wrap directly
+   (itself now the full page width), same as it always has below this
+   breakpoint. */
+@media (max-width: 980px) {
+  .engineering-nav-layout {
+    display: block;
+    max-width: none;
+    padding: 0;
+  }
+  .engineering-cycle-bleed {
+    width: auto;
+    margin-left: 0;
+  }
+}
+
+/* Static "next up" handoff at the very bottom of a block's own content
+   (see the pastBlockEnd sentinel + footer nav in Engineering.tsx) --
+   deliberately plain typographic links, not the pill/card treatment a
+   generic pagination control would use, so it reads as an editorial
+   footnote pointing onward rather than an app-style "next page" bar. */
+.engineering-block-nav-sentinel {
+  height: 1px;
+}
+
+.engineering-block-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  max-width: 1280px;
+  margin: 96px auto 0;
+  padding: 48px 20px 104px;
+  border-top: 1px solid var(--line);
+}
+
+.engineering-block-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.engineering-block-nav__link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 6px;
+}
+
+/* Small static sphere -- same glass/--eco-color recipe as EcosystemMap
+   and EcosystemMapMini (see those .css files), but with no glow, fan, or
+   hover-expand mechanics: this one only ever shows one thing. */
+.engineering-block-nav__sphere {
+  position: relative;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--eco-color) 30%, transparent);
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--eco-color) 26%, transparent),
+    color-mix(in srgb, var(--eco-color) 8%, transparent) 60%,
+    rgba(255, 255, 255, 0.6)
+  );
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 3px 6px rgba(255, 255, 255, 0.5);
+  transition: transform 260ms ease;
+}
+.engineering-block-nav__link:hover .engineering-block-nav__sphere,
+.engineering-block-nav__link:focus-visible .engineering-block-nav__sphere {
+  transform: scale(1.06);
+}
+.engineering-block-nav__sphere img {
+  position: relative;
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+}
+
+.engineering-block-nav__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.engineering-block-nav__link--next .engineering-block-nav__text {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.engineering-block-nav__eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* The label itself stays plain --ink for readability -- only the arrow
+   picks up the destination block's colour, which is enough of a visual
+   tie to the sphere beside it without the whole line competing with the
+   surrounding text for contrast. */
+.engineering-block-nav__label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.engineering-block-nav__arrow {
+  color: color-mix(in srgb, var(--eco-color) 65%, var(--ink) 35%);
+  font-size: 1.15rem;
+  line-height: 1;
+  transition: transform 220ms ease;
+}
+.engineering-block-nav__link--prev:hover .engineering-block-nav__arrow,
+.engineering-block-nav__link--prev:focus-visible .engineering-block-nav__arrow {
+  transform: translateX(-4px);
+}
+.engineering-block-nav__link--next:hover .engineering-block-nav__arrow,
+.engineering-block-nav__link--next:focus-visible .engineering-block-nav__arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 640px) {
+  .engineering-block-nav {
+    padding: 40px 20px 84px;
+  }
+  .engineering-block-nav__eyebrow {
+    display: none;
+  }
+  .engineering-block-nav__sphere {
+    width: 40px;
+    height: 40px;
+  }
+  .engineering-block-nav__label {
+    font-size: 0.96rem;
+  }
+}

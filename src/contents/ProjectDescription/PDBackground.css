@@ -1,0 +1,20 @@
+/* --------------------------------------------------------------------------
+   PDBackground — decorative molecule/blob/bubble field behind Project
+   Description's content (see PDBackground.tsx). Depends only on the
+   shared global `.parallax-decor` rule in App.css for the actual drift
+   transform; everything else here is page-local.
+   -------------------------------------------------------------------------- */
+.pdbg-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(120% 60% at 8% 0%, rgba(206, 234, 255, 0.55), rgba(255, 255, 255, 0) 60%),
+    radial-gradient(90% 40% at 96% 12%, rgba(156, 198, 111, 0.1), rgba(255, 255, 255, 0) 62%);
+}
+
+.pdbg-decor {
+  will-change: transform;
+}

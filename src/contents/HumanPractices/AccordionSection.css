@@ -1,0 +1,57 @@
+/* AccordionSection — shared structural chrome, local to Human Practices.
+   Per-section wrappers (e.g. .hp-why__accordion) add their own background
+   tint; this file only owns the trigger/chevron/content mechanics. */
+
+.hp-accordion__trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 0;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+.hp-accordion__trigger:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.hp-accordion__title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+.hp-accordion__chevron {
+  flex-shrink: 0;
+  color: var(--ink-soft);
+  transition: transform 0.2s ease;
+}
+.hp-accordion__chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.hp-accordion__content {
+  padding: 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.hp-accordion__content p { line-height: 1.65; }
+.hp-accordion__content strong { color: var(--ink); }
+
+/* Nested accordions (e.g. section 0's two alternatives, or a risk card's
+   read-more) get a lighter, indented treatment. */
+.hp-accordion__content .hp-accordion {
+  border-top: 1px solid var(--line);
+}
+.hp-accordion__content .hp-accordion:first-child {
+  border-top: none;
+}

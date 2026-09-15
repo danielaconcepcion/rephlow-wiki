@@ -1,51 +1,414 @@
 /* --------------------------------------------------------------------------
    PROJECT DESCRIPTION — page content
-   Page-specific styles for src/contents/ProjectDescription.tsx. Reuses
-   global tokens (--ink, --ink-soft, --section-nav-offset) — no new colors,
-   typography scale, or design system introduced. Drafting-callout styles
-   live in ../components/Callout.css (shared across page drafts).
+   Keeps the existing visual-index component untouched and styles only the
+   editorial copy, figures, tables and references around it.
    -------------------------------------------------------------------------- */
+
+/* Relative anchor for PDBackground.tsx's absolutely-positioned decor
+   layer, which spans the full width of this wrapper (not the narrower,
+   centred .page-with-section-nav box) so its molecule/blob field can use
+   real page margins — including the space behind the section nav — not
+   just the gutters either side of the prose column. */
+.pd-page {
+  position: relative;
+}
+
+.pd-page > .page-with-section-nav {
+  position: relative;
+  z-index: 1;
+}
+
 .pd-content-wrap {
   padding: 6vh 20px 10vh;
 }
 
 .pd-content {
-  max-width: 760px;
+  max-width: 790px;
   margin: 0 auto;
 }
 
-.pd-content p {
-  margin-top: 12px;
+.pd-content p,
+.pd-content li {
   color: var(--ink-soft);
   line-height: 1.65;
+}
+
+.pd-content p {
+  margin-top: 14px;
+  text-align: justify;
+  hyphens: none;
 }
 
 .pd-content ul {
-  margin: 12px 0 0;
-  padding-left: 22px;
-  color: var(--ink-soft);
-  line-height: 1.65;
+  margin: 16px 0 0;
+  padding-left: 24px;
 }
-.pd-content li { margin-bottom: 6px; }
-.pd-content li:last-child { margin-bottom: 0; }
+
+.pd-content li {
+  margin-bottom: 8px;
+}
+
+.pd-content li:last-child {
+  margin-bottom: 0;
+}
 
 .pd-section {
-  margin-top: 64px;
+  margin-top: 72px;
   scroll-margin-top: var(--section-nav-offset);
 }
-.pd-section:first-child { margin-top: 40px; }
 
-.pd-section > h2 {
-  font-size: clamp(1.5rem, 3.2vw, 2rem);
+.pd-section:first-child {
+  margin-top: 40px;
+}
+
+.pd-section > h2,
+.pd-section > .pd-content > h2 {
   color: var(--ink);
+  font-size: clamp(1.5rem, 3.2vw, 2rem);
+}
+
+.pd-section-lede,
+.pd-block-summary {
+  font-size: 1.06rem;
+}
+
+.pd-block-summary {
+  padding-left: 18px;
+  border-left: 3px solid color-mix(in srgb, var(--water-mid) 62%, transparent);
+}
+
+.pd-block-intro {
+  gap: 0;
+  align-items: stretch;
+  margin: 20px 0 34px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--water-clear) 34%, var(--paper));
+  border: 1px solid color-mix(in srgb, var(--ink) 11%, transparent);
+  border-radius: 18px;
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--ink) 9%, transparent);
+}
+
+.pd-block-intro > .pd-block-summary {
+  align-self: center;
+  margin-top: 0;
+  padding: 24px 27px;
+  border-left: 0;
+}
+
+.pd-block-intro .pd-block-illustration {
+  display: grid;
+  flex: 0 0 190px;
+  place-items: center;
+  padding: 10px;
+  background: color-mix(in srgb, var(--water-mid) 10%, var(--paper));
+  border-right: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+}
+
+.pd-block-intro .pd-block-illustration img {
+  width: 100%;
+  max-height: 155px;
+  aspect-ratio: auto;
+  object-fit: contain;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+#encapsulation .pd-block-intro .pd-block-illustration img,
+#genetic .pd-block-intro .pd-block-illustration img {
+  max-height: 112px;
+}
+
+.pd-content .pd-block-intro .pd-block-illustration {
+  margin: 0;
+}
+
+.pd-block-illustration img {
+  object-fit: contain;
 }
 
 .pd-subsection {
-  margin-top: 32px;
+  margin-top: 38px;
   scroll-margin-top: var(--section-nav-offset);
 }
 
 .pd-subsection > h3 {
-  font-size: 1.1rem;
   color: var(--ink);
+  font-size: 1.12rem;
+}
+
+.pd-subsection > h4 {
+  margin-top: 24px;
+  color: var(--ink);
+}
+
+.pd-subsection--with-float {
+  display: flow-root;
+}
+
+.pd-inline-figure {
+  width: clamp(105px, 15vw, 135px);
+  margin: 4px 0 18px 36px;
+}
+
+.pd-inline-figure--right {
+  float: right;
+}
+
+.pd-inline-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  padding: 8px;
+  background: var(--paper-soft);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.pd-inline-figure figcaption {
+  margin-top: 6px;
+  color: var(--ink-soft);
+  font: 400 11px/1.35 var(--font-body);
+  text-align: center;
+}
+
+/* The existing VisualIndex retains its own component, assets and behaviour. */
+.vsi-wrap {
+  max-width: 1120px;
+  margin: 36px auto 0;
+  padding-top: 36px;
+  border-top: 1px solid var(--line);
+}
+
+#our-solution-visual-index.pd-section {
+  margin-top: 0;
+}
+
+.vsi-intro {
+  margin-bottom: 26px;
+}
+
+.vsi-intro-hint {
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.vsi-details {
+  margin-top: 22px;
+}
+
+.vsi-ref {
+  scroll-margin-top: var(--section-nav-offset);
+}
+
+.pd-content .vsi-figure {
+  margin: 28px auto 0;
+}
+
+.pd-content .pd-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  padding: 0;
+}
+
+.pd-figure--wide {
+  max-width: 940px;
+}
+
+.pd-figure--pathway {
+  max-width: 720px;
+}
+
+.pd-problem-comparison {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 350px);
+  gap: 22px;
+  align-items: start;
+  margin-top: 28px;
+}
+
+.pd-problem-comparison .vsi-figure {
+  width: 100%;
+  max-width: none;
+  margin-top: 0;
+}
+
+.pd-problem-comparison .pd-figure img {
+  width: 100%;
+  height: clamp(220px, 22vw, 280px);
+  object-fit: cover;
+}
+
+.pd-problem-comparison .pd-problem-card--contain img {
+  object-fit: cover;
+}
+
+.pd-problem-card img {
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.pd-problem-illustration {
+  width: 100%;
+  max-width: 720px;
+}
+
+.pd-problem-illustration img {
+  height: auto;
+  background: #dbe9ef;
+  object-fit: contain;
+}
+
+.pd-figure--albufera {
+  max-width: 880px;
+}
+
+.pd-figure--albufera img {
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  object-position: center;
+}
+
+.pd-figure--compact {
+  width: 100%;
+  max-width: 480px;
+}
+
+.pd-monomer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: stretch;
+  margin-top: 26px;
+}
+
+.pd-monomer-grid .vsi-figure {
+  margin-top: 0;
+}
+
+.pd-monomer img {
+  max-height: 270px;
+}
+
+.pd-equation-callout {
+  margin: 24px 0 0;
+  padding: 18px 22px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--water-mid) 9%, transparent);
+  border-left: 3px solid var(--water-mid);
+  font-size: 1.02rem;
+}
+
+.pd-table-wrap {
+  width: 100%;
+  margin-top: 26px;
+  overflow-x: auto;
+  border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  border-radius: 16px;
+}
+
+.pd-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  color: var(--ink-soft);
+  background: color-mix(in srgb, var(--water-clear) 36%, var(--paper));
+}
+
+.pd-table caption {
+  padding: 14px 16px;
+  color: var(--ink-soft);
+  text-align: left;
+  caption-side: top;
+  background: var(--paper);
+}
+
+.pd-table th,
+.pd-table td {
+  padding: 13px 15px;
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  text-align: left;
+  vertical-align: top;
+}
+
+.pd-table th {
+  color: var(--ink);
+  font-weight: 700;
+  background: color-mix(in srgb, var(--water-mid) 10%, var(--paper));
+}
+
+.pd-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.pd-references {
+  padding-top: 8px;
+}
+
+.pd-reference-group {
+  margin-top: 42px;
+}
+
+.pd-reference-list {
+  margin: 18px 0 0;
+  padding-left: 25px;
+}
+
+.pd-reference-list li {
+  margin-bottom: 14px;
+  padding-left: 5px;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 760px) {
+  .pd-content-wrap {
+    padding-inline: 16px;
+  }
+
+  .pd-content p {
+    text-align: left;
+  }
+
+  .pd-monomer-grid,
+  .pd-problem-comparison {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-problem-comparison .pd-figure img {
+    height: auto;
+  }
+
+  .pd-monomer {
+    max-width: 430px;
+  }
+
+  .pd-block-intro {
+    flex-direction: column;
+  }
+
+  .pd-block-intro .pd-block-illustration {
+    width: 100%;
+    min-height: 122px;
+    flex-basis: auto;
+    border-right: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--ink) 10%, transparent);
+  }
+
+  .pd-block-intro .pd-block-illustration img {
+    max-height: 130px;
+  }
+
+  .pd-inline-figure--right {
+    float: none;
+  }
+
+  .pd-inline-figure {
+    width: min(150px, 46vw);
+    margin: 18px auto 20px;
+  }
 }

@@ -1,0 +1,16 @@
+/* --------------------------------------------------------------------------
+   HeaderMoleculeField — decorative blue-green molecule field for the
+   opt-in "molecule" Header variant (see Header.tsx / Header.css). Ported
+   from the MoleculeField design-system component's "light" palette.
+   -------------------------------------------------------------------------- */
+.hmf-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(120% 100% at 10% -10%, rgba(206, 234, 255, 0.62), rgba(255, 255, 255, 0) 62%),
+    radial-gradient(90% 85% at 95% 100%, rgba(156, 198, 111, 0.16), rgba(255, 255, 255, 0) 68%),
+    #fffaf1;
+}

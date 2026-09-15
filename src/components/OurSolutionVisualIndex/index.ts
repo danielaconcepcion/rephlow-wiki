@@ -1,0 +1,1 @@
+export { VisualIndex } from "./VisualIndex";

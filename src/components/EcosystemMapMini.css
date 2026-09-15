@@ -1,0 +1,166 @@
+/* Tiny corner "you are here" companion to the shared EcosystemMap (see
+   EcosystemMap.css for the full glass-sphere treatment this borrows —
+   same --eco-color-driven color-mix() layers, scaled down). Fixed near a
+   screen corner, revealed only once the full map has scrolled out of view
+   — collapsed to just the active block's sphere, fanning the rest out on
+   hover/focus (or a tap on the active sphere, for touch) so any block is
+   reachable without scrolling back up to the main index.
+
+   The container's own width/height (not just the spheres inside it) grow
+   between the collapsed and expanded states, anchored to the same
+   right/bottom corner throughout — every sphere is positioned from that
+   same corner (right:0; bottom:0; + a translate offset) rather than from
+   the top-left, so enlarging the box only ever grows it up and to the
+   left, never shifting the anchor. That growth is what keeps the whole
+   fan, including the empty gaps between spheres, inside one continuous
+   hoverable region — see the .tsx doc comment for why that's what makes
+   the group stay open while the pointer travels between spheres. */
+
+.ecosystem-map-mini {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 45;
+  width: 68px;
+  height: 68px;
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity 320ms ease, transform 320ms ease, width 280ms ease, height 280ms ease;
+}
+.ecosystem-map-mini.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.ecosystem-map-mini.is-expanded {
+  width: 200px;
+  height: 200px;
+}
+
+/* Very light, unobtrusive wash behind the fanned-out group so it stays
+   readable over page content — not a card: no edge, no shadow, just a
+   soft glow fading to nothing well before the box's own edges. */
+.ecosystem-map-mini__backdrop {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 74% 74%,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.25) 45%,
+    rgba(255, 255, 255, 0) 74%
+  );
+  opacity: 0;
+  transition: opacity 280ms ease;
+  pointer-events: none;
+}
+.ecosystem-map-mini.is-expanded .ecosystem-map-mini__backdrop {
+  opacity: 1;
+}
+
+.ecosystem-map-mini__sphere {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+  transition:
+    transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 260ms ease;
+}
+.ecosystem-map-mini__sphere--other {
+  width: 46px;
+  height: 46px;
+}
+.ecosystem-map-mini__sphere--active {
+  transition:
+    transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 260ms ease,
+    filter 260ms ease;
+}
+.ecosystem-map-mini.is-expanded .ecosystem-map-mini__sphere--active {
+  transform: scale(1.08);
+}
+.ecosystem-map-mini__sphere:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.ecosystem-map-mini__glow {
+  position: absolute;
+  inset: -30%;
+  border-radius: 999px;
+  background: radial-gradient(circle at 50% 46%, color-mix(in srgb, var(--eco-color) 34%, transparent), transparent 72%);
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+.ecosystem-map-mini.is-expanded .ecosystem-map-mini__sphere--active .ecosystem-map-mini__glow {
+  opacity: 1;
+}
+
+.ecosystem-map-mini__glass {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--eco-color) 30%, transparent);
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--eco-color) 30%, transparent),
+    color-mix(in srgb, var(--eco-color) 10%, transparent) 60%,
+    rgba(255, 255, 255, 0.65)
+  );
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 4px 8px rgba(255, 255, 255, 0.55);
+}
+.ecosystem-map-mini__glass img {
+  position: relative;
+  object-fit: contain;
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+}
+
+.ecosystem-map-mini__label {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 7px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 3px 8px;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+}
+.ecosystem-map-mini__sphere--other .ecosystem-map-mini__label {
+  transition-delay: 60ms;
+}
+.ecosystem-map-mini.is-expanded .ecosystem-map-mini__label {
+  opacity: 1;
+}
+.ecosystem-map-mini__label--active {
+  bottom: auto;
+  top: calc(100% + 7px);
+}
+
+@media (max-width: 700px) {
+  .ecosystem-map-mini {
+    right: 14px;
+    bottom: 14px;
+  }
+}

@@ -20,6 +20,7 @@ import {
   Contribution,
   Attributions,
   Sponsors,
+  ContentPatterns,
 } from "./contents";
 
 export interface Page {
@@ -37,6 +38,15 @@ export interface Page {
    * shared generic Header (page-shell > page-hero) is skipped for them.
    */
   hideHeader?: boolean;
+  hideEyebrow?: boolean;
+  /** Shrinks page-hero's padding/min-height so the header sits close to
+   * whatever comes right below it (e.g. Engineering/Experiments' ecosystem
+   * map, meant to fit in the initial viewport together with the header). */
+  compactHero?: boolean;
+  /** Opt-in "molecule field" header background (see Header.tsx) — the
+   * Claude Design MoleculeField edge/light treatment, currently used only
+   * by Experiments and Results. The number just seeds the composition. */
+  moleculeSeed?: number;
 }
 
 const Pages: Page[] = [
@@ -56,6 +66,7 @@ const Pages: Page[] = [
     /*An overview of the problem, motivation, and goals behind rePhlow.*/
     path: "/project-description",
     component: ProjectDescription,
+    hideEyebrow: true,
     docTitle: "Project Description — rePhlow iGEM Wiki",
   },
   {
@@ -75,6 +86,8 @@ const Pages: Page[] = [
     path: "/engineering",
     component: Engineering,
     docTitle: "Engineering — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    compactHero: true,
   },
   {
     name: "Model",
@@ -102,6 +115,9 @@ const Pages: Page[] = [
     path: "/experiments",
     component: Experiments,
     docTitle: "Experiments — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    compactHero: true,
+    moleculeSeed: 23,
   },
   {
     name: "Measurements",
@@ -129,6 +145,8 @@ const Pages: Page[] = [
     path: "/results",
     component: Results,
     docTitle: "Results — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    moleculeSeed: 45,
   },
   {
     name: "Safety",
@@ -143,10 +161,10 @@ const Pages: Page[] = [
     name: "Human practices",
     title: "Human Practices",
     lead: "Science shaped by society.",
-    /*A space for the social, ethical, and stakeholder-oriented dimensions of the project.*/
+    hideHeader: true,
     path: "/human-practices",
     component: HumanPractices,
-    docTitle: "Human Practices — rePhlow iGEM Wiki",
+    docTitle: "Human Practices — The Phosphorus Route — rePhlow iGEM Wiki",
   },
   {
     name: "Collaboration and Partnership",
@@ -227,6 +245,20 @@ const Pages: Page[] = [
     path: "/medals",
     component: Medals,
     docTitle: "Medals — rePhlow iGEM Wiki",
+    hideHeader: true,
+  },
+  {
+    // Internal reference page, deliberately not listed in Navbar.tsx's
+    // NAV_GROUPS — reachable only by direct URL. A catalogue of the
+    // wiki's own content patterns (tables, figures, math, code, cards,
+    // ...), meant as a starting point for still-mostly-empty pages, not
+    // as judged wiki content.
+    name: "Content Patterns",
+    title: "Content Patterns",
+    lead: "A field guide to how this wiki is built.",
+    path: "/content-patterns",
+    component: ContentPatterns,
+    docTitle: "Content Patterns — rePhlow iGEM Wiki (internal)",
     hideHeader: true,
   },
 ];

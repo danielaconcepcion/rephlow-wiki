@@ -1,0 +1,17 @@
+/* --------------------------------------------------------------------------
+   Header — opt-in "molecule" variant (see Header.tsx's `moleculeSeed`
+   prop). Everything here is scoped under .page-shell--molecule, so pages
+   that don't pass moleculeSeed keep the default .page-shell/.page-hero
+   look from App.css untouched.
+   -------------------------------------------------------------------------- */
+.page-shell.page-shell--molecule {
+  position: relative;
+  overflow: hidden;
+  background: none;
+  border-bottom: 1px solid rgba(27, 35, 64, 0.08);
+}
+
+.page-shell--molecule .page-hero {
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,169 @@
+/* --------------------------------------------------------------------------
+   GENE SYSTEM GRID — "The five parts of the system" (Genetic engineering)
+   Two colour-coded lanes echoing the source's own add/remove schematic:
+   PPK1 + PstSCAB (added capacity, green) on the left, Ppx + PpkB + PitB
+   (native routes knocked out, red) on the right. Cards expand in place via
+   a CSS grid-rows trick (no JS animation library) — the body is always in
+   the DOM so screen readers can still reach it via aria-expanded, just
+   visually collapsed to zero height. The whole thing sits in a single
+   quiet card (.gene-system-grid-frame), the same tinted-panel language as
+   Model's .factor-explorer__frame, so it reads as one compact unit rather
+   than loose content on the page.
+   -------------------------------------------------------------------------- */
+.gene-system-grid-frame {
+  padding: 24px 28px 28px;
+  margin: 8px 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper-soft);
+}
+
+.gene-system-grid {
+  --gene-add: var(--lab-genetic);
+  --gene-remove: #b3403a;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: 28px;
+}
+
+.gene-lane {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gene-lane__head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gene-lane__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.gene-lane__marker {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+}
+.gene-lane--add .gene-lane__marker { background: var(--gene-add); }
+.gene-lane--remove .gene-lane__marker { background: var(--gene-remove); }
+
+.gene-lane__hint {
+  margin: 0;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.gene-lane__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gene-card {
+  border: 1px solid var(--lab-line);
+  border-radius: 10px;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.gene-card__trigger {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: 4px 12px;
+  padding: 14px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+}
+.gene-card__trigger:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+
+.gene-card__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.gene-card__full-name {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+.gene-card__chevron {
+  width: 9px;
+  height: 9px;
+  align-self: center;
+  border-right: 2px solid var(--ink-soft);
+  border-bottom: 2px solid var(--ink-soft);
+  transform: rotate(45deg);
+  transition: transform 0.2s ease;
+}
+.gene-card.is-open .gene-card__chevron {
+  transform: rotate(-135deg);
+}
+
+.gene-card__body-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+.gene-card.is-open .gene-card__body-wrap {
+  grid-template-rows: 1fr;
+}
+.gene-card__body {
+  min-height: 0;
+  overflow: hidden;
+  padding: 0 18px;
+}
+.gene-card.is-open .gene-card__body {
+  padding: 0 18px 16px;
+}
+
+.gene-card__field {
+  margin: 0 0 10px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.gene-card__field strong { color: var(--ink); }
+.gene-card__field:last-of-type { margin-bottom: 0; }
+
+.gene-card__storyboard {
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px dashed var(--lab-line);
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.gene-card__storyboard-label {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+@media (max-width: 700px) {
+  .gene-system-grid-frame {
+    padding: 18px 18px 22px;
+  }
+  .gene-system-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,148 @@
+/* --------------------------------------------------------------------------
+   ECOSYSTEM MAP — shared visual index component (Experiments, Engineering).
+   Each sphere carries its own accent via --eco-color (set inline per item);
+   every rgba() from the source prototype becomes color-mix(in srgb,
+   var(--eco-color) X%, transparent), the same convention already used
+   throughout LabFolders.css for --folder-accent.
+   -------------------------------------------------------------------------- */
+.ecosystem-map {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 8px auto 32px;
+  aspect-ratio: 1280 / 320;
+}
+
+.ecosystem-map__slot {
+  position: absolute;
+  will-change: transform;
+}
+
+.ecosystem-map__drift {
+  will-change: transform;
+}
+
+.ecosystem-map__sphere {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 50% 44%,
+    color-mix(in srgb, var(--eco-color) 12%, transparent),
+    color-mix(in srgb, var(--eco-color) 4%, transparent) 66%,
+    transparent 74%
+  );
+  cursor: pointer;
+  font: inherit;
+  transition:
+    transform 1100ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 1100ms ease;
+}
+.ecosystem-map__sphere:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.ecosystem-map__glow {
+  position: absolute;
+  inset: -10%;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 50% 46%,
+    color-mix(in srgb, var(--eco-color) 28%, transparent),
+    color-mix(in srgb, var(--eco-color) 9%, transparent) 62%,
+    transparent 76%
+  );
+  transition: opacity 1000ms ease;
+}
+
+.ecosystem-map__glass {
+  position: relative;
+  width: 82%;
+  height: 82%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--eco-color) 26%, transparent);
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--eco-color) 16%, transparent),
+    color-mix(in srgb, var(--eco-color) 5%, transparent) 55%,
+    rgba(255, 255, 255, 0.5)
+  );
+  box-shadow:
+    inset 0 10px 22px rgba(255, 255, 255, 0.6),
+    inset 0 -8px 18px color-mix(in srgb, var(--eco-color) 6%, transparent);
+}
+
+.ecosystem-map__fill {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--eco-color) 60%, transparent),
+    color-mix(in srgb, var(--eco-color) 28%, transparent) 60%,
+    color-mix(in srgb, var(--eco-color) 48%, transparent)
+  );
+  transition: opacity 900ms ease;
+}
+
+.ecosystem-map__sheen {
+  position: absolute;
+  left: 16%;
+  top: 9%;
+  width: 34%;
+  height: 22%;
+  border-radius: 999px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+  filter: blur(1px);
+}
+
+.ecosystem-map__glass img {
+  position: relative;
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.75));
+}
+
+.ecosystem-map__title {
+  text-align: center;
+  margin-top: 14px;
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  transition:
+    font-size 420ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    font-weight 420ms ease,
+    opacity 420ms ease;
+}
+
+@media (max-width: 700px) {
+  .ecosystem-map {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 28px 20px;
+    aspect-ratio: auto;
+    height: auto;
+    padding: 4px 0 8px;
+  }
+  .ecosystem-map__slot {
+    position: static !important;
+    width: 88px !important;
+  }
+  .ecosystem-map__drift {
+    transform: none !important;
+  }
+}

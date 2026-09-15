@@ -1,0 +1,486 @@
+/* Section 2 — "Stakeholders & Voices". Identity: a vertical chronological
+   timeline with a sticky reading pane (preview.html) — a case-file browser,
+   distinct from section 0/1's flip/compass metaphors. */
+
+.stakeholder-timeline {
+  --st-accent: var(--ink);
+}
+
+/* --- Header: same hero pattern as Design Compass / Travel Archive (dark
+   container framing the section h2/lede, decorative element on the right,
+   identical margins and responsive collapse) — the old purple gradient
+   deliberately reused verbatim, per the brief. h2/lede replicate the exact
+   size/max-width/margin/justify the rest of Human Practices uses for its
+   section headers (HumanPractices.css's `.hp-section > h2` /
+   `.hp-section-lede`), only recoloured white: nesting them here takes
+   them out of that selector's reach, so position and hierarchy are
+   preserved by matching values, not by inheritance. */
+.st-hero {
+  --st-hero-dark: #241b3d;
+  --st-hero-mid: #6e5a96;
+  position: relative;
+  margin: 4px 0 40px;
+  padding: clamp(32px, 5vw, 56px) clamp(24px, 5vw, 56px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(120deg, var(--st-hero-dark), var(--st-hero-mid));
+  box-shadow: var(--shadow-soft);
+}
+.st-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.14) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+.st-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+
+.st-hero__intro h2 {
+  max-width: 790px;
+  margin: 0 0 6px;
+  font-size: clamp(2.05rem, 3.6vw, 3.2rem);
+  line-height: 1.08;
+  color: #fff;
+}
+.st-hero__lede {
+  max-width: 790px;
+  margin: 6px 0 0;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: #e6e1f2;
+  text-align: justify;
+  hyphens: none;
+}
+
+/* Connected-voices cutout: a loose mesh of differently sized people,
+   organisation and environmental nodes. Sized to match the passport and
+   decorative compass used in the neighbouring section headers. */
+.st-hero-voices {
+  position: relative;
+  z-index: 1;
+  justify-self: end;
+  width: min(100%, 250px);
+}
+@media (max-width: 980px) {
+  .st-hero__grid {
+    grid-template-columns: 1fr;
+  }
+  .st-hero-voices {
+    justify-self: start;
+    width: 185px;
+    margin-top: 26px;
+  }
+}
+
+@media (max-width: 640px) {
+  .st-hero {
+    padding: 28px 20px;
+    border-radius: 22px;
+  }
+  .st-hero-voices {
+    width: 150px;
+  }
+}
+
+.hp-timeline-shell {
+  margin: 10px 0 30px;
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-card);
+}
+
+.hp-timeline-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 4px 0 24px;
+}
+.hp-timeline-category-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+.hp-timeline-category-btn:hover,
+.hp-timeline-category-btn:focus-visible {
+  border-color: var(--cat-color);
+  color: var(--ink);
+}
+.hp-timeline-category-btn.is-active {
+  border-color: var(--cat-color);
+  color: var(--cat-color);
+  box-shadow: inset 0 0 0 1px var(--cat-color);
+}
+.hp-timeline-category-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cat-color);
+  flex-shrink: 0;
+}
+
+.hp-timeline-category-description {
+  max-width: 900px;
+  margin: -4px 0 28px;
+  color: var(--cat-color);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+.hp-timeline-category-description strong {
+  color: inherit;
+}
+
+.hp-timeline__intro {
+  margin: 0 0 20px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+.hp-timeline__intro h3 {
+  margin-bottom: 6px;
+  font-size: 1.25rem;
+}
+.hp-timeline__intro p {
+  max-width: 760px;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.hp-timeline {
+  display: grid;
+  grid-template-columns: minmax(220px, 300px) 1fr;
+  gap: 32px;
+  scroll-margin-top: var(--section-nav-offset);
+  margin-bottom: 0;
+}
+
+.hp-timeline__rail {
+  display: flex;
+  flex-direction: column;
+  border-left: 2px dotted var(--line);
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-left: 4px;
+}
+
+.hp-timeline__month {
+  margin: 18px 10px 5px 14px;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+.hp-timeline__month:first-child {
+  margin-top: 4px;
+}
+
+.hp-timeline__dot {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 9px 10px 9px 14px;
+  margin-left: -2px;
+  border-left: 2px solid transparent;
+  background: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  text-align: left;
+  cursor: pointer;
+}
+.hp-timeline__dot-marker {
+  width: 9px;
+  height: 9px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: var(--cat-color);
+  flex-shrink: 0;
+}
+.hp-timeline__dot-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.hp-timeline__dot-date {
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+}
+.hp-timeline__dot-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.hp-timeline__dot.is-active {
+  border-left-color: var(--cat-color);
+  background: rgba(27, 35, 64, 0.03);
+}
+.hp-timeline__dot.is-active .hp-timeline__dot-name {
+  color: var(--ink);
+}
+
+.hp-timeline__panel {
+  position: sticky;
+  top: calc(var(--section-nav-offset) + 10px);
+  align-self: start;
+  padding: 22px 26px;
+  border-radius: var(--radius-lg);
+  background: var(--paper-soft);
+  box-shadow: var(--shadow-card);
+  max-height: 74vh;
+  overflow-y: auto;
+}
+
+.hp-timeline__panel-head {
+  border-left: 3px solid var(--cat-color);
+  padding-left: 14px;
+  margin-bottom: 14px;
+}
+.hp-timeline__panel-category {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cat-color);
+}
+.hp-timeline__panel-head h3 {
+  font-size: 1.25rem;
+  margin: 4px 0 2px;
+}
+.hp-timeline__panel-meta {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.hp-timeline__question {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.02rem;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.hp-timeline__panel p {
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.hp-timeline__readmore-toggle {
+  margin-top: 10px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+.hp-timeline__readmore-toggle:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.hp-timeline__readmore {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.hp-timeline__source-entry p,
+.hp-timeline__source-entry blockquote,
+.hp-timeline__source-entry ul,
+.hp-timeline__source-entry ol {
+  margin: 0;
+}
+.hp-timeline__source-entry strong {
+  color: var(--ink);
+}
+.hp-timeline__source-entry ul,
+.hp-timeline__source-entry ol {
+  padding-left: 1.25rem;
+}
+.hp-timeline__source-entry li + li {
+  margin-top: 6px;
+}
+.hp-timeline__source-entry blockquote {
+  padding: 12px 16px;
+  border-left: 2px solid var(--cat-color);
+  background: color-mix(in srgb, var(--cat-color) 7%, var(--paper));
+}
+
+/* --- Pending entries --- */
+.hp-timeline-pending {
+  margin: 30px 0;
+  padding: 20px 24px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-lg);
+}
+.hp-timeline-pending h4 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+.hp-timeline-pending__note {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+}
+.hp-timeline-pending ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.hp-timeline-pending__item {
+  display: flex;
+  gap: 10px;
+}
+.hp-timeline-pending__dot {
+  width: 8px;
+  height: 8px;
+  margin-top: 6px;
+  border-radius: 50%;
+  background: var(--cat-color);
+  flex-shrink: 0;
+}
+.hp-timeline-pending__name {
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 0.92rem;
+}
+.hp-timeline-pending__category {
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+.hp-timeline-pending__status {
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 2px 0 4px;
+}
+.hp-timeline-pending__body {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* --- Users table --- */
+.hp-users {
+  margin-top: 34px;
+  scroll-margin-top: var(--section-nav-offset);
+}
+.hp-users__table-wrap {
+  overflow-x: auto;
+  margin: 18px 0;
+}
+.hp-users__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.hp-users__table th,
+.hp-users__table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+.hp-users__table th {
+  background: var(--paper-soft);
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+}
+.hp-users__table td {
+  color: var(--ink-soft);
+}
+
+.hp-users__network-accordions {
+  width: 100%;
+  max-width: 790px;
+  margin: 18px auto 0;
+  border-top: 1px solid var(--line);
+}
+
+.hp-users__network-accordion.hp-accordion {
+  border-bottom: 1px solid var(--line);
+}
+
+.hp-users__network-accordion .hp-accordion__trigger {
+  padding-block: 16px;
+}
+
+.hp-users__network-accordion .hp-accordion__content {
+  padding-bottom: 20px;
+}
+
+.hp-stakeholder-consent {
+  max-width: 790px;
+  margin: 42px auto 0;
+  padding: 20px 24px;
+  border: 1px solid color-mix(in srgb, var(--st-accent) 18%, var(--line));
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--paper-soft) 80%, white);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+.hp-stakeholder-consent strong {
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .hp-timeline {
+    grid-template-columns: 1fr;
+  }
+  .hp-timeline__rail {
+    max-height: 240px;
+  }
+  .hp-timeline__panel {
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .hp-timeline-shell {
+    padding: 16px;
+    border-radius: var(--radius-md);
+  }
+  .hp-timeline-category-description {
+    margin-bottom: 22px;
+  }
+  .hp-stakeholder-consent {
+    padding: 18px;
+  }
+}

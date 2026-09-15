@@ -1,0 +1,1193 @@
+/* Section 1 — "The Design Compass". Identity: a literal rotating-needle
+   dial (rephlow_guiding_compass_refined.html) bound two-way to six value
+   panels — kept as an actual compass, not abstracted into plain tabs. */
+
+.design-compass {
+  --dc-accent: var(--microbe);
+  --dc-cream: #f6f3ea;
+  --dc-deep: #241b3d;
+  --dc-deep-mid: #6e5a96;
+}
+
+/* --- Header: same hero pattern as Travel Archive (dark container framing
+   the section h2/lede, decorative element on the right, identical margins
+   and responsive collapse) — recoloured purple, with a small decorative
+   compass badge instead of a passport. The h2/lede below replicate the
+   exact size/max-width/margin the rest of Human Practices uses for its
+   section headers (see HumanPractices.css's `.hp-section > h2` /
+   `.hp-section-lede`), only recoloured for the dark background: nesting
+   them here takes them out of that selector's reach, so position and
+   hierarchy are preserved by matching values, not by inheritance. This
+   decorative badge is unrelated to, and never touches, the interactive
+   compass dial further down the section. */
+.dc-hero {
+  --dc-hero-dark: #102b3d;
+  --dc-hero-mid: #2c7287;
+  position: relative;
+  margin: 4px 0 40px;
+  padding: clamp(32px, 5vw, 56px) clamp(24px, 5vw, 56px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: linear-gradient(120deg, var(--dc-hero-dark), var(--dc-hero-mid));
+  box-shadow: var(--shadow-soft);
+}
+.dc-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.14) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  pointer-events: none;
+}
+.dc-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+}
+
+.dc-hero__intro h2 {
+  max-width: 790px;
+  margin: 0 0 6px;
+  font-size: clamp(2.05rem, 3.6vw, 3.2rem);
+  line-height: 1.08;
+  color: #fff;
+}
+.dc-hero__lede {
+  max-width: 790px;
+  margin: 6px 0 0;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: #e6e1f2;
+  text-align: justify;
+  hyphens: none;
+}
+
+.dc-hero-compass {
+  position: relative;
+  z-index: 1;
+  justify-self: end;
+  width: min(100%, 210px);
+}
+
+@media (max-width: 980px) {
+  .dc-hero__grid {
+    grid-template-columns: 1fr;
+  }
+  .dc-hero-compass {
+    justify-self: start;
+    width: 170px;
+    margin-top: 26px;
+  }
+}
+
+@media (max-width: 640px) {
+  .dc-hero {
+    padding: 28px 20px;
+    border-radius: 22px;
+  }
+  .dc-hero-compass {
+    width: 140px;
+  }
+}
+
+.hp-compass__accordion.hp-accordion {
+  background: rgba(110, 90, 150, 0.05);
+  border-radius: var(--radius-md);
+  padding: 4px 22px;
+  margin-bottom: 16px;
+}
+
+/* "Why we needed a framework" only (not the References accordion below it,
+   which shares .hp-compass__accordion) — a blue outline equivalent to
+   WhyPhosphorus.css's .hp-why__reflection green one (same recipe: 1px solid,
+   color-mix at 24% over transparent), using --ink rather than --water-light
+   since --ink is the site's actual navy/blue token and reads at a
+   comparable weight against this card's own pale tinted background,
+   whereas --water-light is close enough to white that the same mix would
+   barely show. */
+#s1-framework.hp-accordion {
+  border: 1px solid color-mix(in srgb, var(--ink) 24%, transparent);
+}
+
+.hp-framework-sequence {
+  margin-top: 2px;
+  padding: 20px 18px 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* One stacked column at every width — the three points read as a simple
+   top-to-bottom sequence, never a horizontal row, so there's only ever
+   one connector shape to get right instead of two. */
+.hp-framework-sequence__points {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+}
+
+/* One unbroken line + arrowhead, both anchored to .points alone (never
+   split across .points and .choice) so they can never drift apart: the
+   line's height and the arrowhead's position are both expressed as
+   .points' own height (100%) plus fixed offsets into the fixed 40px gap
+   above .choice, so they stay joined regardless of how tall the point
+   cards render. Passes through the numbered circles' shared centre-line
+   (left: 30px, matching the circles' centre at left:8px + 46px/2). */
+.hp-framework-sequence__points::before {
+  content: "";
+  position: absolute;
+  top: 23px;
+  left: 30px;
+  width: 2px;
+  height: calc(100% + 13px);
+  background: #2c7287;
+}
+
+.hp-framework-sequence__points::after {
+  content: "";
+  position: absolute;
+  top: calc(100% + 32px);
+  left: 25px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #2c7287;
+}
+
+.hp-framework-sequence__points article {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  min-height: 98px;
+  padding: 0 0 0 68px;
+}
+
+.hp-framework-sequence__number {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 50%;
+  color: #102b3d;
+  background: linear-gradient(135deg, #dff3f1 0%, #edf5e9 56%, #fbfaf0 100%);
+  box-shadow: 0 6px 16px rgba(44, 114, 135, 0.12);
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.hp-framework-sequence__points h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  line-height: 1.35;
+}
+
+.hp-framework-sequence__points p {
+  margin: 7px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.83rem;
+  line-height: 1.55;
+}
+
+/* Sequence → AREA connector: the single line + arrowhead defined on
+   .hp-framework-sequence__points above carries all the way down and
+   touches this box's top edge — nothing is drawn from this element. */
+.hp-framework-sequence__choice {
+  position: relative;
+  z-index: 1;
+  margin: 40px 0 0;
+  padding: 18px 22px;
+  border: 1px solid rgba(44, 114, 135, 0.16);
+  border-radius: 8px;
+  color: var(--ink-soft);
+  background: linear-gradient(135deg, #e5f4f3 0%, #f0f6ec 58%, #fcfbf3 100%);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.hp-framework-sequence__choice strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.hp-compass__area {
+  margin: 24px 0 30px;
+  scroll-margin-top: var(--section-nav-offset);
+}
+.hp-compass__area h3,
+.hp-compass__intro h3,
+.hp-compass__prose h3 {
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+.hp-compass__intro,
+.hp-compass__prose {
+  margin: 26px 0;
+  scroll-margin-top: var(--section-nav-offset);
+}
+.hp-compass__prose p {
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+/* --- AREA pathway: 4 stops, each self-contained (letter + name + question
+   + explanation) — no separate dropdown layer, per the approved merge. --- */
+.hp-area-pathway {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin: 20px 0;
+}
+.hp-area-stop {
+  position: relative;
+  padding: 0 14px;
+  text-align: center;
+}
+.hp-area-stop__letter {
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: var(--dc-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.hp-area-stop__connector {
+  position: absolute;
+  top: 20px;
+  left: calc(50% + 20px);
+  width: calc(100% - 40px);
+  height: 2px;
+  background: var(--line);
+}
+.hp-area-stop__name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+.hp-area-stop__question {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.hp-area-stop__explanation {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.hp-area-outcomes {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 30px 0 14px;
+  padding: 15px 0;
+  list-style: none;
+  border-top: 1px solid rgba(110, 90, 150, 0.2);
+  border-bottom: 1px solid rgba(110, 90, 150, 0.2);
+}
+
+.hp-area-outcomes li {
+  position: relative;
+  min-width: 0;
+  padding: 0 22px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.hp-area-outcomes li:not(:last-child)::after {
+  content: "→";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  color: var(--dc-accent);
+  font-size: 1rem;
+  transform: translate(50%, -50%);
+}
+
+.hp-area-pathway-note {
+  max-width: 850px;
+  margin: 0 auto;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  text-align: center;
+}
+
+.hp-area-pathway-intro {
+  margin-top: 24px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  text-align: center;
+}
+
+.hp-compass-link {
+  color: #557a46;
+  font-weight: 600;
+  text-decoration: none;
+  background-image: linear-gradient(
+    rgba(172, 201, 156, 0.45),
+    rgba(172, 201, 156, 0.45)
+  );
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 45%;
+  transition: background-size 0.22s ease;
+}
+
+.hp-compass-link:hover,
+.hp-compass-link:focus-visible {
+  background-size: 100% 100%;
+}
+
+.hp-compass-link:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.design-compass .hp-citation {
+  color: #557a46;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.design-compass .hp-citation:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* --- The compass dial ---
+   Ported directly from rephlow_guiding_compass_refined.html's
+   .compass-stage/.area-ring/.inner-ring/.compass-center/.needle/.point —
+   same segmented conic-gradient ring, inset white ring, large hub, thick
+   arrow-shaped needle and six absolutely-positioned labelled points.
+   Only the palette (mapped onto wiki tokens) and font (Space Grotesk
+   instead of Georgia, no serif anywhere) are adapted; composition,
+   proportions and behaviour are the source markup, not a reinterpretation. */
+.hp-compass-wrap {
+  display: grid;
+  place-items: center;
+  margin: 12px 0 20px;
+}
+
+.hp-compass-stage {
+  position: relative;
+  width: min(650px, 94vw);
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+
+.hp-compass-area-ring {
+  position: absolute;
+  inset: 5%;
+  border-radius: 50%;
+  border: 2px solid rgba(110, 90, 150, 0.22);
+  background: conic-gradient(
+    from -60deg,
+    rgba(110, 90, 150, 0.16) 0 60deg,
+    rgba(27, 35, 64, 0.08) 60deg 120deg,
+    rgba(124, 154, 78, 0.16) 120deg 180deg,
+    rgba(226, 84, 45, 0.12) 180deg 240deg,
+    rgba(110, 90, 150, 0.13) 240deg 300deg,
+    rgba(27, 35, 64, 0.08) 300deg 360deg
+  );
+  box-shadow:
+    inset 0 0 0 18px rgba(255, 255, 255, 0.68),
+    var(--shadow-soft);
+}
+
+.hp-compass-inner-ring {
+  position: absolute;
+  inset: 18%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid var(--line);
+}
+
+.hp-compass-center {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 164px;
+  height: 164px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  background: var(--paper);
+  border: 7px solid rgba(255, 255, 255, 0.96);
+  z-index: 8;
+  box-shadow: 0 16px 34px rgba(27, 35, 64, 0.24);
+}
+.hp-compass-center__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.hp-compass-needle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 205px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--ink) 0 80%, transparent 80%);
+  transform-origin: 0 50%;
+  transition: transform 0.58s cubic-bezier(0.2, 0.8, 0.2, 1);
+  z-index: 7;
+}
+.hp-compass-needle::after {
+  content: "";
+  position: absolute;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left: 17px solid var(--ink);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+}
+
+.hp-compass-point {
+  position: absolute;
+  width: 152px;
+  min-height: 80px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.98);
+  color: var(--ink);
+  font-family: var(--font-body);
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 7px 20px rgba(27, 35, 64, 0.1);
+  z-index: 10;
+  transition: 0.2s ease;
+}
+.hp-compass-point:hover,
+.hp-compass-point:focus-visible {
+  border-color: var(--dc-accent);
+  outline: none;
+}
+.hp-compass-point.is-active {
+  border-color: var(--algae);
+  box-shadow: 0 10px 26px rgba(124, 154, 78, 0.22);
+}
+.hp-compass-point .num {
+  display: block;
+  color: var(--dc-accent);
+  font-size: 0.66rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+.hp-compass-point .label {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.78rem;
+  line-height: 1.17;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.p0 {
+  left: 50%;
+  top: 1%;
+  transform: translateX(-50%);
+}
+.p1 {
+  right: -1%;
+  top: 20%;
+}
+.p2 {
+  right: 1%;
+  bottom: 20%;
+}
+.p3 {
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+}
+.p4 {
+  left: 1%;
+  bottom: 20%;
+}
+.p5 {
+  left: -1%;
+  top: 20%;
+}
+
+.hp-compass-helper {
+  margin: -4px 0 30px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.hp-compass-layout,
+.hp-compass-visual {
+  min-width: 0;
+}
+
+.hp-compass__values {
+  display: flex;
+  flex-direction: column;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Compass explanations render below the dial (not beside it) at every
+   width, so the compass itself stays visually centred as its own row. */
+
+.hp-compass__value.hp-accordion {
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: calc(var(--section-nav-offset) + 16px);
+}
+.hp-compass__value.hp-accordion:last-child {
+  border-bottom: none;
+}
+.hp-compass__value.is-open .hp-accordion__title {
+  color: var(--dc-accent);
+}
+
+/* --- Value accordion internal hierarchy: a clear intro → 2x2 AREA grid →
+   featured "what changed" block → differentiated evidence close, recovered
+   from rephlow_guiding_compass_refined.html's .meaning-box/.area-steps/
+   .change-box/.evidence-box. Cream surfaces + soft purple tints, so this
+   reads as its own composition rather than a copy of the trade-off or
+   perspective cards below. --- */
+.hp-value-meaning {
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+  background: rgba(110, 90, 150, 0.08);
+}
+.hp-value-meaning p {
+  margin: 0;
+  color: var(--ink);
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.hp-value-meaning__label,
+.hp-value-step__label,
+.hp-value-change__label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--dc-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.hp-value-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.hp-value-step {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--dc-cream);
+}
+.hp-value-step p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.89rem;
+  line-height: 1.6;
+}
+
+.hp-value-change {
+  margin-bottom: 16px;
+  padding: 18px 20px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--dc-deep), var(--dc-deep-mid));
+}
+.hp-value-change__label {
+  color: #d9cdf0;
+}
+.hp-value-change p {
+  margin: 0;
+  color: #f4f1fa;
+  line-height: 1.65;
+}
+
+.hp-evidence-trail {
+  padding: 12px 14px;
+  background: var(--dc-cream);
+  border: 1px dashed rgba(110, 90, 150, 0.35);
+  border-radius: var(--radius-md);
+}
+.hp-evidence-trail__label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dc-accent);
+  margin-bottom: 6px;
+}
+.hp-evidence-trail ul {
+  margin: 0;
+  padding-left: 1.1em;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+/* --- Trade-offs: four compact examples in a 2x2 grid, then three rules as
+   a numbered vertical sequence with a thin connecting line — its own
+   composition, distinct from the value cards above. --- */
+.hp-tradeoff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+.hp-tradeoff-card {
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: var(--dc-cream);
+}
+.hp-tradeoff-card b {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--dc-accent);
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  font-weight: 700;
+}
+.hp-tradeoff-card p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.87rem;
+  line-height: 1.55;
+}
+
+.hp-rule-sequence {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 22px 0;
+}
+.hp-rule-sequence::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 19px;
+  width: 2px;
+  background: rgba(110, 90, 150, 0.28);
+}
+.hp-rule-sequence__item {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+.hp-rule-sequence__number {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--dc-accent);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.hp-rule-sequence__item p {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+/* --- The six evaluation questions, recapped as a single sheet of graph
+   paper (MUJI-notebook style) laid slightly askew on the page: a very
+   light cream ground, a fine discreet grid, a column of binder holes
+   down the left margin. Numbered 1–6 in the wiki's own typefaces only
+   (Space Grotesk for the value name, Inter for the question) — no
+   handwritten/serif/mono font anywhere, no heavy shadow, no aged
+   texture. Two columns × three rows keeps six items compact; it's one
+   sheet with internal dividers, never six separate cards. --- */
+.hp-question-sheet {
+  position: relative;
+  margin: 22px 0 26px;
+  padding: 22px 24px 22px 58px;
+  border-radius: 6px;
+  border: 1px solid rgba(90, 78, 55, 0.16);
+  background-color: #faf8f1;
+  background-image:
+    radial-gradient(
+      circle at 28px 50%,
+      rgba(90, 78, 55, 0.05) 3.4px,
+      rgba(90, 78, 55, 0.32) 3.4px,
+      rgba(90, 78, 55, 0.32) 4px,
+      transparent 4.4px
+    ),
+    linear-gradient(rgba(90, 78, 55, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(90, 78, 55, 0.09) 1px, transparent 1px);
+  background-size:
+    100% 46px,
+    22px 22px,
+    22px 22px;
+  background-repeat: repeat-y, repeat, repeat;
+  background-position:
+    0 18px,
+    0 0,
+    0 0;
+  box-shadow: 0 3px 10px rgba(36, 27, 61, 0.07);
+  transform: rotate(-0.6deg);
+}
+
+.hp-question-sheet__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.hp-question-sheet__row {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(90, 78, 55, 0.18);
+}
+.hp-question-sheet__row:nth-child(odd) {
+  border-right: 1px solid rgba(90, 78, 55, 0.18);
+}
+.hp-question-sheet__row:nth-child(5),
+.hp-question-sheet__row:nth-child(6) {
+  border-bottom: none;
+}
+
+.hp-question-sheet__number {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: var(--dc-accent);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.68rem;
+  vertical-align: -3px;
+}
+
+.hp-question-sheet__value {
+  margin: 0 0 4px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+.hp-question-sheet__question {
+  margin: 0;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .hp-question-sheet {
+    padding: 20px 16px 20px 46px;
+    background-position:
+      0 14px,
+      0 0,
+      0 0;
+    /* A tilted sheet reads fine at full width but risks clipping its own
+       corners/text against the narrower column here, so the tilt drops
+       and only the paper identity (grid + holes) carries over. */
+    transform: none;
+  }
+  .hp-question-sheet__grid {
+    grid-template-columns: 1fr;
+  }
+  .hp-question-sheet__row {
+    border-right: none;
+  }
+  .hp-question-sheet__row:nth-child(5) {
+    border-bottom: 1px solid rgba(90, 78, 55, 0.18);
+  }
+  .hp-question-sheet__row:nth-child(6) {
+    border-bottom: none;
+  }
+}
+
+/* --- Different perspectives: one short card per voice, naming the
+   condition it added to the definition of success. --- */
+.hp-perspective-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 20px 0;
+}
+.hp-perspective-card {
+  padding: 15px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: var(--dc-cream);
+}
+.hp-perspective-card b {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--dc-accent);
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+.hp-perspective-card p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.87rem;
+  line-height: 1.55;
+}
+
+/* --- Missing perspectives: static labels, not buttons — no cursor,
+   hover or shadow affordances, since nothing here is interactive. --- */
+.hp-pill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0;
+  padding: 0;
+  list-style: none;
+}
+.hp-pill {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--dc-cream);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* --- Loop closed: a graphic staircase of six neutral steps (ascending
+   height only signals progression through the six stages, not that any
+   one interaction reached that stage — nothing here is marked "done"). --- */
+.hp-loop-stairs {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+.hp-loop-stairs__step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  min-height: calc(188px + var(--step-i) * 9px);
+  margin-bottom: calc(var(--step-i) * 9px);
+  padding: 14px 8px;
+  border-radius: var(--radius-md) var(--radius-md) 4px 4px;
+  border: 1px solid rgba(110, 90, 150, 0.2);
+  border-bottom: 3px solid var(--dc-accent);
+  background: linear-gradient(
+    180deg,
+    rgba(110, 90, 150, 0.12),
+    var(--dc-cream)
+  );
+  text-align: center;
+}
+.hp-loop-stairs__number {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--dc-accent);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.76rem;
+}
+.hp-loop-stairs__label {
+  font-size: 0.76rem;
+  line-height: 1.32;
+  color: var(--ink);
+  font-weight: 600;
+}
+.hp-loop-stairs__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+}
+.hp-loop-stairs__definition {
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.hp-references li {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 900px) {
+  .hp-area-pathway {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .hp-area-stop__connector {
+    display: none;
+  }
+
+  .hp-area-outcomes {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 18px 0;
+  }
+
+  .hp-area-outcomes li {
+    padding: 0 28px;
+  }
+
+  .hp-area-outcomes li:not(:last-child)::after {
+    content: "↓";
+    top: calc(100% + 9px);
+    right: 50%;
+    transform: translate(50%, -50%);
+  }
+}
+
+/* The absolutely-positioned circular layout doesn't translate to narrow
+   screens — the prototype itself hides the dial below 720px and relies on
+   the value list alone; matched here rather than reinventing a mobile
+   layout for it. */
+@media (max-width: 720px) {
+  .hp-compass__accordion.hp-accordion {
+    padding-inline: 16px;
+  }
+
+  .hp-compass-wrap,
+  .hp-compass-helper {
+    display: none;
+  }
+
+  .hp-value-steps,
+  .hp-tradeoff-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Staircase → plain vertical sequence: ascending height only makes
+     sense as a horizontal row, so on narrow screens every step reverts
+     to the same left-aligned card, read top to bottom in order. */
+  .hp-loop-stairs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  .hp-loop-stairs__step {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+    min-height: auto;
+    margin-bottom: 0;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(110, 90, 150, 0.2);
+    border-left: 3px solid var(--dc-accent);
+    border-bottom: 1px solid rgba(110, 90, 150, 0.2);
+  }
+  .hp-loop-stairs__copy {
+    align-items: flex-start;
+  }
+}
+
+/* -----------------------------------------------------------------------
+   Prototype-approved palette mapping
+
+   Keeps the established component layout and behaviour intact while
+   returning the complete section to the navy / blue / aqua / green visual
+   language of rephlow_guiding_compass_refined.html.
+   ----------------------------------------------------------------------- */
+.design-compass {
+  --dc-accent: #2c7287;
+  --dc-deep: #102b3d;
+  --dc-deep-mid: #245d6d;
+  --dc-proto-navy: #102b3d;
+  --dc-proto-blue: #2c7287;
+  --dc-proto-aqua: #76c9bd;
+  --dc-proto-green: #6ba86f;
+  --dc-proto-soft: #eef5f3;
+  --dc-proto-card: #fbfcfc;
+  --dc-proto-line: #d9e5e6;
+}
+
+.design-compass .dc-hero__lede {
+  color: #edf4f5;
+}
+
+.design-compass .hp-compass__accordion.hp-accordion {
+  background: rgba(118, 201, 189, 0.08);
+}
+
+.design-compass .hp-area-outcomes {
+  border-color: rgba(44, 114, 135, 0.2);
+}
+
+.design-compass .hp-compass-area-ring {
+  border-color: rgba(44, 114, 135, 0.2);
+  background: conic-gradient(
+    from -60deg,
+    rgba(118, 201, 189, 0.14) 0 60deg,
+    rgba(44, 114, 135, 0.08) 60deg 120deg,
+    rgba(184, 207, 122, 0.14) 120deg 180deg,
+    rgba(107, 168, 111, 0.12) 180deg 240deg,
+    rgba(118, 201, 189, 0.12) 240deg 300deg,
+    rgba(44, 114, 135, 0.08) 300deg 360deg
+  );
+  box-shadow:
+    inset 0 0 0 18px rgba(255, 255, 255, 0.62),
+    0 14px 34px rgba(16, 43, 61, 0.09);
+}
+
+.design-compass .hp-compass-center {
+  background: var(--paper);
+  box-shadow: 0 16px 34px rgba(16, 43, 61, 0.22);
+}
+
+.design-compass .hp-compass-needle {
+  background: linear-gradient(
+    90deg,
+    var(--dc-proto-navy) 0 80%,
+    transparent 80%
+  );
+}
+
+.design-compass .hp-compass-needle::after {
+  border-left-color: var(--dc-proto-navy);
+}
+
+.design-compass .hp-compass-point {
+  box-shadow: 0 7px 20px rgba(16, 43, 61, 0.09);
+}
+
+.design-compass .hp-compass-point:hover,
+.design-compass .hp-compass-point:focus-visible {
+  border-color: var(--dc-proto-aqua);
+}
+
+.design-compass .hp-compass-point.is-active {
+  border-color: var(--dc-proto-green);
+  box-shadow: 0 10px 26px rgba(107, 168, 111, 0.18);
+}
+
+.design-compass .hp-compass-point .num,
+.design-compass .hp-compass__value.is-open .hp-accordion__title,
+.design-compass .hp-value-meaning__label,
+.design-compass .hp-value-step__label,
+.design-compass .hp-evidence-trail__label {
+  color: var(--dc-proto-blue);
+}
+
+.design-compass .hp-value-meaning {
+  background: var(--dc-proto-soft);
+}
+
+.design-compass .hp-value-step,
+.design-compass .hp-tradeoff-card {
+  border-color: var(--dc-proto-line);
+  background: var(--dc-proto-card);
+}
+
+.design-compass .hp-value-change {
+  background: linear-gradient(135deg, var(--dc-proto-navy), #245d6d);
+}
+
+.design-compass .hp-value-change__label {
+  color: var(--dc-proto-aqua);
+}
+
+.design-compass .hp-value-change p {
+  color: #edf4f5;
+}
+
+.design-compass .hp-evidence-trail {
+  border-color: #bfced1;
+  background: var(--dc-proto-card);
+}
+
+.design-compass .hp-tradeoff-card b,
+.design-compass .hp-perspective-card b {
+  color: var(--dc-proto-navy);
+}
+
+.design-compass .hp-rule-sequence::before {
+  background: rgba(44, 114, 135, 0.28);
+}
+
+.design-compass .hp-rule-sequence__number,
+.design-compass .hp-loop-stairs__number {
+  background: var(--dc-proto-blue);
+}
+
+.design-compass .hp-perspective-card,
+.design-compass .hp-pill {
+  border-color: rgba(44, 114, 135, 0.16);
+  background: linear-gradient(135deg, #e5f4f3 0%, #f0f6ec 58%, #fcfbf3 100%);
+}
+
+.design-compass .hp-pill {
+  color: var(--dc-proto-navy);
+}
+
+.design-compass .hp-loop-stairs__step {
+  border-color: var(--dc-proto-line);
+  border-bottom-color: var(--dc-proto-green);
+  background: linear-gradient(
+    180deg,
+    rgba(118, 201, 189, 0.18),
+    var(--dc-proto-card)
+  );
+}
+
+@media (max-width: 720px) {
+  .design-compass .hp-loop-stairs__step {
+    border-color: var(--dc-proto-line);
+    border-left-color: var(--dc-proto-green);
+  }
+}

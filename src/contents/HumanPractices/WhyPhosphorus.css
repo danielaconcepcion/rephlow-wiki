@@ -1,0 +1,398 @@
+/* Section 0 follows the editorial hierarchy and card composition of
+   rephlow_HP_00_flipcards_images.html, using the wiki's type system. */
+
+.why-phosphorus {
+  --wp-accent: var(--algae);
+  --wp-tint: rgba(124, 154, 78, 0.08);
+  --wp-warm: #f6f3ec;
+  position: relative;
+}
+
+.why-phosphorus::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: 0;
+  left: 0;
+  border-top: 1px solid var(--line);
+}
+
+.why-phosphorus .hp-why__header {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 4px 0 28px;
+  padding: clamp(32px, 5vw, 56px) clamp(24px, 5vw, 56px);
+  border-radius: var(--radius-lg);
+  background: transparent;
+}
+
+.hp-why__header-outline {
+  position: absolute;
+  inset: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hp-why__header-outline rect {
+  fill: none;
+  stroke: #102b3d;
+  stroke-width: 1;
+  stroke-dasharray: 15 9;
+}
+
+.hp-why__header h2 {
+  margin: 0;
+  color: #102b3d;
+  font-size: clamp(2.05rem, 3.6vw, 3.2rem);
+  line-height: 1.08;
+}
+
+@media (max-width: 640px) {
+  .why-phosphorus::before {
+    top: -28px;
+  }
+
+  .why-phosphorus .hp-why__header {
+    padding: 28px 20px;
+    border-radius: 22px;
+  }
+
+  .hp-why__header-outline rect {
+    rx: 22px;
+  }
+}
+
+.hp-why__subsection {
+  position: relative;
+  padding: 54px 0;
+  scroll-margin-top: var(--section-nav-offset);
+}
+
+.hp-why__subsection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: min(790px, 100%);
+  border-top: 1px solid var(--line);
+  transform: translateX(-50%);
+}
+
+/* The header just above already has its own dashed border acting as a
+   boundary — the first subsection doesn't need this divider repeated
+   immediately under it. Later subsections keep theirs untouched. */
+.hp-why__subsection:first-of-type::before {
+  display: none;
+}
+
+.hp-why__subsection > h3 {
+  max-width: 930px;
+  margin: 0 0 30px;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.hp-why__prose {
+  max-width: 900px;
+  color: var(--ink-soft);
+  font-size: 1rem;
+  line-height: 1.78;
+}
+
+.hp-why__prose p {
+  margin: 0 0 19px;
+}
+
+.hp-why__prose p:last-child {
+  margin-bottom: 0;
+}
+
+.hp-why__prose strong {
+  color: var(--ink);
+}
+
+.hp-central-question {
+  max-width: 900px;
+  margin: 24px 0 0;
+  padding: 20px 24px;
+  border-left: 3px solid var(--wp-accent);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  background: var(--wp-tint);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.hp-team-photo {
+  width: 70%;
+  aspect-ratio: 1.58;
+  margin: 30px auto;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.hp-team-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.hp-why__reflection.hp-accordion {
+  max-width: 900px;
+  margin-top: 30px;
+  padding: 4px 22px;
+  border: 1px solid color-mix(in srgb, var(--algae) 24%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--algae) 13%, var(--paper));
+  box-shadow: var(--shadow-soft);
+}
+
+.hp-why__alternative.hp-accordion,
+.hp-references.hp-accordion {
+  max-width: 900px;
+  margin-top: 16px;
+  padding: 4px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+}
+
+.hp-why__closing {
+  padding-bottom: 32px;
+}
+
+.hp-references {
+  margin-top: 12px;
+}
+
+.hp-references ol {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 1.2em;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.hp-citation {
+  color: #557a46;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hp-citation:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.hp-reference {
+  scroll-margin-top: var(--section-nav-offset);
+}
+
+.hp-reference a {
+  color: #557a46;
+  font-weight: 600;
+  text-decoration: none;
+  background-image: linear-gradient(
+    rgba(172, 201, 156, 0.45),
+    rgba(172, 201, 156, 0.45)
+  );
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 45%;
+  transition: background-size 0.22s ease;
+}
+
+.hp-reference a:hover,
+.hp-reference a:focus-visible {
+  background-size: 100% 100%;
+}
+
+.hp-reference a:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Case-study flip cards */
+.hp-case-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 18px;
+  width: 100%;
+  max-width: 790px;
+  margin: 30px auto;
+}
+
+.hp-case-card {
+  min-height: 560px;
+  border-radius: 14px;
+}
+
+.hp-case-card--wide {
+  grid-column: 1 / -1;
+  min-height: 360px;
+}
+
+.hp-case-card--wide .hp-case-card__front-scrim {
+  justify-content: flex-end;
+}
+
+.hp-case-card .flip-card__face {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: var(--shadow-card);
+}
+
+.hp-case-card__front,
+.hp-case-card__back {
+  width: 100%;
+  height: 100%;
+}
+
+.hp-case-card__front {
+  overflow: hidden;
+  background-position: center;
+  background-size: cover;
+  color: #fff;
+}
+
+.hp-case-card__front-scrim {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  background: linear-gradient(
+    to top,
+    rgba(20, 35, 31, 0.88) 0%,
+    rgba(20, 35, 31, 0.58) 38%,
+    rgba(20, 35, 31, 0.16) 72%,
+    rgba(20, 35, 31, 0.06) 100%
+  );
+}
+
+.hp-case-card__name {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.hp-case-card__date {
+  margin: 0 0 12px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.hp-case-card__teaser {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.96);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.hp-case-card__hint {
+  display: block;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.hp-case-card__back {
+  overflow-y: auto;
+  padding: 22px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.hp-case-card__back-head {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.hp-case-card__back .hp-case-card__name {
+  color: var(--ink);
+  font-size: 1.3rem;
+}
+
+.hp-case-card__back .hp-case-card__date {
+  margin-bottom: 0;
+  color: var(--wp-accent);
+}
+
+.hp-case-card__back p {
+  margin: 0 0 14px;
+}
+
+.hp-case-card__back p:last-child {
+  margin-bottom: 0;
+}
+
+.hp-case-card__back .hp-case-card__credit {
+  margin-top: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  font-style: italic;
+}
+
+.hp-case-card__back strong {
+  color: var(--ink);
+}
+
+@media (max-width: 900px) {
+  .hp-case-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .hp-case-card {
+    min-height: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hp-team-photo {
+    width: 100%;
+    margin-block: 24px;
+  }
+
+  .hp-why__header {
+    margin-bottom: 30px;
+  }
+
+  .hp-why__subsection {
+    padding: 50px 0;
+  }
+
+  .hp-why__subsection > h3 {
+    margin-bottom: 24px;
+  }
+
+  .hp-case-card__front-scrim,
+  .hp-case-card__back {
+    padding: 20px;
+  }
+}

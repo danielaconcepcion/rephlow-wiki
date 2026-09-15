@@ -8,10 +8,10 @@ export { Engineering } from "./Engineering.tsx";
 export { Model } from "./Model/Model.tsx";
 export { Hardware } from "./Hardware.tsx";
 // Laboratory
-export { Experiments } from "./Experiments.tsx";
+export { Experiments } from "./Experiments/Experiments.tsx";
 export { Measurements } from "./Measurements.tsx";
 export { Protocols } from "./Protocols.tsx";
-export { Results } from "./Results.tsx";
+export { Results } from "./Results/Results.tsx";
 export { Safety } from "./Safety.tsx";
 // Engagement
 export { HumanPractices } from "./HumanPractices.tsx";
@@ -23,3 +23,5 @@ export { Contribution } from "./Contribution.tsx";
 // Team
 export { Attributions } from "./Attributions.tsx";
 export { Sponsors } from "./Sponsors.tsx";
+// Internal (not exposed in the Navbar — see pages.ts)
+export { ContentPatterns } from "./ContentPatterns.tsx";

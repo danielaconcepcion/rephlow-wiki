@@ -39,6 +39,12 @@
   flex-direction: column;
   gap: 2px;
   border-left: 2px solid var(--line);
+  /* Same floating-glass surface as .navbar (App.css): translucent white +
+     blurred backdrop. Only the fill is shared — no padding/margin/border/
+     size change, so the column keeps its existing footprint exactly. */
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
 .page-section-nav__link {
@@ -49,10 +55,14 @@
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--ink-soft);
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 @media (hover: hover) {
-  .page-section-nav__link:hover { color: var(--ink); }
+  .page-section-nav__link:hover {
+    color: var(--ink);
+  }
 }
 .page-section-nav__link:focus-visible {
   outline: 2px solid var(--ink);
@@ -61,6 +71,44 @@
 .page-section-nav__link.is-active {
   color: var(--ink);
   border-left-color: var(--ink);
+}
+
+/* "Back to top" -- deliberately a step quieter than even the sub-level
+   links (smaller size, reduced opacity), with its own thin top divider,
+   so it reads as a secondary utility tacked onto the nav rather than
+   another item in the section hierarchy above it. Same left-indent/
+   border-left language as the real links, just muted. */
+.page-section-nav__top {
+  display: block;
+  width: 100%;
+  margin-top: 8px;
+  margin-left: -2px;
+  padding: 10px 16px 0;
+  border: none;
+  border-top: 1px solid var(--line);
+  border-left: 2px solid transparent;
+  background: none;
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink-soft);
+  opacity: 0.7;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    color 0.15s ease,
+    opacity 0.15s ease;
+}
+@media (hover: hover) {
+  .page-section-nav__top:hover {
+    color: var(--ink);
+    opacity: 1;
+  }
+}
+.page-section-nav__top:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
 }
 
 /* Subsections: indented, visually secondary, shown only under the
@@ -136,6 +184,13 @@
 
   /* Top-level-only nav at this width — subsections are desktop-only. */
   .page-section-nav__sublist {
+    display: none;
+  }
+
+  /* The horizontal pill bar has no "bottom of the list" for this to sit
+     below, and a plain page scroll back up is trivial at this width
+     anyway — desktop-only, same as the subsections above. */
+  .page-section-nav__top {
     display: none;
   }
 }
