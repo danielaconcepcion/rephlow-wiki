@@ -3,7 +3,6 @@ export { Team } from "./Team/Team.tsx";
 export { Medals } from "./Medals.tsx";
 // Project
 export { ProjectDescription } from "./ProjectDescription.tsx";
-export { Design } from "./Design.tsx";
 export { Engineering } from "./Engineering.tsx";
 export { Model } from "./Model/Model.tsx";
 export { Hardware } from "./Hardware.tsx";

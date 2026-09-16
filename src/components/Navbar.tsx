@@ -24,7 +24,6 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Project",
     items: [
       { label: "Project description", path: "/project-description" },
-      { label: "Design", path: "/design" },
       { label: "Engineering", path: "/engineering" },
       { label: "Model", path: "/model" },
       { label: "Hardware", path: "/hardware" },

@@ -560,23 +560,6 @@ export function Home() {
               <p className="card__title">Project Description</p>
             </Link>
 
-            <Link className="card" to="/design">
-              <div className="card__icon card__icon--design">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M15 9l-3 6-3-3 6-3z" />
-                </svg>
-              </div>
-              <p className="card__title">Design</p>
-            </Link>
-
             <Link className="card" to="/engineering">
               <div className="card__icon card__icon--engineering">
                 <svg

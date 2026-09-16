@@ -3,7 +3,6 @@ import {
   Team,
   Medals,
   ProjectDescription,
-  Design,
   Engineering,
   Model,
   Hardware,
@@ -68,15 +67,6 @@ const Pages: Page[] = [
     component: ProjectDescription,
     hideEyebrow: true,
     docTitle: "Project Description — rePhlow iGEM Wiki",
-  },
-  {
-    name: "Design",
-    title: "Design",
-    lead: "Blueprints for biology.",
-    /*A space for the design principles and decisions behind our biological system.*/
-    path: "/design",
-    component: Design,
-    docTitle: "Design — rePhlow iGEM Wiki",
   },
   {
     name: "Engineering",
