@@ -262,6 +262,19 @@ const TEAM_DATA: Person[] = [
     ],
   },
   {
+    id: "a14", category: "advisors", isPlaceholder: false,
+    name: "Noemí Encinas García", education: "", role: "Advisor · Alginate encapsulation",
+    facultyColor: "blue", image: "assets/team/advisor-placeholder.png",
+    bio: <>
+      PhD from Universidad Carlos III de Madrid with the thesis <em>‘Surface modification of polymeric materials using cold plasma sources’</em> (2012). Permanent Lecturer in the Department of Chemical and Materials Engineering at the Faculty of Chemical Sciences, Universidad Complutense de Madrid, and researcher in the Surface Engineering and Nanostructured Materials Research Group. Her research focuses on nanostructured surfaces and coatings, corrosion protection, wettability, anti-biofouling materials, and surface characterisation.
+    </>,
+    strength: "", weakness: "",
+    links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0002-6419-2852" }],
+    institutions: [
+      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.webp" },
+    ],
+  },
+  {
     id: "a12", category: "advisors", isPlaceholder: false,
     name: "Eduardo García-Junceda", education: "", role: "Advisor · Revalorisation",
     facultyColor: "yellow", image: "assets/team/advisor-placeholder.png",
