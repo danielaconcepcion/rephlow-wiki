@@ -2,6 +2,7 @@ import { useRef, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { PageSectionNav, type PageSection } from "../components/PageSectionNav";
 import { VisualIndex } from "../components/OurSolutionVisualIndex";
+import { AccordionSection } from "./HumanPractices/AccordionSection";
 import { PDBackground } from "./ProjectDescription/PDBackground";
 import { asset } from "../utils/asset";
 import "./ProjectDescription.css";
@@ -1034,6 +1035,181 @@ export function ProjectDescription() {
                 encapsulated bacteria in the form they can import.
               </p>
             </div>
+
+            <AccordionSection title="References" className="pd-references-accordion">
+              <ol className="pd-reference-list" data-reference-group="enzyme">
+                <Ref group="enzyme" number={1}>
+                  Dijkstra, A. J. (2010). Enzymatic degumming.{" "}
+                  <em>European Journal of Lipid Science and Technology, 112</em>{" "}
+                  (11), 1178–1189. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1002/ejlt.201000320">
+                    10.1002/ejlt.201000320
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={2}>
+                  Costa, E., Almeida, M. F., Alvim-Ferraz, M. C., &amp; Dias, J.
+                  M. (2018). Effect of <em>Crambe abyssinica</em> oil degumming in
+                  phosphorus concentration of refined oil and derived biodiesel.{" "}
+                  <em>Renewable Energy, 124</em>, 27–33. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/j.renene.2017.08.089">
+                    10.1016/j.renene.2017.08.089
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={3}>
+                  Aloulou, A., Rahier, R., Arhab, Y., Noiriel, A., &amp;
+                  Abousalham, A. (2018). Phospholipases: an overview. In{" "}
+                  <em>Lipases and Phospholipases</em>, 69–105. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1007/978-1-4939-8672-9_3">
+                    10.1007/978-1-4939-8672-9_3
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={4}>
+                  Huang, H. et al. (2006). A novel phytase with preferable
+                  characteristics from <em>Yersinia intermedia</em>.{" "}
+                  <em>
+                    Biochemical and Biophysical Research Communications, 350
+                  </em>{" "}
+                  (4), 884–889. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/j.bbrc.2006.09.118">
+                    10.1016/j.bbrc.2006.09.118
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={5}>
+                  Thaller, M. C., Schippa, S., Bonci, A., Cresti, S., &amp;
+                  Rossolini, G. M. (1997). Identification of the <em>aphA</em>{" "}
+                  gene and characterisation of its product.{" "}
+                  <em>FEMS Microbiology Letters, 146</em> (2), 191–198. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1111/j.1574-6968.1997.tb10192.x">
+                    10.1111/j.1574-6968.1997.tb10192.x
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={6}>
+                  Hon, J. et al. (2020). EnzymeMiner: automated mining of soluble
+                  enzymes. <em>Nucleic Acids Research, 48</em> (W1), W104–W109.
+                  DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1093/nar/gkaa372">
+                    10.1093/nar/gkaa372
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={7}>
+                  Hauenstein, J. et al. (2026). BRENDA in 2026.{" "}
+                  <em>Nucleic Acids Research, 54</em> (D1), D527–D534. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1093/nar/gkaf1113">
+                    10.1093/nar/gkaf1113
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={8}>
+                  The UniProt Consortium. (2025). UniProt: the Universal Protein
+                  Knowledgebase in 2025. <em>Nucleic Acids Research, 53</em> (D1),
+                  D609–D617. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1093/nar/gkae1010">
+                    10.1093/nar/gkae1010
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={9}>
+                  Titball, R. W. (1993). Bacterial phospholipases C.{" "}
+                  <em>Microbiological Reviews, 57</em> (2), 347–366. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1128/mr.57.2.347-366.1993">
+                    10.1128/mr.57.2.347-366.1993
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={10}>
+                  Waterhouse, A. et al. (2018). SWISS-MODEL: homology modelling of
+                  protein structures and complexes.{" "}
+                  <em>Nucleic Acids Research, 46</em> (W1), W296–W303. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1093/nar/gky427">
+                    10.1093/nar/gky427
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={11}>
+                  Mura, C., McCrimmon, C. M., Vertrees, J., &amp; Sawaya, M. R.
+                  (2010). An introduction to biomolecular graphics.{" "}
+                  <em>PLoS Computational Biology, 6</em> (8), e1000918. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1371/journal.pcbi.1000918">
+                    10.1371/journal.pcbi.1000918
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={12}>
+                  Andersch, M. A., &amp; Szczypinski, A. J. (1947). Use of{" "}
+                  <em>p</em>-nitrophenylphosphate in acid-phosphatase
+                  determination.{" "}
+                  <em>American Journal of Clinical Pathology, 17</em> (7),
+                  571–574. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1093/ajcp/17.7_ts.571">
+                    10.1093/ajcp/17.7_ts.571
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={13}>
+                  Braham, S. A. et al. (2021). Positive effect of glycerol on the
+                  stability of immobilized enzymes.{" "}
+                  <em>Process Biochemistry, 102</em>, 108–121. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/j.procbio.2020.12.015">
+                    10.1016/j.procbio.2020.12.015
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={14}>
+                  Virgen-Ortíz, J. J. et al. (2019). Lecitase Ultra: a
+                  phospholipase with great potential in biocatalysis.{" "}
+                  <em>Molecular Catalysis, 473</em>, 110405. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/j.mcat.2019.110405">
+                    10.1016/j.mcat.2019.110405
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={15}>
+                  Andrés-Sanz, D. et al. (2021). Stabilization of Lecitase Ultra®
+                  by immobilization and fixation of bimolecular aggregates.{" "}
+                  <em>Catalysts, 11</em> (9), 1067. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.3390/catal11091067">
+                    10.3390/catal11091067
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={16}>
+                  Carballares, D., Rocha-Martín, J., &amp; Fernandez-Lafuente, R.
+                  (2022). Coimmobilization of lipases exhibiting different
+                  stability ranges.{" "}
+                  <em>International Journal of Biological Macromolecules, 206</em>
+                  , 580–590. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/j.ijbiomac.2022.02.084">
+                    10.1016/j.ijbiomac.2022.02.084
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={17}>
+                  López-Gallego, F. et al. (2005). Enzyme stabilization by
+                  glutaraldehyde crosslinking of adsorbed proteins on aminated
+                  supports. <em>Journal of Biotechnology, 119</em> (1), 70–75.
+                  DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/j.jbiotec.2005.05.021">
+                    10.1016/j.jbiotec.2005.05.021
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="enzyme" number={18}>
+                  Mateo, C. et al. (2010). Improvement of enzyme properties with a
+                  two-step immobilization process. <em>Biomacromolecules, 11</em>{" "}
+                  (11), 3112–3117. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1021/bm100916r">
+                    10.1021/bm100916r
+                  </ExternalLink>
+                  .
+                </Ref>
+              </ol>
+            </AccordionSection>
           </section>
 
           <section id="genetic" className="pd-section">
@@ -1263,6 +1439,169 @@ export function ProjectDescription() {
                 .
               </p>
             </div>
+
+            <AccordionSection title="References" className="pd-references-accordion">
+              <ol className="pd-reference-list" data-reference-group="genetic">
+                <Ref group="genetic" number={1}>
+                  Hesselmann, R. P. X., Werlen, C., Hahn, D., van der Meer, J. R.,
+                  &amp; Zehnder, A. J. B. (1999). Enrichment and detection of a
+                  bacterium that performs enhanced biological phosphate removal.{" "}
+                  <em>Systematic and Applied Microbiology, 22</em> (3), 454–465.
+                  DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/S0723-2020(99)80055-1">
+                    10.1016/S0723-2020(99)80055-1
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={2}>
+                  García Martín, H. et al. (2006). Metagenomic analysis of two
+                  enhanced biological phosphorus removal sludge communities.{" "}
+                  <em>Nature Biotechnology, 24</em> (10), 1263–1269. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1038/nbt1247">
+                    10.1038/nbt1247
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={3}>
+                  Oyserman, B. O. et al. (2016). Metatranscriptomic insights on
+                  gene expression in <em>Candidatus Accumulibacter phosphatis</em>
+                  . <em>The ISME Journal, 10</em>, 810–822. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1038/ismej.2015.155">
+                    10.1038/ismej.2015.155
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={4}>
+                  He, S., Gall, D. L., &amp; McMahon, K. D. (2007).{" "}
+                  <em>Candidatus Accumulibacter</em> population structure as
+                  revealed by polyphosphate kinase genes.{" "}
+                  <em>Applied and Environmental Microbiology, 73</em> (18),
+                  5865–5874. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1128/AEM.01207-07">
+                    10.1128/AEM.01207-07
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={5}>
+                  Nelson, K. E. et al. (2002). Complete genome sequence and
+                  comparative analysis of <em>Pseudomonas putida</em> KT2440.{" "}
+                  <em>Environmental Microbiology, 4</em> (12), 799–808. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1046/j.1462-2920.2002.00366.x">
+                    10.1046/j.1462-2920.2002.00366.x
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={6}>
+                  Belda, E. et al. (2016). The revisited genome of{" "}
+                  <em>Pseudomonas putida</em> KT2440.{" "}
+                  <em>Environmental Microbiology, 18</em> (10), 3403–3424. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1111/1462-2920.13230">
+                    10.1111/1462-2920.13230
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={7}>
+                  Kampers, L. F. C., Volkers, R. J. M., &amp; Martins dos Santos,
+                  V. A. P. (2019). <em>Pseudomonas putida</em> KT2440 is HV1
+                  certified, not GRAS. <em>Microbial Biotechnology, 12</em> (5),
+                  845–848. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1111/1751-7915.13443">
+                    10.1111/1751-7915.13443
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={8}>
+                  Chavarría, M., Nikel, P. I., Pérez-Pantoja, D., &amp; de
+                  Lorenzo, V. (2013). The Entner–Doudoroff pathway empowers{" "}
+                  <em>P. putida</em> KT2440 with oxidative-stress tolerance.{" "}
+                  <em>Environmental Microbiology, 15</em> (6), 1772–1785. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1111/1462-2920.12069">
+                    10.1111/1462-2920.12069
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={9}>
+                  Nikel, P. I. et al. (2013). Accumulation of inorganic
+                  polyphosphate enables stress endurance in <em>P. putida</em>{" "}
+                  KT2440. <em>Microbial Cell Factories, 12</em>, 50. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1186/1475-2859-12-50">
+                    10.1186/1475-2859-12-50
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={10}>
+                  He, S. et al. (2010). Metatranscriptomic array analysis of{" "}
+                  <em>Candidatus Accumulibacter phosphatis</em>-enriched sludge.{" "}
+                  <em>Environmental Microbiology, 12</em> (5), 1205–1217. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1111/j.1462-2920.2010.02163.x">
+                    10.1111/j.1462-2920.2010.02163.x
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={11}>
+                  National Center for Biotechnology Information. Genome records
+                  for <em>P. putida</em> KT2440 (AE015451.2/NC_002947.3) and{" "}
+                  <em>Ca. Accumulibacter phosphatis</em> UW-1
+                  (CP001715/GCF_000024165.1).
+                </Ref>
+                <Ref group="genetic" number={12}>
+                  Yuan, Z. C., Zaheer, R., &amp; Finan, T. M. (2006). Regulation
+                  and properties of PstSCAB. <em>Journal of Bacteriology, 188</em>{" "}
+                  (3), 1089–1102. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1128/JB.188.3.1089-1102.2006">
+                    10.1128/JB.188.3.1089-1102.2006
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={13}>
+                  Zago, A., Chugani, S., &amp; Chakrabarty, A. M. (1999). Cloning
+                  and characterisation of polyphosphate kinase and
+                  exopolyphosphatase genes.{" "}
+                  <em>Applied and Environmental Microbiology, 65</em> (5),
+                  2065–2071. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1128/AEM.65.5.2065-2071.1999">
+                    10.1128/AEM.65.5.2065-2071.1999
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={14}>
+                  Zhang, H., Ishige, K., &amp; Kornberg, A. (2002). A
+                  polyphosphate kinase (PPK2) widely conserved in bacteria.{" "}
+                  <em>PNAS, 99</em> (26), 16678–16683. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1073/pnas.262655199">
+                    10.1073/pnas.262655199
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={15}>
+                  van Veen, H. W. et al. (1994). Translocation of metal phosphate
+                  via the phosphate inorganic transport system.{" "}
+                  <em>Biochemistry, 33</em> (7), 1766–1770. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1021/bi00173a020">
+                    10.1021/bi00173a020
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={16}>
+                  Volke, D. C. et al. (2022). CRISPR/nCas9-assisted multiplex
+                  cytidine base-editing. <em>Nature Communications, 13</em>, 3026.
+                  DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1038/s41467-022-30780-z">
+                    10.1038/s41467-022-30780-z
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="genetic" number={17}>
+                  Silva-Rocha, R. et al. (2013). The Standard European Vector
+                  Architecture. <em>Nucleic Acids Research, 41</em> (D1),
+                  D666–D675. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1093/nar/gks1119">
+                    10.1093/nar/gks1119
+                  </ExternalLink>
+                  .
+                </Ref>
+              </ol>
+            </AccordionSection>
           </section>
 
           <section id="model" className="pd-section">
@@ -1467,6 +1806,97 @@ export function ProjectDescription() {
                 <WikiLink to="/results">Results</WikiLink>.
               </p>
             </div>
+
+            <AccordionSection title="References" className="pd-references-accordion">
+              <ol className="pd-reference-list" data-reference-group="revalorisation">
+                <Ref group="revalorisation" number={1}>
+                  Abu, R., &amp; Woodley, J. M. (2015). Application of enzyme
+                  coupling reactions to shift thermodynamically limited
+                  biocatalytic reactions. <em>ChemCatChem, 7</em> (19), 3094–3105.
+                  DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1002/cctc.201500603">
+                    10.1002/cctc.201500603
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="revalorisation" number={2}>
+                  Daniel, R., Stuertz, K., &amp; Gottschalk, G. (1995).
+                  Biochemical and molecular characterisation of the oxidative
+                  branch of glycerol utilisation by <em>Citrobacter freundii</em>.{" "}
+                  <em>Journal of Bacteriology, 177</em> (15), 4392–4401. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1128/jb.177.15.4392-4401.1995">
+                    10.1128/jb.177.15.4392-4401.1995
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="revalorisation" number={3}>
+                  Gauss, D., Sánchez-Moreno, I., Oroz-Guinea, I., García-Junceda,
+                  E., &amp; Wohlgemuth, R. (2018). Phosphorylation catalysed by
+                  dihydroxyacetone kinase.{" "}
+                  <em>European Journal of Organic Chemistry, 2018</em> (23),
+                  2892–2895. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1002/ejoc.201800350">
+                    10.1002/ejoc.201800350
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="revalorisation" number={4}>
+                  Hanson, R. (1989). The role of ATP in metabolism.{" "}
+                  <em>Biochemical Education, 17</em> (2), 86–92. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/0307-4412(89)90012-5">
+                    10.1016/0307-4412(89)90012-5
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="revalorisation" number={5}>
+                  Monterrey, D. T., Azcona, L., Revuelta, J., Sánchez-Moreno, I.,
+                  &amp; García-Junceda, E. (2024). Polyphosphate kinase from{" "}
+                  <em>Burkholderia cenocepacia</em>.{" "}
+                  <em>International Journal of Molecular Sciences, 25</em> (23),
+                  12995. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.3390/ijms252312995">
+                    10.3390/ijms252312995
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="revalorisation" number={6}>
+                  Rao, N. N., Gómez-García, M. R., &amp; Kornberg, A. (2009).
+                  Inorganic polyphosphate: essential for growth and survival.{" "}
+                  <em>Annual Review of Biochemistry, 78</em> (1), 605–647. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1146/annurev.biochem.77.083007.093039">
+                    10.1146/annurev.biochem.77.083007.093039
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="revalorisation" number={7}>
+                  Samland, A. K., &amp; Sprenger, G. A. (2006). Microbial
+                  aldolases as C–C bonding enzymes.{" "}
+                  <em>Applied Microbiology and Biotechnology, 71</em> (3),
+                  253–264. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1007/s00253-006-0422-6">
+                    10.1007/s00253-006-0422-6
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="revalorisation" number={8}>
+                  Sánchez-Moreno, I. (2009).{" "}
+                  <em>
+                    Dihidroxiacetona quinasa de Citrobacter freundii CECT 4626
+                  </em>
+                  . DIGITAL.CSIC.
+                </Ref>
+                <Ref group="revalorisation" number={9}>
+                  Tavanti, M., Hosford, J., Lloyd, R. C., &amp; Brown, M. J. B.
+                  (2021). Recent developments and challenges for industrial
+                  implementation of polyphosphate kinases.{" "}
+                  <em>ChemCatChem, 13</em> (16), 3565–3580. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1002/cctc.202100688">
+                    10.1002/cctc.202100688
+                  </ExternalLink>
+                  .
+                </Ref>
+              </ol>
+            </AccordionSection>
           </section>
 
           <section id="references" className="pd-section pd-references">
@@ -1637,429 +2067,6 @@ export function ProjectDescription() {
                 .{" "}
                 <ExternalLink href="https://eur-lex.europa.eu/eli/dir/2024/3019/oj">
                   Official full text
-                </ExternalLink>
-                .
-              </Ref>
-            </ReferenceGroup>
-
-            <ReferenceGroup id="enzyme" title="Enzyme immobilisation">
-              <Ref group="enzyme" number={1}>
-                Dijkstra, A. J. (2010). Enzymatic degumming.{" "}
-                <em>European Journal of Lipid Science and Technology, 112</em>{" "}
-                (11), 1178–1189. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1002/ejlt.201000320">
-                  10.1002/ejlt.201000320
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={2}>
-                Costa, E., Almeida, M. F., Alvim-Ferraz, M. C., &amp; Dias, J.
-                M. (2018). Effect of <em>Crambe abyssinica</em> oil degumming in
-                phosphorus concentration of refined oil and derived biodiesel.{" "}
-                <em>Renewable Energy, 124</em>, 27–33. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/j.renene.2017.08.089">
-                  10.1016/j.renene.2017.08.089
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={3}>
-                Aloulou, A., Rahier, R., Arhab, Y., Noiriel, A., &amp;
-                Abousalham, A. (2018). Phospholipases: an overview. In{" "}
-                <em>Lipases and Phospholipases</em>, 69–105. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1007/978-1-4939-8672-9_3">
-                  10.1007/978-1-4939-8672-9_3
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={4}>
-                Huang, H. et al. (2006). A novel phytase with preferable
-                characteristics from <em>Yersinia intermedia</em>.{" "}
-                <em>
-                  Biochemical and Biophysical Research Communications, 350
-                </em>{" "}
-                (4), 884–889. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/j.bbrc.2006.09.118">
-                  10.1016/j.bbrc.2006.09.118
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={5}>
-                Thaller, M. C., Schippa, S., Bonci, A., Cresti, S., &amp;
-                Rossolini, G. M. (1997). Identification of the <em>aphA</em>{" "}
-                gene and characterisation of its product.{" "}
-                <em>FEMS Microbiology Letters, 146</em> (2), 191–198. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1111/j.1574-6968.1997.tb10192.x">
-                  10.1111/j.1574-6968.1997.tb10192.x
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={6}>
-                Hon, J. et al. (2020). EnzymeMiner: automated mining of soluble
-                enzymes. <em>Nucleic Acids Research, 48</em> (W1), W104–W109.
-                DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1093/nar/gkaa372">
-                  10.1093/nar/gkaa372
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={7}>
-                Hauenstein, J. et al. (2026). BRENDA in 2026.{" "}
-                <em>Nucleic Acids Research, 54</em> (D1), D527–D534. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1093/nar/gkaf1113">
-                  10.1093/nar/gkaf1113
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={8}>
-                The UniProt Consortium. (2025). UniProt: the Universal Protein
-                Knowledgebase in 2025. <em>Nucleic Acids Research, 53</em> (D1),
-                D609–D617. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1093/nar/gkae1010">
-                  10.1093/nar/gkae1010
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={9}>
-                Titball, R. W. (1993). Bacterial phospholipases C.{" "}
-                <em>Microbiological Reviews, 57</em> (2), 347–366. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1128/mr.57.2.347-366.1993">
-                  10.1128/mr.57.2.347-366.1993
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={10}>
-                Waterhouse, A. et al. (2018). SWISS-MODEL: homology modelling of
-                protein structures and complexes.{" "}
-                <em>Nucleic Acids Research, 46</em> (W1), W296–W303. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1093/nar/gky427">
-                  10.1093/nar/gky427
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={11}>
-                Mura, C., McCrimmon, C. M., Vertrees, J., &amp; Sawaya, M. R.
-                (2010). An introduction to biomolecular graphics.{" "}
-                <em>PLoS Computational Biology, 6</em> (8), e1000918. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1371/journal.pcbi.1000918">
-                  10.1371/journal.pcbi.1000918
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={12}>
-                Andersch, M. A., &amp; Szczypinski, A. J. (1947). Use of{" "}
-                <em>p</em>-nitrophenylphosphate in acid-phosphatase
-                determination.{" "}
-                <em>American Journal of Clinical Pathology, 17</em> (7),
-                571–574. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1093/ajcp/17.7_ts.571">
-                  10.1093/ajcp/17.7_ts.571
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={13}>
-                Braham, S. A. et al. (2021). Positive effect of glycerol on the
-                stability of immobilized enzymes.{" "}
-                <em>Process Biochemistry, 102</em>, 108–121. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/j.procbio.2020.12.015">
-                  10.1016/j.procbio.2020.12.015
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={14}>
-                Virgen-Ortíz, J. J. et al. (2019). Lecitase Ultra: a
-                phospholipase with great potential in biocatalysis.{" "}
-                <em>Molecular Catalysis, 473</em>, 110405. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/j.mcat.2019.110405">
-                  10.1016/j.mcat.2019.110405
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={15}>
-                Andrés-Sanz, D. et al. (2021). Stabilization of Lecitase Ultra®
-                by immobilization and fixation of bimolecular aggregates.{" "}
-                <em>Catalysts, 11</em> (9), 1067. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.3390/catal11091067">
-                  10.3390/catal11091067
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={16}>
-                Carballares, D., Rocha-Martín, J., &amp; Fernandez-Lafuente, R.
-                (2022). Coimmobilization of lipases exhibiting different
-                stability ranges.{" "}
-                <em>International Journal of Biological Macromolecules, 206</em>
-                , 580–590. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/j.ijbiomac.2022.02.084">
-                  10.1016/j.ijbiomac.2022.02.084
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={17}>
-                López-Gallego, F. et al. (2005). Enzyme stabilization by
-                glutaraldehyde crosslinking of adsorbed proteins on aminated
-                supports. <em>Journal of Biotechnology, 119</em> (1), 70–75.
-                DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/j.jbiotec.2005.05.021">
-                  10.1016/j.jbiotec.2005.05.021
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="enzyme" number={18}>
-                Mateo, C. et al. (2010). Improvement of enzyme properties with a
-                two-step immobilization process. <em>Biomacromolecules, 11</em>{" "}
-                (11), 3112–3117. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1021/bm100916r">
-                  10.1021/bm100916r
-                </ExternalLink>
-                .
-              </Ref>
-            </ReferenceGroup>
-
-            <ReferenceGroup id="genetic" title="Genetic engineering">
-              <Ref group="genetic" number={1}>
-                Hesselmann, R. P. X., Werlen, C., Hahn, D., van der Meer, J. R.,
-                &amp; Zehnder, A. J. B. (1999). Enrichment and detection of a
-                bacterium that performs enhanced biological phosphate removal.{" "}
-                <em>Systematic and Applied Microbiology, 22</em> (3), 454–465.
-                DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/S0723-2020(99)80055-1">
-                  10.1016/S0723-2020(99)80055-1
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={2}>
-                García Martín, H. et al. (2006). Metagenomic analysis of two
-                enhanced biological phosphorus removal sludge communities.{" "}
-                <em>Nature Biotechnology, 24</em> (10), 1263–1269. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1038/nbt1247">
-                  10.1038/nbt1247
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={3}>
-                Oyserman, B. O. et al. (2016). Metatranscriptomic insights on
-                gene expression in <em>Candidatus Accumulibacter phosphatis</em>
-                . <em>The ISME Journal, 10</em>, 810–822. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1038/ismej.2015.155">
-                  10.1038/ismej.2015.155
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={4}>
-                He, S., Gall, D. L., &amp; McMahon, K. D. (2007).{" "}
-                <em>Candidatus Accumulibacter</em> population structure as
-                revealed by polyphosphate kinase genes.{" "}
-                <em>Applied and Environmental Microbiology, 73</em> (18),
-                5865–5874. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1128/AEM.01207-07">
-                  10.1128/AEM.01207-07
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={5}>
-                Nelson, K. E. et al. (2002). Complete genome sequence and
-                comparative analysis of <em>Pseudomonas putida</em> KT2440.{" "}
-                <em>Environmental Microbiology, 4</em> (12), 799–808. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1046/j.1462-2920.2002.00366.x">
-                  10.1046/j.1462-2920.2002.00366.x
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={6}>
-                Belda, E. et al. (2016). The revisited genome of{" "}
-                <em>Pseudomonas putida</em> KT2440.{" "}
-                <em>Environmental Microbiology, 18</em> (10), 3403–3424. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1111/1462-2920.13230">
-                  10.1111/1462-2920.13230
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={7}>
-                Kampers, L. F. C., Volkers, R. J. M., &amp; Martins dos Santos,
-                V. A. P. (2019). <em>Pseudomonas putida</em> KT2440 is HV1
-                certified, not GRAS. <em>Microbial Biotechnology, 12</em> (5),
-                845–848. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1111/1751-7915.13443">
-                  10.1111/1751-7915.13443
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={8}>
-                Chavarría, M., Nikel, P. I., Pérez-Pantoja, D., &amp; de
-                Lorenzo, V. (2013). The Entner–Doudoroff pathway empowers{" "}
-                <em>P. putida</em> KT2440 with oxidative-stress tolerance.{" "}
-                <em>Environmental Microbiology, 15</em> (6), 1772–1785. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1111/1462-2920.12069">
-                  10.1111/1462-2920.12069
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={9}>
-                Nikel, P. I. et al. (2013). Accumulation of inorganic
-                polyphosphate enables stress endurance in <em>P. putida</em>{" "}
-                KT2440. <em>Microbial Cell Factories, 12</em>, 50. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1186/1475-2859-12-50">
-                  10.1186/1475-2859-12-50
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={10}>
-                He, S. et al. (2010). Metatranscriptomic array analysis of{" "}
-                <em>Candidatus Accumulibacter phosphatis</em>-enriched sludge.{" "}
-                <em>Environmental Microbiology, 12</em> (5), 1205–1217. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1111/j.1462-2920.2010.02163.x">
-                  10.1111/j.1462-2920.2010.02163.x
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={11}>
-                National Center for Biotechnology Information. Genome records
-                for <em>P. putida</em> KT2440 (AE015451.2/NC_002947.3) and{" "}
-                <em>Ca. Accumulibacter phosphatis</em> UW-1
-                (CP001715/GCF_000024165.1).
-              </Ref>
-              <Ref group="genetic" number={12}>
-                Yuan, Z. C., Zaheer, R., &amp; Finan, T. M. (2006). Regulation
-                and properties of PstSCAB. <em>Journal of Bacteriology, 188</em>{" "}
-                (3), 1089–1102. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1128/JB.188.3.1089-1102.2006">
-                  10.1128/JB.188.3.1089-1102.2006
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={13}>
-                Zago, A., Chugani, S., &amp; Chakrabarty, A. M. (1999). Cloning
-                and characterisation of polyphosphate kinase and
-                exopolyphosphatase genes.{" "}
-                <em>Applied and Environmental Microbiology, 65</em> (5),
-                2065–2071. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1128/AEM.65.5.2065-2071.1999">
-                  10.1128/AEM.65.5.2065-2071.1999
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={14}>
-                Zhang, H., Ishige, K., &amp; Kornberg, A. (2002). A
-                polyphosphate kinase (PPK2) widely conserved in bacteria.{" "}
-                <em>PNAS, 99</em> (26), 16678–16683. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1073/pnas.262655199">
-                  10.1073/pnas.262655199
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={15}>
-                van Veen, H. W. et al. (1994). Translocation of metal phosphate
-                via the phosphate inorganic transport system.{" "}
-                <em>Biochemistry, 33</em> (7), 1766–1770. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1021/bi00173a020">
-                  10.1021/bi00173a020
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={16}>
-                Volke, D. C. et al. (2022). CRISPR/nCas9-assisted multiplex
-                cytidine base-editing. <em>Nature Communications, 13</em>, 3026.
-                DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1038/s41467-022-30780-z">
-                  10.1038/s41467-022-30780-z
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="genetic" number={17}>
-                Silva-Rocha, R. et al. (2013). The Standard European Vector
-                Architecture. <em>Nucleic Acids Research, 41</em> (D1),
-                D666–D675. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1093/nar/gks1119">
-                  10.1093/nar/gks1119
-                </ExternalLink>
-                .
-              </Ref>
-            </ReferenceGroup>
-
-            <ReferenceGroup id="revalorisation" title="Revalorisation">
-              <Ref group="revalorisation" number={1}>
-                Abu, R., &amp; Woodley, J. M. (2015). Application of enzyme
-                coupling reactions to shift thermodynamically limited
-                biocatalytic reactions. <em>ChemCatChem, 7</em> (19), 3094–3105.
-                DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1002/cctc.201500603">
-                  10.1002/cctc.201500603
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="revalorisation" number={2}>
-                Daniel, R., Stuertz, K., &amp; Gottschalk, G. (1995).
-                Biochemical and molecular characterisation of the oxidative
-                branch of glycerol utilisation by <em>Citrobacter freundii</em>.{" "}
-                <em>Journal of Bacteriology, 177</em> (15), 4392–4401. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1128/jb.177.15.4392-4401.1995">
-                  10.1128/jb.177.15.4392-4401.1995
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="revalorisation" number={3}>
-                Gauss, D., Sánchez-Moreno, I., Oroz-Guinea, I., García-Junceda,
-                E., &amp; Wohlgemuth, R. (2018). Phosphorylation catalysed by
-                dihydroxyacetone kinase.{" "}
-                <em>European Journal of Organic Chemistry, 2018</em> (23),
-                2892–2895. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1002/ejoc.201800350">
-                  10.1002/ejoc.201800350
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="revalorisation" number={4}>
-                Hanson, R. (1989). The role of ATP in metabolism.{" "}
-                <em>Biochemical Education, 17</em> (2), 86–92. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/0307-4412(89)90012-5">
-                  10.1016/0307-4412(89)90012-5
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="revalorisation" number={5}>
-                Monterrey, D. T., Azcona, L., Revuelta, J., Sánchez-Moreno, I.,
-                &amp; García-Junceda, E. (2024). Polyphosphate kinase from{" "}
-                <em>Burkholderia cenocepacia</em>.{" "}
-                <em>International Journal of Molecular Sciences, 25</em> (23),
-                12995. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.3390/ijms252312995">
-                  10.3390/ijms252312995
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="revalorisation" number={6}>
-                Rao, N. N., Gómez-García, M. R., &amp; Kornberg, A. (2009).
-                Inorganic polyphosphate: essential for growth and survival.{" "}
-                <em>Annual Review of Biochemistry, 78</em> (1), 605–647. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1146/annurev.biochem.77.083007.093039">
-                  10.1146/annurev.biochem.77.083007.093039
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="revalorisation" number={7}>
-                Samland, A. K., &amp; Sprenger, G. A. (2006). Microbial
-                aldolases as C–C bonding enzymes.{" "}
-                <em>Applied Microbiology and Biotechnology, 71</em> (3),
-                253–264. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1007/s00253-006-0422-6">
-                  10.1007/s00253-006-0422-6
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="revalorisation" number={8}>
-                Sánchez-Moreno, I. (2009).{" "}
-                <em>
-                  Dihidroxiacetona quinasa de Citrobacter freundii CECT 4626
-                </em>
-                . DIGITAL.CSIC.
-              </Ref>
-              <Ref group="revalorisation" number={9}>
-                Tavanti, M., Hosford, J., Lloyd, R. C., &amp; Brown, M. J. B.
-                (2021). Recent developments and challenges for industrial
-                implementation of polyphosphate kinases.{" "}
-                <em>ChemCatChem, 13</em> (16), 3565–3580. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1002/cctc.202100688">
-                  10.1002/cctc.202100688
                 </ExternalLink>
                 .
               </Ref>

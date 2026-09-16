@@ -354,6 +354,11 @@
   margin-top: 42px;
 }
 
+.pd-references-accordion {
+  margin-top: 42px;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+}
+
 .pd-reference-list {
   margin: 18px 0 0;
   padding-left: 25px;
