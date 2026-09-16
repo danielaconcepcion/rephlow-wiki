@@ -356,7 +356,9 @@
 
 .pd-references-accordion {
   margin-top: 42px;
-  border-top: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  background: color-mix(in srgb, var(--water-mid) 7%, transparent);
+  border-radius: var(--radius-md);
+  padding: 4px 22px;
 }
 
 .pd-reference-list {
