@@ -349,6 +349,7 @@
 .pd-references-accordion {
   margin-top: 42px;
   background: color-mix(in srgb, var(--water-mid) 7%, transparent);
+  border: 1px solid rgba(27, 35, 64, .08);
   border-radius: var(--radius-md);
   padding: 4px 22px;
 }
