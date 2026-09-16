@@ -33,7 +33,6 @@ const PROJECT_DESCRIPTION_SECTIONS: PageSection[] = [
       { id: "revalorisation", label: "Revalorisation" },
     ],
   },
-  { id: "references", label: "References" },
 ];
 
 function Cite({ group, numbers }: { group: CitationGroup; numbers: number[] }) {
@@ -162,25 +161,6 @@ function InlineFigure({
       <img src={asset(image)} alt={alt} />
       <figcaption>{caption}</figcaption>
     </figure>
-  );
-}
-
-function ReferenceGroup({
-  id,
-  title,
-  children,
-}: {
-  id: CitationGroup;
-  title: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className="pd-subsection pd-reference-group">
-      <h3>{title}</h3>
-      <ol className="pd-reference-list" data-reference-group={id}>
-        {children}
-      </ol>
-    </div>
   );
 }
 
@@ -506,6 +486,178 @@ export function ProjectDescription() {
                 phosphorus for subsequent recovery.
               </p>
             </div>
+
+            <AccordionSection title="References" className="pd-references-accordion">
+              <ol className="pd-reference-list" data-reference-group="problem">
+                <Ref group="problem" number={1}>
+                  Wagner, C. A. (2024). The basics of phosphate metabolism.{" "}
+                  <em>Nephrology Dialysis Transplantation, 39</em> (2), 190–201.
+                  DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1093/ndt/gfad188">
+                    10.1093/ndt/gfad188
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={2}>
+                  United States Environmental Protection Agency. (2026).{" "}
+                  <em>Basic Information on Nutrient Pollution</em>. US EPA.
+                </Ref>
+                <Ref group="problem" number={3}>
+                  Wurtsbaugh, W. A., Paerl, H. W., &amp; Dodds, W. K. (2019).
+                  Nutrients, eutrophication and harmful algal blooms along the
+                  freshwater to marine continuum. <em>WIREs Water, 6</em> (5),
+                  e1373. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1002/wat2.1373">
+                    10.1002/wat2.1373
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={4}>
+                  Smith, V. H., Tilman, G. D., &amp; Nekola, J. C. (1999).
+                  Eutrophication: impacts of excess nutrient inputs on freshwater,
+                  marine, and terrestrial ecosystems.{" "}
+                  <em>Environmental Pollution, 100</em> (1–3), 179–196. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/S0269-7491(99)00091-3">
+                    10.1016/S0269-7491(99)00091-3
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={5}>
+                  Zhang, Y., Li, M., Dong, J., et al. (2021). A critical review of
+                  methods for analyzing freshwater eutrophication.{" "}
+                  <em>Water, 13</em> (2), 225. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.3390/w13020225">
+                    10.3390/w13020225
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={6}>
+                  Maúre, E. R., Terauchi, G., Ishizaka, J., Clinton, N., &amp;
+                  DeWitt, M. (2021). Globally consistent assessment of coastal
+                  eutrophication. <em>Nature Communications, 12</em>, 6142. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1038/s41467-021-26391-9">
+                    10.1038/s41467-021-26391-9
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={7}>
+                  United Nations Environment Programme. (2025).{" "}
+                  <em>
+                    How Spain is turning an iconic lagoon from “green soup” into a
+                    natural oasis
+                  </em>
+                  . UNEP.
+                </Ref>
+                <Ref group="problem" number={8}>
+                  Heezen, J., &amp; Fernández López, L. (2022).{" "}
+                  <em>
+                    PETI fact-finding visit to Mar Menor, Spain: 23–25 February
+                    2022
+                  </em>
+                  . European Parliament.
+                </Ref>
+                <Ref group="problem" number={9}>
+                  Aparicio, G., Camacho, M., &amp; Maté-Sánchez-Val, M. (2024).
+                  Quantifying the impact: Are coastal areas impoverished by marine
+                  pollution? <em>Ecological Economics, 221</em>, 108213. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/j.ecolecon.2024.108213">
+                    10.1016/j.ecolecon.2024.108213
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={10}>
+                  Lamas Rodríguez, M., Garcia Lorenzo, M. L., Medina Magro, M.,
+                  &amp; Perez Quiros, G. (2023). Impact of climate risk
+                  materialization and ecological deterioration on house prices in
+                  Mar Menor, Spain. <em>Scientific Reports, 13</em>, 11772. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1038/s41598-023-39022-8">
+                    10.1038/s41598-023-39022-8
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={11}>
+                  PRTR-España, Ministerio para la Transición Ecológica y el Reto
+                  Demográfico.{" "}
+                  <em>
+                    Spanish Pollutant Release and Transfer Register:
+                    total-phosphorus releases to water by industrial activity
+                  </em>
+                  . Database accessed in 2026.
+                </Ref>
+                <Ref group="problem" number={12}>
+                  Junta de Andalucía. (2017).{" "}
+                  <em>
+                    Integrated Environmental Authorisation for the Bio-Oils Huelva
+                    “La Rábida” biodiesel plant
+                  </em>
+                  . File AAI/HU/075.
+                </Ref>
+                <Ref group="problem" number={13}>
+                  American Oil Chemists&apos; Society. <em>Chemical Degumming</em>{" "}
+                  and <em>Oil Refining</em>. AOCS Lipid Library.
+                </Ref>
+                <Ref group="problem" number={14}>
+                  Zheng, Y., Wan, Y., Zhang, Y., et al. (2023). Recovery of
+                  phosphorus from wastewater: a review based on current phosphorus
+                  removal technologies.{" "}
+                  <em>
+                    Critical Reviews in Environmental Science and Technology, 53
+                  </em>{" "}
+                  (11), 1148–1172. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1080/10643389.2022.2128194">
+                    10.1080/10643389.2022.2128194
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={15}>
+                  United States Environmental Protection Agency. (2010).{" "}
+                  <em>Nutrient Control Design Manual</em> (EPA/600/R-10/100).
+                </Ref>
+                <Ref group="problem" number={16}>
+                  Minnesota Pollution Control Agency. (2006).{" "}
+                  <em>Phosphorus Treatment and Removal Technologies</em>{" "}
+                  (WQ-WWTP9-02).
+                </Ref>
+                <Ref group="problem" number={17}>
+                  Uzkurt Kaljunen, J., Al-Juboori, R. A., Khunjar, W., Mikola, A.,
+                  &amp; Wells, G. (2022). Phosphorus recovery alternatives for
+                  sludge from chemical phosphorus removal processes.{" "}
+                  <em>Sustainable Materials and Technologies, 34</em>, e00514.
+                  DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1016/j.susmat.2022.e00514">
+                    10.1016/j.susmat.2022.e00514
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={18}>
+                  Law, Y., Kirkegaard, R. H., Cokro, A. A., et al. (2016).
+                  Integrative microbial community analysis reveals full-scale
+                  enhanced biological phosphorus removal under tropical
+                  conditions. <em>Scientific Reports, 6</em>, 25719. DOI:{" "}
+                  <ExternalLink href="https://doi.org/10.1038/srep25719">
+                    10.1038/srep25719
+                  </ExternalLink>
+                  .
+                </Ref>
+                <Ref group="problem" number={19}>
+                  U.S. Geological Survey. (2025).{" "}
+                  <em>The Mineral Industry of Morocco in 2020–2021</em>. U.S.
+                  Geological Survey Minerals Yearbook.
+                </Ref>
+                <Ref group="problem" number={20}>
+                  European Parliament and Council of the European Union. (2024).{" "}
+                  <em>
+                    Directive (EU) 2024/3019 concerning urban wastewater treatment
+                    (recast)
+                  </em>
+                  .{" "}
+                  <ExternalLink href="https://eur-lex.europa.eu/eli/dir/2024/3019/oj">
+                    Official full text
+                  </ExternalLink>
+                  .
+                </Ref>
+              </ol>
+            </AccordionSection>
           </section>
         </div>
 
@@ -1897,180 +2049,6 @@ export function ProjectDescription() {
                 </Ref>
               </ol>
             </AccordionSection>
-          </section>
-
-          <section id="references" className="pd-section pd-references">
-            <h2>References</h2>
-
-            <ReferenceGroup id="problem" title="The problem">
-              <Ref group="problem" number={1}>
-                Wagner, C. A. (2024). The basics of phosphate metabolism.{" "}
-                <em>Nephrology Dialysis Transplantation, 39</em> (2), 190–201.
-                DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1093/ndt/gfad188">
-                  10.1093/ndt/gfad188
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={2}>
-                United States Environmental Protection Agency. (2026).{" "}
-                <em>Basic Information on Nutrient Pollution</em>. US EPA.
-              </Ref>
-              <Ref group="problem" number={3}>
-                Wurtsbaugh, W. A., Paerl, H. W., &amp; Dodds, W. K. (2019).
-                Nutrients, eutrophication and harmful algal blooms along the
-                freshwater to marine continuum. <em>WIREs Water, 6</em> (5),
-                e1373. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1002/wat2.1373">
-                  10.1002/wat2.1373
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={4}>
-                Smith, V. H., Tilman, G. D., &amp; Nekola, J. C. (1999).
-                Eutrophication: impacts of excess nutrient inputs on freshwater,
-                marine, and terrestrial ecosystems.{" "}
-                <em>Environmental Pollution, 100</em> (1–3), 179–196. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/S0269-7491(99)00091-3">
-                  10.1016/S0269-7491(99)00091-3
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={5}>
-                Zhang, Y., Li, M., Dong, J., et al. (2021). A critical review of
-                methods for analyzing freshwater eutrophication.{" "}
-                <em>Water, 13</em> (2), 225. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.3390/w13020225">
-                  10.3390/w13020225
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={6}>
-                Maúre, E. R., Terauchi, G., Ishizaka, J., Clinton, N., &amp;
-                DeWitt, M. (2021). Globally consistent assessment of coastal
-                eutrophication. <em>Nature Communications, 12</em>, 6142. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1038/s41467-021-26391-9">
-                  10.1038/s41467-021-26391-9
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={7}>
-                United Nations Environment Programme. (2025).{" "}
-                <em>
-                  How Spain is turning an iconic lagoon from “green soup” into a
-                  natural oasis
-                </em>
-                . UNEP.
-              </Ref>
-              <Ref group="problem" number={8}>
-                Heezen, J., &amp; Fernández López, L. (2022).{" "}
-                <em>
-                  PETI fact-finding visit to Mar Menor, Spain: 23–25 February
-                  2022
-                </em>
-                . European Parliament.
-              </Ref>
-              <Ref group="problem" number={9}>
-                Aparicio, G., Camacho, M., &amp; Maté-Sánchez-Val, M. (2024).
-                Quantifying the impact: Are coastal areas impoverished by marine
-                pollution? <em>Ecological Economics, 221</em>, 108213. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/j.ecolecon.2024.108213">
-                  10.1016/j.ecolecon.2024.108213
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={10}>
-                Lamas Rodríguez, M., Garcia Lorenzo, M. L., Medina Magro, M.,
-                &amp; Perez Quiros, G. (2023). Impact of climate risk
-                materialization and ecological deterioration on house prices in
-                Mar Menor, Spain. <em>Scientific Reports, 13</em>, 11772. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1038/s41598-023-39022-8">
-                  10.1038/s41598-023-39022-8
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={11}>
-                PRTR-España, Ministerio para la Transición Ecológica y el Reto
-                Demográfico.{" "}
-                <em>
-                  Spanish Pollutant Release and Transfer Register:
-                  total-phosphorus releases to water by industrial activity
-                </em>
-                . Database accessed in 2026.
-              </Ref>
-              <Ref group="problem" number={12}>
-                Junta de Andalucía. (2017).{" "}
-                <em>
-                  Integrated Environmental Authorisation for the Bio-Oils Huelva
-                  “La Rábida” biodiesel plant
-                </em>
-                . File AAI/HU/075.
-              </Ref>
-              <Ref group="problem" number={13}>
-                American Oil Chemists&apos; Society. <em>Chemical Degumming</em>{" "}
-                and <em>Oil Refining</em>. AOCS Lipid Library.
-              </Ref>
-              <Ref group="problem" number={14}>
-                Zheng, Y., Wan, Y., Zhang, Y., et al. (2023). Recovery of
-                phosphorus from wastewater: a review based on current phosphorus
-                removal technologies.{" "}
-                <em>
-                  Critical Reviews in Environmental Science and Technology, 53
-                </em>{" "}
-                (11), 1148–1172. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1080/10643389.2022.2128194">
-                  10.1080/10643389.2022.2128194
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={15}>
-                United States Environmental Protection Agency. (2010).{" "}
-                <em>Nutrient Control Design Manual</em> (EPA/600/R-10/100).
-              </Ref>
-              <Ref group="problem" number={16}>
-                Minnesota Pollution Control Agency. (2006).{" "}
-                <em>Phosphorus Treatment and Removal Technologies</em>{" "}
-                (WQ-WWTP9-02).
-              </Ref>
-              <Ref group="problem" number={17}>
-                Uzkurt Kaljunen, J., Al-Juboori, R. A., Khunjar, W., Mikola, A.,
-                &amp; Wells, G. (2022). Phosphorus recovery alternatives for
-                sludge from chemical phosphorus removal processes.{" "}
-                <em>Sustainable Materials and Technologies, 34</em>, e00514.
-                DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1016/j.susmat.2022.e00514">
-                  10.1016/j.susmat.2022.e00514
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={18}>
-                Law, Y., Kirkegaard, R. H., Cokro, A. A., et al. (2016).
-                Integrative microbial community analysis reveals full-scale
-                enhanced biological phosphorus removal under tropical
-                conditions. <em>Scientific Reports, 6</em>, 25719. DOI:{" "}
-                <ExternalLink href="https://doi.org/10.1038/srep25719">
-                  10.1038/srep25719
-                </ExternalLink>
-                .
-              </Ref>
-              <Ref group="problem" number={19}>
-                U.S. Geological Survey. (2025).{" "}
-                <em>The Mineral Industry of Morocco in 2020–2021</em>. U.S.
-                Geological Survey Minerals Yearbook.
-              </Ref>
-              <Ref group="problem" number={20}>
-                European Parliament and Council of the European Union. (2024).{" "}
-                <em>
-                  Directive (EU) 2024/3019 concerning urban wastewater treatment
-                  (recast)
-                </em>
-                .{" "}
-                <ExternalLink href="https://eur-lex.europa.eu/eli/dir/2024/3019/oj">
-                  Official full text
-                </ExternalLink>
-                .
-              </Ref>
-            </ReferenceGroup>
           </section>
         </div>
       </div>

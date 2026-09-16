@@ -346,14 +346,6 @@
   border-bottom: 0;
 }
 
-.pd-references {
-  padding-top: 8px;
-}
-
-.pd-reference-group {
-  margin-top: 42px;
-}
-
 .pd-references-accordion {
   margin-top: 42px;
   background: color-mix(in srgb, var(--water-mid) 7%, transparent);
