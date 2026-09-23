@@ -38,6 +38,8 @@ jobs:
 
       - name: Build
         run: yarn build
+        env:
+          VITE_BASE_PATH: rephlow-wiki
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

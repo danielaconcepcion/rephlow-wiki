@@ -9,8 +9,10 @@ import { stringToSlug } from "./src/utils/stringToSlug";
 // https://vitejs.dev/config/
 export default () => {
   const env = loadEnv("dev", process.cwd());
+  const baseSlug = process.env.VITE_BASE_PATH ?? stringToSlug(env.VITE_TEAM_NAME);
+
   return defineConfig({
-    base: `/${stringToSlug(env.VITE_TEAM_NAME)}/`,
+    base: `/${baseSlug}/`,
     plugins: [react()],
   });
 };
