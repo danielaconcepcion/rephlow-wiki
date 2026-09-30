@@ -1,0 +1,12 @@
+/* --------------------------------------------------------------------------
+   EdgeMoleculeField — design-system MoleculeField, edge family, primary
+   palette (135° #86b1d1 → #9dc76f, white motif). See EdgeMoleculeField.tsx.
+   -------------------------------------------------------------------------- */
+.emf-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background: linear-gradient(135deg, #86b1d1, #9dc76f);
+}

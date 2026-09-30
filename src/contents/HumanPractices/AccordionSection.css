@@ -55,3 +55,16 @@
 .hp-accordion__content .hp-accordion:first-child {
   border-top: none;
 }
+
+/* Decorated variant (optional `background` prop): the decorative layer is
+   absolutely positioned behind the trigger and content. */
+.hp-accordion--decorated {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.hp-accordion--decorated > .hp-accordion__trigger,
+.hp-accordion--decorated > .hp-accordion__content {
+  position: relative;
+  z-index: 1;
+}

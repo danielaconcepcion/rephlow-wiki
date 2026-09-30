@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { asset } from "../../utils/asset";
+import { EdgeMoleculeField } from "../../components/EdgeMoleculeField";
 import { AccordionSection } from "./AccordionSection";
 import { FlipCard } from "./FlipCard";
 import "./WhyPhosphorus.css";
@@ -520,7 +521,8 @@ export function WhyPhosphorus() {
         </div>
         <AccordionSection
           title="Wetland restoration and constructed wetlands"
-          className="hp-why__alternative"
+          className="hp-why__alternative hp-why__alternative--edge"
+          background={<EdgeMoleculeField seed={8} />}
         >
           <p>
             Natural and constructed wetlands can retain or transform nutrients
@@ -548,7 +550,8 @@ export function WhyPhosphorus() {
         </AccordionSection>
         <AccordionSection
           title="Agricultural policy and nutrient-loss prevention"
-          className="hp-why__alternative"
+          className="hp-why__alternative hp-why__alternative--edge"
+          background={<EdgeMoleculeField seed={27} />}
         >
           <p>
             Fertiliser regulation, improved nutrient management and measures to
