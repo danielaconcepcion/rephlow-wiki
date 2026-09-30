@@ -18,10 +18,10 @@ import type { ExperimentSubBlock } from "../../components/LabFolders/types";
  *   "1./2." scheme of the other blocks (the source has no sub-block 2).
  * - Each stage's own "· DHAK only" / "· Shared" / "· DHAK" tag is kept in
  *   the card title, exactly as written after the stage name.
- * - The source's figures are not yet uploaded to the wiki, so each one is
- *   an `image-placeholder` carrying the source's own caption. One figure in
- *   the DHAK activity assay has no caption in the source; its placeholder
- *   carries none either.
+ * - Figures are the images from the Notion export (under
+ *   public/assets/experiments/revalorisation/), with the source's own
+ *   captions minus the "Figure." prefix. The reaction scheme in the DHAK
+ *   activity assay has no caption in the source, so it carries none here.
  * - Every "PROTOCOL: SCIENCE>BLOQUES>…" line is replaced by a real
  *   `protocols` download link named after the protocol the source cites
  *   (placeholder PDF paths, as in the other blocks).
@@ -47,6 +47,8 @@ const PROTOCOL: Record<string, { label: string; href: string }> = {
     href: "assets/protocols/revalorisation-crude-extract.pdf",
   },
 };
+const IMG_DIR = "assets/experiments/revalorisation";
+
 function protocolLinks(...names: string[]) {
   return names.map((n) => PROTOCOL[n]);
 }
@@ -161,14 +163,18 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
               </>,
             ],
             pairedResource: {
-              kind: "image-placeholder",
+              kind: "image",
+              src: `${IMG_DIR}/dhak-homodimer-1un9.png`,
+              alt: "DHAK homodimer (PDB 1UN9) with its K- and L-domains, and close-ups of the ATP and DHA binding sites and the Mg²⁺ ions",
               caption:
                 "DHAK homodimer (PDB 1UN9), K- and L-domains and the ATP, DHA and Mg²⁺ ligands.",
             },
           },
           {
             pairedResource: {
-              kind: "image-placeholder",
+              kind: "image",
+              src: `${IMG_DIR}/dhak-protected-residues.png`,
+              alt: "DHAK monomer with the residues within 4 Å of the ATP and DHA ligands shown as spheres in the L- and K-domains",
               caption:
                 "Protected residues within 4 Å of the ligands, mapped on the structure",
             },
@@ -193,7 +199,9 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
               </>,
             ],
             pairedResource: {
-              kind: "image-placeholder",
+              kind: "image",
+              src: `${IMG_DIR}/dhak-pross5-mutations.png`,
+              alt: "DHAK dimer surface (chains A and B) and chain A cartoon with the PROSS design 5 mutations highlighted in yellow",
               caption:
                 "Mutated positions of PROSS design 5 relative to wild-type DHAK",
             },
@@ -449,10 +457,6 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 <strong>absolute amount of DHAP</strong>, which keeps the
                 measurement comparable between instruments and laboratories.
               </>,
-            ],
-          },
-          {
-            paragraphs: [
               <>
                 The <strong>DHAK source</strong> was the{" "}
                 <strong>crude extract</strong> from the previous stage, assayed
@@ -472,7 +476,14 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 <strong>per mg of total protein</strong>.
               </>,
             ],
-            pairedResource: { kind: "image-placeholder", caption: "" },
+          },
+          {
+            pairedResource: {
+              kind: "image",
+              src: `${IMG_DIR}/dhak-coupled-assay-scheme.png`,
+              alt: "Reaction scheme: DHAK phosphorylates DHA to DHAP using ATP; TIM interconverts DHAP and D-GA3P; α-GDH reduces DHAP to α-glycerophosphate while oxidising NADH to NAD⁺",
+              caption: "",
+            },
           },
         ],
       },
