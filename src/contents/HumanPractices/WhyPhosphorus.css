@@ -187,7 +187,7 @@
 }
 
 .hp-why__alternative--edge .hp-accordion__title {
-  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-size: 1.1rem;
   line-height: 1.2;
   letter-spacing: -0.01em;
   color: #fffaf1;
