@@ -10,27 +10,17 @@ import {
   ENZYMATIC_IMMOBILISATION_REFERENCES,
   ENZYMATIC_IMMOBILISATION_SUBBLOCKS,
 } from "./EnzymaticImmobilisationData";
+import { REVALORISATION_INTRO, REVALORISATION_REFERENCES, REVALORISATION_SUBBLOCKS } from "./RevalorisationData";
 
 /**
- * Placeholder experiment records — structure only, ready to be replaced
- * with real materials, steps, and results. See
- * src/components/LabFolders/types.ts for the full field reference.
- *
- * These are the 4 official experiment blocks (matching the project's own
- * modules — see ProjectDescription's visual index). "Alginate encapsulation",
- * "Genetic engineering" and "Enzymatic immobilisation" are real content
- * (see EncapsulationData.tsx, GeneticEngineeringData.tsx and
- * EnzymaticImmobilisationData.tsx), each organised into the source's own
- * labelled sub-blocks rather than a flat experiment list. Revalorisation is
- * still placeholder structure.
+ * The 4 official experiment blocks (matching the project's own modules —
+ * see ProjectDescription's visual index). All four are real content (see
+ * EncapsulationData.tsx, GeneticEngineeringData.tsx,
+ * EnzymaticImmobilisationData.tsx and RevalorisationData.tsx), each
+ * organised into the source's own labelled sub-blocks rather than a flat
+ * experiment list. See src/components/LabFolders/types.ts for the full
+ * field reference.
  */
-const LOREM =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-
-function step(n: number) {
-  return `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Placeholder step ${n} text.`;
-}
-
 export const EXPERIMENT_BLOCKS: ExperimentBlockData[] = [
   {
     id: "encapsulation",
@@ -61,33 +51,13 @@ export const EXPERIMENT_BLOCKS: ExperimentBlockData[] = [
   {
     id: "revalorisation",
     label: "Revalorisation",
-    accent: "var(--lab-revalorisation)",
+    // Text accent (links/citations) in the mostaza palette's deep shade —
+    // the folder decks themselves take the full palette via `palette`.
+    accent: "#b8790a",
+    palette: "mostaza",
     protocolsPdfSrc: "assets/protocols/revalorisation-protocols.pdf",
-    experiments: [
-      {
-        id: "experiment-1",
-        tabLabel: "Experiment 1",
-        title: "Experiment 1",
-        description: LOREM,
-        materialsTable: [{ item: "Reagent A", quantity: "Add qty" }],
-        protocol: [{ text: step(1) }, { text: step(2) }, { text: step(3) }],
-        notes: [{ kind: "note", text: LOREM }],
-        pdfHref: "assets/protocols/revalorisation-experiment-1.pdf",
-      },
-      {
-        id: "experiment-2",
-        tabLabel: "Experiment 2",
-        title: "Experiment 2",
-        description: LOREM,
-        materialsList: ["Lorem ipsum material 1.", "Lorem ipsum material 2.", "Lorem ipsum material 3."],
-        protocol: [{ text: step(1) }, { text: step(2) }],
-        references: ["Lorem ipsum reference, 2024."],
-        figure: {
-          src: "assets/experiments/revalorisation-experiment-2-placeholder.png",
-          caption: "Placeholder figure caption.",
-        },
-        pdfHref: "assets/protocols/revalorisation-experiment-2.pdf",
-      },
-    ],
+    intro: REVALORISATION_INTRO,
+    subBlocks: REVALORISATION_SUBBLOCKS,
+    references: REVALORISATION_REFERENCES,
   },
 ];

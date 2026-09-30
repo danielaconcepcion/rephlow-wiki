@@ -185,6 +185,9 @@ export interface ExperimentBlockData {
   label: string;
   /** CSS value assigned to --folder-accent for this block, e.g. "var(--lab-bacteria)". */
   accent: string;
+  /** Optional full colour re-skin for this block's folder decks (see
+   * .lab-block--mostaza in LabFolders.css). */
+  palette?: "mostaza";
   /** Source for this block's embedded Protocols PDF folder, resolved with asset(). */
   protocolsPdfSrc: string;
   /** Shown once, above everything else in the block. */

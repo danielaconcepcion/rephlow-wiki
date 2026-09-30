@@ -149,12 +149,17 @@ function paragraphs(text: ReactNode | ReactNode[] | undefined, className: string
   ));
 }
 
-function experimentFolders(experiments: ExperimentData[], idPrefix = "") {
+/** Wraps a block's folder deck in its optional palette scope (see
+ * ExperimentBlockData.palette / .lab-block--mostaza) — scoped to the deck
+ * only, so the block's surrounding prose keeps the page's own colours. */
+function DeckPalette({ palette, children }: { palette?: "mostaza"; children: ReactNode }) {
+  if (!palette) return <>{children}</>;
+  return <div className={`lab-block--${palette}`}>{children}</div>;
+}
+
+function experimentFolders(experiments: ExperimentData[]) {
   return experiments.map((experiment, index) => ({
-    // idPrefix keeps a duplicated deck's tab/panel DOM ids (folder-tab-*,
-    // folder-panel-*) from colliding with the real deck's — see the
-    // mostaza-palette preview deck below, the only caller that passes one.
-    id: `${idPrefix}${experiment.id}`,
+    id: experiment.id,
     label: experiment.tabLabel,
     content: <ExperimentCard data={experiment} />,
     // 1-indexed position within this experiment sequence (each sub-block
@@ -298,10 +303,12 @@ export function Experiments() {
                     )}
                   </div>
                   {subBlock.experiments && (
-                    <FolderStack
-                      ariaLabel={`${subBlock.heading} experiments`}
-                      folders={experimentFolders(subBlock.experiments)}
-                    />
+                    <DeckPalette palette={activeBlock.palette}>
+                      <FolderStack
+                        ariaLabel={`${subBlock.heading} experiments`}
+                        folders={experimentFolders(subBlock.experiments)}
+                      />
+                    </DeckPalette>
                   )}
                   {subBlock.outro && (
                     <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
@@ -330,39 +337,8 @@ export function Experiments() {
               </section>
             )}
 
-            {/* Colour-only design preview: the exact same Revalorisation
-                deck below, duplicated above it, re-skinned with the
-                approved "Paleta mostaza" (see .lab-block--mostaza in
-                LabFolders.css) — a scoped token override, not a rebuilt
-                component, so it's the real FolderStack/ExperimentCard,
-                just recoloured. Distinct "preview-" tab ids keep it from
-                colliding with the real deck's DOM ids below. Drop this
-                block (and the CSS scope it points at) once a palette is
-                chosen for real. */}
-            {activeBlock.id === "revalorisation" && (
-              <div className="lab-block--mostaza" style={{ marginBottom: 40 }}>
-                <p className="lab-mostaza-label">Paleta mostaza — color preview</p>
-                <FolderStack
-                  ariaLabel={`${activeBlock.label} experiments (mostaza palette preview)`}
-                  folders={[
-                    ...experimentFolders(activeBlock.experiments ?? [], "preview-"),
-                    {
-                      id: "preview-protocols",
-                      label: "Notebook",
-                      variant: "protocols" as const,
-                      content: (
-                        <PdfViewer
-                          src={asset(activeBlock.protocolsPdfSrc)}
-                          title={`${activeBlock.label} notebook`}
-                        />
-                      ),
-                    },
-                  ]}
-                />
-              </div>
-            )}
-
             {!activeBlock.subBlocks && (
+              <DeckPalette palette={activeBlock.palette}>
               <FolderStack
                 ariaLabel={`${activeBlock.label} experiments`}
                 folders={[
@@ -380,6 +356,7 @@ export function Experiments() {
                   },
                 ]}
               />
+              </DeckPalette>
             )}
           </div>
         </div>

@@ -41,8 +41,9 @@
 }
 
 /* --------------------------------------------------------------------------
-   MOSTAZA PALETTE — a scoped colour re-skin for a duplicated preview deck
-   (currently only Revalorisation, see Experiments.tsx). Every folder/card
+   MOSTAZA PALETTE — a scoped colour re-skin for a block's folder decks
+   (currently only Revalorisation — see ExperimentBlockData.palette and
+   Experiments.tsx's DeckPalette). Every folder/card
    visual reads its colours from --paper, --paper-soft, --folder-accent
    (plus --folder-accent-strong, added above for the one spot a plain
    accent swap isn't enough: white-text-on-accent circles need a deeper
@@ -65,15 +66,6 @@
 }
 .lab-block--mostaza .record-table th {
   background: #fbe6ae;
-}
-.lab-mostaza-label {
-  margin: 0 0 14px;
-  font-family: ui-monospace, "SFMono-Regular", "Courier New", monospace;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #8a5c05;
 }
 
 /* --------------------------------------------------------------------------
