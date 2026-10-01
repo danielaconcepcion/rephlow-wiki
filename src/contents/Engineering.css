@@ -112,6 +112,11 @@
 .engineering-thread + .engineering-thread {
   margin-top: 72px;
 }
+/* Revalorisation's closing Reflection, after its single spiral — same
+   72px section gap as between two threads. */
+.engineering-reflection {
+  margin-top: 72px;
+}
 .engineering-thread__title {
   max-width: 790px;
   margin: 0 auto 28px;

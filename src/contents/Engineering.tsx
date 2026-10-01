@@ -24,6 +24,7 @@ import {
   CLONING_ITERATIONS,
   CRISPR_ITERATIONS,
 } from "./Engineering/GeneticEngineeringData";
+import { REVALORISATION_ITERATIONS } from "./Engineering/RevalorisationData";
 import { ITERATIONS, type Iteration } from "./Engineering/dbtlData";
 
 /**
@@ -47,12 +48,14 @@ import { ITERATIONS, type Iteration } from "./Engineering/dbtlData";
  * so the second spiral picks the gradient up exactly where the first left
  * off instead of restarting it.
  *
- * The other three still share the generic placeholder content in
- * Engineering/dbtlData.ts — only the colour palette is genuinely per-tab
- * for those so far.
+ * Revalorisation has its real 4-iteration write-up
+ * (Engineering/RevalorisationData.ts) as one spiral, framed by its own
+ * intro and closing Reflection. Hardware still uses the generic placeholder
+ * content in Engineering/dbtlData.ts.
  */
 const TAB_ITERATIONS: Record<string, Iteration[] | undefined> = {
   "bacterial-encapsulation": BACTERIAL_ENCAPSULATION_ITERATIONS,
+  revalorisation: REVALORISATION_ITERATIONS,
 };
 // The five Engineering tabs as glass spheres — see EcosystemMap's own doc
 // comment for the shared component's behaviour. Colours and illustrations
@@ -606,6 +609,77 @@ export function Engineering() {
                       }
                     />
                   </div>
+                </section>
+              </div>
+            ) : activeTab === "revalorisation" ? (
+              /* One thread (a single spiral, like Bacterial encapsulation),
+                 framed by the source's own intro and closing Reflection —
+                 see Engineering/RevalorisationData.ts. */
+              <div className="engineering-threads">
+                <p className="engineering-threads__intro">
+                  Our engineering goal on this side of the project was clear
+                  from the start:{" "}
+                  <strong>
+                    transform the polyphosphate our bacteria accumulate into
+                    something of actual value
+                  </strong>
+                  , closing the cycle rather than leaving polyP as a dead end.
+                  The harder question was where to start and how, and the two
+                  iterations below are the process of turning that open
+                  question into a specific, coupled enzymatic system, and then
+                  into a system stable enough to be worth scaling.
+                </p>
+                <div className="engineering-cycle-bleed">
+                  <DbtlCycle
+                    key={activeTab}
+                    ref={singleCycleRef}
+                    palette={ENGINEERING_PALETTES[activeTab]}
+                    iterations={REVALORISATION_ITERATIONS}
+                    onActiveChange={(iteration, phase) =>
+                      setSingleActive({ iteration, phase })
+                    }
+                  />
+                </div>
+                <section className="engineering-thread engineering-reflection">
+                  <h2 className="engineering-thread__title">Reflection</h2>
+                  <p className="engineering-threads__intro">
+                    Looking back at this whole process, what stands out most is
+                    not any single result but{" "}
+                    <strong>the path it took to get there</strong>. Every
+                    choice, from picking DHAP over glucose 6-phosphate, to
+                    landing on PPK2 and DHAK, to testing a PROSS variant that
+                    turned out not to work, came from{" "}
+                    <strong>
+                      trial and error rather than a straight line planned out
+                      from day one
+                    </strong>
+                    . Design 5 failing was not a setback so much as
+                    information: it told us something real about how DHAK's
+                    stability and function are connected, and pushed us toward
+                    a smarter, more conservative next step instead of a lucky
+                    guess. The purification problem taught a related lesson
+                    from a completely different angle: even a routine,
+                    well-established method like IMAC can quietly fail on a
+                    protein it was never validated for, and the fix was not to
+                    force it, but to bring in a different technique, FPLC, that
+                    was actually suited to DHAK. And the SpyTag–SpyCatcher work
+                    is a reminder that engineering decisions keep compounding,
+                    even assigning which half of a fusion tag goes on which
+                    enzyme required reasoning back to basic properties like
+                    size and oligomeric state. None of this would have happened
+                    without the people who talked us through it along the way.{" "}
+                    <strong>Eduardo, Israel and Día</strong> did not just hand
+                    us protocols, they challenged our assumptions, pointed out
+                    things we had not considered, and helped us read our own
+                    results more critically. That kind of exchange with the
+                    wider scientific community shaped this part of the project
+                    just as much as anything we did at the bench, and it is a
+                    reminder that{" "}
+                    <strong>good science rarely happens in isolation</strong>.
+                    Staying open to being wrong, and staying in conversation
+                    with people who know more than we do, turned out to be just
+                    as important as any single experiment.
+                  </p>
                 </section>
               </div>
             ) : (
