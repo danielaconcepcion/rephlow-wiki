@@ -2,6 +2,7 @@ import {
   forwardRef,
   useEffect,
   useId,
+  useCallback,
   useImperativeHandle,
   useMemo,
   useRef,
@@ -820,33 +821,32 @@ export const DbtlCycle = forwardRef<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Defined inside the useImperativeHandle callback itself (rather than as
-  // a standalone function referenced from its deps array) so the handle
-  // only needs to change when `pacing` actually does, not on every render
-  // -- a plain function declaration is a new value each render, which
+  // Shared by the lateral nav (through the exposed handle below) and by
+  // the prev/next arrows beside the pips, so a click on either lands a
+  // reader in exactly the same place. Memoised on `pacing` alone -- a
+  // plain function declaration would be a new value every render, which
   // would otherwise recreate the exposed handle needlessly often.
-  useImperativeHandle(
-    ref,
-    () => ({
-      jumpToPhase(iterIndex: number, phaseIndex: number) {
-        const scroller = scrollerRef.current;
-        if (!scroller) return;
-        const rect = scroller.getBoundingClientRect();
-        const pageTop = window.scrollY + rect.top;
-        const { contentStart, contentEnd, phaseCumPerIter } = pacing;
-        // Jumps land within the target phase's own CONTENT span -- never
-        // inside a trailing TRANSITION_VH slice, which phaseCumPerIter was
-        // never defined against in the first place.
-        const contentSpan = contentEnd[iterIndex] - contentStart[iterIndex];
-        const frac =
-          contentStart[iterIndex] +
-          phaseCumPerIter[iterIndex][phaseIndex] * contentSpan;
-        const top = pageTop + frac * scroller.offsetHeight + 4;
-        window.scrollTo({ top, behavior: "smooth" });
-      },
-    }),
+  const jumpToPhase = useCallback(
+    (iterIndex: number, phaseIndex: number) => {
+      const scroller = scrollerRef.current;
+      if (!scroller) return;
+      const rect = scroller.getBoundingClientRect();
+      const pageTop = window.scrollY + rect.top;
+      const { contentStart, contentEnd, phaseCumPerIter } = pacing;
+      // Jumps land within the target phase's own CONTENT span -- never
+      // inside a trailing TRANSITION_VH slice, which phaseCumPerIter was
+      // never defined against in the first place.
+      const contentSpan = contentEnd[iterIndex] - contentStart[iterIndex];
+      const frac =
+        contentStart[iterIndex] +
+        phaseCumPerIter[iterIndex][phaseIndex] * contentSpan;
+      const top = pageTop + frac * scroller.offsetHeight + 4;
+      window.scrollTo({ top, behavior: "smooth" });
+    },
     [pacing],
   );
+
+  useImperativeHandle(ref, () => ({ jumpToPhase }), [jumpToPhase]);
 
   // Relayed to a parent-owned nav (see the DbtlCycleHandle/onActiveChange
   // doc comment above) -- deliberately not depended on `onActiveChange`
@@ -866,6 +866,22 @@ export const DbtlCycle = forwardRef<
 
   const activeIter = iterations[activeIteration];
   const activePhaseData = activeIter.phases[activePhase];
+
+  // Step one phase at a time with the arrows beside the pips, crossing
+  // into the neighbouring iteration at either end of a cycle rather than
+  // stopping there -- the pips are a position indicator for the whole
+  // spiral, not just the current loop. Both arrows reuse the same
+  // jumpToPhase scroll maths the lateral nav already uses (see the
+  // useImperativeHandle above), so an arrow click and a nav click land a
+  // reader in exactly the same place.
+  const PHASES_PER_ITER = 4;
+  const flatIndex = activeIteration * PHASES_PER_ITER + activePhase;
+  const flatTotal = iterations.length * PHASES_PER_ITER;
+  function stepPhase(delta: number) {
+    const next = flatIndex + delta;
+    if (next < 0 || next >= flatTotal) return;
+    jumpToPhase(Math.floor(next / PHASES_PER_ITER), next % PHASES_PER_ITER);
+  }
   const nextIter =
     activeIteration < total - 1 ? iterations[activeIteration + 1] : null;
 
@@ -1019,13 +1035,33 @@ export const DbtlCycle = forwardRef<
                 </div>
               </div>
             </div>
-            <div className="dbtl-cycle__pips">
-              {activeIter.phases.map((p, j) => (
-                <span
-                  key={p.name}
-                  className={`dbtl-cycle__pip${j === activePhase ? " is-active" : ""}`}
-                />
-              ))}
+            <div className="dbtl-cycle__pager">
+              <button
+                type="button"
+                className="dbtl-cycle__pager-arrow"
+                onClick={() => stepPhase(-1)}
+                disabled={flatIndex === 0}
+                aria-label="Previous phase"
+              >
+                &larr;
+              </button>
+              <div className="dbtl-cycle__pips">
+                {activeIter.phases.map((p, j) => (
+                  <span
+                    key={p.name}
+                    className={`dbtl-cycle__pip${j === activePhase ? " is-active" : ""}`}
+                  />
+                ))}
+              </div>
+              <button
+                type="button"
+                className="dbtl-cycle__pager-arrow"
+                onClick={() => stepPhase(1)}
+                disabled={flatIndex === flatTotal - 1}
+                aria-label="Next phase"
+              >
+                &rarr;
+              </button>
             </div>
           </div>
 
@@ -1054,13 +1090,25 @@ export const DbtlCycle = forwardRef<
                   renderBlock(block, k),
                 )}
               </div>
-              <div className="dbtl-cycle__pips">
-                {nextIter.phases.map((p, j) => (
-                  <span
-                    key={p.name}
-                    className={`dbtl-cycle__pip${j === 0 ? " is-active" : ""}`}
-                  />
-                ))}
+              {/* Same pager shell as the real content box above, so the
+                  cross-fade between the two doesn't shift the pips
+                  sideways. Inert spans rather than buttons -- this whole
+                  box is aria-hidden and never interactive. */}
+              <div className="dbtl-cycle__pager">
+                <span className="dbtl-cycle__pager-arrow" aria-hidden="true">
+                  &larr;
+                </span>
+                <div className="dbtl-cycle__pips">
+                  {nextIter.phases.map((p, j) => (
+                    <span
+                      key={p.name}
+                      className={`dbtl-cycle__pip${j === 0 ? " is-active" : ""}`}
+                    />
+                  ))}
+                </div>
+                <span className="dbtl-cycle__pager-arrow" aria-hidden="true">
+                  &rarr;
+                </span>
               </div>
             </div>
           )}

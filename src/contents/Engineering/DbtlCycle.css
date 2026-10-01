@@ -718,11 +718,53 @@
   color: var(--ink-soft);
 }
 
+/* The phase pips, flanked by prev/next arrows (see DbtlCycle.tsx's
+   stepPhase): a quiet, text-weight affordance beside the indicator rather
+   than a pair of buttons, so the panel keeps reading as a page rather than
+   a carousel widget. The arrows step across iteration boundaries too, and
+   are disabled only at the very start and very end of the whole spiral. */
+.dbtl-cycle__pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+.dbtl-cycle__pager-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink-soft);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+.dbtl-cycle__pager-arrow:hover:not(:disabled) {
+  color: var(--iter-color);
+}
+.dbtl-cycle__pager-arrow:focus-visible {
+  outline: 2px solid var(--iter-color);
+  outline-offset: 2px;
+}
+.dbtl-cycle__pager-arrow:disabled {
+  opacity: 0.25;
+  cursor: default;
+}
+
 .dbtl-cycle__pips {
   display: flex;
   justify-content: center;
   gap: 7px;
-  margin-top: 20px;
 }
 .dbtl-cycle__pip {
   width: 6px;
