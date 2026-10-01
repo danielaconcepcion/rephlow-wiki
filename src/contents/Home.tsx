@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { TileMoleculeField } from "../components/TileMoleculeField";
 import { Link } from "react-router-dom";
 import { asset } from "../utils";
 
@@ -541,7 +542,8 @@ export function Home() {
         <div className="explore__group">
           <p className="explore__group-title">Project</p>
           <div className="card-grid">
-            <Link className="card" to="/project-description">
+            <Link className="card card--feature" to="/project-description">
+              <TileMoleculeField seed={11} palette="primary" />
               <div className="card__icon card__icon--project">
                 <svg
                   viewBox="0 0 24 24"
@@ -561,6 +563,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/engineering">
+              <TileMoleculeField seed={18} palette="light" />
               <div className="card__icon card__icon--engineering">
                 <svg
                   viewBox="0 0 24 24"
@@ -580,6 +583,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/model">
+              <TileMoleculeField seed={25} palette="light" />
               <div className="card__icon card__icon--model">
                 <svg
                   viewBox="0 0 24 24"
@@ -597,6 +601,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/hardware">
+              <TileMoleculeField seed={32} palette="light" />
               <div className="card__icon card__icon--hardware">
                 <svg
                   viewBox="0 0 24 24"
@@ -618,7 +623,8 @@ export function Home() {
         <div className="explore__group">
           <p className="explore__group-title">Laboratory</p>
           <div className="card-grid">
-            <Link className="card" to="/experiments">
+            <Link className="card card--feature" to="/experiments">
+              <TileMoleculeField seed={39} palette="primary" />
               <div className="card__icon card__icon--experiments">
                 <svg
                   viewBox="0 0 24 24"
@@ -637,6 +643,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/measurements">
+              <TileMoleculeField seed={46} palette="light" />
               <div className="card__icon card__icon--measurements">
                 <svg
                   viewBox="0 0 24 24"
@@ -653,23 +660,8 @@ export function Home() {
               <p className="card__title">Measurements</p>
             </Link>
 
-            <Link className="card" to="/protocols">
-              <div className="card__icon card__icon--protocols">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M9 2h6v4a3 3 0 0 1-1 2.24V13l4 7a1 1 0 0 1-.9 1.5H6.9A1 1 0 0 1 6 20l4-7V8.24A3 3 0 0 1 9 6V2z" />
-                </svg>
-              </div>
-              <p className="card__title">Protocols</p>
-            </Link>
-
             <Link className="card" to="/results">
+              <TileMoleculeField seed={53} palette="light" />
               <div className="card__icon card__icon--results">
                 <svg
                   viewBox="0 0 24 24"
@@ -688,6 +680,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/safety">
+              <TileMoleculeField seed={60} palette="light" />
               <div className="card__icon card__icon--safety">
                 <svg
                   viewBox="0 0 24 24"
@@ -708,7 +701,8 @@ export function Home() {
         <div className="explore__group">
           <p className="explore__group-title">Engagement</p>
           <div className="card-grid">
-            <Link className="card" to="/human-practices">
+            <Link className="card card--feature" to="/human-practices">
+              <TileMoleculeField seed={67} palette="primary" />
               <div className="card__icon card__icon--hp">
                 <svg
                   viewBox="0 0 24 24"
@@ -725,6 +719,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/collaboration-partnership">
+              <TileMoleculeField seed={74} palette="light" />
               <div className="card__icon card__icon--collab">
                 <svg
                   viewBox="0 0 24 24"
@@ -742,6 +737,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/education-communication">
+              <TileMoleculeField seed={81} palette="light" />
               <div className="card__icon card__icon--education">
                 <svg
                   viewBox="0 0 24 24"
@@ -758,6 +754,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/entrepreneurship">
+              <TileMoleculeField seed={88} palette="light" />
               <div className="card__icon card__icon--entrepreneurship">
                 <svg
                   viewBox="0 0 24 24"
@@ -776,6 +773,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/sustainability">
+              <TileMoleculeField seed={95} palette="light" />
               <div className="card__icon card__icon--sustain">
                 <svg
                   viewBox="0 0 24 24"
@@ -792,6 +790,7 @@ export function Home() {
             </Link>
 
             <Link className="card" to="/contribution">
+              <TileMoleculeField seed={102} palette="light" />
               <div className="card__icon card__icon--contribution">
                 <svg
                   viewBox="0 0 24 24"
@@ -815,6 +814,7 @@ export function Home() {
           <p className="explore__group-title">Team</p>
           <div className="card-grid">
             <Link className="card" to="/team">
+              <TileMoleculeField seed={109} palette="light" />
               <div className="card__icon card__icon--team">
                 <svg
                   viewBox="0 0 24 24"
@@ -833,47 +833,14 @@ export function Home() {
               <p className="card__title">Team</p>
             </Link>
 
-            <Link className="card" to="/attributions">
-              <div className="card__icon card__icon--attributions">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M9 12l2 2 4-4" />
-                </svg>
-              </div>
-              <p className="card__title">Attributions</p>
-            </Link>
-
-            <Link className="card" to="/sponsors">
-              <div className="card__icon card__icon--sponsors">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="3" y="7" width="18" height="13" rx="2" />
-                  <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-                  <line x1="3" y1="13" x2="21" y2="13" />
-                </svg>
-              </div>
-              <p className="card__title">Sponsors</p>
-            </Link>
           </div>
         </div>
 
         <div className="explore__group">
           <p className="explore__group-title">Judging</p>
           <div className="card-grid">
-            <Link className="card" to="/medals">
+            <Link className="card card--feature" to="/medals">
+              <TileMoleculeField seed={116} palette="primary" />
               <div className="card__icon card__icon--medals">
                 <svg
                   viewBox="0 0 24 24"

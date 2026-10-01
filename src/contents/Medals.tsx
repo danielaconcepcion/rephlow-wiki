@@ -112,9 +112,14 @@ export function Medals() {
                       Project Attributions Form.
                     </p>
                     <div className="medals-links">
-                      <Link className="medals-link-btn" to="/attributions">
+                      <a
+                        className="medals-link-btn"
+                        href="https://teams.igem.org/6124"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         Attributions
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </div>

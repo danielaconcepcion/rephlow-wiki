@@ -34,7 +34,6 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { label: "Experiments", path: "/experiments" },
       { label: "Measurements", path: "/measurements" },
-      { label: "Protocols", path: "/protocols" },
       { label: "Results", path: "/results" },
       { label: "Safety", path: "/safety" },
     ],
@@ -54,8 +53,6 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Team",
     items: [
       { label: "Team", path: "/team" },
-      { label: "Attributions", path: "/attributions" },
-      { label: "Sponsors", path: "/sponsors" },
     ],
   },
   {

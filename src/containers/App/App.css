@@ -698,70 +698,107 @@ img { max-width: 100%; display: block; }
   margin-bottom: 6vh;
 }
 
+/* The Explore index is a dense mosaic of small tiles rather than a few
+   wide, evenly-weighted cards: tiles flex to fill each row whatever the
+   viewport, and one tile per group is a double-width "feature" so
+   each group has an obvious entry point instead of a uniform row. Each
+   tile's surface is a MoleculeField (see TileMoleculeField.tsx) --
+   "distributed" family, density "dense" -- in the neutral #fffaf1 base,
+   or the 135° primary gradient for a feature tile. The pastel icon discs
+   are gone: the molecule motif is the colour, and the icon is now a
+   quiet line mark above a left-aligned label. */
 .card-grid {
   max-width: 1080px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
 }
 
 .card {
-  background: var(--paper);
+  flex: 1 1 168px;
+  max-width: 300px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 136px;
   border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 32px 20px;
+  border-radius: var(--radius-md);
+  padding: 16px 16px 18px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 18px;
-  box-shadow: var(--shadow-card);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+  gap: 24px;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+/* One tile per group, spanning two columns: the group's own entry point.
+   Falls back to a single column where the grid is only one tile wide. */
+/* Roughly twice a plain tile, but still allowed to grow or shrink with
+   the row rather than being pinned to a fixed span -- a group of four and
+   a group of six both end up with full, flush rows. */
+.card--feature {
+  flex: 2 1 348px;
+  max-width: 480px;
+  border-color: transparent;
+}
+
+/* On a phone the full-size basis leaves one tile per row and a very long
+   column; a smaller basis fits two plain tiles side by side, with the
+   feature tile keeping the full width it needs to stay the entry point. */
+@media (max-width: 520px) {
+  .card {
+    flex-basis: 132px;
+    min-height: 112px;
+  }
+  .card--feature {
+    flex-basis: 100%;
+  }
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 32px rgba(27, 35, 64, 0.1);
+  transform: translateY(-3px);
+  border-color: rgba(27, 35, 64, 0.16);
+  box-shadow: 0 12px 24px rgba(27, 35, 64, 0.08);
+}
+
+.card__icon,
+.card__title {
+  position: relative;
+  z-index: 1;
 }
 
 .card__icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: var(--ink-soft);
 }
-.card__icon svg { width: 30px; height: 30px; }
+.card__icon svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+.card--feature .card__icon {
+  color: #fffaf1;
+}
 
 .card__title {
   font-family: var(--font-display);
-  font-size: 1.02rem;
+  font-size: 0.95rem;
   font-weight: 600;
+  line-height: 1.25;
   color: var(--ink);
+  max-width: 14ch;
 }
-
-/* Colores por categoría — coherentes con la paleta científica */
-.card__icon--model      { background: rgba(110, 90, 150, 0.12); color: var(--microbe); }
-.card__icon--sustain     { background: rgba(124, 154, 78, 0.14); color: var(--algae); }
-.card__icon--hardware    { background: rgba(226, 84, 45, 0.12); color: var(--phosphate); }
-.card__icon--hp          { background: rgba(110, 90, 150, 0.12); color: var(--microbe); }
-.card__icon--protocols   { background: rgba(74, 81, 112, 0.1);  color: var(--ink-soft); }
-.card__icon--results     { background: rgba(226, 84, 45, 0.12); color: var(--phosphate); }
-.card__icon--safety      { background: rgba(74, 81, 112, 0.1);  color: var(--ink-soft); }
-.card__icon--team        { background: rgba(124, 154, 78, 0.14); color: var(--algae); }
-.card__icon--project        { background: rgba(74, 81, 112, 0.1);   color: var(--ink-soft); }
-.card__icon--engineering    { background: rgba(110, 90, 150, 0.12); color: var(--microbe); }
-.card__icon--experiments    { background: rgba(226, 84, 45, 0.12);  color: var(--phosphate); }
-.card__icon--measurements   { background: rgba(74, 81, 112, 0.1);   color: var(--ink-soft); }
-.card__icon--collab         { background: rgba(124, 154, 78, 0.14); color: var(--algae); }
-.card__icon--education      { background: rgba(110, 90, 150, 0.12); color: var(--microbe); }
-.card__icon--entrepreneurship { background: rgba(226, 84, 45, 0.12); color: var(--phosphate); }
-.card__icon--contribution   { background: rgba(74, 81, 112, 0.1);   color: var(--ink-soft); }
-.card__icon--attributions   { background: rgba(74, 81, 112, 0.1);   color: var(--ink-soft); }
-.card__icon--sponsors       { background: rgba(226, 84, 45, 0.12);  color: var(--phosphate); }
-.card__icon--medals         { background: rgba(244, 211, 94, 0.3);  color: #8A6D1A; }
+.card--feature .card__title {
+  font-size: 1.12rem;
+  color: #fffaf1;
+  max-width: 18ch;
+}
 
 /* --- Grouped card sections in "Explore rePhlow!" --- */
 .explore__group { margin-bottom: 6vh; }

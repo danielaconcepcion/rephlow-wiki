@@ -8,7 +8,6 @@ import {
   Hardware,
   Experiments,
   Measurements,
-  Protocols,
   Results,
   Safety,
   HumanPractices,
@@ -17,8 +16,6 @@ import {
   Entrepreneurship,
   Sustainability,
   Contribution,
-  Attributions,
-  Sponsors,
   ContentPatterns,
 } from "./contents";
 
@@ -119,15 +116,6 @@ const Pages: Page[] = [
     docTitle: "Measurements — rePhlow iGEM Wiki",
   },
   {
-    name: "Protocols",
-    title: "Protocols",
-    lead: "Reliable. Repeatable. Reproducible.",
-    /*A space for the laboratory protocols and procedures used by the team.*/
-    path: "/protocols",
-    component: Protocols,
-    docTitle: "Protocols — rePhlow iGEM Wiki",
-  },
-  {
     name: "Results",
     title: "Results",
     lead: "Discover. Analyse. Explain.",
@@ -209,24 +197,6 @@ const Pages: Page[] = [
     component: Team,
     docTitle: "Team — rePhlow iGEM Wiki",
     hideHeader: true,
-  },
-  {
-    name: "Attributions",
-    title: "Attributions",
-    lead: "Credit where it's due.",
-    /*A space for acknowledging the work and responsibilities of team members and contributors.*/
-    path: "/attributions",
-    component: Attributions,
-    docTitle: "Attributions — rePhlow iGEM Wiki",
-  },
-  {
-    name: "Sponsors",
-    title: "Sponsors",
-    lead: "Made possible together.",
-    /*A space for acknowledging the support received from sponsors and institutions.*/
-    path: "/sponsors",
-    component: Sponsors,
-    docTitle: "Sponsors — rePhlow iGEM Wiki",
   },
   {
     name: "Medals",
