@@ -31,7 +31,7 @@ SOURCE = ROOT / "data" / "genetic-engineering" / "valoracion-fosforo-hoja1.csv"
 SUMMER_SOURCE = (
     ROOT / "data" / "genetic-engineering" / "resultados-verano-2025-rephlow.xlsx"
 )
-OUT_DIR = ROOT / "public" / "assets" / "experiments" / "genetic-engineering"
+OUT_DIR = ROOT / "public" / "assets" / "results" / "genetic-engineering"
 
 
 def main() -> int:

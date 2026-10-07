@@ -911,6 +911,15 @@
   padding: 6px;
 }
 
+/* A generated chart (an SVG plotted at a deliberate figure size) renders
+   at that size and only ever scales down, so its type stays the size it
+   was designed at instead of being blown up to the card width. */
+.record-figure__photo--chart {
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
 /* Several real photos cropped from one composite source figure (e.g. a
    4-panel SDS-PAGE plate) — each keeps its own printed sub-title directly
    above it (not a figcaption below, which would visually detach the label

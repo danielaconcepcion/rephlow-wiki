@@ -11,68 +11,9 @@ import { GENE_PARTS } from "./GeneticEngineeringData";
 import { GeneSystemGrid } from "./GeneSystemGrid";
 import { ENZYME_ACTIVITIES, ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION } from "./EnzymaticImmobilisationData";
 import { EnzymeActivityGrid } from "./EnzymeActivityGrid";
-import { EcosystemMap, type EcosystemMapItem } from "../../components/EcosystemMap";
+import { EcosystemMap } from "../../components/EcosystemMap";
+import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
 import "../../components/LabFolders/LabFolders.css";
-
-// The four experiment blocks as glass spheres — see EcosystemMap's own doc
-// comment for the component's shared behaviour. Encapsulation is pushed
-// bluer than --lab-encapsulation's own teal (#146b78) so it reads as
-// clearly distinct from Genetic engineering's green at a glance; the same
-// adjusted blue is used on Engineering's own Bacterial encapsulation
-// sphere for consistency between the two maps. Revalorisation's gold
-// (#c99a06) similarly replaces the duller #b8790a mustard tried first.
-// Revalorisation uses this colour rather than --phosphate, which
-// Engineering's Hardware sphere uses instead.
-const EXPERIMENTS_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
-  {
-    id: "encapsulation",
-    label: ["Alginate", "encapsulation"],
-    color: "#1568a3",
-    image: "assets/experiments/ecosystem-map/alginate.png",
-    alt: "Alginate capsule illustration",
-    left: 4.2,
-    top: 28,
-    width: 13.5,
-    imageSize: 88,
-    home: [140, 175],
-  },
-  {
-    id: "enzymatic-immobilisation",
-    label: ["Enzymatic", "immobilisation"],
-    color: "#6b4e9a",
-    image: "assets/experiments/ecosystem-map/enzyme.png",
-    alt: "Protein ribbon structure illustration",
-    left: 29.4,
-    top: 4,
-    width: 11.5,
-    imageSize: 80,
-    home: [450, 90],
-  },
-  {
-    id: "genetic-engineering",
-    label: ["Genetic", "engineering"],
-    color: "#3f7d4a",
-    image: "assets/experiments/ecosystem-map/bacteria.png",
-    alt: "Engineered bacterium illustration",
-    left: 53.1,
-    top: 38,
-    width: 12.5,
-    imageSize: 84,
-    home: [760, 215],
-  },
-  {
-    id: "revalorisation",
-    label: ["Revalorisation"],
-    color: "#c99a06",
-    image: "assets/experiments/ecosystem-map/revalorisation.png",
-    alt: "Star illustration",
-    left: 78.8,
-    top: 17,
-    width: 12.8,
-    imageSize: 70,
-    home: [1090, 140],
-  },
-];
 
 // Built once at module scope (stable array references — see
 // PageSectionNav's own note on why `sections` must not be recreated every
@@ -181,7 +122,7 @@ export function Experiments() {
           for Engineering's map only, so a null selection here is ignored
           rather than clearing the active block. */}
       <EcosystemMap
-        items={EXPERIMENTS_ECOSYSTEM_ITEMS}
+        items={LAB_BLOCK_SPHERES}
         activeId={activeBlockId}
         onSelect={(id) => id !== null && setActiveBlockId(id)}
       />

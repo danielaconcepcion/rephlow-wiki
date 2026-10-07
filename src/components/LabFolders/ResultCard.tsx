@@ -1,3 +1,4 @@
+import { asset } from "../../utils/asset";
 import type { ResultData, ResultSubsection } from "./types";
 
 function Subsection({ subsection }: { subsection: ResultSubsection }) {
@@ -11,9 +12,21 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
         <div className="record-figure-grid">
           {subsection.figures.map((figure, index) => (
             <figure className="record-figure" key={index}>
-              <div className="record-figure__placeholder" aria-hidden="true">
-                [ figure placeholder ]
-              </div>
+              {figure.src ? (
+                <img
+                  className={
+                    figure.kind === "chart"
+                      ? "record-figure__photo record-figure__photo--chart"
+                      : "record-figure__photo"
+                  }
+                  src={asset(figure.src)}
+                  alt={figure.alt ?? ""}
+                />
+              ) : (
+                <div className="record-figure__placeholder" aria-hidden="true">
+                  [ figure placeholder ]
+                </div>
+              )}
               <figcaption>{figure.caption}</figcaption>
             </figure>
           ))}

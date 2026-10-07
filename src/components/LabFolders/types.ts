@@ -52,7 +52,19 @@ export interface NoteItem {
 }
 
 export interface FigureData {
-  src: string;
+  /** Path under /public, e.g. "assets/results/foo.svg" — resolved with
+   * asset(). Omit for a figure the write-up calls for but has no image
+   * for yet: it then renders as the same caption-only placeholder the
+   * Experiments cards already use (see ResultCard). */
+  src?: string;
+  /** Required alongside `src`; ignored by a placeholder. */
+  alt?: string;
+  /** "chart" for a generated plot (see
+   * scripts/build-genetic-engineering-figures.py), which already has an
+   * intrinsic size chosen when it was plotted — stretching it to the card
+   * width just magnifies its type and rules. A photo (the default) does
+   * want the full width. */
+  kind?: "chart" | "photo";
   caption: string;
 }
 
@@ -230,9 +242,32 @@ export interface ResultData {
   discussion?: string[];
 }
 
+/** One labelled sub-section within a result block, mirroring
+ * ExperimentSubBlock exactly — same heading/intro/deck/outro shape, so the
+ * Results page reads as the same kind of document as Experiments and the
+ * two can share the section-nav and folder machinery. A sub-block with no
+ * results of its own renders as heading + intro only. */
+export interface ResultSubBlock {
+  id: string;
+  /** Rendered as-is, e.g. "1. Polyphosphate accumulation in the wild type". */
+  heading: string;
+  intro?: ReactNode | ReactNode[];
+  results?: ResultData[];
+  outro?: ReactNode | ReactNode[];
+}
+
 export interface ResultBlockData {
   id: string;
   label: string;
   accent: string;
-  results: ResultData[];
+  /** Optional full colour re-skin for this block's folder decks (see
+   * .lab-block--mostaza in LabFolders.css), as on Experiments. */
+  palette?: "mostaza";
+  /** Shown once, above everything else in the block. */
+  intro?: ReactNode | ReactNode[];
+  /** A flat block has one folder-tab row: set `results`. A block with
+   * multiple labelled sub-sections sets `subBlocks` instead — Results.tsx
+   * branches on which one is present, exactly as Experiments.tsx does. */
+  results?: ResultData[];
+  subBlocks?: ResultSubBlock[];
 }
