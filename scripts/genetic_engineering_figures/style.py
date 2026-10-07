@@ -59,6 +59,11 @@ def apply_theme() -> None:
             "figure.facecolor": "white",
             "savefig.facecolor": "white",
             "savefig.bbox": "tight",
+            # Keep SVG text as text, the way the Model figures ship it, so
+            # the browser resolves the same Helvetica the rest of the wiki
+            # uses. Layout here is measured with Liberation Sans, whose
+            # metrics are close enough that nothing shifts visibly.
+            "svg.fonttype": "none",
             # Model figures drop the top/right spines and keep the
             # remaining two in the same muted ink as the type.
             "axes.spines.top": False,

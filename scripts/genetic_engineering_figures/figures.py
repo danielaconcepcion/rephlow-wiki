@@ -29,7 +29,9 @@ from dataclasses import dataclass
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
+from matplotlib.ticker import FuncFormatter
 
+from .data import RATE_WINDOW, Calibration, TimeCourse
 from .style import INK, SERIES, finish
 
 MARKERS = ["o", "s", "^", "X", "D", "v"]
@@ -56,31 +58,43 @@ def _fit_line(x: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray, flo
     return xs, slope * xs + intercept, slope
 
 
-def standard_curve(replicates: list[Series]) -> Figure:
-    """Figure 1 — intracellular-phosphorus assay calibration.
+def standard_curve(calibration: Calibration) -> Figure:
+    """Calibration of the intracellular-phosphorus assay.
 
-    Absorbance against phosphate mass for each standard-curve replicate,
-    with the least-squares line through each.
+    Mean absorbance per phosphate mass with the SD of the replicates, and
+    the least-squares line through the means. The fitted line and its R²
+    are drawn from the measurements, not from the spreadsheet's own cells.
     """
-    fig, ax = plt.subplots(figsize=(5.4, 3.8))
+    fig, ax = plt.subplots(figsize=(5.6, 4.0))
+    colour = SERIES[0]
 
-    for i, rep in enumerate(replicates):
-        colour = SERIES[i % len(SERIES)]
-        ax.plot(
-            rep.x,
-            rep.y,
-            linestyle="none",
-            marker=MARKERS[i % len(MARKERS)],
-            color=colour,
-            label=rep.label,
-        )
-        xs, ys, _ = _fit_line(rep.x, rep.y)
-        ax.plot(xs, ys, linestyle=":", color=colour, linewidth=1.4)
+    slope, intercept = calibration.fit
+    xs = np.array([calibration.mass_ng.min(), calibration.mass_ng.max()])
+    ax.plot(xs, slope * xs + intercept, linestyle=":", color=colour, linewidth=1.4)
+    ax.errorbar(
+        calibration.mass_ng,
+        calibration.absorbance,
+        yerr=calibration.sd,
+        linestyle="none",
+        marker="o",
+        color=colour,
+        ecolor=colour,
+        elinewidth=1.0,
+        capsize=3,
+    )
 
-    ax.set_title("Standard curve of the intracellular-phosphorus assay")
+    ax.annotate(
+        f"A = {slope:.3e}·m + {intercept:.3f}\nR² = {calibration.r_squared:.4f}",
+        xy=(0.04, 0.96),
+        xycoords="axes fraction",
+        va="top",
+        fontsize=10,
+        color=INK,
+    )
+
+    ax.set_title("Calibration of the intracellular-phosphorus assay")
     ax.set_xlabel("Phosphate [ng]")
-    ax.set_ylabel("Absorbance at 600 nm")
-    ax.legend(loc="upper left")
+    ax.set_ylabel("Absorbance at 600 nm [a.u.]")
     finish(ax, grid=True)
     return fig
 
@@ -151,41 +165,60 @@ def operating_conditions(
 
 
 def wild_type_vs_transformant(
-    wild_type: Series, transformant: Series
-) -> tuple[Figure, dict[str, float]]:
-    """Figure 23 — phosphorus accumulation, wild type against ppk1.
+    wild_type: TimeCourse,
+    transformant: TimeCourse,
+    *,
+    window: tuple[float, float] = RATE_WINDOW,
+) -> Figure:
+    """Phosphorus accumulation, wild type against the ppk1 transformant.
 
-    Points with their error bars, joined by straight segments, plus the
-    dotted least-squares line whose slope is the uptake rate the Closing
-    section quotes. Returns the figure and the two fitted rates (ng per
-    OD600 per minute) with their ratio, so the caption's numbers come from
-    the same fit the figure draws rather than from a separate calculation.
+    Means with the SD of their replicates, joined by straight segments.
+    The dotted least-squares line is drawn ONLY across `window`, the final
+    stretch of the time course the quoted uptake rates are fitted over —
+    drawing it across the full axis would imply a fit that was never made,
+    and over the full window the ranking of the two slopes reverses. The
+    window is named on the figure for the same reason.
     """
-    fig, ax = plt.subplots(figsize=(7.2, 4.2))
+    fig, ax = plt.subplots(figsize=(7.4, 4.4))
+    lo, hi = window
 
-    rates: dict[str, float] = {}
-    for i, s in enumerate((wild_type, transformant)):
+    for i, course in enumerate((wild_type, transformant)):
         colour = SERIES[i % len(SERIES)]
         ax.errorbar(
-            s.x,
-            s.y,
-            yerr=s.yerr,
+            course.time_min,
+            course.mean,
+            yerr=course.sd,
             marker=MARKERS[i],
             color=colour,
             ecolor=colour,
             elinewidth=1.0,
             capsize=3,
-            label=s.label,
+            label=f"{course.label} ({course.rate():,.0f} ng OD$_{{600}}^{{-1}}$ min$^{{-1}}$)",
         )
-        xs, ys, slope = _fit_line(s.x, s.y)
-        ax.plot(xs, ys, linestyle=":", color=colour, linewidth=1.4)
-        rates[s.label] = slope
+        sel = (course.time_min >= lo) & (course.time_min <= hi)
+        slope, intercept = np.polyfit(course.time_min[sel], course.mean[sel], 1)
+        xs = np.array([lo, hi])
+        ax.plot(xs, slope * xs + intercept, linestyle=":", color=colour, linewidth=1.6)
 
-    rates["ratio"] = rates[transformant.label] / rates[wild_type.label]
+    ax.axvspan(lo, hi, color=INK, alpha=0.05, linewidth=0)
+    ax.annotate(
+        f"rate fitted over {lo:.0f}–{hi:.0f} min",
+        xy=((lo + hi) / 2, 0.02),
+        xycoords=("data", "axes fraction"),
+        ha="center",
+        fontsize=9,
+        color=INK,
+    )
+
+    # Millions on the tick labels, rather than matplotlib's "1e6" corner
+    # offset, which is easy to miss at figure scale.
+    ax.yaxis.set_major_formatter(
+        FuncFormatter(lambda value, _: f"{value / 1e6:g}")
+    )
 
     ax.set_title("Phosphorus accumulation relative to biomass")
     ax.set_xlabel("Time [min]")
-    ax.set_ylabel("m$_{P}$/OD$_{600}$ [ng per OD$_{600}$]")
+    ax.set_ylabel("m$_{P}$/OD$_{600}$ [10$^{6}$ ng per OD$_{600}$]")
     ax.legend(loc="upper left")
     finish(ax, grid=True)
-    return fig, rates
+    return fig
