@@ -1,4 +1,7 @@
-import type { ResultData, ResultSubBlock } from "../../components/LabFolders/types";
+import type {
+  ResultData,
+  ResultSubBlock,
+} from "../../components/LabFolders/types";
 
 /**
  * Alginate encapsulation results, transcribed from the team's own Notion
@@ -12,14 +15,22 @@ import type { ResultData, ResultSubBlock } from "../../components/LabFolders/typ
  * than written around: those experiments were run, so dropping them would
  * misrepresent the work, and filling them in would be inventing results.
  *
- * Figures are caption-only for now. The source's own figure callouts are
- * mostly still briefs for figures that have not been made ("[Figure X.
- * Representative images of beads produced at each combination…]"), and the
- * bead and capsule photographs it does carry live in Notion and have to be
- * uploaded through the iGEM uploads tool before they can be referenced
- * here. The captions below are the source's briefs, kept so it stays
- * visible which figure each record is waiting on.
+ * Figures: the bead-preservation photographs are the source's own,
+ * downloaded from Notion into public/assets/results/encapsulation. Every
+ * other figure callout here is still a brief for a figure that has not
+ * been made ("[Figure X. Representative images of beads produced at each
+ * combination...]"), so those stay caption-only, carrying the brief so it
+ * remains visible which figure each record is waiting on. The core-shell
+ * pH, PBS and wastewater photo series in the source are left out: they
+ * belong to records whose write-up is still pending, and a photograph with
+ * no result to read it against is not yet a figure.
+ *
+ * Like every image on this wiki, the ones referenced here still have to go
+ * through the iGEM uploads tool and be re-pointed at static.igem.wiki
+ * before the Wiki Freeze (see MIGRATION.md).
  */
+
+const FIGURES = "assets/results/encapsulation";
 
 export const ENCAPSULATION_INTRO =
   "This block builds the encapsulation platform of the rePhlow sphere: the raw alginate is characterised, a reproducible bead protocol is established, the system is translated into a core-shell architecture and validated against the chemical, physical and mechanical demands of the bioreactor, and the final platform is characterised structurally. Each record reports the outcome of the corresponding experiment on the Experiments page, following the same order and titles.";
@@ -84,11 +95,41 @@ const BEAD_CONCENTRATION_HEIGHT: ResultData = {
             "Circularity of beads produced at different alginate concentrations and drop heights (mean ± SD, n = 10). The selected condition is 3.5% at 3 cm.",
           headers: ["Drop height (cm)", "2%", "2.5%", "3%", "3.5%"],
           rows: [
-            ["1", "0.801 ± 0.049", "0.842 ± 0.071", "0.772 ± 0.068", "0.886 ± 0.009"],
-            ["2", "0.803 ± 0.033", "0.851 ± 0.024", "0.828 ± 0.093", "0.883 ± 0.011"],
-            ["3", "0.804 ± 0.045", "0.831 ± 0.019", "0.877 ± 0.010", "0.885 ± 0.013"],
-            ["4", "0.807 ± 0.023", "0.810 ± 0.041", "0.856 ± 0.015", "0.887 ± 0.010"],
-            ["5", "0.783 ± 0.047", "0.850 ± 0.021", "0.838 ± 0.056", "0.883 ± 0.009"],
+            [
+              "1",
+              "0.801 ± 0.049",
+              "0.842 ± 0.071",
+              "0.772 ± 0.068",
+              "0.886 ± 0.009",
+            ],
+            [
+              "2",
+              "0.803 ± 0.033",
+              "0.851 ± 0.024",
+              "0.828 ± 0.093",
+              "0.883 ± 0.011",
+            ],
+            [
+              "3",
+              "0.804 ± 0.045",
+              "0.831 ± 0.019",
+              "0.877 ± 0.010",
+              "0.885 ± 0.013",
+            ],
+            [
+              "4",
+              "0.807 ± 0.023",
+              "0.810 ± 0.041",
+              "0.856 ± 0.015",
+              "0.887 ± 0.010",
+            ],
+            [
+              "5",
+              "0.783 ± 0.047",
+              "0.850 ± 0.021",
+              "0.838 ± 0.056",
+              "0.883 ± 0.009",
+            ],
           ],
         },
       ],
@@ -128,14 +169,63 @@ const BEAD_CROSSLINKING: ResultData = {
         {
           caption:
             "Size and shape descriptors of 3.5% (w/v) alginate beads after different crosslinking times (mean ± SD). The selected condition is 30 min.",
-          headers: ["Crosslinking time (min)", "n", "Area (mm²)", "Deq (mm)", "Circularity", "Roundness"],
+          headers: [
+            "Crosslinking time (min)",
+            "n",
+            "Area (mm²)",
+            "Deq (mm)",
+            "Circularity",
+            "Roundness",
+          ],
           rows: [
-            ["10", "10", "10.77 ± 0.52", "3.70 ± 0.09", "0.842 ± 0.046", "0.900 ± 0.064"],
-            ["20", "10", "11.66 ± 0.47", "3.85 ± 0.08", "0.812 ± 0.089", "0.901 ± 0.093"],
-            ["30", "10", "10.78 ± 0.56", "3.70 ± 0.10", "0.862 ± 0.007", "0.900 ± 0.076"],
-            ["40", "8", "10.49 ± 0.39", "3.65 ± 0.07", "0.855 ± 0.015", "0.893 ± 0.035"],
-            ["60", "10", "10.33 ± 0.51", "3.62 ± 0.09", "0.844 ± 0.025", "0.853 ± 0.083"],
-            ["90", "9", "9.00 ± 0.33", "3.38 ± 0.06", "0.866 ± 0.018", "0.931 ± 0.042"],
+            [
+              "10",
+              "10",
+              "10.77 ± 0.52",
+              "3.70 ± 0.09",
+              "0.842 ± 0.046",
+              "0.900 ± 0.064",
+            ],
+            [
+              "20",
+              "10",
+              "11.66 ± 0.47",
+              "3.85 ± 0.08",
+              "0.812 ± 0.089",
+              "0.901 ± 0.093",
+            ],
+            [
+              "30",
+              "10",
+              "10.78 ± 0.56",
+              "3.70 ± 0.10",
+              "0.862 ± 0.007",
+              "0.900 ± 0.076",
+            ],
+            [
+              "40",
+              "8",
+              "10.49 ± 0.39",
+              "3.65 ± 0.07",
+              "0.855 ± 0.015",
+              "0.893 ± 0.035",
+            ],
+            [
+              "60",
+              "10",
+              "10.33 ± 0.51",
+              "3.62 ± 0.09",
+              "0.844 ± 0.025",
+              "0.853 ± 0.083",
+            ],
+            [
+              "90",
+              "9",
+              "9.00 ± 0.33",
+              "3.38 ± 0.06",
+              "0.866 ± 0.018",
+              "0.931 ± 0.042",
+            ],
           ],
         },
       ],
@@ -165,8 +255,64 @@ const BEAD_PRESERVATION: ResultData = {
             "Figure pending. Relative change in projected area (A/A₀, mean ± SD) over time for beads stored in water, industrial wastewater and PBS, one line per medium; the PBS series ends at 48 h, with the reduced number of measurable beads indicated.",
         },
         {
-          caption:
-            "Figure pending. Photographs of the beads in each medium at 0, 24, 48 and 72 h (and 168 h for water and wastewater) are in the team's notes and need uploading before they can be shown here.",
+          src: `${FIGURES}/beads-water-0h.jpg`,
+          alt: "Alginate beads stored in water, photographed at 0 h.",
+          caption: "Water, 0 h.",
+        },
+        {
+          src: `${FIGURES}/beads-water-24h.jpg`,
+          alt: "Alginate beads stored in water, photographed at 24 h.",
+          caption: "Water, 24 h.",
+        },
+        {
+          src: `${FIGURES}/beads-water-48h.jpg`,
+          alt: "Alginate beads stored in water, photographed at 48 h.",
+          caption: "Water, 48 h.",
+        },
+        {
+          src: `${FIGURES}/beads-water-72h.jpg`,
+          alt: "Alginate beads stored in water, photographed at 72 h.",
+          caption: "Water, 72 h.",
+        },
+        {
+          src: `${FIGURES}/beads-wastewater-0h.jpg`,
+          alt: "Alginate beads stored in industrial wastewater, photographed at 0 h.",
+          caption: "Industrial wastewater, 0 h.",
+        },
+        {
+          src: `${FIGURES}/beads-wastewater-24h.jpg`,
+          alt: "Alginate beads stored in industrial wastewater, photographed at 24 h.",
+          caption: "Industrial wastewater, 24 h.",
+        },
+        {
+          src: `${FIGURES}/beads-wastewater-48h.jpg`,
+          alt: "Alginate beads stored in industrial wastewater, photographed at 48 h.",
+          caption: "Industrial wastewater, 48 h.",
+        },
+        {
+          src: `${FIGURES}/beads-wastewater-72h.jpg`,
+          alt: "Alginate beads stored in industrial wastewater, photographed at 72 h.",
+          caption: "Industrial wastewater, 72 h.",
+        },
+        {
+          src: `${FIGURES}/beads-pbs-0h.jpg`,
+          alt: "Alginate beads stored in pbs, photographed at 0 h.",
+          caption: "PBS, 0 h.",
+        },
+        {
+          src: `${FIGURES}/beads-pbs-24h.jpg`,
+          alt: "Alginate beads stored in pbs, photographed at 24 h.",
+          caption: "PBS, 24 h.",
+        },
+        {
+          src: `${FIGURES}/beads-pbs-48h.jpg`,
+          alt: "Alginate beads stored in pbs, photographed at 48 h.",
+          caption: "PBS, 48 h.",
+        },
+        {
+          src: `${FIGURES}/beads-pbs-72h.jpg`,
+          alt: "Alginate beads stored in pbs, photographed at 72 h.",
+          caption: "PBS, 72 h.",
         },
       ],
       tables: [
@@ -361,7 +507,13 @@ export const ENCAPSULATION_SUBBLOCKS: ResultSubBlock[] = [
     heading: "1. Alginate characterisation & bead optimisation",
     intro:
       "The relative proportion of G and M residues governs the crosslinking behaviour and mechanical properties assumed throughout the rest of the encapsulation work, so this is where that composition is established. Alginate concentration, drop height, flow rate and crosslinking time are then optimised in turn to establish a reproducible bead protocol, and the resulting beads are tested for preservation under different storage media, providing the baseline the core-shell work builds on.",
-    results: [FTIR, BEAD_CONCENTRATION_HEIGHT, BEAD_FLOW_RATE, BEAD_CROSSLINKING, BEAD_PRESERVATION],
+    results: [
+      FTIR,
+      BEAD_CONCENTRATION_HEIGHT,
+      BEAD_FLOW_RATE,
+      BEAD_CROSSLINKING,
+      BEAD_PRESERVATION,
+    ],
   },
   {
     id: "core-shell-formation",

@@ -1,4 +1,7 @@
-import type { ResultData, ResultSubBlock } from "../../components/LabFolders/types";
+import type {
+  ResultData,
+  ResultSubBlock,
+} from "../../components/LabFolders/types";
 
 /**
  * Revalorisation results, transcribed from the team's own Notion results
@@ -19,6 +22,8 @@ import type { ResultData, ResultSubBlock } from "../../components/LabFolders/typ
  * marked pending rather than written around.
  */
 
+const FIGURES = "assets/results/revalorisation";
+
 export const REVALORISATION_INTRO =
   "This block reports the revalorisation module: obtaining the transformed strains, growing and inducing them, recovering a clarified cell-free extract in which production can be read out, purifying the enzymes, and measuring the two activities the module depends on. Each record reports the outcome of the corresponding stage on the Experiments page, following the same order and titles.";
 
@@ -31,8 +36,10 @@ const TRANSFORMATION: ResultData = {
       id: "transformation",
       figures: [
         {
+          src: `${FIGURES}/bl21-transformation-plate.jpg`,
+          alt: "Agar plate of BL21(DE3) transformed with the pET-28a(+) construct, with abundant well-separated colonies.",
           caption:
-            "Figure pending. BL21(DE3) transformed with the pET-28a(+) construct, showing abundant well-separated colonies under kanamycin selection.",
+            "BL21(DE3) transformed with the pET-28a(+) construct, showing abundant well-separated colonies under kanamycin selection.",
         },
       ],
       observations:
@@ -86,7 +93,9 @@ const HARVEST: ResultData = {
   subsections: [
     {
       id: "biomass",
-      body: ["Biomass was recorded for every culture by weighing the tared tubes before and after, to ±0.02 g."],
+      body: [
+        "Biomass was recorded for every culture by weighing the tared tubes before and after, to ±0.02 g.",
+      ],
       tables: [
         {
           caption: "Standard condition, 30 ºC.",
@@ -132,11 +141,14 @@ const SDS_PAGE: ResultData = {
   subsections: [
     {
       id: "gel-1",
-      title: "Crude extracts of DHAK WT and DHAK PROSS 5, and binding to Co²⁺ resin",
+      title:
+        "Crude extracts of DHAK WT and DHAK PROSS 5, and binding to Co²⁺ resin",
       figures: [
         {
+          src: `${FIGURES}/sds-page-dhak-wt-pross5.jpg`,
+          alt: "SDS-PAGE of the crude extracts of DHAK WT and DHAK PROSS 5 and of their Co2+ resin fractions.",
           caption:
-            "Figure pending. Crude extracts of DHAK WT and DHAK PROSS 5 and their binding to Co²⁺ resin.",
+            "Crude extracts of DHAK WT and DHAK PROSS 5 and their binding to Co²⁺ resin.",
         },
       ],
       observations:
@@ -148,11 +160,14 @@ const SDS_PAGE: ResultData = {
     },
     {
       id: "gel-2",
-      title: "Crude extracts of the 2021 DHAK strain, resin fractions and purified DHAK PROSS 5",
+      title:
+        "Crude extracts of the 2021 DHAK strain, resin fractions and purified DHAK PROSS 5",
       figures: [
         {
+          src: `${FIGURES}/sds-page-2021-strain-and-purified-pross5.jpg`,
+          alt: "SDS-PAGE of the 2021 strain crude extracts, its resin fractions and purified DHAK PROSS 5.",
           caption:
-            "Figure pending. Crude extracts of the 2021 DHAK strain, its resin fractions, and purified DHAK PROSS 5.",
+            "Crude extracts of the 2021 DHAK strain, its resin fractions, and purified DHAK PROSS 5.",
         },
       ],
       body: [
@@ -198,8 +213,10 @@ const DHAK_DSM: ResultData = {
       id: "dsm-activity",
       figures: [
         {
+          src: `${FIGURES}/dhak-activity-dsm30040.png`,
+          alt: "Absorbance at 340 nm against time for the DSM 30040 variant, a shallow linear fall.",
           caption:
-            "Figure pending. DHAK activity assay of the DSM 30040 wild type by the coupled α-GDH/TIM assay; the fall in A₃₄₀ gives an initial rate of only 3.73 mOD/min (R² = 0.991).",
+            "DHAK activity assay of the DSM 30040 wild type by the coupled α-GDH/TIM assay; the fall in A₃₄₀ gives an initial rate of only 3.73 mOD/min (R² = 0.991).",
         },
       ],
       observations:
@@ -221,8 +238,10 @@ const DHAK_2021: ResultData = {
       id: "cect-2021-activity",
       figures: [
         {
+          src: `${FIGURES}/dhak-activity-cect4626-2021.png`,
+          alt: "Absorbance at 340 nm against time for the purified CECT 4626 2021 stock, a steady linear fall.",
           caption:
-            "Figure pending. DHAK activity assay of the CECT 4626 variant, 2021 stock, purified. Initial rate 16.64 mOD/min (R² = 0.989), equal to 2.68 nmol DHAP/min from 1 µL of enzyme.",
+            "DHAK activity assay of the CECT 4626 variant, 2021 stock, purified. Initial rate 16.64 mOD/min (R² = 0.989), equal to 2.68 nmol DHAP/min from 1 µL of enzyme.",
         },
       ],
       observations:
@@ -249,14 +268,32 @@ const DHAK_2012: ResultData = {
       ],
       figures: [
         {
+          src: `${FIGURES}/dhak-activity-cect4626-2012-cfe.png`,
+          alt: "Absorbance at 340 nm against time for the 2012 stock as cell-free extract, the steepest trace of the series.",
           caption:
-            "Figure pending. Activity assay of the 2012 stock as cell-free extract (581.1 mOD/min); the same stock purified by FPLC and concentrated (198.5 mOD/min); and the Bradford quantification of the extract against a linear BSA standard curve (R² = 0.994).",
+            "Activity assay of the 2012 stock as cell-free extract (581.1 mOD/min); the same stock purified by FPLC and concentrated (198.5 mOD/min); and the Bradford quantification of the extract against a linear BSA standard curve (R² = 0.994).",
+        },
+        {
+          src: `${FIGURES}/dhak-activity-cect4626-2012-purified.png`,
+          alt: "Absorbance at 340 nm against time for the 2012 stock purified by FPLC and concentrated.",
+          caption:
+            "The same 2012 stock purified by FPLC and concentrated with a Centricon: initial rate 198.5 mOD/min (R² = 1.00), about 31.9 nmol DHAP/min, roughly one third of the extract's activity per microlitre.",
+        },
+        {
+          src: `${FIGURES}/bradford-2012-cfe.png`,
+          alt: "Bradford standard curve of BSA used to quantify the protein in the 2012 cell-free extract.",
+          caption:
+            "Bradford protein quantification of the 2012 cell-free extract against a linear BSA standard curve (R² = 0.994), used to convert the measured activity into a specific activity.",
         },
       ],
       tables: [
         {
           caption: "The two preparations of the 2012 stock compared.",
-          headers: ["Parameter", "Cell-free extract", "Purified (FPLC + Centricon)"],
+          headers: [
+            "Parameter",
+            "Cell-free extract",
+            "Purified (FPLC + Centricon)",
+          ],
           rows: [
             ["Initial rate", "581.1 mOD/min", "198.5 mOD/min"],
             ["R²", "1.00", "1.00"],
@@ -286,8 +323,10 @@ const DHAK_PROSS: ResultData = {
       id: "pross-activity",
       figures: [
         {
+          src: `${FIGURES}/dhak-activity-pross5.png`,
+          alt: "Absorbance at 340 nm against time for the PROSS design 5 variant, an essentially flat trace.",
           caption:
-            "Figure pending. DHAK activity assay of the PROSS design 5 variant. A₃₄₀ stays essentially flat and the fitted slope (0.92 mOD/min) has R² = 0.374, so no activity can be reliably measured.",
+            "DHAK activity assay of the PROSS design 5 variant. A₃₄₀ stays essentially flat and the fitted slope (0.92 mOD/min) has R² = 0.374, so no activity can be reliably measured.",
         },
       ],
       observations:
@@ -340,6 +379,13 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
     heading: "3. Activity",
     intro:
       "The module depends on two enzymatic activities working together, the phosphorylation of dihydroxyacetone by DHAK and the regeneration of ATP by PPK2. DHAK was assayed on its own first, to confirm the purified enzyme is catalytically active and fix a baseline rate, and the two enzymes were then run together. Both assays read out the same product, dihydroxyacetone phosphate, through the coupled α-GDH/TIM reaction, which ties the NADH signal to the DHAP formed and lets the single-enzyme and coupled results be compared on the same scale.",
-    results: [DHAK_DSM, DHAK_2021, DHAK_2012, DHAK_PROSS, COUPLED_ASSAY, THERMAL_STABILITY],
+    results: [
+      DHAK_DSM,
+      DHAK_2021,
+      DHAK_2012,
+      DHAK_PROSS,
+      COUPLED_ASSAY,
+      THERMAL_STABILITY,
+    ],
   },
 ];
