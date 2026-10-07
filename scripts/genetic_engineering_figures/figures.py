@@ -164,6 +164,46 @@ def operating_conditions(
     return fig
 
 
+def bacterial_growth(
+    wild_type: TimeCourse, transformant: TimeCourse
+) -> Figure:
+    """OD600 of both strains across the phosphorus time course.
+
+    This is the biomass every phosphorus value is normalised by, so it
+    belongs next to the accumulation figure: it shows that neither strain
+    was growing during the assay, and that the two declined at similar
+    rates, which is what makes the normalised comparison fair.
+
+    Unlike the accumulation figure, the trend line here IS fitted over the
+    whole time course, because that is what the spreadsheet's own chart
+    does and the decline is monotonic enough to support it.
+    """
+    fig, ax = plt.subplots(figsize=(6.4, 4.0))
+
+    for i, course in enumerate((wild_type, transformant)):
+        colour = SERIES[i % len(SERIES)]
+        ax.errorbar(
+            course.time_min,
+            course.mean,
+            yerr=course.sd,
+            marker=MARKERS[i],
+            color=colour,
+            ecolor=colour,
+            elinewidth=1.0,
+            capsize=3,
+            label=course.label,
+        )
+        xs, ys, slope = _fit_line(course.time_min, course.mean)
+        ax.plot(xs, ys, linestyle=":", color=colour, linewidth=1.4)
+
+    ax.set_title("Biomass across the phosphorus time course")
+    ax.set_xlabel("Time [min]")
+    ax.set_ylabel("OD$_{600}$ [a.u.]")
+    ax.legend(loc="lower left")
+    finish(ax, grid=True)
+    return fig
+
+
 def wild_type_vs_transformant(
     wild_type: TimeCourse,
     transformant: TimeCourse,

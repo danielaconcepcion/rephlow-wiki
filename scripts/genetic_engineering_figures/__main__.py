@@ -56,6 +56,11 @@ def main() -> int:
     fig.savefig(path)
     written.append(path)
 
+    fig = figures.bacterial_growth(*measurements.od600)
+    path = OUT_DIR / "phosphorus-assay-biomass.svg"
+    fig.savefig(path)
+    written.append(path)
+
     wild_type, transformant = measurements.phosphorus
     fig = figures.wild_type_vs_transformant(wild_type, transformant)
     path = OUT_DIR / "phosphorus-wild-type-vs-ppk1.svg"

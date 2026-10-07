@@ -165,6 +165,20 @@ def verify_against_sheet(data: Phosphorus) -> list[str]:
         if abs(got - want) > abs(want) * 1e-3:
             problems.append(f"{name}: recomputed {got:.9g}, sheet {want:.9g}")
 
+    # The sheet's own OD600 chart carries its two trend lines as printed
+    # equations (see the PDF export of the sheet); check against those.
+    for course, want_slope, want_intercept in (
+        (data.od600[0], -0.0029, 1.8209),
+        (data.od600[1], -0.0022, 1.8112),
+    ):
+        slope, intercept = np.polyfit(course.time_min, course.mean, 1)
+        if abs(slope - want_slope) > 5e-5 or abs(intercept - want_intercept) > 5e-4:
+            problems.append(
+                f"{course.label} OD600 trend: recomputed "
+                f"{slope:.4f}x + {intercept:.4f}, sheet "
+                f"{want_slope:.4f}x + {want_intercept:.4f}"
+            )
+
     wild_type, transformant = data.phosphorus
     for course, want in ((wild_type, 6449.858816), (transformant, 11016.98977)):
         got = course.rate()
