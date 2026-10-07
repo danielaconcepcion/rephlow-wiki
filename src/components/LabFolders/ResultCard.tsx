@@ -1,10 +1,36 @@
 import { asset } from "../../utils/asset";
-import type { ResultData, ResultSubsection } from "./types";
+import type { RecordTable, ResultData, ResultSubsection } from "./types";
+
+function Table({ table }: { table: RecordTable & { caption?: string } }) {
+  return (
+    <>
+      {table.caption && <p className="record-table__caption">{table.caption}</p>}
+      <table className="record-table">
+        <thead>
+          <tr>
+            {table.headers.map((header, index) => (
+              <th key={index}>{header}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {table.rows.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {row.map((cell, cellIndex) => (
+                <td key={cellIndex}>{cell}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </>
+  );
+}
 
 function Subsection({ subsection }: { subsection: ResultSubsection }) {
   return (
     <section className="result-subsection" id={subsection.id}>
-      <h4>{subsection.title}</h4>
+      {subsection.title && <h4>{subsection.title}</h4>}
 
       {subsection.body?.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
 
@@ -33,38 +59,26 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
         </div>
       )}
 
-      {subsection.table && (
-        <table className="record-table">
-          <thead>
-            <tr>
-              {subsection.table.headers.map((header) => (
-                <th key={header}>{header}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {subsection.table.rows.map((row, rowIndex) => (
-              <tr key={rowIndex}>
-                {row.map((cell, cellIndex) => (
-                  <td key={cellIndex}>{cell}</td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+      {subsection.tables?.map((table, index) => <Table table={table} key={index} />)}
 
       {subsection.observations && (
         <div className="result-subsection__field">
-          <h5>Observation</h5>
+          <h5>What was obtained</h5>
           <p>{subsection.observations}</p>
         </div>
       )}
 
       {subsection.interpretation && (
         <div className="result-subsection__field">
-          <h5>Interpretation</h5>
+          <h5>What it means</h5>
           <p>{subsection.interpretation}</p>
+        </div>
+      )}
+
+      {subsection.expectation && (
+        <div className="result-subsection__field">
+          <h5>Was it expected?</h5>
+          <p>{subsection.expectation}</p>
         </div>
       )}
     </section>
@@ -82,13 +96,22 @@ export function ResultCard({ data }: { data: ResultData }) {
     <article className="result-card">
       <header className="result-card__header">
         <h3 className="result-card__title">{data.title}</h3>
-        <p className="result-card__desc">{data.description}</p>
+        {data.description && <p className="result-card__desc">{data.description}</p>}
       </header>
 
-      <div className="result-card__aim">
-        <h4 className="record-rule-heading">Aim</h4>
-        <p>{data.aim}</p>
-      </div>
+      {data.pending && (
+        <p className="result-card__pending">
+          This experiment was run, but its write-up is still pending: the team's
+          notes carry the entry without its results yet.
+        </p>
+      )}
+
+      {data.aim && (
+        <div className="result-card__aim">
+          <h4 className="record-rule-heading">Aim</h4>
+          <p>{data.aim}</p>
+        </div>
+      )}
 
       {!!data.background?.length && (
         <div className="result-card__background">

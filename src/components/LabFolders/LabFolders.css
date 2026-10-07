@@ -1104,6 +1104,30 @@
 .result-card__discussion p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.65; }
 .result-card__discussion p:first-of-type { margin-top: 0; }
 
+/* A record whose write-up the source has not supplied yet. Set apart from
+   body copy so it reads as a note about the record rather than as its
+   content — an empty card would claim the experiment had nothing to
+   report, which is a different thing. */
+.result-card__pending {
+  margin: 0 0 4px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--lab-line);
+  background: color-mix(in srgb, var(--lab-line) 12%, transparent);
+  border-radius: 0 var(--radius-md, 8px) var(--radius-md, 8px) 0;
+  color: var(--ink-soft);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Above its table, as table captions conventionally go (and as the
+   source's own "Table X." lines do), unlike a figure's caption below. */
+.record-table__caption {
+  margin: 16px 0 8px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
 @media (max-width: 640px) {
   .result-card { padding: 22px 20px; }
 }

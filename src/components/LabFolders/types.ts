@@ -221,25 +221,43 @@ export interface ExperimentBlockData {
 
 /* ---------- Result record ---------- */
 
+/** One section of a result record. The three named fields follow the
+ * template the team uses on every results page — "what was obtained, what
+ * it means, and whether it matched what we expected" — so a record
+ * transcribed from that write-up keeps its own shape instead of being
+ * flattened into undifferentiated prose. `body`, `figures` and `table`
+ * carry the supporting detail those three answers refer to. */
 export interface ResultSubsection {
   id: string;
-  title: string;
+  /** Omit when the record has a single section: the card's own title is
+   * already the heading, and a second one directly under it reads as a
+   * duplicate. */
+  title?: string;
   body?: string[];
   figures?: FigureData[];
-  table?: RecordTable;
+  tables?: (RecordTable & { caption?: string })[];
   observations?: string;
   interpretation?: string;
+  /** "Was it expected, and why?" */
+  expectation?: string;
 }
 
 export interface ResultData {
   id: string;
   tabLabel: string;
   title: string;
-  description: string;
-  aim: string;
+  description?: string;
+  /** Results pages state the aim on Experiments rather than per record, so
+   * this is optional and usually unset. */
+  aim?: string;
   background?: string[];
   subsections: ResultSubsection[];
   discussion?: string[];
+  /** Set when the source has the entry but has not written it up yet (its
+   * "what was obtained" still reads [XXX]). The card then says so plainly
+   * instead of the record looking finished-but-empty, and nothing is
+   * invented to fill it. */
+  pending?: boolean;
 }
 
 /** One labelled sub-section within a result block, mirroring
