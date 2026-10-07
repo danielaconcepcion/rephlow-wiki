@@ -24,14 +24,13 @@ re-stated inside the figure.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.ticker import FuncFormatter
 
 from .data import RATE_WINDOW, Calibration, TimeCourse
+from .summer import StandardCurveReplicate
 from .style import INK, SERIES, finish
 
 MARKERS = ["o", "s", "^", "X", "D", "v"]
@@ -39,16 +38,6 @@ MARKERS = ["o", "s", "^", "X", "D", "v"]
 # The two reference media in Figure 3 are deliberately neutral, so the
 # four screened conditions keep the palette to themselves.
 CONTROL_GREYS = [INK, "#9aa0b4"]
-
-
-@dataclass(frozen=True)
-class Series:
-    """One plotted series: a label, its x/y values and optional error bars."""
-
-    label: str
-    x: np.ndarray
-    y: np.ndarray
-    yerr: np.ndarray | None = None
 
 
 def _fit_line(x: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, np.ndarray, float]:
@@ -99,27 +88,79 @@ def standard_curve(calibration: Calibration) -> Figure:
     return fig
 
 
-def growth_in_m9(od: Series) -> tuple[Figure, float]:
-    """Figure 2 — OD600 of P. putida KT2440 in M9 over the assay window.
+def standard_curve_replicates(
+    replicates: list[StandardCurveReplicate], *, wavelength_nm: int
+) -> Figure:
+    """The summer assay's two standard curves, plotted separately.
 
-    Returns the figure and the fitted slope (OD600 per minute), so the
+    The sheet's own chart is called "Rectas patron por separado" — the
+    point of it is that the two replicate curves are shown apart rather
+    than averaged, so that is kept. Each gets its own least-squares line
+    and R², recomputed from the measurements.
+
+    `wavelength_nm` is passed in rather than hard-coded because the two
+    assays in this project read at different wavelengths, and the figure
+    should state the one its own data was measured at.
+    """
+    fig, ax = plt.subplots(figsize=(5.8, 4.1))
+
+    notes = []
+    for i, replicate in enumerate(replicates):
+        colour = SERIES[i % len(SERIES)]
+        slope, intercept = replicate.fit
+        xs = np.array([replicate.mass_ng.min(), replicate.mass_ng.max()])
+        ax.plot(xs, slope * xs + intercept, linestyle=":", color=colour, linewidth=1.4)
+        ax.plot(
+            replicate.mass_ng,
+            replicate.absorbance,
+            linestyle="none",
+            marker=MARKERS[i % len(MARKERS)],
+            color=colour,
+            label=replicate.label,
+        )
+        notes.append(f"{replicate.label}: R² = {replicate.r_squared:.4f}")
+
+    ax.annotate(
+        "\n".join(notes),
+        xy=(0.04, 0.96),
+        xycoords="axes fraction",
+        va="top",
+        fontsize=10,
+        color=INK,
+    )
+
+    ax.set_title("Standard curves of the phosphorus assay")
+    ax.set_xlabel("Phosphate [ng]")
+    ax.set_ylabel(f"Absorbance at {wavelength_nm} nm [a.u.]")
+    ax.legend(loc="lower right")
+    finish(ax, grid=True)
+    return fig
+
+
+def growth_in_m9(od: TimeCourse) -> tuple[Figure, float]:
+    """Growth of P. putida KT2440 in M9 across the 240 min assay window.
+
+    Returns the figure and the fitted slope (OD600 per minute), so a
     caption can quote the decline without the number being retyped by hand.
     """
-    fig, ax = plt.subplots(figsize=(5.4, 3.6))
+    fig, ax = plt.subplots(figsize=(5.8, 3.8))
 
-    ax.plot(od.x, od.y, marker="o", color=SERIES[0], label=od.label)
-    xs, ys, slope = _fit_line(od.x, od.y)
+    ax.plot(od.time_min, od.mean, marker="o", color=SERIES[0], label=od.label)
+    xs, ys, slope = _fit_line(od.time_min, od.mean)
     ax.plot(xs, ys, linestyle=":", color=SERIES[0], linewidth=1.4)
 
     ax.set_title("Growth of $\\it{P.\\,putida}$ KT2440 in M9")
     ax.set_xlabel("Time [min]")
-    ax.set_ylabel("OD$_{600}$")
+    ax.set_ylabel("OD$_{600}$ [a.u.]")
     finish(ax, grid=True)
     return fig, slope
 
 
 def operating_conditions(
-    controls: list[Series], conditions: list[Series], *, zoom_max: float
+    controls: list[TimeCourse],
+    conditions: list[TimeCourse],
+    *,
+    zoom_max: float,
 ) -> Figure:
     """Figure 3 — normalised intracellular phosphorus across the screen.
 
@@ -142,7 +183,9 @@ def operating_conditions(
 
     for ax in (ax_a, ax_b):
         for s, colour, marker in plotted:
-            ax.plot(s.x, s.y, marker=marker, color=colour, label=s.label)
+            ax.plot(
+                s.time_min, s.mean, marker=marker, color=colour, label=s.label
+            )
         ax.set_xlabel("Time [min]")
         finish(ax, grid=True)
 

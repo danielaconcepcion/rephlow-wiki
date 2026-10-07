@@ -10,12 +10,10 @@ write anything if the values recomputed from the measurements disagree
 with the ones the spreadsheet itself carries, so the figures and the
 captions quoting them cannot drift apart.
 
-Figures still waiting on their data (the comments on the Notion results
-page ask for these in the same format, but their measurements are in other
-sheets that are not in this repository yet):
-
-  * growth of P. putida KT2440 in M9 over 240 min
-  * the 21/07 operating-condition screen, four conditions plus M9 and LB
+Two source books feed it: "Valoracion fosforo" (the September assay of the
+ppk1 transformant against the wild type) and "Resultados verano 2025
+rePhlow" (the summer assays — the M9 growth curve, the standard curves and
+the operating-condition screen).
 """
 
 from __future__ import annotations
@@ -25,17 +23,22 @@ from pathlib import Path
 
 from . import data as sheet
 from . import figures
+from . import summer
 from .style import apply_theme
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCE = ROOT / "data" / "genetic-engineering" / "valoracion-fosforo-hoja1.csv"
+SUMMER_SOURCE = (
+    ROOT / "data" / "genetic-engineering" / "resultados-verano-2025-rephlow.xlsx"
+)
 OUT_DIR = ROOT / "public" / "assets" / "experiments" / "genetic-engineering"
 
 
 def main() -> int:
-    if not SOURCE.exists():
-        print(f"missing source data: {SOURCE}", file=sys.stderr)
-        return 1
+    for source in (SOURCE, SUMMER_SOURCE):
+        if not source.exists():
+            print(f"missing source data: {source}", file=sys.stderr)
+            return 1
 
     measurements = sheet.load(SOURCE)
 
@@ -53,6 +56,28 @@ def main() -> int:
 
     fig = figures.standard_curve(measurements.calibration)
     path = OUT_DIR / "phosphorus-standard-curve.svg"
+    fig.savefig(path)
+    written.append(path)
+
+    assays = summer.load(SUMMER_SOURCE)
+
+    fig = figures.standard_curve_replicates(assays.standard_curve, wavelength_nm=830)
+    path = OUT_DIR / "phosphorus-standard-curves-summer.svg"
+    fig.savefig(path)
+    written.append(path)
+
+    fig, od_slope = figures.growth_in_m9(assays.m9_growth)
+    path = OUT_DIR / "kt2440-growth-m9.svg"
+    fig.savefig(path)
+    written.append(path)
+
+    # Clip panel B just above the highest screened condition, so every
+    # condition stays on-axis and only the two reference media run off it.
+    zoom_max = max(c.mean.max() for c in assays.screen_conditions) * 1.1
+    fig = figures.operating_conditions(
+        assays.screen_controls, assays.screen_conditions, zoom_max=zoom_max
+    )
+    path = OUT_DIR / "phosphorus-operating-conditions.svg"
     fig.savefig(path)
     written.append(path)
 
@@ -75,6 +100,9 @@ def main() -> int:
     print(f"  wild type    {wild_type.rate():,.0f} ng per OD600 per minute")
     print(f"  transformant {transformant.rate():,.0f} ng per OD600 per minute")
     print(f"  ratio        {measurements.rate_ratio:.3f}")
+    print(f"M9 growth: {od_slope:.5f} OD600 per minute over "
+          f"{assays.m9_growth.time_min.min():.0f}-"
+          f"{assays.m9_growth.time_min.max():.0f} min")
     for path in written:
         print(f"wrote {path.relative_to(ROOT)}")
     return 0
