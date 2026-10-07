@@ -787,7 +787,7 @@ export function Home() {
           </div>
         </div>
 
-        <div className="explore__group">
+        <div className="explore__group explore__group--engagement">
           <p className="explore__group-title">Engagement</p>
           <div className="card-grid">
             <Link className="card card--feature" to="/human-practices">

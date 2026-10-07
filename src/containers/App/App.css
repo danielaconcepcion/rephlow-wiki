@@ -939,6 +939,15 @@ img {
   border-color: transparent;
 }
 
+.explore__group--engagement .card {
+  flex-basis: 120px;
+  min-width: 0;
+}
+
+.explore__group--engagement .card--feature {
+  flex-basis: 240px;
+}
+
 /* On a phone the full-size basis leaves one tile per row and a very long
    column; a smaller basis fits two plain tiles side by side, with the
    feature tile keeping the full width it needs to stay the entry point. */
@@ -948,6 +957,12 @@ img {
     min-height: 112px;
   }
   .card--feature {
+    flex-basis: 100%;
+  }
+  .explore__group--engagement .card {
+    flex-basis: 132px;
+  }
+  .explore__group--engagement .card--feature {
     flex-basis: 100%;
   }
 }
