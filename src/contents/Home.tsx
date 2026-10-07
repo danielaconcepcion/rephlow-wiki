@@ -1,7 +1,15 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TileMoleculeField } from "../components/TileMoleculeField";
 import { Link } from "react-router-dom";
 import { asset } from "../utils";
+
+const promotionVideos = [
+  { code: "en", shortLabel: "EN", label: "English" },
+  { code: "es", shortLabel: "ES", label: "Español" },
+  { code: "fr", shortLabel: "FR", label: "Français" },
+] as const;
+
+type PromotionLanguage = (typeof promotionVideos)[number]["code"];
 
 /**
  * Scroll-driven parallax for the decorative elements inside .problem.
@@ -74,7 +82,40 @@ function useParallax(sectionRef: React.RefObject<HTMLElement | null>) {
 
 export function Home() {
   const problemRef = useRef<HTMLElement>(null);
+  const promotionVideoRef = useRef<HTMLVideoElement>(null);
+  const promotionResumeRef = useRef({ time: 0, wasPlaying: false });
+  const [promotionLanguage, setPromotionLanguage] =
+    useState<PromotionLanguage>("en");
   useParallax(problemRef);
+
+  useEffect(() => {
+    const video = promotionVideoRef.current;
+    if (!video) return;
+
+    video.load();
+  }, [promotionLanguage]);
+
+  function changePromotionLanguage(language: PromotionLanguage) {
+    if (language === promotionLanguage) return;
+
+    const video = promotionVideoRef.current;
+    promotionResumeRef.current = {
+      time: video?.currentTime ?? 0,
+      wasPlaying: video ? !video.paused : false,
+    };
+    setPromotionLanguage(language);
+  }
+
+  function resumePromotionVideo() {
+    const video = promotionVideoRef.current;
+    if (!video) return;
+
+    const { time, wasPlaying } = promotionResumeRef.current;
+    if (Number.isFinite(video.duration)) {
+      video.currentTime = Math.min(time, Math.max(video.duration - 0.1, 0));
+    }
+    if (wasPlaying) void video.play();
+  }
 
   return (
     <>
@@ -527,9 +568,56 @@ export function Home() {
         <p className="solution__lede">
           rePhlow engineers a biological system that intercepts phosphate
           before it can drive this collapse, turning a pollutant into a
-          resource. <br />
-          <b> AQUÍ PONER EL VÍDEO </b>
+          resource.
         </p>
+
+        <div className="promotion-video" aria-label="Promotion video">
+          <div className="promotion-video__layout">
+            <div className="promotion-video__frame">
+              <video
+                ref={promotionVideoRef}
+                controls
+                playsInline
+                preload="metadata"
+                onLoadedMetadata={resumePromotionVideo}
+                aria-label={`rePhlow promotion video in ${
+                  promotionVideos.find(
+                    ({ code }) => code === promotionLanguage,
+                  )?.label
+                }`}
+              >
+                <source
+                  src={asset(
+                    `assets/videos/promotion-${promotionLanguage}.mp4`,
+                  )}
+                  type="video/mp4"
+                />
+                Your browser does not support embedded video.
+              </video>
+            </div>
+
+            <div
+              className="promotion-video__languages"
+              role="group"
+              aria-label="Video language"
+            >
+              {promotionVideos.map(({ code, shortLabel, label }) => (
+                <button
+                  key={code}
+                  type="button"
+                  className={`promotion-video__language${
+                    promotionLanguage === code ? " is-active" : ""
+                  }`}
+                  aria-pressed={promotionLanguage === code}
+                  onClick={() => changePromotionLanguage(code)}
+                >
+                  <span aria-hidden="true">{shortLabel}</span>
+                  <span className="promotion-video__language-name">{label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
         <div className="clean-stream" aria-hidden="true"></div>
       </section>
 

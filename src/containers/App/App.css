@@ -362,6 +362,138 @@ img { max-width: 100%; display: block; }
 }
 
 /* --------------------------------------------------------------------------
+   3b. PROMOTION VIDEO — multilingual player
+   -------------------------------------------------------------------------- */
+.promotion-video {
+  padding: clamp(72px, 10vw, 128px) 24px;
+  background: var(--paper);
+}
+
+.solution .promotion-video {
+  padding: clamp(36px, 5vw, 56px) 0 0;
+  background: transparent;
+}
+
+.promotion-video__heading {
+  max-width: 720px;
+  margin: 0 auto clamp(32px, 5vw, 56px);
+  text-align: center;
+}
+
+.promotion-video__eyebrow {
+  margin-bottom: 12px;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.promotion-video__heading h2 {
+  color: var(--ink);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.05;
+}
+
+.promotion-video__heading > p:last-child {
+  max-width: 590px;
+  margin: 18px auto 0;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.promotion-video__layout {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+}
+
+.promotion-video__frame {
+  overflow: hidden;
+  border: 1px solid rgba(27, 35, 64, 0.12);
+  border-radius: var(--radius-lg);
+  background: var(--ink);
+  box-shadow: 0 24px 60px rgba(27, 35, 64, 0.14);
+}
+
+.promotion-video__frame video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+
+.promotion-video__languages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.promotion-video__language {
+  width: 80px;
+  min-height: 64px;
+  padding: 10px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper-soft);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.promotion-video__language:hover {
+  transform: translateX(3px);
+  border-color: rgba(27, 35, 64, 0.3);
+}
+
+.promotion-video__language.is-active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.promotion-video__language-name {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+@media (max-width: 720px) {
+  .promotion-video__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .promotion-video__languages {
+    order: -1;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .promotion-video__language {
+    width: auto;
+    min-width: 84px;
+    min-height: 52px;
+  }
+
+  .promotion-video__language:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* --------------------------------------------------------------------------
    4. THE PROBLEM — descenso al agua eutrofizada
    Un único contenedor alto con gradiente vertical continuo.
    -------------------------------------------------------------------------- */
