@@ -13,28 +13,28 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Paleta de agua: de limpia a eutrofizada */
-  --water-clear:   #EAF6FA;   /* agua limpia, hero */
-  --water-light:   #BFE3EE;   /* inicio de "The Problem" */
-  --water-mid:     #9CC9B8;   /* transición azul -> verde */
-  --algae:         #7C9A4E;   /* proliferación de algas */
-  --eutrophic:     #3E4A2A;   /* agua eutrofizada, colapso */
-  --eutrophic-deep:#2C3520;   /* punto más oscuro, justo antes de "Our Solution" */
+  --water-clear: #eaf6fa; /* agua limpia, hero */
+  --water-light: #bfe3ee; /* inicio de "The Problem" */
+  --water-mid: #9cc9b8; /* transición azul -> verde */
+  --algae: #7c9a4e; /* proliferación de algas */
+  --eutrophic: #3e4a2a; /* agua eutrofizada, colapso */
+  --eutrophic-deep: #2c3520; /* punto más oscuro, justo antes de "Our Solution" */
 
   /* Acentos científicos (de la ilustración de referencia) */
-  --phosphate:  #E2542D;  /* fosfato: rojo-naranja */
-  --microbe:    #6E5A96;  /* microorganismos: morado */
-  --oxygen:     #F4FAF9;  /* oxígeno: blanco-azulado */
+  --phosphate: #e2542d; /* fosfato: rojo-naranja */
+  --microbe: #6e5a96; /* microorganismos: morado */
+  --oxygen: #f4faf9; /* oxígeno: blanco-azulado */
 
   /* Neutros / texto */
-  --ink:        #1B2340;  /* azul marino oscuro, titulares */
-  --ink-soft:   #4A5170;  /* texto secundario */
-  --paper:      #FFFFFF;
-  --paper-soft: #F7FAFB;
-  --line:       rgba(27, 35, 64, 0.08);
+  --ink: #1b2340; /* azul marino oscuro, titulares */
+  --ink-soft: #4a5170; /* texto secundario */
+  --paper: #ffffff;
+  --paper-soft: #f7fafb;
+  --line: rgba(27, 35, 64, 0.08);
 
   /* Tipografía */
-  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
-  --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
 
   /* Alturas de las secciones — AJUSTA AQUÍ el "recorrido" del problema.
      Más alto = scroll más lento y dramático. */
@@ -48,8 +48,12 @@
   --shadow-card: 0 8px 24px rgba(27, 35, 64, 0.06);
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
 
 body {
   margin: 0;
@@ -59,20 +63,33 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-display);
   margin: 0;
   letter-spacing: -0.01em;
 }
 
-p { margin: 0; line-height: 1.6; }
+p {
+  margin: 0;
+  line-height: 1.6;
+}
 
-a { color: inherit; text-decoration: none; }
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-img { max-width: 100%; display: block; }
+img {
+  max-width: 100%;
+  display: block;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
@@ -107,7 +124,9 @@ img { max-width: 100%; display: block; }
   color: var(--ink-soft);
   padding: 8px 16px;
   border-radius: 999px;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
   white-space: nowrap;
 }
 
@@ -116,7 +135,10 @@ img { max-width: 100%; display: block; }
    before a second tap actually fires click — which looks exactly like a tap
    that gets stuck grey and does nothing. */
 @media (hover: hover) {
-  .navbar__link:hover { color: var(--ink); background: rgba(27, 35, 64, 0.05); }
+  .navbar__link:hover {
+    color: var(--ink);
+    background: rgba(27, 35, 64, 0.05);
+  }
 }
 
 .navbar__link.is-active {
@@ -134,7 +156,10 @@ img { max-width: 100%; display: block; }
   color: var(--ink-soft);
   flex-shrink: 0;
 }
-.navbar__search svg { width: 16px; height: 16px; }
+.navbar__search svg {
+  width: 16px;
+  height: 16px;
+}
 
 /* Wrapper around the actual links. display:contents removes it from the box
    tree entirely on desktop, so .navbar's own flex row lays out Home / each
@@ -181,7 +206,9 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius-md);
   backdrop-filter: blur(20px) saturate(1.3);
   -webkit-backdrop-filter: blur(20px) saturate(1.3);
-  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -191,7 +218,9 @@ img { max-width: 100%; display: block; }
      is the main source of the "unstable in Safari" behavior. Opacity +
      pointer-events already fully gate visibility and interactivity, so
      visibility only needs to flip instantly, in sync with them. */
-  transition: opacity 0.18s ease, transform 0.18s ease;
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
   z-index: 101;
 }
 
@@ -250,7 +279,9 @@ img { max-width: 100%; display: block; }
   font-weight: 500;
   color: var(--ink-soft);
   white-space: nowrap;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
 }
 
 .navbar__dropdown-link:focus-visible {
@@ -314,8 +345,8 @@ img { max-width: 100%; display: block; }
 
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    inset 0 -1px 0 rgba(180, 137, 20, 0.10),
-    0 10px 28px rgba(129, 104, 32, 0.10);
+    inset 0 -1px 0 rgba(180, 137, 20, 0.1),
+    0 10px 28px rgba(129, 104, 32, 0.1);
 
   backdrop-filter: blur(16px) saturate(1.25);
   -webkit-backdrop-filter: blur(16px) saturate(1.25);
@@ -357,8 +388,14 @@ img { max-width: 100%; display: block; }
 }
 
 @keyframes sink {
-  0%   { transform: translateY(0);   opacity: 1; }
-  100% { transform: translateY(14px); opacity: 0; }
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -502,10 +539,10 @@ img { max-width: 100%; display: block; }
   min-height: var(--problem-height);
   background: linear-gradient(
     to bottom,
-    var(--water-light)   0%,
-    var(--water-mid)     30%,
-    var(--algae)         62%,
-    var(--eutrophic)     85%,
+    var(--water-light) 0%,
+    var(--water-mid) 30%,
+    var(--algae) 62%,
+    var(--eutrophic) 85%,
     var(--eutrophic-deep) 100%
   );
   overflow: hidden;
@@ -540,12 +577,16 @@ img { max-width: 100%; display: block; }
   top: 26vh;
   bottom: 10vh;
   width: 2px;
-  background: linear-gradient(to bottom, rgba(27,35,64,0.35), rgba(255,255,255,0.5));
+  background: linear-gradient(
+    to bottom,
+    rgba(27, 35, 64, 0.35),
+    rgba(255, 255, 255, 0.5)
+  );
   z-index: 1;
 }
 .gauge::before,
 .gauge::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -553,10 +594,14 @@ img { max-width: 100%; display: block; }
   height: 8px;
   border-radius: 50%;
   background: var(--paper);
-  box-shadow: 0 0 0 3px rgba(255,255,255,0.35);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
 }
-.gauge::before { top: -4px; }
-.gauge::after { bottom: -4px; }
+.gauge::before {
+  top: -4px;
+}
+.gauge::after {
+  bottom: -4px;
+}
 
 .gauge__mark {
   position: absolute;
@@ -571,14 +616,14 @@ img { max-width: 100%; display: block; }
   height: 10px;
   border-radius: 50%;
   flex-shrink: 0;
-  box-shadow: 0 0 0 4px rgba(255,255,255,0.25);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
 }
 .gauge__mark .gauge__reading {
   font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.04em;
-  color: rgba(255,255,255,0.92);
+  color: rgba(255, 255, 255, 0.92);
   white-space: nowrap;
 }
 
@@ -633,7 +678,7 @@ img { max-width: 100%; display: block; }
   text-transform: uppercase;
   opacity: 0.75;
   margin-bottom: 10px;
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .beat__text {
@@ -649,10 +694,8 @@ img { max-width: 100%; display: block; }
   font-size: clamp(0.95rem, 1.4vw, 1.08rem);
   font-weight: 400;
   line-height: 1.55;
-  color: rgba(255,255,255,0.82);
+  color: rgba(255, 255, 255, 0.82);
 }
-
-
 
 .beat--dark .beat__text,
 .beat--dark .beat__step {
@@ -671,7 +714,6 @@ img { max-width: 100%; display: block; }
   padding: 0 24px;
 }
 
-
 /* --- Elementos flotantes decorativos --- */
 .decor {
   position: absolute;
@@ -681,7 +723,11 @@ img { max-width: 100%; display: block; }
 
 .bubble {
   border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.85), rgba(255,255,255,0.05));
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.85),
+    rgba(255, 255, 255, 0.05)
+  );
   filter: blur(0.2px);
 }
 
@@ -711,7 +757,13 @@ img { max-width: 100%; display: block; }
 
 .algae-blob {
   border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
-  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.18), transparent 60%), var(--algae);
+  background:
+    radial-gradient(
+      circle at 35% 35%,
+      rgba(255, 255, 255, 0.18),
+      transparent 60%
+    ),
+    var(--algae);
   opacity: 0.55;
 }
 
@@ -742,8 +794,12 @@ img { max-width: 100%; display: block; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .parallax-decor { transform: none !important; }
-  .algae-wrap.parallax-decor { transform: rotate(-13deg) !important; }
+  .parallax-decor {
+    transform: none !important;
+  }
+  .algae-wrap.parallax-decor {
+    transform: rotate(-13deg) !important;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -760,7 +816,11 @@ img { max-width: 100%; display: block; }
    6. OUR SOLUTION — salida limpia y esperanzadora
    -------------------------------------------------------------------------- */
 .solution {
-  background: linear-gradient(to bottom, var(--paper) 0%, var(--paper-soft) 100%);
+  background: linear-gradient(
+    to bottom,
+    var(--paper) 0%,
+    var(--paper-soft) 100%
+  );
   padding: 4vh 24px 10vh;
   text-align: center;
   position: relative;
@@ -805,7 +865,7 @@ img { max-width: 100%; display: block; }
 }
 .clean-stream::after {
   /* content: 'contaminated → treated';*/
-  content: ' → ';
+  content: " → ";
   position: absolute;
   top: 16px;
   right: 0;
@@ -850,7 +910,6 @@ img { max-width: 100%; display: block; }
 
 .card {
   flex: 1 1 168px;
-  max-width: 300px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -877,7 +936,6 @@ img { max-width: 100%; display: block; }
    a group of six both end up with full, flush rows. */
 .card--feature {
   flex: 2 1 348px;
-  max-width: 480px;
   border-color: transparent;
 }
 
@@ -933,8 +991,39 @@ img { max-width: 100%; display: block; }
 }
 
 /* --- Grouped card sections in "Explore rePhlow!" --- */
-.explore__group { margin-bottom: 6vh; }
-.explore__group:last-child { margin-bottom: 0; }
+.explore__group {
+  margin-bottom: 6vh;
+}
+.explore__group:last-child {
+  margin-bottom: 0;
+}
+
+.explore__group-row {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.explore__group-row .explore__group {
+  margin-bottom: 0;
+}
+
+.explore__group-row .card-grid {
+  height: calc(100% - 2.4vh - 1rem);
+}
+
+.explore__group-row .card {
+  width: 100%;
+}
+
+@media (max-width: 520px) {
+  .explore__group-row {
+    grid-template-columns: 1fr;
+    gap: 6vh;
+  }
+}
 
 .explore__group-title {
   font-size: 0.78rem;
@@ -1003,7 +1092,7 @@ img { max-width: 100%; display: block; }
   height: 130px;
   right: 18%;
   bottom: -50px;
-  background: #F4D35E;
+  background: #f4d35e;
   opacity: 0.28;
 }
 
@@ -1018,7 +1107,9 @@ img { max-width: 100%; display: block; }
   border: 1px solid rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(20px) saturate(1.3);
   -webkit-backdrop-filter: blur(20px) saturate(1.3);
-  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
 .site-footer__inner {
@@ -1069,10 +1160,16 @@ img { max-width: 100%; display: block; }
   color: var(--ink-soft);
   background: rgba(255, 255, 255, 0.55);
   border: 1px solid var(--line);
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
-.site-footer__social svg { width: 17px; height: 17px; }
+.site-footer__social svg {
+  width: 17px;
+  height: 17px;
+}
 
 .site-footer__social:hover {
   color: var(--ink);
@@ -1096,14 +1193,28 @@ img { max-width: 100%; display: block; }
   text-underline-offset: 2px;
 }
 
-.site-footer__legal a:hover { color: var(--ink); }
+.site-footer__legal a:hover {
+  color: var(--ink);
+}
 
 @media (max-width: 640px) {
-  .site-footer { padding: 48px 16px 32px; }
-  .site-footer__panel { padding: 28px 20px; }
-  .site-footer__inner { flex-direction: column; text-align: center; gap: 20px; }
-  .site-footer__contact { align-items: center; }
-  .site-footer__address { text-align: center; }
+  .site-footer {
+    padding: 48px 16px 32px;
+  }
+  .site-footer__panel {
+    padding: 28px 20px;
+  }
+  .site-footer__inner {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  .site-footer__contact {
+    align-items: center;
+  }
+  .site-footer__address {
+    text-align: center;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1164,11 +1275,24 @@ img { max-width: 100%; display: block; }
    10. RESPONSIVE
    -------------------------------------------------------------------------- */
 @media (max-width: 900px) {
-  .card-grid { grid-template-columns: repeat(2, 1fr); }
-  .gauge { left: 6%; }
-  .gauge__mark { left: 6%; transform: translate(14px, -50%); }
-  .gauge__mark .gauge__reading { font-size: 0.62rem; }
-  .molecule-wrap { width: 130px; height: 130px; right: 4%; }
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gauge {
+    left: 6%;
+  }
+  .gauge__mark {
+    left: 6%;
+    transform: translate(14px, -50%);
+  }
+  .gauge__mark .gauge__reading {
+    font-size: 0.62rem;
+  }
+  .molecule-wrap {
+    width: 130px;
+    height: 130px;
+    right: 4%;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1180,12 +1304,14 @@ img { max-width: 100%; display: block; }
    main function and deserve to look like an intentional action.
    -------------------------------------------------------------------------- */
 :root {
-  --medal-bronze: #A9764A;
-  --medal-silver: #7C8798;
-  --medal-gold:   #A67C1E;
+  --medal-bronze: #a9764a;
+  --medal-silver: #7c8798;
+  --medal-gold: #a67c1e;
 }
 
-.medals-hero.page-hero { padding-bottom: 40px; }
+.medals-hero.page-hero {
+  padding-bottom: 40px;
+}
 
 /* The old horizontal jump bar (Bronze/Silver/Gold pills) that used to live
    here has been replaced by the reusable PageSectionNav sidebar — see
@@ -1195,7 +1321,9 @@ img { max-width: 100%; display: block; }
    Silver / Gold read as clearly separate blocks rather than bands that
    touch each other. Scroll-margin-top keeps a jumped-to panel's heading
    clear of the floating main navbar. --- */
-.medals-panels { padding: 6vh 20px 10vh; }
+.medals-panels {
+  padding: 6vh 20px 10vh;
+}
 
 .medals-panel {
   max-width: 1120px;
@@ -1204,15 +1332,29 @@ img { max-width: 100%; display: block; }
   border-radius: var(--radius-lg);
   scroll-margin-top: var(--section-nav-offset);
 }
-.medals-panel:last-child { margin-bottom: 0; }
+.medals-panel:last-child {
+  margin-bottom: 0;
+}
 
-.medals-panel--bronze { background: rgba(169, 118, 74, 0.07); }
-.medals-panel--silver { background: rgba(124, 135, 152, 0.08); }
-.medals-panel--gold   { background: rgba(244, 211, 94, 0.16); }
+.medals-panel--bronze {
+  background: rgba(169, 118, 74, 0.07);
+}
+.medals-panel--silver {
+  background: rgba(124, 135, 152, 0.08);
+}
+.medals-panel--gold {
+  background: rgba(244, 211, 94, 0.16);
+}
 
-.medals-panel__inner { max-width: 880px; margin: 0 auto; }
+.medals-panel__inner {
+  max-width: 880px;
+  margin: 0 auto;
+}
 
-.medals-tier__head { text-align: center; margin-bottom: 5vh; }
+.medals-tier__head {
+  text-align: center;
+  margin-bottom: 5vh;
+}
 
 /* The tier badge doubles as the section heading — no separate title or
    subtitle repeating what it already says. */
@@ -1228,10 +1370,22 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.07em;
   text-transform: uppercase;
 }
-.medals-tier-badge svg { width: 14px; height: 14px; }
-.medals-tier-badge--bronze { color: var(--medal-bronze); background: rgba(169, 118, 74, 0.14); }
-.medals-tier-badge--silver { color: var(--medal-silver); background: rgba(124, 135, 152, 0.14); }
-.medals-tier-badge--gold   { color: var(--medal-gold);   background: rgba(244, 211, 94, 0.32); }
+.medals-tier-badge svg {
+  width: 14px;
+  height: 14px;
+}
+.medals-tier-badge--bronze {
+  color: var(--medal-bronze);
+  background: rgba(169, 118, 74, 0.14);
+}
+.medals-tier-badge--silver {
+  color: var(--medal-silver);
+  background: rgba(124, 135, 152, 0.14);
+}
+.medals-tier-badge--gold {
+  color: var(--medal-gold);
+  background: rgba(244, 211, 94, 0.32);
+}
 
 /* Gold's Special-Award mechanism is the one bit of framing that isn't
    already said by the badge, so it keeps a short explanatory note. */
@@ -1243,7 +1397,10 @@ img { max-width: 100%; display: block; }
 }
 
 /* --- Bronze / Silver: a divided list, not a grid of cards --- */
-.medals-list { display: flex; flex-direction: column; }
+.medals-list {
+  display: flex;
+  flex-direction: column;
+}
 
 .medals-item {
   display: grid;
@@ -1252,7 +1409,9 @@ img { max-width: 100%; display: block; }
   padding: 28px 0;
   border-top: 1px solid var(--line);
 }
-.medals-item:last-child { border-bottom: 1px solid var(--line); }
+.medals-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
 
 .medals-item__index {
   font-family: var(--font-display);
@@ -1293,10 +1452,17 @@ img { max-width: 100%; display: block; }
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--ink);
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 @media (hover: hover) {
-  .medals-link-btn:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+  .medals-link-btn:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
 }
 
 /* --- Gold: three candidate Special Award cards --- */
@@ -1338,19 +1504,40 @@ img { max-width: 100%; display: block; }
   color: var(--ink-soft);
 }
 
-.medals-card .medals-links { margin-top: auto; padding-top: 6px; }
+.medals-card .medals-links {
+  margin-top: auto;
+  padding-top: 6px;
+}
 
 @media (max-width: 900px) {
-  .medals-award-grid { grid-template-columns: repeat(2, 1fr); }
+  .medals-award-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 640px) {
-  .medals-award-grid { grid-template-columns: 1fr; }
-  .medals-item { grid-template-columns: 1fr; gap: 6px; }
-  .medals-item__index { font-size: 1.1rem; }
-  .medals-panel { padding: 5vh 20px; border-radius: var(--radius-md); }
-  .medals-index { padding: 24px 16px; gap: 10px; }
-  .medals-index__item { padding: 9px 14px; font-size: 0.82rem; }
+  .medals-award-grid {
+    grid-template-columns: 1fr;
+  }
+  .medals-item {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  .medals-item__index {
+    font-size: 1.1rem;
+  }
+  .medals-panel {
+    padding: 5vh 20px;
+    border-radius: var(--radius-md);
+  }
+  .medals-index {
+    padding: 24px 16px;
+    gap: 10px;
+  }
+  .medals-index__item {
+    padding: 9px 14px;
+    font-size: 0.82rem;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1378,13 +1565,21 @@ img { max-width: 100%; display: block; }
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none; /* Firefox */
   }
-  .navbar__links::-webkit-scrollbar { display: none; } /* Chrome / Safari */
+  .navbar__links::-webkit-scrollbar {
+    display: none;
+  } /* Chrome / Safari */
 
-  .navbar__link { padding: 7px 12px; font-size: 0.78rem; white-space: nowrap; }
+  .navbar__link {
+    padding: 7px 12px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+  }
 
   /* The invisible hover-bridge only matters for the absolutely-positioned
      desktop dropdown; there is no hover on touch, so it's just dead weight. */
-  .navbar__item::after { display: none; }
+  .navbar__item::after {
+    display: none;
+  }
 
   /* .navbar has `transform`, which makes it the containing block for any
      position:fixed descendant — including this dropdown. That lets the open
@@ -1405,14 +1600,41 @@ img { max-width: 100%; display: block; }
     transform: translateY(4px);
   }
 
-  .navbar__item.is-open .navbar__dropdown { transform: translateY(0); }
+  .navbar__item.is-open .navbar__dropdown {
+    transform: translateY(0);
+  }
 
-  .navbar__dropdown-link { white-space: normal; }
+  .navbar__dropdown-link {
+    white-space: normal;
+  }
 
-  .card-grid { grid-template-columns: 1fr; }
-  .beats { padding-top: 10vh; padding-bottom: 10vh; }
-  .beat-row { min-height: var(--beat-row-height); }
-  .beat, .beat--left, .beat--right { margin-left: auto; margin-right: auto; max-width: 90vw; padding: 0 20px; }
-  .gauge__mark .gauge__reading { display: none; } /* en móvil solo se ven los puntos, sin etiquetas */
-  .molecule-wrap { position: relative; right: auto; top: auto; margin: 0 auto 20px; width: 110px; height: 110px; }
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+  .beats {
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+  }
+  .beat-row {
+    min-height: var(--beat-row-height);
+  }
+  .beat,
+  .beat--left,
+  .beat--right {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90vw;
+    padding: 0 20px;
+  }
+  .gauge__mark .gauge__reading {
+    display: none;
+  } /* en móvil solo se ven los puntos, sin etiquetas */
+  .molecule-wrap {
+    position: relative;
+    right: auto;
+    top: auto;
+    margin: 0 auto 20px;
+    width: 110px;
+    height: 110px;
+  }
 }

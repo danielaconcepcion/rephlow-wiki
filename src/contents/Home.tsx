@@ -123,7 +123,6 @@ export function Home() {
           HERO — agua limpia, punto de partida
           ================================================================== */}
       <header className="hero" id="home">
-        <p className="hero__eyebrow">Web page currently under construction!</p>
         <h1 className="hero__title">rePhlow</h1>
         <p className="hero__subtitle">
           Make water flow. Make value grow. Choose rePhlow.
@@ -514,7 +513,9 @@ export function Home() {
           <div className="beat-row beat-row--01">
             <div className="beat beat--left">
               <p className="beat__step">Step 01</p>
-              <p className="beat__text">Excess phosphate enters aquatic systems.</p>
+              <p className="beat__text">
+                Excess phosphate enters aquatic systems.
+              </p>
               <p className="beat__body">
                 Wastewater from biodiesel production can carry phosphate
                 residues from washing and purification steps. Without proper
@@ -566,9 +567,8 @@ export function Home() {
       <section className="solution" id="solution">
         <h2 className="solution__title">Our Solution</h2>
         <p className="solution__lede">
-          rePhlow engineers a biological system that intercepts phosphate
-          before it can drive this collapse, turning a pollutant into a
-          resource.
+          rePhlow engineers a biological system that intercepts phosphate before
+          it can drive this collapse, turning a pollutant into a resource.
         </p>
 
         <div className="promotion-video" aria-label="Promotion video">
@@ -581,9 +581,8 @@ export function Home() {
                 preload="metadata"
                 onLoadedMetadata={resumePromotionVideo}
                 aria-label={`rePhlow promotion video in ${
-                  promotionVideos.find(
-                    ({ code }) => code === promotionLanguage,
-                  )?.label
+                  promotionVideos.find(({ code }) => code === promotionLanguage)
+                    ?.label
                 }`}
               >
                 <source
@@ -612,7 +611,9 @@ export function Home() {
                   onClick={() => changePromotionLanguage(code)}
                 >
                   <span aria-hidden="true">{shortLabel}</span>
-                  <span className="promotion-video__language-name">{label}</span>
+                  <span className="promotion-video__language-name">
+                    {label}
+                  </span>
                 </button>
               ))}
             </div>
@@ -898,52 +899,53 @@ export function Home() {
           </div>
         </div>
 
-        <div className="explore__group">
-          <p className="explore__group-title">Team</p>
-          <div className="card-grid">
-            <Link className="card" to="/team">
-              <TileMoleculeField seed={109} palette="light" />
-              <div className="card__icon card__icon--team">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="9" cy="8" r="3" />
-                  <circle cx="17" cy="10" r="2.4" />
-                  <path d="M3 20c0-3 3-5 6-5s6 2 6 5" />
-                  <path d="M15.5 15.2c2 .3 4 1.6 4.5 4.3" />
-                </svg>
-              </div>
-              <p className="card__title">Team</p>
-            </Link>
-
+        <div className="explore__group-row">
+          <div className="explore__group">
+            <p className="explore__group-title">Team</p>
+            <div className="card-grid">
+              <Link className="card" to="/team">
+                <TileMoleculeField seed={109} palette="light" />
+                <div className="card__icon card__icon--team">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="9" cy="8" r="3" />
+                    <circle cx="17" cy="10" r="2.4" />
+                    <path d="M3 20c0-3 3-5 6-5s6 2 6 5" />
+                    <path d="M15.5 15.2c2 .3 4 1.6 4.5 4.3" />
+                  </svg>
+                </div>
+                <p className="card__title">Team</p>
+              </Link>
+            </div>
           </div>
-        </div>
 
-        <div className="explore__group">
-          <p className="explore__group-title">Judging</p>
-          <div className="card-grid">
-            <Link className="card card--feature" to="/medals">
-              <TileMoleculeField seed={116} palette="primary" />
-              <div className="card__icon card__icon--medals">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="9" r="5" />
-                  <path d="M8.5 13.5L6 21l6-3.5L18 21l-2.5-7.5" />
-                </svg>
-              </div>
-              <p className="card__title">Medals</p>
-            </Link>
+          <div className="explore__group">
+            <p className="explore__group-title">Judging</p>
+            <div className="card-grid">
+              <Link className="card card--feature" to="/medals">
+                <TileMoleculeField seed={116} palette="primary" />
+                <div className="card__icon card__icon--medals">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="12" cy="9" r="5" />
+                    <path d="M8.5 13.5L6 21l6-3.5L18 21l-2.5-7.5" />
+                  </svg>
+                </div>
+                <p className="card__title">Medals</p>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
