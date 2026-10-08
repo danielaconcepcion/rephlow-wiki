@@ -31,11 +31,12 @@
   margin: 0 auto;
 }
 
-/* Experiments' compact hero (see App.css .page-hero--compact) already
-   provides its own breathing room above the ecosystem map — .lab-folders'
-   own 6vh top padding on top of that left an oversized header→index gap.
-   Scoped to "the map is the very first thing in .lab-folders" so this
-   doesn't reach any other .lab-folders usage (e.g. Results.tsx). */
+/* The lab hero (see App.css .page-hero--lab) already provides its own
+   breathing room above the ecosystem map — .lab-folders' own 6vh top
+   padding on top of that left an oversized header→index gap. Scoped to
+   "the map is the very first thing in .lab-folders" so it doesn't reach a
+   .lab-folders that opens with something else. Experiments and Results
+   both open with the map, so both get this and their indexes line up. */
 .lab-folders > .ecosystem-map:first-child {
   margin-top: -40px;
 }

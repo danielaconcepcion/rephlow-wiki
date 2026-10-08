@@ -50,6 +50,7 @@ const App = () => {
               hideHeader,
               hideEyebrow,
               compactHero,
+              labHero,
               moleculeSeed,
               component: Component,
             },
@@ -65,6 +66,7 @@ const App = () => {
                       lead={lead}
                       hideEyebrow={hideEyebrow}
                       compactHero={compactHero}
+                      labHero={labHero}
                       moleculeSeed={moleculeSeed}
                     />
                   )}
