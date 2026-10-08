@@ -1565,7 +1565,7 @@ export function ProjectDescription() {
                 <Cite group="genetic" numbers={[17]} />.
               </p>
               <Figure
-                src="engineered-phosphorus-pathway.original.webp"
+                src="engineered-phosphorus-pathway.webp"
                 alt="Engineered phosphate uptake and polyphosphate storage pathway in Pseudomonas putida"
                 caption={
                   <>

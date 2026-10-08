@@ -1,0 +1,292 @@
+/* --------------------------------------------------------------------------
+   STAKEHOLDER MATRIX — the team's power/interest matrix as web elements
+   rather than a flat image, so names are selectable and searchable, the
+   engagement state reaches a screen reader, and each actor carries its own
+   detail card (the stakeholder table's three columns).
+   -------------------------------------------------------------------------- */
+
+.hp-matrix {
+  margin: 28px 0 0;
+}
+
+.hp-matrix__frame {
+  position: relative;
+  padding: 0 0 0 34px;
+}
+
+/* The two axis names, set along the rules they label. */
+.hp-matrix__axis {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.hp-matrix__axis--power {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+}
+.hp-matrix__axis--interest {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.hp-matrix__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md, 18px);
+  overflow: hidden;
+}
+
+.hp-matrix__quadrant {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 230px;
+  padding: 18px;
+  background: var(--paper);
+}
+/* The two quadrants the team marked as high-priority read warmer. */
+.hp-matrix__quadrant--manage-closely,
+.hp-matrix__quadrant--keep-satisfied {
+  background: var(--paper-soft);
+}
+
+.hp-matrix__quadrant-label {
+  margin: 0;
+  align-self: flex-start;
+  padding: 7px 16px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.hp-matrix__items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* An actor. The panel is positioned against this box, so it needs to
+   establish the containing block and sit above its neighbours while open. */
+.hp-matrix__item {
+  position: relative;
+}
+.hp-matrix__item.is-open {
+  z-index: 5;
+}
+
+.hp-matrix__pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.18s ease;
+}
+.hp-matrix__item.is-open .hp-matrix__pill,
+.hp-matrix__pill:hover {
+  border-color: rgba(27, 35, 64, 0.3);
+  box-shadow: var(--shadow-card, 0 8px 24px rgba(27, 35, 64, 0.06));
+  transform: translateY(-1px);
+}
+.hp-matrix__pill:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Filled = engaged to date, hollow = not yet engaged, matching the
+   legend on the team's own matrix. */
+.hp-matrix__dot {
+  flex: none;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--ink-soft);
+  border-radius: 50%;
+  background: transparent;
+}
+.hp-matrix__dot--engaged {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.hp-matrix__logo {
+  flex: none;
+  width: auto;
+  max-width: 64px;
+  max-height: 24px;
+  object-fit: contain;
+}
+
+.hp-matrix__names {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.hp-matrix__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.hp-matrix__subtitle {
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+/* The engagement state is in the dot, which is decorative — so it is also
+   written out here for anyone who cannot see the dot. Visually hidden
+   rather than removed. */
+.hp-matrix__engagement {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The detail card. Floats over the matrix on a wide screen so opening one
+   does not reflow the grid; becomes an ordinary block below the pill once
+   the quadrants stack. */
+.hp-matrix__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: min(380px, 78vw);
+  padding: 16px 18px;
+  border: 1px solid rgba(27, 35, 64, 0.16);
+  border-radius: var(--radius-md, 18px);
+  background: var(--paper);
+  box-shadow: var(--shadow-soft, 0 12px 40px rgba(27, 35, 64, 0.08));
+}
+/* Near the right-hand edge the card would overflow the frame, so the
+   second column's cards hang to the left of their pill instead. */
+.hp-matrix__quadrant--manage-closely .hp-matrix__panel,
+.hp-matrix__quadrant--keep-satisfied .hp-matrix__panel {
+  left: auto;
+  right: 0;
+}
+
+.hp-matrix__panel-title {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.hp-matrix__fields {
+  margin: 0;
+}
+.hp-matrix__fields dt {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.hp-matrix__fields dd {
+  margin: 4px 0 12px;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.hp-matrix__fields dd:last-child {
+  margin-bottom: 0;
+}
+
+/* An actor with no table row behind it: named, but not a control, so it
+   gets none of the button's affordances. */
+.hp-matrix__pill--static {
+  cursor: default;
+}
+.hp-matrix__pill--static:hover {
+  border-color: var(--line);
+  box-shadow: none;
+  transform: none;
+}
+
+.hp-matrix__legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  margin: 18px 0 0;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+.hp-matrix__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hp-matrix > figcaption {
+  margin-top: 14px;
+  font-size: 0.82rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 860px) {
+  .hp-matrix__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .hp-matrix__quadrant {
+    min-height: 0;
+  }
+  /* One column, so a floating card has nothing to float over and would
+     only cover the next quadrant. It becomes part of the flow instead. */
+  .hp-matrix__panel,
+  .hp-matrix__quadrant--manage-closely .hp-matrix__panel,
+  .hp-matrix__quadrant--keep-satisfied .hp-matrix__panel {
+    position: static;
+    width: auto;
+    margin-top: 8px;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hp-matrix__pill {
+    transition: none;
+  }
+  .hp-matrix__item.is-open .hp-matrix__pill,
+  .hp-matrix__pill:hover {
+    transform: none;
+  }
+}
+
+/* The table is now behind an accordion below the matrix. */
+.hp-users__table-accordion {
+  margin-top: 26px;
+}
