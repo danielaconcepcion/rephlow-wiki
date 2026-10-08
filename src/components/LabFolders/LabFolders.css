@@ -868,6 +868,42 @@
 }
 
 .record-figure { margin: 0; }
+
+/* Keep a caption the width of the figure it belongs to. An image that
+   renders narrower than its column (a generated chart at its own size, a
+   small cropped panel) otherwise gets a caption running the full column
+   width, which reads as a caption for the whole row rather than for that
+   figure.
+
+   `width: fit-content` does not do this: the caption is a long run of
+   text, so the figure's max-content width is the caption's, and it
+   stretches to the column anyway. A table box does, because it
+   shrink-to-fits its cells — here the image — while a table-caption takes
+   the table's width. Images that already fill their column are
+   unaffected. */
+.record-figure:has(.record-figure__photo) {
+  display: table;
+  margin-inline: auto;
+}
+
+.record-figure--wide { grid-column: 1 / -1; }
+
+/* One caption for a whole grid of cropped panels. It spans every column so
+   it reads as the group's caption, instead of dropping into the next free
+   cell and looking like an eighth panel. */
+.record-figure-grid__caption {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.record-figure:has(.record-figure__photo) > figcaption {
+  display: table-caption;
+  caption-side: bottom;
+}
 .record-figure__placeholder {
   aspect-ratio: 16 / 9;
   display: flex;
@@ -903,7 +939,11 @@
    aspect-ratio so a portrait gel and a wide diagram both sit naturally). */
 .record-figure__photo {
   display: block;
-  width: 100%;
+  /* Render at the source's own size and only ever scale down. These are
+     crops and screenshots a few hundred pixels across; stretching one to
+     fill its column just blurs it. */
+  width: auto;
+  max-width: 100%;
   height: auto;
   background: var(--paper);
   border: 1px solid var(--lab-line);

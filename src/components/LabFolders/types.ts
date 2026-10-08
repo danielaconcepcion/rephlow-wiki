@@ -64,6 +64,11 @@ export interface FigureData {
    * panels cropped from one composite source figure, each keeping its own
    * label while the panels share the surrounding prose. */
   title?: string;
+  /** Give this figure a whole row of the grid instead of sharing one.
+   * For a very wide image — a linear plasmid map is a thin backbone with
+   * annotations along it — a third of a row leaves the annotations too
+   * small to read. */
+  wide?: boolean;
   /** "chart" for a generated plot (see
    * scripts/build-genetic-engineering-figures.py), which already has an
    * intrinsic size chosen when it was plotted — stretching it to the card
