@@ -1272,6 +1272,35 @@ img {
   padding: 190px 24px 85px;
 }
 
+/* Experiments + Results: one shared hero, halfway between the two bands
+   those pages used to have.
+
+   Experiments had the compact hero (a fixed 396px band) and Results the
+   default one, whose 60vh min-height made its band 540px on a 900px-tall
+   window — and taller or shorter on any other, so the two pages never
+   matched and Results never matched itself. Because the default shell
+   centres the hero in that min-height, Results' extra space landed as
+   90px above and 90px below the hero box, giving 250px above the title
+   and 170px below against Experiments' 190px and 85px. Averaging each
+   edge gives 220px and 128px, which is the 468px band below: the exact
+   midpoint of 396 and 540, now stated as padding so it is the same on
+   every window height instead of tracking the viewport. */
+.page-shell--lab {
+  min-height: 0;
+}
+.page-hero--lab {
+  padding: 220px 24px 128px;
+}
+
+/* On a short or narrow window a fixed 468px band eats most of the screen
+   before any content shows, so the two edges come back towards the
+   compact hero's. Both pages share this, so they still match. */
+@media (max-width: 760px), (max-height: 760px) {
+  .page-hero--lab {
+    padding: 185px 24px 90px;
+  }
+}
+
 /* Generic content wrapper for simple content pages that are otherwise just
    the shared Header hero plus a bit of body content (currently used by
    Hardware/Measurements/Sustainability/Engineering) — the same

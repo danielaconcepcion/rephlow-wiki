@@ -6,6 +6,10 @@ interface HeaderProps {
   lead: string;
   hideEyebrow?: boolean;
   compactHero?: boolean;
+  /** Experiments + Results' shared hero band, sized between the compact
+   * hero and the default one (see App.css .page-hero--lab). Takes
+   * precedence over compactHero if both are somehow set. */
+  labHero?: boolean;
   /**
    * Opt-in visual variant: renders the Claude Design "MoleculeField"
    * (edge/light) header treatment — a blue-green molecule field on a
@@ -28,17 +32,19 @@ export function Header({
   lead,
   hideEyebrow = false,
   compactHero = false,
+  labHero = false,
   moleculeSeed,
 }: HeaderProps) {
   const molecule = moleculeSeed !== undefined;
+  const size = labHero ? "--lab" : compactHero ? "--compact" : "";
   return (
     <main
-      className={`page-shell${compactHero ? " page-shell--compact" : ""}${
+      className={`page-shell${size ? ` page-shell${size}` : ""}${
         molecule ? " page-shell--molecule" : ""
       }`}
     >
       {molecule && <HeaderMoleculeField seed={moleculeSeed} />}
-      <section className={`page-hero${compactHero ? " page-hero--compact" : ""}`}>
+      <section className={`page-hero${size ? ` page-hero${size}` : ""}`}>
         {!hideEyebrow && (
           <p className="hero__eyebrow">
             Web page currently under construction!
