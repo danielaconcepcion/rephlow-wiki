@@ -38,21 +38,24 @@ function Marker({
   const style: PlotStyle = { "--x": `${item.x}%`, "--y": `${item.y}%` };
 
   const body = (
-    <>
-      <span className="hp-matrix__pin" aria-hidden="true">
-        <span className="hp-matrix__pin-number">{index + 1}</span>
+    <span className="hp-matrix__label">
+      <span className="hp-matrix__number" aria-hidden="true">
+        {index + 1}
       </span>
-      <span className="hp-matrix__label">
-        {item.logo && (
-          <img className="hp-matrix__logo" src={asset(item.logo)} alt="" />
-        )}
-        <span className="hp-matrix__name">{item.name}</span>
-        {item.subtitle && <span className="hp-matrix__note">{item.subtitle}</span>}
-        <span className="hp-matrix__sr">
-          {item.engaged ? "Engaged to date" : "Not yet engaged"}
+      {item.logo && (
+        <img className="hp-matrix__logo" src={asset(item.logo)} alt="" />
+      )}
+      <span className="hp-matrix__name">{item.name}</span>
+      {item.subtitle && <span className="hp-matrix__note">{item.subtitle}</span>}
+      {item.members && (
+        <span className="hp-matrix__note hp-matrix__note--members">
+          {item.members.join(" \u00b7 ")}
         </span>
+      )}
+      <span className="hp-matrix__sr">
+        {item.engaged ? "Engaged to date" : "Not yet engaged"}
       </span>
-    </>
+    </span>
   );
 
   // Near an edge the label is hung below/above the marker rather than
@@ -75,7 +78,7 @@ function Marker({
      than a button, so it does not offer a control that opens nothing. */
   if (!row) {
     return (
-      <div className={`${classes} is-static`} style={style}>
+      <div className={`${classes} is-static`} style={style} data-id={item.id}>
         <div className="hp-matrix__hit">{body}</div>
       </div>
     );
@@ -85,6 +88,7 @@ function Marker({
     <div
       className={classes}
       style={style}
+      data-id={item.id}
       onMouseEnter={onOpen}
       onMouseLeave={onClose}
     >
@@ -151,14 +155,15 @@ export function StakeholderMatrix() {
         {/* The two axes: dotted rules crossing where the source crosses
             them, each named at its growing end. This is a field with
             positions, not a table of four cells. */}
-        <div className="hp-matrix__rule hp-matrix__rule--y" aria-hidden="true" />
-        <div className="hp-matrix__rule hp-matrix__rule--x" aria-hidden="true" />
+        <div className="hp-matrix__field">
+          <div className="hp-matrix__rule hp-matrix__rule--y" aria-hidden="true" />
+          <div className="hp-matrix__rule hp-matrix__rule--x" aria-hidden="true" />
         {/* As in the source: the horizontal rule is the Power divider
             (above it = more power) and the vertical rule the Interest one
             (right of it = more interest), each named at the end the
             source names it. */}
-        <p className="hp-matrix__axis hp-matrix__axis--x">Power</p>
-        <p className="hp-matrix__axis hp-matrix__axis--y">Interest</p>
+          <p className="hp-matrix__axis hp-matrix__axis--x">Power</p>
+          <p className="hp-matrix__axis hp-matrix__axis--y">Interest</p>
 
         {QUADRANTS.map((quadrant) => (
           <p
@@ -169,16 +174,17 @@ export function StakeholderMatrix() {
           </p>
         ))}
 
-        {MATRIX_ITEMS.map((item, index) => (
-          <Marker
-            item={item}
-            index={index}
-            key={item.id}
-            open={openId === item.id}
-            onOpen={() => setOpenId(item.id)}
-            onClose={() => setOpenId((id) => (id === item.id ? null : id))}
-          />
-        ))}
+          {MATRIX_ITEMS.map((item, index) => (
+            <Marker
+              item={item}
+              index={index}
+              key={item.id}
+              open={openId === item.id}
+              onOpen={() => setOpenId(item.id)}
+              onClose={() => setOpenId((id) => (id === item.id ? null : id))}
+            />
+          ))}
+        </div>
       </div>
 
       {/* Below ~620px the plot keeps its points but drops its labels (no
@@ -198,15 +204,6 @@ export function StakeholderMatrix() {
         ))}
       </ol>
 
-      {/* The funding group is one point on the plot but seven names. They
-          are printed inside the box on the team's own matrix, so they are
-          kept — under it, where they have room, rather than inflating one
-          marker's label until it covers its neighbours. */}
-      {MATRIX_ITEMS.filter((item) => item.members).map((item) => (
-        <p className="hp-matrix__members" key={item.id}>
-          <strong>{item.name}:</strong> {item.members?.join(" · ")}
-        </p>
-      ))}
 
       <p className="hp-matrix__legend">
         <span className="hp-matrix__legend-item">
@@ -222,13 +219,6 @@ export function StakeholderMatrix() {
         </span>
       </p>
 
-      <figcaption>
-        Our stakeholder matrix: every actor sits at its own point, by the
-        power it holds over rePhlow&rsquo;s implementation and the interest it
-        has in it. Where we have written an actor up, selecting or hovering
-        over it shows how it relates to rePhlow, what matters most to it and
-        what rePhlow would have to demonstrate.
-      </figcaption>
     </figure>
   );
 }
