@@ -59,6 +59,11 @@ export interface FigureData {
   src?: string;
   /** Required alongside `src`; ignored by a placeholder. */
   alt?: string;
+  /** A sub-figure's own printed label, e.g. "(A) estE1_MG", rendered
+   * above the image rather than as part of the caption — for a group of
+   * panels cropped from one composite source figure, each keeping its own
+   * label while the panels share the surrounding prose. */
+  title?: string;
   /** "chart" for a generated plot (see
    * scripts/build-genetic-engineering-figures.py), which already has an
    * intrinsic size chosen when it was plotted — stretching it to the card
@@ -235,7 +240,16 @@ export interface ResultSubsection {
   title?: string;
   body?: string[];
   figures?: FigureData[];
+  /** One caption for the whole `figures` grid, rendered below it — for a
+   * group of panels cropped from a single composite source figure, which
+   * share one caption. Without this the shared caption has to hang off the
+   * last panel, where it reads as that panel's own. */
+  figuresCaption?: string;
   tables?: (RecordTable & { caption?: string })[];
+  /** A bespoke visual instead of an image — e.g. the candidate-selection
+   * funnel, which is a component rather than a screenshot so its numbers
+   * stay legible at any width. Rendered with its own caption. */
+  custom?: { node: ReactNode; caption?: string };
   observations?: string;
   interpretation?: string;
   /** "Was it expected, and why?" */

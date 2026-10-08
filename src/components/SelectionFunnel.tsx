@@ -1,4 +1,4 @@
-import type { CSSVarStyle } from "../../components/LabFolders/types";
+import type { CSSVarStyle } from "./LabFolders/types";
 import "./SelectionFunnel.css";
 
 export interface FunnelStep {
