@@ -288,6 +288,7 @@ const PREPARATIVE_DIGESTION: ResultData = {
   subsections: [
     {
       id: "first-trial-digestion",
+      figuresColumns: 2,
       title: "First trial",
       body: [
         "pSEVA2513 (about 5.3 kb) cut with BamHI and HindIII gave a clean, intense linear band of the expected size, and ppk1 was released from pMK-RQ, although its bands in the 2 to 3 kb range overlap the carrier backbone on a 1% gel.",

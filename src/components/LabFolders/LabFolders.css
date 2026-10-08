@@ -933,6 +933,18 @@
   margin-top: 14px;
 }
 
+/* A panel set that declares its own column count (figuresColumns), so a
+   four-panel series stays 2x2 rather than being auto-fitted into three
+   plus an orphan. */
+.record-figure-grid--fixed {
+  grid-template-columns: repeat(var(--figure-columns), minmax(0, 1fr));
+}
+@media (max-width: 680px) {
+  .record-figure-grid--fixed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* A real photo, single or grouped — the site's first actual (non-
    placeholder) figures. Same quiet "photo on paper" card language as
    ProjectDescription's own figures (padding, soft border, no forced
@@ -999,6 +1011,109 @@
   font-size: 0.78rem;
   font-style: italic;
   color: var(--ink-soft);
+}
+
+/* A two-axis photo series: media down the side, time across the top. The
+   column count comes from the data (--matrix-columns), not from auto-fit,
+   so one medium's time course always occupies exactly one row instead of
+   wrapping into the next. Each axis is labelled once, which is what lets
+   the panels themselves carry no caption at all. */
+.record-figure-matrix {
+  margin: 14px 0 0;
+}
+.record-figure-matrix__grid {
+  display: grid;
+  grid-template-columns: max-content repeat(var(--matrix-columns), minmax(0, 1fr));
+  gap: 8px 12px;
+  align-items: center;
+}
+.record-figure-matrix__corner {
+  /* Empty cell where the two axis labels meet. */
+}
+.record-figure-matrix__column-head,
+.record-figure-matrix__row-head {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+.record-figure-matrix__column-head {
+  text-align: center;
+}
+.record-figure-matrix__row-head {
+  text-align: right;
+  padding-right: 4px;
+}
+.record-figure-matrix__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-md, 8px);
+  padding: 4px;
+}
+.record-figure-matrix > figcaption {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* A tall, narrow figure (a gel is about 400 px wide) set beside the prose
+   that reads it, instead of in a full-width band that leaves most of the
+   row empty on both sides and pushes the explanation below the fold. The
+   figure column spans every row of the section, so the text wraps the
+   whole height of the image regardless of where it sits in the DOM. */
+.result-subsection--aside {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  column-gap: 28px;
+  align-items: start;
+}
+.result-subsection--aside > * {
+  grid-column: 1;
+  min-width: 0;
+}
+/* The heading runs across both columns and the figure sits beside the
+   prose on the row below it. Spanning the figure up into the heading's row
+   instead would stretch that row to share the figure's height, leaving the
+   heading stranded above a column of empty space. */
+.result-subsection--aside > h4 {
+  grid-column: 1 / -1;
+}
+.result-subsection--aside > .result-subsection__aside {
+  grid-column: 2;
+}
+.result-subsection--aside .record-figure-grid {
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: 0;
+}
+/* In the aside column the figure fills its (already narrow) column rather
+   than shrink-wrapping to the source pixels, so the gel is legible. */
+.result-subsection--aside .record-figure__photo {
+  width: 100%;
+}
+
+@media (max-width: 880px) {
+  .result-subsection--aside {
+    display: block;
+  }
+  .result-subsection--aside .record-figure-grid {
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 720px) {
+  .record-figure-matrix__grid {
+    grid-template-columns: max-content repeat(var(--matrix-columns), minmax(0, 1fr));
+    gap: 6px 6px;
+  }
+  .record-figure-matrix__column-head,
+  .record-figure-matrix__row-head {
+    font-size: 0.68rem;
+  }
 }
 
 /* A bespoke component dropped in place of an image (e.g. SelectionFunnel)
