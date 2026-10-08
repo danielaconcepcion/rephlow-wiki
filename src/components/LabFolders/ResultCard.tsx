@@ -44,7 +44,12 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
       {!!subsection.figures?.length && (
         <div className="record-figure-grid">
           {subsection.figures.map((figure, index) => (
-            <figure className="record-figure" key={index}>
+            <figure
+              className={
+                figure.wide ? "record-figure record-figure--wide" : "record-figure"
+              }
+              key={index}
+            >
               {figure.title && (
                 <p className="record-figure-group__item-title">{figure.title}</p>
               )}

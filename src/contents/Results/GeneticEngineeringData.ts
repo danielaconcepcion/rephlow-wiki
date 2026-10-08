@@ -1,4 +1,7 @@
-import type { ResultData, ResultSubBlock } from "../../components/LabFolders/types";
+import type {
+  ResultData,
+  ResultSubBlock,
+} from "../../components/LabFolders/types";
 
 /**
  * Genetic engineering results, transcribed from the team's own Notion
@@ -101,7 +104,8 @@ const KINETICS_ACROSS_MEDIA: ResultData = {
 const OPERATING_CONDITIONS: ResultData = {
   id: "operating-conditions",
   tabLabel: "Operating conditions",
-  title: "Operating-condition optimisation, pH and dilution in the synthetic stream",
+  title:
+    "Operating-condition optimisation, pH and dilution in the synthetic stream",
   description:
     "Four combinations of pH and dilution were screened in the synthetic stream, against M9 and LB as the high- and low-retention references.",
   subsections: [
@@ -120,14 +124,42 @@ const OPERATING_CONDITIONS: ResultData = {
         {
           caption:
             "Normalised intracellular phosphorus (mPi/OD₆₀₀, ng per OD₆₀₀) for each condition. Single measurements: this screen has no replicates.",
-          headers: ["Condition", "0 min", "30 min", "60 min", "90 min", "120 min"],
+          headers: [
+            "Condition",
+            "0 min",
+            "30 min",
+            "60 min",
+            "90 min",
+            "120 min",
+          ],
           rows: [
-            ["Positive control (M9)", "141 803", "367 969", "252 304", "187 549", "201 675"],
-            ["Negative control (LB)", "31 505", "51 844", "65 425", "53 733", "37 419"],
+            [
+              "Positive control (M9)",
+              "141 803",
+              "367 969",
+              "252 304",
+              "187 549",
+              "201 675",
+            ],
+            [
+              "Negative control (LB)",
+              "31 505",
+              "51 844",
+              "65 425",
+              "53 733",
+              "37 419",
+            ],
             ["A (pH 6, 1:1)", "43 631", "17 108", "31 908", "50 644", "50 916"],
             ["B (pH 6, 1:35)", "13 669", "12 626", "21 172", "7 499", "9 206"],
             ["C (pH 7, 1:1)", "14 169", "11 907", "3 974", "10 130", "7 597"],
-            ["D (pH 7, 1:35)", "13 425", "16 819", "14 567", "39 952", "27 108"],
+            [
+              "D (pH 7, 1:35)",
+              "13 425",
+              "16 819",
+              "14 567",
+              "39 952",
+              "27 108",
+            ],
           ],
         },
       ],
@@ -153,16 +185,19 @@ const IN_SILICO_CASSETTES: ResultData = {
       figures: [
         {
           src: `${FIGURES}/cassette-map-ppk1.svg`,
+          wide: true,
           alt: "Annotated plasmid map of the codon-optimised ppk1 expression cassette.",
           caption: "Annotated map of the ppk1 expression cassette.",
         },
         {
           src: `${FIGURES}/cassette-map-pstscab.svg`,
+          wide: true,
           alt: "Annotated plasmid map of the codon-optimised pstSCAB expression cassette.",
           caption: "Annotated map of the pstSCAB expression cassette.",
         },
         {
           src: `${FIGURES}/cassette-map-promoter.svg`,
+          wide: true,
           alt: "Annotated map of the pEM7-derived promoter insert.",
           caption: "Annotated map of the pEM7-derived promoter insert.",
         },
@@ -194,12 +229,33 @@ const PART_ACQUISITION: ResultData = {
         {
           caption:
             "Quality of the legacy pSEVA plasmid stocks from the previous year, assessed before re-preparation.",
-          headers: ["Sample", "Plasmid", "Concentration", "A260/A280", "A260/A230", "Interpretation"],
+          headers: [
+            "Sample",
+            "Plasmid",
+            "Concentration",
+            "A260/A280",
+            "A260/A230",
+            "Interpretation",
+          ],
           rows: [
             ["A", "pSEVA2513", "22.05 ng/µL", "1.480", "0.493", "Low purity"],
-            ["B", "pSEVA2513", "14.40 ng/µL", "1.574", "0.718", "Low concentration and low purity"],
+            [
+              "B",
+              "pSEVA2513",
+              "14.40 ng/µL",
+              "1.574",
+              "0.718",
+              "Low concentration and low purity",
+            ],
             ["C", "pSEVA631", "20.10 ng/µL", "1.500", "0.561", "Low purity"],
-            ["D", "pSEVA631", "89.90 ng/µL", "1.773", "1.369", "Best preparation, but still not fully pure"],
+            [
+              "D",
+              "pSEVA631",
+              "89.90 ng/µL",
+              "1.773",
+              "1.369",
+              "Best preparation, but still not fully pure",
+            ],
           ],
         },
       ],
@@ -312,7 +368,8 @@ const ECOLI_TRANSFORMATION: ResultData = {
         {
           src: `${FIGURES}/transformation-plates-gentamycin.jpg`,
           alt: "Replicate transformation plate on LB with gentamycin.",
-          caption: "Second-trial transformation replicate plate on LB − gentamycin.",
+          caption:
+            "Second-trial transformation replicate plate on LB − gentamycin.",
         },
         {
           src: `${FIGURES}/transformation-plates-kanamycin.jpg`,
@@ -550,8 +607,7 @@ const FLUORESCENCE_SCREENING: ResultData = {
       ],
       observations:
         "The screen could not be read cleanly because the pMBEC2 positive control itself fluoresced only weakly, when it should have been as bright as the reference plate. With a dim control, white colonies are ambiguous: they could carry the guide, or simply be untransformed or unhealthy cells.",
-      interpretation:
-        "No guide plasmid could be confirmed.",
+      interpretation: "No guide plasmid could be confirmed.",
       expectation:
         "No. A bright positive control and a clean set of white candidates were expected; the weak control made the read uninterpretable, which together with the contaminated second-trial PCR is why no verified editor-plus-guide plasmid was obtained.",
     },
@@ -678,8 +734,13 @@ const CLOSING: ResultData = {
       ],
       tables: [
         {
-          caption: "Fitted uptake rates, in ng per OD₆₀₀ per minute, over each window.",
-          headers: ["Strain", "Uptake rate, 75–120 min", "Uptake rate, 0–120 min"],
+          caption:
+            "Fitted uptake rates, in ng per OD₆₀₀ per minute, over each window.",
+          headers: [
+            "Strain",
+            "Uptake rate, 75–120 min",
+            "Uptake rate, 0–120 min",
+          ],
           rows: [
             ["Wild type", "6 450", "5 839"],
             ["ppk1 transformant", "11 017", "4 424"],
@@ -710,7 +771,11 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ResultSubBlock[] = [
     heading: "Section 0: Polyphosphate accumulation study",
     intro:
       "The kinetics and yield of polyphosphate accumulation in wild-type P. putida KT2440 set the baseline that the engineered strains are later measured against, so this is where the assay is standardised and the operating window established. The intracellular-phosphorus assay is first made reproducible; growth in the reference minimal medium is characterised; and the kinetics of accumulation are then compared across media and, finally, across pH and dilution in the synthetic stream.",
-    results: [ASSAY_STANDARDISATION, KINETICS_ACROSS_MEDIA, OPERATING_CONDITIONS],
+    results: [
+      ASSAY_STANDARDISATION,
+      KINETICS_ACROSS_MEDIA,
+      OPERATING_CONDITIONS,
+    ],
     outro:
       "This block did not deliver a single optimal condition, but it delivered the two things the project needs before the strains change: a standardised intracellular-phosphorus assay that lets us compare between strains and between media, and a defined operating window in which nutrient stress drives retention (M9 maximal, LB minimal, synthetic stream intermediate) and both pH and dilution measurably matter.",
   },
