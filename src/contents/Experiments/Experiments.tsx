@@ -165,7 +165,7 @@ export function Experiments() {
               <>
                 <div className="lab-prose">
                   <Figure
-                    src="engineered-phosphorus-pathway.original.png"
+                    src="engineered-phosphorus-pathway.webp"
                     alt="Schematic of P. putida KT2440 redesigned as a phosphate-accumulating organism, with PPK1 and PstSCAB added in green and Ppx, PpkB and PitB inactivated in red"
                     caption="Schematic of P. putida KT2440 redesigned as a PAO. In green, the functions we add (PPK1 and PstSCAB); in red, the ones we inactivate (Ppx, PpkB/PPK2 and PitB). The arrows follow the phosphate: it enters through PstSCAB, is fixed as polyP by PPK1, and both the exits (PitB) and the degradation/consumption of polyP (Ppx, PpkB) are blocked."
                     className="lab-figure--pathway"

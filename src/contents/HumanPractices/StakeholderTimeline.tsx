@@ -8,8 +8,10 @@ import {
   type Category,
 } from "./StakeholderTimelineData";
 import { AccordionSection } from "./AccordionSection";
+import { StakeholderMatrix } from "./StakeholderMatrix";
 import { VoiceNetworkGlyph } from "./HeroObjects";
 import "./StakeholderTimeline.css";
+import "./StakeholderMatrix.css";
 
 type AccentStyle = CSSProperties & { "--cat-color": string };
 
@@ -281,28 +283,40 @@ export function StakeholderTimeline() {
           final user, but as a system that must create value, and avoid
           transferring risk, across several connected communities.
         </p>
-        <div className="hp-users__table-wrap">
-          <table className="hp-users__table">
-            <thead>
-              <tr>
-                <th>Stakeholder</th>
-                <th>Relationship with rePhlow</th>
-                <th>What matters most to them</th>
-                <th>What rePhlow must demonstrate</th>
-              </tr>
-            </thead>
-            <tbody>
-              {USER_ROWS.map((row) => (
-                <tr key={row.stakeholder}>
-                  <td>{row.stakeholder}</td>
-                  <td>{row.relationship}</td>
-                  <td>{row.matters}</td>
-                  <td>{row.mustDemonstrate}</td>
+        <StakeholderMatrix />
+        {/* The matrix places most, but not all, of the table's rows — four
+            of them (infrastructure organisations, downstream communities,
+            aquatic ecosystems, the scientific community) have no marker on
+            it — so the table itself stays on the page rather than being
+            replaced outright. Folded away, since the matrix is now the
+            thing to read first. */}
+        <AccordionSection
+          title="Full stakeholder table"
+          className="hp-users__table-accordion"
+        >
+          <div className="hp-users__table-wrap">
+            <table className="hp-users__table">
+              <thead>
+                <tr>
+                  <th>Stakeholder</th>
+                  <th>Relationship with rePhlow</th>
+                  <th>What matters most to them</th>
+                  <th>What rePhlow must demonstrate</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {USER_ROWS.map((row) => (
+                  <tr key={row.stakeholder}>
+                    <td>{row.stakeholder}</td>
+                    <td>{row.relationship}</td>
+                    <td>{row.matters}</td>
+                    <td>{row.mustDemonstrate}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </AccordionSection>
         <h4>From one user to a network of users</h4>
         <p>
           This mapping reinforced a conclusion that emerged repeatedly
