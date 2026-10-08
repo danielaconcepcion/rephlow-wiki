@@ -25,6 +25,23 @@ export interface MatrixItem {
   /** The small line under the name on the matrix, where it has one. */
   subtitle?: string;
   quadrant: Quadrant;
+  /**
+   * Where the actor sits in the plot, as a percentage of the plot area:
+   * `x` along Interest (0 = least), `y` down from the top (0 = most
+   * Power). Read off the markers in the team's own matrix image rather
+   * than re-placed by eye — the axis rules cross at 47.4% / 50.3%, which
+   * is what puts each actor in the quadrant the source drew it in.
+   */
+  x: number;
+  y: number;
+  /** Which side of its marker the label sits on, to keep labels off each
+   * other and inside the plot. */
+  side?: "left" | "right";
+  /** Hang the label below or above its marker instead of across it, where
+   * that is what separates it from a neighbour. Points near the top or
+   * bottom edge get this automatically; this is for the rest. The marker
+   * stays on its coordinate either way, so the data is unaffected. */
+  valign?: "below" | "above";
   /** Filled marker on the matrix's legend ("Engaged to date") vs hollow
    * ("Not yet engaged"). */
   engaged: boolean;
@@ -54,6 +71,9 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   // ---- Manage closely (high power, high interest) ----
   {
     id: "bio-oils",
+    x: 55.8,
+    y: 1.3,
+    side: "right",
     name: "Bio-Oils Huelva",
     quadrant: "manage-closely",
     engaged: true,
@@ -62,6 +82,9 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   },
   {
     id: "repsol",
+    x: 85.5,
+    y: 8.6,
+    side: "left",
     name: "REPSOL",
     subtitle: "large industrial validator",
     quadrant: "manage-closely",
@@ -71,6 +94,9 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   },
   {
     id: "cedex",
+    x: 76.7,
+    y: 31.2,
+    side: "left",
     name: "CEDEX",
     subtitle: "public research & technical validation body",
     quadrant: "manage-closely",
@@ -79,6 +105,9 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   },
   {
     id: "plant-operators",
+    x: 52.6,
+    y: 32.1,
+    side: "left",
     name: "Plant-operators",
     quadrant: "manage-closely",
     engaged: false,
@@ -88,6 +117,9 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   // ---- Keep informed (high power, low interest) ----
   {
     id: "permitting-authorities",
+    x: 31.9,
+    y: 7.5,
+    side: "right",
     name: "Permitting authorities",
     quadrant: "keep-informed",
     engaged: false,
@@ -95,6 +127,9 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   },
   {
     id: "occupational-safety",
+    x: 15.8,
+    y: 21.9,
+    side: "right",
     name: "Occupational-safety specialists",
     quadrant: "keep-informed",
     engaged: false,
@@ -104,6 +139,10 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   // ---- Keep satisfied (low power, high interest) ----
   {
     id: "funding",
+    x: 57.5,
+    y: 55.4,
+    side: "left",
+    valign: "below",
     name: "Funding & accelerators",
     quadrant: "keep-satisfied",
     engaged: true,
@@ -120,6 +159,9 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   },
   {
     id: "phosphorus-users",
+    x: 89.7,
+    y: 61.2,
+    side: "left",
     name: "Users of recovered phosphorus",
     quadrant: "keep-satisfied",
     engaged: false,
@@ -127,6 +169,10 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   },
   {
     id: "smaller-facilities",
+    x: 72.0,
+    y: 77.0,
+    side: "left",
+    valign: "below",
     name: "Smaller industrial facilities",
     quadrant: "keep-satisfied",
     engaged: false,
@@ -136,6 +182,10 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   // ---- Monitor (low power, low interest) ----
   {
     id: "maintenance-workers",
+    x: 17.3,
+    y: 54.1,
+    side: "right",
+    valign: "above",
     name: "Maintenance workers",
     quadrant: "monitor",
     engaged: false,
@@ -143,6 +193,9 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   },
   {
     id: "environmental-organisations",
+    x: 34.0,
+    y: 69.3,
+    side: "right",
     name: "Environmental organisations",
     quadrant: "monitor",
     engaged: false,
@@ -150,6 +203,9 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   },
   {
     id: "waste-handlers",
+    x: 10.3,
+    y: 78.1,
+    side: "right",
     name: "Waste handlers",
     quadrant: "monitor",
     engaged: false,
@@ -157,11 +213,25 @@ export const MATRIX_ITEMS: MatrixItem[] = [
   },
 ];
 
+/* Where the two axis rules cross, as a percentage of the plot area —
+   measured from the team's own matrix image, not chosen. Everything that
+   has to line up with the axes (the rules, the quadrant names) reads
+   these rather than repeating the numbers. */
+export const AXIS_CROSS = { x: 47.4, y: 50.3 };
+
 export const QUADRANT_LABELS: Record<Quadrant, string> = {
   "keep-informed": "Keep informed",
   "manage-closely": "Manage closely",
   monitor: "Monitor",
   "keep-satisfied": "Keep satisfied",
+};
+
+/** Which corner of the plot each quadrant name sits in. */
+export const QUADRANT_CORNER: Record<Quadrant, { x: "left" | "right"; y: "top" | "bottom" }> = {
+  "keep-informed": { x: "left", y: "top" },
+  "manage-closely": { x: "right", y: "top" },
+  monitor: { x: "left", y: "bottom" },
+  "keep-satisfied": { x: "right", y: "bottom" },
 };
 
 const ROWS_BY_STAKEHOLDER = new Map(USER_ROWS.map((row) => [row.stakeholder, row]));

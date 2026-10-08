@@ -1,167 +1,329 @@
 /* --------------------------------------------------------------------------
-   STAKEHOLDER MATRIX — the team's power/interest matrix as web elements
-   rather than a flat image, so names are selectable and searchable, the
-   engagement state reaches a screen reader, and each actor carries its own
-   detail card (the stakeholder table's three columns).
+   STAKEHOLDER MATRIX — the team's power/interest matrix as a real plot:
+   two axes, and every actor at its own measured point (see
+   StakeholderMatrixData's `x`/`y`, read off the source image). Built as web
+   elements rather than shipped flat, so names are selectable and
+   searchable, the engagement state reaches a screen reader, and each actor
+   can carry its own card.
    -------------------------------------------------------------------------- */
 
 .hp-matrix {
-  margin: 28px 0 0;
+  /* The phosphorus gradient the Explore tiles use (Claude Design
+     "MoleculeField", primary palette) — the matrix borrows it so it reads
+     as part of the same site rather than a chart dropped into it. */
+  --p-from: #86b1d1;
+  --p-to: #9dc76f;
+  --p-gradient: linear-gradient(135deg, var(--p-from), var(--p-to));
+
+  margin: 30px 0 0;
 }
 
-.hp-matrix__frame {
+/* ---- the field ---- */
+
+.hp-matrix__plot {
   position: relative;
-  padding: 0 0 0 34px;
-}
-
-/* The two axis names, set along the rules they label. */
-.hp-matrix__axis {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.hp-matrix__axis--power {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%) rotate(180deg);
-  writing-mode: vertical-rl;
-}
-.hp-matrix__axis--interest {
-  text-align: center;
-  margin-top: 12px;
-}
-
-.hp-matrix__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2px;
-  background: var(--line);
+  aspect-ratio: 1590 / 860;
+  padding: 10px;
+  border-radius: 26px;
+  /* Light pools towards high power / high interest, so the corner the team
+     marked "manage closely" is visibly the hot one. */
+  background:
+    radial-gradient(
+      120% 100% at 78% 12%,
+      rgba(157, 199, 111, 0.17),
+      rgba(134, 177, 209, 0.12) 42%,
+      rgba(255, 255, 255, 0) 72%
+    ),
+    linear-gradient(170deg, #fdfefe, var(--paper-soft));
   border: 1px solid var(--line);
-  border-radius: var(--radius-md, 18px);
-  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
-.hp-matrix__quadrant {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-height: 230px;
-  padding: 18px;
+/* ---- axes ---- */
+
+.hp-matrix__rule {
+  position: absolute;
+  border-color: rgba(27, 35, 64, 0.26);
+}
+.hp-matrix__rule--y {
+  left: var(--cross-x);
+  top: 2%;
+  bottom: 2%;
+  border-left: 2px dotted;
+}
+.hp-matrix__rule--x {
+  top: var(--cross-y);
+  left: 2%;
+  right: 2%;
+  border-top: 2px dotted;
+}
+/* End caps, so each axis reads as a scale with two ends rather than as a
+   border of the box. */
+.hp-matrix__rule::before,
+.hp-matrix__rule::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 2px solid rgba(27, 35, 64, 0.4);
+  border-radius: 50%;
   background: var(--paper);
 }
-/* The two quadrants the team marked as high-priority read warmer. */
-.hp-matrix__quadrant--manage-closely,
-.hp-matrix__quadrant--keep-satisfied {
-  background: var(--paper-soft);
+.hp-matrix__rule--y::before {
+  top: -5px;
+  left: -5.5px;
+}
+.hp-matrix__rule--y::after {
+  bottom: -5px;
+  left: -5.5px;
+}
+.hp-matrix__rule--x::before {
+  left: -5px;
+  top: -5.5px;
+}
+.hp-matrix__rule--x::after {
+  right: -5px;
+  top: -5.5px;
 }
 
-.hp-matrix__quadrant-label {
+.hp-matrix__axis {
+  position: absolute;
   margin: 0;
-  align-self: flex-start;
-  padding: 7px 16px;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+/* Both names sit inside the plot — hung outside it, the right-hand one
+   pushed the page into a sideways scroll on a phone. */
+.hp-matrix__axis--y {
+  left: var(--cross-x);
+  bottom: 12px;
+  /* Beside the rule, not on it. */
+  transform: translateX(10px);
+}
+.hp-matrix__axis--x {
+  top: var(--cross-y);
+  left: 26px;
+  transform: translateY(-100%) translateY(-7px);
+}
+
+/* ---- quadrant names ----
+   Sentence case in the page's own display face, set quietly in the
+   corners: they name regions of the field, they are not headings and must
+   not compete with the actors sitting on top of them. */
+.hp-matrix__quadrant {
+  position: absolute;
+  margin: 0;
+  max-width: 7ch;
+  font-family: var(--font-display);
+  font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  line-height: 1.15;
+  color: rgba(27, 35, 64, 0.2);
+  pointer-events: none;
+}
+.hp-matrix__quadrant--top-left {
+  left: 16px;
+  top: 12px;
+}
+.hp-matrix__quadrant--top-right {
+  right: 16px;
+  top: 12px;
+  text-align: right;
+}
+.hp-matrix__quadrant--bottom-left {
+  left: 16px;
+  bottom: 12px;
+}
+.hp-matrix__quadrant--bottom-right {
+  right: 16px;
+  bottom: 12px;
+  text-align: right;
 }
 
-.hp-matrix__items {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+/* ---- an actor at its point ---- */
+
+.hp-matrix__point {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  /* The marker, not the label, is what sits on the coordinate. */
+  width: 0;
+  height: 0;
+}
+.hp-matrix__point.is-open {
+  z-index: 20;
 }
 
-/* An actor. The panel is positioned against this box, so it needs to
-   establish the containing block and sit above its neighbours while open. */
-.hp-matrix__item {
-  position: relative;
+/* A point near the top or bottom edge would hang its label off the plot,
+   so the label aligns under or over the marker instead of across it. The
+   marker itself stays exactly on the coordinate either way. */
+.hp-matrix__point--v-below .hp-matrix__hit {
+  top: 0;
+  align-items: flex-start;
+  transform: none;
 }
-.hp-matrix__item.is-open {
-  z-index: 5;
+.hp-matrix__point--v-above .hp-matrix__hit {
+  top: auto;
+  bottom: 0;
+  align-items: flex-end;
+  transform: none;
 }
 
-.hp-matrix__pill {
+.hp-matrix__hit {
+  position: absolute;
+  top: 50%;
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 100%;
-  padding: 11px 14px;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--paper);
+  gap: 9px;
+  padding: 0;
+  border: 0;
+  background: none;
   font-family: inherit;
   text-align: left;
+  transform: translateY(-50%);
   cursor: pointer;
-  transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.18s ease;
 }
-.hp-matrix__item.is-open .hp-matrix__pill,
-.hp-matrix__pill:hover {
-  border-color: rgba(27, 35, 64, 0.3);
-  box-shadow: var(--shadow-card, 0 8px 24px rgba(27, 35, 64, 0.06));
-  transform: translateY(-1px);
+.hp-matrix__point--right .hp-matrix__hit {
+  left: 0;
 }
-.hp-matrix__pill:focus-visible {
+.hp-matrix__point--left .hp-matrix__hit {
+  right: 0;
+  flex-direction: row-reverse;
+}
+.hp-matrix__point.is-static .hp-matrix__hit {
+  cursor: default;
+}
+.hp-matrix__hit:focus-visible {
   outline: 2px solid var(--ink);
-  outline-offset: 2px;
+  outline-offset: 6px;
+  border-radius: 14px;
 }
 
-/* Filled = engaged to date, hollow = not yet engaged, matching the
-   legend on the team's own matrix. */
-.hp-matrix__dot {
+/* The marker. Engaged actors are filled with the phosphorus gradient and
+   carry a soft bloom; the rest are hollow and dashed — a state readable at
+   a glance across the whole field. */
+.hp-matrix__pin {
+  position: relative;
   flex: none;
-  width: 11px;
-  height: 11px;
-  border: 2px solid var(--ink-soft);
+  display: grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
   border-radius: 50%;
-  background: transparent;
+  border: 2px dashed rgba(27, 35, 64, 0.42);
+  background: var(--paper);
+  transition:
+    transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1.3),
+    box-shadow 0.2s ease;
 }
-.hp-matrix__dot--engaged {
-  background: var(--ink);
-  border-color: var(--ink);
+.is-engaged .hp-matrix__pin {
+  border: 0;
+  background: var(--p-gradient);
+  box-shadow:
+    0 0 0 4px rgba(134, 177, 209, 0.2),
+    0 4px 10px rgba(27, 35, 64, 0.16);
+}
+.hp-matrix__pin-number {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ink-soft);
+  opacity: 0;
+}
+.is-engaged .hp-matrix__pin-number {
+  color: #ffffff;
 }
 
-.hp-matrix__logo {
-  flex: none;
-  width: auto;
-  max-width: 64px;
-  max-height: 24px;
-  object-fit: contain;
+/* A ring that blooms out of the marker on hover. */
+.hp-matrix__pin::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(134, 177, 209, 0.55);
+  opacity: 0;
+  transform: scale(0.72);
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+}
+.hp-matrix__hit:hover .hp-matrix__pin,
+.hp-matrix__point.is-open .hp-matrix__pin {
+  transform: scale(1.3);
+}
+.hp-matrix__hit:hover .hp-matrix__pin::after,
+.hp-matrix__point.is-open .hp-matrix__pin::after {
+  opacity: 1;
+  transform: scale(1.25);
 }
 
-.hp-matrix__names {
+/* The label beside the marker. A tinted, blurred card rather than an
+   outlined box, so twelve of them across one field stay quiet. */
+.hp-matrix__label {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 0;
+  gap: 1px;
+  /* max-content so a short name stays on one line instead of being
+     squeezed into a column by the flex row it sits in; capped so a long
+     one still wraps rather than running across the field. */
+  width: max-content;
+  max-width: 19ch;
+  padding: 7px 12px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 1px 2px rgba(27, 35, 64, 0.06);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
+.is-engaged .hp-matrix__label {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow:
+    inset 0 0 0 1px rgba(134, 177, 209, 0.4),
+    0 2px 8px rgba(27, 35, 64, 0.07);
+}
+.hp-matrix__hit:hover .hp-matrix__label,
+.hp-matrix__point.is-open .hp-matrix__label {
+  background: #ffffff;
+  box-shadow:
+    inset 0 0 0 1px rgba(134, 177, 209, 0.6),
+    0 8px 20px rgba(27, 35, 64, 0.12);
+}
+.hp-matrix__point.is-static .hp-matrix__hit:hover .hp-matrix__label {
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 1px 2px rgba(27, 35, 64, 0.06);
+}
+
 .hp-matrix__name {
   font-family: var(--font-display);
+  font-size: 0.86rem;
   font-weight: 700;
-  font-size: 0.9rem;
-  color: var(--ink);
   line-height: 1.25;
+  color: var(--ink);
 }
-.hp-matrix__subtitle {
-  font-size: 0.76rem;
-  color: var(--ink-soft);
+.hp-matrix__note {
+  font-size: 0.72rem;
   line-height: 1.35;
+  color: var(--ink-soft);
 }
-/* The engagement state is in the dot, which is decorative — so it is also
-   written out here for anyone who cannot see the dot. Visually hidden
-   rather than removed. */
-.hp-matrix__engagement {
+.hp-matrix__logo {
+  width: auto;
+  max-width: 76px;
+  max-height: 20px;
+  margin-bottom: 3px;
+  object-fit: contain;
+  object-position: left center;
+}
+
+/* The engagement state lives in the marker, which is decorative, so it is
+   also written out for anyone who cannot see it. */
+.hp-matrix__sr {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -172,50 +334,59 @@
   white-space: nowrap;
 }
 
-/* The detail card. Floats over the matrix on a wide screen so opening one
-   does not reflow the grid; becomes an ordinary block below the pill once
-   the quadrants stack. */
-.hp-matrix__panel {
+/* ---- the card ---- */
+
+.hp-matrix__card {
   position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  width: min(380px, 78vw);
-  padding: 16px 18px;
-  border: 1px solid rgba(27, 35, 64, 0.16);
-  border-radius: var(--radius-md, 18px);
+  top: calc(50% + 22px);
+  width: min(340px, 72vw);
+  padding: 15px 17px;
+  border-radius: 18px;
   background: var(--paper);
-  box-shadow: var(--shadow-soft, 0 12px 40px rgba(27, 35, 64, 0.08));
+  box-shadow:
+    inset 0 0 0 1px rgba(134, 177, 209, 0.45),
+    0 16px 40px rgba(27, 35, 64, 0.16);
 }
-/* Near the right-hand edge the card would overflow the frame, so the
-   second column's cards hang to the left of their pill instead. */
-.hp-matrix__quadrant--manage-closely .hp-matrix__panel,
-.hp-matrix__quadrant--keep-satisfied .hp-matrix__panel {
-  left: auto;
+.hp-matrix__point--right .hp-matrix__card {
+  left: 0;
+}
+.hp-matrix__point--left .hp-matrix__card {
   right: 0;
 }
+.hp-matrix__point.is-open .hp-matrix__card {
+  animation: hp-matrix-pop 0.22s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+@keyframes hp-matrix-pop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+}
 
-.hp-matrix__panel-title {
-  margin: 0 0 10px;
+.hp-matrix__card-title {
+  margin: 0 0 11px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   color: var(--ink);
 }
 
 .hp-matrix__fields {
   margin: 0;
 }
+/* Sentence case, like the rest of the page — these labels are read, not
+   shouted. */
 .hp-matrix__fields dt {
   font-family: var(--font-display);
-  font-size: 0.68rem;
+  font-size: 0.74rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+  color: #5f8bad;
 }
 .hp-matrix__fields dd {
-  margin: 4px 0 12px;
-  font-size: 0.84rem;
+  margin: 3px 0 11px;
+  font-size: 0.83rem;
   line-height: 1.55;
   color: var(--ink);
 }
@@ -223,70 +394,161 @@
   margin-bottom: 0;
 }
 
-/* An actor with no table row behind it: named, but not a control, so it
-   gets none of the button's affordances. */
-.hp-matrix__pill--static {
-  cursor: default;
-}
-.hp-matrix__pill--static:hover {
-  border-color: var(--line);
-  box-shadow: none;
-  transform: none;
-}
+/* ---- legend ---- */
 
 .hp-matrix__legend {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 8px 28px;
-  margin: 18px 0 0;
-  font-size: 0.8rem;
+  gap: 8px 30px;
+  margin: 22px 0 0;
+  font-size: 0.82rem;
   color: var(--ink-soft);
 }
 .hp-matrix__legend-item {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+}
+.hp-matrix__key {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px dashed rgba(27, 35, 64, 0.42);
+  background: var(--paper);
+}
+.hp-matrix__key--engaged {
+  border: 0;
+  background: var(--p-gradient);
+  box-shadow: 0 0 0 3px rgba(134, 177, 209, 0.2);
 }
 
 .hp-matrix > figcaption {
-  margin-top: 14px;
+  margin-top: 16px;
   font-size: 0.82rem;
   font-style: italic;
   line-height: 1.6;
   color: var(--ink-soft);
 }
 
-@media (max-width: 860px) {
-  .hp-matrix__grid {
-    grid-template-columns: minmax(0, 1fr);
+/* ---- narrow screens ----
+   The field stays a field: the positions are the content, so the plot is
+   kept and made taller rather than collapsed into a list. */
+@media (max-width: 980px) {
+  .hp-matrix__plot {
+    aspect-ratio: 1590 / 1150;
   }
-  .hp-matrix__quadrant {
-    min-height: 0;
+  .hp-matrix__label {
+    max-width: 14ch;
+    padding: 5px 9px;
+    border-radius: 10px;
   }
-  /* One column, so a floating card has nothing to float over and would
-     only cover the next quadrant. It becomes part of the flow instead. */
-  .hp-matrix__panel,
-  .hp-matrix__quadrant--manage-closely .hp-matrix__panel,
-  .hp-matrix__quadrant--keep-satisfied .hp-matrix__panel {
-    position: static;
-    width: auto;
-    margin-top: 8px;
-    box-shadow: none;
+  .hp-matrix__name {
+    font-size: 0.72rem;
+  }
+  .hp-matrix__note {
+    display: none;
+  }
+  .hp-matrix__card {
+    width: min(290px, 64vw);
+  }
+}
+
+@media (max-width: 620px) {
+  /* Below this no label can be read at a size that still fits, so the
+     markers carry their number instead and the names sit in the key
+     underneath. */
+  .hp-matrix__plot {
+    aspect-ratio: 1 / 1;
+  }
+  .hp-matrix__label {
+    display: none;
+  }
+  .hp-matrix__pin-number {
+    opacity: 1;
+  }
+  .hp-matrix__pin {
+    width: 23px;
+    height: 23px;
+  }
+  .hp-matrix__card {
+    width: min(250px, 56vw);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hp-matrix__pill {
+  .hp-matrix__pin,
+  .hp-matrix__pin::after,
+  .hp-matrix__label {
     transition: none;
   }
-  .hp-matrix__item.is-open .hp-matrix__pill,
-  .hp-matrix__pill:hover {
+  .hp-matrix__point.is-open .hp-matrix__card {
+    animation: none;
+  }
+  .hp-matrix__hit:hover .hp-matrix__pin,
+  .hp-matrix__point.is-open .hp-matrix__pin {
     transform: none;
   }
 }
 
 /* The table is now behind an accordion below the matrix. */
 .hp-users__table-accordion {
-  margin-top: 26px;
+  margin-top: 30px;
+}
+
+/* ---- numbered key (narrow screens only) ----
+   Shown only where the plot drops its labels, so the points can still be
+   matched to names. */
+.hp-matrix__key-list {
+  display: none;
+}
+@media (max-width: 620px) {
+  .hp-matrix__key-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 7px;
+    margin: 20px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8rem;
+    color: var(--ink);
+  }
+  .hp-matrix__key-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.3;
+  }
+  .hp-matrix__key-number {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    border: 2px dashed rgba(27, 35, 64, 0.42);
+    font-family: var(--font-display);
+    font-size: 0.64rem;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+  .hp-matrix__key-number.is-engaged {
+    border: 0;
+    background: var(--p-gradient);
+    color: #ffffff;
+  }
+}
+
+/* The funding group's seven members, kept under the plot rather than in
+   its one marker's label. */
+.hp-matrix__members {
+  margin: 18px auto 0;
+  max-width: 62ch;
+  text-align: center;
+  font-size: 0.79rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.hp-matrix__members strong {
+  color: var(--ink);
 }
