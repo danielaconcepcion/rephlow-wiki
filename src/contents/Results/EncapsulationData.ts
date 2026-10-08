@@ -254,67 +254,77 @@ const BEAD_PRESERVATION: ResultData = {
           caption:
             "Figure pending. Relative change in projected area (A/A₀, mean ± SD) over time for beads stored in water, industrial wastewater and PBS, one line per medium; the PBS series ends at 48 h, with the reduced number of measurable beads indicated.",
         },
-        {
-          src: `${FIGURES}/beads-water-0h.jpg`,
-          alt: "Alginate beads stored in water, photographed at 0 h.",
-          caption: "Water, 0 h.",
-        },
-        {
-          src: `${FIGURES}/beads-water-24h.jpg`,
-          alt: "Alginate beads stored in water, photographed at 24 h.",
-          caption: "Water, 24 h.",
-        },
-        {
-          src: `${FIGURES}/beads-water-48h.jpg`,
-          alt: "Alginate beads stored in water, photographed at 48 h.",
-          caption: "Water, 48 h.",
-        },
-        {
-          src: `${FIGURES}/beads-water-72h.jpg`,
-          alt: "Alginate beads stored in water, photographed at 72 h.",
-          caption: "Water, 72 h.",
-        },
-        {
-          src: `${FIGURES}/beads-wastewater-0h.jpg`,
-          alt: "Alginate beads stored in industrial wastewater, photographed at 0 h.",
-          caption: "Industrial wastewater, 0 h.",
-        },
-        {
-          src: `${FIGURES}/beads-wastewater-24h.jpg`,
-          alt: "Alginate beads stored in industrial wastewater, photographed at 24 h.",
-          caption: "Industrial wastewater, 24 h.",
-        },
-        {
-          src: `${FIGURES}/beads-wastewater-48h.jpg`,
-          alt: "Alginate beads stored in industrial wastewater, photographed at 48 h.",
-          caption: "Industrial wastewater, 48 h.",
-        },
-        {
-          src: `${FIGURES}/beads-wastewater-72h.jpg`,
-          alt: "Alginate beads stored in industrial wastewater, photographed at 72 h.",
-          caption: "Industrial wastewater, 72 h.",
-        },
-        {
-          src: `${FIGURES}/beads-pbs-0h.jpg`,
-          alt: "Alginate beads stored in pbs, photographed at 0 h.",
-          caption: "PBS, 0 h.",
-        },
-        {
-          src: `${FIGURES}/beads-pbs-24h.jpg`,
-          alt: "Alginate beads stored in pbs, photographed at 24 h.",
-          caption: "PBS, 24 h.",
-        },
-        {
-          src: `${FIGURES}/beads-pbs-48h.jpg`,
-          alt: "Alginate beads stored in pbs, photographed at 48 h.",
-          caption: "PBS, 48 h.",
-        },
-        {
-          src: `${FIGURES}/beads-pbs-72h.jpg`,
-          alt: "Alginate beads stored in pbs, photographed at 72 h.",
-          caption: "PBS, 72 h.",
-        },
       ],
+      figureMatrix: {
+        columns: ["0 h", "24 h", "48 h", "72 h"],
+        rows: [
+        {
+          label: "Water",
+          figures: [
+            {
+              src: `${FIGURES}/beads-water-0h.jpg`,
+              alt: "Alginate beads stored in water, photographed at 0 h.",
+            },
+            {
+              src: `${FIGURES}/beads-water-24h.jpg`,
+              alt: "Alginate beads stored in water, photographed at 24 h.",
+            },
+            {
+              src: `${FIGURES}/beads-water-48h.jpg`,
+              alt: "Alginate beads stored in water, photographed at 48 h.",
+            },
+            {
+              src: `${FIGURES}/beads-water-72h.jpg`,
+              alt: "Alginate beads stored in water, photographed at 72 h.",
+            },
+          ],
+        },
+        {
+          label: "Industrial wastewater",
+          figures: [
+            {
+              src: `${FIGURES}/beads-wastewater-0h.jpg`,
+              alt: "Alginate beads stored in industrial wastewater, photographed at 0 h.",
+            },
+            {
+              src: `${FIGURES}/beads-wastewater-24h.jpg`,
+              alt: "Alginate beads stored in industrial wastewater, photographed at 24 h.",
+            },
+            {
+              src: `${FIGURES}/beads-wastewater-48h.jpg`,
+              alt: "Alginate beads stored in industrial wastewater, photographed at 48 h.",
+            },
+            {
+              src: `${FIGURES}/beads-wastewater-72h.jpg`,
+              alt: "Alginate beads stored in industrial wastewater, photographed at 72 h.",
+            },
+          ],
+        },
+        {
+          label: "PBS",
+          figures: [
+            {
+              src: `${FIGURES}/beads-pbs-0h.jpg`,
+              alt: "Alginate beads stored in pbs, photographed at 0 h.",
+            },
+            {
+              src: `${FIGURES}/beads-pbs-24h.jpg`,
+              alt: "Alginate beads stored in pbs, photographed at 24 h.",
+            },
+            {
+              src: `${FIGURES}/beads-pbs-48h.jpg`,
+              alt: "Alginate beads stored in pbs, photographed at 48 h.",
+            },
+            {
+              src: `${FIGURES}/beads-pbs-72h.jpg`,
+              alt: "Alginate beads stored in pbs, photographed at 72 h.",
+            },
+          ],
+        },
+        ],
+        caption:
+          "3.5% (w/v) alginate beads photographed over 72 h of storage in each medium. The 72 h PBS panel is the end state of that series: the beads had dissolved or broken apart and none could be measured.",
+      },
       tables: [
         {
           caption:

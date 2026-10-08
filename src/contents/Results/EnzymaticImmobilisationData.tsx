@@ -131,6 +131,7 @@ const IN_SILICO: ResultData = {
   subsections: [
     {
       id: "topology",
+      figuresColumns: 4,
       title: "Terminal accessibility and tag placement",
       figures: [
         {
@@ -181,6 +182,7 @@ const IN_SILICO: ResultData = {
     },
     {
       id: "disulphides",
+      figuresColumns: 4,
       title: "Structural disulphide bridges",
       figures: [
         {
@@ -285,6 +287,7 @@ const CONSTRUCTS: ResultData = {
   subsections: [
     {
       id: "amplification",
+      figuresAside: true,
       figures: [
         {
           src: `${GELS}/gel_gene_amplification.png`,
@@ -310,6 +313,7 @@ const TRANSFORMATION: ResultData = {
   subsections: [
     {
       id: "colony-pcr",
+      figuresAside: true,
       figures: [
         {
           src: `${GELS}/gel_colony_pcr.png`,
@@ -335,6 +339,7 @@ const EXPRESSION: ResultData = {
   subsections: [
     {
       id: "iptg-vs-autoinduction",
+      figuresColumns: 2,
       title: "IPTG against ZY auto-induction",
       figures: [
         {
@@ -369,6 +374,7 @@ const EXPRESSION: ResultData = {
     },
     {
       id: "plc-cytotoxicity",
+      figuresAside: true,
       title: "The Addgene constructs, and PLC cytotoxicity",
       figures: [
         {
@@ -464,11 +470,22 @@ const FUNCTIONAL: ResultData = {
           caption:
             "Kinetic characterisation of the purified hydrolases. (A) Time course of pNP released, with hyperbolic fits. (B) Bradford standard curve against BSA used to quantify protein. (C) Linear section whose slope is the specific activity. Points are the mean of three independent replicates with their standard deviation.",
         },
+      ],
+      tables: [
         {
-          src: `${FIGURES}/specific-activity-summary.png`,
-          alt: "Summary table of enzymatic activity, protein concentration and specific activity for AphA, PhyA and M2-32.",
           caption:
-            "Enzymatic activity, protein concentration and specific activity of the three purified recombinant hydrolases.",
+            "Enzymatic activity, protein concentration and specific activity of the three purified recombinant hydrolases. Transcribed from the team's own summary table.",
+          headers: [
+            "Enzyme",
+            "Activity (U/mL)",
+            "[Protein] (mg/mL)",
+            "Specific activity (U/mg)",
+          ],
+          rows: [
+            ["AphA", "0.000413", "0.186", "0.2223"],
+            ["PhyA", "0.000421", "0.299", "0.1406"],
+            ["M2-32", "0.000542", "0.337", "0.1608"],
+          ],
         },
       ],
       observations:
@@ -490,22 +507,50 @@ const LECITASE: ResultData = {
       id: "lecitase-baseline",
       figures: [
         {
-          src: `${FIGURES}/lecitase-dilutions.png`,
-          alt: "Mean absorbance at 595 nm of the Lecitase Ultra dilution series with standard deviations.",
-          caption:
-            "Mean A₅₉₅ of the prepared Lecitase® Ultra dilutions, with the standard deviation.",
-        },
-        {
           src: `${FIGURES}/lecitase-stock-concentration.png`,
           alt: "Interpolation of the Lecitase Ultra dilutions on the BSA standard line.",
           caption:
             "Determination of the concentration of the Lecitase® Ultra stock. In green, the interpolation of the concentrations falling in the linear range of the standard line, in blue.",
         },
+      ],
+      tables: [
         {
-          src: `${FIGURES}/lecitase-specific-activity.png`,
-          alt: "Table of the specific activity of the Lecitase Ultra stock.",
           caption:
-            "Determination of the specific enzymatic activity of the Lecitase® Ultra stock from the activity assay and the Bradford method, performed in duplicate.",
+            "Mean A₅₉₅ of the prepared Lecitase® Ultra dilutions, with the standard deviation. Transcribed from the team's own summary table.",
+          headers: ["Dilution factor", "Average A₅₉₅ (a.u.)", "Standard deviation (a.u.)"],
+          rows: [
+            ["10", "1.307", "0.030"],
+            ["20", "1.535", "0.262"],
+            ["30", "1.021", "0.059"],
+            ["40", "0.674", "0.085"],
+            ["50", "0.795", "0.031"],
+            ["60", "0.665", "0.013"],
+          ],
+        },
+        {
+          caption:
+            "Determination of the specific enzymatic activity of the Lecitase® Ultra stock from the activity assay and the Bradford method, performed in duplicate. Transcribed from the team's own summary table; the stock concentration and the mean specific activity are each one value derived from both replicates, not a per-replicate measurement.",
+          headers: [
+            "ΔA₃₄₈/min",
+            "Activity (U)",
+            "A₅₉₅ (a.u.)",
+            "[protein] (mg/mL)",
+            "[protein]stock (mg/mL)",
+            "Specific activity (U/mg)",
+            "Mean specific activity (U/mg)",
+          ],
+          rows: [
+            [
+              "0.1632",
+              "31.689",
+              "0.656",
+              "0.653",
+              { value: "39.856", rowSpan: 2 },
+              "969.64",
+              { value: "981", rowSpan: 2 },
+            ],
+            ["0.1724", "33.476", "0.674", "0.674", "991.99"],
+          ],
         },
       ],
       observations:
@@ -622,6 +667,7 @@ const MODELLING: ResultData = {
   subsections: [
     {
       id: "open-closed-models",
+      figuresColumns: 2,
       figures: [
         {
           src: `${FIGURES}/lecitase-top-view.png`,

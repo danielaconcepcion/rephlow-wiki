@@ -78,9 +78,17 @@ export interface FigureData {
   caption: string;
 }
 
+/** One cell of a transcribed table. A plain string in the ordinary case;
+ * the object form carries a vertical span, for a source table where one
+ * value genuinely covers several rows (e.g. a stock concentration derived
+ * once from a duplicate pair). Repeating that value down the rows instead
+ * would read as several independent measurements, which is not what was
+ * measured. */
+export type TableCell = string | { value: string; rowSpan: number };
+
 export interface RecordTable {
   headers: string[];
-  rows: string[][];
+  rows: TableCell[][];
 }
 
 /* ---------- Experiment record ---------- */
@@ -250,6 +258,36 @@ export interface ResultSubsection {
    * share one caption. Without this the shared caption has to hang off the
    * last panel, where it reads as that panel's own. */
   figuresCaption?: string;
+  /** A grid of photographs that vary along two axes — e.g. three storage
+   * media photographed at four time points. The flat `figures` grid
+   * auto-flows at whatever column count fits, so such a series breaks
+   * mid-row ("PBS, 48 h" ending one row and "PBS, 72 h" opening the
+   * next) and each panel has to repeat both axes in its own caption.
+   * Here the axes are named once — columns across the top, rows down the
+   * side — and the row is never split. */
+  figureMatrix?: {
+    /** Column headings, e.g. ["0 h", "24 h", "48 h", "72 h"]. */
+    columns: string[];
+    rows: {
+      /** Row heading, e.g. "Water". */
+      label: string;
+      /** One per column, in the same order. */
+      figures: { src: string; alt: string }[];
+    }[];
+    caption?: string;
+  };
+  /** Fix the number of columns in the `figures` grid instead of letting it
+   * auto-fit. Auto-fit packs as many panels per row as will fit, which
+   * leaves a four-panel series as three plus a lone fourth — a split that
+   * reads as two groups. A panel set that belongs together states its own
+   * shape here. */
+  figuresColumns?: number;
+  /** Put this section's figures in a narrow column beside its text rather
+   * than in a band across the card. For a tall, narrow image — a gel lane
+   * is roughly 400 px wide — a full-width band leaves most of the row
+   * empty on both sides, and pushes the prose that explains the gel far
+   * below it. */
+  figuresAside?: boolean;
   tables?: (RecordTable & { caption?: string })[];
   /** A bespoke visual instead of an image — e.g. the candidate-selection
    * funnel, which is a component rather than a screenshot so its numbers
