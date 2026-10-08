@@ -1,88 +1,96 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
 
 import { asset } from "../../utils";
 import {
+  AXIS_CROSS,
   MATRIX_ITEMS,
+  QUADRANT_CORNER,
   QUADRANT_LABELS,
   rowFor,
   type MatrixItem,
   type Quadrant,
 } from "./StakeholderMatrixData";
 
-const QUADRANT_ORDER: Quadrant[] = [
-  "keep-informed",
-  "manage-closely",
-  "monitor",
-  "keep-satisfied",
-];
+type PlotStyle = CSSProperties & { "--x": string; "--y": string };
+
+const QUADRANTS = Object.keys(QUADRANT_LABELS) as Quadrant[];
 
 /**
- * One actor on the matrix. A button rather than a hover-only element: the
- * detail has to be reachable by keyboard and on a touch screen, where
- * there is no hover at all. Pointer users still get the card on hover;
- * keyboard users get it on focus; touch users get it on tap.
+ * One actor, placed at its own point in the plot. The marker is the thing
+ * at the coordinate; the label hangs off it, on the side the data picks so
+ * labels stay off each other and inside the plot.
  */
-function MatrixCard({
+function Marker({
   item,
+  index,
   open,
   onOpen,
   onClose,
 }: {
   item: MatrixItem;
+  index: number;
   open: boolean;
   onOpen: () => void;
   onClose: () => void;
 }) {
   const panelId = useId();
   const row = rowFor(item);
+  const style: PlotStyle = { "--x": `${item.x}%`, "--y": `${item.y}%` };
 
   const body = (
     <>
-      <span
-        className={`hp-matrix__dot${item.engaged ? " hp-matrix__dot--engaged" : ""}`}
-        aria-hidden="true"
-      />
-      {item.logo && <img className="hp-matrix__logo" src={asset(item.logo)} alt="" />}
-      <span className="hp-matrix__names">
+      <span className="hp-matrix__pin" aria-hidden="true">
+        <span className="hp-matrix__pin-number">{index + 1}</span>
+      </span>
+      <span className="hp-matrix__label">
+        {item.logo && (
+          <img className="hp-matrix__logo" src={asset(item.logo)} alt="" />
+        )}
         <span className="hp-matrix__name">{item.name}</span>
-        {item.subtitle && (
-          <span className="hp-matrix__subtitle">{item.subtitle}</span>
-        )}
-        {/* Printed inside the box on the team's own matrix, so it belongs
-            on the pill rather than only inside a card — which an actor
-            with no table row does not have. */}
-        {item.members && (
-          <span className="hp-matrix__subtitle">
-            {item.members.join(" · ")}
-          </span>
-        )}
-        <span className="hp-matrix__engagement">
+        {item.subtitle && <span className="hp-matrix__note">{item.subtitle}</span>}
+        <span className="hp-matrix__sr">
           {item.engaged ? "Engaged to date" : "Not yet engaged"}
         </span>
       </span>
     </>
   );
 
+  // Near an edge the label is hung below/above the marker rather than
+  // centred on it, so it stays inside the plot.
+  const vAlign =
+    item.valign ?? (item.y < 10 ? "below" : item.y > 90 ? "above" : null);
+
+  const classes = [
+    "hp-matrix__point",
+    `hp-matrix__point--${item.side ?? "right"}`,
+    vAlign ? `hp-matrix__point--v-${vAlign}` : "",
+    item.engaged ? "is-engaged" : "is-pending",
+    open ? "is-open" : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   /* An actor the stakeholder table has no row for carries no card: it is
-     named on the matrix and nothing more. Rendered as plain text rather
+     placed on the matrix and named, and nothing more. Plain text rather
      than a button, so it does not offer a control that opens nothing. */
   if (!row) {
     return (
-      <div className="hp-matrix__item">
-        <div className="hp-matrix__pill hp-matrix__pill--static">{body}</div>
+      <div className={`${classes} is-static`} style={style}>
+        <div className="hp-matrix__hit">{body}</div>
       </div>
     );
   }
 
   return (
     <div
-      className={`hp-matrix__item${open ? " is-open" : ""}`}
+      className={classes}
+      style={style}
       onMouseEnter={onOpen}
       onMouseLeave={onClose}
     >
       <button
         type="button"
-        className="hp-matrix__pill"
+        className="hp-matrix__hit"
         aria-expanded={open}
         aria-controls={panelId}
         onFocus={onOpen}
@@ -91,9 +99,8 @@ function MatrixCard({
         {body}
       </button>
 
-      <div className="hp-matrix__panel" id={panelId} role="note" hidden={!open}>
-        <p className="hp-matrix__panel-title">{item.name}</p>
-
+      <div className="hp-matrix__card" id={panelId} role="note" hidden={!open}>
+        <p className="hp-matrix__card-title">{item.name}</p>
         <dl className="hp-matrix__fields">
           <dt>Relationship with rePhlow</dt>
           <dd>{row.relationship}</dd>
@@ -112,7 +119,7 @@ export function StakeholderMatrix() {
   const rootRef = useRef<HTMLDivElement>(null);
 
   // A card opened by tap or keyboard stays open until something else is
-  // chosen, Escape is pressed, or the focus/pointer leaves the matrix —
+  // chosen, Escape is pressed, or the pointer leaves the matrix —
   // otherwise on a touch screen there is no way to dismiss it.
   useEffect(() => {
     if (!openId) return;
@@ -130,61 +137,97 @@ export function StakeholderMatrix() {
     };
   }, [openId]);
 
+  const crossStyle = {
+    "--cross-x": `${AXIS_CROSS.x}%`,
+    "--cross-y": `${AXIS_CROSS.y}%`,
+  } as CSSProperties & { "--cross-x": string; "--cross-y": string };
+
   return (
     <figure className="hp-matrix" ref={rootRef}>
-      <div className="hp-matrix__frame">
-        <p className="hp-matrix__axis hp-matrix__axis--power">Power</p>
+      <div
+        className={`hp-matrix__plot${openId ? " has-open" : ""}`}
+        style={crossStyle}
+      >
+        {/* The two axes: dotted rules crossing where the source crosses
+            them, each named at its growing end. This is a field with
+            positions, not a table of four cells. */}
+        <div className="hp-matrix__rule hp-matrix__rule--y" aria-hidden="true" />
+        <div className="hp-matrix__rule hp-matrix__rule--x" aria-hidden="true" />
+        {/* As in the source: the horizontal rule is the Power divider
+            (above it = more power) and the vertical rule the Interest one
+            (right of it = more interest), each named at the end the
+            source names it. */}
+        <p className="hp-matrix__axis hp-matrix__axis--x">Power</p>
+        <p className="hp-matrix__axis hp-matrix__axis--y">Interest</p>
 
-        <div className="hp-matrix__grid">
-          {QUADRANT_ORDER.map((quadrant) => (
-            <section
-              className={`hp-matrix__quadrant hp-matrix__quadrant--${quadrant}`}
-              key={quadrant}
-              aria-label={QUADRANT_LABELS[quadrant]}
-            >
-              <h4 className="hp-matrix__quadrant-label">
-                {QUADRANT_LABELS[quadrant]}
-              </h4>
-              <div className="hp-matrix__items">
-                {MATRIX_ITEMS.filter((item) => item.quadrant === quadrant).map(
-                  (item) => (
-                    <MatrixCard
-                      item={item}
-                      key={item.id}
-                      open={openId === item.id}
-                      onOpen={() => setOpenId(item.id)}
-                      onClose={() => setOpenId((id) => (id === item.id ? null : id))}
-                    />
-                  ),
-                )}
-              </div>
-            </section>
-          ))}
-        </div>
+        {QUADRANTS.map((quadrant) => (
+          <p
+            className={`hp-matrix__quadrant hp-matrix__quadrant--${QUADRANT_CORNER[quadrant].y}-${QUADRANT_CORNER[quadrant].x}`}
+            key={quadrant}
+          >
+            {QUADRANT_LABELS[quadrant]}
+          </p>
+        ))}
 
-        <p className="hp-matrix__axis hp-matrix__axis--interest">Interest</p>
+        {MATRIX_ITEMS.map((item, index) => (
+          <Marker
+            item={item}
+            index={index}
+            key={item.id}
+            open={openId === item.id}
+            onOpen={() => setOpenId(item.id)}
+            onClose={() => setOpenId((id) => (id === item.id ? null : id))}
+          />
+        ))}
       </div>
+
+      {/* Below ~620px the plot keeps its points but drops its labels (no
+          label is readable at a size that still fits twelve of them), so
+          the names live here instead. Hidden from a screen reader, which
+          already gets every name from the plot itself. */}
+      <ol className="hp-matrix__key-list" aria-hidden="true">
+        {MATRIX_ITEMS.map((item, index) => (
+          <li key={item.id}>
+            <span
+              className={`hp-matrix__key-number${item.engaged ? " is-engaged" : ""}`}
+            >
+              {index + 1}
+            </span>
+            {item.name}
+          </li>
+        ))}
+      </ol>
+
+      {/* The funding group is one point on the plot but seven names. They
+          are printed inside the box on the team's own matrix, so they are
+          kept — under it, where they have room, rather than inflating one
+          marker's label until it covers its neighbours. */}
+      {MATRIX_ITEMS.filter((item) => item.members).map((item) => (
+        <p className="hp-matrix__members" key={item.id}>
+          <strong>{item.name}:</strong> {item.members?.join(" · ")}
+        </p>
+      ))}
 
       <p className="hp-matrix__legend">
         <span className="hp-matrix__legend-item">
           <span
-            className="hp-matrix__dot hp-matrix__dot--engaged"
+            className="hp-matrix__key hp-matrix__key--engaged"
             aria-hidden="true"
           />
           Engaged to date
         </span>
         <span className="hp-matrix__legend-item">
-          <span className="hp-matrix__dot" aria-hidden="true" />
+          <span className="hp-matrix__key" aria-hidden="true" />
           Not yet engaged
         </span>
       </p>
 
       <figcaption>
-        Our stakeholder matrix, by the power an actor holds over rePhlow's
-        implementation and the interest they have in it. Where we have
-        written an actor up, selecting or hovering over it shows how it
-        relates to rePhlow, what matters most to it and what rePhlow would
-        have to demonstrate.
+        Our stakeholder matrix: every actor sits at its own point, by the
+        power it holds over rePhlow&rsquo;s implementation and the interest it
+        has in it. Where we have written an actor up, selecting or hovering
+        over it shows how it relates to rePhlow, what matters most to it and
+        what rePhlow would have to demonstrate.
       </figcaption>
     </figure>
   );
