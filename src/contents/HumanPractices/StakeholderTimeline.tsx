@@ -4,7 +4,6 @@ import {
   CATEGORY_DESCRIPTIONS,
   EVENTS,
   PENDING_ENTRIES,
-  USER_ROWS,
   type Category,
 } from "./StakeholderTimelineData";
 import { AccordionSection } from "./AccordionSection";
@@ -258,7 +257,7 @@ export function StakeholderTimeline() {
       </div>
 
       <div className="hp-users" id="s2-users">
-        <h3>Communities and potential users: summary table</h3>
+        <h3>Communities and potential users</h3>
         <p>
           As our Human Practices route expanded, we realised that asking whether
           rePhlow could remove and recover phosphorus was only part of the
@@ -284,39 +283,6 @@ export function StakeholderTimeline() {
           transferring risk, across several connected communities.
         </p>
         <StakeholderMatrix />
-        {/* The matrix places most, but not all, of the table's rows — four
-            of them (infrastructure organisations, downstream communities,
-            aquatic ecosystems, the scientific community) have no marker on
-            it — so the table itself stays on the page rather than being
-            replaced outright. Folded away, since the matrix is now the
-            thing to read first. */}
-        <AccordionSection
-          title="Full stakeholder table"
-          className="hp-users__table-accordion"
-        >
-          <div className="hp-users__table-wrap">
-            <table className="hp-users__table">
-              <thead>
-                <tr>
-                  <th>Stakeholder</th>
-                  <th>Relationship with rePhlow</th>
-                  <th>What matters most to them</th>
-                  <th>What rePhlow must demonstrate</th>
-                </tr>
-              </thead>
-              <tbody>
-                {USER_ROWS.map((row) => (
-                  <tr key={row.stakeholder}>
-                    <td>{row.stakeholder}</td>
-                    <td>{row.relationship}</td>
-                    <td>{row.matters}</td>
-                    <td>{row.mustDemonstrate}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </AccordionSection>
         <h4>From one user to a network of users</h4>
         <p>
           This mapping reinforced a conclusion that emerged repeatedly
