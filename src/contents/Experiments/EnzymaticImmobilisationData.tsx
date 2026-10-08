@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import type { ExperimentSubBlock } from "../../components/LabFolders/types";
-import { SelectionFunnel } from "./SelectionFunnel";
 
 /** An inline "[n]" citation. Unlike Genetic engineering / Alginate
  * encapsulation, this whole block shares ONE reference list (see
@@ -90,12 +89,12 @@ function protocolLinks(...names: string[]) {
  *   labelled text description in EnzymeActivityGrid, not as a real media
  *   placeholder, exactly as GeneSystemGrid already does for Genetic
  *   engineering.
- * - The selection funnel is rendered as a real, live component
- *   (SelectionFunnel) instead of the source's own static screenshot.
- * - Every real photo the team supplied (agarose/SDS-PAGE gels, PyMOL
- *   structures) is a real `image` or `image-group` resource now, using the
- *   source's own captions verbatim — this is the first block in the site
- *   to have real photographic figures rather than placeholders.
+ * - The figures this block used to carry (the selection funnel, the gels,
+ *   the PyMOL structures, the enzyme and construct tables) are outcomes,
+ *   not design, and the Experiments source page has none of them. They
+ *   moved to Results along with their assets; only the two tables this
+ *   page actually contains, the IMAC buffer scheme and the assay
+ *   parameters, stay here, because both describe how the step is run.
  * - Two cross-references to another experiment ("see Experiment 5",
  *   "(Experiment 7)") are kept exactly as written, even though this deck's
  *   own tabs aren't numbered 1-7 the same way the source's toggles were —
@@ -263,10 +262,6 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
   },
 ];
 
-const GEL_DIR = "assets/experiments/enzymatic-immobilisation/gels";
-const STRUCT_COLOR_DIR = "assets/experiments/enzymatic-immobilisation/structures-colored";
-const STRUCT_CYS_DIR = "assets/experiments/enzymatic-immobilisation/structures-cys-bridges";
-
 export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
   {
     id: "enzyme-production",
@@ -285,247 +280,132 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
         id: "bioinformatic-mining",
         tabLabel: "Bioinformatic mining",
         title: "Bioinformatic mining and candidate selection",
-        body: [
-          {
-            paragraphs: [
-              <>
-                The funnel narrowed <strong>3,741 initial candidates to 7</strong>. EnzymeMiner <Cite n={1} />{" "}
-                returned 3,741 sequences across the four activities; manual selection of about 40 prokaryotic
-                representatives per activity gave 160; expression and purification evidence from BRENDA and UniProt
-                cut this to 102; only <strong>13</strong> retained sufficient activity at pH 5.0 and 30 ºC; and 7
-                were finally chosen, at least two per activity except PLA. The panel was EstE1 (PLA), Plc and CerA
-                (PLC), AppA and PhyA (phytase), and M2-32 and AphA (NAP), each with a commercial backup.
-              </>,
-            ],
-            pairedResource: {
-              kind: "custom",
-              node: (
-                <SelectionFunnel
-                  steps={[
-                    { label: "Initial research", value: 3741 },
-                    { label: "Present in prokaryotes", value: 160 },
-                    { label: "Present in literature", value: 102 },
-                    { label: "Catalytic profile", value: 13 },
-                    { label: "Final selection", value: 7 },
-                  ]}
-                />
-              ),
-              caption:
-                "Flowchart of the candidate enzyme selection process. The figures represent the sequential selection (3741 → 160 → 102 → 13 → 7) after the application of the biotechnological and operational exclusion criteria.",
-            },
-          },
-          {
-            paragraphs: [
-              <>
-                The phosphorus in the effluent can be attacked from four complementary angles with enzymes that are
-                both expressible in <em>E. coli</em> and acid-tolerant, the acid phosphatases keeping activity across
-                the pH 4.5 to 6.0 of the stream <Cite n={2} /> and the histidine acid phytases being active and
-                stable at low pH <Cite n={3} />. The redundancy of two representatives per activity hedges against
-                any single enzyme failing to express.
-              </>,
-            ],
-          },
-          {
-            // No paragraph paired locally — kept full-width on request.
-            pairedResource: {
-              kind: "table",
-              table: {
-                caption:
-                  "Selected enzymes, indicating their activity, microorganism of origin and the commercial alternatives identified as a contingency plan.",
-                headers: ["Enzyme activity", "Gene", "Microorganism of origin", "Alternative commercial"],
-                rows: [
-                  ["Phospholipase C (PLC)", "plc_Tk", "Thermococcus kodakarensis", "Clostridium perfringens or Bacillus cereus [Sigma Aldrich] plc"],
-                  ["Phospholipase C (PLC)", "cerA_Bc", "Bacillus cereus", "Clostridium perfringens or Bacillus cereus [Sigma Aldrich] plc"],
-                  ["Phospholipase A (PLA)", "estE1_MG", "Metagenome", "Lecitase® Ultra (PLA1) or pancreatin (PLA2) [Merck Millipore]"],
-                  ["Phytase", "appA_Yi", "Yersinia intermedia", "Axtra® PHY [IFF] or Ronozyme® HiPhos [Novonesis]"],
-                  ["Phytase", "phyA_Op", "Obesumbacterium proteus", "Axtra® PHY [IFF] or Ronozyme® HiPhos [Novonesis]"],
-                  ["Acid Phosphatase (NAP)", "M2-32_MG", "Metagenome", "Acid phosphatase from potatoes or wheat germ [Merck]"],
-                  ["Acid Phosphatase (NAP)", "aphA_Ec", "Escherichia coli", "Acid phosphatase from potatoes or wheat germ [Merck]"],
-                ],
-              },
-            },
-          },
-          {
-            paragraphs: [
-              "Broadly yes. A steep funnel was expected given the strict criteria, and a redundant panel was the design goal. The informative point was quantitative: only 13 of 102 candidates kept activity at pH 5.0 and 30 ºC, confirming that the operating window, not sequence availability, is the real bottleneck.",
-            ],
-          },
+        description: [
+          <>
+            The aim was to assemble a shortlist of phosphohydrolases able to dismantle the organophosphorus in the
+            degumming effluent while remaining expressible in <em>E. coli</em>. Because the effluent is not a single
+            compound but a mixture of phospholipids, phytate and phosphomonoesters, no single enzyme can mineralise
+            it, so four complementary activities were targeted: type A and type C phospholipases (PLA, PLC),
+            non-specific acid phosphatases (NAP) and phytases. The substrate composition itself was taken from the
+            European patent describing industrial degumming <Cite n={1} />, so that the activities were matched to
+            the real stream rather than to a generic phospholipid.
+          </>,
+          <>
+            Candidates had to satisfy four constraints, each chosen to de-risk the downstream work. First, a sequence
+            deposited in a public database (GenBank or UniProt), so it could be synthesised or amplified. Second,
+            suitability for <em>E. coli</em>, meaning no dependence on post-translational modifications such as
+            glycosylation that a prokaryote cannot perform. Third, at least one literature report of recombinant
+            expression and kinetics. Fourth, retention of at least 30% of maximum activity at pH 5.0 and 30 ºC, the
+            window imposed by the acid-degummed effluent and the mesophilic PAO. Screening on these criteria before
+            any wet work concentrated effort only on enzymes that could realistically be made and would survive the
+            process.
+          </>,
+          <>
+            The search combined <strong>EnzymeMiner</strong> <Cite n={2} />, a platform that ranks candidate
+            sequences by predicted solubility and expressibility, with targeted queries in <strong>BRENDA</strong>{" "}
+            <Cite n={3} /> and <strong>UniProt</strong> <Cite n={4} />, applied as four sequential filters (initial
+            pool, prokaryotic origin, literature support, catalytic profile). In parallel, a commercial homologue was
+            identified for every activity as a contingency, so that a failure to express any one enzyme would not
+            stall the panel.
+          </>,
+          <>
+            The screen was expected to yield a small, redundant panel with at least two representatives per activity.
+            It reduced 3,741 candidates to <strong>7</strong> (see Results).
+          </>,
         ],
       },
       {
         id: "structural-design",
         tabLabel: "Structural design",
         title: "In silico structural design of the constructs",
-        body: [
-          {
-            paragraphs: [
-              <>
-                Homology models placed the tag and mapped disulphide bridges for all seven enzymes. Terminal
-                exposure set the vector, for example CerA with a more exposed C-terminus (pET-22b(+)) and AphA the
-                opposite (pET-28a(+)). The 2.5 Å analysis flagged <strong>AppA (4 bridges), PhyA (4) and M2-32 (2)</strong> as
-                disulphide-dependent, while EstE1, Plc, AphA and CerA had none. Predicted masses ranged from 26 to 49
-                kDa, several of them oligomeric (EstE1 4x34, M2-32 2x29, AphA 2x26 kDa).
-              </>,
-            ],
-          },
-          {
-            // No paragraph paired locally — kept full-width on request.
-            pairedResource: {
-              kind: "table",
-              table: {
-                caption:
-                  "Experimental design of genetic constructs: presence of disulfide bridges, vector selection and breeding strategy for the enzyme consortium.",
-                headers: ["Enzyme", "Molecular mass (kDa)", "S-S bridges", "pET vector", "Origin of the gene"],
-                rows: [
-                  ["EstE1", "4 x 34", "No", "pET-22b(+)", "GCAT Bio"],
-                  ["Plc", "49", "No", "pET-28a(+)", "GCAT Bio"],
-                  ["AppA", "48", "C80-C111; C136-C415; C181-C191; C389-C398", "pET-28a(+)", "GCAT Bio"],
-                  ["PhyA", "49", "C79-C110; C135-C410; C180-C189; C384-C393", "pET-28a(+)", "GCAT Bio"],
-                  ["M2-32", "2 x 29", "C81-C238; C131-C185", "pET-28a(+)", "GCAT Bio"],
-                  ["AphA", "2 x 26", "No", "pET-28a(+)", "Addgene"],
-                  ["CerA", "32.5", "No", "pET-22b(+)", "Addgene"],
-                ],
-              },
-            },
-          },
-          {
-            paragraphs: [
-              <>
-                Three enzymes would need an oxidising cytoplasm to fold their structural disulphides <Cite n={4} />,
-                and this was known <strong>before any wet work</strong>, so the later requirement for SHuffle T7 or
-                Origami 2 was anticipated rather than discovered through failed expression.
-              </>,
-            ],
-            pairedResource: {
-              kind: "image-group",
-              caption:
-                "Structural modeling of candidate enzymes in PyMOL. Identification of structural disulfide bridges in silico through PyMOL. Detail of the measurement of the interatomic distance (< 2.5Å) between the sulfur atoms of the cysteine residues (purple) based on the predictive model.",
-              images: [
-                { src: `${STRUCT_CYS_DIR}/struct_A_estE1_MG.png`, alt: "EstE1_MG structure with cysteine bridges highlighted", title: "(A) estE1_MG" },
-                { src: `${STRUCT_CYS_DIR}/struct_B_plc_Tk.png`, alt: "Plc_Tk structure, no disulfide bridges", title: "(B) plc_Tk" },
-                { src: `${STRUCT_CYS_DIR}/struct_C_appA_Yi.png`, alt: "AppA_Yi structure with four cysteine bridges highlighted", title: "(C) appA_Yi" },
-                { src: `${STRUCT_CYS_DIR}/struct_D_phyA_Op.png`, alt: "PhyA_Op structure with four cysteine bridges highlighted", title: "(D) phyA_Op" },
-                { src: `${STRUCT_CYS_DIR}/struct_E_M2-32_MG.png`, alt: "M2-32_MG structure with two cysteine bridges highlighted", title: "(E) M2-32_MG" },
-                { src: `${STRUCT_CYS_DIR}/struct_F_aphA_Ec.png`, alt: "AphA_Ec structure, no disulfide bridges", title: "(F) aphA_Ec" },
-                { src: `${STRUCT_CYS_DIR}/struct_G_cerA_Bc.png`, alt: "CerA_Bc structure, no disulfide bridges", title: "(G) cerA_Bc" },
-              ],
-            },
-          },
-          {
-            paragraphs: [
-              "Yes. Disulphide dependence is consistent with the periplasmic or secreted biology of these phytases and phosphatases, and the tag choices followed directly from the models. The experiment carried little risk; its value was pre-empting the solubility problem.",
-            ],
-            pairedResource: {
-              kind: "image-group",
-              caption:
-                "Structural modeling of candidate enzymes in PyMOL. The spectrum coloration highlights the three-dimensional topology from the N-terminal end (blue) to the C-terminal (red), allowing the accessibility for the fusion of the Tag of His. For multi-homomeric structures, only one of them is shown colored.",
-              images: [
-                { src: `${STRUCT_COLOR_DIR}/struct_A_estE1_MG.png`, alt: "EstE1_MG structure coloured N-terminus (blue) to C-terminus (red)", title: "(A) estE1_MG" },
-                { src: `${STRUCT_COLOR_DIR}/struct_B_plc_Tk.png`, alt: "Plc_Tk structure coloured N-terminus (blue) to C-terminus (red)", title: "(B) plc_Tk" },
-                { src: `${STRUCT_COLOR_DIR}/struct_C_appA_Yi.png`, alt: "AppA_Yi structure coloured N-terminus (blue) to C-terminus (red)", title: "(C) appA_Yi" },
-                { src: `${STRUCT_COLOR_DIR}/struct_D_phyA_Op.png`, alt: "PhyA_Op structure coloured N-terminus (blue) to C-terminus (red)", title: "(D) phyA_Op" },
-                { src: `${STRUCT_COLOR_DIR}/struct_E_M2-32_MG.png`, alt: "M2-32_MG structure coloured N-terminus (blue) to C-terminus (red)", title: "(E) M2-32_MG" },
-                { src: `${STRUCT_COLOR_DIR}/struct_F_aphA_Ec.png`, alt: "AphA_Ec structure coloured N-terminus (blue) to C-terminus (red)", title: "(F) aphA_Ec" },
-                { src: `${STRUCT_COLOR_DIR}/struct_G_cerA_Bc.png`, alt: "CerA_Bc structure coloured N-terminus (blue) to C-terminus (red)", title: "(G) cerA_Bc" },
-              ],
-            },
-          },
+        description: [
+          "Before ordering any DNA, we decided for each enzyme where to place the purification tag and whether it would need a special folding environment, because both decisions are far cheaper to make on a model than to correct after cloning.",
+          <>
+            Each sequence without a resolved structure was modelled by homology on <strong>SWISS-MODEL</strong>{" "}
+            <Cite n={5} /> and inspected in <strong>PyMOL</strong> <Cite n={6} /> for two things. First, the
+            accessibility of the N- and C-termini: the polyhistidine tag must sit on an exposed terminus so it can
+            reach the resin without occluding the active site, so the more exposed terminus set the vector,{" "}
+            <strong>pET-28a(+)</strong> for an N-terminal tag (introduced at the NdeI site with a downstream STOP
+            codon) or <strong>pET-22b(+)</strong> for a C-terminal tag <Cite n={7} />. Second, the presence of
+            structural disulphide bridges: pairs of cysteine sulphur atoms closer than 2.5 Å were flagged, because a
+            disulphide-dependent enzyme will not fold in the reducing cytoplasm of a standard strain and will instead
+            need an oxidising chassis. Mapping this in silico told us in advance which enzymes would later require
+            Rosetta-gami 2 or Origami 2, so the folding strategy was planned rather than discovered by trial and
+            error.
+          </>,
+          "The expected outcome was a per-enzyme decision (tag position, vector and disulphide dependence) that pre-empted the main causes of insolubility.",
         ],
       },
       {
         id: "genetic-constructs",
         tabLabel: "Genetic constructs",
         title: "Obtaining the genetic constructs",
-        body: [
-          {
-            paragraphs: [
-              "All seven constructs were obtained, five by de novo synthesis in the pET backbone and two (AphA, CerA) by PCR from Addgene. Amplification gave clean bands of the expected size (CerA about 873 bp, AphA about 735 bp), matching the SnapGene simulation.",
-            ],
-            pairedResource: {
-              kind: "image",
-              src: `${GEL_DIR}/gel_gene_amplification.png`,
-              alt: "Agarose gel of gene amplification for cerA (873 bp) and aphA (735 bp)",
-              caption:
-                "Analysis by 1% w/v agarose gel of gene amplification for cloning in pET vectors by comparing sizes against molecular weight markers φ29 and λ.",
-            },
-          },
-          {
-            paragraphs: [
-              "The mixed synthesis and amplification strategy worked and kept costs down, and cloning the Addgene genes into the same pET backbones made the later expression comparison fair.",
-              "Yes, although the Addgene amplification initially failed and only worked after reducing the template amount, a minor and expected PCR adjustment.",
-            ],
-          },
+        description: [
+          "The aim was to obtain each gene inside its chosen pET backbone, using two routes according to availability so as to minimise cost. Sequences held in no repository were ordered as de novo gene synthesis directly in the pET vector (GCAT Bio, Changzhou, China), with codon optimisation used only when the nucleotide sequence was unavailable but the amino acid sequence was, since unnecessary optimisation can introduce its own expression artefacts. Sequences already validated in Addgene were amplified by PCR and cloned, which is far cheaper than synthesis.",
+          <>
+            For amplification, primers carried NdeI (5') and HindIII (3') sites matching the pET multiple cloning
+            site. A small amount of donor plasmid (50 ng) was used as template with the high-fidelity polymerase{" "}
+            <strong>Pfu Ultra II</strong> <Cite n={8} />, chosen to avoid mutations in the coding sequence, and DMSO
+            was added to help denature GC-rich regions. Because the Addgene genes arrived in different backbones,
+            cloning them into the <strong>same</strong> pET vectors as the synthesised genes was a deliberate choice,
+            so that any later difference in expression would reflect the enzyme and not the vector.
+          </>,
+          "Inserts and vectors were then cut with FastDigest NdeI and HindIII, and the linearised vector was dephosphorylated with the thermosensitive alkaline phosphatase FastAP, a step included specifically to stop the vector re-circularising on itself without an insert and inflating the background. Fragments were gel-purified, and ligation was set at a 1:5 vector:insert molar ratio (NEBioCalculator) with T4 DNA ligase overnight at 16 ºC, a temperature that balances ligase activity against the annealing stability of the short cohesive ends.",
+          "The expected outcome was a set of recombinant pET plasmids for each gene, in matched backbones and ready to transform.",
         ],
       },
       {
         id: "clone-verification",
         tabLabel: "Clone verification",
         title: "Transformation and clone verification",
-        body: [
-          {
-            paragraphs: [
-              "All constructs transformed successfully, with confluent colony growth on selective LB-agar in every case. Colony PCR with T7 primers gave inserts of the expected size (AphA about 971 bp, CerA about 1,050 bp), matching the simulation, so sequencing was not needed.",
-            ],
-            pairedResource: {
-              kind: "image",
-              src: `${GEL_DIR}/gel_colony_pcr.png`,
-              alt: "Agarose gel of colony PCR for aphA (971 bp) and cerA (1050 bp)",
-              caption:
-                "Analysis by 1% w/v agarose gel of colony PCR after ligation, verifying that the insert was correct by comparing sizes against molecular weight markers φ29 and λ.",
-            },
-          },
-          {
-            paragraphs: [
-              "The plasmids are correct and stably carried, and the pipeline delivered verified clones ready to express.",
-              "Yes. Correct-size amplicons on both gene amplification and colony PCR were the expected checkpoint, and the match with the simulation justified proceeding without sequencing.",
-            ],
-          },
+        description: [
+          <>
+            The aim was to introduce the plasmids into bacteria, confirm the correct insert and hand a validated
+            construct to the expression host. The plasmids were introduced by <strong>transformation</strong>, the
+            direct uptake of naked plasmid DNA by permeabilised competent cells, which is the appropriate route for
+            purified plasmid DNA, as opposed to conjugation or transduction. Cloning was done first in{" "}
+            <em>E. coli</em> DH5α, a recA and endA deficient strain that gives a high yield of stable plasmid but
+            carries no T7 polymerase, so it propagates the construct without expressing it.
+          </>,
+          <>
+            Immediately after heat shock (42 ºC, 90 s) or electroporation, the cells were recovered in{" "}
+            <strong>LB-SOC</strong>, a rich medium supplemented with glucose, and incubated for one hour at 37 ºC
+            before plating. This recovery step is essential: it lets the permeabilised cells repair their envelopes
+            and, above all, transcribe and translate the antibiotic-resistance gene, so that they survive the
+            subsequent selection. Plating straight onto antibiotic would kill successfully transformed but
+            not-yet-resistant cells and collapse the apparent efficiency.
+          </>,
+          <>
+            Transformants were screened by colony PCR with universal T7 primers flanking the insert, resolved on a 1%
+            agarose gel; since the amplicon sizes matched the SnapGene simulation, sequencing was not required.
+            Positive clones were grown and their plasmid recovered by alkaline-lysis <strong>miniprep</strong> (NZY),
+            which denatures and precipitates genomic DNA and protein while keeping the supercoiled plasmid in
+            solution, giving clean DNA to re-transform. The verified plasmid was finally moved into a{" "}
+            <strong>(DE3)</strong> expression strain, which carries T7 RNA polymerase under the IPTG-inducible lacUV5
+            promoter, the element absent from DH5α that actually drives transcription of the cloned gene.
+          </>,
+          "The expected outcome was verified clones in the expression host, ready for induction.",
         ],
       },
       {
         id: "recombinant-expression",
         tabLabel: "Recombinant expression",
         title: "Recombinant expression",
-        body: [
-          {
-            paragraphs: [
-              "IPTG gave clearly stronger overexpression than ZY auto-induction at 20 ºC for the five synthesised constructs, and this was extrapolated to the two Addgene ones. The two phospholipases C were cytotoxic: Plc and CerA caused a sharp OD₆₀₀ drop the morning after induction, CerA partly compensable with about thirty times the culture volume and Plc not compensable at all.",
-            ],
-            pairedResource: {
-              kind: "image-group",
-              caption:
-                "SDS-PAGE analysis of the recombinant expression of candidates from GCAT Bio constructs under induction with IPTG (A and B) and auto-induction in ZY medium (C and D), both at 20 ºC. Lanes indicate: (M) Molecular Weight Marker NZYBlue®; pET-28a(+) (C1); pET-22b(+) (C2); EstE1 (3); Plc (4); AppA (5); PhyA (6) and M2-32 (7). The black arrows reflect the band corresponding to the enzyme, if any.",
-              images: [
-                { src: `${GEL_DIR}/gel_A_iptg_total.png`, alt: "SDS-PAGE, IPTG induction, total fraction", title: "(A) IPTG, total fraction" },
-                { src: `${GEL_DIR}/gel_B_iptg_soluble.png`, alt: "SDS-PAGE, IPTG induction, soluble fraction", title: "(B) IPTG, soluble fraction" },
-                { src: `${GEL_DIR}/gel_C_autoinduction_total.png`, alt: "SDS-PAGE, ZY auto-induction, total fraction", title: "(C) Autoinduction, total fraction" },
-                { src: `${GEL_DIR}/gel_D_autoinduction_soluble.png`, alt: "SDS-PAGE, ZY auto-induction, soluble fraction", title: "(D) Autoinduction, soluble fraction" },
-              ],
-            },
-          },
-          {
-            paragraphs: [
-              <>
-                IPTG is the induction method of choice for this panel, and PLC cannot be produced in a live{" "}
-                <em>E. coli</em> host because these enzymes hydrolyse essential host membrane phospholipids{" "}
-                <Cite n={6} />, so it was redirected to cell-free IVTT, a system that does not depend on host
-                viability <Cite n={7} />.
-              </>,
-              <>
-                Partly. IPTG outperforming auto-induction was expected from the full derepression of the lacUV5
-                promoter, in contrast to the density-linked, more gradual induction of auto-induction medium{" "}
-                <Cite n={5} />. The PLC cytotoxicity had been anticipated as a risk, so its appearance confirmed
-                rather than contradicted the design and justified not carrying PLC forward.
-              </>,
-            ],
-            pairedResource: {
-              kind: "image",
-              src: `${GEL_DIR}/gel_bl21_apha_cera.png`,
-              alt: "SDS-PAGE of BL21 expression of aphA and cerA at 20°C, total and soluble fractions",
-              caption:
-                "SDS-PAGE analysis of the recombinant expression of candidates from Addgene constructs under IPTG induction conditions at 20 ºC. Lanes indicate: (M) Molecular Weight Marker NZYBlue®; total (T) and soluble (S) fractions of pET-28a(+) (1); AphA (2); pET-22b(+) (3) and CerA (4). The black arrows reflect the band corresponding to the enzyme, if any.",
-            },
-          },
+        description: [
+          "The aim was to find the induction regime that maximises production of each enzyme, comparing chemical induction with IPTG against ZY auto-induction, both at 20 ºC.",
+          <>
+            For IPTG, cultures were grown in LB to mid-exponential phase (OD₆₀₀ 0.4 to 0.6), where the cells are
+            healthiest and most metabolically active, and induced with 1 mM IPTG, a saturating concentration that
+            fully derepresses lacUV5 and therefore T7 transcription. Induction was continued overnight at a reduced{" "}
+            <strong>20 ºC</strong> rather than 37 ºC, because slowing translation gives the nascent chains more time
+            to fold and reduces the accumulation of inclusion bodies. Auto-induction instead uses a medium whose
+            glucose is consumed first and whose lactose then induces the system automatically as the culture reaches
+            high density <Cite n={9} />, so it needs no OD monitoring or timed addition. Every culture was started
+            from a single colony in a 5 mL overnight pre-inoculum and seeded at OD₆₀₀ 0.05, so that all conditions
+            began from the same low density. Expression was read by SDS-PAGE of the total and soluble fractions
+            against a prestained standard.
+          </>,
+          "The expected outcome was to select the higher-yielding regime. IPTG gave the stronger overexpression and was carried forward; it also revealed that the enzymes accumulated as inclusion bodies and that the two phospholipases C were cytotoxic to the host, which set up the next two experiments.",
         ],
       },
       {
@@ -533,54 +413,96 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
         tabLabel: "Solubilisation",
         title: "Solubilisation of the recombinant enzymes",
         description: [
+          "Since none of the targets appeared in the soluble fraction, the aim here was to recover folded, soluble enzyme, applying three levers that each address a different cause of misfolding.",
           <>
-            Despite good IPTG yields, none of the enzymes appeared in the soluble fraction at first, accumulating as
-            inclusion bodies <Cite n={8} />. Of the rescue strategies, <strong>GroES/GroEL solubilised M2-32</strong>{" "}
-            <Cite n={11} />, <strong>SHuffle T7 solubilised PhyA</strong> <Cite n={12} />, and <strong>AphA</strong>{" "}
-            was soluble in BL21 (DE3). Induction at 30 ºC and Trigger factor <Cite n={10} /> alone were largely
-            insufficient for the remaining targets.
+            Induction at <strong>30 ºC</strong> was tried as a compromise that slows synthesis relative to 37 ºC while
+            keeping growth reasonable, giving chains more time to fold. <strong>Molecular chaperones</strong> were
+            co-expressed, the ribosome-associated Trigger factor, which stabilises the emerging chain and prevents
+            premature aggregation, and the GroES/GroEL complex, which encapsulates partly folded protein and lets it
+            fold in an ATP-dependent cage away from the crowded cytoplasm. Finally, for the disulphide-dependent
+            enzymes flagged in the structural-design experiment, expression was moved to strains with an oxidising
+            cytoplasm and rare-codon tRNAs (<strong>Origami 2, Rosetta-gami 2 and SHuffle T7</strong>, the last also
+            co-expressing a disulphide isomerase); a codon analysis motivated this, since rare codons throttle both
+            yield and folding. The cytotoxic phospholipases C were not forced through this pipeline but earmarked for
+            cell-free IVTT, which does not depend on host viability.
           </>,
-          <>
-            Solubility, not expression, was the limiting step, a well-documented outcome of the fast T7-driven
-            translation outpacing host folding capacity <Cite n={8} />, <Cite n={9} />. It was resolved exactly for
-            the disulphide-dependent enzymes by the oxidising chassis predicted in the structural-design experiment{" "}
-            <Cite n={4} />, and a codon analysis further motivated moving to rare-codon-competent strains{" "}
-            <Cite n={13} />. Three enzymes (M2-32, PhyA, AphA) reached soluble form and could proceed.
-          </>,
-          "Partly. Generalised insolubility under strong T7/IPTG expression is a known outcome, so the rescue plan was in place. That SHuffle T7 specifically rescued PhyA matched the in-silico disulphide prediction, the expected confirmation; that EstE1 and AppA were not recovered set the practical limit of the panel.",
+          "The expected outcome was soluble enzyme for the tractable targets.",
         ],
       },
       {
         id: "imac-purification",
         tabLabel: "IMAC purification",
         title: "Purification by IMAC",
-        description: [
-          "PhyA and M2-32 purified to electrophoretic homogeneity, with the 20 mM imidazole wash removing contaminants without eluting the target. AphA behaved differently: a normal crude extract and flow-through, but only faint bands in the elution, dialysis and concentration fractions, indicating low yield, though still enough to characterise.",
-          <>
-            Two clean preparations and one low-yield but usable one were obtained, and the His-tag and Ni-NTA
-            strategy with a competitive imidazole wash worked as designed <Cite n={14} />.
-          </>,
-          "Yes for PhyA and M2-32. AphA's low recovery was not fully expected and is consistent with its low soluble expression; the tag chemistry still worked, so it did not block characterisation.",
+        body: [
+          {
+            paragraphs: [
+              <>
+                The aim was to obtain each soluble enzyme clean enough for kinetic characterisation and, ultimately,
+                immobilisation. Purification used immobilised metal-ion affinity chromatography on Ni-NTA{" "}
+                <Cite n={10} />, which exploits the coordinate bond between the engineered polyhistidine tag and
+                nickel ions held on the resin.
+              </>,
+            ],
+          },
+          {
+            pairedResource: {
+              kind: "table",
+              table: {
+                headers: ["Step", "Buffer / condition", "Reason"],
+                rows: [
+                  ["Lysis", "pressure homogenisation, 4 ºC, benzonase added", "efficient lysis at scale, cold protects activity, benzonase digests nucleic acids to cut viscosity"],
+                  ["Binding", "Tris-HCl 50 mM pH 8.0, NaCl 300 mM, imidazole 20 mM", "low basal imidazole and high salt suppress non-specific binding of native His-rich proteins"],
+                  ["Wash", "Tris-HCl 50 mM pH 8.0, NaCl 300 mM, imidazole 20 mM", "removes weak binders without eluting the target"],
+                  ["Elution", "Tris-HCl 50 mM pH 8.0, NaCl 300 mM, imidazole 500 mM", "outcompetes the tag for nickel, releasing the pure protein"],
+                  ["Dialysis", "Tris-HCl 10 mM pH 7.0, NaCl 100 mM, MWCO 3.5 kDa", "removes imidazole and salt"],
+                  ["Concentration", "ultrafiltration, MWCO 10 kDa", "retains the enzyme while reducing volume"],
+                ],
+              },
+            },
+          },
+          {
+            paragraphs: [
+              "The two membrane cut-offs are chosen deliberately so that small solutes pass during dialysis while the enzymes are retained during concentration. The expected outcome was homogeneous preparations.",
+            ],
+          },
         ],
       },
       {
         id: "functional-characterisation",
         tabLabel: "Functional characterisation",
         title: "Functional characterisation",
-        description: [
-          <>
-            All three enzymes hydrolysed bis-pNPP at pH 5.0 and 30 ºC <Cite n={15} />. Raw product accumulation at 30
-            min was highest for PhyA (about 27 µM pNP) and lower for M2-32 and AphA (both about 11 µM). Once
-            normalised by Bradford protein, the ranking reversed: specific activities were{" "}
-            <strong>AphA 0.222 U/mg &gt; M2-32 0.161 U/mg &gt; PhyA 0.141 U/mg</strong>. AphA reached the same product
-            (about 11 µM) with roughly 45% less enzyme mass than M2-32 (0.015 vs 0.027 mg).
-          </>,
-          <>
-            On a per-milligram basis AphA is the most efficient acid phosphatase <Cite n={2} /> and PhyA the least,
-            so the raw curves are misleading until normalised. AphA and the phytate-specialist PhyA are the
-            components to carry into the immobilisation study.
-          </>,
-          "Instructively not, at first. The raw data suggested PhyA was best, but normalisation showed the opposite, which is precisely why protein quantification was built into the assay. The reliable result is the normalised order, AphA > M2-32 > PhyA.",
+        body: [
+          {
+            paragraphs: [
+              <>
+                The aim was to confirm that the purified enzymes are active at process conditions and to rank them by
+                intrinsic efficiency. Activity was measured with{" "}
+                <strong>bis(p-nitrophenyl) phosphate (bis-pNPP)</strong> rather than the usual pNPP <Cite n={11} />,
+                because bis-pNPP is a phosphodiester that better mimics the bulky, stable organophosphates of a real
+                effluent (phytate, phospholipids), whereas pNPP carries a single, easily hydrolysed phosphate.
+              </>,
+            ],
+          },
+          {
+            pairedResource: {
+              kind: "table",
+              table: {
+                headers: ["Parameter", "Value", "Reason"],
+                rows: [
+                  ["Buffer", "citrate 50 mM, pH 5.0", "the effluent is rich in citric acid and its salts, so the buffer matches the process"],
+                  ["Temperature", "30 ºC", "reactor operating temperature"],
+                  ["Substrate:enzyme", "9:1", "keeps substrate in excess for initial-rate kinetics"],
+                  ["Stop / read", "1 M NaOH, 405 nm", "pNP is only coloured at basic pH, so the reaction is stopped and developed at each time point"],
+                ],
+              },
+            },
+          },
+          {
+            paragraphs: [
+              "The end-point design (sampling into NaOH) is necessary precisely because pNP cannot be followed continuously at acidic pH, a constraint that later dictated a different assay for the immobilisation work. An enzyme-free well corrected for spontaneous substrate hydrolysis. Protein was quantified by Bradford against a BSA standard, and specific activity (U/mg, one unit releasing 1 µmol pNP per minute) was taken from the initial linear rate; normalising by protein mass is essential, since two enzymes releasing the same amount of product can differ greatly in efficiency once their loading is accounted for.",
+              "The expected outcome was a definitive order of intrinsic efficiency in acid medium, identifying the key components of the panel (see Results).",
+            ],
+          },
         ],
       },
     ],

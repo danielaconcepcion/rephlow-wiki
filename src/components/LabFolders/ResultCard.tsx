@@ -34,10 +34,20 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
 
       {subsection.body?.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
 
+      {subsection.custom && (
+        <figure className="record-figure record-figure--custom">
+          {subsection.custom.node}
+          {subsection.custom.caption && <figcaption>{subsection.custom.caption}</figcaption>}
+        </figure>
+      )}
+
       {!!subsection.figures?.length && (
         <div className="record-figure-grid">
           {subsection.figures.map((figure, index) => (
             <figure className="record-figure" key={index}>
+              {figure.title && (
+                <p className="record-figure-group__item-title">{figure.title}</p>
+              )}
               {figure.src ? (
                 <img
                   className={
@@ -53,9 +63,12 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
                   [ figure placeholder ]
                 </div>
               )}
-              <figcaption>{figure.caption}</figcaption>
+              {figure.caption && <figcaption>{figure.caption}</figcaption>}
             </figure>
           ))}
+          {subsection.figuresCaption && (
+            <p className="record-figure-grid__caption">{subsection.figuresCaption}</p>
+          )}
         </div>
       )}
 

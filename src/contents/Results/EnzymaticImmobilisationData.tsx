@@ -2,27 +2,36 @@ import type {
   ResultData,
   ResultSubBlock,
 } from "../../components/LabFolders/types";
+import { SelectionFunnel } from "../../components/SelectionFunnel";
 
 /**
  * Enzymatic immobilisation results, transcribed from the team's own Notion
  * results page ("Enzymatic immobilisation", under WIKI / Results). Both
- * sub-blocks, their order and the record titles follow that page.
+ * sub-blocks, their order and the record titles follow that page, and each
+ * record keeps its three-answer shape.
  *
- * This is the one results page with no unwritten entries: every record
- * below is filled in the source. The bracketed reference numbers in the
- * source ("[1]", "[15]") follow the Experiments page's own numbered list,
- * so they are left out here rather than reproduced as numbers pointing at
- * a list this page does not carry; the citing sentence keeps the claim.
+ * The figures here were already in this repository, on the Experiments
+ * page, where they did not belong: the Experiments Notion page is pure
+ * design and rationale and carries no gels, no structures and no funnel.
+ * They moved to Results with their assets, which is why this block has
+ * cropped, per-panel gel and structure images rather than the composite
+ * screenshots the Notion results page embeds — the crops are the team's
+ * own and are far more readable. The same applies to the two tables, which
+ * are transcribed rather than shown as pictures of tables, and to the
+ * selection funnel, which is a component rather than a screenshot so its
+ * numbers stay legible at any width.
  *
- * Figures are the source's own, downloaded from Notion into
- * public/assets/results/enzymatic-immobilisation and kept with their
- * original captions. Note that, like every other image on this wiki, they
- * still have to go through the iGEM uploads tool and be re-pointed at
- * static.igem.wiki before the Wiki Freeze (see MIGRATION.md) — the local
- * path here is a development stand-in.
+ * The source cites by numbers that belong to the Experiments page's own
+ * reference list, so the numbers are dropped here and the citing sentences
+ * keep their claims. As everywhere, these asset paths are development
+ * stand-ins and still have to go through the iGEM uploads tool before the
+ * Wiki Freeze.
  */
 
 const FIGURES = "assets/results/enzymatic-immobilisation";
+const GELS = `${FIGURES}/gels`;
+const STRUCT_COLOUR = `${FIGURES}/structures-colored`;
+const STRUCT_CYS = `${FIGURES}/structures-cys-bridges`;
 
 export const ENZYMATIC_IMMOBILISATION_INTRO =
   "This block builds the enzymatic layer of the rePhlow sphere: a panel of phosphohydrolases is produced in E. coli and characterised, and the chemistry to immobilise it on the support is worked out on a model system with Lecitase® Ultra. Each record reports the outcome of the corresponding experiment on the Experiments page, following the same order and titles.";
@@ -34,18 +43,75 @@ const MINING: ResultData = {
   subsections: [
     {
       id: "selection-funnel",
-      figures: [
+      custom: {
+        node: (
+          <SelectionFunnel
+            steps={[
+              { label: "Initial research", value: 3741 },
+              { label: "Present in prokaryotes", value: 160 },
+              { label: "Present in literature", value: 102 },
+              { label: "Catalytic profile", value: 13 },
+              { label: "Final selection", value: 7 },
+            ]}
+          />
+        ),
+        caption:
+          "Flowchart of the candidate enzyme selection process. The figures represent the sequential selection (3741 → 160 → 102 → 13 → 7) after the application of the biotechnological and operational exclusion criteria.",
+      },
+      tables: [
         {
-          src: `${FIGURES}/selection-funnel.png`,
-          alt: "Flowchart narrowing 3,741 candidate sequences to 7 selected enzymes.",
           caption:
-            "Flowchart of the candidate selection process, showing the sequential narrowing (3,741 → 160 → 102 → 13 → 7) after each biotechnological and operational exclusion criterion, and the selected enzymes with their activity, source organism and commercial alternatives.",
-        },
-        {
-          src: `${FIGURES}/selected-enzymes.png`,
-          alt: "Table of the seven selected enzymes with their activity, source organism and commercial backup.",
-          caption:
-            "Selected enzymes, with their activity, microorganism of origin and the commercial alternatives identified as a contingency plan.",
+            "Selected enzymes, indicating their activity, microorganism of origin and the commercial alternatives identified as a contingency plan.",
+          headers: [
+            "Enzyme activity",
+            "Gene",
+            "Microorganism of origin",
+            "Commercial alternative",
+          ],
+          rows: [
+            [
+              "Phospholipase C (PLC)",
+              "plc_Tk",
+              "Thermococcus kodakarensis",
+              "Clostridium perfringens or Bacillus cereus [Sigma Aldrich] plc",
+            ],
+            [
+              "Phospholipase C (PLC)",
+              "cerA_Bc",
+              "Bacillus cereus",
+              "Clostridium perfringens or Bacillus cereus [Sigma Aldrich] plc",
+            ],
+            [
+              "Phospholipase A (PLA)",
+              "estE1_MG",
+              "Metagenome",
+              "Lecitase® Ultra (PLA1) or pancreatin (PLA2) [Merck Millipore]",
+            ],
+            [
+              "Phytase",
+              "appA_Yi",
+              "Yersinia intermedia",
+              "Axtra® PHY [IFF] or Ronozyme® HiPhos [Novonesis]",
+            ],
+            [
+              "Phytase",
+              "phyA_Op",
+              "Obesumbacterium proteus",
+              "Axtra® PHY [IFF] or Ronozyme® HiPhos [Novonesis]",
+            ],
+            [
+              "Acid phosphatase (NAP)",
+              "M2-32_MG",
+              "Metagenome",
+              "Acid phosphatase from potatoes or wheat germ [Merck]",
+            ],
+            [
+              "Acid phosphatase (NAP)",
+              "aphA_Ec",
+              "Escherichia coli",
+              "Acid phosphatase from potatoes or wheat germ [Merck]",
+            ],
+          ],
         },
       ],
       observations:
@@ -64,25 +130,142 @@ const IN_SILICO: ResultData = {
   title: "In silico structural design of the constructs",
   subsections: [
     {
-      id: "homology-models",
+      id: "topology",
+      title: "Terminal accessibility and tag placement",
       figures: [
         {
-          src: `${FIGURES}/pymol-topology.png`,
-          alt: "PyMOL renders of the candidate enzymes coloured from blue at the N-terminus to red at the C-terminus.",
-          caption:
-            "Structural modelling of the candidate enzymes in PyMOL, coloured N-terminus (blue) to C-terminus (red) to assess accessibility for the His-tag fusion; detail of the interatomic distances (< 2.5 Å) between cysteine sulfur atoms identifying structural disulphide bridges; and the resulting construct design table (disulphide bridges, vector choice and expression strategy).",
+          src: `${STRUCT_COLOUR}/struct_A_estE1_MG.png`,
+          title: "(A) estE1_MG",
+          alt: "EstE1_MG model coloured from blue at the N-terminus to red at the C-terminus.",
+          caption: "",
         },
         {
-          src: `${FIGURES}/pymol-disulphides.png`,
-          alt: "PyMOL detail of interatomic distances under 2.5 angstrom between cysteine sulfur atoms.",
-          caption:
-            "Identification of structural disulphide bridges in silico, showing the measured interatomic distance (< 2.5 Å) between the sulfur atoms of the cysteine residues.",
+          src: `${STRUCT_COLOUR}/struct_B_plc_Tk.png`,
+          title: "(B) plc_Tk",
+          alt: "Plc_Tk model coloured from blue at the N-terminus to red at the C-terminus.",
+          caption: "",
         },
         {
-          src: `${FIGURES}/construct-design.png`,
-          alt: "Table of the construct design: disulphide bridges, vector choice and expression strategy per enzyme.",
+          src: `${STRUCT_COLOUR}/struct_C_appA_Yi.png`,
+          title: "(C) appA_Yi",
+          alt: "AppA_Yi model coloured from blue at the N-terminus to red at the C-terminus.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_COLOUR}/struct_D_phyA_Op.png`,
+          title: "(D) phyA_Op",
+          alt: "PhyA_Op model coloured from blue at the N-terminus to red at the C-terminus.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_COLOUR}/struct_E_M2-32_MG.png`,
+          title: "(E) M2-32_MG",
+          alt: "M2-32_MG model coloured from blue at the N-terminus to red at the C-terminus.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_COLOUR}/struct_F_aphA_Ec.png`,
+          title: "(F) aphA_Ec",
+          alt: "AphA_Ec model coloured from blue at the N-terminus to red at the C-terminus.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_COLOUR}/struct_G_cerA_Bc.png`,
+          title: "(G) cerA_Bc",
+          alt: "CerA_Bc model coloured from blue at the N-terminus to red at the C-terminus.",
+          caption: "",
+        },
+      ],
+      figuresCaption:
+        "Structural modelling of the candidate enzymes in PyMOL. The spectrum colouring highlights the three-dimensional topology from the N-terminal end (blue) to the C-terminal (red), showing the accessibility for the fusion of the His tag. For multi-homomeric structures, only one subunit is shown coloured.",
+    },
+    {
+      id: "disulphides",
+      title: "Structural disulphide bridges",
+      figures: [
+        {
+          src: `${STRUCT_CYS}/struct_A_estE1_MG.png`,
+          title: "(A) estE1_MG",
+          alt: "EstE1_MG model with cysteine residues highlighted; no disulphide bridges.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_CYS}/struct_B_plc_Tk.png`,
+          title: "(B) plc_Tk",
+          alt: "Plc_Tk model with cysteine residues highlighted; no disulphide bridges.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_CYS}/struct_C_appA_Yi.png`,
+          title: "(C) appA_Yi",
+          alt: "AppA_Yi model with four disulphide bridges highlighted.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_CYS}/struct_D_phyA_Op.png`,
+          title: "(D) phyA_Op",
+          alt: "PhyA_Op model with four disulphide bridges highlighted.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_CYS}/struct_E_M2-32_MG.png`,
+          title: "(E) M2-32_MG",
+          alt: "M2-32_MG model with two disulphide bridges highlighted.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_CYS}/struct_F_aphA_Ec.png`,
+          title: "(F) aphA_Ec",
+          alt: "AphA_Ec model with cysteine residues highlighted; no disulphide bridges.",
+          caption: "",
+        },
+        {
+          src: `${STRUCT_CYS}/struct_G_cerA_Bc.png`,
+          title: "(G) cerA_Bc",
+          alt: "CerA_Bc model with cysteine residues highlighted; no disulphide bridges.",
+          caption: "",
+        },
+      ],
+      figuresCaption:
+        "Identification of structural disulphide bridges in silico. Detail of the measured interatomic distance (< 2.5 Å) between the sulfur atoms of the cysteine residues (purple) on the predictive model.",
+      tables: [
+        {
           caption:
-            "Experimental design of the genetic constructs: presence of disulphide bridges, vector selection and expression strategy for the enzyme consortium.",
+            "Experimental design of the genetic constructs: presence of disulphide bridges, vector selection and sourcing strategy for the enzyme consortium.",
+          headers: [
+            "Enzyme",
+            "Molecular mass (kDa)",
+            "S-S bridges",
+            "pET vector",
+            "Origin of the gene",
+          ],
+          rows: [
+            ["EstE1", "4 × 34", "No", "pET-22b(+)", "GCAT Bio"],
+            ["Plc", "49", "No", "pET-28a(+)", "GCAT Bio"],
+            [
+              "AppA",
+              "48",
+              "C80-C111; C136-C415; C181-C191; C389-C398",
+              "pET-28a(+)",
+              "GCAT Bio",
+            ],
+            [
+              "PhyA",
+              "49",
+              "C79-C110; C135-C410; C180-C189; C384-C393",
+              "pET-28a(+)",
+              "GCAT Bio",
+            ],
+            [
+              "M2-32",
+              "2 × 29",
+              "C81-C238; C131-C185",
+              "pET-28a(+)",
+              "GCAT Bio",
+            ],
+            ["AphA", "2 × 26", "No", "pET-28a(+)", "Addgene"],
+            ["CerA", "32.5", "No", "pET-22b(+)", "Addgene"],
+          ],
         },
       ],
       observations:
@@ -104,8 +287,8 @@ const CONSTRUCTS: ResultData = {
       id: "amplification",
       figures: [
         {
-          src: `${FIGURES}/gene-amplification-gel.png`,
-          alt: "Agarose gel of the amplified genes against the phi29 and lambda markers.",
+          src: `${GELS}/gel_gene_amplification.png`,
+          alt: "Agarose gel of the gene amplification for cerA (873 bp) and aphA (735 bp).",
           caption:
             "1% (w/v) agarose gel of the gene amplification for cloning into the pET vectors, sized against the φ29 and λ molecular-weight markers.",
         },
@@ -129,8 +312,8 @@ const TRANSFORMATION: ResultData = {
       id: "colony-pcr",
       figures: [
         {
-          src: `${FIGURES}/colony-pcr-gel.png`,
-          alt: "Agarose gel of the colony PCR products against the phi29 and lambda markers.",
+          src: `${GELS}/gel_colony_pcr.png`,
+          alt: "Agarose gel of the colony PCR for aphA (971 bp) and cerA (1050 bp).",
           caption:
             "1% (w/v) agarose gel of the colony PCR after ligation, verifying the insert against the φ29 and λ molecular-weight markers.",
         },
@@ -152,22 +335,51 @@ const EXPRESSION: ResultData = {
   subsections: [
     {
       id: "iptg-vs-autoinduction",
+      title: "IPTG against ZY auto-induction",
       figures: [
         {
-          src: `${FIGURES}/expression-gcat.png`,
-          alt: "SDS-PAGE comparing IPTG induction and ZY auto-induction for the five synthesised constructs.",
-          caption:
-            "SDS-PAGE of the recombinant expression of the GCAT Bio constructs under IPTG induction (A and B) and ZY auto-induction (C and D), both at 20 ºC. Lanes: (M) NZYBlue® marker; pET-28a(+) (C1); pET-22b(+) (C2); EstE1 (3); Plc (4); AppA (5); PhyA (6); M2-32 (7).",
+          src: `${GELS}/gel_A_iptg_total.png`,
+          title: "(A) IPTG, total fraction",
+          alt: "SDS-PAGE of IPTG induction, total fraction.",
+          caption: "",
         },
         {
-          src: `${FIGURES}/expression-addgene.png`,
-          alt: "SDS-PAGE of the AphA and CerA constructs under IPTG induction, total and soluble fractions.",
+          src: `${GELS}/gel_B_iptg_soluble.png`,
+          title: "(B) IPTG, soluble fraction",
+          alt: "SDS-PAGE of IPTG induction, soluble fraction.",
+          caption: "",
+        },
+        {
+          src: `${GELS}/gel_C_autoinduction_total.png`,
+          title: "(C) Auto-induction, total",
+          alt: "SDS-PAGE of ZY auto-induction, total fraction.",
+          caption: "",
+        },
+        {
+          src: `${GELS}/gel_D_autoinduction_soluble.png`,
+          title: "(D) Auto-induction, soluble",
+          alt: "SDS-PAGE of ZY auto-induction, soluble fraction.",
+          caption: "",
+        },
+      ],
+      figuresCaption:
+        "SDS-PAGE of the recombinant expression of the GCAT Bio constructs under IPTG induction (A and B) and ZY auto-induction (C and D), both at 20 ºC. Lanes: (M) NZYBlue® marker; pET-28a(+) (C1); pET-22b(+) (C2); EstE1 (3); Plc (4); AppA (5); PhyA (6); M2-32 (7). The black arrows mark the band corresponding to the enzyme, where present.",
+      observations:
+        "IPTG gave clearly stronger overexpression than ZY auto-induction at 20 ºC for the five synthesised constructs, and this was extrapolated to the two Addgene ones.",
+    },
+    {
+      id: "plc-cytotoxicity",
+      title: "The Addgene constructs, and PLC cytotoxicity",
+      figures: [
+        {
+          src: `${GELS}/gel_bl21_apha_cera.png`,
+          alt: "SDS-PAGE of BL21 expression of aphA and cerA at 20 ºC, total and soluble fractions.",
           caption:
-            "SDS-PAGE of the recombinant expression of the Addgene constructs under IPTG induction at 20 ºC. Lanes: (M) NZYBlue® marker; total (T) and soluble (S) fractions of pET-28a(+) (1); AphA (2); pET-22b(+) (3); CerA (4).",
+            "SDS-PAGE of the recombinant expression of the Addgene constructs under IPTG induction at 20 ºC. Lanes: (M) NZYBlue® marker; total (T) and soluble (S) fractions of pET-28a(+) (1); AphA (2); pET-22b(+) (3); CerA (4). The black arrows mark the band corresponding to the enzyme, where present.",
         },
       ],
       observations:
-        "IPTG gave clearly stronger overexpression than ZY auto-induction at 20 ºC for the five synthesised constructs, and this was extrapolated to the two Addgene ones. The two phospholipases C were cytotoxic: Plc and CerA caused a sharp OD₆₀₀ drop the morning after induction, CerA partly compensable with about thirty times the culture volume and Plc not compensable at all.",
+        "The two phospholipases C were cytotoxic: Plc and CerA caused a sharp OD₆₀₀ drop the morning after induction, CerA partly compensable with about thirty times the culture volume and Plc not compensable at all.",
       interpretation:
         "IPTG is the induction method of choice for this panel, and PLC cannot be produced in a live E. coli host because these enzymes hydrolyse essential host membrane phospholipids, so it was redirected to cell-free IVTT, a system that does not depend on host viability.",
       expectation:
@@ -186,21 +398,21 @@ const SOLUBILISATION: ResultData = {
       figures: [
         {
           src: `${FIGURES}/solubilisation-chaperones.png`,
-          alt: "SDS-PAGE of expression with GroES/GroEL and Trigger factor at 30 and 20 degrees.",
+          alt: "SDS-PAGE of expression with GroES/GroEL and Trigger factor at 30 and 20 ºC.",
           caption:
             "SDS-PAGE of expression under IPTG induction at 30 ºC and 20 ºC in the presence of chaperones. Lanes: (M) NZYBlue® marker; total (T) and soluble (S) fractions of pET-28a(+) (1); pET-22b(+) (2); EstE1 (3); AppA (4); PhyA (5); M2-32 (6); AppA-GroES/EL (7); AppA-tig (7'); PhyA-GroES/EL (8); PhyA-tig (8'); M2-32-GroES/EL (9); M2-32-tig (9').",
         },
         {
           src: `${FIGURES}/solubilisation-origami2.png`,
-          alt: "SDS-PAGE of expression in Origami 2, SHuffle T7 and Rosetta-gami 2.",
+          alt: "SDS-PAGE of expression in the Origami 2 strain at 20 and 30 ºC.",
           caption:
-            "SDS-PAGE of expression under IPTG induction at 20 ºC and 30 ºC in the Origami 2 strain, and under IPTG induction at 20 ºC in the SHuffle T7 and Rosetta-gami 2 strains.",
+            "SDS-PAGE of expression under IPTG induction at 20 ºC and 30 ºC in the Origami 2 strain.",
         },
         {
           src: `${FIGURES}/solubilisation-shuffle-rosettagami.png`,
-          alt: "SDS-PAGE of expression in SHuffle T7 and Rosetta-gami 2 at 20 degrees, total and soluble fractions.",
+          alt: "SDS-PAGE of expression in SHuffle T7 and Rosetta-gami 2 at 20 ºC.",
           caption:
-            "SDS-PAGE of expression under IPTG induction at 20 ºC in the SHuffle T7 (1 and 2) and Rosetta-gami 2 (3–5) strains. Lanes: (M) NZYBlue® marker; total (T) and soluble (S) fractions of pET-22b(+) (1); EstE1 (2); pET-28a(+) (3); AppA (4); PhyA (5).",
+            "SDS-PAGE of expression under IPTG induction at 20 ºC in the SHuffle T7 (1 and 2) and Rosetta-gami 2 (3–5) strains.",
         },
       ],
       observations:
@@ -256,24 +468,7 @@ const FUNCTIONAL: ResultData = {
           src: `${FIGURES}/specific-activity-summary.png`,
           alt: "Summary table of enzymatic activity, protein concentration and specific activity for AphA, PhyA and M2-32.",
           caption:
-            "Enzymatic activity, protein concentration and specific activity of the three purified recombinant hydrolases (AphA, PhyA and M2-32).",
-        },
-      ],
-      tables: [
-        {
-          caption:
             "Enzymatic activity, protein concentration and specific activity of the three purified recombinant hydrolases.",
-          headers: [
-            "Enzyme",
-            "pNP at 30 min (µM)",
-            "Protein (mg)",
-            "Specific activity (U/mg)",
-          ],
-          rows: [
-            ["AphA", "~11", "0.015", "0.222"],
-            ["M2-32", "~11", "0.027", "0.161"],
-            ["PhyA", "~27", "—", "0.141"],
-          ],
         },
       ],
       observations:
@@ -298,17 +493,17 @@ const LECITASE: ResultData = {
           src: `${FIGURES}/lecitase-dilutions.png`,
           alt: "Mean absorbance at 595 nm of the Lecitase Ultra dilution series with standard deviations.",
           caption:
-            "Mean A₅₉₅ of the prepared Lecitase® Ultra dilutions with their standard deviation; determination of the stock concentration by interpolation on the BSA standard line; and the specific activity determined from the activity assay and the Bradford method, both in duplicate.",
+            "Mean A₅₉₅ of the prepared Lecitase® Ultra dilutions, with the standard deviation.",
         },
         {
           src: `${FIGURES}/lecitase-stock-concentration.png`,
-          alt: "Interpolation of the Lecitase Ultra dilutions on the BSA standard line to determine the stock concentration.",
+          alt: "Interpolation of the Lecitase Ultra dilutions on the BSA standard line.",
           caption:
             "Determination of the concentration of the Lecitase® Ultra stock. In green, the interpolation of the concentrations falling in the linear range of the standard line, in blue.",
         },
         {
           src: `${FIGURES}/lecitase-specific-activity.png`,
-          alt: "Table of the specific activity of the Lecitase Ultra stock from the activity assay and the Bradford method.",
+          alt: "Table of the specific activity of the Lecitase Ultra stock.",
           caption:
             "Determination of the specific enzymatic activity of the Lecitase® Ultra stock from the activity assay and the Bradford method, performed in duplicate.",
         },
@@ -336,7 +531,7 @@ const STRATEGY_A: ResultData = {
           src: `${FIGURES}/strategy-a-time-course.png`,
           alt: "Time course of immobilisation on the preactivated support, with and without Triton X-100.",
           caption:
-            "Time course of immobilisation on glutaraldehyde-activated MANAE-agarose. (A) Without Triton X-100 and (B) with Triton X-100, following the activity of the immobilisation suspension and of the clarified supernatant over time against the no-immobilisation control. (C) Immobilisation yield over time for the two conditions.",
+            "Time course of immobilisation on glutaraldehyde-activated MANAE-agarose. (A) Without Triton X-100 and (B) with Triton X-100, following the activity of the immobilisation suspension (circles) and of the clarified supernatant (squares) over time against the no-immobilisation control (dashed). (C) Immobilisation yield over time for the two conditions.",
         },
       ],
       observations:
@@ -402,7 +597,7 @@ const YIELD: ResultData = {
       tables: [
         {
           caption:
-            "The two winning conditions compared at equal yield. One unit is the activity of the free enzyme control, which kept its activity throughout.",
+            "The two winning conditions compared at equal yield. The free-enzyme control kept its activity throughout.",
           headers: ["Condition", "Yield", "Immobilised activity"],
           rows: [
             ["Adsorption + crosslinking, no detergent", "~80%", "~0.0448 U"],
@@ -411,7 +606,7 @@ const YIELD: ResultData = {
         },
       ],
       observations:
-        "Both winning conditions reached about 80% yield, but their immobilised activities differed roughly tenfold (about 0.0448 U for adsorption plus crosslinking without detergent, against about 0.0053 U for preactivated covalent with detergent). The free-enzyme control kept its activity throughout.",
+        "Both winning conditions reached about 80% yield, but their immobilised activities differed roughly tenfold. The free-enzyme control kept its activity throughout.",
       interpretation:
         "Yield alone is misleading: two methods can immobilise similar amounts of protein while retaining very different amounts of activity, so activity retention, not percentage bound, is the right metric. The control confirms the differences came from immobilisation, not from buffer effects or denaturation.",
       expectation:
@@ -430,27 +625,31 @@ const MODELLING: ResultData = {
       figures: [
         {
           src: `${FIGURES}/lecitase-top-view.png`,
-          alt: "PyMOL views of Lecitase Ultra in its closed and open conformations, around the active site and the lid.",
+          title: "Top view",
+          alt: "Top view of the Lecitase Ultra active site in its closed and open conformations.",
           caption:
-            "Lecitase® Ultra in its closed (left) and open (right) conformation: top view of the active site showing the catalytic triad (Ser146, Asp201, His258) at the bottom of the cavity and the lid domain (residues 80–95); side view highlighting Lys24 and Lys259 on the immediate periphery of the lid; rear view of the opposite face; and a detail of the polyanionic patch (Asp27, Glu56, Asp57, Asp62) around the active site.",
+            "Top view of the active centre, closed (left) and open (right). The catalytic triad (Ser146, Asp201, His258) stands out in magenta at the bottom of the cavity, and the lid domain (residues 80–95) in green, showing the pocket clearing after interfacial activation.",
         },
         {
           src: `${FIGURES}/lecitase-side-view.png`,
-          alt: "Side view of Lecitase Ultra showing Lys24 and Lys259 beside the lid in the closed and open forms.",
+          title: "Side view",
+          alt: "Side view showing Lys24 and Lys259 beside the lid in the closed and open forms.",
           caption:
-            "Side view of the active centre, closed (left) and open (right), with Lys24 and Lys259 highlighted. In the closed form these lysines sit on the immediate periphery of the lid and the active centre, so fixing them covalently on the preactivated support rigidly immobilises that area and mechanically prevents the lid from moving.",
+            "Side view, with Lys24 and Lys259 highlighted. In the closed form these lysines sit on the immediate periphery of the lid, so fixing them covalently on the preactivated support rigidly immobilises that area and mechanically prevents the lid from moving.",
         },
         {
           src: `${FIGURES}/lecitase-rear-view.png`,
-          alt: "Rear view of Lecitase Ultra, 180 degrees from the active site, with acidic and lysine residues highlighted.",
+          title: "Rear view",
+          alt: "Rear view, 180 degrees from the active site, with acidic and lysine residues highlighted.",
           caption:
-            "View from the back, 180º from the catalytic pocket, with acidic (red) and lysine (blue) residues highlighted. This external surface sits away from the lid-opening mechanism, making it an ideal anchoring zone that keeps the active site exposed to the solvent.",
+            "View from the back, 180º from the catalytic pocket. This external surface sits away from the lid-opening mechanism, making it an ideal anchoring zone that keeps the active site exposed to the solvent.",
         },
         {
           src: `${FIGURES}/lecitase-acidic-patch.png`,
-          alt: "Detail of the polyanionic patch Asp27, Glu56, Asp57 and Asp62 around the active site of Lecitase Ultra.",
+          title: "Acidic crown",
+          alt: "Detail of the polyanionic patch Asp27, Glu56, Asp57 and Asp62 around the active site.",
           caption:
-            "Detail of the catalytic pocket, closed (left) and open (right), with the polyanionic residues Asp27, Glu56, Asp57 and Asp62 in red. In the closed form this negatively charged patch allows targeted physical adsorption on the cationic MANAE-agarose support, protecting the flexibility of the active site before the final crosslinking.",
+            "Detail of the catalytic pocket with the polyanionic residues Asp27, Glu56, Asp57 and Asp62 in red. In the closed form this negatively charged patch allows targeted physical adsorption on the cationic MANAE-agarose support, protecting the flexibility of the active site before the final crosslinking.",
         },
       ],
       observations:
@@ -466,7 +665,7 @@ const MODELLING: ResultData = {
 export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ResultSubBlock[] = [
   {
     id: "enzyme-production",
-    heading: "1. Enzyme production",
+    heading: "Section 1: Enzyme production",
     intro:
       "This set of experiments builds and validates the enzymatic toolbox: candidate phosphohydrolases are identified by data mining, expressed heterologously in E. coli, purified by immobilised metal-ion affinity chromatography and characterised under the operating conditions of the reactor (pH 5.0, 30 ºC). Because heterologous expression carries inherent risks, a parallel search for commercial homologues was kept for each activity as a contingency plan.",
     results: [
@@ -484,7 +683,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ResultSubBlock[] = [
   },
   {
     id: "immobilisation-chemistry",
-    heading: "2. Immobilisation chemistry",
+    heading: "Section 2: Immobilisation chemistry",
     intro:
       "This set of experiments establishes how to fix the enzymes onto the support while keeping them active. Rather than testing directly on the more complex and costly alginate-chitosan-genipin sphere, the chemistry is first optimised on a simple, well-characterised MANAE-agarose model support, and the more reactive genipin of the final sphere is emulated by glutaraldehyde, which plays the same crosslinking role. The model enzyme is Lecitase® Ultra, chosen because it is the most demanding case: its active site is capped by a mobile lid that requires interfacial activation, and it forms bimolecular aggregates in solution.",
     results: [LECITASE, STRATEGY_A, STRATEGY_B, DETERGENT, YIELD, MODELLING],
