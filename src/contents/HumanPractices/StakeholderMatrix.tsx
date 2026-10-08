@@ -36,6 +36,44 @@ function MatrixCard({
   const panelId = useId();
   const row = rowFor(item);
 
+  const body = (
+    <>
+      <span
+        className={`hp-matrix__dot${item.engaged ? " hp-matrix__dot--engaged" : ""}`}
+        aria-hidden="true"
+      />
+      {item.logo && <img className="hp-matrix__logo" src={asset(item.logo)} alt="" />}
+      <span className="hp-matrix__names">
+        <span className="hp-matrix__name">{item.name}</span>
+        {item.subtitle && (
+          <span className="hp-matrix__subtitle">{item.subtitle}</span>
+        )}
+        {/* Printed inside the box on the team's own matrix, so it belongs
+            on the pill rather than only inside a card — which an actor
+            with no table row does not have. */}
+        {item.members && (
+          <span className="hp-matrix__subtitle">
+            {item.members.join(" · ")}
+          </span>
+        )}
+        <span className="hp-matrix__engagement">
+          {item.engaged ? "Engaged to date" : "Not yet engaged"}
+        </span>
+      </span>
+    </>
+  );
+
+  /* An actor the stakeholder table has no row for carries no card: it is
+     named on the matrix and nothing more. Rendered as plain text rather
+     than a button, so it does not offer a control that opens nothing. */
+  if (!row) {
+    return (
+      <div className="hp-matrix__item">
+        <div className="hp-matrix__pill hp-matrix__pill--static">{body}</div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`hp-matrix__item${open ? " is-open" : ""}`}
@@ -50,47 +88,20 @@ function MatrixCard({
         onFocus={onOpen}
         onClick={() => (open ? onClose() : onOpen())}
       >
-        <span
-          className={`hp-matrix__dot${item.engaged ? " hp-matrix__dot--engaged" : ""}`}
-          aria-hidden="true"
-        />
-        {item.logo && (
-          <img className="hp-matrix__logo" src={asset(item.logo)} alt="" />
-        )}
-        <span className="hp-matrix__names">
-          <span className="hp-matrix__name">{item.name}</span>
-          {item.subtitle && (
-            <span className="hp-matrix__subtitle">{item.subtitle}</span>
-          )}
-          <span className="hp-matrix__engagement">
-            {item.engaged ? "Engaged to date" : "Not yet engaged"}
-          </span>
-        </span>
+        {body}
       </button>
 
       <div className="hp-matrix__panel" id={panelId} role="note" hidden={!open}>
         <p className="hp-matrix__panel-title">{item.name}</p>
 
-        {item.members && (
-          <p className="hp-matrix__members">{item.members.join(" · ")}</p>
-        )}
-
-        {row ? (
-          <dl className="hp-matrix__fields">
-            <dt>Relationship with rePhlow</dt>
-            <dd>{row.relationship}</dd>
-            <dt>What matters most to them</dt>
-            <dd>{row.matters}</dd>
-            <dt>What rePhlow must demonstrate</dt>
-            <dd>{row.mustDemonstrate}</dd>
-          </dl>
-        ) : (
-          <p className="hp-matrix__unsourced">
-            This actor appears on our matrix but does not yet have a row in
-            the stakeholder table below, so there is nothing written up here
-            for it yet.
-          </p>
-        )}
+        <dl className="hp-matrix__fields">
+          <dt>Relationship with rePhlow</dt>
+          <dd>{row.relationship}</dd>
+          <dt>What matters most to them</dt>
+          <dd>{row.matters}</dd>
+          <dt>What rePhlow must demonstrate</dt>
+          <dd>{row.mustDemonstrate}</dd>
+        </dl>
       </div>
     </div>
   );
@@ -170,9 +181,10 @@ export function StakeholderMatrix() {
 
       <figcaption>
         Our stakeholder matrix, by the power an actor holds over rePhlow's
-        implementation and the interest they have in it. Select or hover over
-        any actor to see how it relates to rePhlow, what matters most to it
-        and what rePhlow would have to demonstrate.
+        implementation and the interest they have in it. Where we have
+        written an actor up, selecting or hovering over it shows how it
+        relates to rePhlow, what matters most to it and what rePhlow would
+        have to demonstrate.
       </figcaption>
     </figure>
   );

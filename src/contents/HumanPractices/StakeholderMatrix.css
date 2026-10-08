@@ -201,12 +201,6 @@
   font-size: 0.92rem;
   color: var(--ink);
 }
-.hp-matrix__members {
-  margin: -4px 0 12px;
-  font-size: 0.78rem;
-  color: var(--ink-soft);
-  line-height: 1.5;
-}
 
 .hp-matrix__fields {
   margin: 0;
@@ -229,12 +223,15 @@
   margin-bottom: 0;
 }
 
-.hp-matrix__unsourced {
-  margin: 0;
-  font-size: 0.84rem;
-  font-style: italic;
-  line-height: 1.55;
-  color: var(--ink-soft);
+/* An actor with no table row behind it: named, but not a control, so it
+   gets none of the button's affordances. */
+.hp-matrix__pill--static {
+  cursor: default;
+}
+.hp-matrix__pill--static:hover {
+  border-color: var(--line);
+  box-shadow: none;
+  transform: none;
 }
 
 .hp-matrix__legend {

@@ -31,11 +31,11 @@ export interface MatrixItem {
   /**
    * The row of the team's own stakeholder table whose detail describes
    * this actor, matched by its `stakeholder` text. `null` where the table
-   * has no row for it: the card then says so rather than being filled in
-   * with text nobody on the team wrote. Every mapping here is an
-   * interpretation of two separate team documents (the matrix and the
-   * table), so it is listed explicitly for review instead of being
-   * inferred at render time.
+   * has no row for it: the actor is then named on the matrix and nothing
+   * more, rather than carrying a card filled with text nobody on the team
+   * wrote. Every mapping here is an interpretation of two separate team
+   * documents (the matrix and the table), so it is listed explicitly for
+   * review instead of being inferred at render time.
    */
   sourceRow: string | null;
   /**
