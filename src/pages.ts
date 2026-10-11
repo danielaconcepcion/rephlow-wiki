@@ -154,6 +154,9 @@ const Pages: Page[] = [
     path: "/collaboration-partnership",
     component: CollaborationPartnership,
     docTitle: "Collaboration and Partnership — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 23,
   },
   {
     name: "Education and Communication",
