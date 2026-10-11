@@ -16,9 +16,15 @@ function DataTable({ table }: { table: RecordTable & { caption?: string } }) {
         <tbody>
           {table.rows.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {row.map((cell, cellIndex) => (
-                <td key={cellIndex}>{cell}</td>
-              ))}
+              {row.map((cell, cellIndex) =>
+                typeof cell === "string" ? (
+                  <td key={cellIndex}>{cell}</td>
+                ) : (
+                  <td key={cellIndex} rowSpan={cell.rowSpan}>
+                    {cell.value}
+                  </td>
+                ),
+              )}
             </tr>
           ))}
         </tbody>

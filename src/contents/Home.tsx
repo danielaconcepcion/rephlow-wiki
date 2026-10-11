@@ -123,7 +123,15 @@ export function Home() {
           HERO — agua limpia, punto de partida
           ================================================================== */}
       <header className="hero" id="home">
-        <h1 className="hero__title">rePhlow</h1>
+        {/* The wordmark replaces the typeset title, but stays inside the
+            h1: it is still the page's top-level heading, so its alt text
+            carries the name for search engines and screen readers. */}
+        <h1 className="hero__title">
+          <img
+            src={asset("assets/rephlow-logo-transparent.png")}
+            alt="rePhlow"
+          />
+        </h1>
         <p className="hero__subtitle">
           Make water flow. Make value grow. Choose rePhlow.
         </p>

@@ -31,11 +31,12 @@
   margin: 0 auto;
 }
 
-/* Experiments' compact hero (see App.css .page-hero--compact) already
-   provides its own breathing room above the ecosystem map — .lab-folders'
-   own 6vh top padding on top of that left an oversized header→index gap.
-   Scoped to "the map is the very first thing in .lab-folders" so this
-   doesn't reach any other .lab-folders usage (e.g. Results.tsx). */
+/* The lab hero (see App.css .page-hero--lab) already provides its own
+   breathing room above the ecosystem map — .lab-folders' own 6vh top
+   padding on top of that left an oversized header→index gap. Scoped to
+   "the map is the very first thing in .lab-folders" so it doesn't reach a
+   .lab-folders that opens with something else. Experiments and Results
+   both open with the map, so both get this and their indexes line up. */
 .lab-folders > .ecosystem-map:first-child {
   margin-top: -40px;
 }
@@ -868,6 +869,42 @@
 }
 
 .record-figure { margin: 0; }
+
+/* Keep a caption the width of the figure it belongs to. An image that
+   renders narrower than its column (a generated chart at its own size, a
+   small cropped panel) otherwise gets a caption running the full column
+   width, which reads as a caption for the whole row rather than for that
+   figure.
+
+   `width: fit-content` does not do this: the caption is a long run of
+   text, so the figure's max-content width is the caption's, and it
+   stretches to the column anyway. A table box does, because it
+   shrink-to-fits its cells — here the image — while a table-caption takes
+   the table's width. Images that already fill their column are
+   unaffected. */
+.record-figure:has(.record-figure__photo) {
+  display: table;
+  margin-inline: auto;
+}
+
+.record-figure--wide { grid-column: 1 / -1; }
+
+/* One caption for a whole grid of cropped panels. It spans every column so
+   it reads as the group's caption, instead of dropping into the next free
+   cell and looking like an eighth panel. */
+.record-figure-grid__caption {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.record-figure:has(.record-figure__photo) > figcaption {
+  display: table-caption;
+  caption-side: bottom;
+}
 .record-figure__placeholder {
   aspect-ratio: 16 / 9;
   display: flex;
@@ -897,18 +934,43 @@
   margin-top: 14px;
 }
 
+/* A panel set that declares its own column count (figuresColumns), so a
+   four-panel series stays 2x2 rather than being auto-fitted into three
+   plus an orphan. */
+.record-figure-grid--fixed {
+  grid-template-columns: repeat(var(--figure-columns), minmax(0, 1fr));
+}
+@media (max-width: 680px) {
+  .record-figure-grid--fixed {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 /* A real photo, single or grouped — the site's first actual (non-
    placeholder) figures. Same quiet "photo on paper" card language as
    ProjectDescription's own figures (padding, soft border, no forced
    aspect-ratio so a portrait gel and a wide diagram both sit naturally). */
 .record-figure__photo {
   display: block;
-  width: 100%;
+  /* Render at the source's own size and only ever scale down. These are
+     crops and screenshots a few hundred pixels across; stretching one to
+     fill its column just blurs it. */
+  width: auto;
+  max-width: 100%;
   height: auto;
   background: var(--paper);
   border: 1px solid var(--lab-line);
   border-radius: var(--radius-md, 8px);
   padding: 6px;
+}
+
+/* A generated chart (an SVG plotted at a deliberate figure size) renders
+   at that size and only ever scales down, so its type stays the size it
+   was designed at instead of being blown up to the card width. */
+.record-figure__photo--chart {
+  width: auto;
+  max-width: 100%;
+  margin-inline: auto;
 }
 
 /* Several real photos cropped from one composite source figure (e.g. a
@@ -950,6 +1012,109 @@
   font-size: 0.78rem;
   font-style: italic;
   color: var(--ink-soft);
+}
+
+/* A two-axis photo series: media down the side, time across the top. The
+   column count comes from the data (--matrix-columns), not from auto-fit,
+   so one medium's time course always occupies exactly one row instead of
+   wrapping into the next. Each axis is labelled once, which is what lets
+   the panels themselves carry no caption at all. */
+.record-figure-matrix {
+  margin: 14px 0 0;
+}
+.record-figure-matrix__grid {
+  display: grid;
+  grid-template-columns: max-content repeat(var(--matrix-columns), minmax(0, 1fr));
+  gap: 8px 12px;
+  align-items: center;
+}
+.record-figure-matrix__corner {
+  /* Empty cell where the two axis labels meet. */
+}
+.record-figure-matrix__column-head,
+.record-figure-matrix__row-head {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+.record-figure-matrix__column-head {
+  text-align: center;
+}
+.record-figure-matrix__row-head {
+  text-align: right;
+  padding-right: 4px;
+}
+.record-figure-matrix__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-md, 8px);
+  padding: 4px;
+}
+.record-figure-matrix > figcaption {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* A tall, narrow figure (a gel is about 400 px wide) set beside the prose
+   that reads it, instead of in a full-width band that leaves most of the
+   row empty on both sides and pushes the explanation below the fold. The
+   figure column spans every row of the section, so the text wraps the
+   whole height of the image regardless of where it sits in the DOM. */
+.result-subsection--aside {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+  column-gap: 28px;
+  align-items: start;
+}
+.result-subsection--aside > * {
+  grid-column: 1;
+  min-width: 0;
+}
+/* The heading runs across both columns and the figure sits beside the
+   prose on the row below it. Spanning the figure up into the heading's row
+   instead would stretch that row to share the figure's height, leaving the
+   heading stranded above a column of empty space. */
+.result-subsection--aside > h4 {
+  grid-column: 1 / -1;
+}
+.result-subsection--aside > .result-subsection__aside {
+  grid-column: 2;
+}
+.result-subsection--aside .record-figure-grid {
+  grid-template-columns: minmax(0, 1fr);
+  margin-top: 0;
+}
+/* In the aside column the figure fills its (already narrow) column rather
+   than shrink-wrapping to the source pixels, so the gel is legible. */
+.result-subsection--aside .record-figure__photo {
+  width: 100%;
+}
+
+@media (max-width: 880px) {
+  .result-subsection--aside {
+    display: block;
+  }
+  .result-subsection--aside .record-figure-grid {
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 720px) {
+  .record-figure-matrix__grid {
+    grid-template-columns: max-content repeat(var(--matrix-columns), minmax(0, 1fr));
+    gap: 6px 6px;
+  }
+  .record-figure-matrix__column-head,
+  .record-figure-matrix__row-head {
+    font-size: 0.68rem;
+  }
 }
 
 /* A bespoke component dropped in place of an image (e.g. SelectionFunnel)
@@ -1094,6 +1259,30 @@
 
 .result-card__discussion p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.65; }
 .result-card__discussion p:first-of-type { margin-top: 0; }
+
+/* A record whose write-up the source has not supplied yet. Set apart from
+   body copy so it reads as a note about the record rather than as its
+   content — an empty card would claim the experiment had nothing to
+   report, which is a different thing. */
+.result-card__pending {
+  margin: 0 0 4px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--lab-line);
+  background: color-mix(in srgb, var(--lab-line) 12%, transparent);
+  border-radius: 0 var(--radius-md, 8px) var(--radius-md, 8px) 0;
+  color: var(--ink-soft);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Above its table, as table captions conventionally go (and as the
+   source's own "Table X." lines do), unlike a figure's caption below. */
+.record-table__caption {
+  margin: 16px 0 8px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
 
 @media (max-width: 640px) {
   .result-card { padding: 22px 20px; }

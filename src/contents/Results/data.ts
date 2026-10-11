@@ -1,176 +1,58 @@
 import type { ResultBlockData } from "../../components/LabFolders/types";
+import { ENCAPSULATION_INTRO, ENCAPSULATION_SUBBLOCKS } from "./EncapsulationData";
+import {
+  ENZYMATIC_IMMOBILISATION_INTRO,
+  ENZYMATIC_IMMOBILISATION_SUBBLOCKS,
+} from "./EnzymaticImmobilisationData";
+import {
+  GENETIC_ENGINEERING_INTRO,
+  GENETIC_ENGINEERING_SUBBLOCKS,
+} from "./GeneticEngineeringData";
+import { REVALORISATION_INTRO, REVALORISATION_SUBBLOCKS } from "./RevalorisationData";
 
 /**
- * Placeholder result records — structure only, ready to be replaced with
- * real figures, tables, and interpretation. See
- * src/components/LabFolders/types.ts for the full field reference.
+ * The Results page's four blocks, matching EXPERIMENT_BLOCKS one-for-one in
+ * id, label and accent so that both pages share the same glass-sphere index
+ * and the same block reads the same colour on either page (see
+ * labBlockSpheres.ts). One data file per block, as on Experiments.
+ *
+ * Content comes from the team's own four Notion results pages, under WIKI /
+ * Results, each of which reports the outcome of the corresponding
+ * experiment on the Experiments page and answers the same three questions:
+ * what was obtained, what it means, and whether it matched what we
+ * expected. Where a source entry still reads [XXX], the record is marked
+ * `pending` instead of being written around or quietly dropped.
  */
-const LOREM =
-  "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
-
 export const RESULT_BLOCKS: ResultBlockData[] = [
   {
-    id: "bacteria",
-    label: "Bacteria",
-    accent: "var(--lab-bacteria)",
-    results: [
-      {
-        id: "result-1",
-        tabLabel: "Result 1",
-        title: "Result 1",
-        description: LOREM,
-        aim: LOREM,
-        background: [LOREM, LOREM],
-        subsections: [
-          {
-            id: "phosphate-uptake",
-            title: "Phosphate uptake over time",
-            body: [LOREM],
-            figures: [{ src: "assets/results/bacteria-result-1-placeholder.png", caption: "Placeholder figure caption." }],
-            observations: LOREM,
-            interpretation: LOREM,
-          },
-          {
-            id: "biomass-comparison",
-            title: "Biomass comparison across conditions",
-            table: {
-              headers: ["Condition", "Value", "SD"],
-              rows: [
-                ["Control", "Add value", "Add value"],
-                ["Engineered strain", "Add value", "Add value"],
-                ["Encapsulated", "Add value", "Add value"],
-              ],
-            },
-            figures: [
-              { src: "assets/results/bacteria-result-1-placeholder-2.png", caption: "Placeholder figure caption." },
-              { src: "assets/results/bacteria-result-1-placeholder-3.png", caption: "Placeholder figure caption." },
-            ],
-            observations: LOREM,
-            interpretation: LOREM,
-          },
-        ],
-        discussion: [LOREM, LOREM],
-      },
-      {
-        id: "result-2",
-        tabLabel: "Result 2",
-        title: "Result 2",
-        description: LOREM,
-        aim: LOREM,
-        subsections: [
-          {
-            id: "growth-trend",
-            title: "Growth trend under selection",
-            body: [LOREM, LOREM],
-            observations: LOREM,
-            interpretation: LOREM,
-          },
-        ],
-        discussion: [LOREM],
-      },
-    ],
+    id: "encapsulation",
+    label: "Alginate encapsulation",
+    accent: "var(--lab-encapsulation)",
+    intro: ENCAPSULATION_INTRO,
+    subBlocks: ENCAPSULATION_SUBBLOCKS,
   },
   {
-    id: "encapsulation",
-    label: "Encapsulación",
-    accent: "var(--lab-encapsulation)",
-    results: [
-      {
-        id: "result-1",
-        tabLabel: "Result 1",
-        title: "Result 1",
-        description: LOREM,
-        aim: LOREM,
-        subsections: [
-          {
-            id: "bead-size-distribution",
-            title: "Bead size distribution",
-            figures: [
-              { src: "assets/results/encapsulation-result-1-placeholder-1.png", caption: "Placeholder figure caption." },
-              { src: "assets/results/encapsulation-result-1-placeholder-2.png", caption: "Placeholder figure caption." },
-            ],
-            observations: LOREM,
-          },
-          {
-            id: "release-profile",
-            title: "Release profile over time",
-            body: [LOREM],
-            interpretation: LOREM,
-          },
-        ],
-        discussion: [LOREM],
-      },
-      {
-        id: "result-2",
-        tabLabel: "Result 2",
-        title: "Result 2",
-        description: LOREM,
-        aim: LOREM,
-        background: [LOREM],
-        subsections: [
-          {
-            id: "encapsulation-efficiency",
-            title: "Encapsulation efficiency by batch",
-            body: [LOREM],
-            observations: LOREM,
-            interpretation: LOREM,
-          },
-        ],
-        discussion: [LOREM],
-      },
-    ],
+    id: "enzymatic-immobilisation",
+    label: "Enzymatic immobilisation",
+    accent: "var(--lab-enzyme)",
+    intro: ENZYMATIC_IMMOBILISATION_INTRO,
+    subBlocks: ENZYMATIC_IMMOBILISATION_SUBBLOCKS,
+  },
+  {
+    id: "genetic-engineering",
+    label: "Genetic engineering",
+    accent: "var(--lab-genetic)",
+    intro: GENETIC_ENGINEERING_INTRO,
+    subBlocks: GENETIC_ENGINEERING_SUBBLOCKS,
   },
   {
     id: "revalorisation",
     label: "Revalorisation",
-    accent: "var(--lab-revalorisation)",
-    results: [
-      {
-        id: "result-1",
-        tabLabel: "Result 1",
-        title: "Result 1",
-        description: LOREM,
-        aim: LOREM,
-        background: [LOREM],
-        subsections: [
-          {
-            id: "recovery-yield",
-            title: "Recovery yield by condition",
-            table: {
-              headers: ["Condition", "Yield (%)", "Notes"],
-              rows: [
-                ["Condition A", "Add value", "Lorem ipsum."],
-                ["Condition B", "Add value", "Lorem ipsum."],
-              ],
-            },
-            observations: LOREM,
-            interpretation: LOREM,
-          },
-        ],
-        discussion: [LOREM],
-      },
-      {
-        id: "result-2",
-        tabLabel: "Result 2",
-        title: "Result 2",
-        description: LOREM,
-        aim: LOREM,
-        subsections: [
-          {
-            id: "process-comparison",
-            title: "Process comparison",
-            body: [LOREM],
-            observations: LOREM,
-          },
-          {
-            id: "long-term-stability",
-            title: "Long-term stability",
-            body: [LOREM],
-            interpretation: LOREM,
-          },
-        ],
-        discussion: [LOREM],
-      },
-    ],
+    // Text accent in the mostaza palette's deep shade; the folder decks
+    // take the full palette via `palette`, as on Experiments.
+    accent: "#b8790a",
+    palette: "mostaza",
+    intro: REVALORISATION_INTRO,
+    subBlocks: REVALORISATION_SUBBLOCKS,
   },
 ];

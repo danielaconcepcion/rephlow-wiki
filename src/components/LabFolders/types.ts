@@ -52,13 +52,43 @@ export interface NoteItem {
 }
 
 export interface FigureData {
-  src: string;
+  /** Path under /public, e.g. "assets/results/foo.svg" — resolved with
+   * asset(). Omit for a figure the write-up calls for but has no image
+   * for yet: it then renders as the same caption-only placeholder the
+   * Experiments cards already use (see ResultCard). */
+  src?: string;
+  /** Required alongside `src`; ignored by a placeholder. */
+  alt?: string;
+  /** A sub-figure's own printed label, e.g. "(A) estE1_MG", rendered
+   * above the image rather than as part of the caption — for a group of
+   * panels cropped from one composite source figure, each keeping its own
+   * label while the panels share the surrounding prose. */
+  title?: string;
+  /** Give this figure a whole row of the grid instead of sharing one.
+   * For a very wide image — a linear plasmid map is a thin backbone with
+   * annotations along it — a third of a row leaves the annotations too
+   * small to read. */
+  wide?: boolean;
+  /** "chart" for a generated plot (see
+   * scripts/build-genetic-engineering-figures.py), which already has an
+   * intrinsic size chosen when it was plotted — stretching it to the card
+   * width just magnifies its type and rules. A photo (the default) does
+   * want the full width. */
+  kind?: "chart" | "photo";
   caption: string;
 }
 
+/** One cell of a transcribed table. A plain string in the ordinary case;
+ * the object form carries a vertical span, for a source table where one
+ * value genuinely covers several rows (e.g. a stock concentration derived
+ * once from a duplicate pair). Repeating that value down the rows instead
+ * would read as several independent measurements, which is not what was
+ * measured. */
+export type TableCell = string | { value: string; rowSpan: number };
+
 export interface RecordTable {
   headers: string[];
-  rows: string[][];
+  rows: TableCell[][];
 }
 
 /* ---------- Experiment record ---------- */
@@ -209,30 +239,110 @@ export interface ExperimentBlockData {
 
 /* ---------- Result record ---------- */
 
+/** One section of a result record. The three named fields follow the
+ * template the team uses on every results page — "what was obtained, what
+ * it means, and whether it matched what we expected" — so a record
+ * transcribed from that write-up keeps its own shape instead of being
+ * flattened into undifferentiated prose. `body`, `figures` and `table`
+ * carry the supporting detail those three answers refer to. */
 export interface ResultSubsection {
   id: string;
-  title: string;
+  /** Omit when the record has a single section: the card's own title is
+   * already the heading, and a second one directly under it reads as a
+   * duplicate. */
+  title?: string;
   body?: string[];
   figures?: FigureData[];
-  table?: RecordTable;
+  /** One caption for the whole `figures` grid, rendered below it — for a
+   * group of panels cropped from a single composite source figure, which
+   * share one caption. Without this the shared caption has to hang off the
+   * last panel, where it reads as that panel's own. */
+  figuresCaption?: string;
+  /** A grid of photographs that vary along two axes — e.g. three storage
+   * media photographed at four time points. The flat `figures` grid
+   * auto-flows at whatever column count fits, so such a series breaks
+   * mid-row ("PBS, 48 h" ending one row and "PBS, 72 h" opening the
+   * next) and each panel has to repeat both axes in its own caption.
+   * Here the axes are named once — columns across the top, rows down the
+   * side — and the row is never split. */
+  figureMatrix?: {
+    /** Column headings, e.g. ["0 h", "24 h", "48 h", "72 h"]. */
+    columns: string[];
+    rows: {
+      /** Row heading, e.g. "Water". */
+      label: string;
+      /** One per column, in the same order. */
+      figures: { src: string; alt: string }[];
+    }[];
+    caption?: string;
+  };
+  /** Fix the number of columns in the `figures` grid instead of letting it
+   * auto-fit. Auto-fit packs as many panels per row as will fit, which
+   * leaves a four-panel series as three plus a lone fourth — a split that
+   * reads as two groups. A panel set that belongs together states its own
+   * shape here. */
+  figuresColumns?: number;
+  /** Put this section's figures in a narrow column beside its text rather
+   * than in a band across the card. For a tall, narrow image — a gel lane
+   * is roughly 400 px wide — a full-width band leaves most of the row
+   * empty on both sides, and pushes the prose that explains the gel far
+   * below it. */
+  figuresAside?: boolean;
+  tables?: (RecordTable & { caption?: string })[];
+  /** A bespoke visual instead of an image — e.g. the candidate-selection
+   * funnel, which is a component rather than a screenshot so its numbers
+   * stay legible at any width. Rendered with its own caption. */
+  custom?: { node: ReactNode; caption?: string };
   observations?: string;
   interpretation?: string;
+  /** "Was it expected, and why?" */
+  expectation?: string;
 }
 
 export interface ResultData {
   id: string;
   tabLabel: string;
   title: string;
-  description: string;
-  aim: string;
+  description?: string;
+  /** Results pages state the aim on Experiments rather than per record, so
+   * this is optional and usually unset. */
+  aim?: string;
   background?: string[];
   subsections: ResultSubsection[];
   discussion?: string[];
+  /** Set when the source has the entry but has not written it up yet (its
+   * "what was obtained" still reads [XXX]). The card then says so plainly
+   * instead of the record looking finished-but-empty, and nothing is
+   * invented to fill it. */
+  pending?: boolean;
+}
+
+/** One labelled sub-section within a result block, mirroring
+ * ExperimentSubBlock exactly — same heading/intro/deck/outro shape, so the
+ * Results page reads as the same kind of document as Experiments and the
+ * two can share the section-nav and folder machinery. A sub-block with no
+ * results of its own renders as heading + intro only. */
+export interface ResultSubBlock {
+  id: string;
+  /** Rendered as-is, e.g. "1. Polyphosphate accumulation in the wild type". */
+  heading: string;
+  intro?: ReactNode | ReactNode[];
+  results?: ResultData[];
+  outro?: ReactNode | ReactNode[];
 }
 
 export interface ResultBlockData {
   id: string;
   label: string;
   accent: string;
-  results: ResultData[];
+  /** Optional full colour re-skin for this block's folder decks (see
+   * .lab-block--mostaza in LabFolders.css), as on Experiments. */
+  palette?: "mostaza";
+  /** Shown once, above everything else in the block. */
+  intro?: ReactNode | ReactNode[];
+  /** A flat block has one folder-tab row: set `results`. A block with
+   * multiple labelled sub-sections sets `subBlocks` instead — Results.tsx
+   * branches on which one is present, exactly as Experiments.tsx does. */
+  results?: ResultData[];
+  subBlocks?: ResultSubBlock[];
 }

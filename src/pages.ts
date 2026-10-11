@@ -39,6 +39,7 @@ export interface Page {
    * whatever comes right below it (e.g. Engineering/Experiments' ecosystem
    * map, meant to fit in the initial viewport together with the header). */
   compactHero?: boolean;
+  labHero?: boolean;
   /** Opt-in "molecule field" header background (see Header.tsx) — the
    * Claude Design MoleculeField edge/light treatment, currently used only
    * by Experiments and Results. The number just seeds the composition. */
@@ -103,7 +104,7 @@ const Pages: Page[] = [
     component: Experiments,
     docTitle: "Experiments — rePhlow iGEM Wiki",
     hideEyebrow: true,
-    compactHero: true,
+    labHero: true,
     moleculeSeed: 23,
   },
   {
@@ -124,6 +125,7 @@ const Pages: Page[] = [
     component: Results,
     docTitle: "Results — rePhlow iGEM Wiki",
     hideEyebrow: true,
+    labHero: true,
     moleculeSeed: 45,
   },
   {
