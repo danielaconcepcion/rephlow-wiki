@@ -111,8 +111,8 @@ export function CollaborationPartnership() {
             </strong>
           </p>
           <p className="cp-intro">
-            Three tables, one for each kind of collaboration. Select an object
-            on a table to open it.
+            The objects on each table represent the teams and institutions we
+            worked with.
           </p>
 
           {(Object.keys(GROUPS) as GroupId[]).map((g, i) => (

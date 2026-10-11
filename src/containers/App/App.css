@@ -1302,6 +1302,7 @@ img {
   min-height: 0;
 }
 .page-hero--lab {
+  max-width: 960px;
   padding: 220px 24px 128px;
 }
 
