@@ -198,11 +198,11 @@ function KickoffBody() {
     <Stack>
       <p className="cp-kicker">June 24th – 26th, 2026 · Madrid</p>
       <p className="cp-lead">
-        We hosted a meetup bringing together iGEM teams for conferences on
+        We hosted a meetup bringing together <strong>iGEM teams</strong> for conferences on
         synthetic biology, neurobiology, biophysics, scientific illustration,
-        design, and biotechnology careers, alongside workshops on
-        brainstorming, science communication, and project pitching, as well
-        as a mini iGEM hackathon and interactive group activities.
+        design, and biotechnology careers, alongside <strong>workshops on
+        brainstorming</strong>, science communication, and project pitching, as well
+        as a <strong>mini iGEM hackathon</strong> and interactive group activities.
       </p>
       <p>Discover what we achieved and how this initiative enhanced our collaborations.</p>
       <div className="cp-photo-grid">
@@ -234,9 +234,9 @@ function KickoffBody() {
       <h3 className="cp-h3">iGEM Community Board</h3>
       <div className="cp-split">
         <p className="cp-split__text">
-          We featured the iGEM Community Board at our meetup, creating a space
-          where participants could share ideas, opportunities, questions, and
-          resources with other teams. It encouraged interaction beyond the
+          We featured the <strong>iGEM Community Board</strong> at our meetup, creating a space
+          where <strong>participants could share ideas, opportunities, questions, and
+          resources with other teams</strong>. It encouraged interaction beyond the
           scheduled activities and helped strengthen connections within the
           wider iGEM community.
         </p>
@@ -356,12 +356,12 @@ function MalagaBody() {
   return (
     <Stack>
       <p className="cp-lead">
-        We participated in the iGEM European Meetup in Málaga, connecting with
-        teams from across Europe to present our project, exchange feedback,
+        We participated in the <strong>iGEM European Meetup</strong> in Málaga, connecting with
+        <strong>teams from across Europe</strong> to present our project, exchange feedback,
         discuss common challenges, and explore opportunities for
         collaboration through talks, poster sessions, and networking
-        activities. It was also a great opportunity to support a fellow
-        Spanish iGEM team while connecting with the wider European community.
+        activities. It was also a great opportunity to support a <strong>fellow
+        Spanish iGEM team</strong> while connecting with the wider European community.
       </p>
       <div ref={stripRef} className="cp-gallery" onScroll={onScroll}>
         {MALAGA_GALLERY.map((g, i) => (
@@ -400,32 +400,32 @@ function MspBody() {
         </p>
       </div>
       <p>
-        The MSP-Vector is an open-access, peer-reviewed journal exclusive to
+        The <strong>MSP-Vector</strong> is an open-access, peer-reviewed journal exclusive to
         iGEM teams, organised annually by the Maastricht University iGEM team.
-        We submitted an original research paper, "RePhlow: A modular
+        We submitted an original research paper, <strong>"RePhlow: A modular
         synthetic-biology platform for phosphorus capture and valorisation
-        from industrial wastewater," covering three components of the
+        from industrial wastewater,"</strong> covering three components of the
         project; the enzymatic immobilisation, the engineered{" "}
         <em>Pseudomonas putida</em> chassis, and the biocatalytic
         revalorisation.
       </p>
       <p>
-        The paper went through a month-long double-blind peer review round, in
+        The paper went through a <strong>month-long double-blind peer review</strong> round, in
         which each participating team reviews three papers from other teams
-        and is reviewed in turn. As part of this process, we reviewed three
-        anonymous articles submitted by other iGEM teams, each against a
+        and is reviewed in turn. As part of this process, <strong>we reviewed three
+        anonymous articles submitted by other iGEM teams</strong>, each against a
         graded rubric with written feedback and open questions.
       </p>
       <p className="cp-pull">
-        Following the review round, our article was ranked among the three best
-        submissions of this year's edition and has been forwarded to
+        Following the review round, our article was ranked among the <strong>three best
+        submissions of this year's edition</strong> and has been forwarded to
         professional editors in synthetic biology publishing for further
         feedback, which will appear alongside the article when the journal is
         published in October.
       </p>
       <p>
-        Participating in MSP-Vector gave the team direct experience with the
-        mechanics of scientific publishing, drafting a research paper under
+        Participating in MSP-Vector gave the team direct <strong>experience with the
+        mechanics of scientific publishing,</strong> drafting a research paper under
         review, evaluating the work of peers under the same rubric we were
         judged against, which is a different discipline from writing for the
         wiki.
@@ -444,17 +444,17 @@ function CbmBody() {
         <Logo src={IMG.csic} alt="CSIC" />
       </div>
       <p>
-        The collaboration between UCM and CBM was highly positive for both
+        The collaboration between <strong>UCM</strong> and <strong>CBM</strong> was highly positive for both
         scientific experience and the overall development of the project. The
         complementary expertise of the two teams enabled to combine
-        bioinformatic mining and experimental characterization of enzymes
+        <strong>bioinformatic mining</strong> and <strong>experimental characterization of enzymes</strong>
         acting on phosphate-containing substrates, particularly phosphatases
-        and phospholipases, with the development of effective enzyme
-        immobilization strategies. This multidisciplinary approach
+        and phospholipases, with the development of <strong>effective enzyme
+        immobilization strategies</strong>. This multidisciplinary approach
         strengthened the project, the relationship between both rePhlow and
         CBM PIs and opened new opportunities for joint research, ultimately
-        contributing to the preparation of a Horizon Europe proposal under
-        Cluster 6.
+        contributing to the preparation of a <strong>Horizon Europe proposal</strong> under
+        <strong>Cluster 6</strong>.
       </p>
       <AlsoIn
         tone="teal"
@@ -475,17 +475,17 @@ function IqogBody() {
         <Logo src={IMG.csic} alt="CSIC" />
       </div>
       <p>
-        Between May and August, Marta Gil, Ángel Vilar and Adriana Cuadro
-        completed a research stay at the Institute of General Organic
-        Chemistry (IQOG-CSIC), where the wet lab experiments for the
+        Between May and August, <strong>Marta Gil</strong>, <strong>Ángel Vilar</strong> and <strong>Adriana Cuadro</strong>
+        completed a research stay at the <strong>Institute of General Organic
+        Chemistry (IQOG-CSIC)</strong>, where the wet lab experiments for the
         revalorisation module were carried out.
       </p>
       <p>
-        The stay took place in the Biocatalysis and Enzyme Evolution (BEE)
-        group, led by Israel Sánchez Moreno, a group focused on identifying
+        The stay took place in the <strong>Biocatalysis and Enzyme Evolution (BEE)
+        group</strong>, led by <strong>Israel Sánchez Moreno</strong>, a group focused on identifying
         and re-engineering enzymes for organic synthesis and biocatalysis,
-        with the collaboration of Eduardo García-Junceda, from the Advanced
-        Biomaterials and Biotechnology group, and Dianelis Toledo Monterrey.
+        with the collaboration of <strong>Eduardo García-Junceda</strong>, from the Advanced
+        Biomaterials and Biotechnology group, and <strong>Dianelis Toledo Monterrey</strong>.
       </p>
       <p className="cp-thanks">
         We thank Israel, Eduardo and Dianelis for hosting us and for their
@@ -511,13 +511,13 @@ function CibBody() {
         <Logo src={IMG.csic} alt="CSIC" />
       </div>
       <p>
-        Our interaction with the CIB-CSIC focused on supporting the
-        development of our CRISPR-based genome engineering strategy. Their
+        Our interaction with the <strong>CIB-CSIC</strong> focused on supporting the
+        development of our <strong>CRISPR-based genome engineering strategy</strong>. Their
         researchers provided us with technical guidance on the use and
         implementation of the system, helping us better understand the
         experimental workflow and key considerations for its application in{" "}
         <em>Pseudomonas putida</em>. They also supplied essential plasmids for
-        our work, including pEX128 and pMBEC2, which formed the basis of our
+        our work, including <strong>pEX128 and pMBEC2</strong>, which formed the basis of our
         guide RNA assembly and cytidine base-editing experiments. Their
         support was therefore instrumental in translating our initial genetic
         engineering design into an experimentally feasible strategy.
@@ -540,8 +540,8 @@ function BioBody() {
     <Stack>
       <Logo src={IMG.bioOils} alt="Bio Oils Huelva" height={72} />
       <p className="cp-pull cp-pull--plain">
-        Bio Oils Huelva supported our project by providing wastewater data and
-        samples, helping us better understand the characteristics of real
+        Bio Oils Huelva supported our project by providing <strong>wastewater data and
+        samples</strong>, helping us better understand the characteristics of real
         industrial wastewater and informing the development and testing of
         our system.
       </p>
@@ -566,20 +566,20 @@ function CompluBody() {
           <Logo src={IMG.iea} alt="Instituto de Emprendimiento Avanzado" height={56} />
         </div>
         <p>
-          As part of the “Tuesdays with Compluemprende” initiative, rePhlow has
-          taken part in a conversation hosted by IEA, focused on the
-          entrepreneurial journey behind the project. The interview has
-          explore how rePhlow evolved from a scientific idea into a potential
-          real-world solution, while discussing the decisions, challenges,
-          lessons learned and opportunities that have shaped its development.
-          It also provided a space to reflect on our experience building a
-          multidisciplinary student-led project, translating research into an
-          entrepreneurial proposal, and connecting scientific innovation with
-          market needs and societal impact. (See{" "}
+          As part of the <strong>“Tuesdays with Compluemprende”</strong> initiative, rePhlow has
+          taken part in a <strong>conversation hosted by IEA</strong>, focused on the
+          <strong>entrepreneurial journey behind the project</strong>. The interview has
+          explore how rePhlow evolved from a <strong>scientific idea into a potential
+          real-world solution</strong>, while discussing the <strong>decisions, challenges,
+          lessons learned and opportunities that have shaped its development</strong>.
+          It also provided a space to reflect on our <strong>experience building a
+          multidisciplinary student-led project</strong>, translating research into an
+          entrepreneurial proposal, and <strong>connecting scientific innovation with
+          market needs and societal impact.</strong> <strong>(See{" "}
           <Link to="/entrepreneurship" className="cp-link cp-link--rust">
             entrepreneurship
           </Link>
-          )
+          )</strong>
         </p>
       </div>
       <figure className="cp-portrait cp-split__aside">

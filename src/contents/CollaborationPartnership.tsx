@@ -97,6 +97,19 @@ export function CollaborationPartnership() {
         />
 
         <div ref={colRef} className="cp-col">
+          <p className="cp-notion-intro">
+            <strong>Collaboration and partnerships</strong>, both{" "}
+            <strong>within and beyond the iGEM community</strong>, have been
+            essential to the development of rePhlow. By bringing together
+            diverse perspectives, expertise and resources, these connections
+            have helped us overcome technical challenges, refine our approach
+            and explore the <strong>real-world potential of our solution</strong>.
+            Beyond strengthening our project, they have shown us that meaningful
+            scientific progress is driven by{" "}
+            <strong>
+              teamwork, knowledge-sharing and a shared commitment to innovation.
+            </strong>
+          </p>
           <p className="cp-intro">
             Three tables, one for each kind of collaboration. Select an object
             on a table to open it.
