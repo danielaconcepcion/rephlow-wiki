@@ -915,7 +915,7 @@ export function ProjectDescription() {
                 .
               </p>
               <Figure
-                src="encapsulation-comparison.svg"
+                src="beads-and-core-shell.webp"
                 alt="Comparison between bacteria immobilised throughout an alginate bead and bacteria confined inside an alginate core-shell capsule"
                 caption={
                   <>
