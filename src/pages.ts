@@ -136,6 +136,9 @@ const Pages: Page[] = [
     path: "/safety",
     component: Safety,
     docTitle: "Safety — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 61,
   },
   {
     name: "Human practices",
