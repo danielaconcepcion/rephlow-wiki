@@ -5,10 +5,11 @@ import {
   GROUPS,
   IMG,
   KICKOFF_DAYS,
+  KICKOFF_GALLERY,
   MALAGA_GALLERY,
   VISIBLE_ENTRIES,
 } from "./collaborationData";
-import type { EntryId, GroupId, ProgrammeItem } from "./collaborationData";
+import type { EntryId, GalleryPhoto, GroupId, ProgrammeItem } from "./collaborationData";
 
 /* --------------------------------------------------------------------------
    One dialog for every object on the tables. Prev/next (buttons or ←/→)
@@ -196,7 +197,10 @@ function KickoffBody() {
   const [day, setDay] = useState(0);
   return (
     <Stack>
-      <p className="cp-kicker">June 24th – 26th, 2026 · Madrid</p>
+      <div className="cp-paper-head">
+        <Logo src={IMG.kickoff} alt="iGEM Kick Off Madrid 2026" height={88} />
+        <p className="cp-kicker">June 24th – 26th, 2026 · Madrid</p>
+      </div>
       <p className="cp-lead">
         We hosted a meetup bringing together <strong>iGEM teams</strong> for conferences on
         synthetic biology, neurobiology, biophysics, scientific illustration,
@@ -205,10 +209,7 @@ function KickoffBody() {
         as a <strong>mini iGEM hackathon</strong> and interactive group activities.
       </p>
       <p>Discover what we achieved and how this initiative enhanced our collaborations.</p>
-      <div className="cp-photo-grid">
-        <Pending file="kickoff-photo-1.jpg" label="Meetup photo" className="cp-slot--photo" />
-        <Pending file="kickoff-photo-2.jpg" label="Meetup photo" className="cp-slot--photo" />
-      </div>
+      <PhotoStrip photos={KICKOFF_GALLERY} alt="iGEM kick-off meetup, Madrid" />
       <p>
         The SEBBM, the Spanish Society for Biochemistry and Molecular Biology,
         supported us in the organization of our congress by helping us
@@ -240,7 +241,9 @@ function KickoffBody() {
           scheduled activities and helped strengthen connections within the
           wider iGEM community.
         </p>
-        <Pending file="community-board.jpg" label="Board photo" className="cp-slot--photo cp-split__aside" />
+        <figure className="cp-board cp-split__aside">
+          <img src={IMG.communityBoard} alt="The iGEM Community Board at the kick-off meetup" loading="lazy" />
+        </figure>
       </div>
 
       <h3 className="cp-h3">Programme</h3>
@@ -321,10 +324,11 @@ function ProgrammeRow({ item }: { item: ProgrammeItem }) {
   );
 }
 
-function MalagaBody() {
+/** Horizontal, snap-scrolling photo strip with a counter and prev/next. */
+function PhotoStrip({ photos, alt }: { photos: GalleryPhoto[]; alt: string }) {
   const stripRef = useRef<HTMLDivElement>(null);
   const [gi, setGi] = useState(0);
-  const last = MALAGA_GALLERY.length - 1;
+  const last = photos.length - 1;
 
   function go(dir: number) {
     const el = stripRef.current;
@@ -354,25 +358,17 @@ function MalagaBody() {
   const pad = (x: number) => String(x).padStart(2, "0");
 
   return (
-    <Stack>
-      <p className="cp-lead">
-        We participated in the <strong>iGEM European Meetup</strong> in Málaga, connecting with
-        <strong>teams from across Europe</strong> to present our project, exchange feedback,
-        discuss common challenges, and explore opportunities for
-        collaboration through talks, poster sessions, and networking
-        activities. It was also a great opportunity to support a <strong>fellow
-        Spanish iGEM team</strong> while connecting with the wider European community.
-      </p>
+    <>
       <div ref={stripRef} className="cp-gallery" onScroll={onScroll}>
-        {MALAGA_GALLERY.map((g, i) => (
+        {photos.map((g, i) => (
           <figure key={g.src} className="cp-gallery__item" style={{ aspectRatio: g.ratio }}>
-            <img src={g.src} alt={`iGEM European Meetup Málaga '26 — photo ${i + 1}`} loading="lazy" />
+            <img src={g.src} alt={`${alt} — photo ${i + 1}`} loading="lazy" />
           </figure>
         ))}
       </div>
       <div className="cp-gallery__bar">
         <span className="cp-gallery__count">
-          {pad(gi + 1)} / {pad(MALAGA_GALLERY.length)}
+          {pad(gi + 1)} / {pad(photos.length)}
         </span>
         <div className="cp-gallery__buttons">
           <button type="button" className="cp-round-btn" aria-label="Previous photo" onClick={() => go(-1)}>
@@ -383,6 +379,22 @@ function MalagaBody() {
           </button>
         </div>
       </div>
+    </>
+  );
+}
+
+function MalagaBody() {
+  return (
+    <Stack>
+      <p className="cp-lead">
+        We participated in the <strong>iGEM European Meetup</strong> in Málaga, connecting with
+        <strong>teams from across Europe</strong> to present our project, exchange feedback,
+        discuss common challenges, and explore opportunities for
+        collaboration through talks, poster sessions, and networking
+        activities. It was also a great opportunity to support a <strong>fellow
+        Spanish iGEM team</strong> while connecting with the wider European community.
+      </p>
+      <PhotoStrip photos={MALAGA_GALLERY} alt="iGEM European Meetup Málaga '26" />
     </Stack>
   );
 }
