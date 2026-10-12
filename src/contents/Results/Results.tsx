@@ -1,8 +1,12 @@
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { PageSectionNav, type PageSection } from "../../components/PageSectionNav";
 import { SectionTabs } from "../../components/LabFolders/SectionTabs";
 import { FolderStack } from "../../components/LabFolders/FolderStack";
 import { ResultCard } from "../../components/LabFolders/ResultCard";
+import { ReferenceItem } from "../../components/LabFolders/ExperimentCard";
+import { Rich } from "../../components/LabFolders/RichText";
+import { CitationScope } from "../../components/LabFolders/citationScope";
+import { NumberingContext, numberResults } from "../../components/LabFolders/numbering";
 import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
 import type { AccentStyle, ResultData } from "../../components/LabFolders/types";
 import { EcosystemMap } from "../../components/EcosystemMap";
@@ -58,7 +62,7 @@ function paragraphs(text: ReactNode | ReactNode[] | undefined, className: string
   const list = Array.isArray(text) ? text : [text];
   return list.map((paragraph, index) => (
     <p className={className} key={index}>
-      {paragraph}
+      <Rich text={paragraph} />
     </p>
   ));
 }
@@ -80,6 +84,10 @@ function resultFolders(results: ResultData[]) {
 export function Results() {
   const [activeBlockId, setActiveBlockId] = useState(RESULT_BLOCKS[0].id);
   const activeBlock = RESULT_BLOCKS.find((block) => block.id === activeBlockId) ?? RESULT_BLOCKS[0];
+  const numbering = useMemo(
+    () => numberResults(activeBlock.subBlocks ?? [activeBlock]),
+    [activeBlock],
+  );
 
   return (
     <div className="lab-folders">
@@ -109,46 +117,77 @@ export function Results() {
         />
 
         <div className="lab-content-wrap">
-          <div
-            className="lab-block"
-            key={activeBlock.id}
-            style={{ "--folder-accent": activeBlock.accent } as AccentStyle}
-          >
-            {activeBlock.intro && (
-              <div className="lab-prose">{paragraphs(activeBlock.intro, "lab-block__intro")}</div>
-            )}
+          <NumberingContext.Provider value={numbering}>
+            <CitationScope.Provider
+              value={activeBlock.references?.length ? activeBlock.id : null}
+            >
+              <div
+                className="lab-block"
+                key={activeBlock.id}
+                style={{ "--folder-accent": activeBlock.accent } as AccentStyle}
+              >
+                {activeBlock.intro && (
+                  <div className="lab-prose">{paragraphs(activeBlock.intro, "lab-block__intro")}</div>
+                )}
 
-            {activeBlock.subBlocks
-              ? activeBlock.subBlocks.map((subBlock) => (
-                  <section className="lab-subblock" id={subBlock.id} key={subBlock.id}>
+                {activeBlock.subBlocks
+                  ? activeBlock.subBlocks.map((subBlock) => (
+                      <section className="lab-subblock" id={subBlock.id} key={subBlock.id}>
+                        <div className="lab-prose">
+                          <h2 className="lab-subblock__heading">{subBlock.heading}</h2>
+                          {paragraphs(subBlock.intro, "lab-subblock__intro")}
+                        </div>
+                        {subBlock.results && (
+                          <DeckPalette palette={activeBlock.palette}>
+                            <FolderStack
+                              ariaLabel={`${subBlock.heading} results`}
+                              folders={resultFolders(subBlock.results)}
+                            />
+                          </DeckPalette>
+                        )}
+                        {subBlock.outro && (
+                          <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
+                        )}
+                      </section>
+                    ))
+                  : null}
+
+                {!activeBlock.subBlocks && (
+                  <DeckPalette palette={activeBlock.palette}>
+                    <FolderStack
+                      ariaLabel={`${activeBlock.label} results`}
+                      folders={resultFolders(activeBlock.results ?? [])}
+                    />
+                  </DeckPalette>
+                )}
+
+                {activeBlock.outro && (
+                  <section className="lab-subblock">
                     <div className="lab-prose">
-                      <h2 className="lab-subblock__heading">{subBlock.heading}</h2>
-                      {paragraphs(subBlock.intro, "lab-subblock__intro")}
+                      <h2 className="lab-subblock__heading">Overall conclusion</h2>
+                      {paragraphs(activeBlock.outro, "lab-subblock__outro")}
                     </div>
-                    {subBlock.results && (
-                      <DeckPalette palette={activeBlock.palette}>
-                        <FolderStack
-                          ariaLabel={`${subBlock.heading} results`}
-                          folders={resultFolders(subBlock.results)}
-                        />
-                      </DeckPalette>
-                    )}
-                    {subBlock.outro && (
-                      <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
-                    )}
                   </section>
-                ))
-              : null}
+                )}
 
-            {!activeBlock.subBlocks && (
-              <DeckPalette palette={activeBlock.palette}>
-                <FolderStack
-                  ariaLabel={`${activeBlock.label} results`}
-                  folders={resultFolders(activeBlock.results ?? [])}
-                />
-              </DeckPalette>
-            )}
-          </div>
+                {/* One reference list for the whole block, at the very bottom
+                    rather than tucked into each folder; "[n]" anywhere above
+                    links down to its entry. */}
+                {!!activeBlock.references?.length && (
+                  <section className="lab-subblock">
+                    <div className="lab-prose">
+                      <h2 className="lab-subblock__heading lab-block__references-heading">References</h2>
+                      <ul className="lab-block__references">
+                        {activeBlock.references.map((reference, index) => (
+                          <ReferenceItem scope={activeBlock.id} text={reference} key={index} />
+                        ))}
+                      </ul>
+                    </div>
+                  </section>
+                )}
+              </div>
+            </CitationScope.Provider>
+          </NumberingContext.Provider>
         </div>
       </div>
     </div>

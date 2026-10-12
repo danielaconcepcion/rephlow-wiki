@@ -247,6 +247,11 @@ export interface ExperimentBlockData {
  * carry the supporting detail those three answers refer to. */
 export interface ResultSubsection {
   id: string;
+  /** Carries straight on from the previous subsection — no rule or gap
+   * between them — so a record whose source interleaves prose, figures and
+   * tables can be split into several subsections and still read as one
+   * continuous text. */
+  continued?: boolean;
   /** Omit when the record has a single section: the card's own title is
    * already the heading, and a second one directly under it reads as a
    * duplicate. */
@@ -289,6 +294,10 @@ export interface ResultSubsection {
    * below it. */
   figuresAside?: boolean;
   tables?: (RecordTable & { caption?: string })[];
+  /** Prose that reads the figures and tables above it, rendered after them
+   * — `body` always comes first. Saves splitting a record into a second
+   * subsection just to put a paragraph below its table. */
+  bodyAfter?: string[];
   /** A bespoke visual instead of an image — e.g. the candidate-selection
    * funnel, which is a component rather than a screenshot so its numbers
    * stay legible at any width. Rendered with its own caption. */
@@ -345,4 +354,11 @@ export interface ResultBlockData {
    * branches on which one is present, exactly as Experiments.tsx does. */
   results?: ResultData[];
   subBlocks?: ResultSubBlock[];
+  /** Closing synthesis for the whole block ("Overall conclusion"),
+   * rendered after the last sub-block. */
+  outro?: ReactNode | ReactNode[];
+  /** One numbered reference list for the whole block, rendered at the very
+   * bottom of the page; "[n]" in any of the block's prose links to it (see
+   * RichText.tsx). */
+  references?: string[];
 }
