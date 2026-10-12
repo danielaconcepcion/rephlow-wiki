@@ -142,7 +142,9 @@ export function BarcelonaArt() {
   return (
     <span className="cp-art" style={{ aspectRatio: "1.5", display: "flex", alignItems: "center", transform: "rotate(-3deg)" }}>
       <span style={{ ...panel, transform: "skewY(-5deg)", background: "#fbf7ef", borderRadius: "1cqw 0 0 1cqw" }}>
-        <FileSlot label="Team logo" file="bcn-team-logo.png" />
+        <span style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <img src={IMG.igemBarcelona} alt="" style={{ width: "72%", height: "auto" }} />
+        </span>
       </span>
       <span style={{ ...panel, transform: "skewY(5deg)", background: "linear-gradient(90deg, #e9e1d2, #f8f3ea 40%)" }}>
         <FileSlot label="Joint photo" file="bcn-joint-photo.jpg" />
