@@ -1311,3 +1311,106 @@
   color: var(--ink-soft);
 }
 .pdf-viewer__download { align-self: flex-start; }
+
+/* --------------------------------------------------------------------------
+   Results: numbered captions and content-width tables
+   -------------------------------------------------------------------------- */
+
+/* One caption style for every figure in a result record — a single photo,
+   a panel grid sharing one caption, a figure matrix or a bespoke visual —
+   instead of three slightly different sizes. "Figure 3." / "Table 2." is
+   set in the ink colour so the number reads as the caption's label. */
+.result-card .record-figure figcaption,
+.result-card .record-figure-grid__caption,
+.result-card .record-figure-matrix figcaption {
+  margin: 10px 0 0;
+  font-size: 0.86rem;
+  font-style: normal;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.record-caption__label {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* A narrow image (a gel lane, a small crop) keeps its caption to the
+   image's width, but never so narrow that a sentence breaks every two
+   words. */
+.result-card .record-figure:has(.record-figure__photo) {
+  min-width: min(100%, 380px);
+}
+.result-card .record-figure__photo {
+  margin-inline: auto;
+}
+
+/* Tables size to their content rather than stretching every column across
+   the card: a two-column biomass table stays two readable columns instead
+   of two islands of text with a gap between them. Wide tables still fill
+   the card, and scroll sideways on a narrow screen. */
+.result-table {
+  margin: 24px 0 0;
+}
+.result-table:first-child {
+  margin-top: 0;
+}
+.record-table-scroll {
+  overflow-x: auto;
+}
+.result-table .record-table {
+  width: auto;
+  max-width: 100%;
+}
+.result-table .record-table td,
+.result-table .record-table th {
+  white-space: normal;
+}
+
+/* Above its table, with clear air above (separating it from whatever came
+   before) and a small gap below (tying it to its own table). The selector
+   outweighs `.result-subsection p`, which otherwise reset these margins. */
+.result-subsection .result-table .record-table__caption {
+  margin: 0 0 8px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* Prose that resumes after a figure or a table gets the same breathing
+   room the figure/table got above it. */
+.result-subsection .result-table + p,
+.result-subsection .record-figure-grid + p,
+.result-subsection .record-figure-matrix + p,
+.result-subsection .record-figure--custom + p {
+  margin-top: 20px;
+}
+.result-subsection .record-figure-grid,
+.result-subsection .record-figure-matrix,
+.result-subsection .record-figure--custom {
+  margin-top: 20px;
+}
+.result-subsection > .record-figure-grid:first-child,
+.result-subsection__main > .record-figure-grid:first-child {
+  margin-top: 0;
+}
+
+.lab-citation-group {
+  white-space: nowrap;
+}
+
+.result-subsection.result-subsection--continued {
+  margin-top: 20px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* A results placeholder stands in for a figure that has not been plotted
+   yet, and several records now carry one. At 16/9 across the full card
+   width each is a screen-tall empty box, which reads as a fault rather
+   than as a gap; capped, it stays legible as a reserved slot without
+   pushing the text that explains it off the screen. */
+.result-card .record-figure__placeholder {
+  aspect-ratio: auto;
+  min-height: 140px;
+  padding: 48px 16px;
+}

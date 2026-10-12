@@ -1,38 +1,73 @@
-import { Fragment } from "react";
-import type { CSSProperties } from "react";
+import { Fragment, useContext } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 import { asset } from "../../utils/asset";
+import { NumberingContext } from "./numbering";
+import { Rich } from "./RichText";
 import type { RecordTable, ResultData, ResultSubsection } from "./types";
+
+/** "Figure 3." / "Table 2." ahead of a caption, when the block numbered it. */
+function Caption({
+  kind,
+  item,
+  text,
+}: {
+  kind: "Figure" | "Table";
+  item: object;
+  text?: string;
+}): ReactNode {
+  const number = useContext(NumberingContext).get(item);
+  if (!text && number === undefined) return null;
+  return (
+    <>
+      {number !== undefined && (
+        <strong className="record-caption__label">
+          {kind} {number}.
+        </strong>
+      )}
+      {number !== undefined && text ? " " : null}
+      {text && <Rich text={text} />}
+    </>
+  );
+}
 
 function Table({ table }: { table: RecordTable & { caption?: string } }) {
   return (
-    <>
-      {table.caption && <p className="record-table__caption">{table.caption}</p>}
-      <table className="record-table">
-        <thead>
-          <tr>
-            {table.headers.map((header, index) => (
-              <th key={index}>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {table.rows.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              {row.map((cell, cellIndex) =>
-                typeof cell === "string" ? (
-                  <td key={cellIndex}>{cell}</td>
-                ) : (
-                  <td key={cellIndex} rowSpan={cell.rowSpan}>
-                    {cell.value}
-                  </td>
-                ),
-              )}
+    <div className="result-table">
+      <p className="record-table__caption">
+        <Caption kind="Table" item={table} text={table.caption} />
+      </p>
+      <div className="record-table-scroll">
+        <table className="record-table">
+          <thead>
+            <tr>
+              {table.headers.map((header, index) => (
+                <th key={index}>
+                  <Rich text={header} />
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </>
+          </thead>
+          <tbody>
+            {table.rows.map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {row.map((cell, cellIndex) =>
+                  typeof cell === "string" ? (
+                    <td key={cellIndex}>
+                      <Rich text={cell} />
+                    </td>
+                  ) : (
+                    <td key={cellIndex} rowSpan={cell.rowSpan}>
+                      <Rich text={cell.value} />
+                    </td>
+                  ),
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
   );
 }
 
@@ -75,11 +110,17 @@ function FigureGrid({ subsection }: { subsection: ResultSubsection }) {
               [ figure placeholder ]
             </div>
           )}
-          {figure.caption && <figcaption>{figure.caption}</figcaption>}
+          {figure.caption && !subsection.figuresCaption && (
+            <figcaption>
+              <Caption kind="Figure" item={figure} text={figure.caption} />
+            </figcaption>
+          )}
         </figure>
       ))}
       {subsection.figuresCaption && (
-        <p className="record-figure-grid__caption">{subsection.figuresCaption}</p>
+        <p className="record-figure-grid__caption">
+          <Caption kind="Figure" item={subsection.figures} text={subsection.figuresCaption} />
+        </p>
       )}
     </div>
   );
@@ -123,7 +164,11 @@ function FigureMatrix({
           </Fragment>
         ))}
       </div>
-      {matrix.caption && <figcaption>{matrix.caption}</figcaption>}
+      {matrix.caption && (
+        <figcaption>
+          <Caption kind="Figure" item={matrix} text={matrix.caption} />
+        </figcaption>
+      )}
     </figure>
   );
 }
@@ -131,12 +176,20 @@ function FigureMatrix({
 function Subsection({ subsection }: { subsection: ResultSubsection }) {
   const prose = (
     <>
-      {subsection.body?.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+      {subsection.body?.map((paragraph, index) => (
+        <p key={index}>
+          <Rich text={paragraph} />
+        </p>
+      ))}
 
       {subsection.custom && (
         <figure className="record-figure record-figure--custom">
           {subsection.custom.node}
-          {subsection.custom.caption && <figcaption>{subsection.custom.caption}</figcaption>}
+          {subsection.custom.caption && (
+            <figcaption>
+              <Caption kind="Figure" item={subsection.custom} text={subsection.custom.caption} />
+            </figcaption>
+          )}
         </figure>
       )}
 
@@ -146,24 +199,36 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
 
       {subsection.tables?.map((table, index) => <Table table={table} key={index} />)}
 
+      {subsection.bodyAfter?.map((paragraph, index) => (
+        <p key={index}>
+          <Rich text={paragraph} />
+        </p>
+      ))}
+
       {subsection.observations && (
         <div className="result-subsection__field">
           <h5>What was obtained</h5>
-          <p>{subsection.observations}</p>
+          <p>
+            <Rich text={subsection.observations} />
+          </p>
         </div>
       )}
 
       {subsection.interpretation && (
         <div className="result-subsection__field">
           <h5>What it means</h5>
-          <p>{subsection.interpretation}</p>
+          <p>
+            <Rich text={subsection.interpretation} />
+          </p>
         </div>
       )}
 
       {subsection.expectation && (
         <div className="result-subsection__field">
           <h5>Was it expected?</h5>
-          <p>{subsection.expectation}</p>
+          <p>
+            <Rich text={subsection.expectation} />
+          </p>
         </div>
       )}
     </>
@@ -171,7 +236,14 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
 
   if (!subsection.figuresAside) {
     return (
-      <section className="result-subsection" id={subsection.id}>
+      <section
+        className={
+          subsection.continued
+            ? "result-subsection result-subsection--continued"
+            : "result-subsection"
+        }
+        id={subsection.id}
+      >
         {subsection.title && <h4>{subsection.title}</h4>}
         {prose}
       </section>
@@ -203,8 +275,14 @@ export function ResultCard({ data }: { data: ResultData }) {
   return (
     <article className="result-card">
       <header className="result-card__header">
-        <h3 className="result-card__title">{data.title}</h3>
-        {data.description && <p className="result-card__desc">{data.description}</p>}
+        <h3 className="result-card__title">
+          <Rich text={data.title} />
+        </h3>
+        {data.description && (
+          <p className="result-card__desc">
+            <Rich text={data.description} />
+          </p>
+        )}
       </header>
 
       {data.pending && (
@@ -225,7 +303,9 @@ export function ResultCard({ data }: { data: ResultData }) {
         <div className="result-card__background">
           <h4>Background</h4>
           {data.background.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
+            <p key={index}>
+              <Rich text={paragraph} />
+            </p>
           ))}
         </div>
       )}
@@ -240,7 +320,9 @@ export function ResultCard({ data }: { data: ResultData }) {
         <section className="result-card__discussion">
           <h4 className="record-rule-heading record-rule-heading--discussion">Discussion</h4>
           {data.discussion.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
+            <p key={index}>
+              <Rich text={paragraph} />
+            </p>
           ))}
         </section>
       )}

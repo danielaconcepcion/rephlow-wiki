@@ -1,5 +1,10 @@
 import type { ResultBlockData } from "../../components/LabFolders/types";
-import { ENCAPSULATION_INTRO, ENCAPSULATION_SUBBLOCKS } from "./EncapsulationData";
+import {
+  ENCAPSULATION_INTRO,
+  ENCAPSULATION_OUTRO,
+  ENCAPSULATION_REFERENCES,
+  ENCAPSULATION_SUBBLOCKS,
+} from "./EncapsulationData";
 import {
   ENZYMATIC_IMMOBILISATION_INTRO,
   ENZYMATIC_IMMOBILISATION_SUBBLOCKS,
@@ -8,7 +13,11 @@ import {
   GENETIC_ENGINEERING_INTRO,
   GENETIC_ENGINEERING_SUBBLOCKS,
 } from "./GeneticEngineeringData";
-import { REVALORISATION_INTRO, REVALORISATION_SUBBLOCKS } from "./RevalorisationData";
+import {
+  REVALORISATION_INTRO,
+  REVALORISATION_REFERENCES,
+  REVALORISATION_SUBBLOCKS,
+} from "./RevalorisationData";
 
 /**
  * The Results page's four blocks, matching EXPERIMENT_BLOCKS one-for-one in
@@ -30,6 +39,8 @@ export const RESULT_BLOCKS: ResultBlockData[] = [
     accent: "var(--lab-encapsulation)",
     intro: ENCAPSULATION_INTRO,
     subBlocks: ENCAPSULATION_SUBBLOCKS,
+    outro: ENCAPSULATION_OUTRO,
+    references: ENCAPSULATION_REFERENCES,
   },
   {
     id: "enzymatic-immobilisation",
@@ -54,5 +65,6 @@ export const RESULT_BLOCKS: ResultBlockData[] = [
     palette: "mostaza",
     intro: REVALORISATION_INTRO,
     subBlocks: REVALORISATION_SUBBLOCKS,
+    references: REVALORISATION_REFERENCES,
   },
 ];
