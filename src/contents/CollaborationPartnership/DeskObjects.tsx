@@ -55,7 +55,7 @@ export function KickoffArt() {
         }}
       >
         <P s={{ left: "24cqw", top: "3cqw", width: "12cqw", height: "2.6cqw", borderRadius: "2cqw", background: "#e8e4dc" }} />
-        <span className="cp-art__logo-ring">logo</span>
+        <img src={IMG.kickoff} alt="" className="cp-art__badge-logo" />
         <span style={{ font: "500 4.2cqw/1 var(--font-body)", color: "var(--ink-soft)" }}>Meetup</span>
         <span style={{ font: "700 8.6cqw/0.98 var(--font-display)", color: "var(--ink)", letterSpacing: "-0.02em" }}>
           iGEM

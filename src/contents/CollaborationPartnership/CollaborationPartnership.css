@@ -216,16 +216,9 @@
   height: 100%;
   object-fit: cover;
 }
-.cp-art__logo-ring {
-  width: 17cqw;
-  height: 17cqw;
-  border-radius: 50%;
-  border: 0.6cqw dashed rgba(110, 90, 150, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font: 500 2.8cqw ui-monospace, Menlo, monospace;
-  color: #6e5a96;
+.cp-art__badge-logo {
+  width: 20cqw;
+  height: auto;
 }
 .cp-art-slot {
   flex: 1;
@@ -494,20 +487,11 @@
   font: 500 12px ui-monospace, Menlo, monospace;
   color: var(--ink);
 }
-.cp-slot--photo {
-  aspect-ratio: 4 / 3;
-}
 .cp-slot--logo {
   flex: 1 1 140px;
   height: 72px;
   border-radius: 10px;
 }
-.cp-photo-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 10px;
-}
-
 .cp-split {
   display: flex;
   flex-wrap: wrap;
@@ -533,6 +517,17 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.cp-board {
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cp-board img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .cp-paper-head {

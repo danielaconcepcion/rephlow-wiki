@@ -127,6 +127,8 @@ export const IMG = {
   compluemprende: A("logo-compluemprende.webp"),
   iea: A("logo-iea.webp"),
   compluConversation: A("compluemprende-conversation.webp"),
+  kickoff: A("logo-kickoff.webp"),
+  communityBoard: A("community-board.webp"),
 };
 
 export interface GalleryPhoto {
@@ -143,6 +145,14 @@ export const MALAGA_GALLERY: GalleryPhoto[] = [
   { src: A("malaga-05.webp"), ratio: "4 / 3" },
   { src: A("malaga-06.webp"), ratio: "3 / 4" },
   { src: A("malaga-07.webp"), ratio: "4 / 3" },
+];
+
+export const KICKOFF_GALLERY: GalleryPhoto[] = [
+  { src: A("kickoff-01.webp"), ratio: "4 / 3" },
+  { src: A("kickoff-02.webp"), ratio: "4 / 3" },
+  { src: A("kickoff-03.webp"), ratio: "4 / 3" },
+  { src: A("kickoff-04.webp"), ratio: "4 / 3" },
+  { src: A("kickoff-05.webp"), ratio: "4 / 3" },
 ];
 
 /* --- Kick-off meetup programme ----------------------------------------- */
