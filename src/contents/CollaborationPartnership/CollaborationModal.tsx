@@ -133,13 +133,15 @@ function EntryBody({ id }: { id: EntryId }) {
       return <MspBody />;
     case "barcelona":
       return (
-        <div className="cp-pending">
-          <p className="cp-pending__title">Entry in preparation</p>
-          <p className="cp-pending__note">
-            Placeholder · text, team logo, joint photo and Barcelona image
-            pending.
-          </p>
-        </div>
+        <Stack>
+          <Logo src={IMG.igemBarcelona} alt="iGEM Barcelona" height={96} />
+          <div className="cp-pending">
+            <p className="cp-pending__title">Entry in preparation</p>
+            <p className="cp-pending__note">
+              Placeholder · text, joint photo and Barcelona image pending.
+            </p>
+          </div>
+        </Stack>
       );
     case "cbm":
       return <CbmBody />;
@@ -227,9 +229,9 @@ function KickoffBody() {
         impact of science beyond the laboratory.
       </p>
       <div className="cp-logo-row">
-        <Pending file="sebbm-logo.png" label="SEBBM logo" className="cp-slot--logo" />
+        <Logo src={IMG.sebbm} alt="SEBBM" height={72} />
         <Pending file="sponsor-logos.png" label="Other sponsors" className="cp-slot--logo" />
-        <Pending file="rephlow-logo.svg" label="rePhlow logo" className="cp-slot--logo" />
+        <Logo src={IMG.rephlow} alt="rePhlow" height={72} />
       </div>
 
       <h3 className="cp-h3">iGEM Community Board</h3>
@@ -355,31 +357,55 @@ function PhotoStrip({ photos, alt }: { photos: GalleryPhoto[]; alt: string }) {
     if (best !== gi) setGi(best);
   }
 
-  const pad = (x: number) => String(x).padStart(2, "0");
-
   return (
-    <>
-      <div ref={stripRef} className="cp-gallery" onScroll={onScroll}>
-        {photos.map((g, i) => (
-          <figure key={g.src} className="cp-gallery__item" style={{ aspectRatio: g.ratio }}>
-            <img src={g.src} alt={`${alt} — photo ${i + 1}`} loading="lazy" />
-          </figure>
-        ))}
-      </div>
-      <div className="cp-gallery__bar">
-        <span className="cp-gallery__count">
-          {pad(gi + 1)} / {pad(photos.length)}
-        </span>
-        <div className="cp-gallery__buttons">
-          <button type="button" className="cp-round-btn" aria-label="Previous photo" onClick={() => go(-1)}>
-            ←
-          </button>
-          <button type="button" className="cp-round-btn" aria-label="Next photo" onClick={() => go(1)}>
-            →
-          </button>
+    <div className="cp-carousel">
+      <button
+        type="button"
+        className="cp-carousel__arrow cp-carousel__arrow--prev"
+        disabled={gi === 0}
+        aria-label="Previous photo"
+        onClick={() => go(-1)}
+      >
+        <Arrowhead direction="left" />
+      </button>
+      <div className="cp-carousel__view">
+        <div ref={stripRef} className="cp-gallery" onScroll={onScroll}>
+          {photos.map((g, i) => (
+            <figure key={g.src} className="cp-gallery__item" style={{ aspectRatio: g.ratio }}>
+              <img src={g.src} alt={`${alt} — photo ${i + 1}`} loading="lazy" />
+            </figure>
+          ))}
         </div>
+        <span className="cp-carousel__counter">
+          {gi + 1} of {photos.length}
+        </span>
       </div>
-    </>
+      <button
+        type="button"
+        className="cp-carousel__arrow cp-carousel__arrow--next"
+        disabled={gi === last}
+        aria-label="Next photo"
+        onClick={() => go(1)}
+      >
+        <Arrowhead direction="right" />
+      </button>
+    </div>
+  );
+}
+
+/** Same chevron as the Model page's Factor Explorer carousel. */
+function Arrowhead({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg className="cp-carousel__arrowhead" viewBox="0 0 10 16" aria-hidden="true">
+      <path
+        d={direction === "left" ? "M8 2 2 8l6 6" : "M2 2l6 6-6 6"}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
@@ -387,7 +413,7 @@ function MalagaBody() {
   return (
     <Stack>
       <p className="cp-lead">
-        We participated in the <strong>iGEM European Meetup</strong> in Málaga, connecting with
+        We participated in the <strong>iGEM European Meetup</strong> in Málaga, connecting with{" "}
         <strong>teams from across Europe</strong> to present our project, exchange feedback,
         discuss common challenges, and explore opportunities for
         collaboration through talks, poster sessions, and networking
@@ -458,14 +484,14 @@ function CbmBody() {
       <p>
         The collaboration between <strong>UCM</strong> and <strong>CBM</strong> was highly positive for both
         scientific experience and the overall development of the project. The
-        complementary expertise of the two teams enabled to combine
-        <strong>bioinformatic mining</strong> and <strong>experimental characterization of enzymes</strong>
+        complementary expertise of the two teams enabled to combine{" "}
+        <strong>bioinformatic mining</strong> and <strong>experimental characterization of enzymes</strong>{" "}
         acting on phosphate-containing substrates, particularly phosphatases
         and phospholipases, with the development of <strong>effective enzyme
         immobilization strategies</strong>. This multidisciplinary approach
         strengthened the project, the relationship between both rePhlow and
         CBM PIs and opened new opportunities for joint research, ultimately
-        contributing to the preparation of a <strong>Horizon Europe proposal</strong> under
+        contributing to the preparation of a <strong>Horizon Europe proposal</strong> under{" "}
         <strong>Cluster 6</strong>.
       </p>
       <AlsoIn
@@ -487,7 +513,7 @@ function IqogBody() {
         <Logo src={IMG.csic} alt="CSIC" />
       </div>
       <p>
-        Between May and August, <strong>Marta Gil</strong>, <strong>Ángel Vilar</strong> and <strong>Adriana Cuadro</strong>
+        Between May and August, <strong>Marta Gil</strong>, <strong>Ángel Vilar</strong> and <strong>Adriana Cuadro</strong>{" "}
         completed a research stay at the <strong>Institute of General Organic
         Chemistry (IQOG-CSIC)</strong>, where the wet lab experiments for the
         revalorisation module were carried out.
@@ -579,7 +605,7 @@ function CompluBody() {
         </div>
         <p>
           As part of the <strong>“Tuesdays with Compluemprende”</strong> initiative, rePhlow has
-          taken part in a <strong>conversation hosted by IEA</strong>, focused on the
+          taken part in a <strong>conversation hosted by IEA</strong>, focused on the{" "}
           <strong>entrepreneurial journey behind the project</strong>. The interview has
           explore how rePhlow evolved from a <strong>scientific idea into a potential
           real-world solution</strong>, while discussing the <strong>decisions, challenges,

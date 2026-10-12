@@ -129,6 +129,9 @@ export const IMG = {
   compluConversation: A("compluemprende-conversation.webp"),
   kickoff: A("logo-kickoff.webp"),
   communityBoard: A("community-board.webp"),
+  sebbm: A("logo-sebbm.webp"),
+  rephlow: asset("assets/rephlow-logo-transparent.png"),
+  igemBarcelona: A("logo-igem-barcelona.webp"),
 };
 
 export interface GalleryPhoto {
