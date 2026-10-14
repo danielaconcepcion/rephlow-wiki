@@ -16,7 +16,7 @@ function Cite({ scope, n }: { scope: string; n: number }) {
  * Real content for the "Alginate encapsulation" Experiments block —
  * transcribed verbatim from the team's own write-up (Notion export,
  * Experiments-Encapsulacion/Alginate encapsulation ....html). Wording is
- * kept exactly as written, including the source's own "XXX" placeholders
+ * kept aligned with the current Notion source.
  * for values not yet filled in — these are genuine pending fields, not
  * something to invent a number for.
  *
@@ -66,7 +66,7 @@ export const ALGINATE_ENCAPSULATION_INTRO: string[] = [
   "Efficient bacterial encapsulation was essential to develop a biological module that combines biosafety, structural stability and effective phosphate transport. Rather than relying on a single optimisation step, the encapsulation strategy was developed through a sequential experimental workflow in which the outcome of each stage guided the design of the next.",
   "Upon contact with calcium ions, alginate rapidly forms a hydrogel through ionic crosslinking between its polymer chains according to the well-established egg-box model. The relative proportion of α-L-guluronic acid (G) and β-D-mannuronic acid (M) residues strongly influences the mechanical properties of the resulting gel. This property enables the formation of alginate beads by dripping an alginate solution into a calcium chloride bath under mild conditions, making alginate one of the most widely used materials for bacterial encapsulation. However, obtaining beads with consistent size, shape and mechanical integrity requires careful optimisation of several synthesis parameters, including alginate concentration, drop height, flow rate and crosslinking time.",
   "Building upon this optimised bead protocol, the system was then translated into a more advanced core-shell architecture, in which a liquid calcium chloride core is surrounded by an alginate shell. Unlike conventional beads, core-shell capsule formation depends on the simultaneous control of two coaxial flows, making additional optimisation necessary. Parameters such as the concentrations of the inner calcium chloride and outer alginate solutions, the outer-to-inner flow-rate ratio, storage conditions and mechanical resistance were therefore systematically evaluated to obtain stable, reproducible capsules suitable for wastewater treatment.",
-  "Unless otherwise stated, all encapsulation experiments were performed using sodium alginate (manufacturer, grade and lot: XXX), calcium chloride (XXX) and ultrapure water. Solutions were prepared immediately before use and delivered using two programmable infusion pumps (model: XXX) connected through plastic syringes (XXX mL), connected through standard Luer connectors to flexible tubing to a coaxial needle provided by DOXA Microfluidics for core-shell production (inner gauge: XXX; outer gauge: XXX). Capsule formation was carried out by dripping into a calcium chloride crosslinking bath under ambient laboratory conditions. When a parameter was investigated, all remaining synthesis conditions were kept constant unless explicitly indicated.",
+  "Unless otherwise stated, all encapsulation experiments were performed using sodium alginate from brown algae (Sigma-Aldrich, A1112; lot 081M1381V), anhydrous calcium chloride (96%, extra pure, Acros Organics, 349615000; lot A0358796) and distilled water. Solutions were prepared immediately before use and delivered using programmable infusion pumps (KDS 200 dual-syringe pump, KD Scientific, and Fisherbrand KDS 100 single-syringe pump, Fisher Scientific) through 10 mL plastic syringes. Bead production used one pump; core-shell production used both pumps and a DMF-C01 coaxial injector (Doxa Microfluidics; inner needle 22G, 0.7 mm OD / 0.4 mm ID; outer needle 17G, 1.4 mm OD / 1.1 mm ID). Capsule formation was carried out by dripping into a calcium chloride crosslinking bath under ambient laboratory conditions. When a parameter was investigated, all remaining synthesis conditions were kept constant unless explicitly indicated.",
   "Together, these experiments provided the experimental evidence required to develop an encapsulation platform suitable for the safe immobilisation of engineered bacteria and its integration into the rePhlow bioreactor.",
   "Raw material characterisation (1) → Bead optimisation (2-5) → Core-shell optimisation (6-7) → Core-shell validation (8-10) → Core-shell characterisation (11-12).",
 ];
@@ -86,7 +86,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             paragraphs: [
               "The aim of this experiment was to characterise the raw sodium alginate used throughout the encapsulation platform by Fourier-transform infrared (FTIR) spectroscopy, in order to estimate the relative proportion of mannuronic (M) and guluronic (G) residues before developing the bead and core-shell synthesis protocols.",
-              "Alginate is a linear copolymer of β-D-mannuronic acid (M) and α-L-guluronic acid (G) residues arranged in homopolymeric and heteropolymeric blocks. Because the G/M composition influences calcium-mediated crosslinking, gel stiffness and mechanical stability, this characterisation aims to provide information relevant to the expected behaviour of the hydrogel during encapsulation: a mannuronic-rich alginate (M/G > 1) would be expected to produce softer, more elastic gels, whereas a guluronic-rich alginate (M/G < 1) would be expected to produce stiffer, more rigid gels.",
+              "Alginate is a linear copolymer of β-D-mannuronic acid (M) and α-L-guluronic acid (G) residues arranged in homopolymeric and heteropolymeric blocks. Because the M/G composition influences calcium-mediated crosslinking, gel stiffness and mechanical stability, this characterisation aims to provide information relevant to the expected behaviour of the hydrogel during encapsulation: a mannuronic-rich alginate (M/G > 1) would be expected to produce softer, more elastic gels, whereas a guluronic-rich alginate (M/G < 1) would be expected to produce stiffer, more rigid gels.",
             ],
           },
           {
@@ -114,12 +114,12 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
               table: {
                 headers: ["Parameter", "Value"],
                 rows: [
-                  ["Sample form", "Sodium alginate powder, XXX"],
-                  ["Sampling technique", "XXX (ATR)"],
+                  ["Sample form", "Sodium alginate powder"],
+                  ["Sampling technique", "ATR (Nicolet iS50, ZnSe crystal, multiple-bounce H-ATR; 13 internal reflections)"],
                   ["Spectral range", "400–4000 cm⁻¹"],
-                  ["Resolution", "XXX cm⁻¹"],
-                  ["Number of scans", "XXX"],
-                  ["Instrument", "XXX"],
+                  ["Resolution", "0.09 cm⁻¹"],
+                  ["Detector", "DTGS-KBr"],
+                  ["Instrument", "Nicolet iS50 FTIR spectrometer (Thermo Scientific)"],
                 ],
               },
             },
@@ -179,7 +179,28 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
         id: "flow-rate",
         tabLabel: "Flow rate",
         title: "Bead optimisation: flow rate",
-        description: "Content not yet available in the source record.",
+        body: [
+          {
+            paragraphs: [
+              "The aim of this experiment was to determine the range of flow rates compatible with stable bead production once alginate concentration and drop height had been established. At low rates, droplets form and detach individually under gravity; excessively high rates can instead produce a continuous jet.",
+              "Flow rate was progressively increased to 3200 μL/min while all other conditions were kept constant. Droplet formation was monitored visually and 10 beads per condition were imaged and analysed in ImageJ for projected area, perimeter, equivalent diameter, Feret diameters and sphericity.",
+            ],
+            pairedResource: {
+              kind: "table",
+              table: {
+                headers: ["Parameter", "Status", "Value"],
+                rows: [
+                  ["Alginate concentration", "Constant", "3.5% (w/v)"],
+                  ["Drop height", "Constant", "3 cm"],
+                  ["CaCl₂ bath concentration", "Constant", "5% (w/v)"],
+                  ["Flow rate", "Variable", "400, 500, 600, 700, 800, 1600 and 3200 μL/min"],
+                  ["Crosslinking time", "Constant", "30 min"],
+                ],
+              },
+            },
+          },
+          { paragraphs: ["The expected outcome was to identify the maximum rate at which stable dripping was maintained without a transition to jetting and to establish whether bead morphology changed inside that operating window."] },
+        ],
       },
       {
         id: "crosslinking-time",
@@ -400,7 +421,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "Three capsule formulations were prepared using the optimised encapsulation conditions (Qe/Qi = XXX:1): control capsules without magnetite, capsules containing magnetite in the calcium chloride core, and capsules containing magnetite dispersed in the alginate shell. Although localisation within the core more closely resembles the intended encapsulation of the bacterial suspension, preliminary observations suggested that the limited core volume would provide insufficient visual contrast and that maintaining magnetite nanoparticles homogeneously suspended in the calcium chloride solution throughout the encapsulation process would be difficult because of particle sedimentation inside the syringe. Consequently, magnetite dispersed in the alginate shell was included as an alternative formulation expected to provide a more homogeneous particle distribution and facilitate both visualisation and quantitative leakage measurements. Control capsules without magnetite were included to account for the intrinsic absorbance of the encapsulation system, allowing the spectra of magnetite-containing samples to be baseline-corrected prior to analysis. All three formulations were therefore characterised to compare their containment performance.",
+              "Three capsule formulations were prepared using the optimised encapsulation conditions (Qe/Qi = 6:1): control capsules without magnetite, capsules containing magnetite in the calcium chloride core, and capsules containing magnetite dispersed in the alginate shell. Although localisation within the core more closely resembles the intended encapsulation of the bacterial suspension, preliminary observations suggested that the limited core volume would provide insufficient visual contrast and that maintaining magnetite nanoparticles homogeneously suspended in the calcium chloride solution throughout the encapsulation process would be difficult because of particle sedimentation inside the syringe. Consequently, magnetite dispersed in the alginate shell was included as an alternative formulation expected to provide a more homogeneous particle distribution and facilitate both visualisation and quantitative leakage measurements. Control capsules without magnetite were included to account for the intrinsic absorbance of the encapsulation system, allowing the spectra of magnetite-containing samples to be baseline-corrected prior to analysis. All three formulations were therefore characterised to compare their containment performance.",
             ],
             pairedResource: {
               kind: "table",
@@ -409,7 +430,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 rows: [
                   ["Alginate concentration", "Constant", "3.5% (w/v)"],
                   ["Inner CaCl₂ concentration", "Constant", "0.5% (w/v)"],
-                  ["Qe/Qi ratio", "Constant", "XXX:1"],
+                  ["Qe/Qi ratio", "Constant", "6:1"],
                   ["Capsule formulation", "Variable", "No magnetite; magnetite in the core; magnetite in the alginate shell"],
                   ["Storage medium", "Constant", "Distilled water"],
                   ["Spectral range", "Constant", "200–1000 nm"],
@@ -419,8 +440,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "Capsules were synthesised on Day 0, and the calcium chloride crosslinking bath was collected immediately after encapsulation. The capsules were subsequently transferred to distilled water for storage. On Day 1, UV–Vis spectra (200–1000 nm) were acquired from the recovered calcium chloride bath to evaluate particle loss during synthesis, from the distilled water to assess leakage during storage, and from a phosphate-buffered saline (PBS) solution in which the same capsules were deliberately dissolved after completion of the preservation study to determine the total amount of magnetite remaining inside the capsules. A second measurement of the storage water was performed on Day 3 (three days after synthesis) to evaluate whether additional particle leakage occurred during prolonged storage.",
-              "Absorbance measurements were performed using an XXX spectrophotometer with quartz cuvettes, as the spectral region of interest was located in the ultraviolet range, where conventional plastic cuvettes exhibit significant background absorbance that could interfere with the analysis. Full spectra between 200 and 1000 nm were recorded for each sample. The corresponding medium (calcium chloride solution, distilled water or PBS) was used as the instrumental blank for each measurement. Subsequently, spectra obtained from control capsules without magnetite were subtracted from those of magnetite-containing capsules to correct for the intrinsic absorbance of the alginate matrix (XXX nm), allowing the characteristic absorbance band of magnetite (XXX nm) to be analysed independently.",
+              "Capsules were synthesised on Day 0 and the calcium chloride crosslinking bath was collected immediately. The capsules were then transferred to distilled water. On Day 3, the storage water was measured again to evaluate prolonged leakage, and capsules were deliberately dissolved in PBS so the resulting solution could confirm the presence of magnetite retained inside them.",
+              "Absorbance measurements were performed using a GENESYS 10S UV–Vis spectrophotometer (Thermo Scientific) with quartz cuvettes. Full spectra between 200 and 1000 nm were recorded using the corresponding medium as blank. For each medium, the control-capsule spectrum was subtracted from the magnetite-containing sample, and the mean absorbance difference between 450 and 600 nm was used as an indicator of the amount of magnetite present.",
               "The expected outcome was that negligible magnetite would be detected in the calcium chloride bath and storage medium, whereas the highest absorbance would be observed after dissolution of the capsules in PBS, indicating that the encapsulated material remained effectively retained until intentional degradation of the alginate matrix. This would demonstrate that the optimised core-shell architecture provides effective physical containment throughout synthesis and storage, supporting its suitability for the encapsulation of engineered bacteria.",
             ],
           },
@@ -438,7 +459,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "Core-shell capsules produced under the selected encapsulation conditions were subjected to increasing compressive loads by placing calibrated masses (1, 2, 5, 10 and 20 g) on a microscope coverslip resting on groups of three capsules. Each mass was applied independently, and after every loading step the capsules were photographed before removing the weight and replacing it with the next mass. All measurements were performed under identical experimental conditions.",
+              "Core-shell capsules produced under the selected encapsulation conditions were subjected to increasing compressive loads by placing calibrated masses on a 0.4 g microscope coverslip resting on groups of three capsules. Fresh capsules and capsules stored for one week in distilled water were compared. Each load was applied independently and the capsules were photographed after every step.",
             ],
             pairedResource: {
               kind: "table",
@@ -450,7 +471,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                     "Variable",
                     "Same flow-rate ratios as the outer-to-inner flow-rate ratio experiment",
                   ],
-                  ["Applied mass", "Variable", "1, 2, 5, 10 and 20 g"],
+                  ["Applied total mass", "Variable", "0.4, 1.4, 2.4, 5.4, 10.4 and 20.4 g"],
+                  ["Storage condition", "Variable", "Fresh; one week in distilled water"],
                   ["Loading procedure", "Constant", "Sequential application of individual masses"],
                 ],
               },
@@ -458,7 +480,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "The photographs obtained after each loading step were analysed to quantify capsule deformation and determine the maximum load each formulation could withstand without structural failure.",
+              "The photographs obtained after each loading step were analysed using normalised sphericity as the deformation descriptor.",
               "The expected outcome was to identify the core-shell formulation that best resisted compressive loading while best preserving its geometry and shell integrity. This information would support the selection of the most mechanically robust capsule design for subsequent biological experiments and integration into the modular bioreactor.",
             ],
           },
@@ -476,14 +498,15 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "Core-shell capsules synthesised under the optimal encapsulation conditions were incubated in three groups of media: serial dilutions of phosphate-buffered saline (PBS; 1×, 1/2×, 1/4× and 1/8×), an equivalent sodium-free phosphate buffer with the same ionic strength and matching dilutions, and distilled water adjusted to different pH values (1.73, 3.00, 5.00 and 5.78). All remaining synthesis and storage conditions were kept constant throughout the study.",
+              "Core-shell capsules were incubated in five groups of media: pH-adjusted distilled water (pH 1.73, 3.00, 5.00 and 5.78), serial dilutions of PBS, matching dilutions of a sodium-free phosphate buffer, untreated industrial wastewater, and the same wastewater basified to pH 5 with NaOH, KOH or NH₄OH.",
             ],
             pairedResource: {
               kind: "table",
               table: {
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
-                  ["Storage medium", "Variable", "PBS, sodium-free phosphate buffer, pH-adjusted distilled water"],
+                  ["Storage medium", "Variable", "PBS, sodium-free phosphate buffer, pH-adjusted water, untreated wastewater and basified wastewater"],
+                  ["Industrial wastewater", "Variable", "Untreated (pH 1.76); pH 5 with NaOH, KOH or NH₄OH"],
                   ["PBS concentration", "Variable", "1×, 1/2×, 1/4× and 1/8×"],
                   ["Sodium-free phosphate buffer (PBS equivalent ionic strength)", "Variable", "1×, 1/2×, 1/4× and 1/8×"],
                   ["Water pH", "Variable", "1.73, 3.00, 5.00 and 5.78"],
@@ -512,13 +535,30 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
         id: "tga-dsc",
         tabLabel: "TGA-DSC",
         title: "Thermal characterisation (TGA-DSC)",
-        description: "Content not yet available in the source record.",
+        description: [
+          "Hydrated and air-dried core-shell capsules were compared by simultaneous thermogravimetric analysis and differential scanning calorimetry on an SDT Q600 (TA Instruments) under nitrogen. Two hydrated capsules were analysed independently (11.22 and 11.75 mg) and the dried sample contained two capsules (1.30 mg).",
+          "Runs extended from room temperature to 495 °C; the first hydrated capsule was continued to 673 °C to confirm that no further events occurred. TGA recorded mass loss while DSC recorded heat flow, allowing evaporation, polymer decomposition and final inorganic residue to be distinguished.",
+        ],
+        tables: [{
+          headers: ["Sample", "Mass", "Temperature range"],
+          rows: [
+            ["Hydrated capsule 1", "11.22 mg", "Room temperature–673 °C"],
+            ["Hydrated capsule 2", "11.75 mg", "Room temperature–495 °C"],
+            ["Two air-dried capsules", "1.30 mg", "Room temperature–495 °C"],
+          ],
+        }],
       },
       {
         id: "sem",
-        tabLabel: "SEM",
-        title: "Microstructural characterisation (SEM)",
-        description: "Content not yet available in the source record.",
+        tabLabel: "Microscopy, SEM & EDS",
+        title: "Microstructural, surface and elemental characterisation",
+        description: [
+          "A dried capsule was first documented by optical microscopy at 5× and at four surface positions at 20×. Dried capsules were then inspected, gold-coated and imaged with a JEOL JSM-IT700HR scanning electron microscope at 90×, 400×, 2000×, 7000× and 20000×.",
+          "SEM describes the dried polymer network rather than the hydrated operating state: vacuum is incompatible with free water and air-drying causes shrinkage and surface collapse. EDS on the same instrument assessed carbon, oxygen, calcium and residual chloride; hydrogen is not detected and the gold coating contributes to the normalised spectrum.",
+        ],
+        references: [
+          "Koch M, Włodarczyk-Biegun MK. Faithful scanning electron microscopic (SEM) visualization of 3D printed alginate-based scaffolds. Bioprinting. 2020;20:e00098. https://doi.org/10.1016/j.bprint.2020.e00098",
+        ],
       },
     ],
   },

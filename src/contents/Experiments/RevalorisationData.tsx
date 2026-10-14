@@ -108,7 +108,7 @@ export const REVALORISATION_INTRO: ReactNode[] = [
 
 export const REVALORISATION_REFERENCES: string[] = [
   "Bastida A, Fernandez‐Mayoralas A, Arrayas RG, Iradier F, Carretero JC, Garcia‐Junceda E. ChemInform Abstract: Heterologous Over‐Expression of α‐1,6‐Fucosyltransferase from Rhizobium sp.: Application to the Synthesis of the Trisaccharide β‐D‐GlcNAc(1→4)‐[α‐L‐Fuc‐(1→6)]‐D‐GlcNAc, Study of the Acceptor Specificity and Evaluation of Polyhydroxylated Indolizidines as Inhibitors. ChemInform [Internet]. 12 de febrero de 2002;33(6). Disponible en: https://doi.org/10.1002/chin.200206232",
-  "Sambrook J, Fritsch E, Maniatis T. Molecular Cloning: a Laboratory manual. UCLA - Biblioteca de Ciencias de la Salud [Internet]. 1 de enero de 1989; Disponible en: http://bibmed.ucla.edu.ve/cgi-win/be_alex.exe?Acceso=T070000058197/0&Nombrebd=bmucla",
+  "Sambrook J, Russell DW. Molecular Cloning: A Laboratory Manual. 3rd ed. Cold Spring Harbor Laboratory Press; 2001.",
 ];
 
 export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
@@ -427,8 +427,39 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
     ],
   },
   {
+    id: "enzyme-purification",
+    heading: "2. Enzyme purification",
+    intro: "Purification was treated as an experimental workflow rather than a single step, because activity had to survive separation as well as expression.",
+    experiments: [
+      {
+        id: "imac-purification",
+        tabLabel: "IMAC",
+        title: "Immobilised metal affinity chromatography",
+        description: "His-tagged DHAK and PPK2 were purified on Co²⁺-IDA-agarose. The resin was equilibrated, loaded, washed and eluted with increasing imidazole. DHAK and PPK2 required different wash conditions because their non-specific interactions with the resin differed.",
+      },
+      {
+        id: "dialysis-concentration",
+        tabLabel: "Dialysis",
+        title: "Dialysis and concentration",
+        description: "Imidazole and incompatible salts were removed before activity measurements. DHAK preparations were concentrated with 30 kDa Amicon devices and PPK2 preparations with 10 kDa devices, matching their molecular sizes.",
+      },
+      {
+        id: "express-imac",
+        tabLabel: "Express IMAC",
+        title: "Express IMAC diagnostic",
+        description: "A microlitre-scale affinity test tracked activity through the load, flow-through, wash and eluate. Its purpose was diagnostic: to identify the exact stage at which active enzyme was being lost before committing a full preparation.",
+      },
+      {
+        id: "size-exclusion-fplc",
+        tabLabel: "FPLC",
+        title: "Size-exclusion chromatography by FPLC",
+        description: "DHAK was also separated isocratically on an ÄKTAprime plus fitted with a HiLoad 26/60 Superdex 200 column. Fractions across each chromatographic feature were retained for the activity assay so purification quality was judged by function, not absorbance alone.",
+      },
+    ],
+  },
+  {
     id: "activity-assay",
-    heading: "2. Activity assay",
+    heading: "3. Activity assay",
     experiments: [
       {
         id: "dhak-activity-assay",
@@ -466,7 +497,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 <strong>α-GDH and TIM coupling enzymes</strong>, in{" "}
                 <strong>50 mM potassium phosphate buffer at pH 7.5</strong>, and{" "}
                 <strong>A340</strong> was followed over time in a{" "}
-                <strong>microplate reader</strong>. This buffer differs from the{" "}
+                <strong>spectrophotometer using a 1 cm cuvette</strong>. This buffer differs from the{" "}
                 <strong>Tris-HCl pH 8.0</strong> of the reference thesis assay;
                 phosphate at pH 7.5 was kept consistent with the{" "}
                 <strong>lysis buffer</strong>. <strong>One unit (U)</strong> of

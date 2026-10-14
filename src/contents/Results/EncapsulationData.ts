@@ -52,7 +52,7 @@ const FTIR: ResultData = {
           src: `${FIGURES}/ftir-spectrum.webp`,
           alt: "FTIR spectrum of the raw sodium alginate powder, with the O–H, C–H and carboxylate bands and the fingerprint region marked.",
           kind: "chart",
-          caption: "FTIR spectrum of the raw sodium alginate powder.",
+          caption: "FTIR spectrum of the raw sodium alginate powder. Main assignments: 3287 cm⁻¹ (O–H), 2933 cm⁻¹ (C–H), 1596 and 1407 cm⁻¹ (carboxylate), 1299 cm⁻¹, 1081/1027 cm⁻¹, and fingerprint bands at 949/885/814/787 cm⁻¹.",
         },
       ],
     },
@@ -604,6 +604,15 @@ const CORE_SHELL_PRESERVATION: ResultData = {
       ],
       figures: [
         {
+          src: `${FIGURES}/preservation-ph1-day0.jpg`,
+          alt: "Core-shell capsules in water at pH 1.73 at day 0.",
+          title: "pH 1.73 · day 0",
+          caption: "Core-shell capsules in pH-adjusted water at the start of the preservation assay.",
+        },
+        {
+          src: `${FIGURES}/preservation-ph1-day3.jpg`,
+          alt: "Core-shell capsules in water at pH 1.73 after three days.",
+          title: "pH 1.73 · day 3",
           caption:
             "Representative images of core-shell capsules stored in water at pH 1.73, 3, 5 and 5.78 (rows) over time (columns: days 0, 1, 2, 3 and 7).",
         },
@@ -617,6 +626,15 @@ const CORE_SHELL_PRESERVATION: ResultData = {
       ],
       figures: [
         {
+          src: `${FIGURES}/preservation-pbs-day0.jpg`,
+          alt: "Core-shell capsules in one-eighth-strength PBS at day 0.",
+          title: "⅛× PBS · day 0",
+          caption: "Core-shell capsules in one-eighth-strength PBS at the start of the assay.",
+        },
+        {
+          src: `${FIGURES}/preservation-pbs-day3.jpg`,
+          alt: "Core-shell capsules in one-eighth-strength PBS after three days.",
+          title: "⅛× PBS · day 3",
           caption:
             "Representative images of core-shell capsules stored in ⅛× PBS and ⅛× sodium-free phosphate buffer (rows) over time (columns: days 0, 1, 2, 3 and 7). Capsules stored in 1×, ½× and ¼× buffers dissolved within the first day and are not shown.",
         },
@@ -630,6 +648,33 @@ const CORE_SHELL_PRESERVATION: ResultData = {
       ],
       figures: [
         {
+          src: `${FIGURES}/preservation-ww-day0.jpg`,
+          alt: "Core-shell capsules in untreated industrial wastewater at day 0.",
+          title: "Untreated wastewater · day 0",
+          caption: "Capsules at the start of the industrial-wastewater preservation assay.",
+        },
+        {
+          src: `${FIGURES}/preservation-ww-day7.jpg`,
+          alt: "Core-shell capsules in untreated industrial wastewater after seven days.",
+          title: "Untreated wastewater · day 7",
+          caption: "Capsules remained intact in untreated wastewater, although they became more fragile.",
+        },
+        {
+          src: `${FIGURES}/preservation-ww-na-day1.jpg`,
+          alt: "Core-shell capsules after one day in wastewater basified with sodium hydroxide.",
+          title: "NaOH · day 1",
+          caption: "Wastewater basified to pH 5 with NaOH.",
+        },
+        {
+          src: `${FIGURES}/preservation-ww-k-day1.jpg`,
+          alt: "Core-shell capsules after one day in wastewater basified with potassium hydroxide.",
+          title: "KOH · day 1",
+          caption: "Wastewater basified to pH 5 with KOH.",
+        },
+        {
+          src: `${FIGURES}/preservation-ww-nh4-day1.jpg`,
+          alt: "Core-shell material after one day in wastewater basified with ammonium hydroxide.",
+          title: "NH₄OH · day 1",
           caption:
             "Representative images of core-shell capsules stored in untreated industrial wastewater and in industrial wastewater basified with NaOH, KOH and NH₄OH (rows) over time (columns: days 0, 1, 2, 3 and 7). Capsules basified with NH₄OH had turned into a paste by day 1 and could not be imaged thereafter, so that row ends there; empty cells elsewhere indicate that no capsules remained intact enough to be imaged.",
         },
@@ -885,4 +930,5 @@ export const ENCAPSULATION_REFERENCES = [
   "[6] Pan CT, Chien ST, Chiang TC, Yen CK, Wang SY, Wen ZH, et al. Optimization of the spherical integrity for sustained-release alginate microcarriers-encapsulated doxorubicin by the Taguchi method. Scientific Reports. 2020 Dec 10;10(1):21758. Available from: https://doi.org/10.1038/s41598-020-78813-1",
   "[7] Karunadasa KSP, Manoratne CH, Pitawala HMTGA, Rajapakse RMG. Relative stability of hydrated/anhydrous products of calcium chloride during complete dehydration as examined by high-temperature X-ray powder diffraction. Journal of Physics and Chemistry of Solids. 2018 Apr 27;120:167–72. Available from: https://doi.org/10.1016/j.jpcs.2018.04.034",
   "[8] Pereda M, Poncelet D, Renard D. Characterization of Core-Shell Alginate capsules. Food Biophysics. 2019 Jul 4;14(4):467–78. Available from: https://doi.org/10.1007/s11483-019-09595-x",
+  "[9] Koch M, Włodarczyk-Biegun MK. Faithful scanning electron microscopic (SEM) visualization of 3D printed alginate-based scaffolds. Bioprinting. 2020;20:e00098. Available from: https://doi.org/10.1016/j.bprint.2020.e00098",
 ];

@@ -8,11 +8,7 @@ import type {
  * page ("Revalorisation", under WIKI / Results). The sub-blocks, their
  * order and the record titles follow that page.
  *
- * The Activity sub-block in the source opens with an early toggle that
- * reports the same 16.64 mOD/min trace as the later numbered record for the
- * CECT 4626 2021 stock. Only the numbered series is transcribed, since it
- * carries the full comparison between variants and stocks; nothing is
- * dropped, only the duplicate. The source's own numbering of the DHAK
+ * The source's own numbering of the DHAK
  * records jumps (two records are both numbered 3); they are listed in
  * sequence below, which changes no content. The thermal-stability toggle
  * sits in a section the source marks to be ignored, and is left out.
@@ -20,8 +16,7 @@ import type {
  * In-text "(Figure n)" pointers in the source are dropped: figure numbers
  * on this page are assigned automatically (numbering.ts), so a hand-written
  * number would point at the wrong figure. Computational design and
- * purification have entries in the source but no write-up yet, so they
- * are marked `pending` rather than written around.
+ * purification records are kept in the same workflow order as the source.
  */
 
 const FIGURES = "assets/results/revalorisation";
@@ -37,24 +32,36 @@ const DESIGN_DSM: ResultData = {
   id: "design-dhak-dsm-30040",
   tabLabel: "Stabilisation, DSM 30040",
   title: "In silico stabilisation of DHAK from *C. freundii* DSM 30040",
-  pending: true,
-  subsections: [],
+  subsections: [{
+    id: "pross-cycle-1",
+    observations: "PROSS returned **nine designs**, from 21 substitutions (3.9%) to 119 (22.2%). With budget for one gene, **design 5** was selected as the mid-range option: **56 substitutions (10.4%)**. The underlying alignment contained more than 3,000 homologues with high coverage.",
+    interpretation: "Structural superposition preserved the K- and L-domains and the dimer interface, and no residue within 4 Å of AMP-PNP, DHA or Mg²⁺ was changed. This established that the design was structurally plausible, not that it remained active.",
+    expectation: "The structural checks passed, but design 5 later proved inactive. That result redirected stabilisation onto the active CECT 4626 background.",
+  }],
 };
 
 const DESIGN_CECT: ResultData = {
   id: "design-dhak-cect-4626",
   tabLabel: "Stabilisation, CECT 4626",
   title: "In silico stabilisation of DHAK CECT 4626",
-  pending: true,
-  subsections: [],
+  subsections: [{
+    id: "pross-cycle-2",
+    observations: "The stabilisation was rebuilt on the active **CECT 4626** sequence. The most conservative design was selected: **design 1, 21 substitutions (3.9%)**, transferred position by position while distinguishing natural strain differences from PROSS substitutions.",
+    interpretation: "Using the conservative design minimised the mutations added on top of the approximately 22 positions at which CECT 4626 naturally differs from DSM 30040. A codon-optimised gene was generated, ordered and transformed.",
+    expectation: "The design was completed, but it was **not induced or assayed**, so no conclusion can yet be drawn about stability or activity.",
+  }],
 };
 
 const DESIGN_CHANNELLING: ResultData = {
   id: "design-channelling",
   tabLabel: "SpyTag/SpyCatcher",
   title: "Channelling the biocatalytic complex (SpyTag/SpyCatcher)",
-  pending: true,
-  subsections: [],
+  subsections: [{
+    id: "spytag-spycatcher-design",
+    observations: "DHAK–SpyTag and PPK2–SpyCatcher were explored with AlphaFold and Boltz2. Modelling each split element alone failed for PPK2, while modelling each enzyme with the complete SpyTag/SpyCatcher system produced well-folded partners that could be superposed through the interface.",
+    interpretation: "The final model provides a viable geometry in which both enzymes retain their folds and the joining module is structured. It also shows why split systems may need to be modelled as a complete unit even when the proteins are expressed separately.",
+    expectation: "The work remained **computational only**: the fusion was not expressed or tested experimentally.",
+  }],
 };
 
 /* ---------- Enzyme expression ---------- */
@@ -221,32 +228,28 @@ const PURIFICATION_IMAC: ResultData = {
   id: "purification-imac",
   tabLabel: "IMAC",
   title: "Immobilised Metal Affinity Chromatography (Co²⁺-IDA-Agarose)",
-  pending: true,
-  subsections: [],
+  subsections: [{ id: "imac-result", observations: "PPK2 was retained by the Co²⁺ resin and recovered as the dominant species in the dialysed eluate. For DHAK, the first affinity run separated two problems: empty wild-type and 2021 eluates reflected the absence of protein in their extracts, while PROSS 5 bound and eluted as two persistent bands.", interpretation: "The affinity step worked whenever target protein was present. PPK2 supplied a preparation clean enough for the coupled assay; the unidentified upper PROSS 5 band remained unresolved.", expectation: "PPK2 purified as intended. DHAK recovery was construct-dependent and prompted activity-led troubleshooting." }],
 };
 
 const PURIFICATION_DIALYSIS: ResultData = {
   id: "purification-dialysis",
   tabLabel: "Dialysis",
   title: "Dialysis of IMAC eluates",
-  pending: true,
-  subsections: [],
+  subsections: [{ id: "dialysis-result", observations: "Dialysis removed imidazole and salt from every eluate and visibly concentrated the PROSS 5 preparation on the gel.", interpretation: "Dialysis functioned as both buffer exchange and a practical concentration step before activity measurement.", expectation: "The buffer exchange was expected; the concentrating effect was not." }],
 };
 
 const PURIFICATION_EXPRESS_IMAC: ResultData = {
   id: "purification-express-imac",
   tabLabel: "Express IMAC",
   title: "Express Immobilised Metal Affinity Chromatography (Co²⁺-IDA-Agarose)",
-  pending: true,
-  subsections: [],
+  subsections: [{ id: "express-imac-result", observations: "Microlitre-scale express IMAC recovered PROSS 5 in its eluates, while wild-type DHAK appeared neither in the crude extract nor in the eluates.", interpretation: "Because the resin recovered protein when protein was present, the wild-type failure lay in expression rather than purification.", expectation: "The diagnostic resolved the ambiguity as intended, but against the construct rather than the resin." }],
 };
 
 const PURIFICATION_SEC: ResultData = {
   id: "purification-sec",
   tabLabel: "SEC (FPLC)",
   title: "Size-exclusion chromatography (FPLC)",
-  pending: true,
-  subsections: [],
+  subsections: [{ id: "sec-result", observations: "Four size-exclusion runs were performed on an ÄKTAprime plus with a HiLoad 26/60 Superdex 200 column. Separation was not reproducible: most absorbance appeared outside the expected DHAK window, the only narrow symmetric peak was missed by late fraction collection, and collected features were broad or overlapping.", interpretation: "Size exclusion did not provide a reliable second route to purified DHAK. Fractions were carried into the activity assay to decide whether any active enzyme had nevertheless been recovered.", expectation: "No. The method failed to stabilise across four runs, so the workflow returned to affinity purification." }],
 };
 
 /* ---------- Enzyme activity assay ---------- */
@@ -286,17 +289,17 @@ const DHAK_2021: ResultData = {
       figures: [
         {
           src: `${FIGURES}/dhak-activity-cect4626-2021.png`,
-          alt: "Absorbance at 340 nm against time for the purified CECT 4626 2021 stock, a steady linear fall.",
+          alt: "Absorbance at 340 nm against time for the CECT 4626 2021 stock, showing a flat trace.",
           caption:
-            "DHAK activity assay of the CECT 4626 variant, 2021 stock, purified. Initial rate 16.64 mOD/min (R² = 0.989), equal to 2.68 nmol DHAP/min from 1 µL of enzyme.",
+            "DHAK activity assay of the CECT 4626 variant, 2021 stock, cell-free extract. The trace is flat (−0.080 mOD/min; R² = 0.035), so no activity can be measured.",
         },
       ],
       observations:
-        "The absorbance at 340 nm **fell steadily** at an initial rate of **16.64 mOD/min** (R² = 0.989), starting from A₃₄₀ ≈ 1.25, the value expected for 0.2 mM NADH over a 1 cm path. The slope corresponds to a DHAP formation rate of **2.68 nmol/min** from 1 µL of this purified preparation, a **volumetric activity of about 2.7 U/mL**.",
+        "The absorbance at 340 nm **stayed flat** for the whole read. The fitted slope was **−0.080 mOD/min with R² = 0.035**, so no reliable rate can be extracted and the extract showed **no measurable DHAK activity**. This agrees with the expression gel, where the 2021 stock gave no band.",
       interpretation:
         "This preparation is **clearly active**, and already **several-fold more active than the DSM 30040 variant**, confirming that the change of variant was the right move. The rate is still modest, which pointed us to look for a better-performing stock of the same enzyme before committing to downstream work.",
       expectation:
-        "**Partly.** The CECT 4626 variant is characterised as the **most catalytically efficient DHAK described to date** (kcat/Km ≈ 2×10⁷ M⁻¹s⁻¹, kcat ≈ 24 s⁻¹, Km for DHA ≈ 1.2 µM) [3], so a clear activity was expected; its moderate level, however, was lower than that reference would suggest and led us to test a **different stock of the same variant**, described next.",
+        "**No.** CECT 4626 is described as the most catalytically efficient DHAK reported to date [3], so the flat trace points to the state of this preparation, not to the enzyme's biochemistry. The **2021 stock was discarded** as the reference and the older 2012 material was tested next.",
     },
   ],
 };
@@ -402,7 +405,7 @@ const COUPLED_ASSAY: ResultData = {
     {
       id: "coupled-assay",
       observations:
-        "The coupled reaction was run with DHAK (CFE) and PPK2, **50 mM DHA**, a **substoichiometric 1.7 mM ATP**, and polyphosphate at **45 mM (R1)** or **90 mM (R2)**, sampling at 90 and 180 min. DHAP was quantified by the endpoint α-GDH/TIM assay (fall in A₃₄₀, proportional to DHAP). The assay was designed so that, with 0.45 mM NADH in the well (30 mM stock) and the 1:4 sample dilution, its **detection ceiling corresponds to 1.8 mM DHAP in the reaction**, just above the 1.7 mM ATP supplied. **Every reaction sample drove the assay to full NADH consumption** (ΔA₃₄₀ ≈ 1.0, matching the 50 mM DHAP standard), at both polyphosphate concentrations and both time points.",
+        "The coupled reaction was run with DHAK cell-free extract and purified PPK2, **50 mM DHA**, **1.7 mM ATP**, and polyphosphate at **45 mM (R1)** or **90 mM (R2)**. With **0.30 mM NADH in the well** and the 1:4 sample dilution, the determination could measure only up to **1.2 mM DHAP in the reaction**. Every reaction sample exhausted the NADH and reached that ceiling.",
       tables: [
         {
           caption:
@@ -418,9 +421,39 @@ const COUPLED_ASSAY: ResultData = {
         },
       ],
       interpretation:
-        "Because the samples saturated the assay, each contained **DHAP ≥ 1.8 mM**, which is **above the 1.7 mM ATP supplied**. Without ATP regeneration the DHAP formed cannot exceed the amount of ATP, since DHAK consumes one ATP per DHAP; the fact that **DHAP surpassed the stoichiometric ATP therefore demonstrates that PPK2 regenerated ATP from polyphosphate and that the nucleotide pool was recycled (turnover > 1)**. This is the proof of concept for the module, the waste-derived polyphosphate is used as the phosphate donor to keep DHAK supplied with ATP. The result was **reproducible across both polyphosphate concentrations and stable between 90 and 180 min**, and the signal was as high as the 50 mM DHAP standard, indicating that conversion went well beyond the ATP level, plausibly toward the 50 mM DHA ceiling.",
+        "The saturated signal **cannot be read as a concentration**. Its 1.2 mM ceiling lies **below the 1.7 mM ATP supplied**, so this round establishes only that DHAP was formed in every condition; it **cannot demonstrate ATP regeneration or turnover greater than one**. The endpoint determination was therefore redesigned with a much smaller aliquot.",
       expectation:
-        "**Yes.** The design placed the assay's detection ceiling (1.8 mM) just above the ATP (1.7 mM) precisely so that saturation would be a direct, unambiguous read-out of regeneration, and that is what was seen. The one quantity this run does not resolve is the **exact** amount of DHAP, because the readout saturated above 1.8 mM; the true value is higher and will be pinned down by re-reading the (frozen) aliquots **diluted into the linear range** against a **fresh low-concentration DHAP standard curve**.",
+        "**Partly.** The coupled system ran, but the assay ceiling was placed incorrectly and could not answer the regeneration question. The proof of concept comes from round 2.",
+    },
+  ],
+};
+
+const COUPLED_ASSAY_ROUND_2: ResultData = {
+  id: "coupled-assay-round-2",
+  tabLabel: "Coupled assay — round 2",
+  title: "Coupled DHAK–PPK2 assay, round 2 with purified enzymes",
+  subsections: [
+    {
+      id: "coupled-assay-round-2",
+      observations:
+        "The reaction was repeated with **purified DHAK and purified PPK2** and a much smaller sample volume per well. The 25 and 50 mM DHAP standards now gave distinct, unsaturated signals. Under the same substrate conditions, R1 (45 mM polyphosphate) formed **16.44 mM DHAP**, while R2 (90 mM polyphosphate) formed **49.15 mM DHAP**, with reported yields of **97.2%** and **97.6%**.",
+      tables: [
+        {
+          caption: "Coupled DHAK–PPK2 endpoint assay with both enzymes purified.",
+          headers: ["Sample", "A₃₄₀ before", "A₃₄₀ after", "ΔA₃₄₀", "DHAP (mM)", "Yield"],
+          rows: [
+            ["Control (−)", "0.897", "0.878", "0.019", "0.00", "—"],
+            ["DHAP 25 mM standard", "0.914", "0.452", "0.462", "25.00", "—"],
+            ["DHAP 50 mM standard", "0.917", "0.044", "0.873", "50.00", "—"],
+            ["R1 (45 mM polyP, 1.5 h)", "0.941", "0.636", "0.305", "16.44", "97.2%"],
+            ["R2 (90 mM polyP, 1.5 h)", "0.934", "0.070", "0.864", "49.15", "97.6%"],
+          ],
+        },
+      ],
+      interpretation:
+        "With only **1.7 mM ATP** supplied, these product concentrations require ATP regeneration: the nucleotide pool was recycled about **10 times in R1** and **29 times in R2**. R2 reached essentially full conversion of the 50 mM DHA, and the extent of conversion scaled with the polyphosphate supplied.",
+      expectation:
+        "**Yes.** This is the quantitative proof of concept that round 1 could not provide: the coupled system regenerates ATP and sustains DHAK turnover far beyond the nucleotide added at the start.",
     },
   ],
 };
@@ -455,7 +488,7 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
     heading: "4. Enzyme activity assay",
     intro:
       "The revalorisation module depends on **two enzymatic activities working together**, the phosphorylation of dihydroxyacetone by DHAK and the regeneration of ATP by PPK2. We tested them in two steps. First, DHAK was assayed on its own to confirm that the purified enzyme is catalytically active and to fix a baseline rate. Then the two enzymes were run together, with **polyphosphate as the phosphate donor**, to test the system as it is meant to operate, where **PPK2 rebuilds the ATP that DHAK spends** so that the reaction is no longer limited by the small amount of nucleotide added at the start. Both assays read out the same product, dihydroxyacetone phosphate (DHAP), through the coupled α-GDH/TIM reaction, which ties the NADH signal to the DHAP formed and lets the single-enzyme and coupled results be compared on the same scale.",
-    results: [DHAK_DSM, DHAK_2021, DHAK_2012, DHAK_PROSS, COUPLED_ASSAY],
+    results: [DHAK_DSM, DHAK_2021, DHAK_2012, DHAK_PROSS, COUPLED_ASSAY, COUPLED_ASSAY_ROUND_2],
   },
 ];
 
