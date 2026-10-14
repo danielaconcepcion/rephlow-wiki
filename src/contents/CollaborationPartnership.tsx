@@ -7,6 +7,8 @@ import {
   ENTRIES,
   GROUPS,
   IMG,
+  BARCELONA_CAROUSEL,
+  BARCELONA_VISIT,
   MALAGA_GALLERY,
   POSITION,
   SHOW_PLACEHOLDERS,
@@ -27,6 +29,7 @@ import {
   MalagaArt,
   MspArt,
   ResearchDecor,
+  TcgArt,
 } from "./CollaborationPartnership/DeskObjects";
 import { CollaborationModal } from "./CollaborationPartnership/CollaborationModal";
 import "./CollaborationPartnership/CollaborationPartnership.css";
@@ -49,7 +52,8 @@ const ART: Record<EntryId, ReactNode> = {
   kickoff: <KickoffArt />,
   malaga: <MalagaArt photo={MALAGA_GALLERY[0].src} />,
   msp: <MspArt />,
-  barcelona: <BarcelonaArt />,
+  tcg: <TcgArt />,
+  barcelona: <BarcelonaArt photo={BARCELONA_VISIT} slide={BARCELONA_CAROUSEL[1].src} />,
   cbm: <CbmArt />,
   iqog: <IqogArt />,
   cib: <CibArt />,

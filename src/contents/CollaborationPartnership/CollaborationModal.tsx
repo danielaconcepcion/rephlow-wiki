@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
+  BARCELONA_CAROUSEL,
+  BARCELONA_VISIT,
   GROUPS,
   IMG,
   KICKOFF_DAYS,
@@ -131,18 +133,10 @@ function EntryBody({ id }: { id: EntryId }) {
       return <MalagaBody />;
     case "msp":
       return <MspBody />;
+    case "tcg":
+      return <TcgBody />;
     case "barcelona":
-      return (
-        <Stack>
-          <Logo src={IMG.igemBarcelona} alt="iGEM Barcelona" height={96} />
-          <div className="cp-pending">
-            <p className="cp-pending__title">Entry in preparation</p>
-            <p className="cp-pending__note">
-              Placeholder · text, joint photo and Barcelona image pending.
-            </p>
-          </div>
-        </Stack>
-      );
+      return <BarcelonaBody />;
     case "cbm":
       return <CbmBody />;
     case "iqog":
@@ -467,6 +461,97 @@ function MspBody() {
         review, evaluating the work of peers under the same rubric we were
         judged against, which is a different discipline from writing for the
         wiki.
+      </p>
+    </Stack>
+  );
+}
+
+function TcgBody() {
+  return (
+    <div className="cp-split">
+      <div className="cp-split__text cp-stack">
+        <p className="cp-lead">
+          As part of the collaborative and networking initiatives between iGEM
+          teams, rePhlow actively participated in the{" "}
+          <strong>Trading Card Game (TCG)</strong> project organized by iGEM
+          RUBochum (CatPURr project).
+        </p>
+        <p>
+          This initiative focused on creating a{" "}
+          <strong>printable collection of trading cards</strong> representing
+          various iGEM 2026 teams, their projects, and their official mascots,
+          to be printed and distributed and exchanged during the Grand Jamboree
+          in Paris, fostering{" "}
+          <strong>scientific outreach, visual identity, and engagement</strong>{" "}
+          across the international iGEM community.
+        </p>
+      </div>
+      <figure className="cp-card cp-split__aside">
+        <img src={IMG.tcgCard} alt="The rePhlow trading card" loading="lazy" />
+      </figure>
+    </div>
+  );
+}
+
+function BarcelonaBody() {
+  return (
+    <Stack>
+      <div className="cp-logo-row">
+        <Logo src={IMG.vinesys} alt="Vinesys — iGEM UPF" height={72} />
+        <Logo src={IMG.rephlow} alt="rePhlow" height={72} />
+      </div>
+      <p className="cp-lead">
+        On September 17, we visited the Vinesys team (iGEM UPF) at the{" "}
+        <strong>Barcelona Biomedical Research Park (PRBB)</strong>. Mariona, the
+        team’s Group Leader, welcomed us and showed us around the campus and
+        their laboratories.
+      </p>
+      <figure className="cp-photo">
+        <img
+          src={BARCELONA_VISIT}
+          alt="The rePhlow team with Vinesys (iGEM UPF) at the PRBB in Barcelona"
+          loading="lazy"
+        />
+      </figure>
+      <p>
+        During the visit, we talked through where each project stood, explored
+        ways our teams could work together, and gave each other feedback as we
+        entered the final stretch before the Grand Jamboree.
+      </p>
+      <p>
+        One idea came up quickly. Our projects start from the same resource and
+        tackle two sides of the same crisis: Vinesys works on the lack of fresh
+        water, and we work on what happens when water carries too many
+        nutrients. We decided to tell that story together in a joint Instagram
+        carousel, <strong>“Two iGEM teams, one resource: water.”</strong>
+      </p>
+      <PhotoStrip
+        photos={BARCELONA_CAROUSEL}
+        alt="“Two iGEM teams, one resource: water” carousel"
+      />
+      <p>
+        The post presents water as “a war on two fronts.” Each team introduces
+        its problem with a figure from home. For Vinesys, it is the{" "}
+        <strong>2024 drought that cut Catalonia’s grape harvest by 40%</strong>.
+        For us, it is the{" "}
+        <strong>
+          2016 algal bloom that killed 85% of the Mar Menor’s seagrass
+        </strong>
+        . Each team then presents its solution. Vinesys engineers soil bacteria
+        that help vineyard soils hold water, so vines keep going when the rain
+        doesn’t come. rePhlow engineers bacteria, encapsulated in alginate
+        beads, that capture phosphate from industrial wastewater before it
+        reaches rivers and seas, turning a pollutant into a valuable resource.
+        The carousel closes with a shared invitation to follow both teams on the
+        road to the iGEM 2026 Grand Jamboree in Paris.
+      </p>
+      <p className="cp-pull">
+        Together, the two halves of the post show that scarcity and pollution
+        are two faces of the same problem. Publishing it on both accounts
+        (@igemupf and @rephlow.igem) brought each project to the other team’s
+        audience. The visit and the post together strengthened our connection
+        and turned a shared concern into joint science communication ahead of
+        Paris.
       </p>
     </Stack>
   );

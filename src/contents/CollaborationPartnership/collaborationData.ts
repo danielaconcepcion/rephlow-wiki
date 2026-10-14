@@ -38,6 +38,7 @@ export type EntryId =
   | "kickoff"
   | "malaga"
   | "msp"
+  | "tcg"
   | "barcelona"
   | "cbm"
   | "iqog"
@@ -56,15 +57,27 @@ export interface Entry {
   placeholder?: boolean;
 }
 
-/** Placeholder entries ("Barcelona collaboration") are shown so the team
- * can see where they go; flip to false to hide them until the text exists. */
+/** Placeholder entries are shown so the team can see where they go; flip
+ * to false to hide them until the text exists. Nothing is a placeholder at
+ * the moment, so this only matters for the next entry that arrives. */
 export const SHOW_PLACEHOLDERS = true;
 
 export const ENTRIES: Entry[] = [
   { id: "kickoff", group: "igem", title: "Meetup: iGEM kick-off", pill: "Meetup: iGEM kick-off" },
   { id: "malaga", group: "igem", title: "iGEM European Meetup - Málaga '26", pill: "European Meetup Málaga '26" },
   { id: "msp", group: "igem", title: "MSP-Vector", pill: "MSP-Vector" },
-  { id: "barcelona", group: "igem", title: "Barcelona collaboration", pill: "Barcelona collaboration", placeholder: true },
+  {
+    id: "tcg",
+    group: "igem",
+    title: "Trading Card Game (TCG) Project with iGEM RUBochum",
+    pill: "Trading Card Game · RUBochum",
+  },
+  {
+    id: "barcelona",
+    group: "igem",
+    title: "Vinesys (iGEM UPF) × rePhlow",
+    pill: "Vinesys (iGEM UPF)",
+  },
   { id: "cbm", group: "research", title: "CBM-CSIC", pill: "CBM-CSIC" },
   { id: "iqog", group: "research", title: "IQOG-CSIC", pill: "IQOG-CSIC" },
   { id: "cib", group: "research", title: "CIB-CSIC", pill: "CIB-CSIC" },
@@ -88,6 +101,7 @@ export const POSITION: Record<EntryId, [number, number, number]> = {
   kickoff: [10, 4, 19],
   malaga: [66, 4, 17],
   msp: [37, 43, 17],
+  tcg: [7, 53, 21],
   barcelona: [60, 56, 25],
   cbm: [4, 5, 38],
   iqog: [57, 5, 28],
@@ -100,6 +114,7 @@ export const STACK_WIDTH: Record<EntryId, string> = {
   kickoff: "52%",
   malaga: "48%",
   msp: "46%",
+  tcg: "74%",
   barcelona: "82%",
   cbm: "92%",
   iqog: "76%",
@@ -110,7 +125,7 @@ export const STACK_WIDTH: Record<EntryId, string> = {
 
 export const STACK_RIGHT: Partial<Record<EntryId, true>> = {
   malaga: true,
-  barcelona: true,
+  tcg: true,
   iqog: true,
   complu: true,
 };
@@ -132,6 +147,8 @@ export const IMG = {
   sebbm: A("logo-sebbm.webp"),
   rephlow: asset("assets/rephlow-logo-transparent.png"),
   igemBarcelona: A("logo-igem-barcelona.webp"),
+  vinesys: A("logo-vinesys.webp"),
+  tcgCard: A("tcg-rubochum.webp"),
 };
 
 export interface GalleryPhoto {
@@ -149,6 +166,16 @@ export const MALAGA_GALLERY: GalleryPhoto[] = [
   { src: A("malaga-06.webp"), ratio: "3 / 4" },
   { src: A("malaga-07.webp"), ratio: "4 / 3" },
 ];
+
+/** The seven slides of the joint "Two iGEM teams, one resource: water"
+ * Instagram carousel, in the order they were published. */
+export const BARCELONA_CAROUSEL: GalleryPhoto[] = Array.from(
+  { length: 7 },
+  (_, i) => ({ src: A(`bcn-0${i + 1}.webp`), ratio: "4 / 5" }),
+);
+
+/** The two teams at the PRBB on the day of the visit. */
+export const BARCELONA_VISIT = A("bcn-visit.webp");
 
 export const KICKOFF_GALLERY: GalleryPhoto[] = [
   { src: A("kickoff-01.webp"), ratio: "4 / 3" },

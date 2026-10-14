@@ -16,16 +16,6 @@ function P({ s, children }: { s: S; children?: ReactNode }) {
   return <span style={{ position: "absolute", ...s }}>{children}</span>;
 }
 
-/** Dashed placeholder box naming the file that still has to be uploaded. */
-function FileSlot({ label, file }: { label: string; file: string }) {
-  return (
-    <span className="cp-art-slot">
-      <span className="cp-art-slot__label">{label}</span>
-      <span className="cp-art-slot__file">{file}</span>
-    </span>
-  );
-}
-
 /* --- Table 1 · iGEM community ------------------------------------------ */
 
 const LANYARD_PATH =
@@ -137,8 +127,57 @@ export function MspArt() {
   );
 }
 
-export function BarcelonaArt() {
+/** A fanned deck of trading cards: two patterned backs behind the rePhlow
+ * card the teams printed for the exchange in Paris. */
+export function TcgArt() {
+  const card: S = {
+    position: "absolute",
+    borderRadius: "3cqw",
+    background: "#fbf8f0",
+    boxShadow: "inset 0 0 0 0.6cqw rgba(27,35,64,0.1)",
+  };
+  const back: S = {
+    ...card,
+    background:
+      "repeating-linear-gradient(45deg, #6E5A96 0 2.2cqw, #5a4a7e 2.2cqw 4.4cqw)",
+    border: "1.6cqw solid #fbf8f0",
+  };
+  return (
+    <span className="cp-art" style={{ aspectRatio: "1.3" }}>
+      <span style={{ ...back, left: "1cqw", top: "11cqw", width: "46cqw", height: "64cqw", transform: "rotate(-13deg)" }} />
+      <span style={{ ...back, left: "16cqw", top: "7cqw", width: "46cqw", height: "64cqw", transform: "rotate(-5deg)" }} />
+      <span
+        style={{
+          ...card, left: "33cqw", top: "2cqw", width: "50cqw", height: "70cqw", transform: "rotate(7deg)",
+          padding: "2.6cqw", display: "flex", flexDirection: "column", gap: "1.8cqw", overflow: "hidden",
+        }}
+      >
+        <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", font: "700 3.4cqw/1 var(--font-display)", color: "#3a2c5c" }}>
+          rePhlow
+          <span style={{ font: "600 2.6cqw/1 var(--font-body)", color: "var(--ink-soft)" }}>iGEM 2026</span>
+        </span>
+        <span className="cp-art__photo" style={{ flex: 1, borderRadius: "1.6cqw" }}>
+          <img src={IMG.tcgCard} alt="" loading="lazy" />
+        </span>
+        <span style={{ display: "block", height: "0.5cqw", background: "#6E5A96" }} />
+        <span style={{ font: "500 2.4cqw/1.25 var(--font-body)", color: "var(--ink-soft)" }}>
+          Trading cards · iGEM RUBochum
+        </span>
+      </span>
+    </span>
+  );
+}
+
+/** The same triptych as before: the iGEM UPF logo, then the two panels
+ * that were waiting on files — now the photo from the visit and a slide
+ * from the joint carousel. */
+export function BarcelonaArt({ photo, slide }: { photo: string; slide: string }) {
   const panel: S = { flex: 1, height: "82%", padding: "2.4cqw", display: "flex" };
+  const pane = (src: string) => (
+    <span className="cp-art__photo" style={{ flex: 1, borderRadius: "0.6cqw" }}>
+      <img src={src} alt="" loading="lazy" />
+    </span>
+  );
   return (
     <span className="cp-art" style={{ aspectRatio: "1.5", display: "flex", alignItems: "center", transform: "rotate(-3deg)" }}>
       <span style={{ ...panel, transform: "skewY(-5deg)", background: "#fbf7ef", borderRadius: "1cqw 0 0 1cqw" }}>
@@ -147,10 +186,10 @@ export function BarcelonaArt() {
         </span>
       </span>
       <span style={{ ...panel, transform: "skewY(5deg)", background: "linear-gradient(90deg, #e9e1d2, #f8f3ea 40%)" }}>
-        <FileSlot label="Joint photo" file="bcn-joint-photo.jpg" />
+        {pane(photo)}
       </span>
       <span style={{ ...panel, transform: "skewY(-5deg)", background: "linear-gradient(90deg, #f1eadd, #fbf7ef 40%)", borderRadius: "0 1cqw 1cqw 0" }}>
-        <FileSlot label="Barcelona" file="barcelona.jpg" />
+        {pane(slide)}
       </span>
     </span>
   );
@@ -510,7 +549,7 @@ export function IgemDecor() {
         <P s={{ inset: 0, borderRadius: "50% 0 50% 50%", transform: "rotate(-45deg)", background: "#58b3ac", border: "3px solid #fff" }} />
       </Prop>
       <Plant s={{ left: "87%", top: "3%", width: "11%" }} pot="radial-gradient(circle, #4a3626 52%, #c97b54 54%, #b8693f 100%)" />
-      <Prop s={{ left: "4%", top: "72%", width: "17%", aspectRatio: "3.4", transform: "rotate(-24deg)", filter: "saturate(0.85) drop-shadow(0 4px 4px rgba(40,15,5,0.3))" }}>
+      <Prop s={{ left: "5%", top: "88%", width: "17%", aspectRatio: "3.4", transform: "rotate(-14deg)", filter: "saturate(0.85) drop-shadow(0 4px 4px rgba(40,15,5,0.3))" }}>
         <P s={{ left: 0, top: "4cqw", width: "92cqw", height: "6.5cqw", borderRadius: "3cqw 1cqw 1cqw 3cqw", background: "linear-gradient(180deg, #3d5a9e, #2b437c)" }} />
         <P s={{ left: "90cqw", top: "5.5cqw", width: "8cqw", height: "3.5cqw", clipPath: "polygon(0 0, 100% 50%, 0 100%)", background: "#c9c3b8" }} />
         <P s={{ left: "6cqw", top: "15cqw", width: "88cqw", height: "6.5cqw", borderRadius: "3cqw 1cqw 1cqw 3cqw", background: "linear-gradient(180deg, #e8b850, #c99a35)" }} />
