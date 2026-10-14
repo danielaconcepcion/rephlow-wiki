@@ -168,34 +168,29 @@ export function TcgArt() {
   );
 }
 
-/** The visit and the joint Instagram carousel, as two photo cards with
- * the two team logos meeting between them. */
+/** The same triptych as before: the iGEM UPF logo, then the two panels
+ * that were waiting on files — now the photo from the visit and a slide
+ * from the joint carousel. */
 export function BarcelonaArt({ photo, slide }: { photo: string; slide: string }) {
-  const frame: S = {
-    position: "absolute",
-    borderRadius: "1.6cqw",
-    background: "#fbf8f0",
-    padding: "1.8cqw",
-    boxShadow: "0 0.6cqw 1cqw rgba(40,15,5,0.18)",
-  };
+  const panel: S = { flex: 1, height: "82%", padding: "2.4cqw", display: "flex" };
+  const pane = (src: string) => (
+    <span className="cp-art__photo" style={{ flex: 1, borderRadius: "0.6cqw" }}>
+      <img src={src} alt="" loading="lazy" />
+    </span>
+  );
   return (
-    <span className="cp-art" style={{ aspectRatio: "1.42" }}>
-      <span style={{ ...frame, left: "1cqw", top: "3cqw", width: "46cqw", height: "54cqw", transform: "rotate(-5deg)" }}>
-        <span className="cp-art__photo" style={{ width: "100%", height: "100%", borderRadius: "0.8cqw" }}>
-          <img src={photo} alt="" loading="lazy" />
+    <span className="cp-art" style={{ aspectRatio: "1.5", display: "flex", alignItems: "center", transform: "rotate(-3deg)" }}>
+      <span style={{ ...panel, transform: "skewY(-5deg)", background: "#fbf7ef", borderRadius: "1cqw 0 0 1cqw" }}>
+        <span style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <img src={IMG.igemBarcelona} alt="" style={{ width: "72%", height: "auto" }} />
         </span>
       </span>
-      <span style={{ ...frame, left: "49cqw", top: "7cqw", width: "48cqw", height: "58cqw", transform: "rotate(4deg)" }}>
-        <span className="cp-art__photo" style={{ width: "100%", height: "100%", borderRadius: "0.8cqw" }}>
-          <img src={slide} alt="" loading="lazy" />
-        </span>
+      <span style={{ ...panel, transform: "skewY(5deg)", background: "linear-gradient(90deg, #e9e1d2, #f8f3ea 40%)" }}>
+        {pane(photo)}
       </span>
-      <P s={{ left: "28cqw", top: "44cqw", width: "24cqw", height: "24cqw", borderRadius: "50%", background: "#fff", boxShadow: "0 0.6cqw 1cqw rgba(40,15,5,0.25)", display: "flex", alignItems: "center", justifyContent: "center", padding: "3cqw" }}>
-        <img src={IMG.vinesys} alt="" style={{ width: "100%", height: "auto" }} />
-      </P>
-      <P s={{ left: "48cqw", top: "49cqw", width: "21cqw", height: "21cqw", borderRadius: "50%", background: "#fff", boxShadow: "0 0.6cqw 1cqw rgba(40,15,5,0.25)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2.6cqw" }}>
-        <img src={IMG.rephlow} alt="" style={{ width: "100%", height: "auto" }} />
-      </P>
+      <span style={{ ...panel, transform: "skewY(-5deg)", background: "linear-gradient(90deg, #f1eadd, #fbf7ef 40%)", borderRadius: "0 1cqw 1cqw 0" }}>
+        {pane(slide)}
+      </span>
     </span>
   );
 }
