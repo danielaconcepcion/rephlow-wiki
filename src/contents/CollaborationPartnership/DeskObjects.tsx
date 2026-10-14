@@ -16,16 +16,6 @@ function P({ s, children }: { s: S; children?: ReactNode }) {
   return <span style={{ position: "absolute", ...s }}>{children}</span>;
 }
 
-/** Dashed placeholder box naming the file that still has to be uploaded. */
-function FileSlot({ label, file }: { label: string; file: string }) {
-  return (
-    <span className="cp-art-slot">
-      <span className="cp-art-slot__label">{label}</span>
-      <span className="cp-art-slot__file">{file}</span>
-    </span>
-  );
-}
-
 /* --- Table 1 · iGEM community ------------------------------------------ */
 
 const LANYARD_PATH =
@@ -137,21 +127,75 @@ export function MspArt() {
   );
 }
 
-export function BarcelonaArt() {
-  const panel: S = { flex: 1, height: "82%", padding: "2.4cqw", display: "flex" };
+/** A fanned deck of trading cards: two patterned backs behind the rePhlow
+ * card the teams printed for the exchange in Paris. */
+export function TcgArt() {
+  const card: S = {
+    position: "absolute",
+    borderRadius: "3cqw",
+    background: "#fbf8f0",
+    boxShadow: "inset 0 0 0 0.6cqw rgba(27,35,64,0.1)",
+  };
+  const back: S = {
+    ...card,
+    background:
+      "repeating-linear-gradient(45deg, #6E5A96 0 2.2cqw, #5a4a7e 2.2cqw 4.4cqw)",
+    border: "1.6cqw solid #fbf8f0",
+  };
   return (
-    <span className="cp-art" style={{ aspectRatio: "1.5", display: "flex", alignItems: "center", transform: "rotate(-3deg)" }}>
-      <span style={{ ...panel, transform: "skewY(-5deg)", background: "#fbf7ef", borderRadius: "1cqw 0 0 1cqw" }}>
-        <span style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <img src={IMG.igemBarcelona} alt="" style={{ width: "72%", height: "auto" }} />
+    <span className="cp-art" style={{ aspectRatio: "1.3" }}>
+      <span style={{ ...back, left: "1cqw", top: "11cqw", width: "46cqw", height: "64cqw", transform: "rotate(-13deg)" }} />
+      <span style={{ ...back, left: "16cqw", top: "7cqw", width: "46cqw", height: "64cqw", transform: "rotate(-5deg)" }} />
+      <span
+        style={{
+          ...card, left: "33cqw", top: "2cqw", width: "50cqw", height: "70cqw", transform: "rotate(7deg)",
+          padding: "2.6cqw", display: "flex", flexDirection: "column", gap: "1.8cqw", overflow: "hidden",
+        }}
+      >
+        <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", font: "700 3.4cqw/1 var(--font-display)", color: "#3a2c5c" }}>
+          rePhlow
+          <span style={{ font: "600 2.6cqw/1 var(--font-body)", color: "var(--ink-soft)" }}>iGEM 2026</span>
+        </span>
+        <span className="cp-art__photo" style={{ flex: 1, borderRadius: "1.6cqw" }}>
+          <img src={IMG.tcgCard} alt="" loading="lazy" />
+        </span>
+        <span style={{ display: "block", height: "0.5cqw", background: "#6E5A96" }} />
+        <span style={{ font: "500 2.4cqw/1.25 var(--font-body)", color: "var(--ink-soft)" }}>
+          Trading cards · iGEM RUBochum
         </span>
       </span>
-      <span style={{ ...panel, transform: "skewY(5deg)", background: "linear-gradient(90deg, #e9e1d2, #f8f3ea 40%)" }}>
-        <FileSlot label="Joint photo" file="bcn-joint-photo.jpg" />
+    </span>
+  );
+}
+
+/** The visit and the joint Instagram carousel, as two photo cards with
+ * the two team logos meeting between them. */
+export function BarcelonaArt({ photo, slide }: { photo: string; slide: string }) {
+  const frame: S = {
+    position: "absolute",
+    borderRadius: "1.6cqw",
+    background: "#fbf8f0",
+    padding: "1.8cqw",
+    boxShadow: "0 0.6cqw 1cqw rgba(40,15,5,0.18)",
+  };
+  return (
+    <span className="cp-art" style={{ aspectRatio: "1.42" }}>
+      <span style={{ ...frame, left: "1cqw", top: "3cqw", width: "46cqw", height: "54cqw", transform: "rotate(-5deg)" }}>
+        <span className="cp-art__photo" style={{ width: "100%", height: "100%", borderRadius: "0.8cqw" }}>
+          <img src={photo} alt="" loading="lazy" />
+        </span>
       </span>
-      <span style={{ ...panel, transform: "skewY(-5deg)", background: "linear-gradient(90deg, #f1eadd, #fbf7ef 40%)", borderRadius: "0 1cqw 1cqw 0" }}>
-        <FileSlot label="Barcelona" file="barcelona.jpg" />
+      <span style={{ ...frame, left: "49cqw", top: "7cqw", width: "48cqw", height: "58cqw", transform: "rotate(4deg)" }}>
+        <span className="cp-art__photo" style={{ width: "100%", height: "100%", borderRadius: "0.8cqw" }}>
+          <img src={slide} alt="" loading="lazy" />
+        </span>
       </span>
+      <P s={{ left: "28cqw", top: "44cqw", width: "24cqw", height: "24cqw", borderRadius: "50%", background: "#fff", boxShadow: "0 0.6cqw 1cqw rgba(40,15,5,0.25)", display: "flex", alignItems: "center", justifyContent: "center", padding: "3cqw" }}>
+        <img src={IMG.vinesys} alt="" style={{ width: "100%", height: "auto" }} />
+      </P>
+      <P s={{ left: "48cqw", top: "49cqw", width: "21cqw", height: "21cqw", borderRadius: "50%", background: "#fff", boxShadow: "0 0.6cqw 1cqw rgba(40,15,5,0.25)", display: "flex", alignItems: "center", justifyContent: "center", padding: "2.6cqw" }}>
+        <img src={IMG.rephlow} alt="" style={{ width: "100%", height: "auto" }} />
+      </P>
     </span>
   );
 }

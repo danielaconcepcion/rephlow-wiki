@@ -834,3 +834,35 @@
     transition: none;
   }
 }
+
+/* The printed trading card, beside its text: a card, not a photo, so it
+   keeps its own 2.5:3.5 proportions and sits on the paper rather than
+   being cropped into a frame. */
+.cp-card {
+  margin: 0;
+  align-self: flex-start;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(40, 15, 5, 0.18);
+}
+.cp-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* A single photograph inside a dialog: tall shots (a group photo in
+   portrait) would otherwise run the full column width and push the text
+   that follows a screen down, so the height is capped and the image is
+   centred rather than cropped. */
+.cp-photo {
+  margin: 0;
+}
+.cp-photo img {
+  display: block;
+  max-width: 100%;
+  max-height: 420px;
+  width: auto;
+  margin-inline: auto;
+  border-radius: 12px;
+}
