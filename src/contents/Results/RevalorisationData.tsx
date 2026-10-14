@@ -2,6 +2,8 @@ import type {
   ResultData,
   ResultSubBlock,
 } from "../../components/LabFolders/types";
+import { NotionMarkdownDocument } from "../../components/NotionMarkdownDocument";
+import completeRevalorisationResults from "../RevalorisationSource/results.md?raw";
 
 /**
  * Revalorisation results, transcribed from the team's own Notion results
@@ -489,6 +491,17 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
     intro:
       "The revalorisation module depends on **two enzymatic activities working together**, the phosphorylation of dihydroxyacetone by DHAK and the regeneration of ATP by PPK2. We tested them in two steps. First, DHAK was assayed on its own to confirm that the purified enzyme is catalytically active and to fix a baseline rate. Then the two enzymes were run together, with **polyphosphate as the phosphate donor**, to test the system as it is meant to operate, where **PPK2 rebuilds the ATP that DHAK spends** so that the reaction is no longer limited by the small amount of nucleotide added at the start. Both assays read out the same product, dihydroxyacetone phosphate (DHAP), through the coupled α-GDH/TIM reaction, which ties the NADH signal to the DHAP formed and lets the single-enzyme and coupled results be compared on the same scale.",
     results: [DHAK_DSM, DHAK_2021, DHAK_2012, DHAK_PROSS, COUPLED_ASSAY, COUPLED_ASSAY_ROUND_2],
+  },
+  {
+    id: "complete-notion-record",
+    heading: "5. Complete results record",
+    intro: "Full results record synchronised from Notion, including all design cycles, gels and lane tables, chromatographic runs, activity traces, coupled-assay rounds, conclusions and references.",
+    results: [{
+      id: "complete-revalorisation-results",
+      tabLabel: "Full record",
+      title: "Revalorisation — complete Results record",
+      subsections: [{ id: "complete-record", custom: { node: <NotionMarkdownDocument source={completeRevalorisationResults} /> } }],
+    }],
   },
 ];
 

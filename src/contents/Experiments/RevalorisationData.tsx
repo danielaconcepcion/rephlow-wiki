@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import type { ExperimentSubBlock } from "../../components/LabFolders/types";
+import { NotionMarkdownDocument } from "../../components/NotionMarkdownDocument";
+import completeRevalorisationExperiments from "../RevalorisationSource/experiments.md?raw";
 
 /**
  * Real content for the "Revalorisation" Experiments block — transcribed
@@ -574,5 +576,16 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
         ],
       },
     ],
+  },
+  {
+    id: "complete-notion-record",
+    heading: "Complete experimental record",
+    intro: "Full laboratory record synchronised from Notion, including every rationale, parameter table, expected outcome, supplementary link and reference in the current source.",
+    experiments: [{
+      id: "complete-revalorisation-experiments",
+      tabLabel: "Full record",
+      title: "Revalorisation — complete Experiments record",
+      body: [{ pairedResource: { kind: "custom", node: <NotionMarkdownDocument source={completeRevalorisationExperiments} /> } }],
+    }],
   },
 ];
