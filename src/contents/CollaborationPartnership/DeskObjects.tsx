@@ -549,7 +549,7 @@ export function IgemDecor() {
         <P s={{ inset: 0, borderRadius: "50% 0 50% 50%", transform: "rotate(-45deg)", background: "#58b3ac", border: "3px solid #fff" }} />
       </Prop>
       <Plant s={{ left: "87%", top: "3%", width: "11%" }} pot="radial-gradient(circle, #4a3626 52%, #c97b54 54%, #b8693f 100%)" />
-      <Prop s={{ left: "4%", top: "72%", width: "17%", aspectRatio: "3.4", transform: "rotate(-24deg)", filter: "saturate(0.85) drop-shadow(0 4px 4px rgba(40,15,5,0.3))" }}>
+      <Prop s={{ left: "5%", top: "88%", width: "17%", aspectRatio: "3.4", transform: "rotate(-14deg)", filter: "saturate(0.85) drop-shadow(0 4px 4px rgba(40,15,5,0.3))" }}>
         <P s={{ left: 0, top: "4cqw", width: "92cqw", height: "6.5cqw", borderRadius: "3cqw 1cqw 1cqw 3cqw", background: "linear-gradient(180deg, #3d5a9e, #2b437c)" }} />
         <P s={{ left: "90cqw", top: "5.5cqw", width: "8cqw", height: "3.5cqw", clipPath: "polygon(0 0, 100% 50%, 0 100%)", background: "#c9c3b8" }} />
         <P s={{ left: "6cqw", top: "15cqw", width: "88cqw", height: "6.5cqw", borderRadius: "3cqw 1cqw 1cqw 3cqw", background: "linear-gradient(180deg, #e8b850, #c99a35)" }} />

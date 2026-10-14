@@ -101,7 +101,7 @@ export const POSITION: Record<EntryId, [number, number, number]> = {
   kickoff: [10, 4, 19],
   malaga: [66, 4, 17],
   msp: [37, 43, 17],
-  tcg: [6, 48, 24],
+  tcg: [7, 53, 21],
   barcelona: [60, 56, 25],
   cbm: [4, 5, 38],
   iqog: [57, 5, 28],
