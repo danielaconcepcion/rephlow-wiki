@@ -3,7 +3,7 @@ import { PageSectionNav, type PageSection } from "../../components/PageSectionNa
 import { SectionTabs } from "../../components/LabFolders/SectionTabs";
 import { FolderStack } from "../../components/LabFolders/FolderStack";
 import { ResultCard } from "../../components/LabFolders/ResultCard";
-import { ReferenceItem } from "../../components/LabFolders/ExperimentCard";
+import { BlockReferences } from "../../components/LabFolders/BlockReferences";
 import { Rich } from "../../components/LabFolders/RichText";
 import { CitationScope } from "../../components/LabFolders/citationScope";
 import { NumberingContext, numberResults } from "../../components/LabFolders/numbering";
@@ -170,21 +170,14 @@ export function Results() {
                   </section>
                 )}
 
-                {/* One reference list for the whole block, at the very bottom
-                    rather than tucked into each folder; "[n]" anywhere above
-                    links down to its entry. */}
-                {!!activeBlock.references?.length && (
-                  <section className="lab-subblock">
-                    <div className="lab-prose">
-                      <h2 className="lab-subblock__heading lab-block__references-heading">References</h2>
-                      <ul className="lab-block__references">
-                        {activeBlock.references.map((reference, index) => (
-                          <ReferenceItem scope={activeBlock.id} text={reference} key={index} />
-                        ))}
-                      </ul>
-                    </div>
-                  </section>
-                )}
+                {/* One reference list for the whole block, folded away at
+                  the very bottom rather than tucked into each folder;
+                  "[n]" anywhere above links down to its entry and opens
+                  the list on the way (see BlockReferences). */}
+              {!!activeBlock.references?.length && (
+                <BlockReferences scope={activeBlock.id} items={activeBlock.references} />
+              )}
+
               </div>
             </CitationScope.Provider>
           </NumberingContext.Provider>

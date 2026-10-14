@@ -2,7 +2,8 @@ import { useState, type ReactNode } from "react";
 import { PageSectionNav, type PageSection } from "../../components/PageSectionNav";
 import { SectionTabs } from "../../components/LabFolders/SectionTabs";
 import { FolderStack } from "../../components/LabFolders/FolderStack";
-import { ExperimentCard, ReferenceItem } from "../../components/LabFolders/ExperimentCard";
+import { ExperimentCard } from "../../components/LabFolders/ExperimentCard";
+import { BlockReferences } from "../../components/LabFolders/BlockReferences";
 import { PdfViewer } from "../../components/LabFolders/PdfViewer";
 import type { AccentStyle, ExperimentData } from "../../components/LabFolders/types";
 import { asset } from "../../utils";
@@ -235,13 +236,6 @@ export function Experiments() {
                   <div className="lab-prose">
                     <h2 className="lab-subblock__heading">{subBlock.heading}</h2>
                     {paragraphs(subBlock.intro, "lab-subblock__intro")}
-                    {!!subBlock.references?.length && (
-                      <ul className="lab-subblock__references">
-                        {subBlock.references.map((reference, index) => (
-                          <ReferenceItem scope={subBlock.id} text={reference} key={index} />
-                        ))}
-                      </ul>
-                    )}
                   </div>
                   {subBlock.experiments && (
                     <DeckPalette palette={activeBlock.palette}>
@@ -254,28 +248,22 @@ export function Experiments() {
                   {subBlock.outro && (
                     <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
                   )}
+                  {/* A sub-block that keeps its own numbered list (rather
+                      than sharing the block's) folds it away here, at the
+                      end of its own section. */}
+                  {!!subBlock.references?.length && (
+                    <BlockReferences scope={subBlock.id} items={subBlock.references} />
+                  )}
                 </section>
               ))
             ) : null}
 
             {/* A single reference list shared by the whole block (see
-                ExperimentBlockData.references) — e.g. Enzymatic
-                immobilisation, whose source cites across both sub-blocks
-                from one numbered list rather than keeping a separate list
-                per sub-block. Rendered once, after every sub-block, as its
-                own section so it gets the same section-break spacing as
-                every sub-block transition (see .lab-subblock + .lab-subblock). */}
+                ExperimentBlockData.references), folded away at the foot
+                of the page; an inline "[n]" anywhere above opens it on
+                the way down (see BlockReferences). */}
             {!!activeBlock.references?.length && (
-              <section className="lab-subblock">
-                <div className="lab-prose">
-                  <h2 className="lab-subblock__heading lab-block__references-heading">References</h2>
-                  <ul className="lab-block__references">
-                    {activeBlock.references.map((reference, index) => (
-                      <ReferenceItem scope={activeBlock.id} text={reference} key={index} />
-                    ))}
-                  </ul>
-                </div>
-              </section>
+              <BlockReferences scope={activeBlock.id} items={activeBlock.references} />
             )}
 
             {!activeBlock.subBlocks && (

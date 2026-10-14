@@ -1414,3 +1414,55 @@
   min-height: 140px;
   padding: 48px 16px;
 }
+
+/* A block's reference list, folded away at the foot of its page (see
+   BlockReferences.tsx). Styled as a quiet rule-and-summary rather than a
+   card, so it reads as the end of the page rather than as one more
+   section competing with the experiments above it. */
+.lab-refs {
+  border-top: 1px solid var(--lab-line);
+  padding-top: 18px;
+}
+.lab-refs__summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--ink);
+}
+.lab-refs__summary::-webkit-details-marker {
+  display: none;
+}
+.lab-refs__summary::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-right: 1.6px solid currentColor;
+  border-bottom: 1.6px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.18s ease;
+}
+.lab-refs[open] .lab-refs__summary::before {
+  transform: rotate(45deg);
+}
+.lab-refs__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+.lab-refs__count {
+  font: 600 0.72rem/1 var(--font-body);
+  color: var(--ink-soft);
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--paper-soft);
+}
+.lab-refs__summary:focus-visible {
+  outline: 2px solid var(--folder-accent, var(--ink));
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.lab-refs > .lab-prose {
+  margin-top: 20px;
+}
