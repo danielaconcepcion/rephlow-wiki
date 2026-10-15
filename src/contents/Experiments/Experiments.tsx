@@ -7,6 +7,7 @@ import { BlockReferences } from "../../components/LabFolders/BlockReferences";
 import { PdfViewer } from "../../components/LabFolders/PdfViewer";
 import type { AccentStyle, ExperimentData } from "../../components/LabFolders/types";
 import { asset } from "../../utils";
+import { ALGINATE_ENCAPSULATION_FIGURES } from "./EncapsulationData";
 import { EXPERIMENT_BLOCKS } from "./data";
 import { GENE_PARTS } from "./GeneticEngineeringData";
 import { GeneSystemGrid } from "./GeneSystemGrid";
@@ -67,15 +68,19 @@ function Figure({
   alt,
   caption,
   className = "",
+  dir = "assets/project-description",
 }: {
   src: string;
   alt: string;
   caption?: ReactNode;
   className?: string;
+  /** Folder under /public the image lives in — the pathway diagram is
+   * shared with Project Description, every other one is this page's own. */
+  dir?: string;
 }) {
   return (
     <figure className={`vsi-figure vsi-figure--full pd-figure ${className}`.trim()}>
-      <img src={asset(`assets/project-description/${src}`)} alt={alt} />
+      <img src={asset(`${dir}/${src}`)} alt={alt} />
       {caption && <figcaption className="vsi-figure__caption">{caption}</figcaption>}
     </figure>
   );
@@ -157,6 +162,23 @@ export function Experiments() {
                 narrow and centered like ProjectDescription's prose. */}
             {activeBlock.intro && <div className="lab-prose">{paragraphs(activeBlock.intro, "lab-block__intro")}</div>}
 
+            {/* Alginate encapsulation's two intro diagrams: the coaxial
+                setup the whole block is built around, and the twelve-stage
+                workflow its experiments walk through. */}
+            {activeBlock.id === "encapsulation" && (
+              <div className="lab-prose">
+                {ALGINATE_ENCAPSULATION_FIGURES.map((figure) => (
+                  <Figure
+                    key={figure.src}
+                    dir="assets/experiments/encapsulation"
+                    src={figure.src}
+                    alt={figure.alt}
+                    caption={figure.caption}
+                  />
+                ))}
+              </div>
+            )}
+
             {/* Genetic engineering's conceptual "five parts of the system"
                 sits between the block intro and its two workflow
                 sub-blocks — a bespoke visual, not a folder deck, since none
@@ -191,6 +213,12 @@ export function Experiments() {
             {activeBlock.id === "enzymatic-immobilisation" && (
               <>
                 <div className="lab-prose">
+                  <Figure
+                    dir="assets/experiments/enzymatic-immobilisation"
+                    src="enzymatic-workflow.webp"
+                    alt="Six-step workflow: mining, cloning, expression, purification, characterisation and immobilisation"
+                    caption="The six steps this block runs through, from mining the databases for candidate enzymes to fixing the purified panel onto the sphere."
+                  />
                   <figure className="record-figure" style={{ margin: "8px 0 24px" }}>
                     <div className="record-figure__placeholder" aria-hidden="true">
                       [ figure placeholder ]
