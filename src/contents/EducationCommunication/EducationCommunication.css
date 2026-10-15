@@ -247,7 +247,7 @@
 .ec-entry__head {
   display: flex;
   align-items: baseline;
-  gap: 18px;
+  gap: 14px;
   flex-wrap: wrap;
   padding-left: 4px;
 }
@@ -255,17 +255,22 @@
 .ec-entry__index {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(3rem, 5.6vw, 4.6rem);
-  line-height: 0.9;
+  font-size: clamp(2.2rem, 3.4vw, 2.9rem);
+  line-height: 0.95;
   color: var(--ec-accent, #6e5a96);
 }
 
+/* The same size as Human Practices' subsection titles (see
+   .hp-why__subsection > h3), so the two sections' headings read as one
+   level. */
 .ec-entry__title {
   margin: 0;
-  font-size: clamp(2.05rem, 3.6vw, 3.2rem);
-  line-height: 1.08;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.6rem, 2.4vw, 2.1rem);
+  line-height: 1.2;
   color: var(--ink);
-  flex: 1 1 320px;
+  flex: 1 1 280px;
 }
 
 .ec-entry__meta {
@@ -361,8 +366,8 @@
 
   .ec-entry__index {
     position: absolute;
-    top: 0.06em;
-    right: calc(100% + 16px);
+    top: 0.04em;
+    right: calc(100% + 14px);
   }
 
   .ec-entry__meta {
