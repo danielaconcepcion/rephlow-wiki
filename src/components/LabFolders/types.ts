@@ -31,7 +31,9 @@ export interface FolderDef {
 export type AccentStyle = CSSProperties & { "--folder-accent": string };
 
 /** Any custom-property style, for elements (like each folder tab) that set more than one CSS variable. */
-export type CSSVarStyle = CSSProperties & { [key: `--${string}`]: string | number };
+export type CSSVarStyle = CSSProperties & {
+  [key: `--${string}`]: string | number;
+};
 
 /* ---------- Shared record primitives ---------- */
 
@@ -133,7 +135,23 @@ export type PairedResource =
  * lets one specific "the conditions were as follows:" paragraph sit next
  * to its table while the rest of the write-up reads as normal body copy,
  * instead of the whole card being forced into one fixed two-column shape. */
+/** A short labelled aside the sources end their stages with — what the
+ * stage produced (OUTCOME), what it taught (LEARN), and what was
+ * deliberately not done. Rendered as a labelled callout rather than as a
+ * paragraph opening with a shouted word. */
+export interface BodyCallout {
+  kind: "outcome" | "learn" | "not-done";
+  text: string;
+}
+
 export interface ExperimentBodyBlock {
+  /** A heading for this block — "Design strategy", "Experimental design",
+   * "Second trial" — rendered with the same rule-and-heading break the
+   * Results subsections use, so a long stage reads as a sequence of named
+   * parts instead of one wall of prose. */
+  title?: string;
+  /** Closing OUTCOME / LEARN notes for this block. */
+  callouts?: BodyCallout[];
   /** Plain strings, or short JSX using <strong>/<em> for inline emphasis
    * (matches ProtocolStep.text's convention) — rendered as one <p> each.
    * Omit for a resource with no single paragraph that specifically
@@ -148,6 +166,10 @@ export interface ExperimentData {
   id: string;
   tabLabel: string;
   title: string;
+  /** Which enzyme(s) the stage belongs to, shown as a chip beside the
+   * title. The sources mark this in the stage heading itself ("DHAK",
+   * "DHAK   PPK2"); here it is data, not part of the title string. */
+  enzymes?: ("DHAK" | "PPK2")[];
   /** A single paragraph, or several — rendered as one <p> each. Plain
    * strings, or short JSX using <strong>/<em> for inline emphasis (matches
    * ProtocolStep.text's convention). Omit when `body` is set (see below);

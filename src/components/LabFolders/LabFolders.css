@@ -1466,3 +1466,84 @@
 .lab-refs > .lab-prose {
   margin-top: 20px;
 }
+
+/* --- An experiment's own parts ------------------------------------------
+   A stage with several named parts ("Design strategy", "Experimental
+   design", "Second trial") breaks on the same rule-and-heading the
+   Results subsections use, so both pages read as the same document. */
+.experiment-card__block--section {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--lab-line);
+}
+.experiment-card__block--section:first-of-type {
+  margin-top: 0;
+}
+.experiment-section__heading {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* The closing note of a stage. The source shouts it (OUTCOME, LEARN); a
+   labelled block says the same thing without raising its voice. */
+.experiment-callout {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--folder-accent, var(--ink));
+  border-radius: 0 8px 8px 0;
+  background: var(--paper-soft);
+}
+.experiment-callout--learn {
+  border-left-color: #8a8372;
+}
+.experiment-callout--not-done {
+  border-left-style: dashed;
+  border-left-color: #8a8372;
+  background: transparent;
+}
+.experiment-callout__label {
+  display: block;
+  margin-bottom: 4px;
+  font: 700 0.72rem/1 var(--font-body);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.experiment-callout__text {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink);
+}
+
+/* Which enzyme a stage belongs to, as a chip beside its title rather than
+   as a suffix glued onto the title string. */
+.experiment-card__titlerow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.experiment-card__enzymes {
+  display: inline-flex;
+  gap: 6px;
+}
+.experiment-chip {
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font: 700 0.68rem/1.3 var(--font-body);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.experiment-chip--dhak {
+  color: #2e7d86;
+  background: rgba(46, 125, 134, 0.08);
+}
+.experiment-chip--ppk2 {
+  color: #b8790a;
+  background: rgba(184, 121, 10, 0.1);
+}

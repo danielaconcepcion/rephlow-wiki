@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import type {
+  BodyCallout,
   ExperimentBodyBlock,
   ExperimentData,
   PairedResource,
@@ -182,13 +183,51 @@ export function ReferenceItem({
  * pair when the block sets pairedResource. Full-width blocks before and
  * after a paired one are unaffected, so only the one paragraph that
  * actually discusses the table/figure sits next to it. */
+/** A stage's own closing note — what came of it, what it taught, what was
+ * deliberately left undone — labelled rather than shouted mid-paragraph. */
+function Callouts({ callouts }: { callouts?: BodyCallout[] }) {
+  if (!callouts?.length) return null;
+  const label: Record<BodyCallout["kind"], string> = {
+    outcome: "Outcome",
+    learn: "What we learned",
+    "not-done": "What we did not do",
+  };
+  return (
+    <>
+      {callouts.map((callout, index) => (
+        <div
+          className={`experiment-callout experiment-callout--${callout.kind}`}
+          key={index}
+        >
+          <span className="experiment-callout__label">
+            {label[callout.kind]}
+          </span>
+          <p className="experiment-callout__text">
+            <Rich text={callout.text} />
+          </p>
+        </div>
+      ))}
+    </>
+  );
+}
+
+function SectionHeading({ title }: { title?: string }) {
+  if (!title) return null;
+  return <h4 className="experiment-section__heading">{title}</h4>;
+}
+
 function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
   const hasParagraphs = !!block.paragraphs?.length;
+  const blockClass = `experiment-card__block${
+    block.title ? " experiment-card__block--section" : ""
+  }`;
 
   if (!block.pairedResource) {
     return (
-      <div className="experiment-card__block">
+      <div className={blockClass}>
+        <SectionHeading title={block.title} />
         <DescriptionParagraphs paragraphs={block.paragraphs ?? []} />
+        <Callouts callouts={block.callouts} />
       </div>
     );
   }
@@ -200,19 +239,23 @@ function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
   // see isWideResource — with its paragraph(s), if any, stacked above it.
   if (!hasParagraphs || isWideResource(block.pairedResource)) {
     return (
-      <div className="experiment-card__block">
+      <div className={blockClass}>
+        <SectionHeading title={block.title} />
         {hasParagraphs && (
           <DescriptionParagraphs paragraphs={block.paragraphs!} />
         )}
         <ResourcePane resource={block.pairedResource} />
+        <Callouts callouts={block.callouts} />
       </div>
     );
   }
 
   return (
-    <div className="experiment-card__pair experiment-card__block">
+    <div className={`experiment-card__pair ${blockClass}`}>
       <div className="experiment-card__text">
+        <SectionHeading title={block.title} />
         <DescriptionParagraphs paragraphs={block.paragraphs!} />
+        <Callouts callouts={block.callouts} />
       </div>
       <div className="experiment-card__tables">
         <ResourcePane resource={block.pairedResource} />
@@ -264,7 +307,23 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
   return (
     <article className="experiment-card">
       <header className="experiment-card__header">
-        <h3 className="experiment-card__title">{data.title}</h3>
+        <div className="experiment-card__titlerow">
+          <h3 className="experiment-card__title">
+            <Rich text={data.title} />
+          </h3>
+          {!!data.enzymes?.length && (
+            <span className="experiment-card__enzymes">
+              {data.enzymes.map((enzyme) => (
+                <span
+                  className={`experiment-chip experiment-chip--${enzyme.toLowerCase()}`}
+                  key={enzyme}
+                >
+                  {enzyme}
+                </span>
+              ))}
+            </span>
+          )}
+        </div>
         {!hasBody && !canPairTable && (
           <DescriptionParagraphs paragraphs={descriptionParagraphs} />
         )}
