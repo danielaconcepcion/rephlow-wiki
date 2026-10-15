@@ -14,21 +14,24 @@
   color: var(--ink);
 }
 
-/* Same column as Collaboration and Safety: 1120 px, centred, with the
-   section's standard vertical rhythm. */
+/* Project Description's page margins: the same 6vh / 20px / 10vh box and
+   the same 790 px text column, so the chronicle sets to the width the
+   rest of the wiki's prose does. The board is the one element allowed the
+   full width of the column. */
 .ec-col {
   display: flex;
   flex-direction: column;
-  gap: 72px;
+  gap: 56px;
+  box-sizing: border-box;
   width: 100%;
   min-width: 0;
   max-width: 1120px;
   margin: 0 auto;
-  padding: 4vh 0 12vh;
+  padding: 6vh 20px 10vh;
 }
 
 .ec-intro {
-  max-width: 820px;
+  max-width: 790px;
   margin: 0 auto;
   font-size: 1.02rem;
   line-height: 1.72;
@@ -43,185 +46,67 @@
 
 /* --- The board ---------------------------------------------------------- */
 
-.ec-board-frame {
-  padding: clamp(10px, 1.4vw, 20px);
-  border-radius: 18px;
-  background: linear-gradient(145deg, #8b6b45, #6d5133 45%, #7d5e3c);
-  box-shadow:
-    0 24px 48px rgba(32, 22, 10, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+/* The slate, its frame, the chalk dust and the timeline are all drawn in
+   one 1600 x 960 SVG (see Blackboard.tsx); the objects are absolutely
+   positioned on top of it as a percentage of the board. The composition
+   never reflows: below its natural width the board scrolls sideways, the
+   way a wide figure does, rather than rearranging itself. */
+.ec-board-scroll {
+  margin: 0 -20px;
+  padding: 0 20px 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
 }
 
 .ec-board {
-  container-type: inline-size;
   position: relative;
-  aspect-ratio: 2 / 1;
-  border-radius: 8px;
-  overflow: hidden;
-  background:
-    radial-gradient(
-      ellipse 60% 50% at 24% 30%,
-      rgba(255, 255, 255, 0.045),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 50% 40% at 78% 70%,
-      rgba(255, 255, 255, 0.035),
-      transparent 70%
-    ),
-    linear-gradient(160deg, #2f4038, #223029 55%, #2b3a33);
-  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.45);
-}
-
-/* The slate's own tooth: a fine noise so the dark area is never flat. */
-.ec-board::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image:
-    radial-gradient(
-      circle at 20% 30%,
-      rgba(255, 255, 255, 0.05) 0.5px,
-      transparent 1px
-    ),
-    radial-gradient(
-      circle at 70% 60%,
-      rgba(255, 255, 255, 0.04) 0.5px,
-      transparent 1px
-    ),
-    radial-gradient(
-      circle at 45% 85%,
-      rgba(255, 255, 255, 0.035) 0.5px,
-      transparent 1px
-    );
-  background-size:
-    7px 7px,
-    11px 11px,
-    13px 13px;
-}
-
-/* --- Chalk marginalia --------------------------------------------------- */
-
-.ec-board__marks {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  color: rgba(238, 240, 230, 0.56);
-}
-
-.ec-chalk {
-  position: absolute;
-  font-family: var(--font-display);
-  letter-spacing: 0.02em;
-  text-shadow: 0 0 1.5px rgba(255, 255, 255, 0.35);
-  white-space: nowrap;
-}
-
-.ec-chalk--title {
-  left: 3%;
-  top: 2.5%;
-  transform: none;
-  font-size: clamp(0.95rem, 2.6cqw, 2rem);
-  font-weight: 700;
-  color: rgba(244, 246, 238, 0.82);
-  border-bottom: 1px solid rgba(244, 246, 238, 0.3);
-  padding-bottom: 0.3em;
-}
-
-.ec-chalk--formula {
-  font-size: clamp(0.6rem, 1.5cqw, 1.05rem);
-  opacity: 0.75;
-}
-
-.ec-chalk--small {
-  font-size: clamp(0.55rem, 1.25cqw, 0.9rem);
-  opacity: 0.6;
-}
-
-.ec-chalk-sketch {
-  position: absolute;
-  height: auto;
-  fill: none;
-  stroke: rgba(238, 240, 230, 0.45);
-  stroke-width: 2;
-  stroke-linecap: round;
-}
-
-/* A sponge pass that never quite cleared: lighter, soft-edged, and always
-   behind everything else on the board. */
-.ec-erase {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(236, 240, 228, 0.055);
-  filter: blur(10px);
-}
-
-/* --- The chalk timeline ------------------------------------------------- */
-
-.ec-board__line {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.ec-board__line-path,
-.ec-board__tick {
-  fill: none;
-  stroke: rgba(240, 242, 232, 0.62);
-  stroke-width: 1.6px;
-  stroke-linecap: round;
-  stroke-dasharray: 9 4;
-  vector-effect: non-scaling-stroke;
-  filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.3));
-}
-
-.ec-board__tick {
-  stroke-dasharray: none;
-  stroke-width: 1.2px;
-  opacity: 0.75;
-}
-
-.ec-board__node {
-  fill: rgba(244, 246, 238, 0.7);
-  vector-effect: non-scaling-stroke;
+  container-type: inline-size;
+  min-width: 920px;
+  aspect-ratio: 1600 / 960;
 }
 
 /* --- Objects on the board ----------------------------------------------- */
 
 .ec-object {
   position: absolute;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
   text-decoration: none;
-  color: inherit;
+  color: var(--ink);
   transition:
-    transform 0.2s ease,
-    filter 0.2s ease;
-  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+/* Two of the nine objects are real paper taped to the slate, so they cast
+   a shadow onto it; the other seven are chalk, drawn in it, and only
+   brighten when picked up. */
+.ec-object--paper {
+  filter: drop-shadow(0 9px 10px rgba(0, 0, 0, 0.5));
 }
 
 .ec-object:hover,
 .ec-object:focus-visible {
-  transform: translateY(-6px) rotate(-0.4deg);
-  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.5));
   z-index: 3;
+  transform: translateY(-6px);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.28));
+}
+
+.ec-object--paper:hover,
+.ec-object--paper:focus-visible {
+  filter: drop-shadow(0 20px 18px rgba(0, 0, 0, 0.55));
 }
 
 .ec-object:focus-visible {
   outline: none;
 }
 
-.ec-object:focus-visible .ec-object__name {
-  outline: 2px solid rgba(244, 246, 238, 0.8);
+.ec-object:focus-visible .ec-object__tag {
+  outline: 2px solid var(--ec-accent, #6e5a96);
   outline-offset: 3px;
-  border-radius: 3px;
 }
 
 /* Each object is its own container, so the art inside scales with the
@@ -233,79 +118,55 @@
   width: 100%;
 }
 
-.ec-art > span {
-  box-sizing: border-box;
+/* The tag under each object. Its units are the board's, not the object's,
+   so nine tags of different widths all read at the same size. */
+.ec-object__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7cqw;
+  margin-top: max(8px, 0.9cqw);
+  padding: 0.45cqw 1.3cqw 0.45cqw 0.45cqw;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font: 600 max(9.5px, 0.92cqw) / 1.15 var(--font-body);
+  white-space: nowrap;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
 }
 
-.ec-object__photo,
-.ec-object__blank {
-  position: relative;
-  display: block;
-  overflow: hidden;
-  border-radius: 0.6cqw;
-  background: #e7e1d2;
+.ec-object__n {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max(18px, 1.9cqw);
+  height: max(18px, 1.9cqw);
+  border-radius: 50%;
+  background: var(--ec-accent, #6e5a96);
+  color: #fff;
+  font: 600 max(9.5px, 0.85cqw) / 1 var(--font-display);
 }
 
-.ec-object__photo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.ec-object__blank {
-  display: grid;
-  place-items: center;
-  color: rgba(42, 60, 92, 0.28);
-  min-height: 24cqw;
-}
-
-.ec-object__blank svg {
-  width: 46%;
-  height: auto;
-}
-
-/* The chalk caption under each object. */
-.ec-object__label {
+.ec-object__text {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 1px;
-  text-align: center;
-  font-family: var(--font-display);
-  color: rgba(244, 246, 238, 0.9);
-  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-}
-
-.ec-object__index {
-  display: grid;
-  place-items: center;
-  width: 1.5em;
-  height: 1.5em;
-  margin-bottom: 2px;
-  border: 1px solid rgba(244, 246, 238, 0.55);
-  border-radius: 50%;
-  font-size: clamp(0.56rem, 1.15cqw, 0.82rem);
-  font-weight: 700;
-}
-
-.ec-object__name {
-  font-size: clamp(0.58rem, 1.18cqw, 0.88rem);
-  font-weight: 700;
-  line-height: 1.12;
-  max-width: 14ch;
+  gap: 0.1cqw;
 }
 
 .ec-object__date {
-  font-family: var(--font-body);
-  font-size: clamp(0.5rem, 0.95cqw, 0.72rem);
-  opacity: 0.72;
+  font-weight: 500;
+  font-size: 0.86em;
+  color: var(--ink-soft);
 }
 
 /* --- Narrow screens: the board becomes a chalk list --------------------- */
 
 .ec-board--list {
+  min-width: 0;
   aspect-ratio: auto;
+  border-radius: 8px;
+  background: linear-gradient(160deg, #2f4038, #223029 55%, #2b3a33);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.45);
   padding: 22px 16px 26px;
   display: flex;
   flex-direction: column;
@@ -363,8 +224,18 @@
   gap: 96px;
 }
 
+/* The board frame the narrow-screen list still uses sits in the column,
+   not in the prose measure. */
+.ec-board-frame {
+  width: 100%;
+}
+
 .ec-entry {
   scroll-margin-top: var(--section-nav-offset);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 790px;
+  margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 18px;
@@ -475,5 +346,26 @@
   }
   .ec-entry__head {
     align-items: flex-end;
+  }
+}
+
+/* Once the page is wide enough to have a margin either side of the prose
+   measure, the ordinal hangs out into it, so the title sets flush with
+   the paragraphs beneath it rather than being pushed off their left
+   edge. Narrower than that, it stays in the line. */
+@media (min-width: 1180px) {
+  .ec-entry__head {
+    position: relative;
+    padding-left: 0;
+  }
+
+  .ec-entry__index {
+    position: absolute;
+    top: 0.06em;
+    right: calc(100% + 16px);
+  }
+
+  .ec-entry__meta {
+    padding-left: 0;
   }
 }
