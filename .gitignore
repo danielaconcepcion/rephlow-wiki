@@ -26,6 +26,10 @@ dist-ssr
 .yarn
 .yarn*
 
+# Yarn's Plug'n'Play runtime, written by `yarn install` (the workflow
+# generates its own); never source.
+.pnp.*
+
 # Local assets pending upload to static.igem.wiki
 public/assets/
 
