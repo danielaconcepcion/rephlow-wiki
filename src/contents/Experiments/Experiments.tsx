@@ -2,10 +2,12 @@ import { useState, type ReactNode } from "react";
 import { PageSectionNav, type PageSection } from "../../components/PageSectionNav";
 import { SectionTabs } from "../../components/LabFolders/SectionTabs";
 import { FolderStack } from "../../components/LabFolders/FolderStack";
-import { ExperimentCard, ReferenceItem } from "../../components/LabFolders/ExperimentCard";
+import { ExperimentCard } from "../../components/LabFolders/ExperimentCard";
+import { BlockReferences } from "../../components/LabFolders/BlockReferences";
 import { PdfViewer } from "../../components/LabFolders/PdfViewer";
 import type { AccentStyle, ExperimentData } from "../../components/LabFolders/types";
 import { asset } from "../../utils";
+import { ALGINATE_ENCAPSULATION_FIGURES } from "./EncapsulationData";
 import { EXPERIMENT_BLOCKS } from "./data";
 import { GENE_PARTS } from "./GeneticEngineeringData";
 import { GeneSystemGrid } from "./GeneSystemGrid";
@@ -66,15 +68,19 @@ function Figure({
   alt,
   caption,
   className = "",
+  dir = "assets/project-description",
 }: {
   src: string;
   alt: string;
   caption?: ReactNode;
   className?: string;
+  /** Folder under /public the image lives in — the pathway diagram is
+   * shared with Project Description, every other one is this page's own. */
+  dir?: string;
 }) {
   return (
     <figure className={`vsi-figure vsi-figure--full pd-figure ${className}`.trim()}>
-      <img src={asset(`assets/project-description/${src}`)} alt={alt} />
+      <img src={asset(`${dir}/${src}`)} alt={alt} />
       {caption && <figcaption className="vsi-figure__caption">{caption}</figcaption>}
     </figure>
   );
@@ -156,6 +162,23 @@ export function Experiments() {
                 narrow and centered like ProjectDescription's prose. */}
             {activeBlock.intro && <div className="lab-prose">{paragraphs(activeBlock.intro, "lab-block__intro")}</div>}
 
+            {/* Alginate encapsulation's two intro diagrams: the coaxial
+                setup the whole block is built around, and the twelve-stage
+                workflow its experiments walk through. */}
+            {activeBlock.id === "encapsulation" && (
+              <div className="lab-prose">
+                {ALGINATE_ENCAPSULATION_FIGURES.map((figure) => (
+                  <Figure
+                    key={figure.src}
+                    dir="assets/experiments/encapsulation"
+                    src={figure.src}
+                    alt={figure.alt}
+                    caption={figure.caption}
+                  />
+                ))}
+              </div>
+            )}
+
             {/* Genetic engineering's conceptual "five parts of the system"
                 sits between the block intro and its two workflow
                 sub-blocks — a bespoke visual, not a folder deck, since none
@@ -190,6 +213,12 @@ export function Experiments() {
             {activeBlock.id === "enzymatic-immobilisation" && (
               <>
                 <div className="lab-prose">
+                  <Figure
+                    dir="assets/experiments/enzymatic-immobilisation"
+                    src="enzymatic-workflow.webp"
+                    alt="Six-step workflow: mining, cloning, expression, purification, characterisation and immobilisation"
+                    caption="The six steps this block runs through, from mining the databases for candidate enzymes to fixing the purified panel onto the sphere."
+                  />
                   <figure className="record-figure" style={{ margin: "8px 0 24px" }}>
                     <div className="record-figure__placeholder" aria-hidden="true">
                       [ figure placeholder ]
@@ -235,13 +264,6 @@ export function Experiments() {
                   <div className="lab-prose">
                     <h2 className="lab-subblock__heading">{subBlock.heading}</h2>
                     {paragraphs(subBlock.intro, "lab-subblock__intro")}
-                    {!!subBlock.references?.length && (
-                      <ul className="lab-subblock__references">
-                        {subBlock.references.map((reference, index) => (
-                          <ReferenceItem scope={subBlock.id} text={reference} key={index} />
-                        ))}
-                      </ul>
-                    )}
                   </div>
                   {subBlock.experiments && (
                     <DeckPalette palette={activeBlock.palette}>
@@ -254,28 +276,22 @@ export function Experiments() {
                   {subBlock.outro && (
                     <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
                   )}
+                  {/* A sub-block that keeps its own numbered list (rather
+                      than sharing the block's) folds it away here, at the
+                      end of its own section. */}
+                  {!!subBlock.references?.length && (
+                    <BlockReferences scope={subBlock.id} items={subBlock.references} />
+                  )}
                 </section>
               ))
             ) : null}
 
             {/* A single reference list shared by the whole block (see
-                ExperimentBlockData.references) — e.g. Enzymatic
-                immobilisation, whose source cites across both sub-blocks
-                from one numbered list rather than keeping a separate list
-                per sub-block. Rendered once, after every sub-block, as its
-                own section so it gets the same section-break spacing as
-                every sub-block transition (see .lab-subblock + .lab-subblock). */}
+                ExperimentBlockData.references), folded away at the foot
+                of the page; an inline "[n]" anywhere above opens it on
+                the way down (see BlockReferences). */}
             {!!activeBlock.references?.length && (
-              <section className="lab-subblock">
-                <div className="lab-prose">
-                  <h2 className="lab-subblock__heading lab-block__references-heading">References</h2>
-                  <ul className="lab-block__references">
-                    {activeBlock.references.map((reference, index) => (
-                      <ReferenceItem scope={activeBlock.id} text={reference} key={index} />
-                    ))}
-                  </ul>
-                </div>
-              </section>
+              <BlockReferences scope={activeBlock.id} items={activeBlock.references} />
             )}
 
             {!activeBlock.subBlocks && (

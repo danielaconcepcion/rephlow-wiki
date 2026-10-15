@@ -1,0 +1,444 @@
+/* ==========================================================================
+   Education & Communication — a blackboard as the chronological index,
+   and the activities themselves as a continuous chronicle below it.
+
+   The board is deliberately an editorial composition rather than a grid of
+   cards: objects at different heights, a chalk line that wanders between
+   them, formulas and half-erased sketches in the margins. Everything on it
+   is drawn in container-query units (see Blackboard.tsx), so the whole
+   composition scales with the board instead of with the viewport.
+   ========================================================================== */
+
+.ec-page {
+  font-family: var(--font-body);
+  color: var(--ink);
+}
+
+.ec-col {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+  width: 100%;
+  min-width: 0;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 4vh 0 12vh;
+}
+
+.ec-intro {
+  max-width: 820px;
+  margin: 0 auto;
+  font-size: 1.02rem;
+  line-height: 1.72;
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+}
+
+.ec-intro strong {
+  font-weight: 650;
+}
+
+/* --- The board ---------------------------------------------------------- */
+
+.ec-board-frame {
+  padding: clamp(10px, 1.4vw, 20px);
+  border-radius: 18px;
+  background: linear-gradient(145deg, #8b6b45, #6d5133 45%, #7d5e3c);
+  box-shadow:
+    0 24px 48px rgba(32, 22, 10, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.ec-board {
+  container-type: inline-size;
+  position: relative;
+  aspect-ratio: 2 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 24% 30%, rgba(255, 255, 255, 0.045), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 78% 70%, rgba(255, 255, 255, 0.035), transparent 70%),
+    linear-gradient(160deg, #2f4038, #223029 55%, #2b3a33);
+  box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.45);
+}
+
+/* The slate's own tooth: a fine noise so the dark area is never flat. */
+.ec-board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.05) 0.5px, transparent 1px),
+    radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.04) 0.5px, transparent 1px),
+    radial-gradient(circle at 45% 85%, rgba(255, 255, 255, 0.035) 0.5px, transparent 1px);
+  background-size: 7px 7px, 11px 11px, 13px 13px;
+}
+
+/* --- Chalk marginalia --------------------------------------------------- */
+
+.ec-board__marks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: rgba(238, 240, 230, 0.56);
+}
+
+.ec-chalk {
+  position: absolute;
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  text-shadow: 0 0 1.5px rgba(255, 255, 255, 0.35);
+  white-space: nowrap;
+}
+
+.ec-chalk--title {
+  left: 3%;
+  top: 2.5%;
+  transform: none;
+  font-size: clamp(0.95rem, 2.6cqw, 2rem);
+  font-weight: 700;
+  color: rgba(244, 246, 238, 0.82);
+  border-bottom: 1px solid rgba(244, 246, 238, 0.3);
+  padding-bottom: 0.3em;
+}
+
+.ec-chalk--formula {
+  font-size: clamp(0.6rem, 1.5cqw, 1.05rem);
+  opacity: 0.75;
+}
+
+.ec-chalk--small {
+  font-size: clamp(0.55rem, 1.25cqw, 0.9rem);
+  opacity: 0.6;
+}
+
+.ec-chalk-sketch {
+  position: absolute;
+  height: auto;
+  fill: none;
+  stroke: rgba(238, 240, 230, 0.45);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* A sponge pass that never quite cleared: lighter, soft-edged, and always
+   behind everything else on the board. */
+.ec-erase {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(236, 240, 228, 0.055);
+  filter: blur(10px);
+}
+
+/* --- The chalk timeline ------------------------------------------------- */
+
+.ec-board__line {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.ec-board__line-path,
+.ec-board__tick {
+  fill: none;
+  stroke: rgba(240, 242, 232, 0.62);
+  stroke-width: 1.6px;
+  stroke-linecap: round;
+  stroke-dasharray: 9 4;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.3));
+}
+
+.ec-board__tick {
+  stroke-dasharray: none;
+  stroke-width: 1.2px;
+  opacity: 0.75;
+}
+
+.ec-board__node {
+  fill: rgba(244, 246, 238, 0.7);
+  vector-effect: non-scaling-stroke;
+}
+
+/* --- Objects on the board ----------------------------------------------- */
+
+.ec-object {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 0.2s ease,
+    filter 0.2s ease;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.45));
+}
+
+.ec-object:hover,
+.ec-object:focus-visible {
+  transform: translateY(-6px) rotate(-0.4deg);
+  filter: drop-shadow(0 18px 22px rgba(0, 0, 0, 0.5));
+  z-index: 3;
+}
+
+.ec-object:focus-visible {
+  outline: none;
+}
+
+.ec-object:focus-visible .ec-object__name {
+  outline: 2px solid rgba(244, 246, 238, 0.8);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Each object is its own container, so the art inside scales with the
+   object rather than with the board. */
+.ec-art {
+  container-type: inline-size;
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.ec-art > span {
+  box-sizing: border-box;
+}
+
+.ec-object__photo,
+.ec-object__blank {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 0.6cqw;
+  background: #e7e1d2;
+}
+
+.ec-object__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ec-object__blank {
+  display: grid;
+  place-items: center;
+  color: rgba(42, 60, 92, 0.28);
+  min-height: 24cqw;
+}
+
+.ec-object__blank svg {
+  width: 46%;
+  height: auto;
+}
+
+/* The chalk caption under each object. */
+.ec-object__label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  text-align: center;
+  font-family: var(--font-display);
+  color: rgba(244, 246, 238, 0.9);
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.ec-object__index {
+  display: grid;
+  place-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  margin-bottom: 2px;
+  border: 1px solid rgba(244, 246, 238, 0.55);
+  border-radius: 50%;
+  font-size: clamp(0.56rem, 1.15cqw, 0.82rem);
+  font-weight: 700;
+}
+
+.ec-object__name {
+  font-size: clamp(0.58rem, 1.18cqw, 0.88rem);
+  font-weight: 700;
+  line-height: 1.12;
+  max-width: 14ch;
+}
+
+.ec-object__date {
+  font-family: var(--font-body);
+  font-size: clamp(0.5rem, 0.95cqw, 0.72rem);
+  opacity: 0.72;
+}
+
+/* --- Narrow screens: the board becomes a chalk list --------------------- */
+
+.ec-board--list {
+  aspect-ratio: auto;
+  padding: 22px 16px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ec-board--list .ec-list-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: rgba(244, 246, 238, 0.86);
+  border-bottom: 1px solid rgba(244, 246, 238, 0.28);
+  padding-bottom: 8px;
+  margin: 0 0 4px;
+}
+
+.ec-list-item {
+  display: grid;
+  grid-template-columns: 26px 1fr;
+  gap: 12px;
+  align-items: baseline;
+  padding: 9px 4px;
+  border-left: 1px dashed rgba(240, 242, 232, 0.35);
+  margin-left: 12px;
+  padding-left: 18px;
+  text-decoration: none;
+  color: rgba(244, 246, 238, 0.9);
+}
+
+.ec-list-item__index {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid rgba(244, 246, 238, 0.5);
+  border-radius: 50%;
+  font: 700 0.76rem/1 var(--font-display);
+}
+
+.ec-list-item__name {
+  font: 700 0.98rem/1.25 var(--font-display);
+}
+
+.ec-list-item__date {
+  display: block;
+  font-size: 0.78rem;
+  opacity: 0.7;
+}
+
+/* --- The chronicle ------------------------------------------------------ */
+
+.ec-chronicle {
+  display: flex;
+  flex-direction: column;
+  gap: 76px;
+}
+
+.ec-entry {
+  scroll-margin-top: var(--section-nav-offset);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
+
+.ec-entry__head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line, rgba(27, 35, 64, 0.12));
+}
+
+.ec-entry__index {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1;
+  color: var(--ec-accent, #6e5a96);
+}
+
+.ec-entry__title {
+  margin: 0;
+  font-size: clamp(1.25rem, 2.3vw, 1.85rem);
+  line-height: 1.16;
+  flex: 1 1 320px;
+}
+
+.ec-entry__meta {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  text-align: right;
+}
+
+.ec-entry__meta b {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.ec-entry__body p {
+  margin: 0 0 14px;
+  line-height: 1.72;
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+}
+
+.ec-entry__body p:last-child {
+  margin-bottom: 0;
+}
+
+.ec-entry__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  font-weight: 600;
+  color: var(--ec-accent, #6e5a96);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+}
+
+/* Photographs: a band of real photos, the only place on the page where
+   the material is photographic rather than drawn. */
+/* A row of photographs of mixed shape: each keeps its own proportions and
+   a shared height, the way a strip of prints would, rather than being
+   cropped square into a grid. */
+.ec-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.ec-photos figure {
+  margin: 0;
+  height: clamp(170px, 20vw, 260px);
+  width: auto;
+  flex: none;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--paper-soft);
+  box-shadow: 0 6px 14px rgba(40, 15, 5, 0.14);
+}
+
+.ec-photos img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 900px) {
+  .ec-entry {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ec-entry__head {
+    align-items: flex-end;
+  }
+}

@@ -1,5 +1,172 @@
-// This page currently has no content beyond its hero (rendered by Header
-// from pages.ts). Add the Education and Communication content here.
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { PageSectionNav } from "../components/PageSectionNav";
+import type { PageSection } from "../components/PageSectionNav";
+import { AdjacentPageNav } from "../components/AdjacentPageNav";
+import { Rich } from "../components/LabFolders/RichText";
+import { Blackboard } from "./EducationCommunication/Blackboard";
+import {
+  ACTIVITIES,
+  EDUCATION_INTRO,
+} from "./EducationCommunication/educationData";
+import "./EducationCommunication/EducationCommunication.css";
+
+/* --------------------------------------------------------------------------
+   Education and Communication — nine activities, in the order they
+   happened, indexed by a blackboard and then told as one continuous
+   chronicle underneath it.
+
+   The board carries the same materiality as the Collaboration tables, in
+   the language of a lecture theatre rather than a desk: objects taped to a
+   slate, a chalk line running from November 2025 to July 2026, formulas
+   and half-erased sketches in the margins. Clicking an object scrolls to
+   that activity's entry. Below the breakpoint the slate stays, but as a
+   chalk list — nine objects at 320 px wide would be nine illegible stamps.
+   -------------------------------------------------------------------------- */
+
+const SECTIONS: PageSection[] = ACTIVITIES.map((activity, index) => ({
+  id: activity.id,
+  label: `${index + 1}. ${activity.chalk}`,
+}));
+
+/** Below this width the board stops being a composition and becomes a list. */
+const WIDE_MIN = 720;
+
+/** The page's own accent — the purple of the Engagement section, so the
+ * chronicle's numbers and links read as part of the same family as
+ * Collaboration and Human Practices. */
+const ACCENT = "#6E5A96";
+
 export function EducationCommunication() {
-  return null;
+  const colRef = useRef<HTMLDivElement>(null);
+  const [wide, setWide] = useState(true);
+
+  useEffect(() => {
+    const element = colRef.current;
+    if (!element) return;
+    const measure = () =>
+      setWide(element.getBoundingClientRect().width >= WIDE_MIN);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+
+  const select = useCallback((id: string) => {
+    const target = document.getElementById(id);
+    if (!target) return;
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Keep the URL in step, without the jump a bare hash change causes.
+    window.history.replaceState(null, "", `#${id}`);
+  }, []);
+
+  return (
+    <>
+      <div
+        className="page-with-section-nav ec-page"
+        style={{ "--ec-accent": ACCENT } as React.CSSProperties}
+      >
+        <PageSectionNav sections={SECTIONS} ariaLabel="Jump to an activity" />
+
+        <div ref={colRef} className="ec-col">
+          <p className="ec-intro">
+            <Rich text={EDUCATION_INTRO} />
+          </p>
+
+          {wide ? (
+            <Blackboard accent={ACCENT} onSelect={select} />
+          ) : (
+            <div className="ec-board-frame">
+              <nav
+                className="ec-board ec-board--list"
+                aria-label="Activities, in order"
+              >
+                <p className="ec-list-title">Education &amp; Communication</p>
+                {ACTIVITIES.map((activity, index) => (
+                  <a
+                    key={activity.id}
+                    className="ec-list-item"
+                    href={`#${activity.id}`}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      select(activity.id);
+                    }}
+                  >
+                    <span className="ec-list-item__index">{index + 1}</span>
+                    <span>
+                      <span className="ec-list-item__name">
+                        {activity.chalk}
+                      </span>
+                      <span className="ec-list-item__date">
+                        {activity.date}
+                      </span>
+                    </span>
+                  </a>
+                ))}
+              </nav>
+            </div>
+          )}
+
+          <div className="ec-chronicle">
+            {ACTIVITIES.map((activity, index) => (
+              <article className="ec-entry" id={activity.id} key={activity.id}>
+                <header className="ec-entry__head">
+                  <span className="ec-entry__index">{index + 1}</span>
+                  <h2 className="ec-entry__title">{activity.title}</h2>
+                  <p className="ec-entry__meta">
+                    <b>{activity.date}</b>
+                    {activity.place}
+                  </p>
+                </header>
+
+                <div className="ec-entry__body">
+                  {activity.body.map((paragraph, i) => (
+                    <p key={i}>
+                      <Rich text={paragraph} />
+                    </p>
+                  ))}
+                  {activity.link && (
+                    <a
+                      className="ec-entry__link"
+                      href={activity.link.href}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {activity.link.label} ↗
+                    </a>
+                  )}
+                </div>
+
+                {activity.photos.length > 0 && (
+                  <div className="ec-photos">
+                    {activity.photos.map((photo) => (
+                      <figure
+                        key={photo.src}
+                        style={{ aspectRatio: photo.ratio }}
+                      >
+                        <img src={photo.src} alt={photo.alt} loading="lazy" />
+                      </figure>
+                    ))}
+                  </div>
+                )}
+              </article>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <AdjacentPageNav
+        prev={{
+          to: "/collaboration-partnership",
+          label: "Collaboration and Partnership",
+          accent: "#6E5A96",
+        }}
+        next={{
+          to: "/entrepreneurship",
+          label: "Entrepreneurship",
+          accent: "#C9572F",
+        }}
+      />
+    </>
+  );
 }

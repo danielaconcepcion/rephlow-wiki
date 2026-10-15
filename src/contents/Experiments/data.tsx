@@ -1,5 +1,9 @@
 import type { ExperimentBlockData } from "../../components/LabFolders/types";
-import { ALGINATE_ENCAPSULATION_INTRO, ALGINATE_ENCAPSULATION_SUBBLOCKS } from "./EncapsulationData";
+import {
+  ALGINATE_ENCAPSULATION_INTRO,
+  ALGINATE_ENCAPSULATION_REFERENCES,
+  ALGINATE_ENCAPSULATION_SUBBLOCKS,
+} from "./EncapsulationData";
 import {
   GENETIC_ENGINEERING_INTRO,
   GENETIC_ENGINEERING_REFERENCES,
@@ -29,6 +33,7 @@ export const EXPERIMENT_BLOCKS: ExperimentBlockData[] = [
     protocolsPdfSrc: "assets/protocols/encapsulation-protocols.pdf",
     intro: ALGINATE_ENCAPSULATION_INTRO,
     subBlocks: ALGINATE_ENCAPSULATION_SUBBLOCKS,
+    references: ALGINATE_ENCAPSULATION_REFERENCES,
   },
   {
     id: "enzymatic-immobilisation",

@@ -310,7 +310,8 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           <>
             The screen was expected to yield a small, redundant panel with at least two representatives per activity.
-            It reduced 3,741 candidates to <strong>7</strong> (see Results).
+            It reduced 3,741 candidates to <strong>7</strong>: EstE1 (PLA), Plc and CerA (PLC), AppA and PhyA
+            (phytase), and M2-32 and AphA (NAP).
           </>,
         ],
       },
@@ -420,13 +421,13 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             co-expressed, the ribosome-associated Trigger factor, which stabilises the emerging chain and prevents
             premature aggregation, and the GroES/GroEL complex, which encapsulates partly folded protein and lets it
             fold in an ATP-dependent cage away from the crowded cytoplasm. Finally, for the disulphide-dependent
-            enzymes flagged in the structural-design experiment, expression was moved to strains with an oxidising
+            enzymes flagged in the in-silico structural design, expression was moved to strains with an oxidising
             cytoplasm and rare-codon tRNAs (<strong>Origami 2, Rosetta-gami 2 and SHuffle T7</strong>, the last also
             co-expressing a disulphide isomerase); a codon analysis motivated this, since rare codons throttle both
             yield and folding. The cytotoxic phospholipases C were not forced through this pipeline but earmarked for
             cell-free IVTT, which does not depend on host viability.
           </>,
-          "The expected outcome was soluble enzyme for the tractable targets.",
+          "The expected outcome was soluble enzyme for the tractable targets. **GroES/GroEL solubilised M2-32, Rosetta-gami 2 solubilised PhyA, and AphA was obtained in BL21 (DE3)**.",
         ],
       },
       {
@@ -462,7 +463,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "The two membrane cut-offs are chosen deliberately so that small solutes pass during dialysis while the enzymes are retained during concentration. The expected outcome was homogeneous preparations.",
+              "The two membrane cut-offs are chosen deliberately so that small solutes pass during dialysis while the enzymes are retained during concentration. The expected outcome was homogeneous preparations; **PhyA and M2-32 reached electrophoretic homogeneity and AphA was recovered at lower yield but sufficient for characterisation**.",
             ],
           },
         ],
@@ -500,7 +501,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             paragraphs: [
               "The end-point design (sampling into NaOH) is necessary precisely because pNP cannot be followed continuously at acidic pH, a constraint that later dictated a different assay for the immobilisation work. An enzyme-free well corrected for spontaneous substrate hydrolysis. Protein was quantified by Bradford against a BSA standard, and specific activity (U/mg, one unit releasing 1 µmol pNP per minute) was taken from the initial linear rate; normalising by protein mass is essential, since two enzymes releasing the same amount of product can differ greatly in efficiency once their loading is accounted for.",
-              "The expected outcome was a definitive order of intrinsic efficiency in acid medium, identifying the key components of the panel (see Results).",
+              "The expected outcome was a definitive order of intrinsic efficiency in acid medium, **AphA (0.222 U/mg) > M2-32 (0.161 U/mg) > PhyA (0.141 U/mg)**, identifying AphA and PhyA as the key components.",
             ],
           },
         ],

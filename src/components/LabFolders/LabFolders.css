@@ -1414,3 +1414,138 @@
   min-height: 140px;
   padding: 48px 16px;
 }
+
+/* A block's reference list, folded away at the foot of its page (see
+   BlockReferences.tsx). Styled as a quiet rule-and-summary rather than a
+   card, so it reads as the end of the page rather than as one more
+   section competing with the experiments above it. */
+.lab-refs {
+  border-top: 1px solid var(--lab-line);
+  padding-top: 18px;
+}
+.lab-refs__summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--ink);
+}
+.lab-refs__summary::-webkit-details-marker {
+  display: none;
+}
+.lab-refs__summary::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-right: 1.6px solid currentColor;
+  border-bottom: 1.6px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.18s ease;
+}
+.lab-refs[open] .lab-refs__summary::before {
+  transform: rotate(45deg);
+}
+.lab-refs__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+}
+.lab-refs__count {
+  font: 600 0.72rem/1 var(--font-body);
+  color: var(--ink-soft);
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--paper-soft);
+}
+.lab-refs__summary:focus-visible {
+  outline: 2px solid var(--folder-accent, var(--ink));
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.lab-refs > .lab-prose {
+  margin-top: 20px;
+}
+
+/* --- An experiment's own parts ------------------------------------------
+   A stage with several named parts ("Design strategy", "Experimental
+   design", "Second trial") breaks on the same rule-and-heading the
+   Results subsections use, so both pages read as the same document. */
+.experiment-card__block--section {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--lab-line);
+}
+.experiment-card__block--section:first-of-type {
+  margin-top: 0;
+}
+.experiment-section__head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.experiment-section__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* The closing note of a stage. The source shouts it (OUTCOME, LEARN); a
+   quiet panel with a plainly written label says the same thing. */
+.experiment-callout {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--paper-soft);
+}
+.experiment-callout--not-done {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--lab-line);
+}
+.experiment-callout__label {
+  display: block;
+  margin-bottom: 5px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.experiment-callout__text {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* Which enzyme a stage belongs to, as a chip beside its title rather than
+   as a suffix glued onto the title string. */
+.experiment-card__titlerow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.experiment-card__enzymes {
+  display: inline-flex;
+  gap: 6px;
+}
+.experiment-chip {
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font: 700 0.68rem/1.3 var(--font-body);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.experiment-chip--dhak {
+  color: #2e7d86;
+  background: rgba(46, 125, 134, 0.08);
+}
+.experiment-chip--ppk2 {
+  color: #b8790a;
+  background: rgba(184, 121, 10, 0.1);
+}
