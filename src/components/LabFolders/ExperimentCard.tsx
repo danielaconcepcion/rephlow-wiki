@@ -211,9 +211,36 @@ function Callouts({ callouts }: { callouts?: BodyCallout[] }) {
   );
 }
 
-function SectionHeading({ title }: { title?: string }) {
+function EnzymeChips({ enzymes }: { enzymes?: ("DHAK" | "PPK2")[] }) {
+  if (!enzymes?.length) return null;
+  return (
+    <span className="experiment-card__enzymes">
+      {enzymes.map((enzyme) => (
+        <span
+          className={`experiment-chip experiment-chip--${enzyme.toLowerCase()}`}
+          key={enzyme}
+        >
+          {enzyme}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function SectionHeading({
+  title,
+  enzymes,
+}: {
+  title?: string;
+  enzymes?: ("DHAK" | "PPK2")[];
+}) {
   if (!title) return null;
-  return <h4 className="experiment-section__heading">{title}</h4>;
+  return (
+    <div className="experiment-section__head">
+      <h4 className="experiment-section__heading">{title}</h4>
+      <EnzymeChips enzymes={enzymes} />
+    </div>
+  );
 }
 
 function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
@@ -225,7 +252,7 @@ function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
   if (!block.pairedResource) {
     return (
       <div className={blockClass}>
-        <SectionHeading title={block.title} />
+        <SectionHeading title={block.title} enzymes={block.enzymes} />
         <DescriptionParagraphs paragraphs={block.paragraphs ?? []} />
         <Callouts callouts={block.callouts} />
       </div>
@@ -240,7 +267,7 @@ function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
   if (!hasParagraphs || isWideResource(block.pairedResource)) {
     return (
       <div className={blockClass}>
-        <SectionHeading title={block.title} />
+        <SectionHeading title={block.title} enzymes={block.enzymes} />
         {hasParagraphs && (
           <DescriptionParagraphs paragraphs={block.paragraphs!} />
         )}
@@ -253,7 +280,7 @@ function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
   return (
     <div className={`experiment-card__pair ${blockClass}`}>
       <div className="experiment-card__text">
-        <SectionHeading title={block.title} />
+        <SectionHeading title={block.title} enzymes={block.enzymes} />
         <DescriptionParagraphs paragraphs={block.paragraphs!} />
         <Callouts callouts={block.callouts} />
       </div>
@@ -311,18 +338,7 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
           <h3 className="experiment-card__title">
             <Rich text={data.title} />
           </h3>
-          {!!data.enzymes?.length && (
-            <span className="experiment-card__enzymes">
-              {data.enzymes.map((enzyme) => (
-                <span
-                  className={`experiment-chip experiment-chip--${enzyme.toLowerCase()}`}
-                  key={enzyme}
-                >
-                  {enzyme}
-                </span>
-              ))}
-            </span>
-          )}
+          <EnzymeChips enzymes={data.enzymes} />
         </div>
         {!hasBody && !canPairTable && (
           <DescriptionParagraphs paragraphs={descriptionParagraphs} />

@@ -150,6 +150,10 @@ export interface ExperimentBodyBlock {
    * Results subsections use, so a long stage reads as a sequence of named
    * parts instead of one wall of prose. */
   title?: string;
+  /** Which enzyme this part of the stage is about, when a shared stage
+   * splits ("DHAK constructs", "PPK2 construct") — shown as a chip beside
+   * the block's own heading, the same way the card title carries one. */
+  enzymes?: ("DHAK" | "PPK2")[];
   /** Closing OUTCOME / LEARN notes for this block. */
   callouts?: BodyCallout[];
   /** Plain strings, or short JSX using <strong>/<em> for inline emphasis
