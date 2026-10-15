@@ -169,6 +169,9 @@ const Pages: Page[] = [
     path: "/education-communication",
     component: EducationCommunication,
     docTitle: "Education and Communication — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 31,
   },
   {
     name: "Entrepreneurship",
