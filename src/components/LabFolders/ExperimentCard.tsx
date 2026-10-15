@@ -7,11 +7,23 @@ import type {
   RecordTable,
 } from "./types";
 import { asset } from "../../utils";
+import { Caption } from "./Caption";
 import { Rich } from "./RichText";
 
-function DataTable({ table }: { table: RecordTable & { caption?: string } }) {
+function DataTable({
+  table,
+  numberKey,
+}: {
+  table: RecordTable & { caption?: string };
+  /** What the number was assigned to (the paired resource, or the table
+   * itself for a plain `tables` entry) — see numbering.ts. */
+  numberKey: object;
+}) {
   return (
     <div className="record-table-wrap">
+      <p className="record-table-caption">
+        <Caption kind="Table" item={numberKey} text={table.caption} />
+      </p>
       <table className="record-table">
         <thead>
           <tr>
@@ -38,11 +50,6 @@ function DataTable({ table }: { table: RecordTable & { caption?: string } }) {
           ))}
         </tbody>
       </table>
-      {table.caption && (
-        <p className="record-table-caption">
-          <Rich text={table.caption} />
-        </p>
-      )}
     </div>
   );
 }
@@ -66,7 +73,7 @@ function DescriptionParagraphs({ paragraphs }: { paragraphs: ReactNode[] }) {
  * source hasn't supplied yet. */
 function ResourcePane({ resource }: { resource: PairedResource }) {
   if (resource.kind === "table") {
-    return <DataTable table={resource.table} />;
+    return <DataTable table={resource.table} numberKey={resource} />;
   }
   if (resource.kind === "image") {
     return (
@@ -77,7 +84,7 @@ function ResourcePane({ resource }: { resource: PairedResource }) {
           alt={resource.alt}
         />
         <figcaption>
-          <Rich text={resource.caption} />
+          <Caption kind="Figure" item={resource} text={resource.caption} />
         </figcaption>
       </figure>
     );
@@ -98,7 +105,7 @@ function ResourcePane({ resource }: { resource: PairedResource }) {
           ))}
         </div>
         <figcaption className="record-figure-group__caption">
-          <Rich text={resource.caption} />
+          <Caption kind="Figure" item={resource} text={resource.caption} />
         </figcaption>
       </figure>
     );
@@ -109,21 +116,31 @@ function ResourcePane({ resource }: { resource: PairedResource }) {
         {resource.node}
         {resource.caption && (
           <figcaption>
-            <Rich text={resource.caption} />
+            <Caption kind="Figure" item={resource} text={resource.caption} />
           </figcaption>
         )}
       </figure>
     );
   }
+  if (resource.kind === "table-placeholder") {
+    return (
+      <div className="record-table-wrap">
+        <p className="record-table-caption">
+          <Caption kind="Table" item={resource} text={resource.caption} />
+        </p>
+        <div className="record-figure__placeholder" aria-hidden="true">
+          [ table placeholder ]
+        </div>
+      </div>
+    );
+  }
   return (
     <figure className="record-figure">
       <div className="record-figure__placeholder" aria-hidden="true">
-        {resource.kind === "table-placeholder"
-          ? "[ table placeholder ]"
-          : "[ figure placeholder ]"}
+        [ figure placeholder ]
       </div>
       <figcaption>
-        <Rich text={resource.caption} />
+        <Caption kind="Figure" item={resource} text={resource.caption} />
       </figcaption>
     </figure>
   );
@@ -360,7 +377,7 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
             aria-label="Experimental parameters"
           >
             {data.tables!.map((table, index) => (
-              <DataTable table={table} key={index} />
+              <DataTable table={table} numberKey={table} key={index} />
             ))}
           </section>
         </div>
@@ -429,7 +446,7 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
           aria-label="Experimental parameters"
         >
           {data.tables!.map((table, index) => (
-            <DataTable table={table} key={index} />
+            <DataTable table={table} numberKey={table} key={index} />
           ))}
         </section>
       )}
@@ -440,7 +457,11 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
             [ figure placeholder ]
           </div>
           <figcaption>
-            <Rich text={data.figure.caption} />
+            <Caption
+              kind="Figure"
+              item={data.figure}
+              text={data.figure.caption}
+            />
           </figcaption>
         </figure>
       )}
