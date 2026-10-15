@@ -7,6 +7,8 @@ import { SectionTabs } from "../../components/LabFolders/SectionTabs";
 import { FolderStack } from "../../components/LabFolders/FolderStack";
 import { ExperimentCard } from "../../components/LabFolders/ExperimentCard";
 import { BlockReferences } from "../../components/LabFolders/BlockReferences";
+import { Rich } from "../../components/LabFolders/RichText";
+import { WorkflowRun } from "../../components/LabFolders/Workflow";
 import {
   NumberingContext,
   numberExperiments,
@@ -107,6 +109,11 @@ function Figure({
   );
 }
 
+/** Block, sub-block and closing prose. Each paragraph goes through Rich,
+ * the same inline-markup pass the folder cards use, so a data file can
+ * write **bold**, *italic* and [n] citations in plain strings exactly as
+ * the team's Notion pages do (a paragraph already written as JSX passes
+ * through untouched). */
 function paragraphs(
   text: ReactNode | ReactNode[] | undefined,
   className: string,
@@ -115,7 +122,7 @@ function paragraphs(
   const list = Array.isArray(text) ? text : [text];
   return list.map((paragraph, index) => (
     <p className={className} key={index}>
-      {paragraph}
+      <Rich text={paragraph} />
     </p>
   ));
 }
@@ -207,9 +214,9 @@ export function Experiments() {
                 </div>
               )}
 
-              {/* Alginate encapsulation's two intro diagrams: the coaxial
-                  setup the whole block is built around, and the twelve-stage
-                  workflow its experiments walk through. */}
+              {/* Alginate encapsulation's intro diagram: the coaxial setup
+                  the whole block is built around. The twelve stages its
+                  experiments walk through are the run below. */}
               {activeBlock.id === "encapsulation" && (
                 <div className="lab-prose">
                   {ALGINATE_ENCAPSULATION_FIGURES.map((figure) => (
@@ -222,6 +229,17 @@ export function Experiments() {
                     />
                   ))}
                 </div>
+              )}
+
+              {/* The block's own experimental run — a figure of its
+                  sequence and, at the same time, the index into it: every
+                  stage opens the experiment that ran it. Wide, like the
+                  folder decks, not capped to .lab-prose. */}
+              {activeBlock.workflow && (
+                <WorkflowRun
+                  id={`${activeBlock.id}-workflow`}
+                  {...activeBlock.workflow}
+                />
               )}
 
               {/* Genetic engineering's conceptual "five parts of the system"
@@ -263,12 +281,6 @@ export function Experiments() {
               {activeBlock.id === "enzymatic-immobilisation" && (
                 <>
                   <div className="lab-prose">
-                    <Figure
-                      dir="assets/experiments/enzymatic-immobilisation"
-                      src="enzymatic-workflow.webp"
-                      alt="Six-step workflow: mining, cloning, expression, purification, characterisation and immobilisation"
-                      caption="The six steps this block runs through, from mining the databases for candidate enzymes to fixing the purified panel onto the sphere."
-                    />
                     <figure
                       className="record-figure"
                       style={{ margin: "8px 0 24px" }}
@@ -339,6 +351,15 @@ export function Experiments() {
                         </h2>
                         {paragraphs(subBlock.intro, "lab-subblock__intro")}
                       </div>
+                      {/* A workflow that belongs to this sub-block rather
+                          than to the whole block (Genetic engineering's two
+                          nine-step routes), drawn above its own deck. */}
+                      {subBlock.workflow && (
+                        <WorkflowRun
+                          id={`${subBlock.id}-workflow`}
+                          {...subBlock.workflow}
+                        />
+                      )}
                       {subBlock.experiments && (
                         <DeckPalette palette={activeBlock.palette}>
                           <FolderStack

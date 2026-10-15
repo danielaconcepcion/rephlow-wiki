@@ -1,0 +1,241 @@
+/* ==========================================================================
+   WorkflowRun — a block's experimental sequence, drawn as a run.
+
+   Two presentations of one DOM. On a wide column the stations are drawn
+   in the canvas and the links sit over them, absolutely placed from the
+   coordinates the component computes. Below the container's breakpoint
+   the canvas is dropped entirely and the same links become a vertical
+   run with a spine, each carrying its own small copy of its drawing.
+   Nothing is duplicated in the markup, and the order of the list is the
+   order of the experiments either way.
+
+   Colour comes from the block: --folder-accent is the one input, and
+   every wash, tint and rule below is derived from it, so the four runs
+   are one family in four colours rather than four separate figures.
+   ========================================================================== */
+
+.wf {
+  --wf-accent: var(--folder-accent, var(--ink));
+  --wf-line: color-mix(in srgb, var(--ink) 72%, transparent);
+  --wf-tint: color-mix(in srgb, var(--wf-accent) 13%, transparent);
+  --wf-wash: color-mix(in srgb, var(--wf-accent) 5%, var(--paper-soft));
+  --wf-paper: var(--paper);
+
+  margin: 26px 0 30px;
+}
+
+.wf-run {
+  container-type: inline-size;
+  position: relative;
+  width: 100%;
+}
+
+.wf-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.wf-ghost {
+  color: var(--wf-accent);
+  opacity: 0.16;
+}
+
+/* --- The rail ----------------------------------------------------------- */
+
+.wf-rail__line {
+  fill: none;
+  stroke: var(--wf-accent);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  opacity: 0.55;
+}
+
+/* The one segment that closes a cycle rather than continuing the line:
+   dashed, so a loop never reads as another step. */
+.wf-rail__line--loop {
+  stroke-dasharray: 10 8;
+  opacity: 0.4;
+}
+
+.wf-rail__head {
+  fill: none;
+  stroke: var(--wf-accent);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+
+/* --- The stations ------------------------------------------------------- */
+
+/* A disc of paper under each drawing: it keeps the rail from running
+   through the art, and reads as the dish or well the step happens in. */
+.wf-plate {
+  fill: var(--wf-paper);
+  stroke: color-mix(in srgb, var(--wf-accent) 32%, transparent);
+  stroke-width: 1.6;
+}
+
+/* --- The stages (the links) --------------------------------------------- */
+
+.wf-stages {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wf-stage {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  padding: 0 1.2cqw;
+  box-sizing: border-box;
+}
+
+.wf-stage__link {
+  display: block;
+  padding: 0.6cqw 0.4cqw;
+  border-radius: 10px;
+  color: var(--ink);
+  text-decoration: none;
+  text-align: center;
+  transition:
+    background 0.18s ease,
+    transform 0.18s ease;
+}
+
+.wf-stage__link:hover,
+.wf-stage__link:focus-visible {
+  background: color-mix(in srgb, var(--wf-accent) 10%, transparent);
+  transform: translateY(-2px);
+}
+
+.wf-stage__link:focus-visible {
+  outline: 2px solid var(--wf-accent);
+  outline-offset: 2px;
+}
+
+/* The drawing is already in the canvas on a wide screen. */
+.wf-stage__glyph {
+  display: none;
+}
+
+.wf-stage__name {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(0.72rem, 1.45cqw, 1.02rem);
+  line-height: 1.22;
+  text-wrap: balance;
+}
+
+/* The step number set into the name's own line, not floated above it. */
+.wf-stage__n {
+  display: inline-block;
+  margin-right: 0.45em;
+  padding: 0.05em 0.5em;
+  border-radius: 999px;
+  background: var(--wf-accent);
+  color: #fff;
+  font-size: 0.86em;
+  font-variant-numeric: tabular-nums;
+  vertical-align: 0.04em;
+}
+
+.wf-stage__note {
+  display: block;
+  margin-top: 0.35em;
+  color: var(--ink-soft);
+  font-size: clamp(0.64rem, 1.12cqw, 0.84rem);
+  line-height: 1.35;
+  text-wrap: pretty;
+}
+
+.wf__caption {
+  margin: 14px auto 0;
+  max-width: 760px;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  text-align: center;
+}
+
+/* --- Narrow: the run turns vertical ------------------------------------- */
+
+@container (max-width: 660px) {
+  .wf-canvas {
+    display: none;
+  }
+
+  .wf-stages {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 6px 0 6px 10px;
+  }
+
+  /* The spine: one continuous line down the drawings, the vertical form
+     of the rail above. */
+  .wf-stages::before {
+    content: "";
+    position: absolute;
+    left: 36px;
+    top: 34px;
+    bottom: 34px;
+    width: 3px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--wf-accent) 45%, transparent);
+  }
+
+  .wf-stage {
+    position: static;
+    width: auto;
+    padding: 0;
+  }
+
+  .wf-stage__link {
+    display: grid;
+    grid-template-columns: 52px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    padding: 8px 10px;
+    text-align: left;
+  }
+
+  .wf-stage__link:hover,
+  .wf-stage__link:focus-visible {
+    transform: none;
+  }
+
+  .wf-stage__glyph {
+    display: block;
+    width: 52px;
+    height: 52px;
+    padding: 6px;
+    border-radius: 50%;
+    background: var(--wf-paper);
+    box-shadow: 0 0 0 1.6px
+      color-mix(in srgb, var(--wf-accent) 32%, transparent);
+    box-sizing: border-box;
+  }
+
+  .wf-stage__name {
+    font-size: 1rem;
+  }
+
+  .wf-stage__note {
+    font-size: 0.82rem;
+  }
+
+  .wf__caption {
+    text-align: left;
+  }
+}
+
+.wf-rail__head--loop {
+  opacity: 0.5;
+}

@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import type { ExperimentSubBlock } from "../../components/LabFolders/types";
-import { asset } from "../../utils";
 
 /**
  * Real content for the "Revalorisation" Experiments block — transcribed
@@ -183,19 +182,6 @@ export const REVALORISATION_INTRO: ReactNode[] = [
     polyphosphate, the step that makes the process viable for integration into
     the rePhlow system.
   </>,
-  // Same look and width as Genetic engineering's own intro figure (the
-  // vsi-figure/pd-figure/lab-figure--pathway combination — see
-  // Experiments.tsx's local Figure component). A <span> rather than a
-  // <figure>, since each intro node is rendered inside a <p>.
-  <span
-    className="vsi-figure vsi-figure--full pd-figure lab-figure--pathway"
-    style={{ display: "block" }}
-  >
-    <img
-      src={asset(`${IMG_DIR}/revalorisation-workflow.webp`)}
-      alt="Six-stage workflow of the conversion module: computational stability engineering, enzyme expression, enzyme purification, enzyme activity assays, multi-enzyme system assembly and testing, and SpyTag–SpyCatcher channelling"
-    />
-  </span>,
 ];
 
 export const REVALORISATION_REFERENCES: string[] = [

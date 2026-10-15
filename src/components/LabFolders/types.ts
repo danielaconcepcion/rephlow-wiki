@@ -1,5 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 
+import type { WorkflowSpec } from "./Workflow";
+
 /**
  * Reusable "layered folder" content system shared by the Experiments and
  * Results pages (src/contents/Experiments, src/contents/Results). This file
@@ -228,6 +230,12 @@ export interface ExperimentSubBlock {
    * link to, the same way an experiment's own `references` does for
    * citations inside its write-up. */
   references?: string[];
+  /** This sub-block's own experimental sequence, drawn as a run and
+   * rendered between the intro and the folder deck (see
+   * Workflow/WorkflowRun.tsx). For a workflow that belongs to one
+   * sub-block rather than to the whole block — Genetic engineering's
+   * cloning and knocking-out routes are each their own nine steps. */
+  workflow?: WorkflowSpec;
   /** Closing synthesis for the whole sub-block (e.g. "these nine steps
    * together achieve X") — rendered as plain prose *below* the folder
    * deck, not inside any one experiment's card. A statement about the
@@ -248,6 +256,12 @@ export interface ExperimentBlockData {
   protocolsPdfSrc: string;
   /** Shown once, above everything else in the block. */
   intro?: ReactNode | ReactNode[];
+  /** The block's experimental sequence, drawn as a run under the intro
+   * (see Workflow/WorkflowRun.tsx). Every stage links into the
+   * experiment that ran it, so the figure doubles as the block's visual
+   * index. A block whose workflows belong to its sub-blocks instead sets
+   * ExperimentSubBlock.workflow on each of them. */
+  workflow?: WorkflowSpec;
   /** A flat block has one folder-tab row: set `experiments`. A block with
    * multiple labelled sub-sections (its own heading + its own folder-tab
    * row each) sets `subBlocks` instead — see Experiments.tsx, which

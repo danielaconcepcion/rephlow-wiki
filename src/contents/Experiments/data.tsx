@@ -14,7 +14,16 @@ import {
   ENZYMATIC_IMMOBILISATION_REFERENCES,
   ENZYMATIC_IMMOBILISATION_SUBBLOCKS,
 } from "./EnzymaticImmobilisationData";
-import { REVALORISATION_INTRO, REVALORISATION_REFERENCES, REVALORISATION_SUBBLOCKS } from "./RevalorisationData";
+import {
+  REVALORISATION_INTRO,
+  REVALORISATION_REFERENCES,
+  REVALORISATION_SUBBLOCKS,
+} from "./RevalorisationData";
+import {
+  ENCAPSULATION_WORKFLOW,
+  ENZYMATIC_WORKFLOW,
+  REVALORISATION_WORKFLOW,
+} from "./workflows";
 
 /**
  * The 4 official experiment blocks (matching the project's own modules —
@@ -32,6 +41,7 @@ export const EXPERIMENT_BLOCKS: ExperimentBlockData[] = [
     accent: "var(--lab-encapsulation)",
     protocolsPdfSrc: "assets/protocols/encapsulation-protocols.pdf",
     intro: ALGINATE_ENCAPSULATION_INTRO,
+    workflow: ENCAPSULATION_WORKFLOW,
     subBlocks: ALGINATE_ENCAPSULATION_SUBBLOCKS,
     references: ALGINATE_ENCAPSULATION_REFERENCES,
   },
@@ -41,6 +51,7 @@ export const EXPERIMENT_BLOCKS: ExperimentBlockData[] = [
     accent: "var(--lab-enzyme)",
     protocolsPdfSrc: "assets/protocols/enzymatic-immobilisation-protocols.pdf",
     intro: ENZYMATIC_IMMOBILISATION_INTRO,
+    workflow: ENZYMATIC_WORKFLOW,
     subBlocks: ENZYMATIC_IMMOBILISATION_SUBBLOCKS,
     references: ENZYMATIC_IMMOBILISATION_REFERENCES,
   },
@@ -62,6 +73,7 @@ export const EXPERIMENT_BLOCKS: ExperimentBlockData[] = [
     palette: "mostaza",
     protocolsPdfSrc: "assets/protocols/revalorisation-protocols.pdf",
     intro: REVALORISATION_INTRO,
+    workflow: REVALORISATION_WORKFLOW,
     subBlocks: REVALORISATION_SUBBLOCKS,
     references: REVALORISATION_REFERENCES,
   },
