@@ -1,35 +1,10 @@
-import { Fragment, useContext } from "react";
-import type { CSSProperties, ReactNode } from "react";
+import { Fragment } from "react";
+import type { CSSProperties } from "react";
 
 import { asset } from "../../utils/asset";
-import { NumberingContext } from "./numbering";
+import { Caption } from "./Caption";
 import { Rich } from "./RichText";
 import type { RecordTable, ResultData, ResultSubsection } from "./types";
-
-/** "Figure 3." / "Table 2." ahead of a caption, when the block numbered it. */
-function Caption({
-  kind,
-  item,
-  text,
-}: {
-  kind: "Figure" | "Table";
-  item: object;
-  text?: string;
-}): ReactNode {
-  const number = useContext(NumberingContext).get(item);
-  if (!text && number === undefined) return null;
-  return (
-    <>
-      {number !== undefined && (
-        <strong className="record-caption__label">
-          {kind} {number}.
-        </strong>
-      )}
-      {number !== undefined && text ? " " : null}
-      {text && <Rich text={text} />}
-    </>
-  );
-}
 
 function Table({ table }: { table: RecordTable & { caption?: string } }) {
   return (
@@ -89,7 +64,9 @@ function FigureGrid({ subsection }: { subsection: ResultSubsection }) {
     >
       {subsection.figures.map((figure, index) => (
         <figure
-          className={figure.wide ? "record-figure record-figure--wide" : "record-figure"}
+          className={
+            figure.wide ? "record-figure record-figure--wide" : "record-figure"
+          }
           key={index}
         >
           {figure.title && (
@@ -119,7 +96,11 @@ function FigureGrid({ subsection }: { subsection: ResultSubsection }) {
       ))}
       {subsection.figuresCaption && (
         <p className="record-figure-grid__caption">
-          <Caption kind="Figure" item={subsection.figures} text={subsection.figuresCaption} />
+          <Caption
+            kind="Figure"
+            item={subsection.figures}
+            text={subsection.figuresCaption}
+          />
         </p>
       )}
     </div>
@@ -138,7 +119,9 @@ function FigureMatrix({
 }: {
   matrix: NonNullable<ResultSubsection["figureMatrix"]>;
 }) {
-  const style = { "--matrix-columns": matrix.columns.length } as CSSProperties & {
+  const style = {
+    "--matrix-columns": matrix.columns.length,
+  } as CSSProperties & {
     "--matrix-columns": number;
   };
   return (
@@ -187,7 +170,11 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
           {subsection.custom.node}
           {subsection.custom.caption && (
             <figcaption>
-              <Caption kind="Figure" item={subsection.custom} text={subsection.custom.caption} />
+              <Caption
+                kind="Figure"
+                item={subsection.custom}
+                text={subsection.custom.caption}
+              />
             </figcaption>
           )}
         </figure>
@@ -195,9 +182,13 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
 
       {!subsection.figuresAside && <FigureGrid subsection={subsection} />}
 
-      {subsection.figureMatrix && <FigureMatrix matrix={subsection.figureMatrix} />}
+      {subsection.figureMatrix && (
+        <FigureMatrix matrix={subsection.figureMatrix} />
+      )}
 
-      {subsection.tables?.map((table, index) => <Table table={table} key={index} />)}
+      {subsection.tables?.map((table, index) => (
+        <Table table={table} key={index} />
+      ))}
 
       {subsection.bodyAfter?.map((paragraph, index) => (
         <p key={index}>
@@ -255,7 +246,10 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
      tall figure spanning all of them stretches every row to share its
      height, opening a gap between each field. One item, one row, no gap. */
   return (
-    <section className="result-subsection result-subsection--aside" id={subsection.id}>
+    <section
+      className="result-subsection result-subsection--aside"
+      id={subsection.id}
+    >
       {subsection.title && <h4>{subsection.title}</h4>}
       <div className="result-subsection__main">{prose}</div>
       <div className="result-subsection__aside">
@@ -318,7 +312,9 @@ export function ResultCard({ data }: { data: ResultData }) {
 
       {!!data.discussion?.length && (
         <section className="result-card__discussion">
-          <h4 className="record-rule-heading record-rule-heading--discussion">Discussion</h4>
+          <h4 className="record-rule-heading record-rule-heading--discussion">
+            Discussion
+          </h4>
           {data.discussion.map((paragraph, index) => (
             <p key={index}>
               <Rich text={paragraph} />

@@ -1,5 +1,10 @@
 import { createContext } from "react";
-import type { ResultData, ResultSubBlock } from "./types";
+import type {
+  ExperimentData,
+  ExperimentSubBlock,
+  ResultData,
+  ResultSubBlock,
+} from "./types";
 
 /**
  * Figure and table numbers for one Results block, assigned in reading
@@ -41,6 +46,40 @@ export function numberResults(
           numbers.set(subsection.figureMatrix, ++figure);
         for (const item of subsection.tables ?? []) numbers.set(item, ++table);
       }
+    }
+  }
+  return numbers;
+}
+
+/**
+ * The same, for one Experiments block. Walk order matches ExperimentCard:
+ * each experiment's `body` blocks in order (a paired resource is a figure
+ * or a table depending on its kind), then the plain `tables`, then the
+ * single `figure`. A caption-less resource is skipped — an unnumbered
+ * illustration is not a figure anyone cites.
+ */
+export function numberExperiments(
+  groups: (ExperimentSubBlock | { experiments?: ExperimentData[] })[],
+): Numbering {
+  const numbers: Numbering = new Map();
+  let figure = 0;
+  let table = 0;
+  for (const group of groups) {
+    for (const experiment of group.experiments ?? []) {
+      for (const block of experiment.body ?? []) {
+        const resource = block.pairedResource;
+        if (!resource) continue;
+        if (
+          resource.kind === "table" ||
+          resource.kind === "table-placeholder"
+        ) {
+          numbers.set(resource, ++table);
+        } else if (resource.kind !== "custom" || resource.caption) {
+          numbers.set(resource, ++figure);
+        }
+      }
+      for (const item of experiment.tables ?? []) numbers.set(item, ++table);
+      if (experiment.figure) numbers.set(experiment.figure, ++figure);
     }
   }
   return numbers;
