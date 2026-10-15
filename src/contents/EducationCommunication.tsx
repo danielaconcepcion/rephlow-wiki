@@ -29,8 +29,11 @@ const SECTIONS: PageSection[] = ACTIVITIES.map((activity, index) => ({
   label: `${index + 1}. ${activity.chalk}`,
 }));
 
-/** Below this width the board stops being a composition and becomes a list. */
-const WIDE_MIN = 720;
+/** The board is drawn at a fixed 1600 x 960 and scrolls sideways when the
+ * column is narrower than it. Below this width there is not enough of it
+ * on screen at once to read as a composition, so it becomes a chalk list
+ * instead — nine objects on a phone would be nine illegible stamps. */
+const WIDE_MIN = 480;
 
 /** The page's own accent — the purple of the Engagement section, so the
  * chronicle's numbers and links read as part of the same family as
@@ -74,7 +77,7 @@ export function EducationCommunication() {
           </p>
 
           {wide ? (
-            <Blackboard accent={ACCENT} onSelect={select} />
+            <Blackboard onSelect={select} />
           ) : (
             <div className="ec-board-frame">
               <nav
