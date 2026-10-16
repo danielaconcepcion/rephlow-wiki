@@ -8,7 +8,9 @@ import { FolderStack } from "../../components/LabFolders/FolderStack";
 import { ExperimentCard } from "../../components/LabFolders/ExperimentCard";
 import { BlockReferences } from "../../components/LabFolders/BlockReferences";
 import { Rich } from "../../components/LabFolders/RichText";
-import { WorkflowRun } from "../../components/LabFolders/Workflow";
+import { EncapsulationWorkflow } from "./workflowFigures/EncapsulationWorkflow";
+import { RevalorisationWorkflow } from "./workflowFigures/RevalorisationWorkflow";
+import { EnzymaticWorkflow } from "./workflowFigures/EnzymaticWorkflow";
 import {
   NumberingContext,
   numberExperiments,
@@ -214,32 +216,31 @@ export function Experiments() {
                 </div>
               )}
 
-              {/* Alginate encapsulation's intro diagram: the coaxial setup
-                  the whole block is built around. The twelve stages its
-                  experiments walk through are the run below. */}
-              {activeBlock.id === "encapsulation" && (
-                <div className="lab-prose">
-                  {ALGINATE_ENCAPSULATION_FIGURES.map((figure) => (
-                    <Figure
-                      key={figure.src}
-                      dir="assets/experiments/encapsulation"
-                      src={figure.src}
-                      alt={figure.alt}
-                      caption={figure.caption}
-                    />
-                  ))}
-                </div>
+              {/* Revalorisation's workflow closes its intro, where the
+                  original image sat — redrawn, with linked panels. */}
+              {activeBlock.id === "revalorisation" && (
+                <RevalorisationWorkflow />
               )}
 
-              {/* The block's own experimental run — a figure of its
-                  sequence and, at the same time, the index into it: every
-                  stage opens the experiment that ran it. Wide, like the
-                  folder decks, not capped to .lab-prose. */}
-              {activeBlock.workflow && (
-                <WorkflowRun
-                  id={`${activeBlock.id}-workflow`}
-                  {...activeBlock.workflow}
-                />
+              {/* Alginate encapsulation's two intro diagrams: the coaxial
+                  setup the whole block is built around, and the twelve-stage
+                  workflow its experiments walk through — the latter redrawn
+                  as a vector figure whose panels open their experiments. */}
+              {activeBlock.id === "encapsulation" && (
+                <>
+                  <div className="lab-prose">
+                    {ALGINATE_ENCAPSULATION_FIGURES.map((figure) => (
+                      <Figure
+                        key={figure.src}
+                        dir="assets/experiments/encapsulation"
+                        src={figure.src}
+                        alt={figure.alt}
+                        caption={figure.caption}
+                      />
+                    ))}
+                  </div>
+                  <EncapsulationWorkflow />
+                </>
               )}
 
               {/* Genetic engineering's conceptual "five parts of the system"
@@ -280,6 +281,8 @@ export function Experiments() {
                   placeholder rather than silently dropped or faked. */}
               {activeBlock.id === "enzymatic-immobilisation" && (
                 <>
+                  {/* The six-step figure, redrawn, with linked panels. */}
+                  <EnzymaticWorkflow />
                   <div className="lab-prose">
                     <figure
                       className="record-figure"
@@ -351,15 +354,6 @@ export function Experiments() {
                         </h2>
                         {paragraphs(subBlock.intro, "lab-subblock__intro")}
                       </div>
-                      {/* A workflow that belongs to this sub-block rather
-                          than to the whole block (Genetic engineering's two
-                          nine-step routes), drawn above its own deck. */}
-                      {subBlock.workflow && (
-                        <WorkflowRun
-                          id={`${subBlock.id}-workflow`}
-                          {...subBlock.workflow}
-                        />
-                      )}
                       {subBlock.experiments && (
                         <DeckPalette palette={activeBlock.palette}>
                           <FolderStack
