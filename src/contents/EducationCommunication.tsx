@@ -4,30 +4,40 @@ import { PageSectionNav } from "../components/PageSectionNav";
 import type { PageSection } from "../components/PageSectionNav";
 import { AdjacentPageNav } from "../components/AdjacentPageNav";
 import { Rich } from "../components/LabFolders/RichText";
+import { ActivityModal } from "./EducationCommunication/ActivityModal";
 import { Blackboard } from "./EducationCommunication/Blackboard";
 import {
   ACTIVITIES,
   EDUCATION_INTRO,
 } from "./EducationCommunication/educationData";
+import "./CollaborationPartnership/CollaborationPartnership.css";
 import "./EducationCommunication/EducationCommunication.css";
 
 /* --------------------------------------------------------------------------
    Education and Communication — nine activities, in the order they
-   happened, indexed by a blackboard and then told as one continuous
-   chronicle underneath it.
+   happened, indexed by a blackboard; clicking an object opens that
+   activity in a dialog, the same one the Collaboration tables use.
 
    The board carries the same materiality as the Collaboration tables, in
    the language of a lecture theatre rather than a desk: objects taped to a
    slate, a chalk line running from November 2025 to July 2026, formulas
-   and half-erased sketches in the margins. Clicking an object scrolls to
-   that activity's entry. Below the breakpoint the slate stays, but as a
+   and half-erased sketches in the margins. Below the breakpoint the slate stays, but as a
    chalk list — nine objects at 320 px wide would be nine illegible stamps.
    -------------------------------------------------------------------------- */
 
+/** Built once, outside the component, so PageSectionNav's observer effect
+ * is not torn down on every render (see PageSectionNav's `sections` doc).
+ * Each activity opens its dialog rather than scrolling: there is no longer
+ * an entry on the page to scroll to, which is what `onSelect` is for. */
 const SECTIONS: PageSection[] = ACTIVITIES.map((activity, index) => ({
   id: activity.id,
   label: `${index + 1}. ${activity.chalk}`,
+  onSelect: () => openActivity?.(activity.id),
 }));
+
+/** Set by the mounted page, so the module-level SECTIONS above can reach
+ * its state setter without being rebuilt on each render. */
+let openActivity: ((id: string) => void) | null = null;
 
 /** The board is drawn at a fixed 1600 x 960 and scrolls sideways when the
  * column is narrower than it. Below this width there is not enough of it
@@ -43,6 +53,8 @@ const ACCENT = "#6E5A96";
 export function EducationCommunication() {
   const colRef = useRef<HTMLDivElement>(null);
   const [wide, setWide] = useState(true);
+  const [openId, setOpenId] = useState<string | null>(null);
+  const triggerRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
     const element = colRef.current;
@@ -55,13 +67,28 @@ export function EducationCommunication() {
     return () => observer.disconnect();
   }, []);
 
+  /** Open an activity's dialog, remembering what opened it so focus can
+   * go back there on close. */
   const select = useCallback((id: string) => {
-    const target = document.getElementById(id);
-    if (!target) return;
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    const active = document.activeElement;
+    triggerRef.current = active instanceof HTMLElement ? active : null;
+    setOpenId(id);
     // Keep the URL in step, without the jump a bare hash change causes.
     window.history.replaceState(null, "", `#${id}`);
   }, []);
+
+  const close = useCallback(() => {
+    setOpenId(null);
+    triggerRef.current?.focus({ preventScroll: true });
+  }, []);
+
+  // Let the sidebar links (built at module level) reach this instance.
+  useEffect(() => {
+    openActivity = select;
+    return () => {
+      openActivity = null;
+    };
+  }, [select]);
 
   return (
     <>
@@ -109,54 +136,12 @@ export function EducationCommunication() {
               </nav>
             </div>
           )}
-
-          <div className="ec-chronicle">
-            {ACTIVITIES.map((activity, index) => (
-              <article className="ec-entry" id={activity.id} key={activity.id}>
-                <header className="ec-entry__head">
-                  <span className="ec-entry__index">{index + 1}</span>
-                  <h2 className="ec-entry__title">{activity.title}</h2>
-                  <p className="ec-entry__meta">
-                    <b>{activity.date}</b>
-                    {activity.place}
-                  </p>
-                </header>
-
-                <div className="ec-entry__body">
-                  {activity.body.map((paragraph, i) => (
-                    <p key={i}>
-                      <Rich text={paragraph} />
-                    </p>
-                  ))}
-                  {activity.link && (
-                    <a
-                      className="ec-entry__link"
-                      href={activity.link.href}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {activity.link.label} ↗
-                    </a>
-                  )}
-                </div>
-
-                {activity.photos.length > 0 && (
-                  <div className="ec-photos">
-                    {activity.photos.map((photo) => (
-                      <figure
-                        key={photo.src}
-                        style={{ aspectRatio: photo.ratio }}
-                      >
-                        <img src={photo.src} alt={photo.alt} loading="lazy" />
-                      </figure>
-                    ))}
-                  </div>
-                )}
-              </article>
-            ))}
-          </div>
         </div>
       </div>
+
+      {openId && (
+        <ActivityModal openId={openId} onNavigate={select} onClose={close} />
+      )}
 
       <AdjacentPageNav
         prev={{
