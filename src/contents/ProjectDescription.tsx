@@ -1513,7 +1513,7 @@ export function ProjectDescription() {
                       <tr className="pd-table__row--addition">
                         <td>
                           <span className="pd-table__strategy pd-table__strategy--addition">
-                            Addition · heterologous expression
+                            Heterologous expression
                           </span>
                         </td>
                         <td>↑ Uptake</td>
@@ -1532,7 +1532,7 @@ export function ProjectDescription() {
                       <tr className="pd-table__row--addition">
                         <td>
                           <span className="pd-table__strategy pd-table__strategy--addition">
-                            Addition · heterologous expression
+                            Heterologous expression
                           </span>
                         </td>
                         <td>↑ Synthesis</td>
@@ -1548,7 +1548,7 @@ export function ProjectDescription() {
                       <tr className="pd-table__row--inactivation">
                         <td>
                           <span className="pd-table__strategy pd-table__strategy--inactivation">
-                            Deletion · functional inactivation
+                            Functional inactivation
                           </span>
                         </td>
                         <td>↓ Degradation</td>
@@ -1564,7 +1564,7 @@ export function ProjectDescription() {
                       <tr className="pd-table__row--inactivation">
                         <td>
                           <span className="pd-table__strategy pd-table__strategy--inactivation">
-                            Deletion · functional inactivation
+                            Functional inactivation
                           </span>
                         </td>
                         <td>↓ Consumption</td>
@@ -1580,7 +1580,7 @@ export function ProjectDescription() {
                       <tr className="pd-table__row--inactivation">
                         <td>
                           <span className="pd-table__strategy pd-table__strategy--inactivation">
-                            Deletion · functional inactivation
+                            Functional inactivation
                           </span>
                         </td>
                         <td>↓ Efflux</td>
