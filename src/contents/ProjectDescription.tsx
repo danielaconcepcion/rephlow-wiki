@@ -1798,8 +1798,8 @@ export function ProjectDescription() {
               </a>
               <h2>Model</h2>
               <BlockIntro
-                image="assets/model-icon.png"
-                alt="Illustration of a laptop representing computational modelling"
+                image="assets/our-solution/model-clean.webp"
+                alt="Illustration of a monitor showing a computational model of a biological system"
               >
                 Genome-scale and kinetic models predict genetic priorities,
                 process conditions and phosphate-accumulation dynamics.
