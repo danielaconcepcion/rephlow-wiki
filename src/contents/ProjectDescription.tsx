@@ -1897,12 +1897,16 @@ export function ProjectDescription() {
               <div className="pd-subsection">
                 <h3>From stored phosphate to a useful donor</h3>
                 <p>
-                  In the complete system, recovered beads are lysed to release a
-                  concentrated stock of inorganic polyphosphate. For
-                  module-level experiments we decoupled this block from upstream
-                  bead recovery and used commercial polyphosphate, allowing the
-                  conversion biochemistry to be characterised independently
-                  before full integration.
+                  In the complete system, the phosphate stored inside the{" "}
+                  <em>P. putida</em> cells is released by lysing the recovered
+                  beads, giving a concentrated stock of inorganic polyphosphate
+                  that serves as the phosphate donor for this module. That
+                  closed loop is the intended design. For the experiments we
+                  decoupled this block from bead recovery, which depends on the
+                  upstream hardware, and used commercial polyphosphate as the
+                  donor. This isolates the biochemistry of the conversion module
+                  so that it can be characterised on its own terms; substituting
+                  bead-derived polyphosphate is a later integration step.
                 </p>
               </div>
 
@@ -1910,9 +1914,10 @@ export function ProjectDescription() {
                 <h3>Drawing energy from polyphosphate: the PPK2 module</h3>
                 <p>
                   Polyphosphate kinases transfer phosphate reversibly between
-                  polyphosphate and nucleotides. PPK1 preferentially uses ATP to
-                  synthesise polyphosphate, whereas PPK2 preferentially uses
-                  polyphosphate to phosphorylate nucleotides
+                  polyphosphate and nucleotides, and they fall into two
+                  unrelated families. PPK1 preferentially uses ATP to synthesise
+                  polyphosphate, whereas PPK2 preferentially uses polyphosphate
+                  to phosphorylate nucleotides
                   <Cite group="revalorisation" numbers={[5, 6]} />. PPK2
                   therefore allows us to spend the accumulated reserve
                   deliberately.
@@ -1924,17 +1929,31 @@ export function ProjectDescription() {
                     {" "}
                     genetic engineering block
                   </SectionLink>
-                  . PPK2 is suppressed inside the living cell to retain
-                  polyphosphate, but added later in vitro to release its
-                  chemical potential.
+                  . The same enzyme family is used towards opposite ends in two
+                  separate compartments: suppressed inside <em>P. putida</em> so
+                  that the living cell cannot draw down the reserve it is
+                  building, and supplied in vitro in the reactor to release it.
                 </p>
                 <p>
                   PPK2-I converts ADP to ATP, PPK2-II converts AMP to ADP and
-                  bifunctional PPK2-III can carry AMP through to ATP
-                  <Cite group="revalorisation" numbers={[5, 9]} />. We selected
-                  BcPPK2-III from <em>Burkholderia cenocepacia</em> because it
-                  accepts AMP and ADP and remains active across a broad pH range
-                  <Cite group="revalorisation" numbers={[5]} />.
+                  bifunctional PPK2-III carries AMP through to ATP in a single
+                  polypeptide
+                  <Cite group="revalorisation" numbers={[5, 9]} />, which
+                  collapses the regeneration step into one biocatalyst. We
+                  selected BcPPK2-III from <em>Burkholderia cenocepacia</em> for
+                  two reasons. It accepts both AMP and ADP, so the regeneration
+                  module can be coupled to downstream enzymes whether they
+                  release ADP or AMP; and it is operationally robust, reported
+                  to combine thermostability with activity across pH 6.0 to 9.0
+                  <Cite group="revalorisation" numbers={[5]} />, the range a
+                  multi-enzyme cascade needs in order to scale.
+                </p>
+                <p>
+                  Those properties are already established in the literature, so
+                  we did not re-characterise the enzyme in isolation. We
+                  measured the behaviour of the coupled multi-enzyme system
+                  instead, which is what determines whether the concept works;
+                  those data are in <WikiLink to="/results">Results</WikiLink>.
                 </p>
                 <Figure
                   src="atp-regeneration-module.webp"
@@ -1942,8 +1961,12 @@ export function ProjectDescription() {
                   className="pd-figure--compact"
                   caption={
                     <>
-                      <strong>Figure 3.</strong> Coupling polyphosphate-driven
-                      ATP regeneration to an ATP-dependent kinase.
+                      <strong>Figure 3.</strong> Conceptual representation of
+                      the coupling between the ATP regeneration and
+                      phosphorylation modules. PPK2 regenerates ATP from
+                      polyphosphate and ADP, supplying the ATP required for
+                      substrate phosphorylation while reducing the ADP
+                      accumulation that inhibits the kinase.
                     </>
                   }
                 />
@@ -1952,49 +1975,177 @@ export function ProjectDescription() {
               <div className="pd-subsection">
                 <h3>Why regenerate ATP rather than add it?</h3>
                 <p>
-                  Supplying ATP stoichiometrically is a standard obstacle in
-                  ATP-dependent biocatalysis
-                  <Cite group="revalorisation" numbers={[1, 5]} />. Regeneration
+                  Feeding the reaction with stoichiometric ATP would not scale,
+                  for two reasons. The first is cost: consuming ATP in
+                  stoichiometric amounts is a standard obstacle in ATP-dependent
+                  biocatalysis
+                  <Cite group="revalorisation" numbers={[1, 5]} />, and the
+                  difference in scale is large. Commercial polyphosphate costing
+                  around USD 20/kg can supply ATP equivalents that would
+                  otherwise cost more than USD 35,000/kg, and common alternative
+                  phosphate donors such as phosphoenolpyruvate are more
+                  expensive still than ATP itself, at roughly USD 264,000/kg
+                  <Cite group="revalorisation" numbers={[5]} />. Regeneration
                   keeps the reaction running on a small recycled nucleotide pool
-                  rather than continuously consuming an expensive cofactor. It
-                  also removes ADP as it forms, shifting the equilibrium towards
-                  product and preventing inhibitory ADP accumulation
-                  <Cite group="revalorisation" numbers={[1, 9]} />.
+                  rather than on a stoichiometric supply of an expensive
+                  cofactor.
+                </p>
+                <p>
+                  The second reason is thermodynamic. Regeneration clears ADP as
+                  it forms, shifting the equilibrium towards product and
+                  preventing the inhibitory build-up of ADP
+                  <Cite group="revalorisation" numbers={[1, 9]} />. That second
+                  effect is what couples the module cleanly to the
+                  proof-of-concept reaction below.
                 </p>
               </div>
 
               <div className="pd-subsection">
                 <h3>Proof of concept: polyphosphate-driven DHAP synthesis</h3>
                 <p>
-                  To demonstrate useful chemistry, we coupled ATP regeneration
-                  to dihydroxyacetone kinase (DHAK), which phosphorylates
-                  dihydroxyacetone to dihydroxyacetone phosphate using ATP
-                  <Cite group="revalorisation" numbers={[2]} />. DHAP is the
-                  obligate donor for DHAP-dependent aldolases, which form
-                  carbon–carbon bonds with strict stereochemical control and
-                  enable access to rare sugars and iminosugars.
+                  To show that ATP regenerated from polyphosphate can drive
+                  useful chemistry, we built and tested a cascade coupling the
+                  PPK2 module to dihydroxyacetone kinase (DHAK), which
+                  phosphorylates dihydroxyacetone to dihydroxyacetone phosphate
+                  using ATP
+                  <Cite group="revalorisation" numbers={[2]} />. Results for the
+                  coupled system are reported in{" "}
+                  <WikiLink to="/results">Results</WikiLink>.
                 </p>
                 <Figure
                   src="dhak-cascade.webp"
                   alt="Dihydroxyacetone kinase reaction coupled to polyphosphate-driven ATP regeneration"
                   caption={
                     <>
-                      <strong>Figure 4.</strong> Proof-of-concept cascade
-                      coupling DHAK to PPK2-mediated ATP regeneration.
+                      <strong>Figure 4.</strong> Schematic representation of the
+                      coupled system linking polyphosphate-driven ATP
+                      regeneration to the phosphorylation of dihydroxyacetone
+                      into dihydroxyacetone phosphate. PPK2 uses polyphosphate
+                      to regenerate ATP from ADP, while DHAK consumes ATP to
+                      catalyse the phosphorylation.
                     </>
                   }
                   className="pd-figure--pathway"
                 />
                 <p>
-                  DHAK from <em>Citrobacter freundii</em> is strongly inhibited
-                  by ADP
-                  <Cite group="revalorisation" numbers={[8]} />. As DHAK
-                  consumes ATP, the PPK2 module regenerates it from
-                  polyphosphate and simultaneously removes the ADP that would
-                  otherwise stall the reaction. The performance of the coupled
-                  system is reported in{" "}
-                  <WikiLink to="/results">Results</WikiLink>.
+                  DHAK is a demonstrator, not the end product. We selected it
+                  for two reasons that make it a good test case, rather than for
+                  the market value of DHAP. First, it lets us prove that a
+                  product-forming phosphorylation can be driven directly by our
+                  polyphosphate-based regeneration module, closing the loop from
+                  recovered polyphosphate to a defined phosphorylated product
+                  within a single coupled system. Second, DHAK is a demanding
+                  enzyme to work with, highly active but sensitive and unstable
+                  under changing conditions, which makes it an ideal case for
+                  showing that such an enzyme can be engineered into a more
+                  robust, industrially usable form.
                 </p>
+                <p>
+                  The pairing is also mechanistically clean. DHAK from{" "}
+                  <em>Citrobacter freundii</em> is strongly inhibited by ADP
+                  <Cite group="revalorisation" numbers={[8]} />. As DHAK
+                  consumes ATP and releases ADP, the PPK2 module regenerates ATP
+                  from polyphosphate and clears the ADP that would otherwise
+                  stall the reaction, so PPK2 both feeds DHAK and relieves its
+                  product inhibition.
+                </p>
+              </div>
+
+              <div className="pd-subsection">
+                <h3>In silico stabilisation of DHAK with PROSS</h3>
+                <p>
+                  A revalorisation process exposes its enzymes to handling,
+                  storage and variable reaction conditions, and DHAK&apos;s
+                  fragility is exactly the property that limits it here. The
+                  design goal for this stage was a DHAK variant with improved
+                  thermodynamic stability that keeps its catalytic function
+                  intact, so that the enzyme tolerates process conditions better
+                  than the wild type. Stabilisation was pursued computationally,
+                  before any bench work. The PPK2 module was kept as its native
+                  sequence and did not go through this stage, since it is
+                  already operationally robust.
+                </p>
+                <p>
+                  We used PROSS, a design algorithm that combines phylogenetic
+                  sequence information with Rosetta energy calculations to lower
+                  the free energy of the fold while conserving function
+                  <Cite group="revalorisation" numbers={[11]} />. The design
+                  started from the ligand-bound crystal structure of DHAK from{" "}
+                  <em>C. freundii</em> (PDB 1UN9)
+                  <Cite group="revalorisation" numbers={[12]} />. Using the
+                  complexed structure is deliberate, because it lets the
+                  algorithm recognise where the functional residues sit and
+                  leave them untouched. DHAK is a homodimer of two domains, a
+                  K-domain carrying the dihydroxyacetone site and an L-domain
+                  carrying the ATP site, arranged so that the two subunits form
+                  two composite active sites. The three ligands that mark the
+                  regions which must not change, the ATP, the dihydroxyacetone
+                  and the Mg²⁺ ion, were declared as protected, so that
+                  stabilising mutations are excluded from the catalytic and
+                  cofactor-binding shells and only the surrounding scaffold is
+                  redesigned.
+                </p>
+                <p>
+                  From the small set of designs returned, one variant (PROSS
+                  design 5) was selected for experimental testing, alongside the
+                  unchanged wild-type enzyme as a reference, so that any
+                  difference in stability or activity can be attributed to the
+                  introduced mutations. The experimental process is reported in{" "}
+                  <WikiLink to="/experiments">Experiments</WikiLink>.
+                </p>
+              </div>
+
+              <div className="pd-subsection">
+                <h3>Stapling the cascade together: SpyTag/SpyCatcher</h3>
+                <p>
+                  SpyTag and SpyCatcher are the two halves of a split bacterial
+                  adhesin domain (CnaB2, from the FbaB protein of{" "}
+                  <em>Streptococcus pyogenes</em>). On contact they form a
+                  spontaneous, irreversible isopeptide bond; no ligase, scaffold
+                  or chemical activation is needed
+                  <Cite group="revalorisation" numbers={[10]} />. Both halves
+                  are genetically encoded and can be fused to either terminus,
+                  so the pair works as a modular staple for building defined
+                  multi-enzyme assemblies.
+                </p>
+                <p>
+                  We designed a stapled version of the regeneration couple, one
+                  half fused to BcPPK2-III and the other to DHAK, so that mixing
+                  the two purified fusions yields a covalent one-to-one
+                  conjugate. The aim is to raise the yield of the catalytic
+                  cycle itself: the covalent link fixes the stoichiometry at any
+                  dilution and keeps ATP regeneration next to ATP consumption,
+                  which should limit the free ADP that inhibits DHAK. A cascade
+                  that holds its ratio and its coupling without re-optimisation
+                  at every dilution is far simpler to scale industrially, since
+                  the assembly step becomes a single mixing operation rather
+                  than a tuning problem. The reaction also reaches essentially
+                  complete conversion across a broad range of temperatures,
+                  buffers and pH values, so it fits the conditions used
+                  elsewhere in the cascade
+                  <Cite group="revalorisation" numbers={[10]} />.
+                </p>
+                <p>
+                  This part of the project has remained theoretical. We designed
+                  the plasmids encoding both fusions for laboratory
+                  implementation, but could not build and assay the constructs
+                  within the project timeframe. To support the design we
+                  produced 3D models of both tagged enzymes, shown below; see{" "}
+                  <WikiLink to="/experiments">Experiments</WikiLink> for more
+                  information.
+                </p>
+                <Figure
+                  src="spytag-spycatcher-models.webp"
+                  alt="Three-dimensional models of the SpyTag- and SpyCatcher-fused enzymes of the regeneration couple"
+                  className="pd-figure--pathway"
+                  caption={
+                    <>
+                      <strong>Figure 5.</strong> 3D models of the SpyTag- and
+                      SpyCatcher-fused enzymes of the regeneration couple. PPK2
+                      in blue, DHAK in green, SpyTag/SpyCatcher in yellow.
+                    </>
+                  }
+                />
               </div>
 
               <AccordionSection
@@ -2090,6 +2241,38 @@ export function ProjectDescription() {
                     <em>ChemCatChem, 13</em> (16), 3565–3580. DOI:{" "}
                     <ExternalLink href="https://doi.org/10.1002/cctc.202100688">
                       10.1002/cctc.202100688
+                    </ExternalLink>
+                    .
+                  </Ref>
+                  <Ref group="revalorisation" number={10}>
+                    Keeble, A. H., &amp; Howarth, M. (2020). Power to the
+                    protein: enhancing and combining activities using the Spy
+                    toolbox. <em>Chemical Science, 11</em> (28), 7281–7291. DOI:{" "}
+                    <ExternalLink href="https://doi.org/10.1039/D0SC01878C">
+                      10.1039/D0SC01878C
+                    </ExternalLink>
+                    .
+                  </Ref>
+                  <Ref group="revalorisation" number={11}>
+                    Goldenzweig, A., Goldsmith, M., Hill, S. E., Gertman, O.,
+                    Laurino, P., Ashani, Y., et al. (2016). Automated structure-
+                    and sequence-based design of proteins for high bacterial
+                    expression and stability. <em>Molecular Cell, 63</em> (2),
+                    337–346. DOI:{" "}
+                    <ExternalLink href="https://doi.org/10.1016/j.molcel.2016.06.012">
+                      10.1016/j.molcel.2016.06.012
+                    </ExternalLink>
+                    .
+                  </Ref>
+                  <Ref group="revalorisation" number={12}>
+                    Siebold, C., Arnold, I., Garcia-Alles, L. F., Baumann, U.,
+                    &amp; Erni, B. (2003). Crystal structure of the{" "}
+                    <em>Citrobacter freundii</em> dihydroxyacetone kinase
+                    reveals an eight-stranded α-helical barrel ATP-binding
+                    domain. <em>Journal of Biological Chemistry, 278</em> (48),
+                    48236–48244. DOI:{" "}
+                    <ExternalLink href="https://doi.org/10.1074/jbc.M305942200">
+                      10.1074/jbc.M305942200
                     </ExternalLink>
                     .
                   </Ref>
