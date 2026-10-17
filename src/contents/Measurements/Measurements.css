@@ -47,6 +47,14 @@
   padding: 18px 22px;
 }
 
+/* Justified, like the record's own prose, with the last line left so a
+   short closing line does not stretch across the box. */
+.ms-page .experiment-callout__text {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+}
+
 .ms-page .experiment-callout--not-done {
   border-left-style: none;
 }
@@ -94,4 +102,79 @@
   max-width: 100%;
   max-height: 440px;
   margin-inline: auto;
+}
+
+/* The record's own measurement groups: a card that measures three things
+   ("Intact beads and capsules: size and shape", then the cross-sections,
+   then the mechanical assay) names each one above its sections. Promoted
+   over a section heading, since it is what the lateral index lists. */
+.ms-page .experiment-card__block--group {
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px solid var(--lab-line);
+}
+
+.ms-page .experiment-card__block--group:first-of-type {
+  margin-top: 6px;
+}
+
+.ms-page .experiment-card__block--group .experiment-section__heading {
+  font-size: 1.1rem;
+  color: var(--folder-accent, var(--ink));
+}
+
+/* Two figures that answer the same question on two supports read as a
+   pair, so they share a row instead of each taking the full width.
+   Inline-block rather than a grid column: these blocks sit inside a
+   folded section, not directly in the card's grid, so they have to lay
+   themselves out wherever they are. */
+.ms-page .experiment-card__block--half {
+  display: inline-block;
+  width: calc(50% - 10px);
+  vertical-align: top;
+}
+
+.ms-page .experiment-card__block--half + .experiment-card__block--half {
+  margin-left: 16px;
+}
+
+/* A figure whose caption is longer than the image is tall: the caption
+   goes beside it rather than leaving the row half empty. */
+.ms-page .experiment-card__block--side-caption .record-figure {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 18px 26px;
+  align-items: center;
+}
+
+.ms-page .experiment-card__block--side-caption .record-figure figcaption {
+  margin-top: 0;
+}
+
+@media (max-width: 760px) {
+  .ms-page .experiment-card__block--half,
+  .ms-page .experiment-card__block--half + .experiment-card__block--half {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .ms-page .experiment-card__block--side-caption .record-figure {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* The block's closing section: its heading was sitting right on top of
+   whatever the folder deck ended with. */
+.ms-page .lab-subblock {
+  margin-top: 46px;
+}
+
+/* These three are multi-panel figures in a narrower column than a
+   full-width one, so the general 440 px cap would shrink their panels
+   past reading size. They get more height instead; a click still opens
+   any figure full size. */
+.ms-page .experiment-card__block--half .record-figure__photo,
+.ms-page .experiment-card__block--side-caption .record-figure__photo {
+  max-height: 580px;
 }

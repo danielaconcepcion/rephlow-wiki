@@ -143,6 +143,7 @@ const PNPB_CONTINUOUS: ExperimentData = {
           ],
         },
         {
+          layout: "half",
           pairedResource: {
             kind: "image",
             src: "assets/measurements/pnpb-continuous-time-course-of-immobilisation-on-the.jpg",
@@ -152,6 +153,7 @@ const PNPB_CONTINUOUS: ExperimentData = {
           },
         },
         {
+          layout: "half",
           pairedResource: {
             kind: "image",
             src: "assets/measurements/pnpb-continuous-time-course-of-immobilisation-on-the-2.jpg",
@@ -169,7 +171,7 @@ const PNPB_CONTINUOUS: ExperimentData = {
           callouts: [
             {
               kind: "outcome",
-              text: "The practical conclusion for the project is that the immobilisation chemistry must be matched to the support: for ionic MANAE-agarose, adsorb-then-crosslink in the closed conformation (no detergent) is the superior route [5], and it also gave the highest absolute immobilised activity.",
+              text: "**The practical conclusion for the project is that the immobilisation chemistry must be matched to the support:** for ionic MANAE-agarose, adsorb-then-crosslink in the closed conformation (no detergent) is the superior route [5], and it also gave the highest absolute immobilised activity.",
             },
           ],
         },
@@ -177,7 +179,7 @@ const PNPB_CONTINUOUS: ExperimentData = {
           callouts: [
             {
               kind: "learn",
-              text: "A caveat noted during measurement is that suspension readings include light scattering from beads; this was controlled by measuring the clarified supernatant for the free-enzyme term and by running the support-free inactivation control, which confirmed the enzyme was stable under the incubation conditions.",
+              text: "**A caveat noted during measurement is that suspension readings include light scattering from beads;** this was controlled by measuring the clarified supernatant for the free-enzyme term and by running the support-free inactivation control, which confirmed the enzyme was stable under the incubation conditions.",
             },
           ],
         },
@@ -185,7 +187,7 @@ const PNPB_CONTINUOUS: ExperimentData = {
           callouts: [
             {
               kind: "not-done",
-              text: "Next steps: measure the operational stability and reusability of the best derivative over multiple hydrolysis cycles; determine the retained specific activity (activity per mg immobilised) to complement the yield; and transfer the winning adsorb-then-crosslink protocol to the genipin–chitosan–alginate matrix, using the same continuous assay to verify the behaviour translates.",
+              text: "**Next steps: measure the operational stability and reusability of the best derivative over multiple hydrolysis cycles;** determine the retained specific activity (activity per mg immobilised) to complement the yield; and transfer the winning adsorb-then-crosslink protocol to the genipin–chitosan–alginate matrix, using the same continuous assay to verify the behaviour translates.",
             },
           ],
         },
@@ -298,6 +300,7 @@ const BISPNPP_DISCONTINUOUS: ExperimentData = {
       foldable: true,
       blocks: [
         {
+          layout: "side-caption",
           pairedResource: {
             kind: "image",
             src: "assets/measurements/bispnpp-discontinuous-progress-curves-bradford-calibration-and-initial.jpg",
@@ -337,7 +340,7 @@ const BISPNPP_DISCONTINUOUS: ExperimentData = {
           callouts: [
             {
               kind: "outcome",
-              text: "This matched our expectation that raw and specific activity could dissociate, and it directly answers the block objective: AphA (a non-specific acid phosphatase with high specific activity) [4] and PhyA (the only phytase carried through, unique in releasing the multiple phosphates of phytate) emerge as the key components for the modular phosphorus-recovery bioreactor.",
+              text: "**This matched our expectation that raw and specific activity could dissociate,** and it directly answers the block objective: AphA (a non-specific acid phosphatase with high specific activity) [4] and PhyA (the only phytase carried through, unique in releasing the multiple phosphates of phytate) emerge as the key components for the modular phosphorus-recovery bioreactor.",
             },
           ],
         },
@@ -345,7 +348,7 @@ const BISPNPP_DISCONTINUOUS: ExperimentData = {
           callouts: [
             {
               kind: "not-done",
-              text: "Next experimental steps: extend the characterisation from single-point specific activity to full Michaelis–Menten kinetics [6] (Kₘ, k꜀ₐₜ) against bis-pNPP and, ideally, against real degumming substrate; assess pH and thermal stability across the operating window; and carry AphA and PhyA into the immobilisation work-block, re-measuring specific activity after immobilisation to quantify activity retention. Had any enzyme shown no activity, the most likely causes would have been misfolding or loss of a required metal cofactor during dialysis.",
+              text: "**Next experimental steps: extend the characterisation from single-point specific activity to full Michaelis–Menten kinetics [6] (Kₘ,** k꜀ₐₜ) against bis-pNPP and, ideally, against real degumming substrate; assess pH and thermal stability across the operating window; and carry AphA and PhyA into the immobilisation work-block, re-measuring specific activity after immobilisation to quantify activity retention. Had any enzyme shown no activity, the most likely causes would have been misfolding or loss of a required metal cofactor during dialysis.",
             },
           ],
         },
@@ -543,7 +546,7 @@ const BRADFORD: ExperimentData = {
           callouts: [
             {
               kind: "learn",
-              text: "The main source of uncertainty is the assay’s intrinsic non-linearity and buffer sensitivity; keeping standards in the same buffer and working within the linear range, as done here via dilution, is the practical mitigation, and the observed low replicate error at the selected dilutions supports the reliability of the reported values.",
+              text: "**The main source of uncertainty is the assay’s intrinsic non-linearity and buffer sensitivity;** keeping standards in the same buffer and working within the linear range, as done here via dilution, is the practical mitigation, and the observed low replicate error at the selected dilutions supports the reliability of the reported values.",
             },
           ],
         },
@@ -551,7 +554,7 @@ const BRADFORD: ExperimentData = {
           callouts: [
             {
               kind: "not-done",
-              text: "Next steps: where the highest accuracy is needed, apply the linearised Bradford read-out (A₅₉₅/A₄₅₀ ratio) to widen the reliable range and reduce dilution dependence [2]; cross-check key concentrations with an orthogonal method, for example A₂₈₀ with the calculated extinction coefficient, for the purified single proteins; and continue to pair every activity measurement with a Bradford quantification so all downstream activities remain mass-normalised.",
+              text: "**Next steps: where the highest accuracy is needed, apply the linearised Bradford read-out (A₅₉₅/A₄₅₀ ratio) to widen the reliable range and reduce dilution dependence [2];** cross-check key concentrations with an orthogonal method, for example A₂₈₀ with the calculated extinction coefficient, for the purified single proteins; and continue to pair every activity measurement with a Bradford quantification so all downstream activities remain mass-normalised.",
             },
           ],
         },

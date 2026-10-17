@@ -252,7 +252,7 @@ const FTIR: ExperimentData = {
           callouts: [
             {
               kind: "learn",
-              text: "This analysis offers a semi-quantitative estimate conditional on spectral quality [1, 4], and the limitation is intrinsic rather than procedural. FTIR reports the overall proportion of M and G residues but says nothing about how they are arranged along the chain. Since calcium crosslinking proceeds through consecutive G blocks in the egg-box arrangement [6, 8], gel stiffness depends on the length and abundance of those blocks rather than on the ratio itself [7, 9]. Our value indicates the direction of the expected mechanical behaviour but not its magnitude. Establishing block composition would require ¹H NMR, which was outside the scope of this work.",
+              text: "**This analysis offers a semi-quantitative estimate conditional on spectral quality [1, 4], and the limitation is intrinsic rather than procedural.** FTIR reports the overall proportion of M and G residues but says nothing about how they are arranged along the chain. Since calcium crosslinking proceeds through consecutive G blocks in the egg-box arrangement [6, 8], gel stiffness depends on the length and abundance of those blocks rather than on the ratio itself [7, 9]. Our value indicates the direction of the expected mechanical behaviour but not its magnitude. Establishing block composition would require ¹H NMR, which was outside the scope of this work.",
             },
           ],
         },
@@ -260,7 +260,7 @@ const FTIR: ExperimentData = {
           callouts: [
             {
               kind: "outcome",
-              text: "FTIR-ATR established the chemical form and approximate composition of the raw material in minutes, from a few milligrams of powder with no sample preparation, at the point in the project where that information was needed to begin designing the encapsulation experiments. This analysis was used as a screening and identity method rather than as a substitute for NMR.",
+              text: "**FTIR-ATR established the chemical form and approximate composition of the raw material in minutes,** from a few milligrams of powder with no sample preparation, at the point in the project where that information was needed to begin designing the encapsulation experiments. This analysis was used as a screening and identity method rather than as a substitute for NMR.",
             },
           ],
         },
@@ -343,6 +343,11 @@ const IMAGEJ: ExperimentData = {
           ],
         },
       },
+    },
+    {
+      id: "section-imagej-intact-beads-and-capsules-size-and-shape",
+      title: "Intact beads and capsules: size and shape",
+      group: true,
     },
     {
       paragraphs: [
@@ -462,12 +467,17 @@ const IMAGEJ: ExperimentData = {
       ],
     },
     {
+      id: "section-imagej-cross-sectioned-core-shell-capsules-shell-thickness",
+      title: "Cross-sectioned core-shell capsules: shell thickness",
+      group: true,
+    },
+    {
       paragraphs: [
         "Shell thickness measurement required access to the internal cross-section of core-shell capsules. These were therefore flash-frozen in liquid nitrogen to preserve their structure without deformation, then cut in half. The cross-section was placed under the microscope with a coverslip laid on top, and shell thickness was measured with ImageJ from the calibrated image. Cryo-fracturing in liquid nitrogen prior to cross-sectional imaging is an established preparation method for alginate capsule cross-sections, since it prevents the collapse or distortion of the internal structure that mechanical cutting alone can cause [8]. The resulting cross-sectional images have been used specifically to quantify shell or membrane thickness in alginate capsules by calibrated image analysis in ImageJ [6]. Because higher magnification was required to resolve the shell clearly, the full particle was not captured within the field of view, meaning that neither overall shape and diameter nor the core-to-shell ratio could be obtained from these same images.",
       ],
     },
     {
-      id: "section-imagej-application-to-our-project",
+      id: "section-imagej-application-to-our-project--cross-sectioned-core",
       title: "Application to our project",
       foldable: true,
       blocks: [
@@ -480,7 +490,7 @@ const IMAGEJ: ExperimentData = {
       ],
     },
     {
-      id: "section-imagej-technique-requirements",
+      id: "section-imagej-technique-requirements--cross-sectioned-core",
       title: "Technique requirements",
       foldable: true,
       blocks: [
@@ -530,7 +540,7 @@ const IMAGEJ: ExperimentData = {
           },
         },
         {
-          id: "section-imagej-sample-preparation",
+          id: "section-imagej-sample-preparation--cross-sectioned-core",
           title: "Sample preparation",
           foldable: true,
           blocks: [
@@ -544,7 +554,7 @@ const IMAGEJ: ExperimentData = {
       ],
     },
     {
-      id: "section-imagej-results",
+      id: "section-imagej-results--cross-sectioned-core",
       title: "Results",
       foldable: true,
       blocks: [
@@ -572,11 +582,16 @@ const IMAGEJ: ExperimentData = {
           callouts: [
             {
               kind: "learn",
-              text: "If the aim is to discriminate between formulations rather than to establish a length scale, optical measurement of a cryo-fractured cross-section is unlikely to be sufficient on its own, and the effort is better spent either on a sectioning method that guarantees a central cut or on measuring a property that depends on the shell rather than on its apparent width.",
+              text: "**If the aim is to discriminate between formulations rather than to establish a length scale,** optical measurement of a cryo-fractured cross-section is unlikely to be sufficient on its own, and the effort is better spent either on a sectioning method that guarantees a central cut or on measuring a property that depends on the shell rather than on its apparent width.",
             },
           ],
         },
       ],
+    },
+    {
+      id: "section-imagej-mechanical-assay-deformation-under-load",
+      title: "Mechanical assay: deformation under load",
+      group: true,
     },
     {
       paragraphs: [
@@ -584,7 +599,7 @@ const IMAGEJ: ExperimentData = {
       ],
     },
     {
-      id: "section-imagej-application-to-our-project",
+      id: "section-imagej-application-to-our-project--mechanical-assay-deformation",
       title: "Application to our project",
       foldable: true,
       blocks: [
@@ -597,7 +612,7 @@ const IMAGEJ: ExperimentData = {
       ],
     },
     {
-      id: "section-imagej-technique-requirements",
+      id: "section-imagej-technique-requirements--mechanical-assay-deformation",
       title: "Technique requirements",
       foldable: true,
       blocks: [
@@ -651,7 +666,7 @@ const IMAGEJ: ExperimentData = {
           },
         },
         {
-          id: "section-imagej-sample-preparation",
+          id: "section-imagej-sample-preparation--mechanical-assay-deformation",
           title: "Sample preparation",
           foldable: true,
           blocks: [
@@ -664,7 +679,7 @@ const IMAGEJ: ExperimentData = {
               callouts: [
                 {
                   kind: "not-done",
-                  text: "The load is applied to a group of three capsules through a shared coverslip, so the figures quoted are the total mass on the group and not the force on an individual capsule. This is consistent across all conditions and batches, which is what the comparison needs, but any absolute interpretation has to divide by three and account for the capsules sharing the load unevenly.",
+                  text: "**The load is applied to a group of three capsules through a shared coverslip,** so the figures quoted are the total mass on the group and not the force on an individual capsule. This is consistent across all conditions and batches, which is what the comparison needs, but any absolute interpretation has to divide by three and account for the capsules sharing the load unevenly.",
                 },
               ],
             },
@@ -673,7 +688,7 @@ const IMAGEJ: ExperimentData = {
       ],
     },
     {
-      id: "section-imagej-results",
+      id: "section-imagej-results--mechanical-assay-deformation",
       title: "Results",
       foldable: true,
       blocks: [
@@ -712,6 +727,11 @@ const IMAGEJ: ExperimentData = {
           ],
         },
       ],
+    },
+    {
+      id: "section-imagej-general-conclusions",
+      title: "General conclusions",
+      group: true,
     },
     {
       paragraphs: [
@@ -906,7 +926,7 @@ const UV_VIS: ExperimentData = {
           callouts: [
             {
               kind: "learn",
-              text: "The approach transfers to any encapsulation system whose cargo absorbs light, and what is worth borrowing is the structure rather than the tracer. It rests on five elements: a matched no-cargo control in every medium; a quantification window chosen from those controls rather than by convention; a diluted reference that sets the detection limit; a deliberate destruction step that confirms the cargo was there; and a tracer placed where the real cargo will sit. The destruction step is the one most easily left out, and without it a containment claim built on absent signals cannot be told apart from a failure to load.",
+              text: "**The approach transfers to any encapsulation system whose cargo absorbs light, and what is worth borrowing is the structure rather than the tracer.** It rests on five elements: a matched no-cargo control in every medium; a quantification window chosen from those controls rather than by convention; a diluted reference that sets the detection limit; a deliberate destruction step that confirms the cargo was there; and a tracer placed where the real cargo will sit. The destruction step is the one most easily left out, and without it a containment claim built on absent signals cannot be told apart from a failure to load.",
             },
           ],
         },
@@ -914,7 +934,7 @@ const UV_VIS: ExperimentData = {
           callouts: [
             {
               kind: "not-done",
-              text: "The obvious next step is to repeat the experiment with the bacteria themselves rather than to look for a better tracer. The core configuration failed here because magnetite is dense and aggregates, settling out of the inner solution before it reaches the capsule, whereas bacterial cells are close to the density of water and stay suspended, so the loading problem does not carry over. Capsules carrying engineered P. putida in the core, with the surrounding medium sampled over time and plated for viable cells, would measure the quantity the biosafety case actually rests on [2].",
+              text: "**The obvious next step is to repeat the experiment with the bacteria themselves rather than to look for a better tracer.** The core configuration failed here because magnetite is dense and aggregates, settling out of the inner solution before it reaches the capsule, whereas bacterial cells are close to the density of water and stay suspended, so the loading problem does not carry over. Capsules carrying engineered P. putida in the core, with the surrounding medium sampled over time and plated for viable cells, would measure the quantity the biosafety case actually rests on [2].",
             },
           ],
         },
@@ -1105,7 +1125,7 @@ const TGA_DSC: ExperimentData = {
           callouts: [
             {
               kind: "learn",
-              text: "Three points from this measurement transfer directly to other teams working with hydrogel encapsulation and cost nothing to apply. A hydrated alginate capsule is approximately 95% water, so any quantity normalised to sample mass, loading capacity and leakage figures in particular, changes by more than an order of magnitude depending on whether it is expressed on a wet or dry basis, and the basis has to be stated. Air-drying overnight does not give a dry sample: roughly a tenth of the remaining mass is still water, so a protocol calling for dry material needs drying to constant mass. And running a hydrated specimen past 200 °C yields almost no usable information about the polymer, because the polymer is not where the mass is.",
+              text: "**Three points from this measurement transfer directly to other teams working with hydrogel encapsulation and cost nothing to apply.** A hydrated alginate capsule is approximately 95% water, so any quantity normalised to sample mass, loading capacity and leakage figures in particular, changes by more than an order of magnitude depending on whether it is expressed on a wet or dry basis, and the basis has to be stated. Air-drying overnight does not give a dry sample: roughly a tenth of the remaining mass is still water, so a protocol calling for dry material needs drying to constant mass. And running a hydrated specimen past 200 °C yields almost no usable information about the polymer, because the polymer is not where the mass is.",
             },
           ],
         },
@@ -1113,7 +1133,7 @@ const TGA_DSC: ExperimentData = {
           callouts: [
             {
               kind: "not-done",
-              text: "The next runs we would make are a specimen dried to constant mass, to resolve any CaCl₂ contribution, and a dried specimen taken to 700 °C, to confirm that the residue is stable rather than still evolving.",
+              text: "**The next runs we would make are a specimen dried to constant mass,** to resolve any CaCl₂ contribution, and a dried specimen taken to 700 °C, to confirm that the residue is stable rather than still evolving.",
             },
           ],
         },
@@ -1344,7 +1364,7 @@ const SEM: ExperimentData = {
           callouts: [
             {
               kind: "outcome",
-              text: "Together these results completed the physical characterisation of the encapsulation platform ahead of its integration with the biological module. The chemistry the encapsulation protocol assumes is confirmed at the surface, the shell is continuous, and the surface texture of the dried material is reproducible between capsules.",
+              text: "**Together these results completed the physical characterisation of the encapsulation platform ahead of its integration with the biological module.** The chemistry the encapsulation protocol assumes is confirmed at the surface, the shell is continuous, and the surface texture of the dried material is reproducible between capsules.",
             },
           ],
         },
@@ -1352,7 +1372,7 @@ const SEM: ExperimentData = {
           callouts: [
             {
               kind: "not-done",
-              text: "Two follow-ups would close what remains open: comparing curing times or a more thorough wash, to establish how much of the calcium excess and the residual chloride can be removed, and imaging a cryogenically prepared or hydrated specimen [4], which is the only way to say anything about the porosity that actually governs transport.",
+              text: "**Two follow-ups would close what remains open:** comparing curing times or a more thorough wash, to establish how much of the calcium excess and the residual chloride can be removed, and imaging a cryogenically prepared or hydrated specimen [4], which is the only way to say anything about the porosity that actually governs transport.",
             },
           ],
         },
