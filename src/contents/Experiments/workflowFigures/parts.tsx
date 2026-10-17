@@ -101,6 +101,7 @@ export function Bacterium({
   fill,
   dna = C.ink,
   flagella = 12,
+  flagellaLen = 26,
 }: {
   x: number;
   y: number;
@@ -111,6 +112,9 @@ export function Bacterium({
   fill: string;
   dna?: string;
   flagella?: number;
+  /** How far the flagella reach beyond the cell; scale it down for the
+   * small cells drawn as legend keys. */
+  flagellaLen?: number;
 }) {
   const hl = len / 2;
   const hw = wid / 2;
@@ -120,12 +124,12 @@ export function Bacterium({
         const t = (i / flagella) * Math.PI * 2;
         const ex = Math.cos(t) * hl * 0.95;
         const ey = Math.sin(t) * hw * 0.95;
-        const ox = Math.cos(t) * (hl + 26);
-        const oy = Math.sin(t) * (hw + 26);
+        const ox = Math.cos(t) * (hl + flagellaLen);
+        const oy = Math.sin(t) * (hw + flagellaLen);
         return (
           <path
             key={i}
-            d={`M${ex},${ey} Q${(ex + ox) / 2 + 8},${(ey + oy) / 2 - 8} ${ox},${oy} T${ox + Math.cos(t) * 14},${oy + Math.sin(t) * 14}`}
+            d={`M${ex},${ey} Q${(ex + ox) / 2 + 8},${(ey + oy) / 2 - 8} ${ox},${oy} T${ox + Math.cos(t) * flagellaLen * 0.54},${oy + Math.sin(t) * flagellaLen * 0.54}`}
             stroke={stroke}
             strokeWidth={2.4}
             fill="none"

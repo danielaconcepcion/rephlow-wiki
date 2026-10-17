@@ -11,6 +11,9 @@ import { Rich } from "../../components/LabFolders/RichText";
 import { EncapsulationWorkflow } from "./workflowFigures/EncapsulationWorkflow";
 import { RevalorisationWorkflow } from "./workflowFigures/RevalorisationWorkflow";
 import { EnzymaticWorkflow } from "./workflowFigures/EnzymaticWorkflow";
+import { PolyphosphateWorkflow } from "./workflowFigures/PolyphosphateWorkflow";
+import { CloningWorkflow } from "./workflowFigures/CloningWorkflow";
+import { KnockoutWorkflow } from "./workflowFigures/KnockoutWorkflow";
 import {
   NumberingContext,
   numberExperiments,
@@ -142,6 +145,13 @@ function DeckPalette({
   if (!palette) return <>{children}</>;
   return <div className={`lab-block--${palette}`}>{children}</div>;
 }
+
+/** The workflow figure a sub-block opens with, where it has one. */
+const SUBBLOCK_WORKFLOWS: Record<string, ReactNode> = {
+  "polyphosphate-accumulation-study": <PolyphosphateWorkflow />,
+  cloning: <CloningWorkflow />,
+  "knocking-out": <KnockoutWorkflow />,
+};
 
 function experimentFolders(experiments: ExperimentData[]) {
   return experiments.map((experiment, index) => ({
@@ -354,6 +364,10 @@ export function Experiments() {
                         </h2>
                         {paragraphs(subBlock.intro, "lab-subblock__intro")}
                       </div>
+                      {/* Genetic engineering's three workflows, redrawn: each
+                        closes its sub-block's intro, where the original image
+                        sat, and its panels open the experiments below. */}
+                      {SUBBLOCK_WORKFLOWS[subBlock.id]}
                       {subBlock.experiments && (
                         <DeckPalette palette={activeBlock.palette}>
                           <FolderStack
