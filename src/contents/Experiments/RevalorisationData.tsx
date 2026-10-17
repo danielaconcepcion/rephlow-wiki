@@ -577,6 +577,17 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 the plasmid's T7 promoter is only transcribed once the
                 polymerase is induced.
               </>,
+            ],
+            pairedResource: {
+              kind: "image",
+              src: `${IMG_DIR}/pet28a-vector-map.png`,
+              alt: "Map of the pET-28a(+) expression vector, with the T7 promoter, lac operator, lacI gene, kanamycin marker and hexahistidine tag",
+              caption:
+                "Map of the **pET-28a(+)** expression vector used for both constructs, showing the **T7 promoter** and **lac operator** upstream of the cloning site, the **lacI** gene, the **kanamycin resistance** marker and the **hexahistidine tag**, read here at the **C-terminus** (Novagen #69864-3).",
+            },
+          },
+          {
+            paragraphs: [
               <>
                 Because the construct was ready for expression, the usual
                 intermediate of amplifying and verifying the plasmid in a

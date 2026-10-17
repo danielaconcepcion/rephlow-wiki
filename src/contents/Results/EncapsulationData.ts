@@ -131,6 +131,8 @@ const BEAD_CONCENTRATION_HEIGHT: ResultData = {
       ],
       figures: [
         {
+          src: `${FIGURES}/beads-sphericity-concentration.png`,
+          alt: "Grouped scatter of bead sphericity against alginate concentration, with the five drop heights within each group.",
           caption:
             "Sphericity of beads produced at each alginate concentration (mean ± SD, n = 10), with the five drop heights shown within each group.",
         },
@@ -155,6 +157,8 @@ const BEAD_CONCENTRATION_HEIGHT: ResultData = {
       continued: true,
       figures: [
         {
+          src: `${FIGURES}/beads-diameter-concentration.png`,
+          alt: "Grouped scatter of bead equivalent diameter against alginate concentration, with the five drop heights within each group.",
           caption:
             "Equivalent diameter of beads produced at each alginate concentration (mean ± SD, n = 10), with the five drop heights shown within each group.",
         },
@@ -193,6 +197,8 @@ const BEAD_FLOW_RATE: ResultData = {
       ],
       figures: [
         {
+          src: `${FIGURES}/beads-flow-rate.png`,
+          alt: "Equivalent diameter and sphericity of beads plotted against extrusion flow rate.",
           caption:
             "Equivalent diameter and sphericity of 3.5% (w/v) alginate beads produced at different flow rates (mean ± SD, n = 10). The flow-rate axis is categorical, not to scale.",
         },
@@ -246,6 +252,8 @@ const BEAD_CROSSLINKING: ResultData = {
       ],
       figures: [
         {
+          src: `${FIGURES}/beads-crosslinking-time.png`,
+          alt: "Equivalent diameter of beads plotted against crosslinking time.",
           caption:
             "Equivalent diameter of 3.5% (w/v) alginate beads after different crosslinking times (mean ± SD, n = 8–10).",
         },
@@ -306,6 +314,25 @@ const BEAD_PRESERVATION: ResultData = {
         caption:
           "3.5% (w/v) alginate beads photographed over 72 h of storage in each medium. The 72 h PBS panel is the end state of that series: the beads had dissolved or broken apart and none could be measured.",
       },
+    },
+    {
+      id: "storage-media-week",
+      continued: true,
+      figuresColumns: 2,
+      figures: [
+        {
+          src: `${FIGURES}/beads-water-168h.jpg`,
+          alt: "Alginate beads after one week in water.",
+          caption: "",
+        },
+        {
+          src: `${FIGURES}/beads-wastewater-168h.jpg`,
+          alt: "Alginate beads after one week in untreated industrial wastewater.",
+          caption: "",
+        },
+      ],
+      figuresCaption:
+        "The same beads after one week (168 h) in water (left) and in untreated industrial wastewater (right). PBS is not shown, as no intact beads remained after day 3.",
     },
     {
       id: "storage-media-measurements",
@@ -424,6 +451,8 @@ const CORE_SHELL_FLOW_RATIO: ResultData = {
       id: "shell-thickness",
       figures: [
         {
+          src: `${FIGURES}/shell-thickness.png`,
+          alt: "Shell thickness of individual capsules for each alginate concentration and flow-rate combination.",
           caption:
             "Shell thickness of individual core-shell capsules, each point the mean of five or six measurements around one capsule, coloured by condition. Points are spread horizontally within each group only to avoid overlap and carry no meaning. n = 10 capsules per condition, 6 for 3.5% (w/v) at 300/75.",
         },
@@ -484,6 +513,8 @@ const CORE_SHELL_MECHANICAL: ResultData = {
       id: "mechanical-normalisation",
       figures: [
         {
+          src: `${FIGURES}/mechanical-sphericity-load.png`,
+          alt: "Sphericity retained under increasing compressive load for fresh and stored capsules, one line per flow condition.",
           caption:
             "Sphericity retained under increasing compressive load, normalised to the unloaded value of each condition (s/s₀, mean ± SD). Two panels: freshly prepared capsules and capsules stored in distilled water for one week. One line per flow condition.",
         },
@@ -549,6 +580,8 @@ const CORE_SHELL_CONTAINMENT: ResultData = {
       id: "magnetite-spectra",
       figures: [
         {
+          src: `${FIGURES}/magnetite-absorbance-spectra.png`,
+          alt: "Absorbance spectra of the synthesis bath, storage water and the PBS used to dissolve the capsules, with and without magnetite.",
           caption:
             "Absorbance spectra of the calcium chloride synthesis bath, the storage water after one and three days, and PBS after dissolution of the capsules, for capsules without magnetite (control), with magnetite in the core and with magnetite in the alginate shell, together with the reference spectrum of the magnetite suspension. Spectra were recorded from 200 to 1000 nm; the figure shows the 250–1000 nm range, below which the signal is dominated by instrumental noise. The dashed lines (450 and 600 nm) indicate the interval used for quantification.",
         },
@@ -591,6 +624,8 @@ const CORE_SHELL_PRESERVATION: ResultData = {
       id: "preservation-size",
       figures: [
         {
+          src: `${FIGURES}/preservation-diameter.png`,
+          alt: "Equivalent diameter of core-shell capsules over time in each storage medium.",
           caption:
             "Equivalent diameter of core-shell capsules stored in different chemical environments over time (mean ± SD, n = 8–10). Capsules in 1×, ½× and ¼× PBS and in the equivalent sodium-free buffer had broken down beyond imaging within the first day, and capsules in basified wastewater fragmented; neither is shown. Only capsules in untreated wastewater were followed to day 7. Capsules stored in industrial wastewater came from a different synthesis batch and were larger at day 0 than those in the other media, so this series should be read for its trend over time rather than compared in absolute size with the others.",
         },
@@ -743,6 +778,8 @@ const THERMAL: ResultData = {
       ],
       figures: [
         {
+          src: `${FIGURES}/tga-curves.png`,
+          alt: "Thermogravimetric curves of two hydrated capsules and the pooled dried sample, to 500 degrees Celsius.",
           caption:
             "Thermogravimetric curves of the two hydrated capsules and the pooled dried sample, shown to 500 °C. One hydrated replicate was taken to 673 °C and lost a further 0.3 percentage points between 495 and 673 °C, which is baseline drift rather than an event, so the comparison is made over the common range.",
         },
