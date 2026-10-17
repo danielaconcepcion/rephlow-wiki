@@ -1,0 +1,97 @@
+/* --------------------------------------------------------------------------
+   Measurements — what this page adds to the shared lab-folder system.
+
+   Everything structural (the block pills, the folder deck, the record
+   card, the foldable sections, the lateral index) is the system's own; the
+   rules below are only the two blocks of block-level prose this page has
+   and the two things the page reads differently from Experiments: no
+   colour bar beside a callout, and air under each run of folded sections.
+   -------------------------------------------------------------------------- */
+
+/* The line naming what the block measures. A lead, not a shouted label:
+   sentence case at reading size, in the block's own accent. */
+.ms-page .ms-summary {
+  margin: 0 0 14px;
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--folder-accent, var(--ink));
+}
+
+/* Why these techniques, and in what order. A quiet panel rather than a
+   bordered callout — it introduces the deck below it, so it should not
+   compete with the record cards. */
+.ms-page .ms-characterisation {
+  margin: 8px 0 40px;
+  padding: 20px 24px;
+  border-radius: 10px;
+  background: var(--paper-soft);
+}
+
+.ms-page .ms-characterisation__text {
+  margin: 0 0 14px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.ms-page .ms-characterisation__text:last-child {
+  margin-bottom: 0;
+}
+
+/* Callouts keep their tint and their label, but not the vertical colour
+   bar: on a page where every folded section already carries one down its
+   left edge, a second kind of bar reads as a second kind of control. */
+.ms-page .experiment-callout {
+  border-left: 0;
+  padding: 18px 22px;
+}
+
+.ms-page .experiment-callout--not-done {
+  border-left-style: none;
+}
+
+/* Air under a run of folded sections, not between them.
+
+   The record card is a grid whose row gap would space the sections apart
+   on its own, so here that gap is handed back to margins: consecutive
+   sections sit tight, and the last one of a run opens the gap before
+   whatever follows the group. */
+.ms-page .experiment-card {
+  row-gap: 0;
+}
+
+.ms-page .experiment-card__block {
+  margin-top: 22px;
+}
+
+.ms-page .experiment-card__block:first-of-type {
+  margin-top: 0;
+}
+
+.ms-page .experiment-card__footer {
+  margin-top: 26px;
+}
+/* Air under a run of folded sections, not between them: consecutive
+   sections stay tight, and the last one of a run is what opens the gap
+   before whatever follows the group. */
+.ms-page
+  .experiment-section--foldable:not(:has(+ .experiment-section--foldable)) {
+  margin-bottom: 34px;
+}
+
+.ms-page .experiment-card__block + .experiment-section--foldable {
+  margin-top: 26px;
+}
+
+/* These records illustrate a technique as much as a result: an instrument
+   photograph or a full-plate gel at card width is taller than the prose
+   that explains it. Capping the height keeps a figure next to its own
+   discussion without changing its proportions. */
+.ms-page .experiment-card .record-figure__photo,
+.ms-page .experiment-card .record-figure-group__photo {
+  width: auto;
+  max-width: 100%;
+  max-height: 440px;
+  margin-inline: auto;
+}

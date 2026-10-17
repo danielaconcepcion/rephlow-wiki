@@ -117,6 +117,9 @@ const Pages: Page[] = [
     path: "/measurements",
     component: Measurements,
     docTitle: "Measurements — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 17,
   },
   {
     name: "Results",

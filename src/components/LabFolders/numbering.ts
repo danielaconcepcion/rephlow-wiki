@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import type {
+  ExperimentBodyBlock,
   ExperimentData,
   ExperimentSubBlock,
   ResultData,
@@ -64,11 +65,13 @@ export function numberExperiments(
   const numbers: Numbering = new Map();
   let figure = 0;
   let table = 0;
-  for (const group of groups) {
-    for (const experiment of group.experiments ?? []) {
-      for (const block of experiment.body ?? []) {
-        const resource = block.pairedResource;
-        if (!resource) continue;
+  /* Reading order, foldable sections included: a figure inside a folded
+     section is still the next figure in the record, whether or not the
+     reader has opened it. */
+  const walk = (blocks: ExperimentBodyBlock[] | undefined) => {
+    for (const block of blocks ?? []) {
+      const resource = block.pairedResource;
+      if (resource) {
         if (
           resource.kind === "table" ||
           resource.kind === "table-placeholder"
@@ -78,6 +81,13 @@ export function numberExperiments(
           numbers.set(resource, ++figure);
         }
       }
+      if (block.blocks) walk(block.blocks);
+    }
+  };
+
+  for (const group of groups) {
+    for (const experiment of group.experiments ?? []) {
+      walk(experiment.body);
       for (const item of experiment.tables ?? []) numbers.set(item, ++table);
       if (experiment.figure) numbers.set(experiment.figure, ++figure);
     }
