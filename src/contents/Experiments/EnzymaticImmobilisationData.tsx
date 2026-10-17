@@ -15,108 +15,80 @@ function Cite({ n }: { n: number }) {
   );
 }
 
-/** Named lab protocols for "Immobilisation chemistry" — same convention as
- * Genetic engineering's own PROTOCOL/protocolLinks: each renders as its own
- * "Protocols:" download link on the experiment card. No protocol document
- * exists yet for any of these (the source itself only says "see the
- * Protocols page [link pending]"), so labels and hrefs are topical
- * placeholders standing in for the eventual real names/files. */
+
+/**
+ * "Enzymatic immobilisation" Experiments block. Every word below is the
+ * team's own, taken from the current Notion page "Experiments / Enzymatic
+ * immobilisation"; nothing is summarised, reworded or filled in.
+ *
+ * What the source's own shape becomes here: the page intro is the block
+ * intro, "The four parts of the system" is ENZYME_ACTIVITIES (rendered by
+ * EnzymeActivityGrid, since none of the four is an experiment), and the
+ * two section callouts are the two sub-blocks, one folder per toggle.
+ * Tables are transcribed into the card's own table component, and inline
+ * "[n]" citations keep the source's numbering against the single
+ * reference list the page ends with.
+ *
+ * The source's recurring "Protocol: see the Protocols page [link
+ * pending]" line is not published as prose; each step instead carries the
+ * matching document from the team's Protocols page as a `protocols`
+ * download, which opens in the wiki's own PDF viewer. The only other
+ * lines left unpublished are each activity's "GIF (storyboard): …"
+ * production note (shown as such by EnzymeActivityGrid, not as a figure).
+ * The source's blank `![]()` embeds carry neither image nor caption and
+ * are not rendered.
+ */
+
+/** The block's own protocol documents, as published on the team's Protocols
+ * page. Each renders as a download pill on the card and opens in the
+ * wiki's PDF viewer — the same `protocols` field Revalorisation uses. */
 const PROTOCOL: Record<string, { label: string; href: string }> = {
-  "lecitase-activity-assay": {
-    label: "Lecitase Ultra activity assay (pNPB)",
-    href: "assets/protocols/lecitase-activity-assay.pdf",
+  "in-silico-design": {
+    label: "In silico construct design",
+    href: "assets/protocols/immobilisation-in-silico-design.pdf",
   },
-  "manae-agarose-preparation": {
-    label: "MANAE-agarose support preparation",
-    href: "assets/protocols/manae-agarose-preparation.pdf",
+  pcr: { label: "PCR", href: "assets/protocols/immobilisation-pcr.pdf" },
+  cloning: { label: "Cloning", href: "assets/protocols/immobilisation-cloning.pdf" },
+  transformation: {
+    label: "Transformation (E. coli)",
+    href: "assets/protocols/immobilisation-transformation.pdf",
   },
-  "immobilisation-strategy-a": {
-    label: "Covalent immobilisation (Strategy A)",
-    href: "assets/protocols/immobilisation-strategy-a.pdf",
+  "iptg-induction": {
+    label: "Expression — IPTG induction",
+    href: "assets/protocols/immobilisation-iptg-induction.pdf",
   },
-  "immobilisation-strategy-b": {
-    label: "Ionic adsorption + crosslinking (Strategy B)",
-    href: "assets/protocols/immobilisation-strategy-b.pdf",
+  "zy-autoinduction": {
+    label: "Expression — ZY autoinduction",
+    href: "assets/protocols/immobilisation-zy-autoinduction.pdf",
   },
-  "detergent-effect-assay": {
-    label: "Detergent-effect assay (Triton X-100)",
-    href: "assets/protocols/detergent-effect-assay.pdf",
+  "expression-test": {
+    label: "Expression test — soluble / insoluble",
+    href: "assets/protocols/immobilisation-expression-test.pdf",
   },
-  "immobilisation-yield-assay": {
-    label: "Immobilisation yield assay",
-    href: "assets/protocols/immobilisation-yield-assay.pdf",
+  imac: {
+    label: "Protein purification — IMAC",
+    href: "assets/protocols/immobilisation-imac.pdf",
   },
-  "pymol-modelling-scripts": {
-    label: "PyMOL modelling scripts",
-    href: "assets/protocols/pymol-modelling-scripts.pdf",
+  "bis-pnpp-assay": {
+    label: "Activity assay — bis-pNPP",
+    href: "assets/protocols/immobilisation-bis-pnpp-assay.pdf",
+  },
+  bradford: {
+    label: "Protein quantification — Bradford",
+    href: "assets/protocols/immobilisation-bradford.pdf",
+  },
+  "lecitase-characterisation": {
+    label: "Lecitase Ultra characterisation",
+    href: "assets/protocols/immobilisation-lecitase-characterisation.pdf",
+  },
+  manae: {
+    label: "Enzyme immobilisation — MANAE",
+    href: "assets/protocols/immobilisation-manae.pdf",
   },
 };
 function protocolLinks(...names: string[]) {
   return names.map((n) => PROTOCOL[n]);
 }
-
-/**
- * Real content for the "Enzymatic immobilisation" Experiments block —
- * transcribed from the team's own write-up (Notion export, "Experiments /
- * Enzymatic immobilisation") and the images/tables already extracted from
- * it (see the processed assets under public/assets/experiments/
- * enzymatic-immobilisation/).
- *
- * Structure mirrors Genetic engineering's: a block intro, a conceptual
- * "The four parts of the system" section (PLA / PLC / NAP / Phytases —
- * see ENZYME_ACTIVITIES below, rendered by EnzymeActivityGrid rather than
- * as folders, since none of them are experiments), then two numbered
- * workflows ("Sub-block 1: Enzyme production", "Sub-block 2:
- * Immobilisation chemistry").
- *
- * Content decisions (no wording invented, only adapted to what this
- * component family can render):
- * - The intro's two bullet points ("Produce the enzyme panel…" / "Immobilise
- *   them…") are rewritten as flowing prose, matching the same fix already
- *   applied to Genetic engineering's intro bullets.
- * - The source mentions an unembedded schematic of "the functionalised
- *   rePhlow sphere" (a callout carrying only the figure's own caption, no
- *   image) — kept as a real `image-placeholder`, the exact treatment this
- *   component family's placeholder system was built for (see
- *   PairedResource in types.ts).
- * - Several stray, caption-less 1×1 embeds scattered through the source
- *   (Notion's own blank-image artifacts, not real figures — no caption, no
- *   accompanying description) are silently dropped rather than rendered as
- *   placeholders, since a placeholder implies real, described missing
- *   content and these carry none.
- * - Each activity's "GIF (storyboard)" line describes a hypothetical
- *   explanatory animation the team hasn't produced — kept as a clearly
- *   labelled text description in EnzymeActivityGrid, not as a real media
- *   placeholder, exactly as GeneSystemGrid already does for Genetic
- *   engineering.
- * - The figures this block used to carry (the selection funnel, the gels,
- *   the PyMOL structures, the enzyme and construct tables) are outcomes,
- *   not design, and the Experiments source page has none of them. They
- *   moved to Results along with their assets; only the two tables this
- *   page actually contains, the IMAC buffer scheme and the assay
- *   parameters, stay here, because both describe how the step is run.
- * - Two cross-references to another experiment ("see Experiment 5",
- *   "(Experiment 7)") are kept exactly as written, even though this deck's
- *   own tabs aren't numbered 1-7 the same way the source's toggles were —
- *   not renamed to a tab label, since the instruction was to change
- *   nothing about the source's own wording.
- * - Every "Protocol: see the Protocols page [link pending]" / "PyMOL
- *   scripts: see the Protocols page [link pending]" line is dropped from the
- *   prose and replaced with a real `protocols` download-link field (see
- *   PROTOCOL/protocolLinks below), matching the convention already used in
- *   Genetic engineering — the source doesn't have real protocol documents
- *   yet either, so these point at the same kind of placeholder PDF paths
- *   Genetic engineering's own protocol links use, with topical placeholder
- *   titles standing in for the eventual real protocol names.
- * - Inline "[n]" citations are reproduced exactly as numbered in the
- *   source. The source's own numbering has a real inconsistency: several
- *   citations in "Sub-block 1: Enzyme production" don't match their
- *   listed reference (e.g. "EnzymeMiner [1]" in the text, but reference
- *   [1] in the list is an unrelated patent — EnzymeMiner is actually [2]).
- *   "Sub-block 2: Immobilisation chemistry"'s citations are internally
- *   consistent. This isn't fixed here — silently renumbering could get the
- *   intended mapping wrong — see the summary note back to the team instead.
- */
 
 export const ENZYMATIC_IMMOBILISATION_INTRO: ReactNode[] = [
   <>
@@ -336,6 +308,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was a per-enzyme decision (tag position, vector and disulphide dependence) that pre-empted the main causes of insolubility.",
         ],
+        protocols: protocolLinks("in-silico-design"),
       },
       {
         id: "genetic-constructs",
@@ -354,6 +327,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           "Inserts and vectors were then cut with FastDigest NdeI and HindIII, and the linearised vector was dephosphorylated with the thermosensitive alkaline phosphatase FastAP, a step included specifically to stop the vector re-circularising on itself without an insert and inflating the background. Fragments were gel-purified, and ligation was set at a 1:5 vector:insert molar ratio (NEBioCalculator) with T4 DNA ligase overnight at 16 ºC, a temperature that balances ligase activity against the annealing stability of the short cohesive ends.",
           "The expected outcome was a set of recombinant pET plasmids for each gene, in matched backbones and ready to transform.",
         ],
+        protocols: protocolLinks("pcr", "cloning"),
       },
       {
         id: "clone-verification",
@@ -387,6 +361,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was verified clones in the expression host, ready for induction.",
         ],
+        protocols: protocolLinks("transformation"),
       },
       {
         id: "recombinant-expression",
@@ -408,6 +383,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was to select the higher-yielding regime. IPTG gave the stronger overexpression and was carried forward; it also revealed that the enzymes accumulated as inclusion bodies and that the two phospholipases C were cytotoxic to the host, which set up the next two experiments.",
         ],
+        protocols: protocolLinks("iptg-induction", "zy-autoinduction"),
       },
       {
         id: "solubilisation",
@@ -421,7 +397,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             co-expressed, the ribosome-associated Trigger factor, which stabilises the emerging chain and prevents
             premature aggregation, and the GroES/GroEL complex, which encapsulates partly folded protein and lets it
             fold in an ATP-dependent cage away from the crowded cytoplasm. Finally, for the disulphide-dependent
-            enzymes flagged in the in-silico structural design, expression was moved to strains with an oxidising
+            enzymes flagged in Experiment 2, expression was moved to strains with an oxidising
             cytoplasm and rare-codon tRNAs (<strong>Origami 2, Rosetta-gami 2 and SHuffle T7</strong>, the last also
             co-expressing a disulphide isomerase); a codon analysis motivated this, since rare codons throttle both
             yield and folding. The cytotoxic phospholipases C were not forced through this pipeline but earmarked for
@@ -429,6 +405,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was soluble enzyme for the tractable targets. **GroES/GroEL solubilised M2-32, Rosetta-gami 2 solubilised PhyA, and AphA was obtained in BL21 (DE3)**.",
         ],
+        protocols: protocolLinks("expression-test"),
       },
       {
         id: "imac-purification",
@@ -467,6 +444,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             ],
           },
         ],
+        protocols: protocolLinks("imac"),
       },
       {
         id: "functional-characterisation",
@@ -505,6 +483,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             ],
           },
         ],
+        protocols: protocolLinks("bis-pnpp-assay", "bradford"),
       },
     ],
     outro:
@@ -550,7 +529,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             <strong>981 U/mg</strong>) to serve as the baseline for every immobilisation yield.
           </>,
         ],
-        protocols: protocolLinks("lecitase-activity-assay"),
+        protocols: protocolLinks("lecitase-characterisation", "bradford"),
       },
       {
         id: "manae-agarose-prep",
@@ -569,7 +548,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             immobilisation strategies.
           </>,
         ],
-        protocols: protocolLinks("manae-agarose-preparation"),
+        protocols: protocolLinks("manae"),
       },
       {
         id: "immobilisation-strategy-a",
@@ -589,7 +568,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             conformation at the moment of attachment.
           </>,
         ],
-        protocols: protocolLinks("immobilisation-strategy-a"),
+        protocols: protocolLinks("manae"),
       },
       {
         id: "immobilisation-strategy-b",
@@ -608,7 +587,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             provided its orientation on the support is right.
           </>,
         ],
-        protocols: protocolLinks("immobilisation-strategy-b"),
+        protocols: protocolLinks("manae"),
       },
       {
         id: "detergent-effect",
@@ -631,7 +610,6 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             route and harming the adsorption route.
           </>,
         ],
-        protocols: protocolLinks("detergent-effect-assay"),
       },
       {
         id: "immobilisation-yield",
@@ -646,7 +624,6 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             support.
           </>,
         ],
-        protocols: protocolLinks("immobilisation-yield-assay"),
       },
       {
         id: "computational-modelling",
@@ -667,7 +644,6 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             the closed-form adsorption route as the strategy to transfer to the sphere.
           </>,
         ],
-        protocols: protocolLinks("pymol-modelling-scripts"),
       },
     ],
     outro:
@@ -696,11 +672,3 @@ export const ENZYMATIC_IMMOBILISATION_REFERENCES: string[] = [
   "[18] Barbosa, O., Ortiz, C., Berenguer-Murcia, Á., Torres, R., Rodrigues, R. C., & Fernandez-Lafuente, R. (2014). Glutaraldehyde in bio-catalyst design: A useful crosslinker and a versatile tool in enzyme immobilization. RSC Advances, 4(4), 1583-1600. https://doi.org/10.1039/c3ra45991h",
 ];
 
-/** The source describes a schematic of "the functionalised rePhlow sphere"
- * (core PAO + surface enzyme panel) but never actually embeds it — the
- * Notion export carries only this caption in an otherwise empty callout.
- * Rendered as a real `image-placeholder` in Experiments.tsx, right after
- * the block intro — the exact case this component family's placeholder
- * system already existed for (see PairedResource in types.ts). */
-export const ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION =
-  "Schematic of the functionalised rePhlow sphere. In the core, the engineered PAO stores phosphorus as polyP; on the surface, the immobilised phosphohydrolase panel hydrolyses organophosphates from the degumming effluent, releasing free orthophosphate that diffuses inwards for assimilation. The arrows follow the phosphate: organic substrates are cleaved at the surface, and the resulting orthophosphate enters the core.";

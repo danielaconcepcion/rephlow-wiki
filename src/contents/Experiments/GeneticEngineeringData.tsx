@@ -21,86 +21,41 @@ function Cite({ scope, n }: { scope: string; n: number }) {
 }
 
 /**
- * Real content for the "Genetic engineering" Experiments block —
- * transcribed from the team's own write-up (Notion export,
- * Experiments-Genetic-Engineering/Genetic engineering ....html).
+ * "Genetic engineering" Experiments block. Every word below is the team's
+ * own, taken from the current Notion page "Experiments / Genetic
+ * engineering"; nothing is summarised, reworded or filled in.
  *
- * The source is organised differently from Alginate encapsulation: an
- * intro, a conceptual "The five parts of the system" section (5 toggles —
- * PPK1, PstSCAB, Ppx, PpkB, PitB — see GENE_PARTS below, rendered by the
- * bespoke GeneSystemGrid component rather than as folders, since none of
- * them are experiments), then two numbered workflows ("Sub-block1:
- * Cloning", "Sub-block 2: Knocking-out") and a closing synthesis section.
- * Reproduced here as three ExperimentSubBlock entries — "1. Cloning" and
- * "2. Knocking-out" (their own numbering: the source calls them "Sub-block
- * 1"/"Sub-block 2" but never numbers a third, so the "1./2./3." scheme
- * here is ours, purely organisational, matching Alginate encapsulation's
- * presentation) each with 9 real experiment steps, and "3. Closing: from
- * two modules to the RePhlow chassis" as a sub-block with no experiments
- * of its own (prose only — see ExperimentSubBlock.experiments being
- * optional).
+ * What the source's own shape becomes here: the page intro is the block
+ * intro, "The five parts of the system" is GENE_PARTS (rendered by
+ * GeneSystemGrid, since none of the five is an experiment), and the four
+ * section callouts are the four sub-blocks — "0. Polyphosphate
+ * accumulation study", "1. Cloning", "2. Knocking-out" and the Closing
+ * section, which is prose only and so has no folder deck. One folder per
+ * toggle, tables transcribed into the card's own table component, and the
+ * source's "[n]" citations kept against its single reference list.
  *
- * This file is .tsx (not .ts) because the source's own bold/italic
- * emphasis is reproduced as real <strong>/<em> JSX — every inline
- * emphasis run in the Notion export was checked against the raw HTML
- * (not just its rendered text) so nesting and, especially, the
- * whitespace immediately after a closing tag is preserved exactly as
- * written (e.g. "codon-optimised for <em>P. putida</em> KT2440" keeps its
- * two real spaces, not a run-together "P. putidaKT2440").
+ * Two source conventions are not published as prose. The bullet pairs in
+ * the page intro are run together as sentences, since block intros here
+ * are paragraphs. And each part's "GIF (storyboard): …" is a production
+ * note for an animation that does not exist, shown as such by
+ * GeneSystemGrid rather than as a figure.
  *
- * Content decisions (no wording invented, only adapted to what this
- * component family can render — matching the precedents already set in
- * EncapsulationData.ts):
- * - The intro's two bullet points ("Add phosphate-uptake…" / "Remove the
- *   native pathways…") are rewritten as flowing prose, since block/intro
- *   text here is plain paragraphs with no bullet-list support.
- * - The source's own explanatory schematic (the green-adds/red-removes
- *   diagram) is not embedded as an image — its content is fully carried by
- *   GeneSystemGrid's own colour-coded ADD/REMOVE layout instead, so
- *   nothing it showed is lost, just re-expressed as the interactive
- *   design requested for this section.
- * - Each toggle's "GIF (storyboard)" field describes a hypothetical
- *   explanatory animation the team hasn't produced — kept as a clearly
- *   labelled text description in GeneSystemGrid, not as a real media
- *   placeholder, since no such asset exists yet.
- * - The base-editing-guide step's "This was achieved by using
- *   :::::::::::::::::::::::::::: tool" is the source's own redacted
- *   placeholder (a tool name the team hasn't filled in yet) — kept as an
- *   honest "not yet specified" sentence rather than inventing a tool name
- *   or silently dropping the sentence.
- * - Each step's trailing "The expected outcome was …" line is folded into
- *   the write-up as a trailing paragraph (never `ExperimentData.notes`) —
- *   it's a narrative continuation of the write-up, not an aside, exactly
- *   the fix already applied throughout EncapsulationData.ts.
- * - Each step's trailing "Protocols: A; B; C." line is removed from the
- *   write-up entirely and turned into a real `protocols` array instead
- *   (see the shared PROTOCOL lookup below) — a plain-text mention of a
- *   named protocol isn't something a reader can act on, but a download
- *   link is. The one exception is the Closing sub-block's own
- *   "Protocols: …" line, which stays as plain text: Closing has no
- *   experiments of its own (see ExperimentSubBlock.experiments being
- *   optional), so there's no card to attach the links to.
- * - Inline "[n]" citation markers are only turned into real `references`
- *   entries at the step level, where ExperimentData actually has a place
- *   to show them; the two sub-block intros also carry citations in the
- *   source but there's no per-intro reference slot in this component
- *   family, so those bracket numbers are kept as plain text rather than
- *   invented into a dangling link.
- * - Two steps reference a table the source itself marks as not yet made
- *   ("[Tabla secuencias]", "[Tabla enzimas con tiempos y buffers]"). Both
- *   use `body` (see ExperimentData.body in types.ts) so the one paragraph
- *   that actually describes what the table would contain sits beside a
- *   clearly-labelled table placeholder — the same visual treatment
- *   already used for a missing figure in Enzymatic immobilisation and
- *   Revalorisation — while the rest of the step's write-up stays
- *   full-width instead of being pinned into a fixed two-column card.
+ * The source's three section images are the three workflow diagrams this
+ * page redraws (SUBBLOCK_WORKFLOWS in Experiments.tsx) and the page
+ * intro's PAO schematic is the project's own redrawn version, with the
+ * source's caption; the construct maps are its own SVG files.
+ *
+ * The steps' "Protocols: …" lines name documents that the team's
+ * Protocols page lists but has not yet attached a file to, so there is
+ * nothing to link to and no download pill is shown here (Enzymatic
+ * immobilisation and Revalorisation, whose protocol PDFs do exist, carry
+ * theirs). The one exception is the Closing section's own "Protocols: …"
+ * line, which the source writes as body text and which stays as such.
  */
 
 export const GENETIC_ENGINEERING_INTRO: ReactNode[] = [
   <>
-    Phosphorus is at once a finite, critical resource (fertilisers, with no chemical substitute) and a key
-    wastewater pollutant that drives eutrophication. <strong>RePhlow</strong> aims to turn{" "}
-    <em>Pseudomonas putida</em> KT2440, a robust, safe and very well-characterised chassis, into a{" "}
+    <strong>RePhlow</strong> aims to turn <em>Pseudomonas putida</em> KT2440, a robust, safe and very well-characterised chassis, into a{" "}
     <strong>phosphorus-accumulating organism (PAO)</strong>: a bacterium that captures phosphate from water and
     stores it internally as <strong>polyphosphate (polyP)</strong> granules. To do this we take inspiration from
     natural PAOs, above all <em>Candidatus</em> Accumulibacter phosphatis, the organism behind enhanced biological
@@ -271,99 +226,135 @@ function refs(...numbers: number[]): string[] {
  * `references` field and its own card footer, untouched. */
 export const GENETIC_ENGINEERING_REFERENCES: string[] = refs(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
 
-/** Every named lab protocol cited across this block's steps — shared here,
- * rather than repeated per experiment, since e.g. "Crispr Protocolo 2.0"
- * is reused across most of the Knocking-out steps. Labels are shortened,
- * English versions of the source's own (often Spanish) protocol names, per
- * a "(PDF)" download convention matching the rest of this component
- * family — ExperimentCard appends "(PDF)" itself, so it's left off here. */
-const PROTOCOL: Record<string, { label: string; href: string }> = {
-  PCR: { label: "PCR", href: "assets/protocols/pcr.pdf" },
-  "Geles de agarosa": { label: "Agarose gel", href: "assets/protocols/agarose-gel.pdf" },
-  "Diamond Nucleic Acid Dye (Promega)": {
-    label: "Diamond dye (Promega)",
-    href: "assets/protocols/diamond-dye-promega.pdf",
-  },
-  "Wizard SV Gel and PCR Clean-Up (Promega)": {
-    label: "Gel/PCR clean-up (Promega)",
-    href: "assets/protocols/wizard-gel-pcr-cleanup.pdf",
-  },
-  ligation: { label: "Ligation", href: "assets/protocols/ligation.pdf" },
-  "Transformación E. coli quimiocompetentes": {
-    label: "E. coli transformation",
-    href: "assets/protocols/ecoli-transformation.pdf",
-  },
-  "Obtención E. coli quimiocompetentes": {
-    label: "E. coli competent cells",
-    href: "assets/protocols/ecoli-competent-cells.pdf",
-  },
-  "Medios de cultivo": { label: "Culture media", href: "assets/protocols/culture-media.pdf" },
-  "Minis de colonias": { label: "Colony minipreps", href: "assets/protocols/colony-minipreps.pdf" },
-  "Miniprep kit": { label: "Miniprep (kit)", href: "assets/protocols/miniprep-kit.pdf" },
-  "Miniprep sin kit": { label: "Miniprep (no kit)", href: "assets/protocols/miniprep-no-kit.pdf" },
-  "internal sequencing submission SOP": {
-    label: "Sequencing submission SOP",
-    href: "assets/protocols/sequencing-submission-sop.pdf",
-  },
-  "Obtención P. putida electrocompetentes": {
-    label: "P. putida electrocompetent cells",
-    href: "assets/protocols/pputida-electrocompetent-cells.pdf",
-  },
-  "Geles de poliacrilamida": { label: "Polyacrylamide gel", href: "assets/protocols/polyacrylamide-gel.pdf" },
-  "internal guide-design SOP": { label: "Guide-design SOP", href: "assets/protocols/guide-design-sop.pdf" },
-  "Crispr Protocolo 2.0": { label: "CRISPR protocol 2.0", href: "assets/protocols/crispr-protocol-2.pdf" },
-};
-function protocolLinks(...names: string[]) {
-  return names.map((n) => PROTOCOL[n]);
-}
 
 export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
   {
     id: "polyphosphate-accumulation-study",
     heading: "0. Polyphosphate accumulation study",
-    intro: "These experiments establish in wild-type Pseudomonas putida KT2440 how much phosphorus cells take up and store as polyphosphate, how fast, and under which operating conditions accumulation is maximised. Wild type and an mCherry-tagged variant were used to standardise the intracellular-phosphorus assay before applying it to the engineered strains.",
+    intro: [
+      <>
+        This set of experiments establishes, in{" "}
+        <strong>
+          wild-type <em>P. putida</em> KT2440
+        </strong>{" "}
+        <Cite scope="genetic-engineering" n={1} />, how much phosphorus the{" "}
+        <strong>
+          cells take up and store as polyphosphate, how fast, and under which operating conditions
+        </strong>{" "}
+        this is maximised. Because the engineered strains will later be judged by exactly this read-out, the
+        experiments first build and standardise a reproducible intracellular-phosphorus assay, then use it to{" "}
+        <strong>
+          characterise growth, the kinetics of accumulation across media, and the two operating variables
+          available in the real feed
+        </strong>
+        . Two variants were used: <strong>the wild type (WT) and an mCherry-tagged variant (Cherry)</strong> for
+        growth tracking. The application target is a synthetic aqueous stream mimicking the phosphorus-rich
+        effluent of biofuel production, the context in which polyphosphate-based phosphorus recovery would operate{" "}
+        <Cite scope="genetic-engineering" n={2} />, <Cite scope="genetic-engineering" n={3} />.
+      </>,
+    ],
     experiments: [
       {
         id: "growth-characterisation-m9",
         tabLabel: "Growth in M9",
         title: "Growth characterisation of P. putida KT2440 in M9",
         description: [
-          "The mCherry variant was cultured in M9 and OD600 was followed across the 240 min assay window, defining the biomass trajectory in the minimal medium used as the maximal-stress reference.",
-          "The expected outcome was a defined OD600 trajectory confirming that cells remain measurable throughout the assay.",
+          <>
+            Before following accumulation over time, the growth trajectory of the cells in the minimal medium used
+            as the maximal-stress reference (<strong>M9</strong>) had to be known, so that phosphorus values could
+            be read against a defined biomass curve. The mCherry variant, which is easy to track, was cultured in
+            M9 and OD600 was followed across the 240 min assay window.
+          </>,
+          "The expected outcome was a defined OD600 trajectory over the assay window, confirming the cells remain measurable throughout.",
         ],
       },
       {
         id: "polyphosphate-kinetics-media",
         tabLabel: "Accumulation kinetics",
         title: "Kinetics of polyphosphate accumulation across culture media",
-        description: "Cells grown in LB were shifted to M9, a synthetic industrial stream or LB and sampled from 0 to 240 min. At each time point, OD600 and intracellular phosphorus were measured in parallel. The synthetic stream contained citric acid, glycerol, soy lecithin, monopotassium phosphate, ammonium sulfate, sodium chloride, filtered used vegetable oil and Tween 80.",
-        tables: [{
-          headers: ["Medium", "Nutrient status", "Role"],
-          rows: [
-            ["M9", "Minimal, maximal nutrient stress", "Positive control"],
-            ["Synthetic stream", "Intermediate, application-relevant", "Condition to characterise and optimise"],
-            ["LB", "Rich, nutrient abundance", "Negative control"],
-          ],
-        }],
+        body: [
+          {
+            paragraphs: [
+              <>
+                With the assay standardised, the kinetics of intracellular polyphosphate were compared across three
+                media that differ in nutrient availability. Cells grown in LB were shifted into each medium and
+                sampled over 0 to 240 min; at each time point one aliquot gave OD600 and a paired aliquot was
+                processed through the assay. The comparison rests on the hypothesis that polyphosphate accumulation
+                is a <strong>nutrient-stress response</strong> <Cite scope="genetic-engineering" n={2} />, so
+                retention should scale inversely with nutrient availability.
+              </>,
+            ],
+            pairedResource: {
+              kind: "table",
+              table: {
+                headers: ["Medium", "Nutrient status", "Role"],
+                rows: [
+                  ["M9", "Minimal, maximal nutrient stress", "Positive control, reference high-retention condition"],
+                  ["Synthetic stream", "Intermediate, application-relevant", "Condition to characterise and optimise"],
+                  ["LB", "Rich, nutrient abundance", "Negative control, reference low-retention condition"],
+                ],
+              },
+            },
+          },
+          {
+            paragraphs: [
+              <>
+                The <strong>synthetic stream</strong> was prepared to mimic a biofuel-derived industrial feed:
+                citric acid, glycerol, soy lecithin, monopotassium phosphate (the phosphate source), ammonium
+                sulfate, sodium chloride, filtered used vegetable oil and Tween 80, with the pH adjusted as
+                required.
+              </>,
+              "The expected outcome was a monotonic trend, with the highest normalised polyphosphate in M9, the lowest in LB and an intermediate value in the synthetic stream.",
+            ],
+          },
+        ],
       },
       {
         id: "operating-condition-optimisation",
         tabLabel: "pH and dilution",
-        title: "Operating-condition optimisation in the synthetic stream",
-        description: "The two variables available in the industrial feed, pH and dilution, were screened combinatorially, with M9 and LB retained as controls. The expected outcome was to identify the combination that maximises phosphorus retention.",
-        tables: [{
-          headers: ["Condition", "pH", "Dilution"],
-          rows: [["A", "6", "1:1"], ["B", "6", "1:35"], ["C", "7", "1:1"], ["D", "7", "1:35"]],
-        }],
+        title: "Operating-condition optimisation, pH and dilution in the synthetic stream",
+        body: [
+          {
+            paragraphs: [
+              <>
+                Having established the medium trend, the two variables that the industrial partner (
+                <strong>BioOils Huelva</strong>) actually allows to be adjusted, <strong>pH</strong> and{" "}
+                <strong>degree of dilution</strong>, were screened combinatorially in the synthetic stream, with
+                dilution standing in for nutrient limitation, since a more dilute feed is a more nutrient-limited
+                one. Four conditions crossed two pH values with two dilutions, with M9 and LB retained as controls,
+                each followed over the assay time course.
+              </>,
+            ],
+            pairedResource: {
+              kind: "table",
+              table: {
+                headers: ["Condition", "pH", "Dilution"],
+                rows: [
+                  ["A", "6", "1:1"],
+                  ["B", "6", "1:35"],
+                  ["C", "7", "1:1"],
+                  ["D", "7", "1:35"],
+                ],
+              },
+            },
+          },
+          {
+            paragraphs: [
+              "The expected outcome was to identify the pH and dilution combination that maximises phosphorus retention in the application-relevant medium.",
+            ],
+          },
+        ],
       },
     ],
+    outro:
+      "These steps take the two genes from design to a functionally validated, phosphate-accumulating strain, with each verification stage gating the next.",
   },
   {
     id: "cloning",
     heading: "1. Cloning",
     intro: [
       <>
-        The goal of this block is a <em>P. putida</em> strain that stably expresses <strong>ppk1</strong> and{" "}
+        The goal of this set of experiments is a <em>P. putida</em> strain that stably expresses <strong>ppk1</strong> and{" "}
         <strong>pstSCAB</strong> from <em>Candidatus</em> Accumulibacter phosphatis. Because <em>P. putida</em> is
         far less amenable to routine cloning than <em>Escherichia coli</em>{" "}
         <Cite scope="genetic-engineering" n={1} />, <Cite scope="genetic-engineering" n={2} />, each plasmid is
@@ -371,7 +362,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
         only then moved into the final chassis. This keeps the iterative cloning steps in the fastest, most
         transformable host and reserves the slower work with <em>P. putida</em> for constructs we already trust.
       </>,
-      "Workflow: in silico design (1) → part acquisition and amplification (2) → preparative digestion of vectors and inserts (3) → ligation (4) → transformation and screening in the cloning host (5 to 7) → transfer to the chassis (8). Steps run in parallel for both constructs.",
     ],
     experiments: [
       {
@@ -402,7 +392,8 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
                 initiation in this host without the risk of an untested sequence. The restriction sites were chosen
                 to match the chosen backbones: <strong>BamHI and HindIII</strong> for the cassettes going into{" "}
                 <strong>pSEVA2513</strong>, and <strong>EcoRI and KpnI</strong> for the promoter fragment going into{" "}
-                <strong>pSEVA6313</strong>. Design and map management were done in <strong>SnapGene</strong>.
+                <strong>pSEVA6313</strong>. Design and map management were done in <strong>SnapGene</strong>. See our parts collection to
+                check DNA sequences.
               </>,
             ],
             pairedResource: {
@@ -418,13 +409,8 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
                   alt: "Map of the pSEVA6313 pstSCAB expression construct.",
                   title: "pSEVA6313 · pstSCAB",
                 },
-                {
-                  src: "assets/experiments/genetic-engineering/pS2513ppk1_Map_XhoI.svg",
-                  alt: "XhoI restriction map of the pSEVA2513 ppk1 construct.",
-                  title: "pSEVA2513 · ppk1 · XhoI",
-                },
               ],
-              caption: "Expression-construct and diagnostic restriction maps. See our parts collection for the DNA sequences.",
+              caption: "Annotated maps of the two expression cassettes.",
             },
           },
           {
@@ -444,7 +430,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
             <strong>synthetic genes delivered pre-cloned in carrier vectors</strong>: <strong>ppk1 in pMK-RQ</strong>{" "}
             and <strong>pstSCAB in pOK-RQ</strong>, both kanamycin-resistant. Ordering genes pre-cloned gives a
             stable, sequence-verified stock that can be propagated and drawn on as needed. The promoter was
-            supplied in the small synthetic vector <strong>pEM7</strong>.
+            supplied in the small synthetic promotor <strong>pEM7</strong>.
           </>,
           <>
             The promoter needed special handling because it is very short (about <strong>77 bp</strong>). Released
@@ -474,7 +460,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
             ],
           },
         ],
-        protocols: protocolLinks("PCR", "Geles de agarosa", "Diamond Nucleic Acid Dye (Promega)"),
       },
       {
         id: "cloning-digestion",
@@ -492,7 +477,8 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
                 <em>P. putida</em> does not maintain the ColE1 or pUC origins of standard <em>E. coli</em> vectors
                 and requires <strong>broad-host-range replicons</strong>; the SEVA collection supplies exactly
                 these, with compatible resistance and origin modules <Cite scope="cloning-digestion" n={3} />,{" "}
-                <Cite scope="cloning-digestion" n={4} />.
+                <Cite scope="cloning-digestion" n={4} />. All of the restriction enzymes used were casual Thermo
+                Fisher ones.
               </>,
             ],
           },
@@ -510,22 +496,23 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
                 buffer.
               </>,
             ],
-            pairedResource: {
-              kind: "table-placeholder",
-              caption: "Restriction enzymes, incubation times and buffers — not yet available in the source record.",
-            },
           },
           {
             paragraphs: [
-              "To ensure the insert's identity, the restriction enzyme XhoI was used during the second attempt for ppk1. This enzyme has two internal restriction sites, which do not cut the empty vector but ensure the release of two fragments of 1126 and 6312 bp when the insert is present.",
+              "To ensure the insert's identity, the restriction enzyme XhoI was used during the second attempt for ppk1. This enzyme has two internal restriction sites, which do not cut the empty vector but ensure the release of two fragments of 1126 and 6312 bp in the correct ligation product.",
             ],
+            pairedResource: {
+              kind: "image",
+              src: "assets/experiments/genetic-engineering/pS2513ppk1_Map_XhoI.svg",
+              alt: "XhoI restriction map of the pSEVA2513 ppk1 construct.",
+              caption: "XhoI diagnostic map of the pSEVA2513 ppk1 ligation product.",
+            },
           },
           {
             paragraphs: ["The expected outcome was cleanly cut, gel-purified vector and insert with compatible ends."],
           },
         ],
         references: refs(3, 4),
-        protocols: protocolLinks("Geles de agarosa", "Wizard SV Gel and PCR Clean-Up (Promega)"),
       },
       {
         id: "cloning-ligation",
@@ -542,7 +529,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was a ligation mixture ready to transform, with the control showing minimal background.",
         ],
-        protocols: protocolLinks("ligation"),
       },
       {
         id: "cloning-ecoli-transformation",
@@ -561,16 +547,11 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           <>
             Cells were heat-shocked, then <strong>recovered in non-selective rich medium</strong> before plating,
             so that the resistance protein is expressed before selection; plating straight onto antibiotic would
-            kill genuine transformants. Cells were then plated on <strong>LB agar with kanamycin</strong> (from a
-            50 mg/mL stock, giving about 75 µg/mL in plates; liquid cultures used about 100 µg/mL).
+            kill genuine transformants. Cells were then plated on <strong>LB agar with kanamycin</strong> or
+            gentamycin depending on the antibiotic resistance gene from the backbone.
           </>,
           "The expected outcome was colonies on the selective plates and few or none on the control.",
         ],
-        protocols: protocolLinks(
-          "Transformación E. coli quimiocompetentes",
-          "Obtención E. coli quimiocompetentes",
-          "Medios de cultivo",
-        ),
       },
       {
         id: "cloning-colony-screening",
@@ -589,7 +570,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was several independent clones per construct with the correct pattern.",
         ],
-        protocols: protocolLinks("PCR", "Minis de colonias", "Miniprep kit", "Miniprep sin kit", "Geles de agarosa"),
       },
       {
         id: "cloning-sequence-confirmation",
@@ -599,7 +579,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           "Clones that passed screening were confirmed by sequencing, because screening shows an insert of the right size and orientation but only sequencing rules out point mutations, indels or assembly scars that could inactivate the protein or shift the reading frame. Sanger sequencing of the cassette and its junctions, or whole-plasmid sequencing, was used, and only a clone matching the in-silico design exactly was carried forward.",
           <>The expected outcome was a <strong>sequence-verified expression plasmid</strong> for each gene.</>,
         ],
-        protocols: protocolLinks("internal sequencing submission SOP"),
       },
       {
         id: "cloning-pputida-transformation",
@@ -622,7 +601,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           <>The expected outcome was resistant <em>P. putida</em> colonies carrying the expression plasmid.</>,
         ],
         references: refs(2, 5),
-        protocols: protocolLinks("Obtención P. putida electrocompetentes", "Medios de cultivo"),
       },
     ],
     outro:
@@ -633,7 +611,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
     heading: "2. Knocking-out",
     intro: [
       <>
-        The goal of this block is to remove, in the same strain, three native activities that oppose accumulation:{" "}
+        The goal of this set of experiments is to remove, in the same strain, three native activities that oppose accumulation:{" "}
         <strong>ppx</strong> (degrades polyphosphate), <strong>ppkB</strong>/<strong>ppk2</strong> (consumes
         polyphosphate to phosphorylate nucleotides) and <strong>pitB</strong> (low-affinity phosphate transport
         implicated in efflux). They are inactivated by <strong>CRISPR base editing</strong>{" "}
@@ -652,7 +630,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
         <Cite scope="genetic-engineering" n={10} />, replacing the msfGFP marker, so that correct constructs can be picked
         by <strong>loss of green fluorescence</strong>.
       </>,
-      "Workflow: guide design (1) → gRNA amplification (2) → Golden Gate assembly into pMBEC2 (3) → transformation and fluorescence-assisted screening (4) → delivery into P. putida (5) → editing (6) → screening of edits (7) → curing and iteration (8) → triple-mutant verification (9).",
     ],
     experiments: [
       {
@@ -671,13 +648,12 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
             suitable NGG PAM lies the correct distance away. The edit was placed{" "}
             <strong>early in each gene</strong> so the truncated protein is certainly non-functional, and candidate
             guides were screened for <strong>off-targets</strong> against the KT2440 genome, with two or three
-            guides designed per gene. The specific guide-design tool used for this is not yet specified in the
-            source record.
+            guides designed per gene. This was achieved by using the <em>CRISPR for Pseudomonas excel</em>
+            tool.
           </>,
           <>The expected outcome was a prioritised set of guides for <em>ppx</em>, <em>ppkB</em> and <em>pitB</em>.</>,
         ],
         references: refs(6, 8),
-        protocols: protocolLinks("internal guide-design SOP"),
       },
       {
         id: "knockout-grna-amplification",
@@ -700,12 +676,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           "The expected outcome was clean bands of about 130 to 150 bp for the three targets, with a blank negative control.",
         ],
         references: refs(7),
-        protocols: protocolLinks(
-          "PCR",
-          "Crispr Protocolo 2.0",
-          "Geles de agarosa",
-          "Wizard SV Gel and PCR Clean-Up (Promega)",
-        ),
       },
       {
         id: "knockout-golden-gate",
@@ -723,7 +693,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           "The expected outcome was an assembly mixture ready to transform.",
         ],
         references: refs(9, 10),
-        protocols: protocolLinks("Crispr Protocolo 2.0"),
       },
       {
         id: "knockout-fluorescence-screening",
@@ -742,12 +711,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
             <em>ppx</em>, <em>ppkB</em> or <em>pitB</em>).
           </>,
         ],
-        protocols: protocolLinks(
-          "Transformación E. coli quimiocompetentes",
-          "Minis de colonias",
-          "Miniprep kit",
-          "Crispr Protocolo 2.0",
-        ),
       },
       {
         id: "knockout-delivery",
@@ -763,7 +726,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           <>The expected outcome was <em>P. putida</em> transformants carrying the editing system.</>,
         ],
         references: refs(5),
-        protocols: protocolLinks("Obtención P. putida electrocompetentes", "Medios de cultivo"),
       },
       {
         id: "knockout-editing",
@@ -777,7 +739,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was individual candidate colonies.",
         ],
-        protocols: protocolLinks("Crispr Protocolo 2.0"),
       },
       {
         id: "knockout-sequencing-screen",
@@ -791,7 +752,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was colonies carrying the edit that creates the stop codon.",
         ],
-        protocols: protocolLinks("PCR", "Crispr Protocolo 2.0"),
       },
       {
         id: "knockout-curing",
@@ -812,7 +772,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
         ],
         references: refs(9),
-        protocols: protocolLinks("Crispr Protocolo 2.0"),
       },
       {
         id: "knockout-triple-mutant-verification",
@@ -828,11 +787,10 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was confirmation of the three knock-outs with no significant unwanted edits.",
         ],
-        protocols: protocolLinks("PCR", "Crispr Protocolo 2.0"),
       },
     ],
     outro:
-      "Together, these nine steps are the minimum needed to install and prove three clean, markerless knock-outs in one strain: per-round sequencing is required by the chemistry of base editing, and curing is what makes three sequential rounds possible with a limited set of markers.",
+      "The steps are the minimum needed to install and prove three clean, markerless knock-outs in one strain: per-round sequencing is required by the chemistry of base editing, and curing is what makes three sequential rounds possible with a limited set of markers.",
   },
   {
     id: "closing",
@@ -854,28 +812,29 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
         individually and together, by electroporation, giving the strains that carry the added machinery; in
         parallel, the base-edited knock-out background from Block B removes the native loss routes. The complete
         strain is then assessed with the{" "}
-        <strong>intracellular phosphorus capture assay</strong>, following internal polyphosphate over
-        time by cell lysis, acid release of phosphate and quantification with the{" "}
-        <strong>Promega molybdate:malachite green phosphate assay</strong>{" "}
-        <Cite scope="genetic-engineering" n={11} />, this
-        time as an end-to-end
-        validation of the full RePhlow phenotype rather than of a single module. Measuring capture inside the cell,
+        <strong>intracellular phosphorus capture assay</strong>, this time as an end-to-end validation of the full
+        rePhlow phenotype rather than of a single module. Measuring capture inside the cell,
         rather than depletion from the medium, is what makes this a direct test of phosphorus accumulation.
       </>,
       <>
-        The assay follows a <strong>phosphate-overplus</strong> logic. Wild type and engineered strains are grown in
-        LB to OD600 ≈ 0.6 and <strong>starved of phosphate for 1 h</strong> in phosphate-free minimal medium. They
-        are then shifted to the <strong>test medium at pH 5</strong> at OD600 = 1.0, which defines t = 0. Samples are
-        taken at 0, 15, 30, 45, 60, 75, 90, 105 and 120 min. A paired aliquot is pelleted and washed three times
-        in 0.1 M NaCl. Intracellular phosphorus is released with <strong>150 µL 1 M HCl at 95 °C for 15 min</strong>,
-        neutralised with 150 µL 1 M NaOH and pre-diluted tenfold before quantification with the{" "}
-        <strong>Promega Non-Radioactive Phosphatase Assay System</strong> (Serine/Threonine Phosphatase Assay
-        System, cat. V2460), which measures phosphate as a <strong>molybdate:malachite green complex</strong> by
-        absorbance in cuvette against a <strong>0–1900 ng phosphate standard curve</strong>. Accumulated
-        polyphosphate is the phosphorus measured at each time point normalised to OD600.
+        The assay follows a <strong>phosphate-overplus</strong> logic. Wild type and engineered strains are grown
+        in LB to OD600 of about 0.6 and then <strong>starved of phosphate for 1 h</strong> in a phosphate-free
+        minimal medium, which empties the internal polyphosphate and derepresses the phosphate-uptake machinery, so
+        that avid uptake is triggered when phosphate is restored. The cells are then shifted into the{" "}
+        <strong>test medium at pH 5</strong> at OD600 = 1.0, which is t = 0. Over a 0 to 120 min time course
+        (sampled at 0, 15, 30, 45, 60, 75, 90, 105 and 120 min) one aliquot is read for OD600 (at a 1/10 dilution)
+        while a paired aliquot is pelleted and <strong>washed three times in 0.1 M NaCl</strong> to remove the
+        phosphate-rich medium, which would otherwise swamp the signal. The phosphorus stored inside the cells is
+        released by acid digestion (150 µL of 1 M HCl, 95 °C, 15 min), the lysate is neutralised (150 µL of
+        supernatant plus 150 µL of 1 M NaOH, to about pH 7) and pre-diluted tenfold, and the free phosphate is
+        quantified with the <strong>Promega Non-Radioactive Phosphatase Assay System</strong> (Serine/Threonine
+        Phosphatase Assay System, cat. V2460), which measures phosphate as a{" "}
+        <strong>molybdate:malachite green complex</strong> by absorbance in cuvette against a 0 to 1900 ng
+        phosphate standard curve <Cite scope="genetic-engineering" n={11} />. Accumulated polyphosphate is taken as
+        the phosphorus measured at each time point normalised to OD600.
       </>,
       "Protocols: Ensayo de absorción de polifosfato intracelular; Promega Serine/Threonine Phosphatase Assay System (V2460); Medios de cultivo.",
-      "The expected outcome was greater intracellular phosphorus accumulation than the wild type.",
+      "The expected outcome was **greater intracellular phosphorus accumulation in the engineered strains than in the wild type**.",
     ],
   },
 ];

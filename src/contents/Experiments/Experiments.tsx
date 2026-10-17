@@ -30,7 +30,6 @@ import { GENE_PARTS } from "./GeneticEngineeringData";
 import { GeneSystemGrid } from "./GeneSystemGrid";
 import {
   ENZYME_ACTIVITIES,
-  ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION,
 } from "./EnzymaticImmobilisationData";
 import { EnzymeActivityGrid } from "./EnzymeActivityGrid";
 import { EcosystemMap } from "../../components/EcosystemMap";
@@ -295,31 +294,11 @@ export function Experiments() {
 
               {/* Enzymatic immobilisation's own conceptual "four parts of the
                   system" (PLA/PLC/NAP/Phytases) — same bespoke placement as
-                  Genetic engineering's five parts, above. The source mentions
-                  a schematic of "the functionalised rePhlow sphere" but never
-                  actually embeds it (an empty callout carrying only the
-                  figure's own caption) — kept honest as a real, captioned
-                  placeholder rather than silently dropped or faked. */}
+                  Genetic engineering's five parts, above. */}
               {activeBlock.id === "enzymatic-immobilisation" && (
                 <>
                   {/* The six-step figure, redrawn, with linked panels. */}
                   <EnzymaticWorkflow />
-                  <div className="lab-prose">
-                    <figure
-                      className="record-figure"
-                      style={{ margin: "8px 0 24px" }}
-                    >
-                      <div
-                        className="record-figure__placeholder"
-                        aria-hidden="true"
-                      >
-                        [ figure placeholder ]
-                      </div>
-                      <figcaption>
-                        {ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION}
-                      </figcaption>
-                    </figure>
-                  </div>
                   <section
                     className="lab-subblock"
                     aria-label="The four parts of the system"
