@@ -712,6 +712,34 @@ const MODELLING: ResultData = {
   ],
 };
 
+const ENZYME_PRODUCTION_REFERENCES = [
+  "[1] Hon J, Borko S, Stourac J, Prokop Z, Zendulka J, Bednar D, et al. EnzymeMiner: automated mining of soluble enzymes with diverse structures, catalytic properties and stabilities. Nucleic Acids Research [Internet]. 2020 Apr 29;48(W1):W104–9. Available from: https://doi.org/10.1093/nar/gkaa372",
+  "[2] Thaller MC, Schippa S, Bonci A, Cresti S, Rossolini GM. Identification of the gene (aphA) encoding the class B acid phosphatase/phosphotransferase of Escherichia coli MG1655 and characterization of its product. FEMS Microbiology Letters [Internet]. 2006 Jan 17;146(2):191–8. Available from: https://doi.org/10.1111/j.1574-6968.1997.tb10192.x",
+  "[3] Huang H, Luo H, Yang P, Meng K, Wang Y, Yuan T, et al. A novel phytase with preferable characteristics from Yersinia intermedia. Biochemical and Biophysical Research Communications [Internet]. 2006 Sep 30;350(4):884–9. Available from: https://doi.org/10.1016/j.bbrc.2006.09.118",
+  "[4] Bessette PH, Åslund F, Beckwith J, Georgiou G. Efficient folding of proteins with multiple disulfide bonds in the Escherichia coli cytoplasm. Proceedings of the National Academy of Sciences [Internet]. 1999 Nov 23;96(24):13703–8. Available from: https://doi.org/10.1073/pnas.96.24.13703",
+  "[5] Studier FW. Protein production by auto-induction in high-density shaking cultures. Protein Expression and Purification [Internet]. 2005 Feb 8;41(1):207–34. Available from: https://doi.org/10.1016/j.pep.2005.01.016",
+  "[6] Titball RW. Bacterial phospholipases C. Microbiological Reviews [Internet]. 1993 Jan 1;57(2):347–66. Available from: https://doi.org/10.1128/mmbr.57.2.347-366.1993",
+  "[7] Zemella A, Thoring L, Hoffmeister C, Kubick S. Cell‐Free protein synthesis: Pros and cons of prokaryotic and eukaryotic systems. ChemBioChem [Internet]. 2015 Oct 19;16(17):2420–31. Available from: https://doi.org/10.1002/cbic.201500340",
+  "[8] Baneyx F, Mujacic M. Recombinant protein folding and misfolding in Escherichia coli. Nature Biotechnology [Internet]. 2004 Nov 1;22(11):1399–408. Available from: https://doi.org/10.1038/nbt1029",
+  "[9] Rosano GL, Ceccarelli EA. Recombinant protein expression in Escherichia coli: advances and challenges. Frontiers in Microbiology [Internet]. 2014 Apr 17;5:172. Available from: https://doi.org/10.3389/fmicb.2014.00172",
+  "[10] Hoffmann A, Bukau B, Kramer G. Structure and function of the molecular chaperone Trigger Factor. Biochimica Et Biophysica Acta (BBA) - Molecular Cell Research [Internet]. 2010 Feb 3;1803(6):650–61. Available from: https://doi.org/10.1016/j.bbamcr.2010.01.017",
+  "[11] Hayer-Hartl M, Bracher A, Hartl FU. The GROEL–GROES chaperonin Machine: a Nano-Cage for protein folding. Trends in Biochemical Sciences [Internet]. 2015 Sep 27;41(1):62–76. Available from: https://doi.org/10.1016/j.tibs.2015.07.009",
+  "[12] Lobstein J, Emrich CA, Jeans C, Faulkner M, Riggs P, Berkmen M. SHuffle, a novel Escherichia coli protein expression strain capable of correctly folding disulfide bonded proteins in its cytoplasm. Microbial Cell Factories [Internet]. 2012 May 8;11(1):124. Available from: https://doi.org/10.1186/1475-2859-11-56",
+  "[13] Kane JF. Effects of rare codon clusters on high-level expression of heterologous proteins in Escherichia coli. Current Opinion in Biotechnology [Internet]. 1995 Jan 1;6(5):494–500. Available from: https://doi.org/10.1016/0958-1669(95)80082-4",
+  "[14] Porath J, Carlsson J, Olsson I, Belfrage G. Metal chelate affinity chromatography, a new approach to protein fractionation. Nature [Internet]. 1975 Dec 1;258(5536):598–9. Available from: https://doi.org/10.1038/258598a0",
+  "[15] Andersch MA, Szczypinski AJ. Use of P-Nitrophenylphosphate as the substrate in determination of serum acid phosphatase*. American Journal of Clinical Pathology [Internet]. 1947 Jul 1;17(7_ts):571–4. Available from: https://doi.org/10.1093/ajcp/17.7_ts.571",
+];
+
+const IMMOBILISATION_REFERENCES = [
+  "[1] Virgen-Ortíz JJ, Santos JCSD, Ortiz C, Berenguer-Murcia Á, Barbosa O, Rodrigues RC, et al. Lecitase ultra: A phospholipase with great potential in biocatalysis. Molecular Catalysis [Internet]. 2019 May 21;473:110405. Available from: https://doi.org/10.1016/j.mcat.2019.110405",
+  "[2] Braham SA, Siar EH, Arana-Peña S, Bavandi H, Carballares D, Morellon-Sterling R, et al. Positive effect of glycerol on the stability of immobilized enzymes: Is it a universal fact? Process Biochemistry [Internet]. 2020 Dec 30;102:108–21. Available from: https://doi.org/10.1016/j.procbio.2020.12.015",
+  "[3] López-Gallego F, Betancor L, Mateo C, Hidalgo A, Alonso-Morales N, Dellamora-Ortiz G, et al. Enzyme stabilization by glutaraldehyde crosslinking of adsorbed proteins on aminated supports. Journal of Biotechnology [Internet]. 2005 Jul 22;119(1):70–5. Available from: https://doi.org/10.1016/j.jbiotec.2005.05.021",
+  "[4] Rodrigues RC, Virgen-Ortíz JJ, Santos JCSD, Berenguer-Murcia Á, Alcantara AR, Barbosa O, et al. Immobilization of lipases on hydrophobic supports: immobilization mechanism, advantages, problems, and solutions. Biotechnology Advances [Internet]. 2019 Apr 8;37(5):746–70. Available from: https://doi.org/10.1016/j.biotechadv.2019.04.003",
+  "[5] Barbosa O, Ortiz C, Berenguer-Murcia Á, Torres R, Rodrigues RC, Fernandez-Lafuente R. Glutaraldehyde in bio-catalysts design: a useful crosslinker and a versatile tool in enzyme immobilization. RSC Advances [Internet]. 2013 Oct 28;4(4):1583–600. Available from: https://doi.org/10.1039/c3ra45991h",
+  "[6] Mateo C, Bolivar JM, Godoy CA, Rocha-Martin J, Pessela BC, Curiel JA, et al. Improvement of Enzyme Properties with a Two-Step Immobilizaton Process on Novel Heterofunctional Supports. Biomacromolecules [Internet]. 2010 Oct 14;11(11):3112–7. Available from: https://doi.org/10.1021/bm100916r",
+  "[7] Andrés-Sanz D, Fresan C, Fernández-Lorente G, Rocha-Martín J, Guisán JM. Stabilization of Lecitase Ultra® by immobilization and fixation of bimolecular aggregates. release of omega-3 fatty acids by enzymatic hydrolysis of krill oil. Catalysts [Internet]. 2021 Aug 31;11(9):1067. Available from: https://doi.org/10.3390/catal11091067",
+];
+
 export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ResultSubBlock[] = [
   {
     id: "enzyme-production",
@@ -730,6 +758,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ResultSubBlock[] = [
     ],
     outro:
       "These experiments take the panel from database to characterised biocatalyst with no redundant step: activities were matched to the real effluent, constructs were designed to pre-empt insolubility, and only the rescue strategies actually needed were used.",
+    references: ENZYME_PRODUCTION_REFERENCES,
   },
   {
     id: "immobilisation-chemistry",
@@ -739,5 +768,6 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ResultSubBlock[] = [
     results: [LECITASE, STRATEGY_A, STRATEGY_B, DETERGENT, YIELD, MODELLING],
     outro:
       "Using an inexpensive model support and glutaraldehyde as a stand-in for genipin let the two anchoring strategies be compared without spending resources on the full sphere; the detergent variable and the free-enzyme control were the minimum needed to interpret the yields, and the modelling was added only to explain the result.",
+    references: IMMOBILISATION_REFERENCES,
   },
 ];

@@ -476,25 +476,6 @@ const PUTIDA_TRANSFORMATION: ResultData = {
   ],
 };
 
-const HETEROLOGOUS_EXPRESSION: ResultData = {
-  id: "heterologous-expression",
-  tabLabel: "Expression confirmation",
-  title: "Confirmation of heterologous expression",
-  description:
-    "Rather than a protein-level check, the *ppk1* transformant was validated functionally with the intracellular-phosphorus assay against the wild type. The data and its figures are reported in full in the Closing.",
-  subsections: [
-    {
-      id: "functional-validation",
-      observations:
-        "Over a 0 to 120 min time course, both strains accumulated phosphorus and the transformant did so faster over the final stretch: fitted across 75 to 120 min, about 11 017 ng per OD₆₀₀ per minute for the transformant against 6 450 for the wild type, a ratio of roughly **1.7**.",
-      interpretation:
-        "Carrying and expressing *ppk1* therefore translates into a measurable gain in function over that window — the first direct evidence that the add-polyP-synthesis-capacity arm of the strategy works in the chassis.",
-      expectation:
-        "Expected in direction: PPK1 is the polyphosphate-synthesising engine, so a faster uptake rate is what the design predicts, and because the per-time-point values are noisy the robust read-out is the rate.",
-    },
-  ],
-};
-
 /* ------------------------ Section 2: knocking-out ------------------------ */
 
 const GUIDE_DESIGN: ResultData = {
@@ -800,7 +781,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ResultSubBlock[] = [
       COLONY_SCREENING,
       SEQUENCE_CONFIRMATION,
       PUTIDA_TRANSFORMATION,
-      HETEROLOGOUS_EXPRESSION,
     ],
     outro:
       "The cloning strategy delivered the result that matters most at this stage: a diagnostically verified pSEVA2513·*ppk1* construct, a *P. putida* transformant carrying it, and a functional increase of about 1.7-fold in the phosphorus-uptake rate over the wild type across the 75 to 120 min window. The first trial, relying on excising the parts from their carriers and a promoter plasmid, exposed the bottlenecks (an unrecoverable 77 bp promoter, an unreliable pSEVA6313 digestion, inserts that co-migrate with their carriers, and a diagnostic pattern that never resolved); the second trial, amplifying the genes by PCR with the RBS built into the primers, cut and purified them cleanly and produced a verified construct. *pstSCAB* was pursued in parallel but, despite repeated attempts and concentrating the insert with Centricon spin concentrators, a correct construct could not be obtained. Completing *pstSCAB*, confirming *ppk1* by sequencing and combining both genes are the remaining tasks.",

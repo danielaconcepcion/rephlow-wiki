@@ -364,6 +364,8 @@ export interface ResultSubBlock {
   intro?: ReactNode | ReactNode[];
   results?: ResultData[];
   outro?: ReactNode | ReactNode[];
+  /** Some Notion result sections restart their reference numbering. */
+  references?: string[];
 }
 
 export interface ResultBlockData {

@@ -148,6 +148,12 @@ export function Results() {
                         {subBlock.outro && (
                           <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
                         )}
+                        {!!subBlock.references?.length && (
+                          <BlockReferences
+                            scope={`${activeBlock.id}-${subBlock.id}`}
+                            items={subBlock.references}
+                          />
+                        )}
                       </section>
                     ))
                   : null}

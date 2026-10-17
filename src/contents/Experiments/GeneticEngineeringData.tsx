@@ -269,7 +269,7 @@ function refs(...numbers: number[]): string[] {
  * deliberately not here: those are only ever cited inside an individual
  * experiment's own write-up, so they stay in that experiment's own
  * `references` field and its own card footer, untouched. */
-export const GENETIC_ENGINEERING_REFERENCES: string[] = refs(1, 2, 6, 7, 8, 9, 10, 11);
+export const GENETIC_ENGINEERING_REFERENCES: string[] = refs(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
 
 /** Every named lab protocol cited across this block's steps — shared here,
  * rather than repeated per experiment, since e.g. "Crispr Protocolo 2.0"
@@ -371,7 +371,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
         only then moved into the final chassis. This keeps the iterative cloning steps in the fastest, most
         transformable host and reserves the slower work with <em>P. putida</em> for constructs we already trust.
       </>,
-      "Workflow: in silico design (1) → part acquisition and amplification (2) → preparative digestion of vectors and inserts (3) → ligation (4) → transformation and screening in the cloning host (5 to 7) → transfer to the chassis (8) → expression and functional validation (9). Steps run in parallel for both constructs.",
+      "Workflow: in silico design (1) → part acquisition and amplification (2) → preparative digestion of vectors and inserts (3) → ligation (4) → transformation and screening in the cloning host (5 to 7) → transfer to the chassis (8). Steps run in parallel for both constructs.",
     ],
     experiments: [
       {
@@ -406,8 +406,25 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
               </>,
             ],
             pairedResource: {
-              kind: "table-placeholder",
-              caption: "Cassette sequences — not yet available in the source record.",
+              kind: "image-group",
+              images: [
+                {
+                  src: "assets/experiments/genetic-engineering/pS2513ppk1_Map.svg",
+                  alt: "Map of the pSEVA2513 ppk1 expression construct.",
+                  title: "pSEVA2513 · ppk1",
+                },
+                {
+                  src: "assets/experiments/genetic-engineering/pS6313SCAB_Map.svg",
+                  alt: "Map of the pSEVA6313 pstSCAB expression construct.",
+                  title: "pSEVA6313 · pstSCAB",
+                },
+                {
+                  src: "assets/experiments/genetic-engineering/pS2513ppk1_Map_XhoI.svg",
+                  alt: "XhoI restriction map of the pSEVA2513 ppk1 construct.",
+                  title: "pSEVA2513 · ppk1 · XhoI",
+                },
+              ],
+              caption: "Expression-construct and diagnostic restriction maps. See our parts collection for the DNA sequences.",
             },
           },
           {
@@ -446,6 +463,17 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was a sequence-verified stock of each gene in its carrier vector and clean, correctly sized amplicons carrying the RBS and cloning sites.",
         ],
+        tables: [
+          {
+            caption: "Primer sequences used to amplify ppk1 and pstSCAB and to build the promoter sequence.",
+            headers: ["", "Forward", "Reverse"],
+            rows: [
+              ["ppk1 amplification", "AAAAAAAAAGGATCCTGACCTAAGGA", "TTTTTTTTTAAGCTTTTAGCTCTGCAG"],
+              ["pstSCAB amplification", "AAAAAAAAAGGTACCCGGGGATCCTGACCTAAGGAGGTAAA", "TTTTTTTTTAAGCTTTTAACCGTAGC"],
+              ["Promoter tetris sequence", "TTAGACTCTCGTTTGGATTGC", "ACTGCCGGTTCTCCGAATTGCAG"],
+            ],
+          },
+        ],
         protocols: protocolLinks("PCR", "Geles de agarosa", "Diamond Nucleic Acid Dye (Promega)"),
       },
       {
@@ -459,7 +487,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
                 The backbones and inserts were then cut to matching ends. <strong>pSEVA2513</strong>{" "}
                 (kanamycin-resistant, about <strong>5.3 kb</strong>) was digested with{" "}
                 <strong>BamHI and HindIII</strong>, together with the <em>ppk1</em> and <em>pstSCAB</em> cassettes;{" "}
-                <strong>pSEVA6313</strong> (gentamicin-resistant, about <strong>3.0 kb</strong>) was digested with{" "}
+                <strong>pSEVA631</strong> (gentamicin-resistant, about <strong>3.0 kb</strong>) was digested with{" "}
                 <strong>EcoRI and KpnI</strong> for the promoter route. These vector choices matter because{" "}
                 <em>P. putida</em> does not maintain the ColE1 or pUC origins of standard <em>E. coli</em> vectors
                 and requires <strong>broad-host-range replicons</strong>; the SEVA collection supplies exactly
@@ -486,6 +514,11 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
               kind: "table-placeholder",
               caption: "Restriction enzymes, incubation times and buffers — not yet available in the source record.",
             },
+          },
+          {
+            paragraphs: [
+              "To ensure the insert's identity, the restriction enzyme XhoI was used during the second attempt for ppk1. This enzyme has two internal restriction sites, which do not cut the empty vector but ensure the release of two fragments of 1126 and 6312 bp when the insert is present.",
+            ],
           },
           {
             paragraphs: ["The expected outcome was cleanly cut, gel-purified vector and insert with compatible ends."],
@@ -591,25 +624,9 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
         references: refs(2, 5),
         protocols: protocolLinks("Obtención P. putida electrocompetentes", "Medios de cultivo"),
       },
-      {
-        id: "cloning-expression-confirmation",
-        tabLabel: "Expression check",
-        title: "Confirmation of heterologous expression",
-        description: [
-          <>
-            Because carrying the plasmid does not guarantee expression, PPK1 and PstSCAB were checked directly in{" "}
-            <em>P. putida</em> by culture followed by <strong>SDS-PAGE</strong> and detection of the tagged
-            proteins (<strong>‹e.g. anti-His Western blot›</strong>), with <strong>RT-qPCR</strong> as an optional
-            transcript-level check. Protein-level detection is the primary read-out because it reports what
-            accumulates in the cell.
-          </>,
-          "The expected outcome was a band or signal of the expected size for each protein.",
-        ],
-        protocols: protocolLinks("Geles de poliacrilamida", "Medios de cultivo"),
-      },
     ],
     outro:
-      "Together, these nine steps take the two genes from design to a functionally validated, phosphate-accumulating strain, with each verification stage gating the next.",
+      "These steps take the two genes from design to a functionally validated, phosphate-accumulating strain, with each verification stage gating the next.",
   },
   {
     id: "knocking-out",

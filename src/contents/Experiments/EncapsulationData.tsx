@@ -66,9 +66,9 @@ function Cite({ scope, n }: { scope: string; n: number }) {
  */
 
 export const ALGINATE_ENCAPSULATION_INTRO: string[] = [
-  "Efficient bacterial encapsulation was essential to develop a biological module that combines biosafety, structural stability and effective phosphate transport. Rather than relying on a single optimisation step, the encapsulation strategy was developed through a sequential experimental workflow in which the outcome of each stage guided the design of the next.",
-  "Upon contact with calcium ions, alginate rapidly forms a hydrogel through ionic crosslinking between its polymer chains according to the well-established **egg-box model**. The relative proportion of **α-L-guluronic acid (G)** and **β-D-mannuronic acid (M)** residues strongly influences the mechanical properties of the resulting gel. This property enables the formation of alginate beads by dripping an alginate solution into a calcium chloride bath under mild conditions, making alginate one of the most widely used materials for bacterial encapsulation. However, obtaining beads with consistent size, shape and mechanical integrity requires careful optimisation of several synthesis parameters, including **alginate concentration**, **drop height**, **flow rate** and **crosslinking time**.",
-  "Building upon this optimised bead protocol, the system was then translated into a more advanced **core-shell architecture**, in which a **liquid calcium chloride core** is surrounded by an **alginate shell**. Unlike conventional beads, core-shell capsule formation depends on the simultaneous control of two coaxial flows, making additional optimisation necessary. Parameters such as the **concentrations** of the inner calcium chloride and outer alginate solutions, the **outer-to-inner flow-rate ratio**, **storage conditions** and **mechanical resistance** were therefore systematically evaluated to obtain stable, reproducible capsules suitable for wastewater treatment.",
+  "Efficient bacterial encapsulation was essential to develop a biological module that combines **biosafety and structural stability**. Rather than relying on a single optimisation step, the encapsulation strategy was developed through a sequential experimental workflow in which the outcome of each stage guided the design of the next.",
+  "Upon contact with calcium ions, alginate rapidly forms a hydrogel through ionic crosslinking between its polymer chains according to the well-established **egg-box model [1]**. The relative proportion of **α-L-guluronic acid (G)** and **β-D-mannuronic acid (M)** residues strongly influences the mechanical properties of the resulting gel [2]. This property enables the formation of alginate beads by dripping an alginate solution into a calcium chloride bath under mild conditions, making alginate one of the most widely used materials for bacterial encapsulation [2-4]. However, obtaining beads with consistent size, shape and mechanical integrity requires careful optimisation of several synthesis parameters, including **alginate concentration**, **drop height**, **flow rate** and **crosslinking time**.",
+  "Building upon this optimised bead protocol, the system was then translated into a more advanced **core-shell architecture**, in which a **liquid calcium chloride core** is surrounded by an **alginate shell [3,4]**. Unlike conventional beads, core-shell capsule formation depends on the simultaneous control of two coaxial flows, making additional optimisation necessary. Parameters such as the **concentrations** of the inner calcium chloride and outer alginate solutions, the **outer-to-inner flow-rate ratio**, **storage conditions** and **mechanical resistance** were therefore systematically evaluated to obtain stable, reproducible capsules suitable for wastewater treatment.",
   "Unless otherwise stated, all encapsulation experiments were performed using **sodium alginate from brown algae** (Sigma-Aldrich, A1112; lot 081M1381V), **anhydrous calcium chloride** (96%, extra pure, Acros Organics, 349615000; lot A0358796) and distilled water. Solutions were prepared immediately before use and delivered using **programmable infusion pumps** (KDS 200 dual-syringe pump, KD Scientific, and Fisherbrand KDS 100 single-syringe pump, Fisher Scientific) through plastic syringes (10 mL), connected via standard Luer connectors and flexible tubing to the dispensing outlet. Bead production used a single infusion pump, while core-shell production used both pumps and a **coaxial injector** (DMF-C01, Doxa Microfluidics; inner needle: 22G, 0.7 mm OD / 0.4 mm ID; outer needle: 17G, 1.4 mm OD / 1.1 mm ID). Capsule formation was carried out by dripping into a calcium chloride crosslinking bath under ambient laboratory conditions. When a parameter was investigated, all remaining synthesis conditions were kept constant unless explicitly indicated.",
   "Together, these experiments provided the experimental evidence required to develop an encapsulation platform suitable for the safe immobilisation of engineered bacteria and its integration into the rePhlow bioreactor.",
 ];
@@ -95,17 +95,23 @@ export const ALGINATE_ENCAPSULATION_FIGURES: {
  * throughout with `<Cite scope="encapsulation" ... />`. Numbered in order
  * of first appearance across the page. */
 export const ALGINATE_ENCAPSULATION_REFERENCES: string[] = [
-  "[1] Mackie W. Semi-quantitative estimation of the composition of alginates by infra-red spectroscopy. Carbohydrate Research. 1971 Dec 1;20(2):413–5. https://doi.org/10.1016/s0008-6215(00)81397-x",
-  "[2] Sakugawa K, Ikeda A, Takemura A, Ono H. Simplified method for estimation of composition of alginates by FTIR. Journal of Applied Polymer Science. 2004 May 4;93(3):1372–7. https://doi.org/10.1002/app.20589",
-  "[3] Rochas C, Lahaye M, Yaphe W. Sulfate content of carrageenan and agar determined by infrared spectroscopy. Botanica Marina. 1986 Jan 1;29(4):335–40. https://doi.org/10.1515/botm.1986.29.4.335",
-  "[4] Gómez-Ordóñez E, Rupérez P. FTIR-ATR spectroscopy as a tool for polysaccharide identification in edible brown and red seaweeds. Food Hydrocolloids. 2011 Feb 20;25(6):1514–20. https://doi.org/10.1016/j.foodhyd.2011.02.009",
-  "[5] Leal D, Matsuhiro B, Rossi M, Caruso F. FT-IR spectra of alginic acid block fractions in three species of brown seaweeds. Carbohydrate Research. 2007 Nov 29;343(2):308–16. https://doi.org/10.1016/j.carres.2007.10.016",
-  "[6] Pereda M, Poncelet D, Renard D. Characterization of Core-Shell Alginate capsules. Food Biophysics. 2019 Jul 4;14(4):467–78. https://doi.org/10.1007/s11483-019-09595-x",
-  "[7] Hu C, Lu W, Sun C, Zhao Y, Zhang Y, Fang Y. Gelation behavior and mechanism of alginate with calcium: Dependence on monovalent counterions. Carbohydrate Polymers. 2022 Jun 28;294:119788. https://doi.org/10.1016/j.carbpol.2022.119788",
-  "[8] Wu L, Schroën K, Corstens M. Structural stability and release properties of emulsion-alginate beads under gastrointestinal conditions. Food Hydrocolloids. 2023 Dec 29;150:109702. https://doi.org/10.1016/j.foodhyd.2023.109702",
-  "[9] Pan CT, Chien ST, Chiang TC, Yen CK, Wang SY, Wen ZH, et al. Optimization of the spherical integrity for sustained-release alginate microcarriers-encapsulated doxorubicin by the Taguchi method. Scientific Reports. 2020 Dec 10;10(1):21758. https://doi.org/10.1038/s41598-020-78813-1",
-  "[10] Karunadasa KSP, Manoratne CH, Pitawala HMTGA, Rajapakse RMG. Relative stability of hydrated/anhydrous products of calcium chloride during complete dehydration as examined by high-temperature X-ray powder diffraction. Journal of Physics and Chemistry of Solids. 2018 Apr 27;120:167–72. https://doi.org/10.1016/j.jpcs.2018.04.034",
-  "[11] Koch M, Włodarczyk-Biegun MK. Faithful scanning electron microscopic (SEM) visualization of 3D printed alginate-based scaffolds. Bioprinting. 2020 Aug 26;20:e00098. https://doi.org/10.1016/j.bprint.2020.e00098",
+  "[1] Grant GT, Morris ER, Rees DA, Smith PJC, Thom D. Biological interactions between polysaccharides and divalent cations: The egg‐box model. FEBS Letters [Internet]. 1973 May 15;32(1):195–8. Available from: https://doi.org/10.1016/0014-5793(73)80770-7",
+  "[2] Lee KY, Mooney DJ. Alginate: Properties and biomedical applications. Progress in Polymer Science [Internet]. 2011 Jul 7;37(1):106–26. Available from: https://doi.org/10.1016/j.progpolymsci.2011.06.003",
+  "[3] Pereda M, Poncelet D, Renard D. Characterization of Core-Shell Alginate capsules. Food Biophysics [Internet]. 2019 Jul 4;14(4):467–78. Available from: https://doi.org/10.1007/s11483-019-09595-x",
+  "[4] Tran DT, Nguyen NK, Yadav AS, Chuang A, Burford M, Malekpour Galogahi F, et al. Calcium alginate core-shell liquid beads encapsulated with microalgae for wastewater treatment. Advanced Energy and Sustainability Research [Internet]. 2024;5(7):2400112. Available from: https://doi.org/10.1002/aesr.202400112",
+  "[5] Mackie W. Semi-quantitative estimation of the composition of alginates by infra-red spectroscopy. Carbohydrate Research [Internet]. 1971 Dec 1;20(2):413–5. Available from: https://doi.org/10.1016/s0008-6215(00)81397-x",
+  "[6] Sakugawa K, Ikeda A, Takemura A, Ono H. Simplified method for estimation of composition of alginates by FTIR. Journal of Applied Polymer Science [Internet]. 2004 May 4;93(3):1372–7. Available from: https://doi.org/10.1002/app.20589",
+  "[7] Rochas C, Lahaye M, Yaphe W. Sulfate content of carrageenan and agar determined by infrared spectroscopy. Botanica Marina [Internet]. 1986 Jan 1;29(4):335–40. Available from: https://doi.org/10.1515/botm.1986.29.4.335",
+  "[8] Gómez-Ordóñez E, Rupérez P. FTIR-ATR spectroscopy as a tool for polysaccharide identification in edible brown and red seaweeds. Food Hydrocolloids [Internet]. 2011 Feb 20;25(6):1514–20. Available from: https://doi.org/10.1016/j.foodhyd.2011.02.009",
+  "[9] Leal D, Matsuhiro B, Rossi M, Caruso F. FT-IR spectra of alginic acid block fractions in three species of brown seaweeds. Carbohydrate Research [Internet]. 2007 Nov 29;343(2):308–16. Available from: https://doi.org/10.1016/j.carres.2007.10.016",
+  "[10] Lee BB, Ravindra P, Chan ES. Size and shape of calcium alginate beads produced by extrusion dripping. Chemical Engineering & Technology [Internet]. 2013;36(10):1627–42. Available from: https://doi.org/10.1002/ceat.201300230",
+  "[11] Larosa C, Salerno M, De Lima JS, Meri RM, Da Silva MF, De Carvalho LB, et al. Characterisation of bare and tannase-loaded calcium alginate beads by microscopic, thermogravimetric, FTIR and XRD analyses. International Journal of Biological Macromolecules [Internet]. 2018 Apr 26;115:900–6. Available from: https://doi.org/10.1016/j.ijbiomac.2018.04.138",
+  "[12] Hu C, Lu W, Sun C, Zhao Y, Zhang Y, Fang Y. Gelation behavior and mechanism of alginate with calcium: Dependence on monovalent counterions. Carbohydrate Polymers [Internet]. 2022 Jun 28;294:119788. Available from: https://doi.org/10.1016/j.carbpol.2022.119788",
+  "[13] Liu C, Shi Y, Liu Y, Liu Y, Yang C, Chen H, et al. Controllable fabrication of alginate-based floating beads with core-shell architecture. Food Hydrocolloids [Internet]. 2024 Feb 6;151:109869. Available from: https://doi.org/10.1016/j.foodhyd.2024.109869",
+  "[14] Wu L, Schroën K, Corstens M. Structural stability and release properties of emulsion-alginate beads under gastrointestinal conditions. Food Hydrocolloids [Internet]. 2023 Dec 29;150:109702. Available from: https://doi.org/10.1016/j.foodhyd.2023.109702",
+  "[15] Pan CT, Chien ST, Chiang TC, Yen CK, Wang SY, Wen ZH, et al. Optimization of the spherical integrity for sustained-release alginate microcarriers-encapsulated doxorubicin by the Taguchi method. Scientific Reports [Internet]. 2020 Dec 10;10(1):21758. Available from: https://doi.org/10.1038/s41598-020-78813-1",
+  "[16] Karunadasa KSP, Manoratne CH, Pitawala HMTGA, Rajapakse RMG. Relative stability of hydrated/anhydrous products of calcium chloride during complete dehydration as examined by high-temperature X-ray powder diffraction. Journal of Physics and Chemistry of Solids [Internet]. 2018 Apr 27;120:167–72. Available from: https://doi.org/10.1016/j.jpcs.2018.04.034",
+  "[17] Koch M, Włodarczyk-Biegun MK. Faithful scanning electron microscopic (SEM) visualization of 3D printed alginate-based scaffolds. Bioprinting [Internet]. 2020 Aug 26;20:e00098. Available from: https://doi.org/10.1016/j.bprint.2020.e00098",
 ];
 
 export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
@@ -157,14 +163,14 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 each associated with M and G residues respectively, were used to
                 estimate the <strong>M/G ratio</strong>:{" "}
                 <strong>808 cm⁻¹ (M) / 787 cm⁻¹ (G)</strong>, as described by
-                Mackie <Cite scope="encapsulation" n={1} />, and{" "}
+                Mackie <Cite scope="encapsulation" n={5} />, and{" "}
                 <strong>1030 cm⁻¹ (M) / 1080 cm⁻¹ (G)</strong>, as described by
-                Sakugawa et al. <Cite scope="encapsulation" n={2} />. For each
+                Sakugawa et al. <Cite scope="encapsulation" n={6} />. For each
                 pair, a linear baseline was drawn between the two local
                 absorbance minima flanking both bands, following the baseline
-                method of Rochas et al. <Cite scope="encapsulation" n={3} /> as
+                method of Rochas et al. <Cite scope="encapsulation" n={7} /> as
                 adapted for alginate by Gómez-Ordóñez & Rupérez{" "}
-                <Cite scope="encapsulation" n={4} />. The transmittance at the
+                <Cite scope="encapsulation" n={8} />. The transmittance at the
                 baseline (Tb) and at the actual peak (Tp) were read at each
                 diagnostic wavenumber, the baseline-corrected absorbance was
                 calculated as <strong>A = log₁₀(Tb/Tp)</strong>, and the M/G
@@ -172,7 +178,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 assignments in the fingerprint (anomeric) region,{" "}
                 <strong>950–750 cm⁻¹</strong>, were further supported by
                 comparison with the literature values reported by Leal et al.{" "}
-                <Cite scope="encapsulation" n={5} />.
+                <Cite scope="encapsulation" n={9} />.
               </>,
               "The expected outcome was to determine whether the raw alginate was mannuronic- or guluronic-rich, providing an initial indication of its expected gelling behaviour. If mannuronic residues predominated, a comparatively softer, more elastic calcium-alginate gel would be expected, potentially requiring closer control of crosslinking parameters (alginate concentration, CaCl₂ concentration, crosslinking time) to achieve sufficient mechanical integrity. Conversely, if guluronic residues predominated, a stiffer, more rigid gel would be expected, favouring mechanical stability but potentially requiring adjustment of other parameters (e.g. flow rate, drop height) to avoid excessive brittleness. This information was intended to guide the interpretation of the mechanical and preservation behaviour observed in the subsequent bead and core-shell experiments.",
             ],
@@ -327,7 +333,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 because <strong>
                   sodium ions compete with calcium ions
                 </strong>{" "}
-                within the alginate matrix <Cite scope="encapsulation" n={7} />,
+                within the alginate matrix <Cite scope="encapsulation" n={12} />,
                 progressively disrupting the ionic crosslinks that stabilise the
                 hydrogel. Evaluating preservation in these media allowed us to
                 assess the effect of different storage media on alginate
@@ -622,11 +628,11 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 conditions, ion exchange between the sodium ions of an external
                 medium and the calcium ions crosslinking the gel is accelerated,
                 weakening the gel to varying degrees{" "}
-                <Cite scope="encapsulation" n={8} />, with the underlying
+                <Cite scope="encapsulation" n={14} />, with the underlying
                 competition between monovalent counterions such as Na⁺ and Ca²⁺
                 for the alginate carboxylate groups also described
                 mechanistically for alginate gelation more broadly{" "}
-                <Cite scope="encapsulation" n={7} />. This experiment was
+                <Cite scope="encapsulation" n={12} />. This experiment was
                 therefore designed to isolate which of these chemical factors
                 was responsible for the degradation observed, so that a
                 preservation medium avoiding it could be identified.
@@ -678,7 +684,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 pH-adjusted water, lowering pH was expected to protonate the
                 carboxylate groups of alginate and reduce swelling independently
                 of any monovalent cation exchange{" "}
-                <Cite scope="encapsulation" n={9} />. For PBS and the
+                <Cite scope="encapsulation" n={15} />. For PBS and the
                 sodium-free buffer dilutions, comparing the two was expected to
                 distinguish whether degradation was driven specifically by
                 sodium ions or by overall ionic strength, since only the PBS
@@ -753,7 +759,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 Literature characterisations of alginate by TGA-DSC are
                 typically performed on the raw sodium alginate powder rather
                 than on a hydrated hydrogel structure{" "}
-                <Cite scope="encapsulation" n={6} />. The dried core-shell
+                <Cite scope="encapsulation" n={3} />. The dried core-shell
                 capsules were therefore expected to yield a thermal profile
                 broadly consistent with these literature values for alginate
                 powder, since drying was intended to bring the capsule's water
@@ -765,7 +771,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 conditions. A contribution from the internal calcium chloride
                 was also anticipated, since its hydrates lose water over ranges
                 that overlap those of the hydrogel{" "}
-                <Cite scope="encapsulation" n={10} />. Comparing the three
+                <Cite scope="encapsulation" n={16} />. Comparing the three
                 profiles (hydrated capsule, dried capsule and literature powder
                 data) was intended to provide an estimate of how much water the
                 core-shell architecture retains relative to the starting raw
@@ -826,7 +832,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 incompatible with a sample retaining substantial free water: the
                 water would evaporate inside the chamber, collapsing the
                 structure and degrading the vacuum{" "}
-                <Cite scope="encapsulation" n={11} />. Air-drying the capsules
+                <Cite scope="encapsulation" n={17} />. Air-drying the capsules
                 overnight on absorbent paper removes that water, at the cost of
                 the shrinkage and surface collapse that are expected for any
                 alginate hydrogel dried without a solvent-exchange or
