@@ -6212,6 +6212,7 @@ export function Sustainability() {
             </h3>
             <div
               ref={kpiRef}
+              className="sus-narrow"
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))",
@@ -6430,6 +6431,7 @@ export function Sustainability() {
               use, against the conventional chemical route.
             </p>
             <div
+              className="sus-narrow"
               style={{
                 margin: "10px 0 28px",
                 overflowX: "auto",
@@ -10094,7 +10096,7 @@ export function Sustainability() {
               </strong>
               .
             </p>
-            <figure style={{ margin: "34px 0" }}>
+            <figure className="sus-narrow" style={{ margin: "34px 0" }}>
               <div
                 style={{
                   borderRadius: "18px",
@@ -13361,7 +13363,7 @@ export function Sustainability() {
                 </div>
               </button>
             </div>
-            <figure style={{ margin: "34px 0" }}>
+            <figure className="sus-narrow" style={{ margin: "34px 0" }}>
               <div
                 style={{
                   borderRadius: "18px",

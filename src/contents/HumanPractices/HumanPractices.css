@@ -7,7 +7,7 @@
    setting of .cp-notion-intro. */
 .hp-page-intro {
   max-width: 820px;
-  margin: 0 auto;
+  margin: 44px auto 0;
   padding: 0 20px;
   color: var(--ink);
   font-size: 1.02rem;
