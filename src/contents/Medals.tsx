@@ -259,7 +259,7 @@ export function Medals() {
                     basis.
                   </p>
                   <div className="medals-links">
-                    <Link className="medals-link-btn" to="/measurements">
+                    <Link className="medals-link-btn" to="/measurement">
                       Measurements
                     </Link>
                   </div>

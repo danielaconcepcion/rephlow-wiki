@@ -271,6 +271,40 @@
   max-width: 480px;
 }
 
+.pd-figure--sequence {
+  width: 100%;
+  max-width: 460px;
+}
+
+.pd-revalorisation-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  margin-top: 24px;
+}
+
+.pd-revalorisation-pair > p {
+  margin: 0;
+}
+
+.pd-content .pd-revalorisation-pair .pd-figure {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+/* The mirrored pairing, so two pairs in the same section don't put their
+   figure on the same side. The figure takes the left-hand column; on a
+   narrow screen the pair stacks and the text leads again. */
+.pd-revalorisation-pair--reverse {
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1fr);
+}
+
+.pd-revalorisation-pair--reverse > .pd-figure {
+  order: -1;
+}
+
 .pd-monomer-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -338,6 +372,41 @@
   border-bottom: 0;
 }
 
+.pd-table__row--addition td:nth-child(2) {
+  color: #235319;
+  font-weight: 700;
+}
+
+.pd-table__row--inactivation td:nth-child(2) {
+  color: #910c12;
+  font-weight: 700;
+}
+
+.pd-table__strategy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.pd-table__strategy::before {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+.pd-table__strategy--addition::before {
+  color: #235319;
+}
+
+.pd-table__strategy--inactivation::before {
+  color: #910c12;
+}
+
 .pd-references-accordion {
   margin-top: 42px;
   background: color-mix(in srgb, var(--water-mid) 7%, transparent);
@@ -364,6 +433,20 @@
 
   .pd-content p {
     text-align: left;
+  }
+
+  .pd-revalorisation-pair {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .pd-content .pd-revalorisation-pair .pd-figure {
+    width: min(100%, 480px);
+    margin-inline: auto;
+  }
+
+  .pd-revalorisation-pair--reverse > .pd-figure {
+    order: 0;
   }
 
   .pd-monomer-grid,

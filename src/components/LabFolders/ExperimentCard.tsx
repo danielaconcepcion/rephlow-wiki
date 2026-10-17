@@ -273,15 +273,43 @@ function SectionHeading({
   );
 }
 
-function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
+function BodyBlock({ block, level = 1 }: { block: ExperimentBodyBlock; level?: number }) {
   const hasParagraphs = !!block.paragraphs?.length;
-  const blockClass = `experiment-card__block${
-    block.title ? " experiment-card__block--section" : ""
-  }`;
+
+  /* A folded section: the title is the summary, the children are what it
+     opens. Nested foldables take level 2, which the stylesheet sets as a
+     quieter, indented row rather than a second boxed panel. */
+  if (block.foldable) {
+    return (
+      <details
+        className={`experiment-section--foldable level-${level}`}
+        id={block.id}
+      >
+        <summary className="experiment-section__summary">
+          <SectionHeading title={block.title} enzymes={block.enzymes} />
+        </summary>
+        <div className="experiment-section__content">
+          {block.blocks?.map((child, index) => (
+            <BodyBlock block={child} level={level + 1} key={index} />
+          ))}
+          <Callouts callouts={block.callouts} />
+        </div>
+      </details>
+    );
+  }
+
+  const blockClass = [
+    "experiment-card__block",
+    block.title && !block.group ? "experiment-card__block--section" : "",
+    block.group ? "experiment-card__block--group" : "",
+    block.layout ? `experiment-card__block--${block.layout}` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   if (!block.pairedResource) {
     return (
-      <div className={blockClass}>
+      <div className={blockClass} id={block.id}>
         <SectionHeading title={block.title} enzymes={block.enzymes} />
         <DescriptionParagraphs paragraphs={block.paragraphs ?? []} />
         <Callouts callouts={block.callouts} />
@@ -296,7 +324,7 @@ function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
   // see isWideResource — with its paragraph(s), if any, stacked above it.
   if (!hasParagraphs || isWideResource(block.pairedResource)) {
     return (
-      <div className={blockClass}>
+      <div className={blockClass} id={block.id}>
         <SectionHeading title={block.title} enzymes={block.enzymes} />
         {hasParagraphs && (
           <DescriptionParagraphs paragraphs={block.paragraphs!} />

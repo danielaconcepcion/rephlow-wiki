@@ -6211,8 +6211,8 @@ export function Sustainability() {
               Reading 1: what one cubic metre gives back
             </h3>
             <div
-              ref={kpiRef}
               className="sus-narrow"
+              ref={kpiRef}
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fit,minmax(170px,1fr))",

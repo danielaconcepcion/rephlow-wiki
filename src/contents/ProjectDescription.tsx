@@ -105,16 +105,15 @@ function Figure({
   caption?: ReactNode;
   className?: string;
 }) {
+  const figureAsset = (path: string) =>
+    asset(path.includes("/") ? path : `assets/project-description/${path}`);
   const image = fallbackSrc ? (
     <picture>
-      <source
-        srcSet={asset(`assets/project-description/${src}`)}
-        type="image/svg+xml"
-      />
-      <img src={asset(`assets/project-description/${fallbackSrc}`)} alt={alt} />
+      <source srcSet={figureAsset(src)} type="image/svg+xml" />
+      <img src={figureAsset(fallbackSrc)} alt={alt} />
     </picture>
   ) : (
-    <img src={asset(`assets/project-description/${src}`)} alt={alt} />
+    <img src={figureAsset(src)} alt={alt} />
   );
   return (
     <figure
@@ -377,15 +376,13 @@ export function ProjectDescription() {
                 </p>
                 <p>
                   This industrial dimension became tangible through{" "}
-                  <strong>Bio-Oils Huelva</strong>, whose La Rábida plant
-                  produces biodiesel from vegetable and residual oils. Before
-                  transesterification, the raw oil must undergo{" "}
-                  <strong>degumming</strong> to remove phospholipids and other
-                  impurities. Some phospholipids can be removed with water,
-                  whereas others remain bound to calcium, magnesium or iron and
-                  are non-hydratable. Phosphoric acid destabilises these
-                  metal–phospholipid complexes, allowing the gums to be
-                  hydrated, neutralised and separated from the oil by
+                  <strong>Bio-Oils Huelva</strong>. Before transesterification,
+                  the raw oil must undergo <strong>degumming</strong> to remove
+                  phospholipids and other impurities. Some phospholipids can be
+                  removed with water, whereas others remain bound to calcium,
+                  magnesium or iron and are non-hydratable. Phosphoric acid
+                  destabilises these metal–phospholipid complexes, allowing the
+                  gums to be hydrated, neutralised and separated from the oil by
                   centrifugation
                   <Cite group="problem" numbers={[12, 13]} />.
                 </p>
@@ -1508,8 +1505,12 @@ export function ProjectDescription() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Heterologous expression</td>
+                      <tr className="pd-table__row--addition">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--addition">
+                            Heterologous expression
+                          </span>
+                        </td>
                         <td>↑ Uptake</td>
                         <td>
                           <em>pstSCAB</em>
@@ -1523,8 +1524,12 @@ export function ProjectDescription() {
                           importer.
                         </td>
                       </tr>
-                      <tr>
-                        <td>Heterologous expression</td>
+                      <tr className="pd-table__row--addition">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--addition">
+                            Heterologous expression
+                          </span>
+                        </td>
                         <td>↑ Synthesis</td>
                         <td>
                           <em>ppk1</em>
@@ -1535,8 +1540,12 @@ export function ProjectDescription() {
                           polyphosphate.
                         </td>
                       </tr>
-                      <tr>
-                        <td>Functional inactivation</td>
+                      <tr className="pd-table__row--inactivation">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--inactivation">
+                            Functional inactivation
+                          </span>
+                        </td>
                         <td>↓ Degradation</td>
                         <td>
                           <em>ppx</em>
@@ -1547,8 +1556,12 @@ export function ProjectDescription() {
                           pool.
                         </td>
                       </tr>
-                      <tr>
-                        <td>Functional inactivation</td>
+                      <tr className="pd-table__row--inactivation">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--inactivation">
+                            Functional inactivation
+                          </span>
+                        </td>
                         <td>↓ Consumption</td>
                         <td>
                           <em>ppkB</em>
@@ -1559,8 +1572,12 @@ export function ProjectDescription() {
                           regeneration.
                         </td>
                       </tr>
-                      <tr>
-                        <td>Functional inactivation</td>
+                      <tr className="pd-table__row--inactivation">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--inactivation">
+                            Functional inactivation
+                          </span>
+                        </td>
                         <td>↓ Efflux</td>
                         <td>
                           <em>pitB</em>
@@ -1798,8 +1815,8 @@ export function ProjectDescription() {
               </a>
               <h2>Model</h2>
               <BlockIntro
-                image="assets/model-icon.png"
-                alt="Illustration of a laptop representing computational modelling"
+                image="assets/our-solution/model-clean.webp"
+                alt="Illustration of a monitor showing a computational model of a biological system"
               >
                 Genome-scale and kinetic models predict genetic priorities,
                 process conditions and phosphate-accumulation dynamics.
@@ -1889,9 +1906,8 @@ export function ProjectDescription() {
                 image="assets/our-solution/revalorizacion-callout-icon.webp"
                 alt="Illustration of the phosphate revalorisation workflow"
               >
-                A multi-enzyme system that uses recovered polyphosphate to
-                regenerate ATP and drive the synthesis of value-added
-                phosphorylated products.
+                A multi-enzyme system that converts the recovered phosphate into
+                high-value-added products.
               </BlockIntro>
 
               <div className="pd-subsection">
@@ -1934,20 +1950,33 @@ export function ProjectDescription() {
                   that the living cell cannot draw down the reserve it is
                   building, and supplied in vitro in the reactor to release it.
                 </p>
-                <p>
-                  PPK2-I converts ADP to ATP, PPK2-II converts AMP to ADP and
-                  bifunctional PPK2-III carries AMP through to ATP in a single
-                  polypeptide
-                  <Cite group="revalorisation" numbers={[5, 9]} />, which
-                  collapses the regeneration step into one biocatalyst. We
-                  selected BcPPK2-III from <em>Burkholderia cenocepacia</em> for
-                  two reasons. It accepts both AMP and ADP, so the regeneration
-                  module can be coupled to downstream enzymes whether they
-                  release ADP or AMP; and it is operationally robust, reported
-                  to combine thermostability with activity across pH 6.0 to 9.0
-                  <Cite group="revalorisation" numbers={[5]} />, the range a
-                  multi-enzyme cascade needs in order to scale.
-                </p>
+                <div className="pd-revalorisation-pair">
+                  <p>
+                    PPK2-I converts ADP to ATP, PPK2-II converts AMP to ADP and
+                    bifunctional PPK2-III carries AMP through to ATP in a single
+                    polypeptide
+                    <Cite group="revalorisation" numbers={[5, 9]} />, which
+                    collapses the regeneration step into one biocatalyst. We
+                    selected the class III polyphosphate kinase BcPPK2 from{" "}
+                    <em>Burkholderia cenocepacia</em> for two reasons. It
+                    accepts both AMP and ADP, so the regeneration module can be
+                    coupled to downstream enzymes whether they release ADP or
+                    AMP; and it is operationally robust, reported to combine
+                    thermostability with activity across pH 6.0 to 9.0
+                    <Cite group="revalorisation" numbers={[5]} />, the range a
+                    multi-enzyme cascade needs in order to scale.
+                  </p>
+                  <Figure
+                    src="assets/results/revalorisation/dhak-ppk2-complex.png"
+                    alt="Model of the coupled DHAK and PPK2 enzyme system"
+                    caption={
+                      <>
+                        <strong>Figure 3.</strong> Structural representation of
+                        the coupled DHAK–PPK2 enzymatic system.
+                      </>
+                    }
+                  />
+                </div>
                 <p>
                   Those properties are already established in the literature, so
                   we did not re-characterise the enzyme in isolation. We
@@ -1955,21 +1984,6 @@ export function ProjectDescription() {
                   instead, which is what determines whether the concept works;
                   those data are in <WikiLink to="/results">Results</WikiLink>.
                 </p>
-                <Figure
-                  src="atp-regeneration-module.webp"
-                  alt="Polyphosphate kinase regenerating ATP to support an ATP-dependent phosphorylation reaction"
-                  className="pd-figure--compact"
-                  caption={
-                    <>
-                      <strong>Figure 3.</strong> Conceptual representation of
-                      the coupling between the ATP regeneration and
-                      phosphorylation modules. PPK2 regenerates ATP from
-                      polyphosphate and ADP, supplying the ATP required for
-                      substrate phosphorylation while reducing the ADP
-                      accumulation that inhibits the kinase.
-                    </>
-                  }
-                />
               </div>
 
               <div className="pd-subsection">
@@ -2049,6 +2063,19 @@ export function ProjectDescription() {
                   stall the reaction, so PPK2 both feeds DHAK and relieves its
                   product inhibition.
                 </p>
+                <Figure
+                  src="atp-regeneration-module.webp"
+                  alt="Polyphosphate kinase regenerating ATP to support an ATP-dependent phosphorylation reaction"
+                  className="pd-figure--compact"
+                  caption={
+                    <>
+                      <strong>Figure 5.</strong> Conceptual representation of
+                      the coupling between the ATP regeneration and
+                      phosphorylation modules, with the kinase reaction written
+                      for any substrate rather than for dihydroxyacetone alone.
+                    </>
+                  }
+                />
               </div>
 
               <div className="pd-subsection">
@@ -2110,42 +2137,44 @@ export function ProjectDescription() {
                 </p>
                 <p>
                   We designed a stapled version of the regeneration couple, one
-                  half fused to BcPPK2-III and the other to DHAK, so that mixing
-                  the two purified fusions yields a covalent one-to-one
-                  conjugate. The aim is to raise the yield of the catalytic
-                  cycle itself: the covalent link fixes the stoichiometry at any
-                  dilution and keeps ATP regeneration next to ATP consumption,
-                  which should limit the free ADP that inhibits DHAK. A cascade
-                  that holds its ratio and its coupling without re-optimisation
-                  at every dilution is far simpler to scale industrially, since
-                  the assembly step becomes a single mixing operation rather
-                  than a tuning problem. The reaction also reaches essentially
-                  complete conversion across a broad range of temperatures,
-                  buffers and pH values, so it fits the conditions used
-                  elsewhere in the cascade
+                  half fused to BcPPK2 and the other to DHAK, so that mixing the
+                  two purified fusions yields a covalent one-to-one conjugate.
+                  The aim is to raise the yield of the catalytic cycle itself:
+                  the covalent link fixes the stoichiometry at any dilution and
+                  keeps ATP regeneration next to ATP consumption, which should
+                  limit the free ADP that inhibits DHAK. A cascade that holds
+                  its ratio and its coupling without re-optimisation at every
+                  dilution is far simpler to scale industrially, since the
+                  assembly step becomes a single mixing operation rather than a
+                  tuning problem. The reaction also reaches essentially complete
+                  conversion across a broad range of temperatures, buffers and
+                  pH values, so it fits the conditions used elsewhere in the
+                  cascade
                   <Cite group="revalorisation" numbers={[10]} />.
                 </p>
-                <p>
-                  This part of the project has remained theoretical. We designed
-                  the plasmids encoding both fusions for laboratory
-                  implementation, but could not build and assay the constructs
-                  within the project timeframe. To support the design we
-                  produced 3D models of both tagged enzymes, shown below; see{" "}
-                  <WikiLink to="/experiments">Experiments</WikiLink> for more
-                  information.
-                </p>
-                <Figure
-                  src="spytag-spycatcher-models.webp"
-                  alt="Three-dimensional models of the SpyTag- and SpyCatcher-fused enzymes of the regeneration couple"
-                  className="pd-figure--pathway"
-                  caption={
-                    <>
-                      <strong>Figure 5.</strong> 3D models of the SpyTag- and
-                      SpyCatcher-fused enzymes of the regeneration couple. PPK2
-                      in blue, DHAK in green, SpyTag/SpyCatcher in yellow.
-                    </>
-                  }
-                />
+                <div className="pd-revalorisation-pair pd-revalorisation-pair--reverse">
+                  <p>
+                    This part of the project has remained theoretical. We
+                    designed the plasmids encoding both fusions for laboratory
+                    implementation, but could not build and assay the constructs
+                    within the project timeframe. To support the design we
+                    produced 3D models of both tagged enzymes; see{" "}
+                    <WikiLink to="/experiments">Experiments</WikiLink> for more
+                    information.
+                  </p>
+                  <Figure
+                    src="spytag-spycatcher-models.webp"
+                    alt="Three-dimensional models of the SpyTag- and SpyCatcher-fused enzymes of the regeneration couple"
+                    caption={
+                      <>
+                        <strong>Figure 6.</strong> 3D models of the SpyTag- and
+                        SpyCatcher-fused enzymes of the regeneration couple.
+                        PPK2 in blue, DHAK in green, SpyTag/SpyCatcher in
+                        yellow.
+                      </>
+                    }
+                  />
+                </div>
               </div>
 
               <AccordionSection

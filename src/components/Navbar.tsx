@@ -33,7 +33,7 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Laboratory",
     items: [
       { label: "Experiments", path: "/experiments" },
-      { label: "Measurements", path: "/measurements" },
+      { label: "Measurements", path: "/measurement" },
       { label: "Results", path: "/results" },
       { label: "Safety", path: "/safety" },
     ],
@@ -42,8 +42,14 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Engagement",
     items: [
       { label: "Human practices", path: "/human-practices" },
-      { label: "Collaboration and Partnership", path: "/collaboration-partnership" },
-      { label: "Education and Communication", path: "/education-communication" },
+      {
+        label: "Collaboration and Partnership",
+        path: "/collaboration-partnership",
+      },
+      {
+        label: "Education and Communication",
+        path: "/education-communication",
+      },
       { label: "Entrepreneurship", path: "/entrepreneurship" },
       { label: "Sustainability", path: "/sustainability" },
       { label: "Contribution", path: "/contribution" },
@@ -51,16 +57,14 @@ const NAV_GROUPS: NavGroup[] = [
   },
   {
     label: "Team",
-    items: [
-      { label: "Team", path: "/team" },
-    ],
+    items: [{ label: "Team", path: "/team" }],
   },
   {
     label: "Judging",
     items: [
       { label: "Medals", path: "/medals", primary: true },
       { label: "Human practices", path: "/human-practices", primary: false },
-      { label: "Measurements", path: "/measurements", primary: false },
+      { label: "Measurements", path: "/measurement", primary: false },
       { label: "Hardware", path: "/hardware", primary: false },
       { label: "Model", path: "/model", primary: false },
     ],

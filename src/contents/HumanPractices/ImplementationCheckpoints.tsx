@@ -976,7 +976,7 @@ const RELATED_PAGES: Record<string, string> = {
   Safety: "/safety",
   Entrepreneurship: "/entrepreneurship",
   "Project description": "/project-description",
-  Measurement: "/measurements",
+  Measurement: "/measurement",
   Engineering: "/engineering",
   Results: "/results",
 };

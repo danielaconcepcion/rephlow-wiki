@@ -739,7 +739,7 @@ export function Home() {
               <p className="card__title">Experiments</p>
             </Link>
 
-            <Link className="card" to="/measurements">
+            <Link className="card" to="/measurement">
               <TileMoleculeField seed={46} palette="light" />
               <div className="card__icon card__icon--measurements">
                 <svg

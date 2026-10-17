@@ -145,6 +145,9 @@ export interface BodyCallout {
 }
 
 export interface ExperimentBodyBlock {
+  /** An anchor for this block, so a page's lateral index can link to it
+   * (Measurements' foldable sections). */
+  id?: string;
   /** A heading for this block — "Design strategy", "Experimental design",
    * "Second trial" — rendered with the same rule-and-heading break the
    * Results subsections use, so a long stage reads as a sequence of named
@@ -164,6 +167,24 @@ export interface ExperimentBodyBlock {
    * full-width on its own rather than being forced into a pair. */
   paragraphs?: ReactNode[];
   pairedResource?: PairedResource;
+  /** Folds this block away behind its `title`, with `blocks` as what the
+   * summary opens — how the Measurements records are read, section by
+   * section ("Application to our project", "Technique requirements",
+   * "Results"), rather than as one long card. Foldables nest one level,
+   * for a section that is itself a series of runs. */
+  foldable?: boolean;
+  /** This block's own children — only read when `foldable` is set. */
+  blocks?: ExperimentBodyBlock[];
+  /** A heading that groups the sections after it, for a record that
+   * measures several things ("Intact beads and capsules: size and shape",
+   * then its own Application / Technique / Results). Rendered as a
+   * promoted heading, and the page's lateral index lists these instead of
+   * the repeating section names underneath them. */
+  group?: boolean;
+  /** How this block sits in the card: "half" shares its row with the next
+   * half block, "side-caption" puts a figure's caption beside it instead
+   * of under it. Default is full width, caption below. */
+  layout?: "half" | "side-caption";
 }
 
 export interface ExperimentData {

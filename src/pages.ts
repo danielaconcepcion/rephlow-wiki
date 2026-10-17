@@ -114,9 +114,16 @@ const Pages: Page[] = [
     title: "Measurements",
     lead: "Measure. Understand. Improve.",
     /*A space for the measurements, characterization, and data collected during the project.*/
-    path: "/measurements",
+    // iGEM's standard URL for the measurement award page is
+    // https://2026.igem.wiki/<team>/measurement — singular, and judged at
+    // that address, so that is where this page lives. /measurements still
+    // resolves to it (see App.tsx).
+    path: "/measurement",
     component: Measurements,
     docTitle: "Measurements — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 17,
   },
   {
     name: "Results",

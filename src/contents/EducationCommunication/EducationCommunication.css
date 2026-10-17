@@ -109,6 +109,73 @@
   outline-offset: 3px;
 }
 
+/* Click me: the objects answer the pointer. Hovering one gives its art a
+   playful wiggle on top of the lift above, and the activity currently
+   open hops once and keeps a chalk-yellow ring on its tag, so it stays
+   findable on the board while its dialog is in front of it.
+
+   Both animate `rotate` and `translate` rather than `transform`, because
+   the art carries its own inline `transform: rotate(...)` tilt, which an
+   animated transform would overwrite. */
+@keyframes ec-wiggle {
+  0% {
+    rotate: 0deg;
+  }
+  25% {
+    rotate: -4deg;
+  }
+  50% {
+    rotate: 3deg;
+  }
+  75% {
+    rotate: -1.5deg;
+  }
+  100% {
+    rotate: 0deg;
+  }
+}
+
+@keyframes ec-hop {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  40% {
+    translate: 0 -10px;
+  }
+  70% {
+    translate: 0 2px;
+  }
+}
+
+.ec-object:hover .ec-art,
+.ec-object:focus-visible .ec-art {
+  animation: ec-wiggle 0.55s ease;
+}
+
+.ec-object.is-current .ec-art {
+  animation: ec-hop 0.6s ease;
+}
+
+.ec-object.is-current .ec-object__tag {
+  box-shadow:
+    0 0 0 0.35cqw rgba(244, 211, 94, 0.65),
+    0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+/* Hovering the current one replaces the hop with the same wiggle every
+   other object gives, so it never plays both at once. */
+.ec-object.is-current:hover .ec-art {
+  animation: ec-wiggle 0.55s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ec-object .ec-art,
+  .ec-object.is-current .ec-art {
+    animation: none;
+  }
+}
+
 /* Each object is its own container, so the art inside scales with the
    object rather than with the board. */
 .ec-art {
@@ -373,4 +440,75 @@
   .ec-entry__meta {
     padding-left: 0;
   }
+}
+
+/* --------------------------------------------------------------------------
+   The activity dialog
+
+   The shell is Collaboration's (cp-modal*, imported from that page's
+   stylesheet); these are the two things this page's entries need on top of
+   it — justified prose, as the chronicle set it, and a single photo shown
+   whole rather than in a strip.
+   -------------------------------------------------------------------------- */
+
+.ec-modal__body p:not(.cp-kicker) {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+}
+
+/* Two or three photos at most, so they sit side by side rather than in a
+   strip; a lone photo is centred and capped, so a portrait does not push
+   the text it belongs to off the dialog. */
+.ec-modal__photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  /* Centred rather than top-aligned: photos of different shapes sit on a
+     shared centre line, instead of a short one leaving a hole under it. */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Flex rather than a grid: with two or four photos an auto-fit grid
+   leaves an empty track, and here the row simply wraps. Half the row is
+   also the most any one photo takes, so the fourth of four does not
+   stretch across the dialog on its own line. */
+.ec-modal__photos > .ec-modal__photo {
+  flex: 1 1 calc(50% - 7px);
+  max-width: calc(50% - 7px);
+}
+
+/* On a phone the dialog is too narrow for two, so each takes the row. */
+@media (max-width: 560px) {
+  .ec-modal__photos > .ec-modal__photo {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+}
+
+.ec-modal__photos--single > .ec-modal__photo {
+  flex: 0 1 min(100%, 420px);
+}
+
+.ec-modal__photo {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--paper-soft);
+  box-shadow: 0 6px 14px rgba(40, 15, 5, 0.14);
+}
+
+.ec-modal__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Inside the dialog the link sits in the cp-stack flow, so it takes its
+   own gap from the stack rather than the chronicle's top margin. */
+.ec-modal__body .ec-entry__link {
+  align-self: flex-start;
+  margin-top: 0;
 }
