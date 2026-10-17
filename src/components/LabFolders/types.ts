@@ -175,6 +175,16 @@ export interface ExperimentBodyBlock {
   foldable?: boolean;
   /** This block's own children — only read when `foldable` is set. */
   blocks?: ExperimentBodyBlock[];
+  /** A heading that groups the sections after it, for a record that
+   * measures several things ("Intact beads and capsules: size and shape",
+   * then its own Application / Technique / Results). Rendered as a
+   * promoted heading, and the page's lateral index lists these instead of
+   * the repeating section names underneath them. */
+  group?: boolean;
+  /** How this block sits in the card: "half" shares its row with the next
+   * half block, "side-caption" puts a figure's caption beside it instead
+   * of under it. Default is full width, caption below. */
+  layout?: "half" | "side-caption";
 }
 
 export interface ExperimentData {

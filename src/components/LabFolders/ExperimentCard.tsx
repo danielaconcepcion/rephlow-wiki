@@ -298,13 +298,18 @@ function BodyBlock({ block, level = 1 }: { block: ExperimentBodyBlock; level?: n
     );
   }
 
-  const blockClass = `experiment-card__block${
-    block.title ? " experiment-card__block--section" : ""
-  }`;
+  const blockClass = [
+    "experiment-card__block",
+    block.title && !block.group ? "experiment-card__block--section" : "",
+    block.group ? "experiment-card__block--group" : "",
+    block.layout ? `experiment-card__block--${block.layout}` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   if (!block.pairedResource) {
     return (
-      <div className={blockClass}>
+      <div className={blockClass} id={block.id}>
         <SectionHeading title={block.title} enzymes={block.enzymes} />
         <DescriptionParagraphs paragraphs={block.paragraphs ?? []} />
         <Callouts callouts={block.callouts} />
@@ -319,7 +324,7 @@ function BodyBlock({ block, level = 1 }: { block: ExperimentBodyBlock; level?: n
   // see isWideResource — with its paragraph(s), if any, stacked above it.
   if (!hasParagraphs || isWideResource(block.pairedResource)) {
     return (
-      <div className={blockClass}>
+      <div className={blockClass} id={block.id}>
         <SectionHeading title={block.title} enzymes={block.enzymes} />
         {hasParagraphs && (
           <DescriptionParagraphs paragraphs={block.paragraphs!} />

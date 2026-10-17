@@ -112,7 +112,7 @@ const POLYP_UPTAKE: ExperimentData = {
         {
           pairedResource: {
             kind: "image",
-            src: "assets/measurements/polyp-uptake-orthophosphate-calibration-curve-from-the-molybdate.jpg",
+            src: "assets/results/genetic-engineering/phosphorus-standard-curve.svg",
             alt: "Orthophosphate calibration curve from the molybdate-dye reaction",
             caption:
               "Orthophosphate calibration curve (mean A₆₀₀ vs phosphate mass, 0–1900 ng Pi), built from the molybdate-dye reaction with a 50 µM phosphate standard series. The linear fit gives A₆₀₀ = 0.00104 · [Pi, ng] + 0.2218, used to interpolate all samples.",
@@ -121,7 +121,7 @@ const POLYP_UPTAKE: ExperimentData = {
         {
           pairedResource: {
             kind: "image",
-            src: "assets/measurements/polyp-uptake-od600-of-wild-type-and-transformant.jpg",
+            src: "assets/results/genetic-engineering/phosphorus-assay-biomass.svg",
             alt: "OD600 of wild type and transformant over the 120 minute assay",
             caption:
               "Growth of wild type and engineered transformant (OD₆₀₀ vs time) over the 120 min assay in operation medium at pH 5; both strains remain near OD₆₀₀ ≈ 1.4–1.8, confirming that the signal changes reflect phosphorus uptake and not large changes in biomass.",
@@ -172,7 +172,7 @@ const POLYP_UPTAKE: ExperimentData = {
           callouts: [
             {
               kind: "outcome",
-              text: "This matches the expectation set out above and provides functional, whole-cell validation that the metabolic design (ppk1 and pstSCAB overexpression together with ppx, ppkB and pitB knockouts) does what it was engineered to do: bias the cell towards capturing and retaining phosphorus from the operation stream [4, 6].",
+              text: "**This matches the expectation set out above and provides functional,** whole-cell validation that the metabolic design (ppk1 and pstSCAB overexpression together with ppx, ppkB and pitB knockouts) does what it was engineered to do: bias the cell towards capturing and retaining phosphorus from the operation stream [4, 6].",
             },
           ],
         },
@@ -180,7 +180,7 @@ const POLYP_UPTAKE: ExperimentData = {
           callouts: [
             {
               kind: "not-done",
-              text: "Next experimental steps: extend the time-course beyond 120 min until the normalised signal plateaus, to obtain each strain’s maximal polyphosphate storage capacity in addition to the initial rate; increase the number of biological replicates and, if needed, apply a brief additional wash or an EDTA rinse to further suppress extracellular-phosphate carry-over, since incomplete removal of the phosphate-rich medium is the most likely source of the early scatter; dissect the contribution of the individual genetic modifications to the observed rate gain; and repeat on genuine, non-simulated degumming effluent, coupling the measurement to the downstream biomass-harvest and phosphorus-recovery step.",
+              text: "**Next experimental steps: extend the time-course beyond 120 min until the normalised signal plateaus,** to obtain each strain’s maximal polyphosphate storage capacity in addition to the initial rate; increase the number of biological replicates and, if needed, apply a brief additional wash or an EDTA rinse to further suppress extracellular-phosphate carry-over, since incomplete removal of the phosphate-rich medium is the most likely source of the early scatter; dissect the contribution of the individual genetic modifications to the observed rate gain; and repeat on genuine, non-simulated degumming effluent, coupling the measurement to the downstream biomass-harvest and phosphorus-recovery step.",
             },
           ],
         },
@@ -188,7 +188,7 @@ const POLYP_UPTAKE: ExperimentData = {
           callouts: [
             {
               kind: "learn",
-              text: "Should a run fail to show uptake, the first things to check would be the completeness of the NaCl washes, the efficiency of the acid hydrolysis (time and temperature) and the freshness of the molybdate-dye reagent, any of which could flatten or distort the signal.",
+              text: "**Should a run fail to show uptake, the first things to check would be the completeness of the NaCl washes,** the efficiency of the acid hydrolysis (time and temperature) and the freshness of the molybdate-dye reagent, any of which could flatten or distort the signal.",
             },
           ],
         },

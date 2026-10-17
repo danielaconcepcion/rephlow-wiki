@@ -43,20 +43,27 @@ const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
       label: measurement.tabLabel,
       onSelect: () =>
         document.getElementById(`folder-tab-${measurement.id}`)?.click(),
-      children: (measurement.body ?? [])
-        .filter((section) => section.foldable && section.id && section.title)
-        .map((section) => ({
-          id: section.id!,
-          label: section.title!,
-          // Opening the index entry opens the section it points at, which
-          // is otherwise folded away and so impossible to scroll to.
-          onSelect: () => {
-            const target = document.getElementById(section.id!);
-            if (!(target instanceof HTMLDetailsElement)) return;
-            target.open = true;
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-          },
-        })),
+      /* A record that measures several things lists those groups; one that
+         measures a single thing lists its own sections, which is what the
+         groups would otherwise repeat verbatim. */
+      children: ((blocks) =>
+        blocks.some((block) => block.group)
+          ? blocks.filter((block) => block.group)
+          : blocks.filter((block) => block.foldable))(
+        (measurement.body ?? []).filter((block) => block.id && block.title),
+      ).map((section) => ({
+        id: section.id!,
+        label: section.title!,
+        // Opening the index entry opens the section it points at, which
+        // is otherwise folded away and so impossible to scroll to. A
+        // group heading is already on the page, so it only scrolls.
+        onSelect: () => {
+          const target = document.getElementById(section.id!);
+          if (!target) return;
+          if (target instanceof HTMLDetailsElement) target.open = true;
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        },
+      })),
     })),
   ]),
 );
