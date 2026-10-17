@@ -189,8 +189,10 @@ const Pages: Page[] = [
     /*A space for the sustainability context and environmental relevance of rePhlow.*/
     path: "/sustainability",
     component: Sustainability,
-    hideEyebrow: true,
     docTitle: "Sustainability — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 37,
   },
   {
     name: "Contribution",
