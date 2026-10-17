@@ -294,17 +294,6 @@
   margin: 0;
 }
 
-/* The mirrored pairing, so two pairs in the same section don't put their
-   figure on the same side. The figure takes the left-hand column; on a
-   narrow screen the pair stacks and the text leads again. */
-.pd-revalorisation-pair--reverse {
-  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1fr);
-}
-
-.pd-revalorisation-pair--reverse > .pd-figure {
-  order: -1;
-}
-
 .pd-monomer-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -443,10 +432,6 @@
   .pd-content .pd-revalorisation-pair .pd-figure {
     width: min(100%, 480px);
     margin-inline: auto;
-  }
-
-  .pd-revalorisation-pair--reverse > .pd-figure {
-    order: 0;
   }
 
   .pd-monomer-grid,

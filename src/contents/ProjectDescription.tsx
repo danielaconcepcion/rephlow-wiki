@@ -1950,33 +1950,21 @@ export function ProjectDescription() {
                   that the living cell cannot draw down the reserve it is
                   building, and supplied in vitro in the reactor to release it.
                 </p>
-                <div className="pd-revalorisation-pair">
-                  <p>
-                    PPK2-I converts ADP to ATP, PPK2-II converts AMP to ADP and
-                    bifunctional PPK2-III carries AMP through to ATP in a single
-                    polypeptide
-                    <Cite group="revalorisation" numbers={[5, 9]} />, which
-                    collapses the regeneration step into one biocatalyst. We
-                    selected the class III polyphosphate kinase BcPPK2 from{" "}
-                    <em>Burkholderia cenocepacia</em> for two reasons. It
-                    accepts both AMP and ADP, so the regeneration module can be
-                    coupled to downstream enzymes whether they release ADP or
-                    AMP; and it is operationally robust, reported to combine
-                    thermostability with activity across pH 6.0 to 9.0
-                    <Cite group="revalorisation" numbers={[5]} />, the range a
-                    multi-enzyme cascade needs in order to scale.
-                  </p>
-                  <Figure
-                    src="assets/results/revalorisation/dhak-ppk2-complex.png"
-                    alt="Model of the coupled DHAK and PPK2 enzyme system"
-                    caption={
-                      <>
-                        <strong>Figure 3.</strong> Structural representation of
-                        the coupled DHAK–PPK2 enzymatic system.
-                      </>
-                    }
-                  />
-                </div>
+                <p>
+                  PPK2-I converts ADP to ATP, PPK2-II converts AMP to ADP and
+                  bifunctional PPK2-III carries AMP through to ATP in a single
+                  polypeptide
+                  <Cite group="revalorisation" numbers={[5, 9]} />, which
+                  collapses the regeneration step into one biocatalyst. We
+                  selected the class III polyphosphate kinase BcPPK2 from{" "}
+                  <em>Burkholderia cenocepacia</em> for two reasons. It accepts
+                  both AMP and ADP, so the regeneration module can be coupled to
+                  downstream enzymes whether they release ADP or AMP; and it is
+                  operationally robust, reported to combine thermostability with
+                  activity across pH 6.0 to 9.0
+                  <Cite group="revalorisation" numbers={[5]} />, the range a
+                  multi-enzyme cascade needs in order to scale.
+                </p>
                 <p>
                   Those properties are already established in the literature, so
                   we did not re-characterise the enzyme in isolation. We
@@ -2031,7 +2019,7 @@ export function ProjectDescription() {
                   alt="Dihydroxyacetone kinase reaction coupled to polyphosphate-driven ATP regeneration"
                   caption={
                     <>
-                      <strong>Figure 4.</strong> Schematic representation of the
+                      <strong>Figure 3.</strong> Schematic representation of the
                       coupled system linking polyphosphate-driven ATP
                       regeneration to the phosphorylation of dihydroxyacetone
                       into dihydroxyacetone phosphate. PPK2 uses polyphosphate
@@ -2069,7 +2057,7 @@ export function ProjectDescription() {
                   className="pd-figure--compact"
                   caption={
                     <>
-                      <strong>Figure 5.</strong> Conceptual representation of
+                      <strong>Figure 4.</strong> Conceptual representation of
                       the coupling between the ATP regeneration and
                       phosphorylation modules, with the kinase reaction written
                       for any substrate rather than for dihydroxyacetone alone.
@@ -2152,7 +2140,7 @@ export function ProjectDescription() {
                   cascade
                   <Cite group="revalorisation" numbers={[10]} />.
                 </p>
-                <div className="pd-revalorisation-pair pd-revalorisation-pair--reverse">
+                <div className="pd-revalorisation-pair">
                   <p>
                     This part of the project has remained theoretical. We
                     designed the plasmids encoding both fusions for laboratory
@@ -2167,7 +2155,7 @@ export function ProjectDescription() {
                     alt="Three-dimensional models of the SpyTag- and SpyCatcher-fused enzymes of the regeneration couple"
                     caption={
                       <>
-                        <strong>Figure 6.</strong> 3D models of the SpyTag- and
+                        <strong>Figure 5.</strong> 3D models of the SpyTag- and
                         SpyCatcher-fused enzymes of the regeneration couple.
                         PPK2 in blue, DHAK in green, SpyTag/SpyCatcher in
                         yellow.
