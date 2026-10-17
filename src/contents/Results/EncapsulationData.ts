@@ -45,7 +45,7 @@ const FTIR: ResultData = {
     {
       id: "ftir-spectrum",
       body: [
-        "The spectrum of the raw sodium alginate powder showed the band pattern expected for an alginate salt: a broad O–H envelope at 3287 cm⁻¹, C–H stretching at 2933 cm⁻¹, and an intense carboxylate band at 1595.8 cm⁻¹ with its symmetric contribution at 1406.8 cm⁻¹, with no absorption near 1730 cm⁻¹. In the fingerprint region the spectrum showed bands at 1081.4 and 1026.9 cm⁻¹, 948.8 cm⁻¹, 885.2 cm⁻¹ and a single maximum at 814.3 cm⁻¹. These positions fall within 1–3 cm⁻¹ of those reported for a commercial sodium alginate standard [1].",
+        "The spectrum of the raw sodium alginate powder showed the band pattern expected for an alginate salt: a broad O–H envelope at 3287 cm⁻¹, C–H stretching at 2933 cm⁻¹, and an intense carboxylate band at 1596 cm⁻¹ with its symmetric contribution at 1407 cm⁻¹, with no absorption near 1730 cm⁻¹. In the fingerprint region the spectrum showed bands at 1081 and 1027 cm⁻¹, 949 cm⁻¹, 885 cm⁻¹ and at 814 cm⁻¹.",
       ],
       figures: [
         {
@@ -65,7 +65,7 @@ const FTIR: ResultData = {
       tables: [
         {
           caption:
-            "M/G ratio of the raw sodium alginate estimated from two independent band pairs, against the values reported for a commercial sodium alginate standard [1].",
+            "M/G ratio of the sodium alginate estimated from two independent absorbance band pairs, with the corresponding fractions of mannuronic (M) and guluronic (G) residues and the values reported for a commercial sodium alginate standard [1].",
           headers: ["Band pair", "M/G ratio", "%M", "%G", "Reference value [1]"],
           rows: [
             ["808 / 787 cm⁻¹ [2]", "1.19", "54.3", "45.7", "1.2"],
@@ -78,12 +78,12 @@ const FTIR: ResultData = {
       id: "ftir-second-derivative",
       continued: true,
       body: [
-        "Second-derivative analysis resolved the anomeric region, which in the parent spectrum shows only the single maximum at 814.3 cm⁻¹, into minima at **821.5 cm⁻¹ (M) and 778.1 cm⁻¹ (G)**, together with 1080.4, 1026.4, 950.2, 931.9, 889.5 and 877.5 cm⁻¹. All seven positions agree with the sodium alginate standard [1] to within 1–8 cm⁻¹.",
+        "Second-derivative analysis resolved the anomeric region, which in the parent spectrum shows only the single maximum at 814.3 cm⁻¹, into minima at **821.5 cm⁻¹ (M) and 778.1 cm⁻¹ (G)**, together with 1080.4, 1026.4, 950.2, 931.9, 889.5 and 877.5 cm⁻¹. All positions agree with the sodium alginate standard [1] to within 1–8 cm⁻¹.",
       ],
       tables: [
         {
           caption:
-            "Second-derivative minima of the raw sodium alginate spectrum compared with the band positions reported in the literature [1, 4], with their assignments.",
+            "Band positions resolved by second-derivative analysis of the FTIR spectrum, compared with published values for sodium alginate [1,4], with their differences (Δ) and assignments.",
           headers: [
             "Experimental (cm⁻¹)",
             "Bibliography [1]",
@@ -110,9 +110,8 @@ const FTIR: ResultData = {
       body: [
         "The absence of a carbonyl band near 1730 cm⁻¹ alongside the strong carboxylate band confirms the material is in the sodium salt form rather than the protonated free acid.",
         "Both pairs give M/G > 1, so the alginate is **mannuronic-rich**. The value sits within the range of 0.5–2.5 reported for brown seaweed alginates [1] and close to the commercial sodium alginate standard measured by the same method, 1.2 and 1.7 [1], against our 1.19 and 1.59.",
-        "A mannuronic-rich alginate is expected to produce a comparatively **softer, more elastic calcium-alginate gel**, since ionic crosslinking proceeds through consecutive guluronic blocks in the egg-box arrangement. That expectation fed directly into how tightly the synthesis parameters of the following experiments needed to be controlled to reach sufficient mechanical integrity.",
-        "FTIR gives no information on how the residues are distributed along the chain. No relationship can be established between the M/G value and block composition, since the same homoguluronic fraction can be found in two alginates whose M/G values greatly differs [4]. Since gel strength depends on the length and abundance of consecutive G blocks rather than on the overall ratio, our value indicates the direction of the expected mechanical behaviour but not its magnitude. However, it can be used as a first semicuantitative analysis.",
-        "The result is consistent with the published literature for commercial sodium alginate measured by the same technique [1], and with the low-viscosity grade of the product, mannuronic-rich alginates.",
+        "A mannuronic-rich alginate is expected to produce a comparatively **softer, more elastic calcium-alginate gel** [5,6], since ionic crosslinking proceeds preferentially through consecutive guluronic blocks in the egg-box arrangement [7]. That expectation fed directly into how tightly the synthesis parameters of the following experiments needed to be controlled to reach sufficient mechanical integrity.",
+        "FTIR gives no information on how the residues are distributed along the chain. No relationship can be established between the M/G value and block composition, since the same homoguluronic fraction can be found in two alginates whose M/G values differ greatly [4]. Since gel strength depends on the length and abundance of consecutive G blocks rather than on the overall ratio, our value indicates the direction of the expected mechanical behaviour but not its magnitude. However, it can be used as a first semicuantitative analysis.",
       ],
     },
   ],

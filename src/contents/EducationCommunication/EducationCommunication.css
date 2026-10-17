@@ -374,3 +374,42 @@
     padding-left: 0;
   }
 }
+
+/* --------------------------------------------------------------------------
+   The activity dialog
+
+   The shell is Collaboration's (cp-modal*, imported from that page's
+   stylesheet); these are the two things this page's entries need on top of
+   it — justified prose, as the chronicle set it, and a single photo shown
+   whole rather than in a strip.
+   -------------------------------------------------------------------------- */
+
+.ec-modal__body p:not(.cp-kicker) {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+}
+
+.ec-modal__photo {
+  align-self: center;
+  max-width: 100%;
+  margin: 4px 0 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--paper-soft);
+  box-shadow: 0 6px 14px rgba(40, 15, 5, 0.14);
+}
+
+.ec-modal__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Inside the dialog the link sits in the cp-stack flow, so it takes its
+   own gap from the stack rather than the chronicle's top margin. */
+.ec-modal__body .ec-entry__link {
+  align-self: flex-start;
+  margin-top: 0;
+}
