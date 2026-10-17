@@ -21,7 +21,7 @@ import "./Sustainability/Sustainability.css";
 const SECTIONS: PageSection[] = [
   {
     id: "r01",
-    label: "01 · The diagnostic lobby",
+    label: "The diagnostic lobby",
     children: [
       {
         id: "r01-the-three-main-goals-we-answer-to",
@@ -43,7 +43,7 @@ const SECTIONS: PageSection[] = [
   },
   {
     id: "r02",
-    label: "02 · The operations core",
+    label: "The operations core",
     children: [
       {
         id: "r02-the-blueprint-on-the-wall-our-sustainabi",
@@ -67,7 +67,7 @@ const SECTIONS: PageSection[] = [
   },
   {
     id: "r03",
-    label: "03 · The control and metrics panel",
+    label: "The control and metrics panel",
     children: [
       {
         id: "r03-reading-1-what-one-cubic-metre-gives-bac",
@@ -89,7 +89,7 @@ const SECTIONS: PageSection[] = [
   },
   {
     id: "r04",
-    label: "04 · The impact amphitheatre",
+    label: "The impact amphitheatre",
     children: [
       {
         id: "r04-the-round-table-four-seats-that-rarely-s",
@@ -333,21 +333,12 @@ export function Sustainability() {
       <div
         style={{
           position: "relative",
-          maxWidth: "760px",
+          maxWidth: "820px",
           margin: "0 auto",
           textAlign: "center",
         }}
       >
-        <p
-          style={{
-            margin: "20px auto 0",
-            maxWidth: "660px",
-            fontSize: "17.5px",
-            lineHeight: "1.65",
-            color: "var(--ink-soft)",
-            textWrap: "pretty",
-          }}
-        >
+        <p className="sus-intro">
           Welcome to the rePhlow plant. Most factories hide their pipes, while
           we put ours behind glass. Over the next four rooms we will show you
           the goals that guide us, the instruments that prove we keep our word,
@@ -6842,7 +6833,7 @@ export function Sustainability() {
               proportional to that capacity, and the beads are the hotspot. The
               relationship is steep:
             </p>
-            <figure style={{ margin: "34px 0" }}>
+            <figure style={{ margin: "34px auto", maxWidth: "720px" }}>
               <div
                 style={{
                   borderRadius: "18px",

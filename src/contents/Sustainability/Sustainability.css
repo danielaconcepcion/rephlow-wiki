@@ -36,6 +36,20 @@
   margin-right: auto !important;
 }
 
+/* The welcome paragraph reads like Collaboration and Partnership's own
+   opening paragraph (.cp-notion-intro): the same size, the same top margin
+   and the same justified setting — centred on the page. */
+.sus-design .sus-intro {
+  max-width: 820px;
+  margin: 0 auto;
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.72;
+  text-align: justify;
+  text-align-last: center;
+  hyphens: auto;
+}
+
 @keyframes flow {
   to {
     stroke-dashoffset: -44;
