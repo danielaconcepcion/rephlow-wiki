@@ -1930,24 +1930,25 @@ export function ProjectDescription() {
 
               <div className="pd-subsection">
                 <h3>Polyphosphate-driven ATP regeneration</h3>
-                <p>
-                  We selected the class III polyphosphate kinase BcPPK2 from
-                  <em> Burkholderia cenocepacia</em>. It accepts both AMP and
-                  ADP, is thermostable and remains active between pH 6.0 and
-                  9.0. The enzyme uses polyphosphate as a phosphate donor to
-                  regenerate ATP for the coupled reaction.
-                </p>
-                <Figure
-                  src="assets/results/revalorisation/dhak-ppk2-complex.png"
-                  alt="Model of the coupled DHAK and PPK2 enzyme system"
-                  className="pd-figure--compact"
-                  caption={
-                    <>
-                      <strong>Figure 3.</strong> Structural representation of
-                      the coupled DHAK–PPK2 enzymatic system.
-                    </>
-                  }
-                />
+                <div className="pd-revalorisation-pair">
+                  <p>
+                    We selected the class III polyphosphate kinase BcPPK2 from
+                    <em> Burkholderia cenocepacia</em>. It accepts both AMP and
+                    ADP, is thermostable and remains active between pH 6.0 and
+                    9.0. The enzyme uses polyphosphate as a phosphate donor to
+                    regenerate ATP for the coupled reaction.
+                  </p>
+                  <Figure
+                    src="assets/results/revalorisation/dhak-ppk2-complex.png"
+                    alt="Model of the coupled DHAK and PPK2 enzyme system"
+                    caption={
+                      <>
+                        <strong>Figure 3.</strong> Structural representation of
+                        the coupled DHAK–PPK2 enzymatic system.
+                      </>
+                    }
+                  />
+                </div>
               </div>
 
               <div className="pd-subsection">
@@ -1982,25 +1983,26 @@ export function ProjectDescription() {
                       PROSS-designed DHAK variants.
                     </>
                   }
-                  className="pd-figure--pathway"
+                  className="pd-figure--sequence"
                 />
-                <p>
-                  In parallel, the SpyCatcher–SpyTag system is being explored to
-                  connect PPK2 and DHAK covalently. Bringing both enzymes closer
-                  together could improve substrate channelling within the
-                  coupled reaction.
-                </p>
-                <Figure
-                  src="assets/results/revalorisation/dhak-spy-system-boltz2.png"
-                  alt="Predicted model of the DHAK SpyTag and PPK2 SpyCatcher system"
-                  caption={
-                    <>
-                      <strong>Figure 5.</strong> Predicted architecture of the
-                      SpyTag–SpyCatcher-linked enzymatic system.
-                    </>
-                  }
-                  className="pd-figure--compact"
-                />
+                <div className="pd-revalorisation-pair pd-revalorisation-pair--reverse">
+                  <p>
+                    In parallel, the SpyCatcher–SpyTag system is being explored
+                    to connect PPK2 and DHAK covalently. Bringing both enzymes
+                    closer together could improve substrate channelling within
+                    the coupled reaction.
+                  </p>
+                  <Figure
+                    src="assets/results/revalorisation/dhak-spy-system-boltz2.png"
+                    alt="Predicted model of the DHAK SpyTag and PPK2 SpyCatcher system"
+                    caption={
+                      <>
+                        <strong>Figure 5.</strong> Predicted architecture of the
+                        SpyTag–SpyCatcher-linked enzymatic system.
+                      </>
+                    }
+                  />
+                </div>
               </div>
 
               <AccordionSection
