@@ -6,7 +6,7 @@ import {
   type CSSProperties,
   type RefObject,
 } from "react";
-import "./PDBackground.css";
+import "./MoleculeBackdrop.css";
 
 /**
  * Ported from the Claude Design mock "PDBackground.dc.html" (itself an
@@ -20,7 +20,10 @@ import "./PDBackground.css";
  * elements drift by their own distance from the viewport centre, not by
  * raw scroll position.
  *
- * Local to Project Description only — not promoted to src/components.
+ * Written for Project Description and now shared with the pages that
+ * asked for the same backdrop (Sustainability, Human Practices): give the
+ * page wrapper `.mbg-host` and render this inside it, passing a ref to
+ * the prose column so the field can lean away from it.
  */
 
 function rng(seed: number) {
@@ -33,7 +36,8 @@ function rng(seed: number) {
   };
 }
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const clampNum = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+const clampNum = (v: number, lo: number, hi: number) =>
+  Math.max(lo, Math.min(hi, v));
 
 interface MolNode {
   key: string;
@@ -66,7 +70,13 @@ const EMPTY_LAYOUT: Layout = { mols: [], blobs: [], bubbles: [] };
  * a chance to sit out entirely, so the field never reads as a single
  * repeating tile.
  */
-function build(w: number, h: number, proseLeft: number, proseRight: number, seed: number): Layout {
+function build(
+  w: number,
+  h: number,
+  proseLeft: number,
+  proseRight: number,
+  seed: number,
+): Layout {
   const rnd = rng(seed);
   const narrow = w < 700;
   const mid = w < 1000;
@@ -100,22 +110,32 @@ function build(w: number, h: number, proseLeft: number, proseRight: number, seed
 
     let size: number;
     if (narrow) size = lerp(96, 190, rnd());
-    else size = clampNum(lerp(0.85, 1.5, rnd()) * Math.max(zone, 120), 110, 340);
+    else
+      size = clampNum(lerp(0.85, 1.5, rnd()) * Math.max(zone, 120), 110, 340);
     if (tier === "big") size *= 1.55;
     if (tier === "small") size *= 0.5;
     size = Math.round(size);
 
     const tight = zone < 150;
-    const crop = narrow || tight ? lerp(0.45, 0.75, rnd()) : lerp(0.05, 0.55, rnd());
+    const crop =
+      narrow || tight ? lerp(0.45, 0.75, rnd()) : lerp(0.05, 0.55, rnd());
     const cx =
       side < 0
         ? lerp(0, Math.max(zone, 60), rnd() * 0.55) - size * crop
         : w - lerp(0, Math.max(zone, 60), rnd() * 0.55) - size * (1 - crop);
 
     const op =
-      tier === "big" ? lerp(0.07, 0.12, rnd()) : tier === "mid" ? lerp(0.13, 0.22, rnd()) : lerp(0.26, 0.44, rnd());
+      tier === "big"
+        ? lerp(0.07, 0.12, rnd())
+        : tier === "mid"
+          ? lerp(0.13, 0.22, rnd())
+          : lerp(0.26, 0.44, rnd());
     const speed =
-      tier === "big" ? lerp(0.06, 0.1, rnd()) : tier === "mid" ? lerp(0.11, 0.16, rnd()) : lerp(0.17, 0.23, rnd());
+      tier === "big"
+        ? lerp(0.06, 0.1, rnd())
+        : tier === "mid"
+          ? lerp(0.11, 0.16, rnd())
+          : lerp(0.17, 0.23, rnd());
     const rot = rnd() * 360;
 
     mols.push({
@@ -127,7 +147,8 @@ function build(w: number, h: number, proseLeft: number, proseRight: number, seed
         width: size + "px",
         height: size + "px",
         opacity: op,
-        filter: tier === "big" ? `blur(${(size * 0.012).toFixed(1)}px)` : "none",
+        filter:
+          tier === "big" ? `blur(${(size * 0.012).toFixed(1)}px)` : "none",
         willChange: "transform",
       },
       svg: {
@@ -145,12 +166,21 @@ function build(w: number, h: number, proseLeft: number, proseRight: number, seed
     if (rnd() < 0.34) {
       const bs = Math.round(lerp(240, 620, rnd()) * (narrow ? 0.55 : 1));
       const tint =
-        rnd() < 0.55 ? "rgba(134,177,209,.30)" : rnd() < 0.7 ? "rgba(206,234,255,.55)" : "rgba(157,199,111,.22)";
+        rnd() < 0.55
+          ? "rgba(134,177,209,.30)"
+          : rnd() < 0.7
+            ? "rgba(206,234,255,.55)"
+            : "rgba(157,199,111,.22)";
       blobs.push({
         key: `b${i}`,
         style: {
           position: "absolute",
-          left: Math.round(side < 0 ? -bs * lerp(0.45, 0.72, rnd()) : w - bs * lerp(0.28, 0.5, rnd())) + "px",
+          left:
+            Math.round(
+              side < 0
+                ? -bs * lerp(0.45, 0.72, rnd())
+                : w - bs * lerp(0.28, 0.5, rnd()),
+            ) + "px",
           top: Math.round(y - bs / 2 + lerp(-160, 160, rnd())) + "px",
           width: bs + "px",
           height: Math.round(bs * lerp(0.62, 1, rnd())) + "px",
@@ -169,7 +199,9 @@ function build(w: number, h: number, proseLeft: number, proseRight: number, seed
     for (let k = 0; k < nB; k++) {
       const d = Math.round(lerp(6, 17, rnd()));
       const bx =
-        side < 0 ? lerp(4, Math.max(leftZone - 10, 30), rnd()) : w - lerp(14, Math.max(rightZone, 40), rnd());
+        side < 0
+          ? lerp(4, Math.max(leftZone - 10, 30), rnd())
+          : w - lerp(14, Math.max(rightZone, 40), rnd());
       bubbles.push({
         key: `u${i}-${k}`,
         style: {
@@ -179,7 +211,8 @@ function build(w: number, h: number, proseLeft: number, proseRight: number, seed
           width: d + "px",
           height: d + "px",
           borderRadius: "50%",
-          background: "radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), rgba(134,177,209,.42))",
+          background:
+            "radial-gradient(circle at 30% 30%, rgba(255,255,255,.95), rgba(134,177,209,.42))",
           boxShadow: "inset 0 0 0 1px rgba(27,35,64,.10)",
           opacity: lerp(0.35, 0.7, rnd()),
           willChange: "transform",
@@ -193,7 +226,11 @@ function build(w: number, h: number, proseLeft: number, proseRight: number, seed
   return { mols, blobs, bubbles };
 }
 
-export function PDBackground({ contentRef }: { contentRef: RefObject<HTMLElement | null> }) {
+export function MoleculeBackdrop({
+  contentRef,
+}: {
+  contentRef: RefObject<HTMLElement | null>;
+}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [box, setBox] = useState({ w: 0, h: 0, proseLeft: 0, proseRight: 0 });
 
@@ -218,7 +255,10 @@ export function PDBackground({ contentRef }: { contentRef: RefObject<HTMLElement
         proseRight = Math.round(pr.right - r.left);
       }
       setBox((prev) =>
-        prev.w === w && prev.h === h && prev.proseLeft === proseLeft && prev.proseRight === proseRight
+        prev.w === w &&
+        prev.h === h &&
+        prev.proseLeft === proseLeft &&
+        prev.proseRight === proseRight
           ? prev
           : { w, h, proseLeft, proseRight },
       );
@@ -240,7 +280,9 @@ export function PDBackground({ contentRef }: { contentRef: RefObject<HTMLElement
   // element drifts by its own distance from the viewport centre, clamped
   // to its own data-max, skipped entirely under reduced motion.
   useEffect(() => {
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (reduceMotion) return;
     const container = containerRef.current;
     if (!container) return;
@@ -266,7 +308,10 @@ export function PDBackground({ contentRef }: { contentRef: RefObject<HTMLElement
       items.forEach((item) => {
         const rect = item.el.getBoundingClientRect();
         const distance = viewportCenter - (rect.top + rect.height / 2);
-        item.el.style.setProperty("--py", clampV(distance * item.speed, item.max).toFixed(1) + "px");
+        item.el.style.setProperty(
+          "--py",
+          clampV(distance * item.speed, item.max).toFixed(1) + "px",
+        );
       });
     }
     function onScroll() {
@@ -285,14 +330,29 @@ export function PDBackground({ contentRef }: { contentRef: RefObject<HTMLElement
   }, [layout]);
 
   return (
-    <div ref={containerRef} className="pdbg-layer" aria-hidden="true">
-      <svg width="0" height="0" style={{ position: "absolute", width: 0, height: 0, overflow: "hidden" }}>
+    <div ref={containerRef} className="mbg-layer" aria-hidden="true">
+      <svg
+        width="0"
+        height="0"
+        style={{
+          position: "absolute",
+          width: 0,
+          height: 0,
+          overflow: "hidden",
+        }}
+      >
         <defs>
           <linearGradient id="pdmC" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor="#86b1d1" />
             <stop offset="1" stopColor="#9dc76f" />
           </linearGradient>
-          <g id="pdmG1" fill="url(#pdmC)" stroke="url(#pdmC)" strokeWidth={13} strokeLinecap="round">
+          <g
+            id="pdmG1"
+            fill="url(#pdmC)"
+            stroke="url(#pdmC)"
+            strokeWidth={13}
+            strokeLinecap="round"
+          >
             <line x1="100" y1="100" x2="79" y2="42" />
             <line x1="100" y1="100" x2="43" y2="108" />
             <line x1="100" y1="100" x2="156" y2="121" />
@@ -303,7 +363,13 @@ export function PDBackground({ contentRef }: { contentRef: RefObject<HTMLElement
             <circle cx="90" cy="154" r="16" stroke="none" />
             <circle cx="100" cy="100" r="31" stroke="none" />
           </g>
-          <g id="pdmG2" fill="url(#pdmC)" stroke="url(#pdmC)" strokeWidth={12} strokeLinecap="round">
+          <g
+            id="pdmG2"
+            fill="url(#pdmC)"
+            stroke="url(#pdmC)"
+            strokeWidth={12}
+            strokeLinecap="round"
+          >
             <line x1="98" y1="104" x2="132" y2="46" />
             <line x1="98" y1="104" x2="38" y2="82" />
             <line x1="98" y1="104" x2="60" y2="158" />
@@ -318,17 +384,35 @@ export function PDBackground({ contentRef }: { contentRef: RefObject<HTMLElement
       </svg>
 
       {layout.blobs.map((b) => (
-        <div key={b.key} className="pdbg-decor parallax-decor" data-speed={b.speed} data-max={b.max} style={b.style} />
+        <div
+          key={b.key}
+          className="mbg-decor parallax-decor"
+          data-speed={b.speed}
+          data-max={b.max}
+          style={b.style}
+        />
       ))}
       {layout.mols.map((m) => (
-        <div key={m.key} className="pdbg-decor parallax-decor" data-speed={m.speed} data-max={m.max} style={m.wrap}>
+        <div
+          key={m.key}
+          className="mbg-decor parallax-decor"
+          data-speed={m.speed}
+          data-max={m.max}
+          style={m.wrap}
+        >
           <svg viewBox="0 0 200 200" style={m.svg}>
             <use href={m.href} />
           </svg>
         </div>
       ))}
       {layout.bubbles.map((u) => (
-        <div key={u.key} className="pdbg-decor parallax-decor" data-speed={u.speed} data-max={u.max} style={u.style} />
+        <div
+          key={u.key}
+          className="mbg-decor parallax-decor"
+          data-speed={u.speed}
+          data-max={u.max}
+          style={u.style}
+        />
       ))}
     </div>
   );

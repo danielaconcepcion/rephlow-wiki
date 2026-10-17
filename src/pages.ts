@@ -65,6 +65,8 @@ const Pages: Page[] = [
     component: ProjectDescription,
     hideEyebrow: true,
     docTitle: "Project Description — rePhlow iGEM Wiki",
+    labHero: true,
+    moleculeSeed: 17,
   },
   {
     name: "Engineering",

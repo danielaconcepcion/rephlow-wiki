@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, MouseEvent } from "react";
 
 import { PageSectionNav, type PageSection } from "../components/PageSectionNav";
+import { MoleculeBackdrop } from "../components/MoleculeBackdrop/MoleculeBackdrop";
 import { AdjacentPageNav } from "../components/AdjacentPageNav";
 import { asset } from "../utils";
 import { SEATS } from "./Sustainability/seats";
@@ -167,6 +168,9 @@ function useCountUp(
 }
 
 export function Sustainability() {
+  /** The column of rooms, so the backdrop knows where the text sits. */
+  const proseRef = useRef<HTMLElement>(null);
+
   /* --- the plant map ----------------------------------------------------- */
   const [hot, setHot] = useState<number | null>(null);
   const [wide, setWide] = useState(true);
@@ -329,7 +333,8 @@ export function Sustainability() {
   const openSeat = seat === null ? null : SEATS[seat];
 
   return (
-    <div className="sus-design">
+    <div className="sus-design mbg-host">
+      <MoleculeBackdrop contentRef={proseRef} />
       <div
         style={{
           position: "relative",
@@ -1694,7 +1699,7 @@ export function Sustainability() {
       </section>
       <div className="page-with-section-nav">
         <PageSectionNav sections={SECTIONS} ariaLabel="Jump to room" />
-        <main style={{ minWidth: "0", paddingBottom: "48px" }}>
+        <main style={{ minWidth: "0", paddingBottom: "48px" }} ref={proseRef}>
           <section
             id="r01"
             data-screen-label="Room 01"

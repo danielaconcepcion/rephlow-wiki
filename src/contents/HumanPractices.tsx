@@ -1,4 +1,7 @@
+import { useRef } from "react";
+
 import { PageSectionNav, type PageSection } from "../components/PageSectionNav";
+import { MoleculeBackdrop } from "../components/MoleculeBackdrop/MoleculeBackdrop";
 import { RouteIndex } from "./HumanPractices/RouteIndex";
 import { WhyPhosphorus } from "./HumanPractices/WhyPhosphorus";
 import { DesignCompass } from "./HumanPractices/DesignCompass";
@@ -87,8 +90,11 @@ const HUMAN_PRACTICES_SECTIONS: PageSection[] = [
 ];
 
 export function HumanPractices() {
+  const contentRef = useRef<HTMLDivElement>(null);
+
   return (
-    <div className="human-practices-page">
+    <div className="human-practices-page mbg-host">
+      <MoleculeBackdrop contentRef={contentRef} />
       <p className="hp-page-intro">
         Human Practices was not a collection of interviews for rePhlow. It was
         the process that followed phosphorus from an industrial degumming tank
@@ -102,7 +108,7 @@ export function HumanPractices() {
           ariaLabel="Jump to Human Practices section"
         />
 
-        <div className="human-practices-sections">
+        <div className="human-practices-sections" ref={contentRef}>
           <RouteIndex />
           <WhyPhosphorus />
           <DesignCompass />
