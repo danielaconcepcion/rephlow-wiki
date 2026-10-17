@@ -1843,3 +1843,121 @@
   color: #b8790a;
   background: rgba(184, 121, 10, 0.1);
 }
+
+/* --------------------------------------------------------------------------
+   Foldable record sections
+
+   A record that is read section by section — "Application to our project",
+   "Technique requirements", "Results" — folds each one behind its own
+   summary (see ExperimentBodyBlock.foldable). The summary keeps the accent
+   bar down its left edge, which is what marks it as a thing to open; a
+   nested section drops the panel and reads as a quieter indented row, so
+   two levels never look like two boxes inside each other.
+   -------------------------------------------------------------------------- */
+
+.experiment-section--foldable {
+  /* The card is a two-column grid (see .experiment-card): a folded
+     section spans it, like every other block-level child. */
+  grid-column: 1 / -1;
+  margin-top: 6px;
+}
+
+.experiment-section__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 18px;
+  border: 1px solid
+    color-mix(in srgb, var(--folder-accent) 22%, var(--lab-line));
+  border-left: 3px solid var(--folder-accent-strong, var(--folder-accent));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--folder-accent) 5%, var(--paper));
+  list-style: none;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.experiment-section__summary::-webkit-details-marker {
+  display: none;
+}
+
+.experiment-section__summary::after {
+  content: "+";
+  flex-shrink: 0;
+  font: 400 1.25rem/1 var(--font-body);
+  color: var(--folder-accent-strong, var(--folder-accent));
+}
+
+.experiment-section__summary:hover {
+  background: color-mix(in srgb, var(--folder-accent) 12%, var(--paper));
+}
+
+.experiment-section__summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.experiment-section--foldable[open] > .experiment-section__summary {
+  border-radius: 10px 10px 0 0;
+  background: color-mix(in srgb, var(--folder-accent) 8%, var(--paper));
+}
+
+.experiment-section--foldable[open] > .experiment-section__summary::after {
+  content: "−";
+}
+
+.experiment-section--foldable .experiment-section__head {
+  margin-bottom: 0;
+}
+
+.experiment-section__content {
+  padding: 22px 18px 26px;
+  border: 1px solid
+    color-mix(in srgb, var(--folder-accent) 22%, var(--lab-line));
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+}
+
+.experiment-section__content > .experiment-card__block:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* A section inside a section: no panel, just an indented row under a rule. */
+.experiment-section__content .experiment-section--foldable {
+  margin: 4px 0 0 16px;
+}
+
+.experiment-section__content .experiment-section__summary {
+  padding: 9px 2px;
+  border: 0;
+  border-bottom: 1px solid var(--lab-line);
+  border-radius: 0;
+  background: none;
+}
+
+.experiment-section__content .experiment-section__summary:hover {
+  background: none;
+}
+
+.experiment-section__content
+  .experiment-section__summary:hover
+  .experiment-section__heading {
+  color: var(--folder-accent-strong, var(--folder-accent));
+}
+
+.experiment-section__content .experiment-section__heading {
+  font-size: 0.96rem;
+  font-weight: 600;
+}
+
+.experiment-section__content .experiment-section__content {
+  padding: 12px 2px 16px 14px;
+  border: 0;
+  border-left: 1px solid var(--lab-line);
+  border-radius: 0;
+}
