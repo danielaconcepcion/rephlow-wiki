@@ -41,7 +41,7 @@ import {
    6 → 8 leftwards. Each panel opens its own experiment, in order.
    -------------------------------------------------------------------------- */
 
-const TITLE = 36;
+const TITLE = 24;
 const SECTION = "cloning";
 
 /** An open pair of scissors, as the digestion panel marks its cut sites. */
@@ -141,7 +141,6 @@ export function CloningWorkflow() {
           x={211}
           y={55}
           size={TITLE}
-          maxWidth={344}
           lines={["1. In silico design of", "the expression cassettes"]}
         />
         <Monitor x={45} y={128} w={332} h={194}>
@@ -188,7 +187,6 @@ export function CloningWorkflow() {
           x={559}
           y={55}
           size={TITLE}
-          maxWidth={262}
           lines={["2. Part acquisition", "and amplification"]}
         />
         <Tube
@@ -235,7 +233,6 @@ export function CloningWorkflow() {
           x={882}
           y={55}
           size={TITLE}
-          maxWidth={300}
           lines={["3. Preparative digestion", "of the vectors and inserts"]}
         />
         <Plasmid
@@ -312,7 +309,6 @@ export function CloningWorkflow() {
           x={1481}
           y={55}
           size={TITLE}
-          maxWidth={310}
           lines={["5. Transformation into", "the *E. coli* cloning host"]}
         />
         <Plasmid
@@ -377,7 +373,6 @@ export function CloningWorkflow() {
           x={1378}
           y={510}
           size={TITLE}
-          maxWidth={510}
           lines={["6. Colony screening and", "diagnostic verification"]}
         />
         <Petri
@@ -473,7 +468,6 @@ export function CloningWorkflow() {
           x={296}
           y={510}
           size={TITLE}
-          maxWidth={500}
           lines={["8. Transformation into", "*P. putida* KT2440"]}
         />
         <Plasmid

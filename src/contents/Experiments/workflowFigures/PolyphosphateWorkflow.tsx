@@ -29,7 +29,7 @@ import { Bacterium, Flask, Plot, Tube } from "./parts";
    other three open their experiment in order.
    -------------------------------------------------------------------------- */
 
-const TITLE = 42;
+const TITLE = 34;
 const SECTION = "polyphosphate-accumulation-study";
 
 /** The seven-step pH scale the fourth panel prints under its bars. */
@@ -78,7 +78,7 @@ export function PolyphosphateWorkflow() {
         section={SECTION}
         label="1. Assay standardisation"
       >
-        <Title x={277} y={70} size={TITLE} fit={470}>
+        <Title x={277} y={70} size={TITLE}>
           1. Assay standardisation
         </Title>
         <Bacterium
@@ -187,7 +187,6 @@ export function PolyphosphateWorkflow() {
           x={812}
           y={70}
           size={TITLE}
-          maxWidth={460}
           lines={["2. Growth characterisation", "in M9"]}
         />
         <Plot
@@ -265,7 +264,6 @@ export function PolyphosphateWorkflow() {
           x={1338}
           y={70}
           size={TITLE}
-          maxWidth={460}
           lines={["3. Accumulation kinetics", "across media"]}
         />
         <Plot
@@ -349,7 +347,6 @@ export function PolyphosphateWorkflow() {
           x={1871}
           y={70}
           size={TITLE}
-          maxWidth={500}
           lines={["4. Operating-condition", "optimisation (pH and dilution)"]}
         />
         {/* the optimum, as a dashed arc over four bars */}

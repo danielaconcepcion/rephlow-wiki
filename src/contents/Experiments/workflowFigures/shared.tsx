@@ -349,8 +349,10 @@ export function Tangle({
 }
 
 /** A title of one or more centred lines, as the originals set them, with
- * *asterisks* marking the species names they print in italics. A line
- * longer than `maxWidth` is narrowed to fit rather than re-broken. */
+ * *asterisks* marking the species names they print in italics. The size
+ * is chosen so the lines fit their panel as they are; `maxWidth` is only
+ * a last-resort guard, narrowing a line that would otherwise run over
+ * rather than re-breaking it. */
 export function TitleLines({
   x,
   y,
@@ -363,7 +365,8 @@ export function TitleLines({
   y: number;
   size: number;
   lines: string[];
-  maxWidth: number;
+  /** Omit it to let the lines set at their natural width. */
+  maxWidth?: number;
   lineHeight?: number;
 }) {
   return (
@@ -383,8 +386,10 @@ export function TitleLines({
             fontSize={size}
             letterSpacing="-0.01em"
             fill={C.ink}
-            textLength={estimate > maxWidth ? maxWidth : undefined}
-            lengthAdjust={estimate > maxWidth ? "spacingAndGlyphs" : undefined}
+            textLength={maxWidth && estimate > maxWidth ? maxWidth : undefined}
+            lengthAdjust={
+              maxWidth && estimate > maxWidth ? "spacingAndGlyphs" : undefined
+            }
           >
             {parts.map((part, j) =>
               part.startsWith("*") ? (

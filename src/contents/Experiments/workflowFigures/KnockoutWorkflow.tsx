@@ -50,7 +50,7 @@ import {
    so its panel opens that section without a folder.
    -------------------------------------------------------------------------- */
 
-const TITLE = 36;
+const TITLE = 28;
 const SECTION = "knocking-out";
 
 /** One target gene as the guide-design panel draws it on screen: a
@@ -369,7 +369,7 @@ export function KnockoutWorkflow() {
         target="knockout-grna-amplification"
         label="2. gRNA amplification"
       >
-        <Title x={612} y={62} size={TITLE} fit={330}>
+        <Title x={612} y={62} size={TITLE}>
           2. gRNA amplification
         </Title>
         <Tube
@@ -424,7 +424,6 @@ export function KnockoutWorkflow() {
           x={990}
           y={58}
           size={TITLE}
-          maxWidth={330}
           lines={["3. Golden Gate assembly", "into pMBEC2"]}
         />
         <Plasmid
@@ -459,8 +458,7 @@ export function KnockoutWorkflow() {
         <TitleLines
           x={1357}
           y={54}
-          size={38}
-          maxWidth={326}
+          size={TITLE}
           lines={[
             "4. Transformation and",
             "fluorescence-assisted",
@@ -522,7 +520,6 @@ export function KnockoutWorkflow() {
           x={1726}
           y={58}
           size={TITLE}
-          maxWidth={330}
           lines={["5. Delivery into", "*P. putida*"]}
         />
         <Plasmid
@@ -577,7 +574,7 @@ export function KnockoutWorkflow() {
         target="knockout-sequencing-screen"
         label="7. Screening of edits"
       >
-        <Title x={1360} y={440} size={TITLE} fit={318}>
+        <Title x={1360} y={440} size={TITLE}>
           7. Screening of edits
         </Title>
         <rect
@@ -623,7 +620,7 @@ export function KnockoutWorkflow() {
         target="knockout-curing"
         label="8. Curing and iteration"
       >
-        <Title x={983} y={440} size={TITLE} fit={334}>
+        <Title x={983} y={440} size={TITLE}>
           8. Curing and iteration
         </Title>
         <Plasmid
@@ -665,7 +662,6 @@ export function KnockoutWorkflow() {
           x={597}
           y={440}
           size={TITLE}
-          maxWidth={352}
           lines={["9. Triple-mutant", "verification"]}
         />
         <VerificationGel x={465} y={502} w={255} h={190} />
@@ -685,7 +681,6 @@ export function KnockoutWorkflow() {
           x={205}
           y={440}
           size={TITLE}
-          maxWidth={350}
           lines={["10. Phenotypic", "characterisation"]}
         />
         <Plot
