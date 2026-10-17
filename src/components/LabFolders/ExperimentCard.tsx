@@ -10,6 +10,7 @@ import { asset } from "../../utils";
 import { Caption } from "./Caption";
 import { Rich } from "./RichText";
 import { ProtocolModal } from "./ProtocolModal";
+import { ZoomableImage } from "./ZoomableImage";
 
 function DataTable({
   table,
@@ -79,10 +80,13 @@ function ResourcePane({ resource }: { resource: PairedResource }) {
   if (resource.kind === "image") {
     return (
       <figure className="record-figure">
-        <img
+        <ZoomableImage
           className="record-figure__photo"
           src={asset(resource.src)}
           alt={resource.alt}
+          caption={
+            <Caption kind="Figure" item={resource} text={resource.caption} />
+          }
         />
         <figcaption>
           <Caption kind="Figure" item={resource} text={resource.caption} />
@@ -97,10 +101,18 @@ function ResourcePane({ resource }: { resource: PairedResource }) {
           {resource.images.map((image, index) => (
             <div className="record-figure-group__item" key={index}>
               <p className="record-figure-group__item-title">{image.title}</p>
-              <img
+              <ZoomableImage
                 className="record-figure-group__photo"
                 src={asset(image.src)}
                 alt={image.alt}
+                title={image.title}
+                caption={
+                  <Caption
+                    kind="Figure"
+                    item={resource}
+                    text={resource.caption}
+                  />
+                }
               />
             </div>
           ))}

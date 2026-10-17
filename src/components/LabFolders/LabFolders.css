@@ -138,11 +138,22 @@
   padding: 9px 22px;
   border-radius: 999px;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
-.section-tabs__btn:hover { color: var(--ink); background: rgba(27, 35, 64, 0.05); }
-.section-tabs__btn.is-active { background: var(--ink); color: var(--paper); }
-.section-tabs__btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.section-tabs__btn:hover {
+  color: var(--ink);
+  background: rgba(27, 35, 64, 0.05);
+}
+.section-tabs__btn.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+.section-tabs__btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
 
 /* --------------------------------------------------------------------------
    2. BLOCK — one colour-scoped layout per contextual-menu block. The block
@@ -156,8 +167,12 @@
   animation: lab-block-in 0.2s ease;
 }
 @keyframes lab-block-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Reuses ProjectDescription's own Figure look (the vsi-figure/pd-figure
@@ -202,7 +217,9 @@
   text-align: justify;
   hyphens: none;
 }
-.lab-block__intro:last-of-type { margin-bottom: 32px; }
+.lab-block__intro:last-of-type {
+  margin-bottom: 32px;
+}
 
 @media (max-width: 760px) {
   .lab-block__intro,
@@ -239,7 +256,9 @@
   text-align: justify;
   hyphens: none;
 }
-.lab-subblock__intro:last-of-type { margin-bottom: 28px; }
+.lab-subblock__intro:last-of-type {
+  margin-bottom: 28px;
+}
 
 /* A closing synthesis for the whole sub-block, sitting below its folder
    deck (see ExperimentSubBlock.outro) — same prose look as .lab-subblock__
@@ -268,8 +287,12 @@
   font-size: 0.78rem;
   color: var(--ink-soft);
 }
-.lab-subblock__references { margin: 0 0 28px; }
-.lab-block__references { margin: 0; }
+.lab-subblock__references {
+  margin: 0 0 28px;
+}
+.lab-block__references {
+  margin: 0;
+}
 
 .lab-subblock__references li,
 .lab-block__references li {
@@ -304,8 +327,16 @@
   text-decoration: none;
   font-weight: 600;
   background-image: linear-gradient(
-    color-mix(in srgb, var(--folder-accent-strong, var(--folder-accent)) 28%, transparent),
-    color-mix(in srgb, var(--folder-accent-strong, var(--folder-accent)) 28%, transparent)
+    color-mix(
+      in srgb,
+      var(--folder-accent-strong, var(--folder-accent)) 28%,
+      transparent
+    ),
+    color-mix(
+      in srgb,
+      var(--folder-accent-strong, var(--folder-accent)) 28%,
+      transparent
+    )
   );
   background-repeat: no-repeat;
   background-size: 100% 45%;
@@ -329,7 +360,9 @@
   font-weight: 700;
   text-decoration: none;
 }
-.lab-citation:hover { text-decoration: underline; }
+.lab-citation:hover {
+  text-decoration: underline;
+}
 .lab-citation:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
@@ -344,7 +377,10 @@
   color: var(--ink-soft);
   text-decoration: none;
   word-break: break-all;
-  background-image: linear-gradient(rgba(27, 35, 64, 0.12), rgba(27, 35, 64, 0.12));
+  background-image: linear-gradient(
+    rgba(27, 35, 64, 0.12),
+    rgba(27, 35, 64, 0.12)
+  );
   background-repeat: no-repeat;
   background-size: 100% 45%;
   background-position: 0 100%;
@@ -445,8 +481,14 @@
   margin-right: -18px;
   filter: drop-shadow(1px 2px 3px rgba(27, 35, 64, 0.1));
 }
-.folder-tab:last-child { margin-right: 0; }
-.folder-tab:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; z-index: 999 !important; }
+.folder-tab:last-child {
+  margin-right: 0;
+}
+.folder-tab:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  z-index: 999 !important;
+}
 
 .folder-tab__shape {
   position: absolute;
@@ -454,7 +496,11 @@
   pointer-events: none;
 }
 .folder-tab__shape path {
-  fill: color-mix(in srgb, var(--folder-accent) var(--tab-shade, 34%), var(--paper));
+  fill: color-mix(
+    in srgb,
+    var(--folder-accent) var(--tab-shade, 34%),
+    var(--paper)
+  );
   stroke: var(--lab-line);
   stroke-width: 1px;
 }
@@ -499,15 +545,29 @@
 }
 
 .folder-tab--protocols .folder-tab__shape path {
-  fill: color-mix(in srgb, var(--lab-protocols) var(--tab-shade, 34%), var(--paper));
+  fill: color-mix(
+    in srgb,
+    var(--lab-protocols) var(--tab-shade, 34%),
+    var(--paper)
+  );
 }
 .folder-tab--protocols.is-active .folder-tab__shape path {
   fill: color-mix(in srgb, var(--lab-protocols) 22%, var(--paper));
 }
 
 @media (max-width: 640px) {
-  .folder-tab { padding: 0 2.5em; font-size: 0.74rem; height: 28px; min-width: 126px; margin-right: -12px; }
-  .folder-tab.is-active { height: 40px; min-width: 168px; font-size: 0.9rem; }
+  .folder-tab {
+    padding: 0 2.5em;
+    font-size: 0.74rem;
+    height: 28px;
+    min-width: 126px;
+    margin-right: -12px;
+  }
+  .folder-tab.is-active {
+    height: 40px;
+    min-width: 168px;
+    font-size: 0.9rem;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -576,8 +636,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .folder-stack__row-wrap { transition: none; }
-  .folder-stack__row-backdrop { transition: none; }
+  .folder-stack__row-wrap {
+    transition: none;
+  }
+  .folder-stack__row-backdrop {
+    transition: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -616,7 +680,10 @@
   box-shadow: 0 2px 6px rgba(27, 35, 64, 0.14);
   cursor: pointer;
 }
-.folder-stack__back:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.folder-stack__back:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
 
 .folder-stack__back--0 {
   z-index: 2;
@@ -630,8 +697,12 @@
 }
 
 @media (max-width: 640px) {
-  .folder-stack__back--0 { transform: translate(6px, 10px); }
-  .folder-stack__back--1 { transform: translate(11px, 18px); }
+  .folder-stack__back--0 {
+    transform: translate(6px, 10px);
+  }
+  .folder-stack__back--1 {
+    transform: translate(11px, 18px);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -744,7 +815,9 @@
   color: var(--ink);
   background: color-mix(in srgb, var(--folder-accent) 26%, var(--paper));
 }
-.record-table td { color: var(--ink-soft); }
+.record-table td {
+  color: var(--ink-soft);
+}
 
 .record-checklist {
   list-style: none;
@@ -790,7 +863,9 @@
   line-height: 1.55;
   min-height: 24px;
 }
-.record-protocol li u { color: var(--ink); }
+.record-protocol li u {
+  color: var(--ink);
+}
 .record-protocol li::before {
   content: counter(step);
   position: absolute;
@@ -826,7 +901,9 @@
   color: var(--ink-soft);
   line-height: 1.55;
 }
-.record-note strong { color: var(--ink); }
+.record-note strong {
+  color: var(--ink);
+}
 
 .record-references {
   margin: 4px 0 0;
@@ -834,7 +911,10 @@
   font-size: 0.78rem;
   color: var(--ink-soft);
 }
-.record-references li { margin-bottom: 4px; scroll-margin-top: var(--section-nav-offset); }
+.record-references li {
+  margin-bottom: 4px;
+  scroll-margin-top: var(--section-nav-offset);
+}
 
 .record-download {
   display: inline-flex;
@@ -848,7 +928,9 @@
   font-weight: 600;
   transition: background 0.2s ease;
 }
-.record-download:hover { background: rgba(27, 35, 64, 0.12); }
+.record-download:hover {
+  background: rgba(27, 35, 64, 0.12);
+}
 
 /* The named protocols an experiment actually used — one small download
    pill per protocol, wrapping onto as many lines as it needs, under a
@@ -875,7 +957,9 @@
   font-size: 0.74rem;
 }
 
-.record-figure { margin: 0; }
+.record-figure {
+  margin: 0;
+}
 
 /* Keep a caption the width of the figure it belongs to. An image that
    renders narrower than its column (a generated chart at its own size, a
@@ -894,7 +978,9 @@
   margin-inline: auto;
 }
 
-.record-figure--wide { grid-column: 1 / -1; }
+.record-figure--wide {
+  grid-column: 1 / -1;
+}
 
 /* One caption for a whole grid of cropped panels. It spans every column so
    it reads as the group's caption, instead of dropping into the next free
@@ -1031,7 +1117,10 @@
 }
 .record-figure-matrix__grid {
   display: grid;
-  grid-template-columns: max-content repeat(var(--matrix-columns), minmax(0, 1fr));
+  grid-template-columns: max-content repeat(
+      var(--matrix-columns),
+      minmax(0, 1fr)
+    );
   gap: 8px 12px;
   align-items: center;
 }
@@ -1115,7 +1204,10 @@
 
 @media (max-width: 720px) {
   .record-figure-matrix__grid {
-    grid-template-columns: max-content repeat(var(--matrix-columns), minmax(0, 1fr));
+    grid-template-columns: max-content repeat(
+        var(--matrix-columns),
+        minmax(0, 1fr)
+      );
     gap: 6px 6px;
   }
   .record-figure-matrix__column-head,
@@ -1144,7 +1236,9 @@
   gap: 28px 36px;
 }
 
-.experiment-card__header { grid-column: 1 / -1; }
+.experiment-card__header {
+  grid-column: 1 / -1;
+}
 .experiment-card__title {
   font-family: var(--font-display);
   font-size: 1.25rem;
@@ -1165,7 +1259,10 @@
   hyphens: none;
 }
 
-.experiment-card__figure { grid-column: 1 / -1; max-width: 480px; }
+.experiment-card__figure {
+  grid-column: 1 / -1;
+  max-width: 480px;
+}
 
 /* One block of a richer, per-paragraph-paired write-up (see
    ExperimentData.body / BodyBlock in ExperimentCard.tsx). Full-width by
@@ -1173,8 +1270,12 @@
    the local two-column case when a block pairs with a table or figure.
    The card's own row-gap already spaces consecutive blocks, so this only
    needs to claim the full row. */
-.experiment-card__block { grid-column: 1 / -1; }
-.experiment-card__block .experiment-card__desc:first-child { margin-top: 0; }
+.experiment-card__block {
+  grid-column: 1 / -1;
+}
+.experiment-card__block .experiment-card__desc:first-child {
+  margin-top: 0;
+}
 
 .experiment-card__footer {
   grid-column: 1 / -1;
@@ -1222,7 +1323,11 @@
   max-width: 70ch;
 }
 
-.result-card__aim p { margin: 0; color: var(--ink); line-height: 1.6; }
+.result-card__aim p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.6;
+}
 
 .result-card__background h4 {
   font-family: var(--font-display);
@@ -1231,8 +1336,14 @@
   color: var(--ink);
   margin: 0 0 8px;
 }
-.result-card__background p { margin-top: 8px; color: var(--ink-soft); line-height: 1.6; }
-.result-card__background p:first-of-type { margin-top: 0; }
+.result-card__background p {
+  margin-top: 8px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.result-card__background p:first-of-type {
+  margin-top: 0;
+}
 
 .result-card__subsections {
   display: flex;
@@ -1252,8 +1363,14 @@
   color: var(--ink);
   margin: 0 0 10px;
 }
-.result-subsection p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.6; }
-.result-subsection p:first-of-type { margin-top: 0; }
+.result-subsection p {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.result-subsection p:first-of-type {
+  margin-top: 0;
+}
 
 .result-subsection__field h5 {
   font-family: var(--font-display);
@@ -1262,10 +1379,18 @@
   color: var(--ink);
   margin: 16px 0 4px;
 }
-.result-subsection__field p { margin-top: 0; }
+.result-subsection__field p {
+  margin-top: 0;
+}
 
-.result-card__discussion p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.65; }
-.result-card__discussion p:first-of-type { margin-top: 0; }
+.result-card__discussion p {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.result-card__discussion p:first-of-type {
+  margin-top: 0;
+}
 
 /* A record whose write-up the source has not supplied yet. Set apart from
    body copy so it reads as a note about the record rather than as its
@@ -1292,7 +1417,9 @@
 }
 
 @media (max-width: 640px) {
-  .result-card { padding: 22px 20px; }
+  .result-card {
+    padding: 22px 20px;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1317,7 +1444,9 @@
   text-align: center;
   color: var(--ink-soft);
 }
-.pdf-viewer__download { align-self: flex-start; }
+.pdf-viewer__download {
+  align-self: flex-start;
+}
 
 .record-download:is(button) {
   appearance: none;
@@ -1388,6 +1517,95 @@
 
 .protocol-modal__frame > p {
   padding: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Record figures: click to enlarge
+   -------------------------------------------------------------------------- */
+
+/* The cursor is the whole affordance — no overlay icon, which would sit on
+   top of the gel lanes and labels the reader came to look at. */
+.record-figure__photo--zoomable {
+  cursor: zoom-in;
+}
+
+.record-figure__photo--zoomable:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.figure-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  /* An explicit 1fr track, not the implicit max-content one: a grid row
+     grows past the viewport to fit a tall figure, and the figure's own
+     `max-height: 100%` would then resolve against that overflowing row. */
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  padding: clamp(12px, 3vw, 40px);
+  background: rgba(8, 25, 31, 0.78);
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
+}
+
+.figure-lightbox__figure {
+  max-width: min(1180px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  cursor: default;
+}
+
+/* The photo takes whatever height is left once the caption has its own, so
+   a tall figure and its caption both stay inside the viewport. */
+.figure-lightbox__photo {
+  min-height: 0;
+  flex: 1;
+  object-fit: contain;
+  border-radius: 10px;
+  background: var(--paper);
+}
+
+.figure-lightbox__caption {
+  flex: 0 0 auto;
+  max-height: 28vh;
+  overflow-y: auto;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.figure-lightbox__title {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.figure-lightbox__close {
+  position: absolute;
+  top: clamp(10px, 2vw, 22px);
+  right: clamp(10px, 2vw, 22px);
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--ink);
+  font: 400 2rem/1 var(--font-body);
+  cursor: pointer;
+}
+
+.figure-lightbox__close:hover {
+  background: #fff;
 }
 
 /* --------------------------------------------------------------------------
