@@ -4,19 +4,20 @@ import type {
 } from "../../components/LabFolders/types";
 
 /**
- * Revalorisation results, transcribed from the team's own Notion results
- * page ("Revalorisation", under WIKI / Results). The sub-blocks, their
- * order and the record titles follow that page.
+ * Revalorisation results. Every word below is the team's own, taken from
+ * the current Notion page "Results / Revalorisation"; nothing is
+ * summarised, reworded or filled in. The four blocks, their order, the
+ * record titles and the readings inside each are the page's own, and each
+ * record keeps the three answers the page itself says it gives: what was
+ * obtained, what it means, and whether it matched what we expected.
  *
- * The source's own numbering of the DHAK
- * records jumps (two records are both numbered 3); they are listed in
- * sequence below, which changes no content. The thermal-stability toggle
- * sits in a section the source marks to be ignored, and is left out.
- *
- * In-text "(Figure n)" pointers in the source are dropped: figure numbers
- * on this page are assigned automatically (numbering.ts), so a hand-written
- * number would point at the wrong figure. Computational design and
- * purification records are kept in the same workflow order as the source.
+ * In-text "(Figure n)" and "(Table n)" pointers are dropped: figure and
+ * table numbers on this page are assigned automatically (numbering.ts),
+ * so a hand-written number would point at the wrong one. The source's
+ * tables are transcribed rather than shown as pictures of tables, and the
+ * sequence files and the PROSS mutation list it attaches to the design
+ * block are offered as downloads beside the records whose prose names
+ * them.
  */
 
 const FIGURES = "assets/results/revalorisation";
@@ -25,9 +26,13 @@ const FIGURES = "assets/results/revalorisation";
 const EXPERIMENT_FIGURES = "assets/experiments/revalorisation";
 
 export const REVALORISATION_INTRO = [
-  "**Scope of this page.** The outcomes of the revalorisation module: obtaining the transformed strains, growing and inducing them, recovering a clarified cell free extract in which production can be read out, purifying the enzymes and measuring the activities the module depends on. The design and rationale of each stage are on the Experiments page, and the stage titles below follow it.",
-  "Each entry answers three questions: what was obtained, what it means, and whether it matched what we expected.",
+  "This page reports the outcomes of the revalorisation work: designing a stabilised DHAK and a fused DHAK–PPK2 complex in silico, producing both enzymes in *E. coli* BL21(DE3) from gene to clarified cell-free extract, purifying them, and measuring the activity of each enzyme alone and of the two coupled, where PPK2 regenerates from polyphosphate the ATP that DHAK spends to phosphorylate dihydroxyacetone. The design and rationale of each step are on the Experiments page.",
+  "Each entry below reports the outcome of the corresponding step on the Experiments page, following the same order and titles. For every step we answer three questions: what was obtained, what it means, and whether it matched what we expected. Within each block the results are given in the order they were obtained, because each one decided what was tried next.",
 ];
+
+/** The sequence files and the mutation list the source attaches to this
+ * block, offered beside the records its own prose points at them from. */
+const SEQ = `${FIGURES}/sequences`;
 
 /* ---------- Computational protein design ---------- */
 
@@ -68,8 +73,8 @@ const DESIGN_DSM: ResultData = {
         },
       ],
       bodyAfter: [
-        "**Why design 5.** The nine designs form a ladder, and the standard way to sample it is to order three constructs, one conservative, one intermediate and one aggressive, so that the trade-off between predicted stability and mutational load can be read directly from the bench. **Our budget allowed a single synthetic gene**, so the ladder had to be sampled once. We chose **design 5 (56 substitutions, 10.4%)** as a **mid-range compromise** between predicted stability gain and mutational load, and carried it forward with the wild type as reference. A conservative design risks gaining too little stability to measure, an aggressive one risks losing function outright, and the middle of the range is the position from which either outcome would still be informative.",
-        "**Checking the design before ordering it.** The design was superposed on the wild-type structure in PyMOL [2,3]. The **overall fold is unchanged**, with the K- and L-domains and the dimer interface preserved, and **none of the residues within 4 Å of AMP-PNP, DHA or Mg²⁺ carries a substitution**: the mutations sit on the surface and in the second shell, away from the catalytic and cofactor-binding regions. The server did what it was instructed to do, and the construct entered the bench round as a structurally conservative change on paper.",
+        "**Why design 5.** The nine designs form a ladder, and the standard way to sample it is to order three constructs, one conservative, one intermediate and one aggressive, so that the trade-off between predicted stability and mutational load can be read directly from the bench. **Our budget allowed a single synthetic gene**, so the ladder had to be sampled once. We chose **design 5 (56 substitutions, 10.4%)** as a **mid-range compromise** between predicted stability gain and mutational load, and carried it forward with the wild type as reference (**Engineering, Iteration 4**). A conservative design risks gaining too little stability to measure, an aggressive one risks losing function outright, and the middle of the range is the position from which either outcome would still be informative.",
+        "**Checking the design before ordering it.** The design was superposed on the wild-type structure in PyMOL [2,3]. The **overall fold is unchanged**, with the K- and L-domains and the dimer interface preserved, and **none of the residues within 4 Å of AMP-PNP, DHA or Mg²⁺ carries a substitution**: the mutations sit on the surface and in the second shell, away from the catalytic and cofactor-binding regions. The server did what it was instructed to do, and the construct entered the bench round as a structurally conservative change on paper. The final sequence is given in *Suplementary_DHAK-PROSS_DMS 30040.dna.*",
       ],
     },
     {
@@ -86,6 +91,21 @@ const DESIGN_DSM: ResultData = {
     },
     {
       id: "pross-cycle-1-reading",
+      downloadsLabel: "Supplementary",
+      downloads: [
+        {
+          label: "PROSS list of mutations (PDF)",
+          href: `${SEQ}/Supplementary_PROSS_list_of_mutations.pdf`,
+        },
+        {
+          label: "DHAK wild type, DSM 30040 (SnapGene)",
+          href: `${SEQ}/DHAK-wt_DMS_30040_parts.dna`,
+        },
+        {
+          label: "DHAK PROSS design 5, DSM 30040 (SnapGene)",
+          href: `${SEQ}/DHAK-PROSS_parts_DMS_30040.dna`,
+        },
+      ],
       continued: true,
       interpretation:
         "That the fold is preserved and the active site untouched is the minimum condition for a design to be worth testing, and it was met. What it does not establish is function: a model superposes well because the backbone is predicted to fold the same way, not because the enzyme still turns over substrate.",
@@ -102,10 +122,21 @@ const DESIGN_CECT: ResultData = {
   subsections: [
     {
       id: "pross-cycle-2",
+      downloadsLabel: "Supplementary",
+      downloads: [
+        {
+          label: "DHAK wild type, CECT 4626 (SnapGene)",
+          href: `${SEQ}/DHAK-WT_CECT_4626.dna`,
+        },
+        {
+          label: "DHAK PROSS design 1, CECT 4626 (SnapGene)",
+          href: `${SEQ}/DHAK-PROSS-CECT_4626.dna`,
+        },
+      ],
       body: [
         "**Why a second design, and why on a different sequence.** Two results forced this round. Design 5 showed no measurable activity, so the mutational load carried on the reference sequence had disturbed function. More decisive, the **wild-type DSM 30040 construct was not expressing**, which left us with **no working control**: without an active reference we could not tell whether the inactivity came from the mutations or from the purification. The host laboratory already had an active DHAK, the **CECT 4626** variant, which had been shown to express and work. Moving the stabilisation onto that sequence was not a preference but the only route to a comparison that means anything, since a stabilised variant can only be judged against a wild type that works.",
-        "**Why the most conservative design.** Again only one construct could be ordered, and two considerations pointed the same way. The first is the lesson from design 5: 56 substitutions were enough to abolish activity, so the next attempt had to carry far fewer. The second is specific to this round. The final construct does not carry the PROSS mutations alone; it carries them **on top of the ~22 positions at which CECT 4626 naturally differs** from the sequence the design was generated on, so the two sources of variation compound. Choosing **design 1 (21 substitutions, 3.9%)**, the most conservative of the nine, keeps the number of changes added on top of those natural differences to a minimum, so that the stabilised construct stays as close as possible to a sequence already known to be active.",
-        "**Result of the transfer.** The transfer was done position by position between the PROSS 1 design and the natural CECT 4626 sequence, and every differing position was assigned to one of three classes: **natural differences between the two strains**, **PROSS substitutions**, and **positions where a natural difference coincides with a PROSS substitution**. This third class is the most informative, since there the algorithm proposed a residue that evolution had already fixed in the active variant; those positions need no mutation at all and are the best-supported part of the design. A **codon-optimised gene** was generated and ordered for synthesis.",
+        "**Why the most conservative design.** Again only one construct could be ordered, and two considerations pointed the same way. The first is the lesson from design 5: 56 substitutions were enough to abolish activity, so the next attempt had to carry far fewer. The second is specific to this round. The final construct does not carry the PROSS mutations alone; it carries them **on top of the ~22 positions at which CECT 4626 naturally differs** from the sequence the design was generated on, so the two sources of variation compound. Choosing **design 1 (21 substitutions, 3.9%)**, the most conservative of the nine, keeps the number of changes added on top of those natural differences to a minimum, so that the stabilised construct stays as close as possible to a sequence already known to be active (**Engineering, Iteration 5**).",
+        "**Result of the transfer.** The transfer was done position by position between the PROSS 1 design and the natural CECT 4626 sequence, and every differing position was assigned to one of three classes: **natural differences between the two strains**, **PROSS substitutions**, and **positions where a natural difference coincides with a PROSS substitution**. This third class is the most informative, since there the algorithm proposed a residue that evolution had already fixed in the active variant; those positions need no mutation at all and are the best-supported part of the design. A **codon-optimised gene** was generated and ordered for synthesis; the final sequence is given in *Suplementary_DHAK-PROSS-CECT4626.dna.*",
       ],
       figures: [
         {
@@ -133,9 +164,9 @@ const DESIGN_CHANNELLING: ResultData = {
       title: "Round 1: each enzyme fused to its own element",
       body: [
         "To channel the ATP intermediate directly between the two enzymes, the DHAK–PPK2 pair was modelled *in silico* as a SpyTag/SpyCatcher fusion [4], with the SpyTag on DHAK and the SpyCatcher on PPK2.",
-        "In the first round each enzyme was modelled carrying only its half of the system. **DHAK with the SpyTag at the N-terminus was predicted cleanly by AlphaFold [5]**: the enzyme adopts its expected fold and the tag protrudes as a **disordered extension**, which is what a short peptide of that kind should look like. Superposing the model on the crystal structure of the wild-type enzyme in PyMOL confirms that the fusion leaves the fold unchanged. The reference used for this comparison is the DSM 30040 variant, since no crystal structure is available for CECT 4626.",
+        "In the first round each enzyme was modelled carrying only its half of the system (**Engineering, Iteration 11**). **DHAK with the SpyTag at the N-terminus was predicted cleanly by AlphaFold [5]**: the enzyme adopts its expected fold and the tag protrudes as a **disordered extension**, which is what a short peptide of that kind should look like. Superposing the model on the crystal structure of the wild-type enzyme in PyMOL confirms that the fusion leaves the fold unchanged. The reference used for this comparison is the DSM 30040 variant, since no crystal structure is available for CECT 4626.",
         "**PPK2 with the SpyCatcher at the N-terminus could not be predicted reliably.** AlphaFold returned a model in which the SpyCatcher was disordered and, more seriously, PPK2 itself did not resemble the free enzyme, so nothing about the geometry of the complex could be judged from it. Modelled without any fusion, PPK2 adopts a fold that agrees with the structure described for BcPPK2-III [6], which is what makes the fusion model's failure legible.",
-        "The contrast between the two enzymes is informative: a short peptide can be appended to a folded enzyme without disturbing the prediction, but a whole domain cannot. That half of the round failed was not expected, and it is what prompted the change of strategy below.",
+        "The contrast between the two enzymes is informative: a short peptide can be appended to a folded enzyme without disturbing the prediction, but a whole domain cannot. That half of the round failed was not expected, and it is what prompted the change of strategy below (**Engineering, Iteration 12**).",
       ],
       figuresColumns: 2,
       figures: [
@@ -171,7 +202,7 @@ const DESIGN_CHANNELLING: ResultData = {
       title: "Round 2: modelling the complete SpyTag/SpyCatcher system",
       body: [
         "The failure is not surprising once the nature of the system is considered. SpyTag and SpyCatcher are **two fragments of a single bacterial protein**, split by their designers into complementary halves; a model trained on natural proteins has no reason to fold one half correctly on its own. We therefore modelled each enzyme fused to the **complete SpyTag/SpyCatcher system**, each attached through the side that corresponds to it in the final construct, **PPK2 through the SpyCatcher and DHAK through the SpyTag**, and changed the prediction interface to **Boltz2** [7].",
-        "This resolved it. **PPK2 with the complete system at its N-terminus** gave a good model, with the module well structured and PPK2 adopting a fold comparable to the published structure of the free enzyme. **DHAK was then remodelled with the complete system at its C-terminus**, also in Boltz2, and likewise matched free DHAK. With both partners modelled reliably, the two models were **superposed through their SpyTag/SpyCatcher interfaces in PyMOL**, giving a model of the assembled complex.",
+        "This resolved it (**Engineering, Iteration 12**). **PPK2 with the complete system at its N-terminus** gave a good model, with the module well structured and PPK2 adopting a fold comparable to the published structure of the free enzyme. **DHAK was then remodelled with the complete system at its C-terminus**, also in Boltz2, and likewise matched free DHAK. With both partners modelled reliably, the two models were **superposed through their SpyTag/SpyCatcher interfaces in PyMOL**, giving a model of the assembled complex.",
       ],
       figuresColumns: 2,
       figures: [
@@ -196,8 +227,6 @@ const DESIGN_CHANNELLING: ResultData = {
       ],
       interpretation:
         "The outcome is a **viable fusion geometry**: both enzymes keep their folds and the module joining them is structured rather than disordered. The method is worth recording in its own right, since the constructs are ultimately expressed as **separate proteins** that meet only on mixing, yet they can only be modelled as a complete unit. That is a limitation of the prediction tools rather than of the design, and future teams modelling split systems should expect it.",
-      expectation:
-        "The work remained **computational only**: the fusion was not expressed or tested experimentally.",
     },
   ],
 };
@@ -215,15 +244,16 @@ const TRANSFORMATION: ResultData = {
         {
           src: `${FIGURES}/bl21-transformation-plate.jpg`,
           alt: "Agar plate of BL21(DE3) transformed with the pET-28a(+) construct, with abundant well-separated colonies.",
-          caption: "BL21(DE3) transformed with the pET-28a(+) construct.",
+          caption:
+            "BL21(DE3) transformed with the expression construct, streaked on LB-kanamycin.",
         },
       ],
       observations:
-        "Both synthetic constructs, **DHAK WT** and **DHAK PROSS 5** in pET-28a(+), transformed into chemically competent BL21 (DE3) and gave abundant, well separated colonies under kanamycin selection. **PPK2** (BcPPK2-III) was transformed in parallel from its native sequence.",
+        "Both synthetic constructs, **DHAK WT** and **DHAK PROSS 5** in pET-28a(+), were transformed into chemically competent BL21 (DE3) [8] and gave abundant, well separated colonies under kanamycin selection. **PPK2** (BcPPK2-III) was transformed in parallel from its native sequence.",
       interpretation:
-        "Both constructs entered the expression host at comparable efficiency from the same normalised input of 50 ng/µL, so the two DHAK variants start from equivalent material and a later difference between them cannot be blamed on the transformation. It also confirms that skipping propagation in a cloning strain was a safe shortcut for a construct delivered sequence verified.",
+        "Both constructs entered the expression host at comparable efficiency from the same normalised input of 50 ng/µL, so the two DHAK variants start from equivalent material and any later difference between them cannot be blamed on the transformation. It also confirms that skipping propagation in a cloning strain was a safe shortcut for a sequence-verified construct.",
       expectation:
-        "Yes. This stage was itself the response to an earlier failure. An initial attempt with a set of pre-existing strains **failed for DHAK**, because those cells carried a resistance marker other than kanamycin and did not survive kanamycin selection, while the PPK2 strains of the same collection grew normally. Re-ordering the gene as a fresh synthetic construct in a vector with a known marker removed that ambiguity rather than working around it, and the plates confirm it did.",
+        "This was expected, since the stage was itself the response to an earlier failure. An initial attempt with a set of pre-existing strains **failed for DHAK**, because those cells carried a resistance marker other than kanamycin and did not survive kanamycin selection, while the PPK2 strains of the same collection grew normally. Re-ordering the gene as a fresh synthetic construct in a vector with a known marker removed that ambiguity rather than working around it, and the plates confirm it did.",
     },
   ],
 };
@@ -236,11 +266,11 @@ const GROWTH: ResultData = {
     {
       id: "growth",
       observations:
-        "Two colonies per construct were picked into 5 mL preinocula with kanamycin at 50 µg/mL, diluted about fiftyfold into 50 mL of LB and grown at 37 ºC and 180 rpm. Three of the four DHAK cultures reached the induction window as planned, at **OD₆₀₀ 0.5 to 0.7**, while one of the wild type cultures (WT1) was only caught at **OD₆₀₀ 0.9**.",
+        "Two colonies per construct were picked into 5 mL pre-inocula with kanamycin at 50 µg/mL, diluted about fiftyfold into 50 mL of LB and grown at 37 °C and 180 rpm. Three of the four DHAK cultures reached the induction window as planned, at **OD₆₀₀ 0.5–0.7**, while one wild-type culture (WT1) was only caught at **OD₆₀₀ 0.9**.",
       interpretation:
-        "The cultures are comparable, with one caveat that has to be carried forward: WT1 was induced later in its growth curve than the rest, so a lower yield in that particular flask would report the induction point and not the construct. Picking two colonies per construct is insurance against an unwanted mutation in one of them, and it is what allows a single anomalous flask to be set aside without restarting the stage.",
+        "The cultures are comparable, with one caveat carried forward: WT1 was induced later in its growth curve than the rest, so a lower yield in that flask would report the induction point and not the construct. Picking two colonies per construct is insurance against an unwanted mutation in one of them, and it is what allows a single anomalous flask to be set aside without restarting the stage.",
       expectation:
-        "Partly. The window was met in three of four cultures. Overshooting OD₆₀₀ in one flask is a matter of sampling frequency rather than a failure of the protocol, and it is flagged here so that this flask is not read as a result about the wild type enzyme.",
+        "This matched expectations only partly. Overshooting the window in one flask is a matter of sampling frequency rather than a failure of the protocol, and it is flagged here so that this flask is not read as a result about the wild-type enzyme.",
     },
   ],
 };
@@ -253,11 +283,11 @@ const INDUCTION: ResultData = {
     {
       id: "induction",
       observations:
-        "All cultures were induced and grew on to the harvest without any visible problem, under both the standard condition (IPTG 0.4 mM, 30 ºC) and, later, the mild one (IPTG 0.2 mM, 20 ºC). The mild run comprised eight cultures: DHAK WT and DHAK PROSS 5 in triplicate at 20 ºC, plus two cultures of the recovered DHAK 2021 strain kept at 30 ºC as the reference. The cultures grew on after induction and reached the harvest without any visible problem.",
+        "All cultures were induced and grew on to harvest without visible problems under the standard condition, **IPTG 0.4 mM at 30 °C**. The recovered **CECT 4626 2021** strain was taken through the same condition in a later batch.",
       interpretation:
-        "The induction step itself is not the limiting factor of this block, since the same inducer, the same window and the same post induction regime delivered PPK2 and, as the gels below show, DHAK from the 2021 strain and DHAK PROSS 5. Whatever went wrong with the wild type construct happened downstream of switching transcription on.",
+        "Induction is not the limiting step of this block. The same inducer, the same window and the same post-induction regime delivered PPK2 and, as the gels below show, DHAK PROSS 5 and the 2021 strain. Whatever went wrong with the wild-type construct happened downstream of switching transcription on.",
       expectation:
-        "Yes at the standard condition, which was chosen to favour soluble over misfolded protein and behaved as intended at the level of the culture. The mild condition was not part of the original plan: it was added once the gels showed the soluble yield of the DHAK constructs was low, and it pushes the same rate-for-folding trade further.",
+        "The standard condition behaved as intended and was expected to, since it already trades rate for folding.",
     },
   ],
 };
@@ -270,31 +300,18 @@ const HARVEST: ResultData = {
     {
       id: "biomass",
       body: [
-        "Biomass was recorded for every culture by weighing the tared tubes before and after, to ±0.02 g.",
+        "Biomass was recorded for every culture by weighing the tared tubes before and after harvesting, to ±0.02 g. The two cultures of the recovered **CECT 4626 2021** strain, grown in a later batch under the same condition, gave **0.55 and 0.59 g**. Resuspension volumes were **scaled to the pellet, 3.5 to 4 mL per tube**, so that all extracts entered lysis at a comparable cell density.",
       ],
       tables: [
         {
-          caption: "Biomass per culture, standard condition, 30 ºC.",
+          caption:
+            "**Wet biomass recovered from the cultures induced under the standard condition (30 °C).** Tubes were tared and weighed before and after harvesting, so every value is a wet cell mass to ±0.02 g.",
           headers: ["Culture", "Biomass (g)"],
           rows: [
             ["DHAK WT 1", "0.50"],
             ["DHAK WT 2", "0.59"],
             ["DHAK PROSS 5 · 1", "0.66"],
             ["DHAK PROSS 5 · 2", "0.70"],
-          ],
-        },
-        {
-          caption: "Biomass per culture, mild condition, 20 ºC, with the 2021 strain at 30 ºC.",
-          headers: ["Culture", "Biomass (g)", "Buffer added"],
-          rows: [
-            ["DHAK WT 1", "0.70", "4 mL"],
-            ["DHAK WT 2", "0.60", "4 mL"],
-            ["DHAK WT 3", "0.57", "4 mL"],
-            ["DHAK PROSS 5 · 1", "0.66", "3.5 mL"],
-            ["DHAK PROSS 5 · 2", "0.47", "3.5 mL"],
-            ["DHAK PROSS 5 · 3", "0.46", "3.5 mL"],
-            ["DHAK 2021 · 1", "0.55", "3.5 mL"],
-            ["DHAK 2021 · 2", "0.59", "3.5 mL"],
           ],
         },
       ],
@@ -314,7 +331,7 @@ const SDS_PAGE: ResultData = {
   tabLabel: "SDS-PAGE read-out",
   title: "Expression read-out by SDS-PAGE",
   description:
-    "Production was read on polyacrylamide gels [9] of the crude extracts, which is where expression itself is visible. The gels are presented in the order they were run, because each one was the reason the next was needed. Some of these gels also carry purification fractions; those lanes are read in the purification block and are not discussed here.",
+    "Production was read on polyacrylamide gels [9] of the crude extracts, which is where expression itself is visible. Three gels were run, and they are presented in the order they were run, because each one was the reason the next was needed. Some of these gels also carry purification fractions; those lanes are read in the purification block and are not discussed here.",
   subsections: [
     {
       id: "gel-1",
@@ -337,9 +354,8 @@ const SDS_PAGE: ResultData = {
           ["10", "Crude extract, DHAK WT (2)"],
         ],
       }],
-      observations: "The first gel was run to confirm the production of PPK2, whose expression conditions had already been optimised by the host laboratory [6], so only the crude extract had to be checked. A band at the position expected for PPK2-III stands out over the normal pattern of host proteins in lane 5. The same gel also carried the crude extract of the original DHAK wild type in lanes 9 and 10, and there no band appears at the expected mass.",
-      interpretation: "PPK2 and this strain were carried forward unchanged for the rest of the module. The route opened by the failure of the original DHAK wild type is followed in Engineering, Iteration 1.",
-      expectation: "The PPK2 result was expected. The absence of the DHAK wild-type band was not.",
+      observations:
+        "The first gel was run to confirm the production of PPK2, whose expression conditions had already been optimised by the host laboratory [6], so only the crude extract had to be checked. The result is exactly what correct expression looks like: **a band at the position expected for PPK2-III standing out over the normal pattern of host proteins** (lane 5). PPK2 and this strain were therefore carried forward unchanged for the whole of the rest of the module. The same gel also carried the crude extract of the original DHAK wild type (lanes 9 and 10), and there no band appears at the expected mass. The route this failure opened is followed in **Engineering, Iteration 1**.",
     },
     {
       id: "gel-2",
@@ -366,9 +382,8 @@ const SDS_PAGE: ResultData = {
           ["10", "DHAK PROSS 5, express purification eluates (2) (purification block)"],
         ],
       }],
-      observations: "Because the first gel gave no DHAK band, a second one was run with the crude extracts of DHAK WT and DHAK PROSS 5. For the wild type it confirms the first read-out, since its extracts again show only the host proteome with nothing at the expected mass. **DHAK PROSS 5 appears here for the first time and is clearly expressed**, accompanied by a contaminating band of higher molecular mass in the upper part of the gel.",
-      interpretation: "Both results are checked again on the third gel. On the strength of this read-out, PROSS 5 was taken forward to purification and then to activity, on the same path as PPK2.",
-      expectation: "The expression of PROSS 5 was the intended outcome. The persistent failure of the original wild type was unexpected.",
+      observations:
+        "Because the first gel gave no DHAK band, a second one was run with the crude extracts of **DHAK WT and DHAK PROSS 5**. For the wild type it confirms the first read-out, since its extracts again show only the host proteome with nothing at the expected mass. **DHAK PROSS 5** appears here for the first time, and it is clearly expressed, accompanied by a contaminating band of higher molecular mass in the upper part of the gel. Both results are checked again on the third gel. On the strength of this read-out, PROSS 5 was taken forward to purification and then to activity, on the same path as PPK2.",
     },
     {
       id: "gel-3",
@@ -395,9 +410,10 @@ const SDS_PAGE: ResultData = {
           ["12", "Dialysed IMAC eluate, DHAK PROSS 5 (purification block)"],
         ],
       }],
-      observations: "Rather than discard the original wild type on two gels alone, a third gel was run in which the alternative DHAK CECT 4626 was loaded for the first time. The new 2021 strain in lanes 1 and 2 shows no band either; PROSS 5 in lane 3 is confirmed as expressing, again with the higher-mass contaminant; and the original wild type in lanes 4 and 5 is confirmed as not expressing.",
-      interpretation: "Neither of the two silent constructs was discarded on this evidence. The absence of a band was weighed against the activity of their crude extracts, and only then was the original wild type definitively set aside. The same applies to the 2021 strain, whose fate was likewise left to the activity measurements.",
-      expectation: "The 2021 stock was chosen because the host laboratory had shown it to be the most active DHAK available and because the more recent material was expected to have suffered less from long-term storage. Its missing band was therefore unexpected.",
+      observations:
+        "Rather than discard the original wild type on two gels alone, a third gel was run in which the alternative **DHAK CECT 4626** was loaded for the first time (**Engineering, Iteration 2**). That variant was chosen because the host laboratory had shown it to be the most active DHAK available to us, and the 2021 stock was preferred over the older 2012 one on the assumption that more recent material would have suffered less from long-term storage [10]. On this gel, the new **2021 strain** (lanes 1 and 2) shows no band either; **PROSS 5** (lane 3) is confirmed as expressing, again with the higher-mass contaminant; and the **original wild type** (lanes 4 and 5) is confirmed as not expressing.",
+      interpretation:
+        "Neither of the two silent constructs were discarded on this evidence. The absence of a band is the observation that will be weighed against the activity of their crude extracts, and only then will the original wild type be definitively set aside. The same applies to the 2021 strain, whose fate was likewise left to the activity measurements reported further on.",
     },
     {
       id: "gel-4",
@@ -416,9 +432,12 @@ const SDS_PAGE: ResultData = {
           ["4", "F-2, IMAC eluate after dialysis (purification block)"],
         ],
       }],
-      observations: "Until this point the expression of the CECT 4626 2012 stock had been taken for granted from its activity, without being checked on a gel. The gel run on the preparation that fed the coupled reaction closes that gap. The crude extract shows a distinct band at the mass expected for DHAK [10], standing out over the dense host pattern that fills the rest of the lane.",
-      interpretation: "This confirms directly what the activity had already indicated indirectly: this strain produces the enzyme in appreciable amount. The same gel carries the two fractions eluted from its purification, which are read in the purification block.",
-      expectation: "The result was expected. This is the only one of the four DHAK constructs examined on a gel that gives the expected expression read-out.",
+      observations:
+        "Until this point the expression of the **CECT 4626 2012** stock had been taken for granted from its activity, without being checked on a gel (**Engineering, Iteration 3**). The gel run on the preparation that fed the coupled reaction closes that gap. The crude extract shows a distinct band at the mass expected for DHAK [10], standing out over the dense host pattern that fills the rest of the lane. This confirms directly what the activity had already indicated indirectly, that this strain produces the enzyme in appreciable amount, and it accounts for the ~10 U/mg reached by its crude extract, since DHAK makes up a visible share of the soluble protein.",
+      interpretation:
+        "The same gel carries the two fractions eluted from its purification, which are read in the purification block.",
+      expectation:
+        "The result **was expected,** and this is the only one of the four DHAK constructs examined on a gel that delivers it. Set against the lanes of the 2021 strain and of the original wild type, neither of which gives a band, the difference is immediate, and it explains why the module ended up relying on this stock.",
     },
     {
       id: "gel-5",
@@ -437,15 +456,15 @@ const SDS_PAGE: ResultData = {
           ["4", "F-2, IMAC eluate after dialysis (purification block)"],
         ],
       }],
-      observations: "The PPK2 crude extract gives a band at 32 kDa, the mass calculated for the tagged subunit. The band is modest against the host background, which is consistent with a construct expressed in soluble form at a level sufficient for the assay rather than one that dominates the lysate.",
-      interpretation: "Since the enzyme is used in catalytic support of DHAK and not as the measured species, that level was taken as adequate and the construct was carried straight to purification.",
-      expectation: "The result was expected and confirms that the behaviour already optimised by the host laboratory was reproduced here.",
+      observations:
+        "Its crude extract gives a band at 32 kDa, the mass calculated for the tagged subunit. The band is modest against the host background, which is consistent with a construct expressed in soluble form at a level sufficient for the assay rather than one that dominates the lysate. Since the enzyme is used in catalytic support of DHAK and not as the measured species, that level was taken as adequate and the construct was carried straight to purification.",
+      expectation:
+        "For **PPK2** the result **was expected**, and the gel only had to confirm that the behaviour already optimised by the host laboratory [6] was reproduced here, as well as in the first gel.",
     },
   ],
   discussion: [
-    "For DHAK nothing went as planned. The original wild type was checked twice before its missing band was accepted. The CECT 4626 2021 stock also gave no visible band. DHAK PROSS 5 expressed strongly on both gels in which it was loaded, but with a contaminating protein of higher molecular mass whose identity remains unresolved.",
-    "The five gels establish that the production routine works, since the same protocol gave clear bands for PPK2, PROSS 5 and the 2012 stock while the other constructs gave none. They do not prove that nothing was made by the silent constructs, because a gel resolves only what is abundant and a weakly expressed enzyme can still be active.",
-    "With time and material limited, the silent constructs were carried forward to the activity assays, where turnover was read directly. PROSS 5 moved on to purification and activity alongside PPK2. The choice of the reference DHAK against which the designed variant would be judged was settled in the activity block, not here.",
+    "For **DHAK** nothing went as planned. A freshly ordered, sequence-verified synthetic gene is the case in which expression is most likely to work, and the supplier's construct data showed nothing unusual, so the silence of the original wild type was unexpected enough to be checked a second time before being accepted. The **CECT 4626 2021** stock, brought in precisely because the host laboratory had shown it to be the most active DHAK available, gave no visible band either, which was the second surprise of the block. The one result that came out as hoped, **PROSS 5** expressing strongly on both gels in which it was loaded, arrived with a complication that was not anticipated, a contaminating protein of higher molecular mass that accompanies it consistently and whose identity remains unresolved.",
+    "**What follows from this** is a deliberate change of read-out rather than more gels. The five gels establish that the production routine works, since the same protocol gave clear bands for PPK2, PROSS 5 and the 2012 stock while the other constructs gave none, so the absence of a band reports on those constructs and not on the handling. It does not, however, prove that nothing was made, because a gel resolves only what is abundant and a weakly expressed enzyme can be active without being visible. With time and material tightly limited, repeating gels on constructs that had already failed twice was not a good use of either. The silent constructs were therefore carried forward to the activity assays, where turnover is read directly and serves as an indirect but sufficient measure of expression, since a protein that converts substrate has necessarily been produced in *E. coli*. PROSS 5 moved on to purification and then to activity alongside PPK2, the original wild type and the 2021 stock remain in play until their crude-extract activity is measured, and the choice of the reference DHAK against which the designed variant will finally be judged is settled in the activity block, not here.",
   ],
 };
 
@@ -453,131 +472,205 @@ const SDS_PAGE: ResultData = {
 
 const PURIFICATION_IMAC: ResultData = {
   id: "purification-imac",
-  tabLabel: "IMAC",
-  title: "Immobilised Metal Affinity Chromatography (Co²⁺-IDA-Agarose)",
-  subsections: [{
-    id: "imac-result",
-    body: [
-      "Dialysis is reported together with IMAC rather than as an independent experiment, because it is the step that immediately follows elution: every eluate goes straight into a dialysis bag, and the same gel carries the affinity fractions and the dialysed sample. Separating them would split one gel across two sections and lose the comparison that makes the dialysis result visible. The affinity step follows the procedure established in this laboratory for related His-tagged enzymes [11].",
-      "For PPK2, the crude extract gives the expected band at 32 kDa, and the dialysed IMAC eluate retains that band while removing most of the host-protein background. PPK2 was therefore retained by the Co²⁺ resin and recovered as the dominant species in the dialysed eluate.",
-      "For the first DHAK affinity run, the wild-type and CECT 4626 2021 eluates were empty because their crude extracts contained no visible target protein. PROSS 5 did bind and elute, but it consistently appeared together with an unidentified band of higher molecular mass. Dialysis visibly concentrated that preparation but did not separate the two species.",
-      "The previous gel allowed the affinity step to be judged only on PROSS 5, because that was the one construct with enough protein on it. Returning to IMAC with the 2012 stock, now with an enzyme known to be strongly active at the outset, finally gives that reading. The crude extract carried the full host background, whereas the two eluted fractions carried a dominant band at 60 kDa and had lost most of the host species. The first fraction was more concentrated, as expected. Two minor species remained, so the preparation was enriched rather than homogeneous.",
-      "What this establishes is that the affinity step works on this enzyme too: the resin retains it and gives it back. The step was not quantified, since no flow-through or wash lane was run and the gel was not loaded on equal protein, so neither loss to the resin nor recovery can be stated from the image.",
-    ],
-    figuresColumns: 2,
-    figures: [
-      {
-        src: `${FIGURES}/sds-page-ppk2-purification.png`,
-        alt: "SDS-PAGE of the PPK2 purification, with crude extract, flow-through and dialysed eluate.",
-        caption: "SDS-PAGE of the PPK2 purification.",
-      },
-      {
-        src: `${FIGURES}/sds-page-ppk2-imac-2.png`,
-        alt: "SDS-PAGE of the second IMAC purification of PPK2.",
-        caption:
-          "SDS-PAGE of the second IMAC purification of PPK2, the preparation used in the second round of the coupled reaction. The eluate shows the band expected for PPK2 at 32 kDa, and the dialysed sample shows the same band and the same host species at higher intensity.",
-      },
-      {
-        src: `${FIGURES}/sds-page-dhak-purifications.png`,
-        alt: "SDS-PAGE of the DHAK purifications.",
-        caption: "SDS-PAGE of the DHAK purifications.",
-      },
-      {
-        src: `${FIGURES}/sds-page-2012-imac.png`,
-        alt: "SDS-PAGE of the IMAC purification of the DHAK CECT 4626 2012 stock.",
-        caption:
-          "SDS-PAGE of the IMAC purification of the DHAK CECT 4626 2012 stock. The two eluted fractions show the band expected for DHAK at 60 kDa.",
-      },
-    ],
-    interpretation: "The affinity step worked whenever target protein was present. PPK2 supplied a preparation clean enough for the coupled assay; the unidentified upper PROSS 5 band remained unresolved, and the 2012 stock required activity measurements to determine whether purification had preserved function.",
-    expectation: "PPK2 purified as intended. DHAK recovery was construct-dependent and prompted activity-led troubleshooting.",
-  }],
-};
-
-const PURIFICATION_DIALYSIS: ResultData = {
-  id: "purification-dialysis",
-  tabLabel: "Dialysis",
-  title: "Dialysis of IMAC eluates",
-  subsections: [{ id: "dialysis-result", body: ["Every IMAC eluate went directly into dialysis to remove imidazole and salt before activity measurement. The dialysed samples were compared on the same gels as the crude extracts and affinity fractions, rather than treated as a separate experiment.", "Dialysis removed the small-molecule components of the elution buffer and visibly concentrated the PROSS 5 preparation on the gel. The same buffer-exchange step was used for PPK2 and for the later CECT 4626 2012 preparations."], interpretation: "Dialysis functioned as both buffer exchange and a practical concentration step before activity measurement.", expectation: "The buffer exchange was expected; the concentrating effect was not." }],
+  tabLabel: "IMAC and dialysis",
+  title:
+    "Immobilised Metal Affinity Chromatography and dialysis of the eluates",
+  description:
+    "Dialysis is reported together with IMAC rather than as an independent experiment, because it is the step that immediately follows elution: every eluate goes straight into a dialysis bag, and the same gel carries the affinity fractions and the dialysed sample. Separating them would split one gel across two sections and lose the comparison that makes the dialysis result visible. The affinity step follows the procedure established in this laboratory for related His-tagged enzymes [11].",
+  subsections: [
+    {
+      id: "imac-ppk2",
+      title: "PPK2 purified as intended",
+      figures: [
+        {
+          src: `${FIGURES}/sds-page-ppk2-purification.png`,
+          alt: "SDS-PAGE of the PPK2 purification, with crude extract, flow-through and dialysed eluate.",
+          caption: "SDS-PAGE of the PPK2 purification.",
+        },
+      ],
+      figuresAside: true,
+      observations:
+        "The crude extract (lane 5) shows the host band pattern plus an additional band at the mass expected for PPK2-III; that band is absent, or nearly so, from the flow-through (lane 6), which means the protein was retained by the resin rather than passing through it; and it reappears as the dominant species in the dialysed eluate (lane 7), over a reduced but not eliminated background of host proteins.",
+      interpretation:
+        "This is a reasonable purification rather than a pure preparation, and that is what the block was designed to deliver: as argued in Experiments, the aim was a fraction clean enough to measure activity without interference. The more stringent wash afforded by PPK2's tolerance of salt and imidazole did its job. This dialysed PPK2 was stored and kept as the partner enzyme, ready for the moment an active DHAK preparation became available for the coupled assay. The result was expected, and PPK2 was never the difficult half of this module.",
+    },
+    {
+      id: "imac-ppk2-second",
+      continued: true,
+      figures: [
+        {
+          src: `${FIGURES}/sds-page-ppk2-imac-2.png`,
+          alt: "SDS-PAGE of the second IMAC purification of PPK2.",
+          caption:
+            "SDS-PAGE of the second IMAC purification of PPK2, the preparation used in the second round of the coupled reaction. The eluate shows the band expected for PPK2 at 32 kDa, and the dialysed sample shows the same band and the same host species at higher intensity.",
+        },
+      ],
+      figuresAside: true,
+      observations:
+        "A second preparation was purified in the same way when the coupled reaction was repeated, and it is the one that supplied PPK2 in **round 2**. The band at **32 kDa** is already visible in the crude extract and is **retained through the affinity step**, with much of the host background removed in the eluate. After dialysis the same band appears **more intense, and so do the remaining host species** between 25 and 100 kDa, which indicates that dialysis **concentrated the sample rather than purifying it further**.",
+      interpretation:
+        "The purity is therefore set by the **affinity step**, and dialysis only raises the **concentration** at which that preparation is used. For the use the preparation is put to, this is **sufficient**. The coupled assay reads the formation of DHAP by DHAK and asks of PPK2 only that it **return ATP**, so a preparation carrying residual host protein performs the function required of it **without needing to be homogeneous**. A kinetic characterisation of PPK2 itself would need a cleaner preparation, and **none was attempted**.",
+    },
+    {
+      id: "imac-dhak-first-run",
+      title: "First affinity run: PROSS 5 and the silent constructs",
+      figures: [
+        {
+          src: `${FIGURES}/sds-page-dhak-purifications.png`,
+          alt: "SDS-PAGE of the DHAK purifications.",
+          caption: "SDS-PAGE of the DHAK purifications.",
+        },
+      ],
+      figuresAside: true,
+      observations:
+        "**DHAK divides into two problems**, which the gel tells apart. What the affinity step cost the enzyme is followed in **Engineering, Iteration 6**. Most eluate lanes are faint, but reading each against its own crude extract shows that this is not a failure of the purification. The **wild-type eluates** (lanes 10 and 11) and the **2021 eluates** (lanes 7 and 8) are empty, and in both cases the corresponding extract already showed no band: where there is nothing to retain, the resin cannot return anything, so what these lanes report is the expression problem documented above and not the behaviour of the affinity step. **PROSS 5** is the exception, and the only lane on which the purification can actually be judged: it expresses more strongly than any other construct on the gel, and its eluate (lane 9) shows two well-defined, essentially clean bands. The identity of the upper band is not established; it is not resolved under reducing conditions and runs above the expected monomer mass, so it may come from the construct or be a co-purifying host protein. It was recorded and set aside, because the priority at that point was to establish whether the stabilised variant was active, not only expressible.",
+      interpretation:
+        "The dialysed lane adds a result that was not the purpose of the step. After dialysis (lane 12) the bands are markedly thicker than in the corresponding eluate: the **sample is more concentrated**. Dialysis therefore serves two functions here rather than one. Besides removing the imidazole and salt that would interfere with the DHAK assay, as argued in Experiments, it acts in practice as a concentration step before activity is measured. This was not anticipated, and it is the reason dialysis is treated as integral to the purification rather than as an optional clean-up.",
+    },
+    {
+      id: "imac-dhak-second-run",
+      title: "Second affinity run: the active 2012 stock",
+      figures: [
+        {
+          src: `${FIGURES}/sds-page-2012-imac.png`,
+          alt: "SDS-PAGE of the IMAC purification of the DHAK CECT 4626 2012 stock.",
+          caption:
+            "SDS-PAGE of the IMAC purification of the DHAK CECT 4626 2012 stock. The two eluted fractions show the band expected for DHAK at 60 kDa over a background strongly reduced with respect to the crude extract.",
+        },
+      ],
+      figuresAside: true,
+      observations:
+        "The previous gel allowed the affinity step to be judged only on PROSS 5, because that was the one construct with enough protein on it. Returning to IMAC with the 2012 stock (**Engineering, Iteration 8**), now with an enzyme known to be strongly active at the outset, finally gives that reading. The crude extract loaded onto the column carries the full host background, with bands spread across the whole range of the marker and the one at the mass of DHAK no more prominent than several others. The two eluted fractions carry a dominant band at 60 kDa, the mass calculated for the tagged subunit, and have lost most of the host species present in the extract. The fraction collected first is the more concentrated of the two, as expected from the elution profile. Two minor species survive the step, one slightly above 60 kDa and one near 35 kDa, so the preparation is enriched rather than homogeneous.",
+      interpretation:
+        "What this establishes is that the affinity step works on this enzyme too, the resin retains it and gives it back. That information was missing, because until now the only evidence that IMAC recovers DHAK came from a construct whose activity was unknown. Here the same preparation that gives this band pattern is the one that went into the second round of the coupled reaction, so purification and function are reported on the same material. The step is not quantified, since no flow-through or wash lane was run and the gel was not loaded on equal protein, so neither the loss to the resin nor the recovery can be stated from the image.",
+    },
+  ],
 };
 
 const PURIFICATION_EXPRESS_IMAC: ResultData = {
   id: "purification-express-imac",
   tabLabel: "Express IMAC",
-  title: "Express Immobilised Metal Affinity Chromatography (Co²⁺-IDA-Agarose)",
-  subsections: [{ id: "express-imac-result",
-    figures: [
-      {
-        src: `${FIGURES}/sds-page-express-imac.jpeg`,
-        alt: "SDS-PAGE of the express IMAC of DHAK.",
-        caption: "SDS-PAGE of the express IMAC of DHAK.",
-      },
-    ],
-    figuresAside: true,
-    body: ["The express IMAC was run to settle a single question: when a DHAK construct yields nothing after purification, is it because the enzyme was never made, or because the purification is losing it?", "DHAK PROSS 5 appeared in its eluates as the only intense species, accompanied by the same unidentified second band seen on the preparative gel, so the resin binds it and gives it back. The wild type appeared nowhere, neither in its crude extract nor in its eluates.", "Taken together, the two observations separate the two possibilities. Because the resin recovers the protein whenever the protein is there, the affinity step itself is working, and because the wild type is absent from its own extract before any resin is involved, its failure must lie in expression rather than in purification. The express protocol obtained that discrimination from microlitre volumes in a fraction of the time a full column run would have taken."], interpretation: "The affinity step was working; the wild-type failure lay in expression rather than purification.", expectation: "That the test would resolve the ambiguity was expected; that it would resolve it against the construct was not." }],
+  title: "Express Immobilised Metal Affinity Chromatography",
+  subsections: [
+    {
+      id: "express-imac-result",
+      figures: [
+        {
+          src: `${FIGURES}/sds-page-express-imac.jpeg`,
+          alt: "SDS-PAGE of the express IMAC of DHAK.",
+          caption: "SDS-PAGE of the express IMAC of DHAK.",
+        },
+      ],
+      figuresAside: true,
+      observations:
+        "The express IMAC was run to settle a single question: *when a DHAK construct yields nothing after purification, is it because the enzyme was never made, or because the purification is losing it?* The gel answers it directly. DHAK PROSS 5 appears in its eluates (lanes 8 and 10) as the only intense species, accompanied by the same unidentified second band seen on the preparative gel, so the resin binds it and gives it back. The wild type appears nowhere, neither in its crude extract nor in its eluates (lanes 7 and 9).",
+      interpretation:
+        "Taken together, the two observations separate the two possibilities. Because the resin recovers the protein whenever the protein is there, the affinity step itself is working, and because the wild type is absent from its own extract before any resin is involved, its failure must lie in expression rather than in purification. That is exactly the discrimination the express protocol was designed to provide, and it was obtained from microlitre volumes in a fraction of the time a full column run would have taken, which is what allowed us to stop troubleshooting the purification and start troubleshooting the construct.",
+      expectation:
+        "That the test would resolve the ambiguity was expected; that it would resolve it against the construct was not.",
+    },
+  ],
 };
 
 const PURIFICATION_SEC: ResultData = {
   id: "purification-sec",
   tabLabel: "SEC (FPLC)",
   title: "Size-exclusion chromatography (FPLC)",
-  subsections: [{
-    id: "sec-result",
-    body: [
-      "Four runs were performed and are reported in chronological order as runs 1 to 4. For each one the full chromatogram was examined together with an enlargement of the region from which fractions were collected.",
-      "Three reference volumes make the traces interpretable. On this column the void volume is about 110 mL, where everything too large to enter the pores elutes together, and the total volume is about 320 mL, where small molecules that fully penetrate the matrix elute. Between them, DHAK is expected at approximately 220–270 mL.",
-      "Run 1 was almost empty in absorbance terms. The whole trace stayed below 7.5 mAU, and the collected region showed three faint shoulders rather than resolved peaks. A very low rise near 290 mL lay past the DHAK window and close to the total volume, so it was unlikely to correspond to a protein of this size.",
-      "Run 2 gave real absorbance for the first time, but most of it fell outside the region of interest. The collected DHAK window contained a broad, poorly defined feature rather than a narrow symmetric peak. The dominant peak at about 288 mL and a later one at about 330 mL indicated that most of what left the column was small-molecule material from the crude extract.",
-      "Run 3 was the only one that behaved as size exclusion should. A narrow, symmetric peak fell squarely inside the 220–270 mL window, with a clean return to baseline on both sides. The run was nonetheless lost because the fraction collector was started after the peak had already left the system, so no fraction could be assayed.",
-      "Run 4 showed a candidate peak at about 261 mL, inside the DHAK window, but it overlapped with a much larger peak near 290 mL. The overlap limited the purity obtainable, while the void peak indicated that more of this sample had aggregated.",
-      "In the three runs that produced real absorbance, most of the signal eluted near the total volume and little appeared in the expected DHAK window. The chromatograms show that the separation was not reproducible, not that the enzyme was absent, so fractions from runs 1, 2 and 4 were carried to the activity assays.",
-    ],
-    figuresColumns: 2,
-    figures: [
-      {
-        src: `${FIGURES}/sec-run1-full.png`,
-        alt: "Full chromatogram of size-exclusion run 1.",
-        caption: "Full chromatogram of run 1 (A₂₈₀ against elution volume, 0–306 mL).",
-      },
-      {
-        src: `${FIGURES}/sec-run1-zoom.png`,
-        alt: "Enlargement of the collected region of size-exclusion run 1.",
-        caption: "Enlargement of the collected region of run 1.",
-      },
-      {
-        src: `${FIGURES}/sec-run2-full.png`,
-        alt: "Full chromatogram of size-exclusion run 2.",
-        caption: "Full chromatogram of run 2 (0–395 mL).",
-      },
-      {
-        src: `${FIGURES}/sec-run2-zoom.png`,
-        alt: "Enlargement of the collected region of size-exclusion run 2.",
-        caption: "Enlargement of the collected region of run 2.",
-      },
-      {
-        src: `${FIGURES}/sec-run3-full.png`,
-        alt: "Full chromatogram of size-exclusion run 3.",
-        caption: "Full chromatogram of run 3 (0–340 mL).",
-      },
-      {
-        src: `${FIGURES}/sec-run3-zoom.png`,
-        alt: "Enlargement of the collected region of size-exclusion run 3.",
-        caption: "Enlargement of the collected region of run 3.",
-      },
-      {
-        src: `${FIGURES}/sec-run4-full.png`,
-        alt: "Full chromatogram of size-exclusion run 4.",
-        caption: "Full chromatogram of run 4 (0–414 mL).",
-      },
-      {
-        src: `${FIGURES}/sec-run4-zoom.png`,
-        alt: "Enlargement of the collected region of size-exclusion run 4.",
-        caption: "Enlargement of the collected region of run 4.",
-      },
-    ],
-    interpretation: "Size exclusion did not provide a reliable second route to purified DHAK. Fractions were carried into the activity assay to decide whether any active enzyme had nevertheless been recovered.",
-    expectation: "None of this was expected. The method never stabilised, and the only clean separation was lost to a fraction collector started too late. With no time to develop it further, the work returned to IMAC.",
-  }],
+  description: [
+    "Four runs were performed and are reported in chronological order as runs 1 to 4. For each one the full chromatogram is shown together with an enlargement of the region from which fractions were collected.",
+    "Three reference volumes make the traces interpretable. On this column the **void volume is about 110 mL**, where everything too large to enter the pores elutes together, and the **total volume is about 320 mL**, where small molecules that fully penetrate the matrix elute. Between them, DHAK is expected at approximately **220–270 mL**, which is the window in which a peak can correspond to the enzyme.",
+  ].join(" "),
+  subsections: [
+    {
+      id: "sec-run-1",
+      title: "Run 1",
+      figuresColumns: 2,
+      figures: [
+        {
+          src: `${FIGURES}/sec-run1-full.png`,
+          alt: "Full chromatogram of size-exclusion run 1.",
+          caption: "Full chromatogram of run 1 (A₂₈₀ against elution volume, 0–306 mL).",
+        },
+        {
+          src: `${FIGURES}/sec-run1-zoom.png`,
+          alt: "Enlargement of the collected region of size-exclusion run 1.",
+          caption: "Enlargement of the collected region of run 1.",
+        },
+      ],
+      observations:
+        "The first run is almost empty in absorbance terms. The whole trace stays below 7.5 mAU, and the only feature of any size is a broad, very low rise near 290 mL. **Fractions 17 to 68 were collected**, and the enlargement covers that region, which includes the window where DHAK should elute. There the trace shows three faint shoulders rather than peaks. A shoulder has no clear apex and sits on the baseline, which means the material is eluting under the edge of something else instead of being separated in its own right. With absorbance this low, very little left the column at all, although a poorly defined feature does not in itself mean there is no protein in those fractions: it means that **whatever eluted was not resolved**.",
+      interpretation:
+        "The rise near 290 mL is worth noting even though it is barely above the baseline. It lies past the DHAK window and close to the total volume of the column, where small molecules elute, so it is unlikely to correspond to a protein of this size. What the collected fractions actually contain, and whether they are active, is reported in the activity block.",
+    },
+    {
+      id: "sec-run-2",
+      title: "Run 2",
+      figuresColumns: 2,
+      figures: [
+        {
+          src: `${FIGURES}/sec-run2-full.png`,
+          alt: "Full chromatogram of size-exclusion run 2.",
+          caption: "Full chromatogram of run 2 (0–395 mL).",
+        },
+        {
+          src: `${FIGURES}/sec-run2-zoom.png`,
+          alt: "Enlargement of the collected region of size-exclusion run 2.",
+          caption: "Enlargement of the collected region of run 2.",
+        },
+      ],
+      observations:
+        "The second run gave real absorbance for the first time, but most of it falls outside the region of interest. The trace shows a small peak at the void volume (~105 mL, 32 mAU), a dominant one at ~288 mL (577 mAU) and a third at ~330 mL (147 mAU). **Fractions 17 to 56 were collected**, and the enlargement covers that region, which is where DHAK should elute. There the absorbance is low and the feature is poorly defined: broad, rather than the narrow, symmetric peak that one cleanly separated species gives. A shape of that kind means **several species eluting together**, or protein retarded by the matrix, so the fractions taken from it cannot be assumed to contain one thing. It does not mean the enzyme is absent, only that it was not resolved.",
+      interpretation:
+        "The large peak at ~288 mL is worth noting even though no fractions were taken from it. It lies past the DHAK window and close to the total volume of the column, where small molecules elute, and the same applies to the peak at ~330 mL, which is past the total volume altogether. Together they indicate that most of what left the column was small-molecule material from the crude extract rather than protein. The void peak is unremarkable, since very large or aggregated material always elutes there, and its small size means little of the sample had aggregated. What the collected fractions actually contain, and whether they are active, is reported in the activity block.",
+    },
+    {
+      id: "sec-run-3",
+      title: "Run 3",
+      figuresColumns: 2,
+      figures: [
+        {
+          src: `${FIGURES}/sec-run3-full.png`,
+          alt: "Full chromatogram of size-exclusion run 3.",
+          caption: "Full chromatogram of run 3 (0–340 mL).",
+        },
+        {
+          src: `${FIGURES}/sec-run3-zoom.png`,
+          alt: "Enlargement of the collected region of size-exclusion run 3.",
+          caption: "Enlargement of the collected region of run 3.",
+        },
+      ],
+      observations:
+        "The third run is the only one that behaved as size exclusion should. Its maximum absorbance is modest, 51 mAU for the whole run, so there was not much material, but the shape of the trace is the best of the series. The peak of interest falls squarely in the 220–270 mL window, exactly where DHAK is expected. It is narrow and symmetric, with no shoulders and a clean return to the baseline on both sides, which is what a single species properly separated from the rest of the sample looks like. **This is the reference profile against which the other three runs are read.**",
+      interpretation:
+        "The **run was nonetheless lost for a trivial reason.** The collection marks show that the fraction collector was started after the peak had already left the system, so the only well-resolved DHAK peak obtained in the whole series went to waste. **No fraction of it could be assayed, and it therefore does not appear in the activity block.**",
+    },
+    {
+      id: "sec-run-4",
+      title: "Run 4",
+      figuresColumns: 2,
+      figures: [
+        {
+          src: `${FIGURES}/sec-run4-full.png`,
+          alt: "Full chromatogram of size-exclusion run 4.",
+          caption: "Full chromatogram of run 4 (0–414 mL).",
+        },
+        {
+          src: `${FIGURES}/sec-run4-zoom.png`,
+          alt: "Enlargement of the collected region of size-exclusion run 4.",
+          caption: "Enlargement of the collected region of run 4.",
+        },
+      ],
+      observations:
+        "The fourth run is better than the first two but not as good as the third. The trace shows a peak at the void volume (~110 mL, 202 mAU), one at ~261 mL (187 mAU), a dominant one at ~290 mL (825 mAU) and a further one at ~333 mL (274 mAU). **Fractions 25 to 48 were collected**, and the enlargement covers that region. The peak at ~261 mL falls inside the DHAK window and is the only candidate for the enzyme. It is broader than a well-resolved peak should be, and the enlargement shows it partially overlapping with the much larger peak that follows it, so its trailing edge is not cleanly separated from that material. Where two peaks overlap, the fractions taken between them contain both species, which limits the purity obtainable rather than ruling out the presence of the enzyme.",
+      interpretation:
+        "The peak at ~290 mL, roughly four times larger, lies past the DHAK window and close to the total volume, and the one at ~333 mL is past it, so both correspond to small-molecule material from the crude extract. The void peak is considerably larger than in run 2, which indicates that more of this sample had aggregated. What the collected fractions contain, and whether the enzyme in them is still active, is reported in the activity block.",
+    },
+  ],
+  discussion: [
+    "In the three runs that produced real absorbance, most of the signal elutes near the total volume of the column, where small molecules appear, and little in the 220–270 mL window where DHAK is expected: the profile of a crude extract dominated by nucleotides and small metabolites, which leaves open whether the collected fractions contained the enzyme at all.",
+    "None of this was expected. Size exclusion was adopted because it avoids metal chelation and imidazole and separates on size, a property the enzyme has regardless of how its tag behaves. Instead the method never stabilised: almost nothing left the column in run 1, run 2 gave a broad, unresolved feature in the collection window, and run 4 a candidate peak overlapping much larger late-eluting material. Run 3 produced exactly the narrow, symmetric peak the technique should give, and it was lost to a fraction collector started too late.",
+    "The chromatograms show that the separation was not reproducible, not that the enzyme was absent, so the fractions from runs 1, 2 and 4 were carried to the activity assays; with no time to develop the method further, the work returned to IMAC, a decision set out in **Engineering, Iteration 7**.",
+  ],
 };
 
 const PURIFIED_2012_STOCK: ResultData = {
@@ -662,21 +755,41 @@ const PURIFIED_2012_STOCK: ResultData = {
 const ACTIVE_DIALYSED_IMAC: ResultData = {
   id: "active-dialysed-imac",
   tabLabel: "Active IMAC eluate",
-  title: "Dialysed IMAC eluate, DHAK CECT 4626 2012 stock",
-  description: "This was a separate preparation produced from a fresh expression of the same 2012 stock and concentrated by centrifugal ultrafiltration after dialysis. The difference from the earlier inactive eluate was not controlled, so the comparison is descriptive rather than causal.",
-  subsections: [{
-    id: "active-imac-result",
-    body: [
-      "Before setting up the coupled assay with purified enzyme, the dialysed IMAC eluate concentrated by Centricon was assayed on its own, so that the amount of active DHAK entering the reaction was known rather than assumed. The trace gave an initial rate of **850.1 mOD/min** (R² = 0.999), equivalent to approximately **20 U/mL**. Bradford against a BSA standard curve gave **1.990 mg/mL** of protein, so the specific activity was approximately **10 U/mg**.",
-      "This is the measurement that was missing from the purification line: an affinity preparation of this enzyme that is active. At approximately 10 U/mg, its specific activity is essentially the 10.7 U/mg reported for the fully purified enzyme [10]. The eluate was concentrated by centrifugal ultrafiltration rather than left dilute, so activity was retained and concentrated instead of lost.",
-      "The result was not expected in light of the earlier purification failures. It made it possible to run the coupled assay with purified enzyme, with a known amount of DHAK entering the reaction.",
-    ],
-    tables: [{
-      caption: "Protein quantification of the purified DHAK preparation (IMAC + Centricon) by the Bradford assay, against a BSA standard curve.",
-      headers: ["Sample", "Absorbance (A₅₉₅, mean)", "Protein (mg/mL)", "Standard curve R²"],
-      rows: [["DHAK purified (IMAC + Centricon), 2 µL", "0.269", "1.990", "0.994"]],
-    }],
-  }],
+  title: "Dialysed IMAC eluate (DHAK CECT 4626, 2012 stock)",
+  subsections: [
+    {
+      id: "active-imac-result",
+      figures: [
+        {
+          src: `${FIGURES}/dhak-activity-cect4626-2012-imac.png`,
+          alt: "Absorbance at 340 nm against time for the dialysed IMAC eluate of the 2012 stock, a steep linear fall.",
+          caption:
+            "DHAK activity of the dialysed IMAC eluate of the CECT 4626 2012 stock (IMAC + Centricon), measured by the coupled α-GDH/TIM assay (~7 µL of enzyme). Initial rate **850.1 mOD/min** (R² = 0.999), equivalent to **~20 U/mL** and a specific activity of **~10 U/mg**.",
+        },
+      ],
+      observations:
+        "The affinity route had already returned one dialysed eluate of this stock with no measurable activity. **This section reports a separate preparation**, produced from a **fresh expression of the same 2012 stock** and concentrated by centrifugal ultrafiltration after dialysis. **We did not control the difference**, so the comparison between them is descriptive rather than causal. Before setting up the coupled assay with purified enzyme, the dialysed IMAC eluate of the 2012 stock (concentrated by Centricon) was **assayed on its own**, so that the amount of active DHAK entering the reaction was known rather than assumed. The trace gave an initial rate of **850.1 mOD/min** (R² = 0.999), a volumetric activity of **~20 U/mL**. Bradford against a BSA standard curve gave **1.990 mg/mL** of protein, so the **specific activity of the purified preparation is ~10 U/mg**.",
+      tables: [
+        {
+          caption:
+            "Protein quantification of the purified DHAK preparation (IMAC + Centricon) by the Bradford assay, against a BSA standard curve.",
+          headers: [
+            "Sample",
+            "Absorbance (A₅₉₅, mean)",
+            "Protein (mg/mL)",
+            "Standard curve R²",
+          ],
+          rows: [
+            ["DHAK purified (IMAC + Centricon), 2 µL", "0.269", "1.990", "0.994"],
+          ],
+        },
+      ],
+      interpretation:
+        "This is the measurement that was **missing from the whole purification line**, an affinity preparation of this enzyme that is **active**. At **~10 U/mg**, the specific activity is essentially the **10.7 U/mg reported for the fully purified enzyme** [10], so the IMAC step followed by concentration delivered DHAK at close to its maximum specific activity. The eluate was **concentrated by centrifugal ultrafiltration (Centricon)** rather than left dilute, so the activity was **retained and concentrated instead of lost**.",
+      expectation:
+        "The result was **not expected** in the light of the earlier purifications, which had **failed to deliver an active preparation** of this enzyme. It is what **made it possible to run the coupled assay with purified enzyme**, with a known amount of DHAK (3 U) entering the reaction, and to refer the turnover to a known amount of protein rather than to a volume of extract.",
+    },
+  ],
 };
 
 /* ---------- Enzyme activity assay ---------- */
@@ -697,11 +810,9 @@ const DHAK_DSM: ResultData = {
         },
       ],
       observations:
-        "In the coupled α-GDH/TIM assay the absorbance at 340 nm fell **only slightly**, giving an initial rate of **3.73 mOD/min** (R² = 0.991), equivalent to a DHAP formation rate of about **0.60 nmol/min**. The fit is clean but the slope is far shallower than any of the CECT 4626 preparations.",
-      interpretation:
-        "This enzyme was **only weakly active**. A linear but shallow trace points to a **low amount of functional DHAK** rather than to a failed assay, since the reaction and the coupling system behaved normally.",
+        "The absorbance at 340 nm fell only slightly, giving an initial rate of **3.73 mOD/min** (R² = 0.991), equivalent to about **0.60 nmol DHAP/min**. The fit is clean but the slope is far shallower than any of the CECT 4626 preparations, which points to a **weakly active enzyme and a low amount of functional DHAK** rather than to a failed assay, since the reaction and the coupling system behaved normally. This was **not what we expected**.",
       expectation:
-        "**No.** This is the **reference variant** of *C. freundii* DHAK, the sequence crystallised as PDB 1UN9 (strain DSM 30040), ordered as a synthetic gene. Its low activity, set against the much higher activity of the **CECT 4626** variant, is consistent with the two being **distinct natural variants** that differ at 22 residues, the CECT 4626 one being the more catalytically efficient [3]. This led us to move to the CECT 4626 variant kept in the laboratory.",
+        "This is the reference variant of *C. freundii* DHAK, the sequence crystallised as PDB 1UN9 (strain DSM 30040), ordered as a synthetic gene, and the result confirms at the level of function what the gels had already shown at the level of protein. It **was not what we expected** from a freshly ordered, sequence-verified construct whose supplier data showed nothing unusual, and it is what turned the wild type from a setback into the central problem of the module. The response was to move to the **CECT 4626** variant kept in the laboratory, reported as the more catalytically efficient of the two natural variants, which differ at 22 residues [10]; the reasoning is in **Engineering, Iteration 1**.",
     },
   ],
 };
@@ -722,11 +833,11 @@ const DHAK_2021: ResultData = {
         },
       ],
       observations:
-        "The absorbance at 340 nm **stayed flat** for the whole read. The fitted slope was **−0.080 mOD/min with R² = 0.035**, so no reliable rate can be extracted and the extract showed **no measurable DHAK activity**. This agrees with the expression gel, where the 2021 stock gave no band.",
+        "Two CECT 4626 stocks were available in the host laboratory, from 2021 and 2012. Work began with the 2021 stock, on the assumption that more recent material would have been better preserved. The extract was taken through **IMAC and dialysis**, and the eluates showed **no band** at the expected mass. A gel resolves only what is abundant, so an absent band does not by itself prove that nothing was made, and the **crude extract was therefore assayed directly**, since activity reports on functional enzyme regardless of whether a band is visible. The absorbance at 340 nm **stayed flat** for the whole read. The fitted slope was **−0.080 mOD/min with R² = 0.035**, so **no reliable rate can be extracted and the extract showed no measurable DHAK activity**. The two read-outs agree that this preparation holds **no functional enzyme in appreciable amount**.",
       interpretation:
-        "This preparation is **clearly active**, and already **several-fold more active than the DSM 30040 variant**, confirming that the change of variant was the right move. The rate is still modest, which pointed us to look for a better-performing stock of the same enzyme before committing to downstream work.",
+        "The result still has to be read against what this variant should do. CECT 4626 is described as the **most catalytically efficient DHAK reported to date** (kcat/Km ≈ 2×10⁷ M⁻¹s⁻¹, kcat ≈ 24 s⁻¹, Km for DHA ≈ 1.2 µM) [10], so a flat trace cannot reflect the enzyme itself. It points to the **state of this particular stock** rather than to the biochemistry, and an extract with no detectable activity **cannot serve as the reference** against which a stabilised design is judged.",
       expectation:
-        "**No.** CECT 4626 is described as the most catalytically efficient DHAK reported to date [3], so the flat trace points to the state of this preparation, not to the enzyme's biochemistry. The **2021 stock was discarded** as the reference and the older 2012 material was tested next.",
+        "The outcome was only partly a surprise. Choosing the more recent stock was a **deliberate bet on preservation**, and the absent gel band had already warned that the bet might not pay off; the assay confirmed it. The **2021 stock was therefore discarded** (**Engineering, Iteration 2**) as the reference enzyme and the older **2012 material was tested next**, the opposite of what the storage argument had predicted.",
     },
   ],
 };
@@ -745,13 +856,14 @@ const DHAK_2012: ResultData = {
       id: "cect-2012-working-batch",
       continued: true,
       body: [
-        "We then tried to **purify** this enzyme, but the **protein peak was repeatedly lost during FPLC**; re-expressing the enzyme and purifying again led once more to a **loss of activity after purification**. These purification attempts are explained above in the *Purification* section of this page.",
-        "Faced with this, we decided **not to purify the enzyme and to work with the CFE directly**. A fresh CFE preparation was assayed and gave **good, reliable activity**, an initial rate of **198.5 mOD/min** (R² = 1.00), i.e. **31.9 nmol DHAP/min** and **~6.4 U/mL** (5 µL assayed). This is lower than the first exceptional batch but solidly active, and it is the **preparation used in all the coupled DHAK–PPK2 experiments**. The two CFE measurements compare as follows.",
+        "With the first purification attempts exhausted and **time short**, the enzyme was re-expressed and the crude extract used directly, as a **working decision for the time being** rather than a final one. A fresh preparation gave **198.5 mOD/min** (R² = 1.00), about **31.9 nmol DHAP/min** and **~6.4 U/mL**, lower than the first batch (ordinary batch-to-batch variation in expression) but **solidly active**. Critically, the baseline before adding DHA was stable, so the extract has **no appreciable NADH-consuming activity of its own** and is clean enough to be taken into a coupled assay.",
+        "Working with crude extract is also **defensible beyond the bench**. A cell-free extract is **cheaper to produce at scale** than a purified enzyme, since it removes the chromatography, buffer exchange and concentration steps that dominate downstream cost and time, and previous work on related multienzyme systems found a cell-free extract performing as well as the purified protein [14]. So the fallback was not a bad place to be while the purification was sorted out.",
+        "This extract was therefore taken into the **first coupled assay (round 1)**, to get the coupled work moving without waiting for a clean purification. That round, however, **saturated and could not be read**, and the purification effort continued in parallel. An **active purified preparation of this DHAK was eventually obtained** and used in **round 2**, which is the experiment that resolved the turnover. The crude extract was thus the **temporary route that let the coupled assay start**, not the enzyme the module finally relied on.",
       ],
       tables: [
         {
           caption:
-            "Activity parameters of the two cell-free extract (CFE) preparations of *C. freundii* CECT 4626 DHAK (2012 stock), measured by the coupled α-GDH/TIM assay with 5 µL of extract.",
+            "Activity of the two cell-free-extract batches of *C. freundii* CECT 4626 DHAK (2012 stock), measured by the coupled α-GDH/TIM assay with 5 µL of extract. Protein was quantified by Bradford only for the first batch, and the two sample volumes disagreed, so **no specific activity is assigned to either extract**.",
           headers: [
             "Parameter",
             "CFE, first batch",
@@ -794,7 +906,7 @@ const DHAK_2012: ResultData = {
       interpretation:
         "What the experiment does establish is **clear from the activity trace alone**. The 2012 extract is the **only DHAK preparation that is strongly and cleanly active** (R² = 1.00), and its rate towers over the flat traces of the DSM 30040 wild type and the 2021 stock. That is consistent with CECT 4626 being the **most catalytically efficient DHAK reported** [10], and it is enough to select this stock as the **reference enzyme for the rest of the module**, through purification and into the coupled assay with PPK2.",
       expectation:
-        "**Partly.** High activity in the CFE was expected from such a strongly expressing stock; the **repeated purification failures were not**, and they are the reason the decision below was forced rather than merely preferred. Losing a protein peak or activity on purification can happen with enzymes sensitive to the chromatography or concentration steps, as explained above in the *Purification* section of this page. Because purification repeatedly failed while the CFE stayed active and simpler to prepare, we kept the DHAK in CFE form. This choice is also backed by previous work on related multienzyme systems, where a cell-free extract containing the overexpressed enzyme was as effective as the purified protein and made the expensive purification step unnecessary, saving time and resources. We therefore used the CFE for all subsequent coupled DHAK–PPK2 experiments.",
+        "**Partly.** High activity in the CFE was expected from such a strongly expressing stock; the **repeated purification failures were not**, and they are the reason the decision was forced rather than merely preferred.",
     },
   ],
 };
@@ -815,11 +927,11 @@ const DHAK_PROSS: ResultData = {
         },
       ],
       observations:
-        "The absorbance at 340 nm **stayed essentially flat**. The fitted slope of **0.92 mOD/min** has **R² = 0.374**, so **no reliable rate** can be extracted.",
+        "Because the gels showed PROSS 5 expressing strongly, it was purified by IMAC, dialysed and assayed. The absorbance at 340 nm **stayed essentially flat**: the fitted slope of **0.92 mOD/min** has **R² = 0.374**, so **no reliable rate** can be extracted and the variant showed **no measurable kinase activity**. Whatever stability the design may have gained **came at the cost of function**.",
       interpretation:
-        "The PROSS design 5 variant showed **no measurable kinase activity**. Whatever stability the design may have gained **came at the cost of function**.",
+        "Two explanations were available and the data could not separate them: either the **purification had inactivated the enzyme, or the 56 substitutions had abolished function**. Discriminating between them would require an active enzyme of the same sequence background passing through exactly the same procedure, and at this point in the module no such reference existed: the **DSM 30040 wild type**, the only sequence PROSS 5 can legitimately be compared against, had itself proved **inactive** in the previous assay. The design was therefore measured without a working counterpart, which is what makes this the most consequential result of the block, not for what it showed but for what it prevented.",
       expectation:
-        "**No.** Design 5 sat in the **middle of the conservative-to-aggressive range** PROSS returned, and we expected it to keep activity comparable to the wild type. The loss of activity indicated that its **mutation load was too high** and likely disturbed the geometry around the active site or the packing between domains, even with the ligand-contact residues protected. This **sent us back to a more conservative PROSS variant**, now being tested, while the CECT 4626 wild type is used in the meantime.",
+        "The loss itself **was not expected**, since design 5 sat in the **middle of the conservative-to-aggressive range** PROSS returned and should have kept activity comparable to the wild type. It indicates that the **mutation load was too high** and likely disturbed the geometry around the active site or the packing between domains, even with the ligand-contact residues protected. Because the two explanations could not be told apart, the response had to act on both at once. On the design side, a far more conservative PROSS variant was ordered on the new background, carrying a fraction of the substitutions so that the next attempt would not risk function in the same way, as set out in **Engineering, Iteration 4**. On the method side, the purification was changed from affinity chromatography to size exclusion, so that the enzyme would no longer be exposed to the metal resin and the imidazole that may have been destroying it, which is the decision documented in **Engineering, Iteration 8**.",
     },
   ],
 };
@@ -831,9 +943,29 @@ const COUPLED_ASSAY: ResultData = {
   subsections: [
     {
       id: "coupled-assay",
+      title: "Round 1 — DHAK cell-free extract with purified PPK2",
+      body: [
+        "The coupled reaction was run with **about 3 U of DHAK (cell-free extract)** and **purified PPK2**, **50 mM DHA** and a **substoichiometric 1.7 mM ATP**, with polyphosphate at **45 mM (R1)** or **90 mM (R2)**, sampled at 90 and 180 min. The design of this round, and the limit its result exposed, are set out in **Engineering, Iteration 9**.",
+        "Polyphosphate was supplied as **chains of 12 phosphate units on average**, and every polyphosphate concentration in this section is given as **millimolar chains**. Each millimolar of polyphosphate therefore carries **12 mM of transferable phosphate**, so the two conditions supplied **540 mM and 1080 mM of phosphate** respectively. This matters because the reaction consumes **phosphate residues**, not whole chains, and PPK2 can draw repeatedly on the same chain.",
+        "DHAP was quantified by the endpoint α-GDH/TIM assay, where the fall in A₃₄₀ is proportional to the DHAP formed. With **0.30 mM NADH in the well** (20 mM stock) and the **1:4 sample dilution**, the **detection ceiling** of this determination corresponds to **1.2 mM DHAP in the reaction**.",
+        "PPK2 was purified by IMAC and its protein quantified by Bradford. Its catalytic activity was **not measured in house**, because the ADP-to-ATP reaction it catalyses is not read by the α-GDH/TIM system used here, and measuring it directly would have required HPLC, which was not available to us. An isolated PPK2 assay was therefore never part of the plan, and the enzyme is judged on what it does in the coupled reaction, where the regeneration of ATP is read through the DHAP that DHAK can only keep forming if the nucleotide is being returned to it. To estimate the PPK2 entering the reaction, the specific activity reported for this enzyme by the host laboratory, **2 U/mg for the ADP-to-ATP reaction** [6], is combined with the Bradford protein. That estimate is only **approximate**. As with the DHAK extract, the readings sat **close to the assay blank** and the two sample volumes **did not agree**, at **4.83 mg/mL** with 1 µL and **1.26 mg/mL** with 5 µL, so the concentration is bounded to **roughly 1 to 5 mg/mL** rather than a single value, which at 2 U/mg places the PPK2 supplied at about **2.5 to 9.7 U/mL**.",
+      ],
       observations:
-        "The coupled reaction was run with DHAK cell-free extract and purified PPK2, **50 mM DHA**, **1.7 mM ATP**, and polyphosphate at **45 mM (R1)** or **90 mM (R2)**. With **0.30 mM NADH in the well** and the 1:4 sample dilution, the determination could measure only up to **1.2 mM DHAP in the reaction**. Every reaction sample exhausted the NADH and reached that ceiling.",
+        "Every reaction sample drove the assay to **full NADH consumption** (ΔA₃₄₀ ≈ 1.0, matching the 50 mM DHAP standard) at both polyphosphate concentrations and both time points.",
       tables: [
+        {
+          caption:
+            "Bradford protein quantification of the PPK2 preparation (first production) at two sample volumes, against a BSA standard curve (y = 0.319 + 0.020·x, R² = 0.994). The 1 µL and 5 µL loads give inconsistent values and sit close to the assay blank, so no single reliable concentration could be assigned.",
+          headers: [
+            "Sample volume",
+            "Absorbance (A₅₉₅, mean)",
+            "Protein (mg/mL)",
+          ],
+          rows: [
+            ["1 µL", "0.416", "4.83"],
+            ["5 µL", "0.445", "1.26"],
+          ],
+        },
         {
           caption:
             "Coupled DHAK–PPK2 endpoint assay. ΔA₃₄₀ (before − after α-GDH/TIM) for the reaction samples (R1 = 45 mM polyP, R2 = 90 mM polyP, at 90 and 180 min) and the DHAP standards; every reaction sample reaches full NADH consumption, matching the 50 mM standard.",
@@ -848,9 +980,9 @@ const COUPLED_ASSAY: ResultData = {
         },
       ],
       interpretation:
-        "The saturated signal **cannot be read as a concentration**. Its 1.2 mM ceiling lies **below the 1.7 mM ATP supplied**, so this round establishes only that DHAP was formed in every condition; it **cannot demonstrate ATP regeneration or turnover greater than one**. The endpoint determination was therefore redesigned with a much smaller aliquot.",
+        "Every sample drove the assay to full NADH consumption, so the signal sits at the **ceiling of the determination** and **cannot be read as a value**. Only the 50 mM standard developed. The 25 mM standard failed, so no calibration curve could be built, and every reaction sample matched the single saturated standard. The cause was the **volume of sample taken into each well** relative to the NADH provided. The 50 µL aliquot carried far more DHAP than the 0.30 mM NADH in the well could titrate, so the well was exhausted whatever the sample contained. The readings are therefore all but identical to one another and to the 50 mM standard because every well reached the same ceiling. They mark the **limit of the assay** rather than how much product each sample held, so no turnover can be calculated from them.",
       expectation:
-        "**Partly.** The coupled system ran, but the assay ceiling was placed incorrectly and could not answer the regeneration question. The proof of concept comes from round 2.",
+        "This ceiling sits **below the ATP supplied**. The determination had been intended to place the ceiling just above the 1.7 mM ATP, so that a saturated signal would mean DHAP had exceeded the ATP and therefore that ATP had been regenerated. With the NADH level and the 1:4 dilution actually used, the ceiling instead fell to **1.2 mM, below the 1.7 mM ATP**. Saturation then shows only that DHAP reached **at least 1.2 mM** in every condition, not that it passed the ATP. What the round does establish is that **DHAP is formed in every condition**, at both polyphosphate concentrations and both time points, so **the coupled system runs**. Whether DHAP exceeds the stoichiometric ATP, the question the experiment was built to answer, **a saturated signal below the ATP cannot settle**. The experiment was repeated with a much **smaller aliquot per well**, which raises the ceiling back above the ATP. The redesign of the endpoint determination is set out in **Engineering, Iteration 9**, and the outcome is what **round 2** reports.",
     },
   ],
 };
@@ -862,14 +994,15 @@ const COUPLED_ASSAY_ROUND_2: ResultData = {
   subsections: [
     {
       id: "coupled-assay-round-2",
+      title: "Round 2 — Purified DHAK with purified PPK2",
       observations:
-        "For this round PPK2 was **produced again** and purified by IMAC. Its protein was **1.331 mg/mL** by Bradford and, taking the host-laboratory specific activity as the reference (**2 U/mg** for the ADP-to-ATP reaction [6]), the stock stands at **~2.2 U/mL**, so **0.63 U of PPK2** entered the reaction. The coupled reaction was then run with **both enzymes purified**, **3 U of DHAK** and **0.63 U of PPK2**, **50 mM DHA** and a **substoichiometric 1.7 mM ATP**. Polyphosphate was supplied **fed-batch**, in seven additions over the first hour, reaching a final **16.9 mM chains (R1)** and **50.4 mM chains (R2)**; at an average of 12 phosphate units per chain, those feeds carry **202.8 mM and 604.8 mM of transferable phosphate**. A **much smaller sample volume per well** kept the endpoint α-GDH/TIM determination within the linear range, so the 25 and 50 mM DHAP standards now gave distinct, unsaturated signals.",
+        "For round 2, PPK2 was **produced again** and purified by IMAC (**Engineering, Iteration 10**). Its protein was **1.331 mg/mL** by Bradford, and taking the host-laboratory specific activity as the reference (**2 U/mg for the ADP-to-ATP reaction** [6]), the stock stands at **~2.2 U/mL**, so **0.63 U of PPK2** entered the reaction. The coupled reaction was run with **both enzymes purified**, **3 U of DHAK** and **0.63 U of PPK2**, **50 mM DHA** and a **substoichiometric 1.7 mM ATP**. Polyphosphate was supplied **fed-batch**, in seven additions over the first hour, reaching a final **16.9 mM chains (R1)** and **50.4 mM chains (R2)**; at an average of 12 phosphate units per chain, those feeds carry **202.8 mM and 604.8 mM of transferable phosphate**. Critically, a **much smaller sample volume per well** kept the endpoint α-GDH/TIM determination **within the linear range** of the NADH read-out. The 25 and 50 mM DHAP standards now give **distinct, unsaturated signals** (ΔA₃₄₀ 0.462 and 0.873), so DHAP is read as a concentration rather than as a ceiling. Samples were taken at 1.5 h, with the negative control, which carried neither enzyme, staying flat (ΔA₃₄₀ 0.019, 0 mM).",
       figures: [
         {
           src: `${FIGURES}/coupled-dhap-standard-curve.png`,
           alt: "DHAP standard curve for the round-2 endpoint assay, with the linear fit through the 0, 25 and 50 mM standards.",
           caption:
-            "DHAP standard curve for the coupled DHAK–PPK2 endpoint assay (round 2). DHAP concentration plotted against the fall in absorbance at 340 nm (ΔA₃₄₀, before minus after addition of α-GDH/TIM), from the 0, 25 and 50 mM DHAP standards. The linear fit, DHAP (mM) = 58.521·ΔA₃₄₀ − 1.4123 (R² ≈ 0.999), was used to convert the ΔA₃₄₀ of each reaction sample into DHAP.",
+            "DHAP standard curve for the coupled DHAK–PPK2 endpoint assay (round 2). DHAP concentration plotted against the fall in absorbance at 340 nm (ΔA₃₄₀, before minus after addition of α-GDH/TIM), from the 0, 25 and 50 mM DHAP standards. The linear fit, DHAP (mM) = 58.521·ΔA₃₄₀ − 1.4123 (R² ≈ 0.999), was used to convert the ΔA₃₄₀ of each reaction sample into DHAP. Unlike round 1, the standards fall on a straight line over the full 0 to 50 mM range, so the determination is within its linear region and the samples can be read as concentrations.",
         },
       ],
       figuresAside: true,
@@ -934,17 +1067,33 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
     ],
     results: [
       PURIFICATION_IMAC,
-      PURIFICATION_DIALYSIS,
       PURIFICATION_EXPRESS_IMAC,
       PURIFICATION_SEC,
+    ],
+    outro: [
+      "**Conclusion.** This sub-block delivered a **working affinity route**, a **diagnosis**, and one **unresolved inconsistency**. PPK2 was captured, washed and dialysed without difficulty, and a second preparation purified in the same way supplied the enzyme for the repeat of the coupled reaction. Both are **enriched rather than homogeneous**, which is what the block was designed to deliver, since PPK2 is used in catalytic support of DHAK and is not the measured species.",
+      "For DHAK the route was first validated **indirectly** by express IMAC, which showed that the resin binds this enzyme and releases it whenever the protein is present, placing the wild-type failure **upstream in expression** rather than in purification. It was then validated **directly** on the active 2012 stock, whose crude extract and eluted fractions are shown on the same gel. That preparation is the one taken into the **second round of the coupled reaction**, so the affinity step and the function of the material it yields are reported on the **same sample**. Dialysis concentrated the sample rather than only exchanging buffer, and is treated here as part of the purification. None of these steps is **quantified**, since no flow-through or wash lane was loaded and no paired protein determination was made, so the block reports that the enzyme is **recovered in active form** but not how much of it is lost.",
+      "Across preparations the outcome was **uneven**. One dialysed eluate showed **no measurable activity**, while later preparations reached the specific activity used in the coupled assay. We **did not control** the difference between them, so it cannot be assigned to a single variable, and the route should be read as one that **recovers active DHAK without yet doing so predictably**.",
+      "Size exclusion **never stabilised** over four runs. Most of the absorbance eluted **past the DHAK window**, the one narrow symmetric peak was **lost** to a fraction collector started too late, and the collected fractions came from **broad or overlapping features**. Those fractions are taken to the activity assays, and the purification of DHAK **returns to the affinity route**, a decision set out in **Engineering, Iteration 7**.",
     ],
   },
   {
     id: "activity",
     heading: "4. Enzyme activity assay",
-    intro:
-      "The revalorisation module depends on **two enzymatic activities working together**, the phosphorylation of dihydroxyacetone by DHAK and the regeneration of ATP by PPK2. We tested them in two steps. First, DHAK was assayed on its own to confirm that the purified enzyme is catalytically active and to fix a baseline rate. Then the two enzymes were run together, with **polyphosphate as the phosphate donor**, to test the system as it is meant to operate, where **PPK2 rebuilds the ATP that DHAK spends** so that the reaction is no longer limited by the small amount of nucleotide added at the start. Both assays read out the same product, dihydroxyacetone phosphate (DHAP), through the coupled α-GDH/TIM reaction, which ties the NADH signal to the DHAP formed and lets the single-enzyme and coupled results be compared on the same scale.",
-    results: [DHAK_DSM, DHAK_2021, DHAK_2012, DHAK_PROSS, PURIFIED_2012_STOCK, ACTIVE_DIALYSED_IMAC, COUPLED_ASSAY, COUPLED_ASSAY_ROUND_2],
+    intro: [
+      "The revalorisation module depends on **two enzymatic activities working together**, the **phosphorylation of dihydroxyacetone by DHAK** and the **regeneration of ATP by PPK2**. We tested them in two steps. First, **DHAK was assayed on its own**, across its variants and preparations, to confirm that the enzyme is **catalytically active** and to fix a **baseline rate**. Then the **two enzymes were run together**, with **polyphosphate as the phosphate donor**, to test the system as it is meant to operate, where **PPK2 rebuilds the ATP that DHAK spends** so that the reaction is **no longer limited by the small amount of nucleotide** added at the start. Both assays read out the same product, **dihydroxyacetone phosphate (DHAP)**, through the **coupled α-GDH/TIM reaction [12]**, which ties the **NADH signal to the DHAP formed** and lets the single-enzyme and coupled results be **compared on the same scale**.",
+      "The DHAK assays are reported **in the order in which they were run**, because each one determined what was attempted next. This is not a comparison of variants decided in advance; it is a diagnostic chain in which the preparation measured at each point was chosen by what the previous measurement had ruled out, and the decisions it forced are documented in Engineering.",
+    ],
+    results: [
+      DHAK_DSM,
+      DHAK_PROSS,
+      DHAK_2021,
+      DHAK_2012,
+      PURIFIED_2012_STOCK,
+      ACTIVE_DIALYSED_IMAC,
+      COUPLED_ASSAY,
+      COUPLED_ASSAY_ROUND_2,
+    ],
     outro: [
       "**Conclusion.** The activity work delivered an **active DHAK preparation** and a **coupled DHAK–PPK2 system that recycles its ATP pool**.",
       "The working enzyme was the **CECT 4626 variant, 2012 stock**, reaching **~10 U/mg** as a purified preparation, close to the **10.7 U/mg reported for the fully purified enzyme** [10]. The **DSM 30040 reference** was too weakly active to serve as a control, which is what removed the comparison the module had been built around. Of the two PROSS-stabilised variants, **design 5 lost all measurable activity**, and the more conservative **design 1 was expressed but not assayed**, since it arrived too late in the season for the activity measurement. No conclusion is drawn here about whether PROSS stabilisation of this enzyme works.",
