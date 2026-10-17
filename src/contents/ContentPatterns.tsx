@@ -1229,7 +1229,7 @@ print(f"mu = {rate:.3f} h^-1")`}
             <p className="cp-related-row cp-embed">
               <ProjectBlockLink blockId="hardware" />
               <ProjectBlockLink blockId="encapsulation" />
-              <RelatedPageLink to="/measurements" accent="var(--water-mid)">
+              <RelatedPageLink to="/measurement" accent="var(--water-mid)">
                 Measurements
               </RelatedPageLink>
             </p>

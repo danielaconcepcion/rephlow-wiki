@@ -1,8 +1,12 @@
-import { useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { PageSectionNav, type PageSection } from "../../components/PageSectionNav";
 import { SectionTabs } from "../../components/LabFolders/SectionTabs";
 import { FolderStack } from "../../components/LabFolders/FolderStack";
 import { ResultCard } from "../../components/LabFolders/ResultCard";
+import { BlockReferences } from "../../components/LabFolders/BlockReferences";
+import { Rich } from "../../components/LabFolders/RichText";
+import { CitationScope } from "../../components/LabFolders/citationScope";
+import { NumberingContext, numberResults } from "../../components/LabFolders/numbering";
 import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
 import type { AccentStyle, ResultData } from "../../components/LabFolders/types";
 import { EcosystemMap } from "../../components/EcosystemMap";
@@ -36,12 +40,20 @@ const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
       const sections: PageSection[] = block.subBlocks.map((subBlock) => ({
         id: subBlock.id,
         label: subBlock.heading.replace(/^\d+\.\s*/, ""),
-        children: subBlock.results?.map((result) => ({
-          id: `${subBlock.id}--${result.id}`,
-          label: result.tabLabel,
-          onSelect: () => document.getElementById(`folder-tab-${result.id}`)?.click(),
-        })),
+        children: [
+          ...(subBlock.results?.map((result) => ({
+            id: `${subBlock.id}--${result.id}`,
+            label: result.tabLabel,
+            onSelect: () => document.getElementById(`folder-tab-${result.id}`)?.click(),
+          })) ?? []),
+          ...(subBlock.references?.length
+            ? [{ id: `${subBlock.id}--references`, label: "References" }]
+            : []),
+        ],
       }));
+      if (block.references?.length) {
+        sections.push({ id: `${block.id}--references`, label: "References" });
+      }
       return [block.id, sections];
     }
     const sections: PageSection[] = (block.results ?? []).map((result) => ({
@@ -49,6 +61,9 @@ const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
       label: result.tabLabel,
       onSelect: () => document.getElementById(`folder-tab-${result.id}`)?.click(),
     }));
+    if (block.references?.length) {
+      sections.push({ id: `${block.id}--references`, label: "References" });
+    }
     return [block.id, sections];
   }),
 );
@@ -58,7 +73,7 @@ function paragraphs(text: ReactNode | ReactNode[] | undefined, className: string
   const list = Array.isArray(text) ? text : [text];
   return list.map((paragraph, index) => (
     <p className={className} key={index}>
-      {paragraph}
+      <Rich text={paragraph} />
     </p>
   ));
 }
@@ -80,6 +95,10 @@ function resultFolders(results: ResultData[]) {
 export function Results() {
   const [activeBlockId, setActiveBlockId] = useState(RESULT_BLOCKS[0].id);
   const activeBlock = RESULT_BLOCKS.find((block) => block.id === activeBlockId) ?? RESULT_BLOCKS[0];
+  const numbering = useMemo(
+    () => numberResults(activeBlock.subBlocks ?? [activeBlock]),
+    [activeBlock],
+  );
 
   return (
     <div className="lab-folders">
@@ -109,46 +128,81 @@ export function Results() {
         />
 
         <div className="lab-content-wrap">
-          <div
-            className="lab-block"
-            key={activeBlock.id}
-            style={{ "--folder-accent": activeBlock.accent } as AccentStyle}
-          >
-            {activeBlock.intro && (
-              <div className="lab-prose">{paragraphs(activeBlock.intro, "lab-block__intro")}</div>
-            )}
+          <NumberingContext.Provider value={numbering}>
+            <CitationScope.Provider
+              value={activeBlock.references?.length ? activeBlock.id : null}
+            >
+              <div
+                className="lab-block"
+                key={activeBlock.id}
+                style={{ "--folder-accent": activeBlock.accent } as AccentStyle}
+              >
+                {activeBlock.intro && (
+                  <div className="lab-prose">{paragraphs(activeBlock.intro, "lab-block__intro")}</div>
+                )}
 
-            {activeBlock.subBlocks
-              ? activeBlock.subBlocks.map((subBlock) => (
-                  <section className="lab-subblock" id={subBlock.id} key={subBlock.id}>
+                {activeBlock.subBlocks
+                  ? activeBlock.subBlocks.map((subBlock) => (
+                      <section className="lab-subblock" id={subBlock.id} key={subBlock.id}>
+                        <div className="lab-prose">
+                          <h2 className="lab-subblock__heading">{subBlock.heading}</h2>
+                          {paragraphs(subBlock.intro, "lab-subblock__intro")}
+                        </div>
+                        {subBlock.results && (
+                          <DeckPalette palette={activeBlock.palette}>
+                            <FolderStack
+                              ariaLabel={`${subBlock.heading} results`}
+                              folders={resultFolders(subBlock.results)}
+                            />
+                          </DeckPalette>
+                        )}
+                        {subBlock.outro && (
+                          <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
+                        )}
+                        {!!subBlock.references?.length && (
+                          <BlockReferences
+                            id={`${subBlock.id}--references`}
+                            scope={`${activeBlock.id}-${subBlock.id}`}
+                            items={subBlock.references}
+                          />
+                        )}
+                      </section>
+                    ))
+                  : null}
+
+                {!activeBlock.subBlocks && (
+                  <DeckPalette palette={activeBlock.palette}>
+                    <FolderStack
+                      ariaLabel={`${activeBlock.label} results`}
+                      folders={resultFolders(activeBlock.results ?? [])}
+                    />
+                  </DeckPalette>
+                )}
+
+                {activeBlock.outro && (
+                  <section className="lab-subblock">
                     <div className="lab-prose">
-                      <h2 className="lab-subblock__heading">{subBlock.heading}</h2>
-                      {paragraphs(subBlock.intro, "lab-subblock__intro")}
+                      <h2 className="lab-subblock__heading">Overall conclusion</h2>
+                      {paragraphs(activeBlock.outro, "lab-subblock__outro")}
                     </div>
-                    {subBlock.results && (
-                      <DeckPalette palette={activeBlock.palette}>
-                        <FolderStack
-                          ariaLabel={`${subBlock.heading} results`}
-                          folders={resultFolders(subBlock.results)}
-                        />
-                      </DeckPalette>
-                    )}
-                    {subBlock.outro && (
-                      <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
-                    )}
                   </section>
-                ))
-              : null}
+                )}
 
-            {!activeBlock.subBlocks && (
-              <DeckPalette palette={activeBlock.palette}>
-                <FolderStack
-                  ariaLabel={`${activeBlock.label} results`}
-                  folders={resultFolders(activeBlock.results ?? [])}
+                {/* One reference list for the whole block, folded away at
+                  the very bottom rather than tucked into each folder;
+                  "[n]" anywhere above links down to its entry and opens
+                  the list on the way (see BlockReferences). */}
+              {!!activeBlock.references?.length && (
+                <BlockReferences
+                  id={`${activeBlock.id}--references`}
+                  scope={activeBlock.id}
+                  items={activeBlock.references}
                 />
-              </DeckPalette>
-            )}
-          </div>
+              )}
+
+              </div>
+            </CitationScope.Provider>
+          </NumberingContext.Provider>
         </div>
       </div>
     </div>

@@ -3,13 +3,51 @@ import { ToolkitDeck } from "./ToolkitDeck";
 import { ImpactRoute } from "./ImpactRoute";
 import "./WhatRouteRevealed.css";
 
+/** The survey's headline results, as the source reports them. */
+const SURVEY_TILES = [
+  {
+    value: "2.4 / 5",
+    label: "average self-rated prior knowledge of water pollution",
+  },
+  {
+    value: "54%",
+    label: "knew that phosphorus can become a serious contaminant in excess",
+  },
+  {
+    value: "89%",
+    label:
+      "would support technologies that recycle phosphorus from wastewater into a useful resource",
+  },
+  {
+    value: "3.8 / 5",
+    label:
+      "average view on genetically modified microorganisms for treatment; only one respondent opposed",
+  },
+];
+
+/** Where respondents think the phosphorus comes from. The remainder is
+ * shown as its own, muted row rather than left unaccounted for. */
+const SURVEY_SOURCES = [
+  { label: "Industrial discharges", share: 34 },
+  { label: "Agricultural fertilisers", share: 31 },
+  { label: "Did not know", share: 14 },
+  { label: "Other answers", share: 21, muted: true },
+];
+
+/** What the route added up to in numbers. */
+const IMPACT_FIGURES = [
+  { value: "23", label: "interviews" },
+  { value: "6", label: "site visits" },
+  {
+    value: "Thousands",
+    label:
+      "people reached across interviews, educational activities and social media: an order of magnitude, not an exact count",
+  },
+];
+
 /**
  * Section 5 — "What the Route Revealed". Content transcribed from the
- * Notion page "5. What the route revealed". The quantitative-impact table
- * (5.4) is omitted: every row in the source is a literal "[to complete]"
- * placeholder, and the source text itself says the table "should not
- * appear until real data exists" — so only the qualitative-impact list,
- * which has real content and cross-links, is kept.
+ * Notion page "5. What the route revealed".
  */
 export function WhatRouteRevealed() {
   return (
@@ -52,21 +90,18 @@ export function WhatRouteRevealed() {
           was a <strong>multi-organism consortium</strong>, chosen for
           biological ambition rather than experimental tractability.
           Consultations captured in the Design Compass (
-          <a
-            className="vsi-wikilink"
-            href="#s1-value-scientific-robustness"
-          >
+          <a className="vsi-wikilink" href="#s1-value-scientific-robustness">
             Scientific robustness and integrity
           </a>
-          ), with Molpeceres, Díaz del Toro, Hidalgo and Mateos,
-          made clear that a consortium combining several organisms and functions
-          would be extremely difficult to characterise reproducibly within the
-          time we had, and would make it hard to attribute any observed
-          phenotype to a specific genetic change. We narrowed the design to a
-          single, well-characterised <em>Pseudomonas putida</em> KT2440 chassis.
-          This was not a failure to reach our original ambition; it was a
-          deliberate trade-off between apparent ambition and experimental
-          interpretability, made explicit rather than hidden.
+          ), with Molpeceres, Díaz del Toro, Hidalgo and Mateos, made clear that
+          a consortium combining several organisms and functions would be
+          extremely difficult to characterise reproducibly within the time we
+          had, and would make it hard to attribute any observed phenotype to a
+          specific genetic change. We narrowed the design to a single,
+          well-characterised <em>Pseudomonas putida</em> KT2440 chassis. This
+          was not a failure to reach our original ambition; it was a deliberate
+          trade-off between apparent ambition and experimental interpretability,
+          made explicit rather than hidden.
         </p>
         <p>
           A second, smaller adjustment happened at the hardware level: our
@@ -98,6 +133,99 @@ export function WhatRouteRevealed() {
           revealed was not a single impact, but four connected ones.
         </p>
         <ImpactRoute />
+
+        <div className="hp-survey" id="s5-survey">
+          <h4 className="hp-survey__title">
+            Where public understanding stands
+          </h4>
+          <p>
+            Alongside our outreach activities, we wanted a clearer, more
+            measurable picture of where public understanding actually stood
+            before we started talking to people. To find out, we ran an{" "}
+            <strong>anonymous online survey</strong> (n = 35; ages 12 to 60;
+            mixed backgrounds, roughly half in science, environment or
+            technology fields and half outside them) asking people how much they
+            actually know about water pollution and how they feel about a
+            biotechnology-based solution.
+          </p>
+          <ul className="hp-survey__tiles" aria-label="Headline survey results">
+            {SURVEY_TILES.map((tile) => (
+              <li className="hp-survey__tile" key={tile.label}>
+                <span className="hp-survey__value">{tile.value}</span>
+                <span className="hp-survey__label">{tile.label}</span>
+              </li>
+            ))}
+          </ul>
+          <p>
+            The results confirmed something we had suspected since Section 0:{" "}
+            <strong>
+              the general public does not carry the same picture of phosphorus
+              that we do.
+            </strong>{" "}
+            Respondents rated their own prior knowledge of water pollution at an
+            average of 2.4 out of 5, and only 54% knew that phosphorus, an
+            element most people associate with fertility and life rather than
+            pollution, can become a serious contaminant in excess. When asked
+            where they thought most of that phosphorus came from, opinion split
+            almost evenly between industrial discharges (34%) and agricultural
+            fertilisers (31%), with 14% admitting they simply did not know. This
+            was a reminder that the industrial point-source framing we adopted
+            in Section 0 is not the public's default mental model of the
+            problem, and that any future communication needs to state it
+            explicitly rather than assume it.
+          </p>
+          <figure className="hp-survey__chart">
+            <figcaption>
+              Where do respondents think the phosphorus polluting water comes
+              from?
+            </figcaption>
+            <ul className="hp-survey__bars">
+              {SURVEY_SOURCES.map((row) => (
+                <li
+                  className={`hp-survey__bar-row${row.muted ? " is-muted" : ""}`}
+                  key={row.label}
+                  title={`${row.label}: ${row.share}% of respondents`}
+                >
+                  <span className="hp-survey__bar-label">{row.label}</span>
+                  <span className="hp-survey__bar-track" aria-hidden="true">
+                    <span
+                      className="hp-survey__bar-fill"
+                      style={{ width: `${row.share}%` }}
+                    />
+                  </span>
+                  <span className="hp-survey__bar-value">{row.share}%</span>
+                </li>
+              ))}
+            </ul>
+            <p className="hp-survey__note">
+              "Other answers" is the remainder of responses not broken down in
+              our survey summary (100% − 34% − 31% − 14%).
+            </p>
+          </figure>
+          <p>
+            What stood out most, however, was the{" "}
+            <strong>
+              gap between uncertainty about the problem and confidence in the
+              solution.
+            </strong>{" "}
+            Despite that low self-rated knowledge, 89% of respondents said they
+            would support technologies that recycle phosphorus from wastewater
+            into a useful resource such as fertiliser, and views on genetically
+            modified microorganisms for treatment leaned favourable overall,
+            with an average of 3.8 out of 5 and only one respondent opposed.
+            This told us something important for our{" "}
+            <a className="vsi-wikilink" href="#s1-compass">
+              Access and Fairness
+            </a>{" "}
+            value: the barrier to public acceptance of rePhlow is unlikely to be
+            resistance to the underlying biotechnology itself. It is much more
+            likely to be the <strong>same communication gap</strong> that our
+            interview with a long-term resident of the Embalse de San Juan
+            surfaced. People seem open to a circular, biology-based solution to
+            a problem they have not yet been given the tools to fully
+            understand.
+          </p>
+        </div>
       </div>
 
       <ToolkitDeck />
@@ -106,9 +234,24 @@ export function WhatRouteRevealed() {
         <h3>Measuring what the route achieved</h3>
         <p>
           To avoid impact remaining a set of good intentions, we structured the
-          evidence of our route into categories with a destination, not a
-          summary of what was said, the content itself already lives, in full,
-          elsewhere on this page.
+          evidence of our route into two categories, quantitative and
+          qualitative, following the same logic already used to evaluate
+          responsibility throughout the project.
+        </p>
+        <h4 className="hp-survey__title">Quantitative impact</h4>
+        <ul className="hp-impact-figures" aria-label="Quantitative impact">
+          {IMPACT_FIGURES.map((figure) => (
+            <li className="hp-survey__tile" key={figure.label}>
+              <span className="hp-survey__value">{figure.value}</span>
+              <span className="hp-survey__label">{figure.label}</span>
+            </li>
+          ))}
+        </ul>
+        <h4 className="hp-survey__title">Qualitative impact</h4>
+        <p>
+          Each line below is a category with a destination, not a summary of
+          what was said: the content itself already lives, in full, elsewhere on
+          this page.
         </p>
         <dl className="hp-impact-list">
           <div>

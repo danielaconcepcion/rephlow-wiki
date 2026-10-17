@@ -31,7 +31,9 @@ export interface FolderDef {
 export type AccentStyle = CSSProperties & { "--folder-accent": string };
 
 /** Any custom-property style, for elements (like each folder tab) that set more than one CSS variable. */
-export type CSSVarStyle = CSSProperties & { [key: `--${string}`]: string | number };
+export type CSSVarStyle = CSSProperties & {
+  [key: `--${string}`]: string | number;
+};
 
 /* ---------- Shared record primitives ---------- */
 
@@ -133,7 +135,30 @@ export type PairedResource =
  * lets one specific "the conditions were as follows:" paragraph sit next
  * to its table while the rest of the write-up reads as normal body copy,
  * instead of the whole card being forced into one fixed two-column shape. */
+/** A short labelled aside the sources end their stages with — what the
+ * stage produced (OUTCOME), what it taught (LEARN), and what was
+ * deliberately not done. Rendered as a labelled callout rather than as a
+ * paragraph opening with a shouted word. */
+export interface BodyCallout {
+  kind: "outcome" | "learn" | "not-done";
+  text: string;
+}
+
 export interface ExperimentBodyBlock {
+  /** An anchor for this block, so a page's lateral index can link to it
+   * (Measurements' foldable sections). */
+  id?: string;
+  /** A heading for this block — "Design strategy", "Experimental design",
+   * "Second trial" — rendered with the same rule-and-heading break the
+   * Results subsections use, so a long stage reads as a sequence of named
+   * parts instead of one wall of prose. */
+  title?: string;
+  /** Which enzyme this part of the stage is about, when a shared stage
+   * splits ("DHAK constructs", "PPK2 construct") — shown as a chip beside
+   * the block's own heading, the same way the card title carries one. */
+  enzymes?: ("DHAK" | "PPK2")[];
+  /** Closing OUTCOME / LEARN notes for this block. */
+  callouts?: BodyCallout[];
   /** Plain strings, or short JSX using <strong>/<em> for inline emphasis
    * (matches ProtocolStep.text's convention) — rendered as one <p> each.
    * Omit for a resource with no single paragraph that specifically
@@ -142,12 +167,34 @@ export interface ExperimentBodyBlock {
    * full-width on its own rather than being forced into a pair. */
   paragraphs?: ReactNode[];
   pairedResource?: PairedResource;
+  /** Folds this block away behind its `title`, with `blocks` as what the
+   * summary opens — how the Measurements records are read, section by
+   * section ("Application to our project", "Technique requirements",
+   * "Results"), rather than as one long card. Foldables nest one level,
+   * for a section that is itself a series of runs. */
+  foldable?: boolean;
+  /** This block's own children — only read when `foldable` is set. */
+  blocks?: ExperimentBodyBlock[];
+  /** A heading that groups the sections after it, for a record that
+   * measures several things ("Intact beads and capsules: size and shape",
+   * then its own Application / Technique / Results). Rendered as a
+   * promoted heading, and the page's lateral index lists these instead of
+   * the repeating section names underneath them. */
+  group?: boolean;
+  /** How this block sits in the card: "half" shares its row with the next
+   * half block, "side-caption" puts a figure's caption beside it instead
+   * of under it. Default is full width, caption below. */
+  layout?: "half" | "side-caption";
 }
 
 export interface ExperimentData {
   id: string;
   tabLabel: string;
   title: string;
+  /** Which enzyme(s) the stage belongs to, shown as a chip beside the
+   * title. The sources mark this in the stage heading itself ("DHAK",
+   * "DHAK   PPK2"); here it is data, not part of the title string. */
+  enzymes?: ("DHAK" | "PPK2")[];
   /** A single paragraph, or several — rendered as one <p> each. Plain
    * strings, or short JSX using <strong>/<em> for inline emphasis (matches
    * ProtocolStep.text's convention). Omit when `body` is set (see below);
@@ -247,6 +294,11 @@ export interface ExperimentBlockData {
  * carry the supporting detail those three answers refer to. */
 export interface ResultSubsection {
   id: string;
+  /** Carries straight on from the previous subsection — no rule or gap
+   * between them — so a record whose source interleaves prose, figures and
+   * tables can be split into several subsections and still read as one
+   * continuous text. */
+  continued?: boolean;
   /** Omit when the record has a single section: the card's own title is
    * already the heading, and a second one directly under it reads as a
    * duplicate. */
@@ -289,6 +341,10 @@ export interface ResultSubsection {
    * below it. */
   figuresAside?: boolean;
   tables?: (RecordTable & { caption?: string })[];
+  /** Prose that reads the figures and tables above it, rendered after them
+   * — `body` always comes first. Saves splitting a record into a second
+   * subsection just to put a paragraph below its table. */
+  bodyAfter?: string[];
   /** A bespoke visual instead of an image — e.g. the candidate-selection
    * funnel, which is a component rather than a screenshot so its numbers
    * stay legible at any width. Rendered with its own caption. */
@@ -329,6 +385,8 @@ export interface ResultSubBlock {
   intro?: ReactNode | ReactNode[];
   results?: ResultData[];
   outro?: ReactNode | ReactNode[];
+  /** Some Notion result sections restart their reference numbering. */
+  references?: string[];
 }
 
 export interface ResultBlockData {
@@ -345,4 +403,11 @@ export interface ResultBlockData {
    * branches on which one is present, exactly as Experiments.tsx does. */
   results?: ResultData[];
   subBlocks?: ResultSubBlock[];
+  /** Closing synthesis for the whole block ("Overall conclusion"),
+   * rendered after the last sub-block. */
+  outro?: ReactNode | ReactNode[];
+  /** One numbered reference list for the whole block, rendered at the very
+   * bottom of the page; "[n]" in any of the block's prose links to it (see
+   * RichText.tsx). */
+  references?: string[];
 }

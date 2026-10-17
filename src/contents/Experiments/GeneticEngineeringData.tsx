@@ -269,7 +269,7 @@ function refs(...numbers: number[]): string[] {
  * deliberately not here: those are only ever cited inside an individual
  * experiment's own write-up, so they stay in that experiment's own
  * `references` field and its own card footer, untouched. */
-export const GENETIC_ENGINEERING_REFERENCES: string[] = refs(1, 2, 6, 7, 8, 9, 10, 11);
+export const GENETIC_ENGINEERING_REFERENCES: string[] = refs(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
 
 /** Every named lab protocol cited across this block's steps — shared here,
  * rather than repeated per experiment, since e.g. "Crispr Protocolo 2.0"
@@ -319,6 +319,46 @@ function protocolLinks(...names: string[]) {
 
 export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
   {
+    id: "polyphosphate-accumulation-study",
+    heading: "0. Polyphosphate accumulation study",
+    intro: "These experiments establish in wild-type Pseudomonas putida KT2440 how much phosphorus cells take up and store as polyphosphate, how fast, and under which operating conditions accumulation is maximised. Wild type and an mCherry-tagged variant were used to standardise the intracellular-phosphorus assay before applying it to the engineered strains.",
+    experiments: [
+      {
+        id: "growth-characterisation-m9",
+        tabLabel: "Growth in M9",
+        title: "Growth characterisation of P. putida KT2440 in M9",
+        description: [
+          "The mCherry variant was cultured in M9 and OD600 was followed across the 240 min assay window, defining the biomass trajectory in the minimal medium used as the maximal-stress reference.",
+          "The expected outcome was a defined OD600 trajectory confirming that cells remain measurable throughout the assay.",
+        ],
+      },
+      {
+        id: "polyphosphate-kinetics-media",
+        tabLabel: "Accumulation kinetics",
+        title: "Kinetics of polyphosphate accumulation across culture media",
+        description: "Cells grown in LB were shifted to M9, a synthetic industrial stream or LB and sampled from 0 to 240 min. At each time point, OD600 and intracellular phosphorus were measured in parallel. The synthetic stream contained citric acid, glycerol, soy lecithin, monopotassium phosphate, ammonium sulfate, sodium chloride, filtered used vegetable oil and Tween 80.",
+        tables: [{
+          headers: ["Medium", "Nutrient status", "Role"],
+          rows: [
+            ["M9", "Minimal, maximal nutrient stress", "Positive control"],
+            ["Synthetic stream", "Intermediate, application-relevant", "Condition to characterise and optimise"],
+            ["LB", "Rich, nutrient abundance", "Negative control"],
+          ],
+        }],
+      },
+      {
+        id: "operating-condition-optimisation",
+        tabLabel: "pH and dilution",
+        title: "Operating-condition optimisation in the synthetic stream",
+        description: "The two variables available in the industrial feed, pH and dilution, were screened combinatorially, with M9 and LB retained as controls. The expected outcome was to identify the combination that maximises phosphorus retention.",
+        tables: [{
+          headers: ["Condition", "pH", "Dilution"],
+          rows: [["A", "6", "1:1"], ["B", "6", "1:35"], ["C", "7", "1:1"], ["D", "7", "1:35"]],
+        }],
+      },
+    ],
+  },
+  {
     id: "cloning",
     heading: "1. Cloning",
     intro: [
@@ -331,7 +371,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
         only then moved into the final chassis. This keeps the iterative cloning steps in the fastest, most
         transformable host and reserves the slower work with <em>P. putida</em> for constructs we already trust.
       </>,
-      "Workflow: in silico design (1) → part acquisition and amplification (2) → preparative digestion of vectors and inserts (3) → ligation (4) → transformation and screening in the cloning host (5 to 7) → transfer to the chassis (8) → expression and functional validation (9). Steps run in parallel for both constructs.",
+      "Workflow: in silico design (1) → part acquisition and amplification (2) → preparative digestion of vectors and inserts (3) → ligation (4) → transformation and screening in the cloning host (5 to 7) → transfer to the chassis (8). Steps run in parallel for both constructs.",
     ],
     experiments: [
       {
@@ -366,8 +406,25 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
               </>,
             ],
             pairedResource: {
-              kind: "table-placeholder",
-              caption: "Cassette sequences — not yet available in the source record.",
+              kind: "image-group",
+              images: [
+                {
+                  src: "assets/experiments/genetic-engineering/pS2513ppk1_Map.svg",
+                  alt: "Map of the pSEVA2513 ppk1 expression construct.",
+                  title: "pSEVA2513 · ppk1",
+                },
+                {
+                  src: "assets/experiments/genetic-engineering/pS6313SCAB_Map.svg",
+                  alt: "Map of the pSEVA6313 pstSCAB expression construct.",
+                  title: "pSEVA6313 · pstSCAB",
+                },
+                {
+                  src: "assets/experiments/genetic-engineering/pS2513ppk1_Map_XhoI.svg",
+                  alt: "XhoI restriction map of the pSEVA2513 ppk1 construct.",
+                  title: "pSEVA2513 · ppk1 · XhoI",
+                },
+              ],
+              caption: "Expression-construct and diagnostic restriction maps. See our parts collection for the DNA sequences.",
             },
           },
           {
@@ -406,6 +463,17 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was a sequence-verified stock of each gene in its carrier vector and clean, correctly sized amplicons carrying the RBS and cloning sites.",
         ],
+        tables: [
+          {
+            caption: "Primer sequences used to amplify ppk1 and pstSCAB and to build the promoter sequence.",
+            headers: ["", "Forward", "Reverse"],
+            rows: [
+              ["ppk1 amplification", "AAAAAAAAAGGATCCTGACCTAAGGA", "TTTTTTTTTAAGCTTTTAGCTCTGCAG"],
+              ["pstSCAB amplification", "AAAAAAAAAGGTACCCGGGGATCCTGACCTAAGGAGGTAAA", "TTTTTTTTTAAGCTTTTAACCGTAGC"],
+              ["Promoter tetris sequence", "TTAGACTCTCGTTTGGATTGC", "ACTGCCGGTTCTCCGAATTGCAG"],
+            ],
+          },
+        ],
         protocols: protocolLinks("PCR", "Geles de agarosa", "Diamond Nucleic Acid Dye (Promega)"),
       },
       {
@@ -419,7 +487,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
                 The backbones and inserts were then cut to matching ends. <strong>pSEVA2513</strong>{" "}
                 (kanamycin-resistant, about <strong>5.3 kb</strong>) was digested with{" "}
                 <strong>BamHI and HindIII</strong>, together with the <em>ppk1</em> and <em>pstSCAB</em> cassettes;{" "}
-                <strong>pSEVA6313</strong> (gentamicin-resistant, about <strong>3.0 kb</strong>) was digested with{" "}
+                <strong>pSEVA631</strong> (gentamicin-resistant, about <strong>3.0 kb</strong>) was digested with{" "}
                 <strong>EcoRI and KpnI</strong> for the promoter route. These vector choices matter because{" "}
                 <em>P. putida</em> does not maintain the ColE1 or pUC origins of standard <em>E. coli</em> vectors
                 and requires <strong>broad-host-range replicons</strong>; the SEVA collection supplies exactly
@@ -446,6 +514,11 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
               kind: "table-placeholder",
               caption: "Restriction enzymes, incubation times and buffers — not yet available in the source record.",
             },
+          },
+          {
+            paragraphs: [
+              "To ensure the insert's identity, the restriction enzyme XhoI was used during the second attempt for ppk1. This enzyme has two internal restriction sites, which do not cut the empty vector but ensure the release of two fragments of 1126 and 6312 bp when the insert is present.",
+            ],
           },
           {
             paragraphs: ["The expected outcome was cleanly cut, gel-purified vector and insert with compatible ends."],
@@ -551,25 +624,9 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
         references: refs(2, 5),
         protocols: protocolLinks("Obtención P. putida electrocompetentes", "Medios de cultivo"),
       },
-      {
-        id: "cloning-expression-confirmation",
-        tabLabel: "Expression check",
-        title: "Confirmation of heterologous expression",
-        description: [
-          <>
-            Because carrying the plasmid does not guarantee expression, PPK1 and PstSCAB were checked directly in{" "}
-            <em>P. putida</em> by culture followed by <strong>SDS-PAGE</strong> and detection of the tagged
-            proteins (<strong>‹e.g. anti-His Western blot›</strong>), with <strong>RT-qPCR</strong> as an optional
-            transcript-level check. Protein-level detection is the primary read-out because it reports what
-            accumulates in the cell.
-          </>,
-          "The expected outcome was a band or signal of the expected size for each protein.",
-        ],
-        protocols: protocolLinks("Geles de poliacrilamida", "Medios de cultivo"),
-      },
     ],
     outro:
-      "Together, these nine steps take the two genes from design to a functionally validated, phosphate-accumulating strain, with each verification stage gating the next.",
+      "These steps take the two genes from design to a functionally validated, phosphate-accumulating strain, with each verification stage gating the next.",
   },
   {
     id: "knocking-out",
@@ -797,7 +854,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
         individually and together, by electroporation, giving the strains that carry the added machinery; in
         parallel, the base-edited knock-out background from Block B removes the native loss routes. The complete
         strain is then assessed with the{" "}
-        <strong>intracellular phosphorus capture assay in M9 medium</strong>, following internal polyphosphate over
+        <strong>intracellular phosphorus capture assay</strong>, following internal polyphosphate over
         time by cell lysis, acid release of phosphate and quantification with the{" "}
         <strong>Promega molybdate:malachite green phosphate assay</strong>{" "}
         <Cite scope="genetic-engineering" n={11} />, this
@@ -806,18 +863,16 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
         rather than depletion from the medium, is what makes this a direct test of phosphorus accumulation.
       </>,
       <>
-        This is measured directly as <strong>intracellular phosphorus capture</strong>, using the polyphosphate
-        titration assay in <strong>M9 medium</strong>. Both transformants, CRISPR-edited and multi-transformants
-        CRISPR-edited were grown in LB to OD600 of about 0.6 and shifted into the test medium (M9). At a series of
-        time points (0, 10, 20, 30, 45, 60, 90, 120, 180 and 240 min) one aliquot is read for OD600 while a paired
-        aliquot is pelleted, washed in 0.1 M NaCl and lysed (0.1 M NaCl, 0.5% SDS, 95 °C). The phosphorus stored
-        inside the cells is then released by acid digestion and the free phosphate is quantified with the{" "}
+        The assay follows a <strong>phosphate-overplus</strong> logic. Wild type and engineered strains are grown in
+        LB to OD600 ≈ 0.6 and <strong>starved of phosphate for 1 h</strong> in phosphate-free minimal medium. They
+        are then shifted to the <strong>test medium at pH 5</strong> at OD600 = 1.0, which defines t = 0. Samples are
+        taken at 0, 15, 30, 45, 60, 75, 90, 105 and 120 min. A paired aliquot is pelleted and washed three times
+        in 0.1 M NaCl. Intracellular phosphorus is released with <strong>150 µL 1 M HCl at 95 °C for 15 min</strong>,
+        neutralised with 150 µL 1 M NaOH and pre-diluted tenfold before quantification with the{" "}
         <strong>Promega Non-Radioactive Phosphatase Assay System</strong> (Serine/Threonine Phosphatase Assay
         System, cat. V2460), which measures phosphate as a <strong>molybdate:malachite green complex</strong> by
-        absorbance against the kit's phosphate standard (detection range about 100 to 4,000 pmol). Accumulated
-        polyphosphate is taken as the phosphorus measured at each time point minus that at t = 0, normalised to
-        OD600, and compared with controls (M9 at pH 5, and LB with 87 mM phosphate). This reports internal storage
-        directly, rather than inferring it from the medium.
+        absorbance in cuvette against a <strong>0–1900 ng phosphate standard curve</strong>. Accumulated
+        polyphosphate is the phosphorus measured at each time point normalised to OD600.
       </>,
       "Protocols: Ensayo de absorción de polifosfato intracelular; Promega Serine/Threonine Phosphatase Assay System (V2460); Medios de cultivo.",
       "The expected outcome was greater intracellular phosphorus accumulation than the wild type.",

@@ -34,7 +34,7 @@ const STRUCT_COLOUR = `${FIGURES}/structures-colored`;
 const STRUCT_CYS = `${FIGURES}/structures-cys-bridges`;
 
 export const ENZYMATIC_IMMOBILISATION_INTRO =
-  "This block builds the enzymatic layer of the rePhlow sphere: a panel of phosphohydrolases is produced in E. coli and characterised, and the chemistry to immobilise it on the support is worked out on a model system with Lecitase® Ultra. Each record reports the outcome of the corresponding experiment on the Experiments page, following the same order and titles.";
+  "This block builds the enzymatic layer of the rePhlow sphere: a panel of phosphohydrolases is produced in *E. coli* and characterised, and the chemistry to immobilise it on the support is worked out on a model system with Lecitase® Ultra. Each record reports the outcome of the corresponding experiment on the Experiments page, following the same order and titles.";
 
 const MINING: ResultData = {
   id: "bioinformatic-mining",
@@ -72,14 +72,14 @@ const MINING: ResultData = {
             [
               "Phospholipase C (PLC)",
               "plc_Tk",
-              "Thermococcus kodakarensis",
-              "Clostridium perfringens or Bacillus cereus [Sigma Aldrich] plc",
+              "*Thermococcus kodakarensis*",
+              "*Clostridium perfringens* or *Bacillus cereus* [Sigma Aldrich] plc",
             ],
             [
               "Phospholipase C (PLC)",
               "cerA_Bc",
-              "Bacillus cereus",
-              "Clostridium perfringens or Bacillus cereus [Sigma Aldrich] plc",
+              "*Bacillus cereus*",
+              "*Clostridium perfringens* or *Bacillus cereus* [Sigma Aldrich] plc",
             ],
             [
               "Phospholipase A (PLA)",
@@ -90,13 +90,13 @@ const MINING: ResultData = {
             [
               "Phytase",
               "appA_Yi",
-              "Yersinia intermedia",
+              "*Yersinia intermedia*",
               "Axtra® PHY [IFF] or Ronozyme® HiPhos [Novonesis]",
             ],
             [
               "Phytase",
               "phyA_Op",
-              "Obesumbacterium proteus",
+              "*Obesumbacterium proteus*",
               "Axtra® PHY [IFF] or Ronozyme® HiPhos [Novonesis]",
             ],
             [
@@ -108,16 +108,16 @@ const MINING: ResultData = {
             [
               "Acid phosphatase (NAP)",
               "aphA_Ec",
-              "Escherichia coli",
+              "*Escherichia coli*",
               "Acid phosphatase from potatoes or wheat germ [Merck]",
             ],
           ],
         },
       ],
       observations:
-        "The funnel narrowed 3,741 initial candidates to 7. EnzymeMiner returned 3,741 sequences across the four activities; manual selection of about 40 prokaryotic representatives per activity gave 160; expression and purification evidence from BRENDA and UniProt cut this to 102; only 13 retained sufficient activity at pH 5.0 and 30 ºC; and 7 were finally chosen, at least two per activity except PLA. The panel was EstE1 (PLA), Plc and CerA (PLC), AppA and PhyA (phytase), and M2-32 and AphA (NAP), each with a commercial backup.",
+        "The funnel narrowed **3,741 initial candidates to 7**. EnzymeMiner returned 3,741 sequences across the four activities; manual selection of about 40 prokaryotic representatives per activity gave 160; expression and purification evidence from BRENDA and UniProt cut this to 102; only **13** retained sufficient activity at pH 5.0 and 30 ºC; and 7 were finally chosen, at least two per activity except PLA. The panel was EstE1 (PLA), Plc and CerA (PLC), AppA and PhyA (phytase), and M2-32 and AphA (NAP), each with a commercial backup.",
       interpretation:
-        "The phosphorus in the effluent can be attacked from four complementary angles with enzymes that are both expressible in E. coli and acid-tolerant, the acid phosphatases keeping activity across the pH 4.5 to 6.0 of the stream and the histidine acid phytases being active and stable at low pH. The redundancy of two representatives per activity hedges against any single enzyme failing to express.",
+        "The phosphorus in the effluent can be attacked from four complementary angles with enzymes that are both expressible in *E. coli* and acid-tolerant, the acid phosphatases keeping activity across the pH 4.5 to 6.0 of the stream and the histidine acid phytases being active and stable at low pH. The redundancy of two representatives per activity hedges against any single enzyme failing to express.",
       expectation:
         "Broadly yes. A steep funnel was expected given the strict criteria, and a redundant panel was the design goal. The informative point was quantitative: only 13 of 102 candidates kept activity at pH 5.0 and 30 ºC, confirming that the operating window, not sequence availability, is the real bottleneck.",
     },
@@ -271,9 +271,9 @@ const IN_SILICO: ResultData = {
         },
       ],
       observations:
-        "Homology models placed the tag and mapped disulphide bridges for all seven enzymes. Terminal exposure set the vector, for example CerA with a more exposed C-terminus (pET-22b(+)) and AphA the opposite (pET-28a(+)). The 2.5 Å analysis flagged AppA (4 bridges), PhyA (4) and M2-32 (2) as disulphide-dependent, while EstE1, Plc, AphA and CerA had none. Predicted masses ranged from 26 to 49 kDa, several of them oligomeric (EstE1 4×34, M2-32 2×29, AphA 2×26 kDa).",
+        "Homology models placed the tag and mapped disulphide bridges for all seven enzymes. Terminal exposure set the vector, for example CerA with a more exposed C-terminus (pET-22b(+)) and AphA the opposite (pET-28a(+)). The 2.5 Å analysis flagged **AppA (4 bridges), PhyA (4) and M2-32 (2)** as disulphide-dependent, while EstE1, Plc, AphA and CerA had none. Predicted masses ranged from 26 to 49 kDa, several of them oligomeric (EstE1 4×34, M2-32 2×29, AphA 2×26 kDa).",
       interpretation:
-        "Three enzymes would need an oxidising cytoplasm to fold their structural disulphides, and this was known before any wet work, so the later requirement for SHuffle T7 or Origami 2 was anticipated rather than discovered through failed expression.",
+        "Three enzymes would need an oxidising cytoplasm to fold their structural disulphides, and this was known **before any wet work**, so the later requirement for SHuffle T7 or Origami 2 was anticipated rather than discovered through failed expression.",
       expectation:
         "Yes. Disulphide dependence is consistent with the periplasmic or secreted biology of these phytases and phosphatases, and the tag choices followed directly from the models. The experiment carried little risk; its value was pre-empting the solubility problem.",
     },
@@ -385,9 +385,9 @@ const EXPRESSION: ResultData = {
         },
       ],
       observations:
-        "The two phospholipases C were cytotoxic: Plc and CerA caused a sharp OD₆₀₀ drop the morning after induction, CerA partly compensable with about thirty times the culture volume and Plc not compensable at all.",
+        "The two phospholipases C were **cytotoxic**: Plc and CerA caused a sharp OD₆₀₀ drop the morning after induction, CerA partly compensable with about thirty times the culture volume and Plc not compensable at all.",
       interpretation:
-        "IPTG is the induction method of choice for this panel, and PLC cannot be produced in a live E. coli host because these enzymes hydrolyse essential host membrane phospholipids, so it was redirected to cell-free IVTT, a system that does not depend on host viability.",
+        "IPTG is the induction method of choice for this panel, and PLC cannot be produced in a live *E. coli* host because these enzymes hydrolyse essential host membrane phospholipids, so it was redirected to cell-free IVTT, a system that does not depend on host viability.",
       expectation:
         "Partly. IPTG outperforming auto-induction was expected from the full derepression of the lacUV5 promoter, in contrast to the density-linked, more gradual induction of auto-induction medium. The PLC cytotoxicity had been anticipated as a risk, so its appearance confirmed rather than contradicted the design and justified not carrying PLC forward.",
     },
@@ -422,7 +422,7 @@ const SOLUBILISATION: ResultData = {
         },
       ],
       observations:
-        "Despite good IPTG yields, none of the enzymes appeared in the soluble fraction at first, accumulating as inclusion bodies. Of the rescue strategies, GroES/GroEL solubilised M2-32, SHuffle T7 solubilised PhyA, and AphA was soluble in BL21 (DE3). Induction at 30 ºC and Trigger factor alone were largely insufficient for the remaining targets.",
+        "Despite good IPTG yields, none of the enzymes appeared in the soluble fraction at first, accumulating as inclusion bodies. Of the rescue strategies, **GroES/GroEL solubilised M2-32**, **SHuffle T7 solubilised PhyA**, and **AphA** was soluble in BL21 (DE3). Induction at 30 ºC and Trigger factor alone were largely insufficient for the remaining targets.",
       interpretation:
         "Solubility, not expression, was the limiting step, a well-documented outcome of the fast T7-driven translation outpacing host folding capacity. It was resolved exactly for the disulphide-dependent enzymes by the oxidising chassis predicted in the in silico design, and a codon analysis further motivated moving to rare-codon-competent strains. Three enzymes (M2-32, PhyA, AphA) reached soluble form and could proceed.",
       expectation:
@@ -447,7 +447,7 @@ const IMAC: ResultData = {
         },
       ],
       observations:
-        "PhyA and M2-32 purified to electrophoretic homogeneity, with the 20 mM imidazole wash removing contaminants without eluting the target. AphA behaved differently: a normal crude extract and flow-through, but only faint bands in the elution, dialysis and concentration fractions, indicating low yield, though still enough to characterise.",
+        "**PhyA and M2-32** purified to electrophoretic homogeneity, with the 20 mM imidazole wash removing contaminants without eluting the target. **AphA** behaved differently: a normal crude extract and flow-through, but only faint bands in the elution, dialysis and concentration fractions, indicating low yield, though still enough to characterise.",
       interpretation:
         "Two clean preparations and one low-yield but usable one were obtained, and the His-tag and Ni-NTA strategy with a competitive imidazole wash worked as designed.",
       expectation:
@@ -489,7 +489,7 @@ const FUNCTIONAL: ResultData = {
         },
       ],
       observations:
-        "All three enzymes hydrolysed bis-pNPP at pH 5.0 and 30 ºC. Raw product accumulation at 30 min was highest for PhyA (about 27 µM pNP) and lower for M2-32 and AphA (both about 11 µM). Once normalised by Bradford protein, the ranking reversed: specific activities were AphA 0.222 U/mg > M2-32 0.161 U/mg > PhyA 0.141 U/mg. AphA reached the same product (about 11 µM) with roughly 45% less enzyme mass than M2-32 (0.015 against 0.027 mg).",
+        "All three enzymes hydrolysed bis-pNPP at pH 5.0 and 30 ºC. Raw product accumulation at 30 min was highest for PhyA (about 27 µM pNP) and lower for M2-32 and AphA (both about 11 µM). Once normalised by Bradford protein, the ranking reversed: specific activities were **AphA 0.222 U/mg > M2-32 0.161 U/mg > PhyA 0.141 U/mg**. AphA reached the same product (about 11 µM) with roughly 45% less enzyme mass than M2-32 (0.015 against 0.027 mg).",
       interpretation:
         "On a per-milligram basis AphA is the most efficient acid phosphatase and PhyA the least, so the raw curves are misleading until normalised. AphA and the phytate-specialist PhyA are the components to carry into the immobilisation study.",
       expectation:
@@ -517,7 +517,11 @@ const LECITASE: ResultData = {
         {
           caption:
             "Mean A₅₉₅ of the prepared Lecitase® Ultra dilutions, with the standard deviation. Transcribed from the team's own summary table.",
-          headers: ["Dilution factor", "Average A₅₉₅ (a.u.)", "Standard deviation (a.u.)"],
+          headers: [
+            "Dilution factor",
+            "Average A₅₉₅ (a.u.)",
+            "Standard deviation (a.u.)",
+          ],
           rows: [
             ["10", "1.307", "0.030"],
             ["20", "1.535", "0.262"],
@@ -554,7 +558,7 @@ const LECITASE: ResultData = {
         },
       ],
       observations:
-        "Bradford against a BSA curve, using serial dilutions, put the stock at approximately 40 mg/mL, with the 1:60 dilution giving the lowest error and used as reference. The pNPB assay gave a mean specific activity of about 981 U/mg (969.6 and 992.0 U/mg in duplicate).",
+        "Bradford against a BSA curve, using serial dilutions, put the stock at approximately **40 mg/mL**, with the 1:60 dilution giving the lowest error and used as reference. The pNPB assay gave a mean specific activity of about **981 U/mg** (969.6 and 992.0 U/mg in duplicate).",
       interpretation:
         "A well-defined baseline of concentration and activity was fixed for this chimeric lipase/phospholipase, against which every immobilisation yield could be referenced.",
       expectation:
@@ -580,7 +584,7 @@ const STRATEGY_A: ResultData = {
         },
       ],
       observations:
-        "On the glutaraldehyde-preactivated support, immobilisation was clearly better with 0.1% Triton X-100, reaching a yield of almost 80% and an immobilised activity of about 0.0053 U. Without the detergent, retention was poor.",
+        "On the glutaraldehyde-preactivated support, immobilisation was clearly better **with 0.1% Triton X-100**, reaching a yield of almost 80% and an immobilised activity of about **0.0053 U**. Without the detergent, retention was poor.",
       interpretation:
         "Direct covalent attachment preserves activity only if the enzyme is held open, by the detergent, at the moment it is fixed; otherwise the derivative is largely inactive. This sensitivity is characteristic of lipases immobilised through residues near a mobile lid, and glutaraldehyde is the versatile amino-reactive crosslinker used to fix them.",
       expectation:
@@ -606,7 +610,7 @@ const STRATEGY_B: ResultData = {
         },
       ],
       observations:
-        "The adsorption-then-crosslink route was best without Triton X-100, again reaching almost 80% yield but with an immobilised activity of about 0.0448 U, roughly ten times that of the preactivated covalent route from the same amount of enzyme and support.",
+        "The adsorption-then-crosslink route was best **without Triton X-100**, again reaching almost 80% yield but with an immobilised activity of about **0.0448 U**, roughly **ten times** that of the preactivated covalent route from the same amount of enzyme and support.",
       interpretation:
         "Pre-orienting the enzyme by ionic adsorption before crosslinking preserves far more activity. The glutaraldehyde here also crosslinks lysines of neighbouring enzymes, consolidating the pre-oriented layer and capturing further monomers from solution, which is the basis of this two-step design on aminated supports.",
       expectation:
@@ -623,7 +627,7 @@ const DETERGENT: ResultData = {
     {
       id: "detergent",
       observations:
-        "The detergent had opposite effects on the two strategies: it improved the preactivated covalent route but harmed the ionic-adsorption route, which was best in plain buffer.",
+        "The detergent had **opposite effects** on the two strategies: it improved the preactivated covalent route but harmed the ionic-adsorption route, which was best in plain buffer.",
       interpretation:
         "The surfactant is neither universally good nor bad. It helps only when the aim is to trap the open form on a pre-activated surface, and it interferes when correct electrostatic orientation is what matters, an effect tied to the enzyme's dimerisation and interfacial activation.",
       expectation:
@@ -651,9 +655,9 @@ const YIELD: ResultData = {
         },
       ],
       observations:
-        "Both winning conditions reached about 80% yield, but their immobilised activities differed roughly tenfold. The free-enzyme control kept its activity throughout.",
+        "Both winning conditions reached about **80% yield**, but their immobilised activities differed roughly tenfold. The free-enzyme control kept its activity throughout.",
       interpretation:
-        "Yield alone is misleading: two methods can immobilise similar amounts of protein while retaining very different amounts of activity, so activity retention, not percentage bound, is the right metric. The control confirms the differences came from immobilisation, not from buffer effects or denaturation.",
+        "Yield alone is misleading: two methods can immobilise similar amounts of protein while retaining very different amounts of activity, so **activity retention, not percentage bound, is the right metric**. The control confirms the differences came from immobilisation, not from buffer effects or denaturation.",
       expectation:
         "Partly. Yields near 80% were plausible for both, but the tenfold activity gap at equal yield was the decisive and somewhat unexpected result, and the parallel control is what makes it trustworthy.",
     },
@@ -699,21 +703,49 @@ const MODELLING: ResultData = {
         },
       ],
       observations:
-        "The open and closed models accounted for every case. On the preactivated support with detergent, the lid is held open and the surface lysines are fixed in the active conformation; without detergent, the closed enzyme is anchored through Lys24 and Lys259 next to the lid, jamming it shut. In the adsorption route, the acidic crown (Asp27, Glu56, Asp57, Asp62) adsorbs the enzyme with its active site projected outward, so without detergent the lid stays free, whereas with detergent the electrostatic orientation is scrambled and the subsequent crosslinking freezes a distorted, low-activity arrangement.",
+        "The open and closed models accounted for every case. On the preactivated support with detergent, the lid is held open and the surface lysines are fixed in the active conformation; without detergent, the closed enzyme is anchored through **Lys24 and Lys259** next to the lid, jamming it shut. In the adsorption route, the acidic crown (**Asp27, Glu56, Asp57, Asp62**) adsorbs the enzyme with its active site projected outward, so without detergent the lid stays free, whereas with detergent the electrostatic orientation is scrambled and the subsequent crosslinking freezes a distorted, low-activity arrangement.",
       interpretation:
-        "The activity differences are structural, not random: they follow from where the enzyme is anchored relative to its lid, and from whether the support acts as a molecular lock on the open form or a brake on the closed one. This is what makes the closed-form adsorption route the one to transfer to the sphere.",
+        "The activity differences are **structural, not random**: they follow from where the enzyme is anchored relative to its lid, and from whether the support acts as a molecular lock on the open form or a brake on the closed one. This is what makes the closed-form adsorption route the one to transfer to the sphere.",
       expectation:
         "Yes. The model was built to test the interfacial-activation and dimerisation hypothesis, and it reproduced the measured yields at the residue level, giving a mechanistic rather than merely empirical basis for the chosen strategy.",
     },
   ],
 };
 
+const ENZYME_PRODUCTION_REFERENCES = [
+  "[1] Hon J, Borko S, Stourac J, Prokop Z, Zendulka J, Bednar D, et al. EnzymeMiner: automated mining of soluble enzymes with diverse structures, catalytic properties and stabilities. Nucleic Acids Research [Internet]. 2020 Apr 29;48(W1):W104–9. Available from: https://doi.org/10.1093/nar/gkaa372",
+  "[2] Thaller MC, Schippa S, Bonci A, Cresti S, Rossolini GM. Identification of the gene (aphA) encoding the class B acid phosphatase/phosphotransferase of Escherichia coli MG1655 and characterization of its product. FEMS Microbiology Letters [Internet]. 2006 Jan 17;146(2):191–8. Available from: https://doi.org/10.1111/j.1574-6968.1997.tb10192.x",
+  "[3] Huang H, Luo H, Yang P, Meng K, Wang Y, Yuan T, et al. A novel phytase with preferable characteristics from Yersinia intermedia. Biochemical and Biophysical Research Communications [Internet]. 2006 Sep 30;350(4):884–9. Available from: https://doi.org/10.1016/j.bbrc.2006.09.118",
+  "[4] Bessette PH, Åslund F, Beckwith J, Georgiou G. Efficient folding of proteins with multiple disulfide bonds in the Escherichia coli cytoplasm. Proceedings of the National Academy of Sciences [Internet]. 1999 Nov 23;96(24):13703–8. Available from: https://doi.org/10.1073/pnas.96.24.13703",
+  "[5] Studier FW. Protein production by auto-induction in high-density shaking cultures. Protein Expression and Purification [Internet]. 2005 Feb 8;41(1):207–34. Available from: https://doi.org/10.1016/j.pep.2005.01.016",
+  "[6] Titball RW. Bacterial phospholipases C. Microbiological Reviews [Internet]. 1993 Jan 1;57(2):347–66. Available from: https://doi.org/10.1128/mmbr.57.2.347-366.1993",
+  "[7] Zemella A, Thoring L, Hoffmeister C, Kubick S. Cell‐Free protein synthesis: Pros and cons of prokaryotic and eukaryotic systems. ChemBioChem [Internet]. 2015 Oct 19;16(17):2420–31. Available from: https://doi.org/10.1002/cbic.201500340",
+  "[8] Baneyx F, Mujacic M. Recombinant protein folding and misfolding in Escherichia coli. Nature Biotechnology [Internet]. 2004 Nov 1;22(11):1399–408. Available from: https://doi.org/10.1038/nbt1029",
+  "[9] Rosano GL, Ceccarelli EA. Recombinant protein expression in Escherichia coli: advances and challenges. Frontiers in Microbiology [Internet]. 2014 Apr 17;5:172. Available from: https://doi.org/10.3389/fmicb.2014.00172",
+  "[10] Hoffmann A, Bukau B, Kramer G. Structure and function of the molecular chaperone Trigger Factor. Biochimica Et Biophysica Acta (BBA) - Molecular Cell Research [Internet]. 2010 Feb 3;1803(6):650–61. Available from: https://doi.org/10.1016/j.bbamcr.2010.01.017",
+  "[11] Hayer-Hartl M, Bracher A, Hartl FU. The GROEL–GROES chaperonin Machine: a Nano-Cage for protein folding. Trends in Biochemical Sciences [Internet]. 2015 Sep 27;41(1):62–76. Available from: https://doi.org/10.1016/j.tibs.2015.07.009",
+  "[12] Lobstein J, Emrich CA, Jeans C, Faulkner M, Riggs P, Berkmen M. SHuffle, a novel Escherichia coli protein expression strain capable of correctly folding disulfide bonded proteins in its cytoplasm. Microbial Cell Factories [Internet]. 2012 May 8;11(1):124. Available from: https://doi.org/10.1186/1475-2859-11-56",
+  "[13] Kane JF. Effects of rare codon clusters on high-level expression of heterologous proteins in Escherichia coli. Current Opinion in Biotechnology [Internet]. 1995 Jan 1;6(5):494–500. Available from: https://doi.org/10.1016/0958-1669(95)80082-4",
+  "[14] Porath J, Carlsson J, Olsson I, Belfrage G. Metal chelate affinity chromatography, a new approach to protein fractionation. Nature [Internet]. 1975 Dec 1;258(5536):598–9. Available from: https://doi.org/10.1038/258598a0",
+  "[15] Andersch MA, Szczypinski AJ. Use of P-Nitrophenylphosphate as the substrate in determination of serum acid phosphatase*. American Journal of Clinical Pathology [Internet]. 1947 Jul 1;17(7_ts):571–4. Available from: https://doi.org/10.1093/ajcp/17.7_ts.571",
+];
+
+const IMMOBILISATION_REFERENCES = [
+  "[1] Virgen-Ortíz JJ, Santos JCSD, Ortiz C, Berenguer-Murcia Á, Barbosa O, Rodrigues RC, et al. Lecitase ultra: A phospholipase with great potential in biocatalysis. Molecular Catalysis [Internet]. 2019 May 21;473:110405. Available from: https://doi.org/10.1016/j.mcat.2019.110405",
+  "[2] Braham SA, Siar EH, Arana-Peña S, Bavandi H, Carballares D, Morellon-Sterling R, et al. Positive effect of glycerol on the stability of immobilized enzymes: Is it a universal fact? Process Biochemistry [Internet]. 2020 Dec 30;102:108–21. Available from: https://doi.org/10.1016/j.procbio.2020.12.015",
+  "[3] López-Gallego F, Betancor L, Mateo C, Hidalgo A, Alonso-Morales N, Dellamora-Ortiz G, et al. Enzyme stabilization by glutaraldehyde crosslinking of adsorbed proteins on aminated supports. Journal of Biotechnology [Internet]. 2005 Jul 22;119(1):70–5. Available from: https://doi.org/10.1016/j.jbiotec.2005.05.021",
+  "[4] Rodrigues RC, Virgen-Ortíz JJ, Santos JCSD, Berenguer-Murcia Á, Alcantara AR, Barbosa O, et al. Immobilization of lipases on hydrophobic supports: immobilization mechanism, advantages, problems, and solutions. Biotechnology Advances [Internet]. 2019 Apr 8;37(5):746–70. Available from: https://doi.org/10.1016/j.biotechadv.2019.04.003",
+  "[5] Barbosa O, Ortiz C, Berenguer-Murcia Á, Torres R, Rodrigues RC, Fernandez-Lafuente R. Glutaraldehyde in bio-catalysts design: a useful crosslinker and a versatile tool in enzyme immobilization. RSC Advances [Internet]. 2013 Oct 28;4(4):1583–600. Available from: https://doi.org/10.1039/c3ra45991h",
+  "[6] Mateo C, Bolivar JM, Godoy CA, Rocha-Martin J, Pessela BC, Curiel JA, et al. Improvement of Enzyme Properties with a Two-Step Immobilizaton Process on Novel Heterofunctional Supports. Biomacromolecules [Internet]. 2010 Oct 14;11(11):3112–7. Available from: https://doi.org/10.1021/bm100916r",
+  "[7] Andrés-Sanz D, Fresan C, Fernández-Lorente G, Rocha-Martín J, Guisán JM. Stabilization of Lecitase Ultra® by immobilization and fixation of bimolecular aggregates. release of omega-3 fatty acids by enzymatic hydrolysis of krill oil. Catalysts [Internet]. 2021 Aug 31;11(9):1067. Available from: https://doi.org/10.3390/catal11091067",
+];
+
 export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ResultSubBlock[] = [
   {
     id: "enzyme-production",
     heading: "Section 1: Enzyme production",
     intro:
-      "This set of experiments builds and validates the enzymatic toolbox: candidate phosphohydrolases are identified by data mining, expressed heterologously in E. coli, purified by immobilised metal-ion affinity chromatography and characterised under the operating conditions of the reactor (pH 5.0, 30 ºC). Because heterologous expression carries inherent risks, a parallel search for commercial homologues was kept for each activity as a contingency plan.",
+      "This set of experiments builds and validates the enzymatic toolbox: candidate phosphohydrolases are identified by data mining, expressed heterologously in *E. coli*, purified by immobilised metal-ion affinity chromatography and characterised under the operating conditions of the reactor (pH 5.0, 30 ºC). Because heterologous expression carries inherent risks, a parallel search for **commercial homologues** was kept for each activity as a contingency plan.",
     results: [
       MINING,
       IN_SILICO,
@@ -726,14 +758,16 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ResultSubBlock[] = [
     ],
     outro:
       "These experiments take the panel from database to characterised biocatalyst with no redundant step: activities were matched to the real effluent, constructs were designed to pre-empt insolubility, and only the rescue strategies actually needed were used.",
+    references: ENZYME_PRODUCTION_REFERENCES,
   },
   {
     id: "immobilisation-chemistry",
     heading: "Section 2: Immobilisation chemistry",
     intro:
-      "This set of experiments establishes how to fix the enzymes onto the support while keeping them active. Rather than testing directly on the more complex and costly alginate-chitosan-genipin sphere, the chemistry is first optimised on a simple, well-characterised MANAE-agarose model support, and the more reactive genipin of the final sphere is emulated by glutaraldehyde, which plays the same crosslinking role. The model enzyme is Lecitase® Ultra, chosen because it is the most demanding case: its active site is capped by a mobile lid that requires interfacial activation, and it forms bimolecular aggregates in solution.",
+      "This set of experiments establishes **how to fix the enzymes onto the support** while keeping them active. Rather than testing directly on the more complex and costly alginate-chitosan-genipin sphere, the chemistry is first optimised on a simple, well-characterised **MANAE-agarose** model support, and the more reactive genipin of the final sphere is emulated by **glutaraldehyde**, which plays the same crosslinking role. The model enzyme is **Lecitase® Ultra**, chosen because it is the most demanding case: its active site is capped by a mobile lid that requires interfacial activation, and it forms bimolecular aggregates in solution.",
     results: [LECITASE, STRATEGY_A, STRATEGY_B, DETERGENT, YIELD, MODELLING],
     outro:
       "Using an inexpensive model support and glutaraldehyde as a stand-in for genipin let the two anchoring strategies be compared without spending resources on the full sphere; the detergent variable and the free-enzyme control were the minimum needed to interpret the yields, and the modelling was added only to explain the result.",
+    references: IMMOBILISATION_REFERENCES,
   },
 ];

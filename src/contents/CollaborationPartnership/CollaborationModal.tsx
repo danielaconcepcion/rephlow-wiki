@@ -2,13 +2,16 @@ import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
+  BARCELONA_CAROUSEL,
+  BARCELONA_VISIT,
   GROUPS,
   IMG,
   KICKOFF_DAYS,
+  KICKOFF_GALLERY,
   MALAGA_GALLERY,
   VISIBLE_ENTRIES,
 } from "./collaborationData";
-import type { EntryId, GroupId, ProgrammeItem } from "./collaborationData";
+import type { EntryId, GalleryPhoto, GroupId, ProgrammeItem } from "./collaborationData";
 
 /* --------------------------------------------------------------------------
    One dialog for every object on the tables. Prev/next (buttons or ←/→)
@@ -130,16 +133,10 @@ function EntryBody({ id }: { id: EntryId }) {
       return <MalagaBody />;
     case "msp":
       return <MspBody />;
+    case "tcg":
+      return <TcgBody />;
     case "barcelona":
-      return (
-        <div className="cp-pending">
-          <p className="cp-pending__title">Entry in preparation</p>
-          <p className="cp-pending__note">
-            Placeholder · text, team logo, joint photo and Barcelona image
-            pending.
-          </p>
-        </div>
-      );
+      return <BarcelonaBody />;
     case "cbm":
       return <CbmBody />;
     case "iqog":
@@ -196,7 +193,10 @@ function KickoffBody() {
   const [day, setDay] = useState(0);
   return (
     <Stack>
-      <p className="cp-kicker">June 24th – 26th, 2026 · Madrid</p>
+      <div className="cp-paper-head">
+        <Logo src={IMG.kickoff} alt="iGEM Kick Off Madrid 2026" height={88} />
+        <p className="cp-kicker">June 24th – 26th, 2026 · Madrid</p>
+      </div>
       <p className="cp-lead">
         We hosted a meetup bringing together <strong>iGEM teams</strong> for conferences on
         synthetic biology, neurobiology, biophysics, scientific illustration,
@@ -205,10 +205,7 @@ function KickoffBody() {
         as a <strong>mini iGEM hackathon</strong> and interactive group activities.
       </p>
       <p>Discover what we achieved and how this initiative enhanced our collaborations.</p>
-      <div className="cp-photo-grid">
-        <Pending file="kickoff-photo-1.jpg" label="Meetup photo" className="cp-slot--photo" />
-        <Pending file="kickoff-photo-2.jpg" label="Meetup photo" className="cp-slot--photo" />
-      </div>
+      <PhotoStrip photos={KICKOFF_GALLERY} alt="iGEM kick-off meetup, Madrid" />
       <p>
         The SEBBM, the Spanish Society for Biochemistry and Molecular Biology,
         supported us in the organization of our congress by helping us
@@ -226,9 +223,9 @@ function KickoffBody() {
         impact of science beyond the laboratory.
       </p>
       <div className="cp-logo-row">
-        <Pending file="sebbm-logo.png" label="SEBBM logo" className="cp-slot--logo" />
+        <Logo src={IMG.sebbm} alt="SEBBM" height={72} />
         <Pending file="sponsor-logos.png" label="Other sponsors" className="cp-slot--logo" />
-        <Pending file="rephlow-logo.svg" label="rePhlow logo" className="cp-slot--logo" />
+        <Logo src={IMG.rephlow} alt="rePhlow" height={72} />
       </div>
 
       <h3 className="cp-h3">iGEM Community Board</h3>
@@ -240,7 +237,9 @@ function KickoffBody() {
           scheduled activities and helped strengthen connections within the
           wider iGEM community.
         </p>
-        <Pending file="community-board.jpg" label="Board photo" className="cp-slot--photo cp-split__aside" />
+        <figure className="cp-board cp-split__aside">
+          <img src={IMG.communityBoard} alt="The iGEM Community Board at the kick-off meetup" loading="lazy" />
+        </figure>
       </div>
 
       <h3 className="cp-h3">Programme</h3>
@@ -321,10 +320,11 @@ function ProgrammeRow({ item }: { item: ProgrammeItem }) {
   );
 }
 
-function MalagaBody() {
+/** Horizontal, snap-scrolling photo strip with a counter and prev/next. */
+function PhotoStrip({ photos, alt }: { photos: GalleryPhoto[]; alt: string }) {
   const stripRef = useRef<HTMLDivElement>(null);
   const [gi, setGi] = useState(0);
-  const last = MALAGA_GALLERY.length - 1;
+  const last = photos.length - 1;
 
   function go(dir: number) {
     const el = stripRef.current;
@@ -351,38 +351,70 @@ function MalagaBody() {
     if (best !== gi) setGi(best);
   }
 
-  const pad = (x: number) => String(x).padStart(2, "0");
+  return (
+    <div className="cp-carousel">
+      <button
+        type="button"
+        className="cp-carousel__arrow cp-carousel__arrow--prev"
+        disabled={gi === 0}
+        aria-label="Previous photo"
+        onClick={() => go(-1)}
+      >
+        <Arrowhead direction="left" />
+      </button>
+      <div className="cp-carousel__view">
+        <div ref={stripRef} className="cp-gallery" onScroll={onScroll}>
+          {photos.map((g, i) => (
+            <figure key={g.src} className="cp-gallery__item" style={{ aspectRatio: g.ratio }}>
+              <img src={g.src} alt={`${alt} — photo ${i + 1}`} loading="lazy" />
+            </figure>
+          ))}
+        </div>
+        <span className="cp-carousel__counter">
+          {gi + 1} of {photos.length}
+        </span>
+      </div>
+      <button
+        type="button"
+        className="cp-carousel__arrow cp-carousel__arrow--next"
+        disabled={gi === last}
+        aria-label="Next photo"
+        onClick={() => go(1)}
+      >
+        <Arrowhead direction="right" />
+      </button>
+    </div>
+  );
+}
 
+/** Same chevron as the Model page's Factor Explorer carousel. */
+function Arrowhead({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg className="cp-carousel__arrowhead" viewBox="0 0 10 16" aria-hidden="true">
+      <path
+        d={direction === "left" ? "M8 2 2 8l6 6" : "M2 2l6 6-6 6"}
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.7"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function MalagaBody() {
   return (
     <Stack>
       <p className="cp-lead">
-        We participated in the <strong>iGEM European Meetup</strong> in Málaga, connecting with
+        We participated in the <strong>iGEM European Meetup</strong> in Málaga, connecting with{" "}
         <strong>teams from across Europe</strong> to present our project, exchange feedback,
         discuss common challenges, and explore opportunities for
         collaboration through talks, poster sessions, and networking
         activities. It was also a great opportunity to support a <strong>fellow
         Spanish iGEM team</strong> while connecting with the wider European community.
       </p>
-      <div ref={stripRef} className="cp-gallery" onScroll={onScroll}>
-        {MALAGA_GALLERY.map((g, i) => (
-          <figure key={g.src} className="cp-gallery__item" style={{ aspectRatio: g.ratio }}>
-            <img src={g.src} alt={`iGEM European Meetup Málaga '26 — photo ${i + 1}`} loading="lazy" />
-          </figure>
-        ))}
-      </div>
-      <div className="cp-gallery__bar">
-        <span className="cp-gallery__count">
-          {pad(gi + 1)} / {pad(MALAGA_GALLERY.length)}
-        </span>
-        <div className="cp-gallery__buttons">
-          <button type="button" className="cp-round-btn" aria-label="Previous photo" onClick={() => go(-1)}>
-            ←
-          </button>
-          <button type="button" className="cp-round-btn" aria-label="Next photo" onClick={() => go(1)}>
-            →
-          </button>
-        </div>
-      </div>
+      <PhotoStrip photos={MALAGA_GALLERY} alt="iGEM European Meetup Málaga '26" />
     </Stack>
   );
 }
@@ -434,6 +466,97 @@ function MspBody() {
   );
 }
 
+function TcgBody() {
+  return (
+    <div className="cp-split">
+      <div className="cp-split__text cp-stack">
+        <p className="cp-lead">
+          As part of the collaborative and networking initiatives between iGEM
+          teams, rePhlow actively participated in the{" "}
+          <strong>Trading Card Game (TCG)</strong> project organized by iGEM
+          RUBochum (CatPURr project).
+        </p>
+        <p>
+          This initiative focused on creating a{" "}
+          <strong>printable collection of trading cards</strong> representing
+          various iGEM 2026 teams, their projects, and their official mascots,
+          to be printed and distributed and exchanged during the Grand Jamboree
+          in Paris, fostering{" "}
+          <strong>scientific outreach, visual identity, and engagement</strong>{" "}
+          across the international iGEM community.
+        </p>
+      </div>
+      <figure className="cp-card cp-split__aside">
+        <img src={IMG.tcgCard} alt="The rePhlow trading card" loading="lazy" />
+      </figure>
+    </div>
+  );
+}
+
+function BarcelonaBody() {
+  return (
+    <Stack>
+      <div className="cp-logo-row">
+        <Logo src={IMG.vinesys} alt="Vinesys — iGEM UPF" height={72} />
+        <Logo src={IMG.rephlow} alt="rePhlow" height={72} />
+      </div>
+      <p className="cp-lead">
+        On September 17, we visited the Vinesys team (iGEM UPF) at the{" "}
+        <strong>Barcelona Biomedical Research Park (PRBB)</strong>. Mariona, the
+        team’s Group Leader, welcomed us and showed us around the campus and
+        their laboratories.
+      </p>
+      <figure className="cp-photo">
+        <img
+          src={BARCELONA_VISIT}
+          alt="The rePhlow team with Vinesys (iGEM UPF) at the PRBB in Barcelona"
+          loading="lazy"
+        />
+      </figure>
+      <p>
+        During the visit, we talked through where each project stood, explored
+        ways our teams could work together, and gave each other feedback as we
+        entered the final stretch before the Grand Jamboree.
+      </p>
+      <p>
+        One idea came up quickly. Our projects start from the same resource and
+        tackle two sides of the same crisis: Vinesys works on the lack of fresh
+        water, and we work on what happens when water carries too many
+        nutrients. We decided to tell that story together in a joint Instagram
+        carousel, <strong>“Two iGEM teams, one resource: water.”</strong>
+      </p>
+      <PhotoStrip
+        photos={BARCELONA_CAROUSEL}
+        alt="“Two iGEM teams, one resource: water” carousel"
+      />
+      <p>
+        The post presents water as “a war on two fronts.” Each team introduces
+        its problem with a figure from home. For Vinesys, it is the{" "}
+        <strong>2024 drought that cut Catalonia’s grape harvest by 40%</strong>.
+        For us, it is the{" "}
+        <strong>
+          2016 algal bloom that killed 85% of the Mar Menor’s seagrass
+        </strong>
+        . Each team then presents its solution. Vinesys engineers soil bacteria
+        that help vineyard soils hold water, so vines keep going when the rain
+        doesn’t come. rePhlow engineers bacteria, encapsulated in alginate
+        beads, that capture phosphate from industrial wastewater before it
+        reaches rivers and seas, turning a pollutant into a valuable resource.
+        The carousel closes with a shared invitation to follow both teams on the
+        road to the iGEM 2026 Grand Jamboree in Paris.
+      </p>
+      <p className="cp-pull">
+        Together, the two halves of the post show that scarcity and pollution
+        are two faces of the same problem. Publishing it on both accounts
+        (@igemupf and @rephlow.igem) brought each project to the other team’s
+        audience. The visit and the post together strengthened our connection
+        and turned a shared concern into joint science communication ahead of
+        Paris.
+      </p>
+    </Stack>
+  );
+}
+
 /* --- Table 2 ------------------------------------------------------------ */
 
 function CbmBody() {
@@ -446,14 +569,14 @@ function CbmBody() {
       <p>
         The collaboration between <strong>UCM</strong> and <strong>CBM</strong> was highly positive for both
         scientific experience and the overall development of the project. The
-        complementary expertise of the two teams enabled to combine
-        <strong>bioinformatic mining</strong> and <strong>experimental characterization of enzymes</strong>
+        complementary expertise of the two teams enabled to combine{" "}
+        <strong>bioinformatic mining</strong> and <strong>experimental characterization of enzymes</strong>{" "}
         acting on phosphate-containing substrates, particularly phosphatases
         and phospholipases, with the development of <strong>effective enzyme
         immobilization strategies</strong>. This multidisciplinary approach
         strengthened the project, the relationship between both rePhlow and
         CBM PIs and opened new opportunities for joint research, ultimately
-        contributing to the preparation of a <strong>Horizon Europe proposal</strong> under
+        contributing to the preparation of a <strong>Horizon Europe proposal</strong> under{" "}
         <strong>Cluster 6</strong>.
       </p>
       <AlsoIn
@@ -475,7 +598,7 @@ function IqogBody() {
         <Logo src={IMG.csic} alt="CSIC" />
       </div>
       <p>
-        Between May and August, <strong>Marta Gil</strong>, <strong>Ángel Vilar</strong> and <strong>Adriana Cuadro</strong>
+        Between May and August, <strong>Marta Gil</strong>, <strong>Ángel Vilar</strong> and <strong>Adriana Cuadro</strong>{" "}
         completed a research stay at the <strong>Institute of General Organic
         Chemistry (IQOG-CSIC)</strong>, where the wet lab experiments for the
         revalorisation module were carried out.
@@ -567,7 +690,7 @@ function CompluBody() {
         </div>
         <p>
           As part of the <strong>“Tuesdays with Compluemprende”</strong> initiative, rePhlow has
-          taken part in a <strong>conversation hosted by IEA</strong>, focused on the
+          taken part in a <strong>conversation hosted by IEA</strong>, focused on the{" "}
           <strong>entrepreneurial journey behind the project</strong>. The interview has
           explore how rePhlow evolved from a <strong>scientific idea into a potential
           real-world solution</strong>, while discussing the <strong>decisions, challenges,

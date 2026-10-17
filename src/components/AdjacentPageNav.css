@@ -40,7 +40,8 @@
   overflow: hidden;
   font-size: 1.1rem;
   color: var(--adjacent-nav-color);
-  border: 1px solid color-mix(in srgb, var(--adjacent-nav-color) 30%, transparent);
+  border: 1px solid
+    color-mix(in srgb, var(--adjacent-nav-color) 30%, transparent);
   background: linear-gradient(
     155deg,
     color-mix(in srgb, var(--adjacent-nav-color) 26%, transparent),
@@ -119,5 +120,15 @@
   }
   .adjacent-page-nav__label {
     font-size: 0.96rem;
+    flex-wrap: wrap;
+  }
+  /* Two long page names (e.g. Entrepreneurship ↔ Contribution) must not
+     push the page wider than the screen. */
+  .adjacent-page-nav {
+    gap: 14px;
+  }
+  .adjacent-page-nav__link,
+  .adjacent-page-nav__text {
+    min-width: 0;
   }
 }

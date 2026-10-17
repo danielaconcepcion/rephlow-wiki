@@ -138,11 +138,22 @@
   padding: 9px 22px;
   border-radius: 999px;
   cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
-.section-tabs__btn:hover { color: var(--ink); background: rgba(27, 35, 64, 0.05); }
-.section-tabs__btn.is-active { background: var(--ink); color: var(--paper); }
-.section-tabs__btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.section-tabs__btn:hover {
+  color: var(--ink);
+  background: rgba(27, 35, 64, 0.05);
+}
+.section-tabs__btn.is-active {
+  background: var(--ink);
+  color: var(--paper);
+}
+.section-tabs__btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
 
 /* --------------------------------------------------------------------------
    2. BLOCK — one colour-scoped layout per contextual-menu block. The block
@@ -156,8 +167,12 @@
   animation: lab-block-in 0.2s ease;
 }
 @keyframes lab-block-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Reuses ProjectDescription's own Figure look (the vsi-figure/pd-figure
@@ -202,7 +217,9 @@
   text-align: justify;
   hyphens: none;
 }
-.lab-block__intro:last-of-type { margin-bottom: 32px; }
+.lab-block__intro:last-of-type {
+  margin-bottom: 32px;
+}
 
 @media (max-width: 760px) {
   .lab-block__intro,
@@ -239,7 +256,9 @@
   text-align: justify;
   hyphens: none;
 }
-.lab-subblock__intro:last-of-type { margin-bottom: 28px; }
+.lab-subblock__intro:last-of-type {
+  margin-bottom: 28px;
+}
 
 /* A closing synthesis for the whole sub-block, sitting below its folder
    deck (see ExperimentSubBlock.outro) — same prose look as .lab-subblock__
@@ -268,8 +287,12 @@
   font-size: 0.78rem;
   color: var(--ink-soft);
 }
-.lab-subblock__references { margin: 0 0 28px; }
-.lab-block__references { margin: 0; }
+.lab-subblock__references {
+  margin: 0 0 28px;
+}
+.lab-block__references {
+  margin: 0;
+}
 
 .lab-subblock__references li,
 .lab-block__references li {
@@ -297,12 +320,23 @@
    .vsi-wikilink / .vsi-citation pattern used elsewhere in the wiki
    (see ProjectDescription), just accent-driven instead of fixed green. */
 .lab-wikilink {
-  color: var(--folder-accent);
+  /* --folder-accent-strong is the deep shade of a palette whose own accent
+     is too light to read as text (mostaza's #fed353 on paper); blocks
+     without one resolve straight to their accent. */
+  color: var(--folder-accent-strong, var(--folder-accent));
   text-decoration: none;
   font-weight: 600;
   background-image: linear-gradient(
-    color-mix(in srgb, var(--folder-accent) 32%, transparent),
-    color-mix(in srgb, var(--folder-accent) 32%, transparent)
+    color-mix(
+      in srgb,
+      var(--folder-accent-strong, var(--folder-accent)) 28%,
+      transparent
+    ),
+    color-mix(
+      in srgb,
+      var(--folder-accent-strong, var(--folder-accent)) 28%,
+      transparent
+    )
   );
   background-repeat: no-repeat;
   background-size: 100% 45%;
@@ -322,11 +356,13 @@
    without the highlighter bar (a citation is a small numeral, not a
    phrase, so a full highlight would be too heavy). */
 .lab-citation {
-  color: var(--folder-accent);
+  color: var(--folder-accent-strong, var(--folder-accent));
   font-weight: 700;
   text-decoration: none;
 }
-.lab-citation:hover { text-decoration: underline; }
+.lab-citation:hover {
+  text-decoration: underline;
+}
 .lab-citation:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
@@ -341,7 +377,10 @@
   color: var(--ink-soft);
   text-decoration: none;
   word-break: break-all;
-  background-image: linear-gradient(rgba(27, 35, 64, 0.12), rgba(27, 35, 64, 0.12));
+  background-image: linear-gradient(
+    rgba(27, 35, 64, 0.12),
+    rgba(27, 35, 64, 0.12)
+  );
   background-repeat: no-repeat;
   background-size: 100% 45%;
   background-position: 0 100%;
@@ -442,8 +481,14 @@
   margin-right: -18px;
   filter: drop-shadow(1px 2px 3px rgba(27, 35, 64, 0.1));
 }
-.folder-tab:last-child { margin-right: 0; }
-.folder-tab:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; z-index: 999 !important; }
+.folder-tab:last-child {
+  margin-right: 0;
+}
+.folder-tab:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+  z-index: 999 !important;
+}
 
 .folder-tab__shape {
   position: absolute;
@@ -451,7 +496,11 @@
   pointer-events: none;
 }
 .folder-tab__shape path {
-  fill: color-mix(in srgb, var(--folder-accent) var(--tab-shade, 34%), var(--paper));
+  fill: color-mix(
+    in srgb,
+    var(--folder-accent) var(--tab-shade, 34%),
+    var(--paper)
+  );
   stroke: var(--lab-line);
   stroke-width: 1px;
 }
@@ -496,15 +545,29 @@
 }
 
 .folder-tab--protocols .folder-tab__shape path {
-  fill: color-mix(in srgb, var(--lab-protocols) var(--tab-shade, 34%), var(--paper));
+  fill: color-mix(
+    in srgb,
+    var(--lab-protocols) var(--tab-shade, 34%),
+    var(--paper)
+  );
 }
 .folder-tab--protocols.is-active .folder-tab__shape path {
   fill: color-mix(in srgb, var(--lab-protocols) 22%, var(--paper));
 }
 
 @media (max-width: 640px) {
-  .folder-tab { padding: 0 2.5em; font-size: 0.74rem; height: 28px; min-width: 126px; margin-right: -12px; }
-  .folder-tab.is-active { height: 40px; min-width: 168px; font-size: 0.9rem; }
+  .folder-tab {
+    padding: 0 2.5em;
+    font-size: 0.74rem;
+    height: 28px;
+    min-width: 126px;
+    margin-right: -12px;
+  }
+  .folder-tab.is-active {
+    height: 40px;
+    min-width: 168px;
+    font-size: 0.9rem;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -573,8 +636,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .folder-stack__row-wrap { transition: none; }
-  .folder-stack__row-backdrop { transition: none; }
+  .folder-stack__row-wrap {
+    transition: none;
+  }
+  .folder-stack__row-backdrop {
+    transition: none;
+  }
 }
 
 @media (max-width: 640px) {
@@ -613,7 +680,10 @@
   box-shadow: 0 2px 6px rgba(27, 35, 64, 0.14);
   cursor: pointer;
 }
-.folder-stack__back:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.folder-stack__back:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
 
 .folder-stack__back--0 {
   z-index: 2;
@@ -627,8 +697,12 @@
 }
 
 @media (max-width: 640px) {
-  .folder-stack__back--0 { transform: translate(6px, 10px); }
-  .folder-stack__back--1 { transform: translate(11px, 18px); }
+  .folder-stack__back--0 {
+    transform: translate(6px, 10px);
+  }
+  .folder-stack__back--1 {
+    transform: translate(11px, 18px);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -706,11 +780,15 @@
 .record-table-wrap + .record-table-wrap {
   margin-top: 18px;
 }
+/* A table's caption is its title, so it sits above the table, not under
+   it — numbered, like the ones on Results. */
 .record-table-caption {
-  margin: 6px 0 0;
-  font-size: 0.78rem;
-  font-style: italic;
+  margin: 0 0 8px;
+  font-size: 0.82rem;
   color: var(--ink-soft);
+}
+.record-table-caption:empty {
+  display: none;
 }
 
 .record-table {
@@ -737,7 +815,9 @@
   color: var(--ink);
   background: color-mix(in srgb, var(--folder-accent) 26%, var(--paper));
 }
-.record-table td { color: var(--ink-soft); }
+.record-table td {
+  color: var(--ink-soft);
+}
 
 .record-checklist {
   list-style: none;
@@ -783,7 +863,9 @@
   line-height: 1.55;
   min-height: 24px;
 }
-.record-protocol li u { color: var(--ink); }
+.record-protocol li u {
+  color: var(--ink);
+}
 .record-protocol li::before {
   content: counter(step);
   position: absolute;
@@ -819,7 +901,9 @@
   color: var(--ink-soft);
   line-height: 1.55;
 }
-.record-note strong { color: var(--ink); }
+.record-note strong {
+  color: var(--ink);
+}
 
 .record-references {
   margin: 4px 0 0;
@@ -827,7 +911,10 @@
   font-size: 0.78rem;
   color: var(--ink-soft);
 }
-.record-references li { margin-bottom: 4px; scroll-margin-top: var(--section-nav-offset); }
+.record-references li {
+  margin-bottom: 4px;
+  scroll-margin-top: var(--section-nav-offset);
+}
 
 .record-download {
   display: inline-flex;
@@ -841,7 +928,9 @@
   font-weight: 600;
   transition: background 0.2s ease;
 }
-.record-download:hover { background: rgba(27, 35, 64, 0.12); }
+.record-download:hover {
+  background: rgba(27, 35, 64, 0.12);
+}
 
 /* The named protocols an experiment actually used — one small download
    pill per protocol, wrapping onto as many lines as it needs, under a
@@ -868,7 +957,9 @@
   font-size: 0.74rem;
 }
 
-.record-figure { margin: 0; }
+.record-figure {
+  margin: 0;
+}
 
 /* Keep a caption the width of the figure it belongs to. An image that
    renders narrower than its column (a generated chart at its own size, a
@@ -887,7 +978,9 @@
   margin-inline: auto;
 }
 
-.record-figure--wide { grid-column: 1 / -1; }
+.record-figure--wide {
+  grid-column: 1 / -1;
+}
 
 /* One caption for a whole grid of cropped panels. It spans every column so
    it reads as the group's caption, instead of dropping into the next free
@@ -1024,7 +1117,10 @@
 }
 .record-figure-matrix__grid {
   display: grid;
-  grid-template-columns: max-content repeat(var(--matrix-columns), minmax(0, 1fr));
+  grid-template-columns: max-content repeat(
+      var(--matrix-columns),
+      minmax(0, 1fr)
+    );
   gap: 8px 12px;
   align-items: center;
 }
@@ -1108,7 +1204,10 @@
 
 @media (max-width: 720px) {
   .record-figure-matrix__grid {
-    grid-template-columns: max-content repeat(var(--matrix-columns), minmax(0, 1fr));
+    grid-template-columns: max-content repeat(
+        var(--matrix-columns),
+        minmax(0, 1fr)
+      );
     gap: 6px 6px;
   }
   .record-figure-matrix__column-head,
@@ -1137,7 +1236,9 @@
   gap: 28px 36px;
 }
 
-.experiment-card__header { grid-column: 1 / -1; }
+.experiment-card__header {
+  grid-column: 1 / -1;
+}
 .experiment-card__title {
   font-family: var(--font-display);
   font-size: 1.25rem;
@@ -1158,7 +1259,10 @@
   hyphens: none;
 }
 
-.experiment-card__figure { grid-column: 1 / -1; max-width: 480px; }
+.experiment-card__figure {
+  grid-column: 1 / -1;
+  max-width: 480px;
+}
 
 /* One block of a richer, per-paragraph-paired write-up (see
    ExperimentData.body / BodyBlock in ExperimentCard.tsx). Full-width by
@@ -1166,8 +1270,12 @@
    the local two-column case when a block pairs with a table or figure.
    The card's own row-gap already spaces consecutive blocks, so this only
    needs to claim the full row. */
-.experiment-card__block { grid-column: 1 / -1; }
-.experiment-card__block .experiment-card__desc:first-child { margin-top: 0; }
+.experiment-card__block {
+  grid-column: 1 / -1;
+}
+.experiment-card__block .experiment-card__desc:first-child {
+  margin-top: 0;
+}
 
 .experiment-card__footer {
   grid-column: 1 / -1;
@@ -1215,7 +1323,11 @@
   max-width: 70ch;
 }
 
-.result-card__aim p { margin: 0; color: var(--ink); line-height: 1.6; }
+.result-card__aim p {
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.6;
+}
 
 .result-card__background h4 {
   font-family: var(--font-display);
@@ -1224,8 +1336,14 @@
   color: var(--ink);
   margin: 0 0 8px;
 }
-.result-card__background p { margin-top: 8px; color: var(--ink-soft); line-height: 1.6; }
-.result-card__background p:first-of-type { margin-top: 0; }
+.result-card__background p {
+  margin-top: 8px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.result-card__background p:first-of-type {
+  margin-top: 0;
+}
 
 .result-card__subsections {
   display: flex;
@@ -1245,8 +1363,14 @@
   color: var(--ink);
   margin: 0 0 10px;
 }
-.result-subsection p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.6; }
-.result-subsection p:first-of-type { margin-top: 0; }
+.result-subsection p {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.result-subsection p:first-of-type {
+  margin-top: 0;
+}
 
 .result-subsection__field h5 {
   font-family: var(--font-display);
@@ -1255,10 +1379,18 @@
   color: var(--ink);
   margin: 16px 0 4px;
 }
-.result-subsection__field p { margin-top: 0; }
+.result-subsection__field p {
+  margin-top: 0;
+}
 
-.result-card__discussion p { margin: 8px 0 0; color: var(--ink-soft); line-height: 1.65; }
-.result-card__discussion p:first-of-type { margin-top: 0; }
+.result-card__discussion p {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+.result-card__discussion p:first-of-type {
+  margin-top: 0;
+}
 
 /* A record whose write-up the source has not supplied yet. Set apart from
    body copy so it reads as a note about the record rather than as its
@@ -1285,7 +1417,9 @@
 }
 
 @media (max-width: 640px) {
-  .result-card { padding: 22px 20px; }
+  .result-card {
+    padding: 22px 20px;
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -1310,4 +1444,520 @@
   text-align: center;
   color: var(--ink-soft);
 }
-.pdf-viewer__download { align-self: flex-start; }
+.pdf-viewer__download {
+  align-self: flex-start;
+}
+
+.record-download:is(button) {
+  appearance: none;
+  border: 0;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.protocol-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 32px);
+  background: rgba(8, 25, 31, 0.66);
+  backdrop-filter: blur(8px);
+}
+
+.protocol-modal__dialog {
+  width: min(1120px, 100%);
+  height: min(88vh, 900px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 28px 80px rgba(4, 20, 25, 0.34);
+}
+
+.protocol-modal__bar {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 12px 10px 22px;
+  border-bottom: 1px solid var(--lab-line);
+}
+
+.protocol-modal__close {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(24, 62, 71, 0.08);
+  color: var(--ink);
+  font: 400 1.8rem/1 var(--font-body);
+  cursor: pointer;
+}
+
+.protocol-modal__close:hover {
+  background: rgba(24, 62, 71, 0.15);
+}
+
+.protocol-modal__frame {
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  border: 0;
+  background: #ececeb;
+}
+
+.protocol-modal__frame > p {
+  padding: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Record figures: click to enlarge
+   -------------------------------------------------------------------------- */
+
+/* The cursor is the whole affordance — no overlay icon, which would sit on
+   top of the gel lanes and labels the reader came to look at. */
+.record-figure__photo--zoomable {
+  cursor: zoom-in;
+}
+
+.record-figure__photo--zoomable:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.figure-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  /* An explicit 1fr track, not the implicit max-content one: a grid row
+     grows past the viewport to fit a tall figure, and the figure's own
+     `max-height: 100%` would then resolve against that overflowing row. */
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  padding: clamp(12px, 3vw, 40px);
+  background: rgba(8, 25, 31, 0.78);
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
+}
+
+.figure-lightbox__figure {
+  max-width: min(1180px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  cursor: default;
+}
+
+/* The photo takes whatever height is left once the caption has its own, so
+   a tall figure and its caption both stay inside the viewport. */
+.figure-lightbox__photo {
+  min-height: 0;
+  flex: 1;
+  object-fit: contain;
+  border-radius: 10px;
+  background: var(--paper);
+}
+
+.figure-lightbox__caption {
+  flex: 0 0 auto;
+  max-height: 28vh;
+  overflow-y: auto;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.figure-lightbox__title {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.figure-lightbox__close {
+  position: absolute;
+  top: clamp(10px, 2vw, 22px);
+  right: clamp(10px, 2vw, 22px);
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--ink);
+  font: 400 2rem/1 var(--font-body);
+  cursor: pointer;
+}
+
+.figure-lightbox__close:hover {
+  background: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   Results: numbered captions and content-width tables
+   -------------------------------------------------------------------------- */
+
+/* One caption style for every figure in a result record — a single photo,
+   a panel grid sharing one caption, a figure matrix or a bespoke visual —
+   instead of three slightly different sizes. "Figure 3." / "Table 2." is
+   set in the ink colour so the number reads as the caption's label. */
+.result-card .record-figure figcaption,
+.result-card .record-figure-grid__caption,
+.result-card .record-figure-matrix figcaption {
+  margin: 10px 0 0;
+  font-size: 0.86rem;
+  font-style: normal;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.record-caption__label {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* A narrow image (a gel lane, a small crop) keeps its caption to the
+   image's width, but never so narrow that a sentence breaks every two
+   words. */
+.result-card .record-figure:has(.record-figure__photo) {
+  min-width: min(100%, 380px);
+}
+.result-card .record-figure__photo {
+  margin-inline: auto;
+}
+
+/* Tables size to their content rather than stretching every column across
+   the card: a two-column biomass table stays two readable columns instead
+   of two islands of text with a gap between them. Wide tables still fill
+   the card, and scroll sideways on a narrow screen. */
+.result-table {
+  margin: 24px 0 0;
+}
+.result-table:first-child {
+  margin-top: 0;
+}
+.record-table-scroll {
+  overflow-x: auto;
+}
+.result-table .record-table {
+  width: auto;
+  max-width: 100%;
+}
+.result-table .record-table td,
+.result-table .record-table th {
+  white-space: normal;
+}
+
+/* Above its table, with clear air above (separating it from whatever came
+   before) and a small gap below (tying it to its own table). The selector
+   outweighs `.result-subsection p`, which otherwise reset these margins. */
+.result-subsection .result-table .record-table__caption {
+  margin: 0 0 8px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+/* Prose that resumes after a figure or a table gets the same breathing
+   room the figure/table got above it. */
+.result-subsection .result-table + p,
+.result-subsection .record-figure-grid + p,
+.result-subsection .record-figure-matrix + p,
+.result-subsection .record-figure--custom + p {
+  margin-top: 20px;
+}
+.result-subsection .record-figure-grid,
+.result-subsection .record-figure-matrix,
+.result-subsection .record-figure--custom {
+  margin-top: 20px;
+}
+.result-subsection > .record-figure-grid:first-child,
+.result-subsection__main > .record-figure-grid:first-child {
+  margin-top: 0;
+}
+
+.lab-citation-group {
+  white-space: nowrap;
+}
+
+.result-subsection.result-subsection--continued {
+  margin-top: 20px;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* A results placeholder stands in for a figure that has not been plotted
+   yet, and several records now carry one. At 16/9 across the full card
+   width each is a screen-tall empty box, which reads as a fault rather
+   than as a gap; capped, it stays legible as a reserved slot without
+   pushing the text that explains it off the screen. */
+.result-card .record-figure__placeholder {
+  aspect-ratio: auto;
+  min-height: 140px;
+  padding: 48px 16px;
+}
+
+/* A block's reference list, folded away at the foot of its page (see
+   BlockReferences.tsx). The summary keeps the heading the list had when
+   it was always open — same display face and size as every other section
+   heading on the page — with only a chevron added to say it opens. */
+.lab-refs {
+  padding-top: 0;
+}
+.lab-refs__summary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--ink);
+}
+.lab-refs__summary::-webkit-details-marker {
+  display: none;
+}
+.lab-refs__summary::before {
+  content: "";
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform 0.18s ease;
+}
+.lab-refs[open] .lab-refs__summary::before {
+  transform: rotate(45deg);
+}
+.lab-refs__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+  line-height: 1.15;
+}
+.lab-refs__count {
+  font: 500 0.82rem/1 var(--font-body);
+  color: var(--ink-soft);
+}
+.lab-refs__summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.lab-refs > .lab-prose {
+  margin-top: 20px;
+}
+
+/* --- An experiment's own parts ------------------------------------------
+   A stage with several named parts ("Design strategy", "Experimental
+   design", "Second trial") breaks on the same rule-and-heading the
+   Results subsections use, so both pages read as the same document. */
+.experiment-card__block--section {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--lab-line);
+}
+.experiment-card__block--section:first-of-type {
+  margin-top: 0;
+}
+.experiment-section__head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.experiment-section__heading {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* The closing note of a stage. The source shouts it (OUTCOME, LEARN); a
+   quiet panel with a plainly written label says the same thing. */
+.experiment-callout {
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--paper-soft);
+}
+.experiment-callout--not-done {
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--lab-line);
+}
+.experiment-callout__label {
+  display: block;
+  margin-bottom: 5px;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.experiment-callout__text {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* Which enzyme a stage belongs to, as a chip beside its title rather than
+   as a suffix glued onto the title string. */
+.experiment-card__titlerow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.experiment-card__enzymes {
+  display: inline-flex;
+  gap: 6px;
+}
+.experiment-chip {
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font: 700 0.68rem/1.3 var(--font-body);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.experiment-chip--dhak {
+  color: #2e7d86;
+  background: rgba(46, 125, 134, 0.08);
+}
+.experiment-chip--ppk2 {
+  color: #b8790a;
+  background: rgba(184, 121, 10, 0.1);
+}
+
+/* --------------------------------------------------------------------------
+   Foldable record sections
+
+   A record that is read section by section — "Application to our project",
+   "Technique requirements", "Results" — folds each one behind its own
+   summary (see ExperimentBodyBlock.foldable). The summary keeps the accent
+   bar down its left edge, which is what marks it as a thing to open; a
+   nested section drops the panel and reads as a quieter indented row, so
+   two levels never look like two boxes inside each other.
+   -------------------------------------------------------------------------- */
+
+.experiment-section--foldable {
+  /* The card is a two-column grid (see .experiment-card): a folded
+     section spans it, like every other block-level child. */
+  grid-column: 1 / -1;
+  margin-top: 6px;
+}
+
+.experiment-section__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 18px;
+  border: 1px solid
+    color-mix(in srgb, var(--folder-accent) 22%, var(--lab-line));
+  border-left: 3px solid var(--folder-accent-strong, var(--folder-accent));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--folder-accent) 5%, var(--paper));
+  list-style: none;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.experiment-section__summary::-webkit-details-marker {
+  display: none;
+}
+
+.experiment-section__summary::after {
+  content: "+";
+  flex-shrink: 0;
+  font: 400 1.25rem/1 var(--font-body);
+  color: var(--folder-accent-strong, var(--folder-accent));
+}
+
+.experiment-section__summary:hover {
+  background: color-mix(in srgb, var(--folder-accent) 12%, var(--paper));
+}
+
+.experiment-section__summary:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.experiment-section--foldable[open] > .experiment-section__summary {
+  border-radius: 10px 10px 0 0;
+  background: color-mix(in srgb, var(--folder-accent) 8%, var(--paper));
+}
+
+.experiment-section--foldable[open] > .experiment-section__summary::after {
+  content: "−";
+}
+
+.experiment-section--foldable .experiment-section__head {
+  margin-bottom: 0;
+}
+
+.experiment-section__content {
+  padding: 22px 18px 26px;
+  border: 1px solid
+    color-mix(in srgb, var(--folder-accent) 22%, var(--lab-line));
+  border-top: 0;
+  border-radius: 0 0 10px 10px;
+}
+
+.experiment-section__content > .experiment-card__block:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* A section inside a section: no panel, just an indented row under a rule. */
+.experiment-section__content .experiment-section--foldable {
+  margin: 4px 0 0 16px;
+}
+
+.experiment-section__content .experiment-section__summary {
+  padding: 9px 2px;
+  border: 0;
+  border-bottom: 1px solid var(--lab-line);
+  border-radius: 0;
+  background: none;
+}
+
+.experiment-section__content .experiment-section__summary:hover {
+  background: none;
+}
+
+.experiment-section__content
+  .experiment-section__summary:hover
+  .experiment-section__heading {
+  color: var(--folder-accent-strong, var(--folder-accent));
+}
+
+.experiment-section__content .experiment-section__heading {
+  font-size: 0.96rem;
+  font-weight: 600;
+}
+
+.experiment-section__content .experiment-section__content {
+  padding: 12px 2px 16px 14px;
+  border: 0;
+  border-left: 1px solid var(--lab-line);
+  border-radius: 0;
+}

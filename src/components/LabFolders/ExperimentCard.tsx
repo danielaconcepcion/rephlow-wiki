@@ -1,10 +1,31 @@
-import type { ReactNode } from "react";
-import type { ExperimentBodyBlock, ExperimentData, PairedResource, RecordTable } from "./types";
+import { useState, type ReactNode } from "react";
+import type {
+  BodyCallout,
+  ExperimentBodyBlock,
+  ExperimentData,
+  PairedResource,
+  RecordTable,
+} from "./types";
 import { asset } from "../../utils";
+import { Caption } from "./Caption";
+import { Rich } from "./RichText";
+import { ProtocolModal } from "./ProtocolModal";
+import { ZoomableImage } from "./ZoomableImage";
 
-function DataTable({ table }: { table: RecordTable & { caption?: string } }) {
+function DataTable({
+  table,
+  numberKey,
+}: {
+  table: RecordTable & { caption?: string };
+  /** What the number was assigned to (the paired resource, or the table
+   * itself for a plain `tables` entry) — see numbering.ts. */
+  numberKey: object;
+}) {
   return (
     <div className="record-table-wrap">
+      <p className="record-table-caption">
+        <Caption kind="Table" item={numberKey} text={table.caption} />
+      </p>
       <table className="record-table">
         <thead>
           <tr>
@@ -18,10 +39,12 @@ function DataTable({ table }: { table: RecordTable & { caption?: string } }) {
             <tr key={rowIndex}>
               {row.map((cell, cellIndex) =>
                 typeof cell === "string" ? (
-                  <td key={cellIndex}>{cell}</td>
+                  <td key={cellIndex}>
+                    <Rich text={cell} />
+                  </td>
                 ) : (
                   <td key={cellIndex} rowSpan={cell.rowSpan}>
-                    {cell.value}
+                    <Rich text={cell.value} />
                   </td>
                 ),
               )}
@@ -29,7 +52,6 @@ function DataTable({ table }: { table: RecordTable & { caption?: string } }) {
           ))}
         </tbody>
       </table>
-      {table.caption && <p className="record-table-caption">{table.caption}</p>}
     </div>
   );
 }
@@ -39,7 +61,7 @@ function DescriptionParagraphs({ paragraphs }: { paragraphs: ReactNode[] }) {
     <>
       {paragraphs.map((paragraph, index) => (
         <p className="experiment-card__desc" key={index}>
-          {paragraph}
+          <Rich text={paragraph} />
         </p>
       ))}
     </>
@@ -53,13 +75,22 @@ function DescriptionParagraphs({ paragraphs }: { paragraphs: ReactNode[] }) {
  * source hasn't supplied yet. */
 function ResourcePane({ resource }: { resource: PairedResource }) {
   if (resource.kind === "table") {
-    return <DataTable table={resource.table} />;
+    return <DataTable table={resource.table} numberKey={resource} />;
   }
   if (resource.kind === "image") {
     return (
       <figure className="record-figure">
-        <img className="record-figure__photo" src={asset(resource.src)} alt={resource.alt} />
-        <figcaption>{resource.caption}</figcaption>
+        <ZoomableImage
+          className="record-figure__photo"
+          src={asset(resource.src)}
+          alt={resource.alt}
+          caption={
+            <Caption kind="Figure" item={resource} text={resource.caption} />
+          }
+        />
+        <figcaption>
+          <Caption kind="Figure" item={resource} text={resource.caption} />
+        </figcaption>
       </figure>
     );
   }
@@ -70,11 +101,25 @@ function ResourcePane({ resource }: { resource: PairedResource }) {
           {resource.images.map((image, index) => (
             <div className="record-figure-group__item" key={index}>
               <p className="record-figure-group__item-title">{image.title}</p>
-              <img className="record-figure-group__photo" src={asset(image.src)} alt={image.alt} />
+              <ZoomableImage
+                className="record-figure-group__photo"
+                src={asset(image.src)}
+                alt={image.alt}
+                title={image.title}
+                caption={
+                  <Caption
+                    kind="Figure"
+                    item={resource}
+                    text={resource.caption}
+                  />
+                }
+              />
             </div>
           ))}
         </div>
-        <figcaption className="record-figure-group__caption">{resource.caption}</figcaption>
+        <figcaption className="record-figure-group__caption">
+          <Caption kind="Figure" item={resource} text={resource.caption} />
+        </figcaption>
       </figure>
     );
   }
@@ -82,16 +127,34 @@ function ResourcePane({ resource }: { resource: PairedResource }) {
     return (
       <figure className="record-figure record-figure--custom">
         {resource.node}
-        {resource.caption && <figcaption>{resource.caption}</figcaption>}
+        {resource.caption && (
+          <figcaption>
+            <Caption kind="Figure" item={resource} text={resource.caption} />
+          </figcaption>
+        )}
       </figure>
+    );
+  }
+  if (resource.kind === "table-placeholder") {
+    return (
+      <div className="record-table-wrap">
+        <p className="record-table-caption">
+          <Caption kind="Table" item={resource} text={resource.caption} />
+        </p>
+        <div className="record-figure__placeholder" aria-hidden="true">
+          [ table placeholder ]
+        </div>
+      </div>
     );
   }
   return (
     <figure className="record-figure">
       <div className="record-figure__placeholder" aria-hidden="true">
-        {resource.kind === "table-placeholder" ? "[ table placeholder ]" : "[ figure placeholder ]"}
+        [ figure placeholder ]
       </div>
-      <figcaption>{resource.caption}</figcaption>
+      <figcaption>
+        <Caption kind="Figure" item={resource} text={resource.caption} />
+      </figcaption>
     </figure>
   );
 }
@@ -116,7 +179,13 @@ const URL_PATTERN = /(https?:\/\/\S+)/;
  * experiment or sub-block id this list belongs to — kept distinct so two
  * different reference lists on the same page never collide on the same
  * anchor id. */
-export function ReferenceItem({ scope, text }: { scope: string; text: string }) {
+export function ReferenceItem({
+  scope,
+  text,
+}: {
+  scope: string;
+  text: string;
+}) {
   const numberMatch = text.match(LEADING_NUMBER);
   const id = numberMatch ? `ref-${scope}-${numberMatch[1]}` : undefined;
   const urlMatch = text.match(URL_PATTERN);
@@ -126,7 +195,12 @@ export function ReferenceItem({ scope, text }: { scope: string; text: string }) 
   return (
     <li id={id}>
       {text.slice(0, splitAt)}
-      <a className="record-reference-link" href={url} target="_blank" rel="noreferrer">
+      <a
+        className="record-reference-link"
+        href={url}
+        target="_blank"
+        rel="noreferrer"
+      >
         {url}
       </a>
       {text.slice(splitAt + url.length)}
@@ -139,13 +213,106 @@ export function ReferenceItem({ scope, text }: { scope: string; text: string }) 
  * pair when the block sets pairedResource. Full-width blocks before and
  * after a paired one are unaffected, so only the one paragraph that
  * actually discusses the table/figure sits next to it. */
-function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
+/** A stage's own closing note — what came of it, what it taught, what was
+ * deliberately left undone — labelled rather than shouted mid-paragraph. */
+function Callouts({ callouts }: { callouts?: BodyCallout[] }) {
+  if (!callouts?.length) return null;
+  const label: Record<BodyCallout["kind"], string> = {
+    outcome: "Outcome",
+    learn: "What we learned",
+    "not-done": "What we did not do",
+  };
+  return (
+    <>
+      {callouts.map((callout, index) => (
+        <div
+          className={`experiment-callout experiment-callout--${callout.kind}`}
+          key={index}
+        >
+          <span className="experiment-callout__label">
+            {label[callout.kind]}
+          </span>
+          <p className="experiment-callout__text">
+            <Rich text={callout.text} />
+          </p>
+        </div>
+      ))}
+    </>
+  );
+}
+
+function EnzymeChips({ enzymes }: { enzymes?: ("DHAK" | "PPK2")[] }) {
+  if (!enzymes?.length) return null;
+  return (
+    <span className="experiment-card__enzymes">
+      {enzymes.map((enzyme) => (
+        <span
+          className={`experiment-chip experiment-chip--${enzyme.toLowerCase()}`}
+          key={enzyme}
+        >
+          {enzyme}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function SectionHeading({
+  title,
+  enzymes,
+}: {
+  title?: string;
+  enzymes?: ("DHAK" | "PPK2")[];
+}) {
+  if (!title) return null;
+  return (
+    <div className="experiment-section__head">
+      <h4 className="experiment-section__heading">{title}</h4>
+      <EnzymeChips enzymes={enzymes} />
+    </div>
+  );
+}
+
+function BodyBlock({ block, level = 1 }: { block: ExperimentBodyBlock; level?: number }) {
   const hasParagraphs = !!block.paragraphs?.length;
+
+  /* A folded section: the title is the summary, the children are what it
+     opens. Nested foldables take level 2, which the stylesheet sets as a
+     quieter, indented row rather than a second boxed panel. */
+  if (block.foldable) {
+    return (
+      <details
+        className={`experiment-section--foldable level-${level}`}
+        id={block.id}
+      >
+        <summary className="experiment-section__summary">
+          <SectionHeading title={block.title} enzymes={block.enzymes} />
+        </summary>
+        <div className="experiment-section__content">
+          {block.blocks?.map((child, index) => (
+            <BodyBlock block={child} level={level + 1} key={index} />
+          ))}
+          <Callouts callouts={block.callouts} />
+        </div>
+      </details>
+    );
+  }
+
+  const blockClass = [
+    "experiment-card__block",
+    block.title && !block.group ? "experiment-card__block--section" : "",
+    block.group ? "experiment-card__block--group" : "",
+    block.layout ? `experiment-card__block--${block.layout}` : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   if (!block.pairedResource) {
     return (
-      <div className="experiment-card__block">
+      <div className={blockClass} id={block.id}>
+        <SectionHeading title={block.title} enzymes={block.enzymes} />
         <DescriptionParagraphs paragraphs={block.paragraphs ?? []} />
+        <Callouts callouts={block.callouts} />
       </div>
     );
   }
@@ -157,17 +324,23 @@ function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
   // see isWideResource — with its paragraph(s), if any, stacked above it.
   if (!hasParagraphs || isWideResource(block.pairedResource)) {
     return (
-      <div className="experiment-card__block">
-        {hasParagraphs && <DescriptionParagraphs paragraphs={block.paragraphs!} />}
+      <div className={blockClass} id={block.id}>
+        <SectionHeading title={block.title} enzymes={block.enzymes} />
+        {hasParagraphs && (
+          <DescriptionParagraphs paragraphs={block.paragraphs!} />
+        )}
         <ResourcePane resource={block.pairedResource} />
+        <Callouts callouts={block.callouts} />
       </div>
     );
   }
 
   return (
-    <div className="experiment-card__pair experiment-card__block">
+    <div className={`experiment-card__pair ${blockClass}`}>
       <div className="experiment-card__text">
+        <SectionHeading title={block.title} enzymes={block.enzymes} />
         <DescriptionParagraphs paragraphs={block.paragraphs!} />
+        <Callouts callouts={block.callouts} />
       </div>
       <div className="experiment-card__tables">
         <ResourcePane resource={block.pairedResource} />
@@ -184,8 +357,14 @@ function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
  * without touching this component.
  */
 export function ExperimentCard({ data }: { data: ExperimentData }) {
+  const [openProtocol, setOpenProtocol] = useState<{
+    src: string;
+    title: string;
+  } | null>(null);
   const hasBody = !!data.body?.length;
-  const hasMaterials = !!(data.materialsTable?.length || data.materialsList?.length);
+  const hasMaterials = !!(
+    data.materialsTable?.length || data.materialsList?.length
+  );
   const hasProtocol = !!data.protocol?.length;
   const hasTables = !!data.tables?.length;
   const hasNotes = !!data.notes?.length;
@@ -200,31 +379,50 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
   // column instead of squeezing the text next to it. Only applies to the
   // simple description/tables path — `body` handles its own pairing
   // per-block instead.
-  const canPairTable = !hasBody && hasTables && !hasMaterials && !hasProtocol && !hasWideTable;
+  const canPairTable =
+    !hasBody && hasTables && !hasMaterials && !hasProtocol && !hasWideTable;
   const descriptionParagraphs = hasBody
     ? []
     : Array.isArray(data.description)
       ? data.description
       : [data.description];
-  const hasFooter = !!(hasNotes || hasReferences || hasProtocolFiles || data.pdfHref);
+  const hasFooter = !!(
+    hasNotes ||
+    hasReferences ||
+    hasProtocolFiles ||
+    data.pdfHref
+  );
 
   return (
     <article className="experiment-card">
       <header className="experiment-card__header">
-        <h3 className="experiment-card__title">{data.title}</h3>
-        {!hasBody && !canPairTable && <DescriptionParagraphs paragraphs={descriptionParagraphs} />}
+        <div className="experiment-card__titlerow">
+          <h3 className="experiment-card__title">
+            <Rich text={data.title} />
+          </h3>
+          <EnzymeChips enzymes={data.enzymes} />
+        </div>
+        {!hasBody && !canPairTable && (
+          <DescriptionParagraphs paragraphs={descriptionParagraphs} />
+        )}
       </header>
 
-      {hasBody && data.body!.map((block, index) => <BodyBlock block={block} key={index} />)}
+      {hasBody &&
+        data.body!.map((block, index) => (
+          <BodyBlock block={block} key={index} />
+        ))}
 
       {!hasBody && canPairTable && (
         <div className="experiment-card__pair">
           <div className="experiment-card__text">
             <DescriptionParagraphs paragraphs={descriptionParagraphs} />
           </div>
-          <section className="experiment-card__tables" aria-label="Experimental parameters">
+          <section
+            className="experiment-card__tables"
+            aria-label="Experimental parameters"
+          >
             {data.tables!.map((table, index) => (
-              <DataTable table={table} key={index} />
+              <DataTable table={table} numberKey={table} key={index} />
             ))}
           </section>
         </div>
@@ -245,9 +443,15 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
               <tbody>
                 {data.materialsTable.map((row) => (
                   <tr key={row.item}>
-                    <td>{row.item}</td>
-                    <td>{row.quantity ?? "—"}</td>
-                    <td>{row.notes ?? "—"}</td>
+                    <td>
+                      <Rich text={row.item} />
+                    </td>
+                    <td>
+                      <Rich text={row.quantity ?? "—"} />
+                    </td>
+                    <td>
+                      <Rich text={row.notes ?? "—"} />
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -255,7 +459,9 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
           ) : (
             <ul className="record-checklist">
               {data.materialsList!.map((item) => (
-                <li key={item}>{item}</li>
+                <li key={item}>
+                  <Rich text={item} />
+                </li>
               ))}
             </ul>
           )}
@@ -271,16 +477,21 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
           <h4 className="record-heading">Protocol</h4>
           <ol className="record-protocol">
             {data.protocol!.map((step, index) => (
-              <li key={index}>{step.text}</li>
+              <li key={index}>
+                <Rich text={step.text} />
+              </li>
             ))}
           </ol>
         </section>
       )}
 
       {!hasBody && hasTables && !canPairTable && (
-        <section className="experiment-card__tables" aria-label="Experimental parameters">
+        <section
+          className="experiment-card__tables"
+          aria-label="Experimental parameters"
+        >
           {data.tables!.map((table, index) => (
-            <DataTable table={table} key={index} />
+            <DataTable table={table} numberKey={table} key={index} />
           ))}
         </section>
       )}
@@ -290,7 +501,13 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
           <div className="record-figure__placeholder" aria-hidden="true">
             [ figure placeholder ]
           </div>
-          <figcaption>{data.figure.caption}</figcaption>
+          <figcaption>
+            <Caption
+              kind="Figure"
+              item={data.figure}
+              text={data.figure.caption}
+            />
+          </figcaption>
         </figure>
       )}
 
@@ -300,7 +517,10 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
             <div className="record-notes">
               {data.notes!.map((note, index) => (
                 <p className="record-note" key={index}>
-                  <strong>{note.kind === "warning" ? "Warning" : "Note"}:</strong> {note.text}
+                  <strong>
+                    {note.kind === "warning" ? "Warning" : "Note"}:
+                  </strong>{" "}
+                  <Rich text={note.text} />
                 </p>
               ))}
             </div>
@@ -319,25 +539,46 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
               <span className="record-protocols__label">Protocols:</span>
               <div className="record-protocols__list">
                 {data.protocols!.map((protocol, index) => (
-                  <a
+                  <button
+                    type="button"
                     className="record-download record-download--compact"
-                    href={asset(protocol.href)}
-                    download
+                    onClick={() =>
+                      setOpenProtocol({
+                        src: asset(protocol.href),
+                        title: protocol.label,
+                      })
+                    }
                     key={index}
                   >
                     {protocol.label} (PDF)
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
           )}
 
           {data.pdfHref && (
-            <a className="record-download" href={asset(data.pdfHref)} download>
+            <button
+              type="button"
+              className="record-download"
+              onClick={() =>
+                setOpenProtocol({
+                  src: asset(data.pdfHref!),
+                  title: `${data.title} protocol`,
+                })
+              }
+            >
               Download protocol (PDF)
-            </a>
+            </button>
           )}
         </footer>
+      )}
+      {openProtocol && (
+        <ProtocolModal
+          src={openProtocol.src}
+          title={openProtocol.title}
+          onClose={() => setOpenProtocol(null)}
+        />
       )}
     </article>
   );

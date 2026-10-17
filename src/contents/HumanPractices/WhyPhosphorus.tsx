@@ -76,6 +76,12 @@ const CASE_STUDIES: CaseStudy[] = [
           more than <strong>€4 billion in lost property value</strong>
           <Cite numbers={[3, 4]} />.
         </p>
+        <p>
+          The Mar Menor was therefore our local warning. It made the problem
+          tangible and gave us a reason to begin. However, as we looked beyond
+          Spain, we realised that the processes we were seeing locally formed
+          part of a much wider pattern.
+        </p>
       </>
     ),
   },
@@ -210,29 +216,28 @@ export function WhyPhosphorus() {
           <p>
             This <strong>diversity</strong> was not simply a characteristic of
             our team. It became the{" "}
-            <strong>starting point of our Human Practices journey</strong>.
-            iGEM encourages teams to begin by building a diverse team,
-            brainstorming broadly and exploring the context of a problem before
-            committing to a solution. Following this approach, we did not begin
-            by choosing a genetic construct and searching for somewhere to
-            apply it. Instead, we first asked ourselves what kind of impact we
-            wanted our project to have and which{" "}
-            <strong>real-world problems</strong> synthetic biology could
-            responsibly help address.
+            <strong>starting point of our Human Practices journey</strong>. iGEM
+            encourages teams to begin by building a diverse team, brainstorming
+            broadly and exploring the context of a problem before committing to
+            a solution. Following this approach, we did not begin by choosing a
+            genetic construct and searching for somewhere to apply it. Instead,
+            we first asked ourselves what kind of impact we wanted our project
+            to have and which <strong>real-world problems</strong> synthetic
+            biology could responsibly help address.
           </p>
           <p>
             Our <strong>first brainstorming</strong> sessions deliberately took
-            place before we had selected a chassis, a plasmid or even a
-            specific application. Some of us were drawn to coral degradation,
-            thinking about engineered organisms that could support reef
-            resilience or help symbiotic algae withstand thermal stress. Others
-            focused on soil health, exploring whether synthetic biology could
-            help restore degraded agricultural land or reduce dependence on
-            chemical fertilisers. A few ideas centred on environmental cleaning
-            more broadly: bioremediation of contaminated sites, or systems to
-            break down persistent pollutants before they reached waterways. But
-            the theme that kept resurfacing, across almost every discipline in
-            the room, was{" "}
+            place before we had selected a chassis, a plasmid or even a specific
+            application. Some of us were drawn to coral degradation, thinking
+            about engineered organisms that could support reef resilience or
+            help symbiotic algae withstand thermal stress. Others focused on
+            soil health, exploring whether synthetic biology could help restore
+            degraded agricultural land or reduce dependence on chemical
+            fertilisers. A few ideas centred on environmental cleaning more
+            broadly: bioremediation of contaminated sites, or systems to break
+            down persistent pollutants before they reached waterways. But the
+            theme that kept resurfacing, across almost every discipline in the
+            room, was{" "}
             <strong>
               water quality: eutrophication, nutrient runoff from agriculture
               and industry, and the excess phosphorus and nitrogen
@@ -257,8 +262,7 @@ export function WhyPhosphorus() {
               what kind of team did solving this problem actually require, and
               what were we missing?
             </strong>{" "}
-            That question became our
-            skill-gap analysis (see{" "}
+            That question became our skill-gap analysis (see{" "}
             <Link className="vsi-wikilink" to="/entrepreneurship">
               entrepreneurship
             </Link>
@@ -361,8 +365,8 @@ export function WhyPhosphorus() {
             what felt like a recent warning was in fact part of a{" "}
             <strong>problem that had persisted across generations.</strong>{" "}
             <strong>Lake Erie</strong> showed that the same broader failure to
-            manage nutrient flows could compromise something as fundamental as
-            a <strong>city&apos;s drinking-water supply</strong>.
+            manage nutrient flows could compromise something as fundamental as a{" "}
+            <strong>city&apos;s drinking-water supply</strong>.
           </p>
           <p>
             But recognising a global pattern did not lead us to claim that
@@ -413,13 +417,13 @@ export function WhyPhosphorus() {
             compounds are used and contacted companies that might generate
             phosphorus-rich wastewater. Our objective was to understand{" "}
             <strong>
-              where phosphorus entered these processes, why it became
-              difficult to manage and what industries actually needed from a
-              new treatment technology
+              where phosphorus entered these processes, why it became difficult
+              to manage and what industries actually needed from a new treatment
+              technology
             </strong>
-            . This route led us to <strong>Bio-Oils Huelva</strong>, a
-            biodiesel producer that uses phosphoric acid during the degumming
-            stage of its production process.
+            . This route led us to <strong>Bio-Oils Huelva</strong>, a biodiesel
+            producer that uses phosphoric acid during the degumming stage of its
+            production process.
           </p>
           <p>
             This input{" "}
@@ -427,11 +431,11 @@ export function WhyPhosphorus() {
               transformed an environmental concern into a tangible industrial
               challenge
             </strong>
-            . Bio-Oils explained that phosphorus was not
-            simply an abstract pollutant appearing at the end of a pipe. It was
-            connected to process operation, wastewater treatment, discharge
-            requirements and the growing need to reduce the nutrient load
-            leaving industrial facilities.
+            . Bio-Oils explained that phosphorus was not simply an abstract
+            pollutant appearing at the end of a pipe. It was connected to
+            process operation, wastewater treatment, discharge requirements and
+            the growing need to reduce the nutrient load leaving industrial
+            facilities.
           </p>
           <p>
             At the same time, the{" "}
@@ -444,11 +448,11 @@ export function WhyPhosphorus() {
             year, Member States must identify areas sensitive to eutrophication
             and determine whether they are sensitive to phosphorus, nitrogen or
             both. The Directive then progressively introduces{" "}
-            <strong>stricter tertiary-treatment requirements</strong>,
-            including total-phosphorus concentrations of{" "}
-            <strong>0.7 mg/L</strong> for plants serving between 10,000 and
-            150,000 population equivalents and <strong>0.5 mg/L</strong> for
-            larger plants, with implementation phased between 2033 and 2045.
+            <strong>stricter tertiary-treatment requirements</strong>, including
+            total-phosphorus concentrations of <strong>0.7 mg/L</strong> for
+            plants serving between 10,000 and 150,000 population equivalents and{" "}
+            <strong>0.5 mg/L</strong> for larger plants, with implementation
+            phased between 2033 and 2045.
           </p>
           <p>
             The industrial need seemed clear: companies required technologies
@@ -460,11 +464,12 @@ export function WhyPhosphorus() {
             . But our first Human Practices insight was that{" "}
             <strong>removal alone was not enough</strong>. Phosphorus is not
             simply a pollutant to be eliminated once it reaches wastewater. It
-            is an <strong>essential nutrient</strong> on which agriculture, food production and,
-            ultimately, human life depend. Allowing it to accumulate in aquatic
-            environments creates environmental harm, but simply transferring it
-            from water into another waste stream creates a different problem: a
-            useful resource is lost, while the burden is merely moved elsewhere.
+            is an <strong>essential nutrient</strong> on which agriculture, food
+            production and, ultimately, human life depend. Allowing it to
+            accumulate in aquatic environments creates environmental harm, but
+            simply transferring it from water into another waste stream creates
+            a different problem: a useful resource is lost, while the burden is
+            merely moved elsewhere.
           </p>
           <p>
             This made phosphorus recovery a question not only of{" "}
@@ -472,11 +477,10 @@ export function WhyPhosphorus() {
             phosphorus can be intercepted before it becomes pollution, it can
             potentially be{" "}
             <strong>returned to productive use rather than discarded</strong>.
-            For us, this meant
-            asking how biotechnology could help protect ecosystems while also
-            treating a limited and essential resource more responsibly, reducing
-            unnecessary waste and preserving value for the people and systems
-            that will depend on it in the future.
+            For us, this meant asking how biotechnology could help protect
+            ecosystems while also treating a limited and essential resource more
+            responsibly, reducing unnecessary waste and preserving value for the
+            people and systems that will depend on it in the future.
           </p>
           <p>
             Our central question therefore changed from “How can we remove
@@ -511,12 +515,11 @@ export function WhyPhosphorus() {
             at which to act, or were there other approaches already addressing
             the same problem more effectively? Answering that honestly meant{" "}
             <strong>looking beyond synthetic biology altogether</strong>.
-            RePhlow is not the only
-            possible response to nutrient pollution, nor should it be presented
-            as one. Eutrophication requires action across agriculture, industry,
-            wastewater management and ecosystem restoration. Two
-            non-biotechnological approaches were particularly important in
-            defining the role our project could realistically play.
+            RePhlow is not the only possible response to nutrient pollution, nor
+            should it be presented as one. Eutrophication requires action across
+            agriculture, industry, wastewater management and ecosystem
+            restoration. Two non-biotechnological approaches were particularly
+            important in defining the role our project could realistically play.
           </p>
         </div>
         <AccordionSection
@@ -531,13 +534,12 @@ export function WhyPhosphorus() {
             appropriate contexts while also generating wider ecological
             benefits. However, their applicability depends on land availability,
             hydrology, loading conditions and long-term management. They also{" "}
-            <strong>operate at a different point in the nutrient cycle from
-            rePhlow.</strong> Although they can retain phosphorus and reduce
-            the quantity reaching receiving waters, they{" "}
-            <strong>do not</strong> necessarily{" "}
             <strong>
-              recover it as a concentrated and reusable output.
-            </strong>
+              operate at a different point in the nutrient cycle from rePhlow.
+            </strong>{" "}
+            Although they can retain phosphorus and reduce the quantity reaching
+            receiving waters, they <strong>do not</strong> necessarily{" "}
+            <strong>recover it as a concentrated and reusable output.</strong>
           </p>
           <p>
             We therefore did not view rePhlow as an alternative to wetland
@@ -562,12 +564,12 @@ export function WhyPhosphorus() {
             <Cite numbers={[5]} />. These interventions are indispensable, but
             they{" "}
             <strong>
-              respond to diffuse nutrient losses distributed across land,
-              farms and drainage systems.
+              respond to diffuse nutrient losses distributed across land, farms
+              and drainage systems.
             </strong>{" "}
             They <strong>do not</strong> directly address{" "}
-            <strong>industrial streams</strong> in which phosphorus enters at
-            an identifiable facility and can potentially be treated before
+            <strong>industrial streams</strong> in which phosphorus enters at an
+            identifiable facility and can potentially be treated before
             discharge.
           </p>
           <p>
@@ -603,8 +605,8 @@ export function WhyPhosphorus() {
           <p>
             Wetland restoration, agricultural nutrient management, conventional
             wastewater treatment and industrial phosphorus recovery each address
-            different parts of that cycle. A <strong>responsible strategy</strong>{" "}
-            needs them to{" "}
+            different parts of that cycle. A{" "}
+            <strong>responsible strategy</strong> needs them to{" "}
             <strong>work together rather than compete</strong> for the claim of
             being the single solution.
           </p>
@@ -613,9 +615,9 @@ export function WhyPhosphorus() {
               RePhlow did not begin with a plasmid. It began with a concern
               close to home.
             </strong>{" "}
-            That concern revealed a <strong>global pattern</strong>, the
-            pattern led us <strong>upstream</strong>, and following it
-            transformed phosphorus from something to be{" "}
+            That concern revealed a <strong>global pattern</strong>, the pattern
+            led us <strong>upstream</strong>, and following it transformed
+            phosphorus from something to be{" "}
             <strong>removed into a resource worth recovering.</strong>
           </p>
         </div>

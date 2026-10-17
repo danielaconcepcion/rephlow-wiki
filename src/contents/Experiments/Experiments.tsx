@@ -1,15 +1,37 @@
-import { useState, type ReactNode } from "react";
-import { PageSectionNav, type PageSection } from "../../components/PageSectionNav";
+import { useMemo, useState, type ReactNode } from "react";
+import {
+  PageSectionNav,
+  type PageSection,
+} from "../../components/PageSectionNav";
 import { SectionTabs } from "../../components/LabFolders/SectionTabs";
 import { FolderStack } from "../../components/LabFolders/FolderStack";
-import { ExperimentCard, ReferenceItem } from "../../components/LabFolders/ExperimentCard";
+import { ExperimentCard } from "../../components/LabFolders/ExperimentCard";
+import { BlockReferences } from "../../components/LabFolders/BlockReferences";
+import { Rich } from "../../components/LabFolders/RichText";
+import { EncapsulationWorkflow } from "./workflowFigures/EncapsulationWorkflow";
+import { RevalorisationWorkflow } from "./workflowFigures/RevalorisationWorkflow";
+import { EnzymaticWorkflow } from "./workflowFigures/EnzymaticWorkflow";
+import { PolyphosphateWorkflow } from "./workflowFigures/PolyphosphateWorkflow";
+import { CloningWorkflow } from "./workflowFigures/CloningWorkflow";
+import { KnockoutWorkflow } from "./workflowFigures/KnockoutWorkflow";
+import {
+  NumberingContext,
+  numberExperiments,
+} from "../../components/LabFolders/numbering";
 import { PdfViewer } from "../../components/LabFolders/PdfViewer";
-import type { AccentStyle, ExperimentData } from "../../components/LabFolders/types";
+import type {
+  AccentStyle,
+  ExperimentData,
+} from "../../components/LabFolders/types";
 import { asset } from "../../utils";
+import { ALGINATE_ENCAPSULATION_FIGURES } from "./EncapsulationData";
 import { EXPERIMENT_BLOCKS } from "./data";
 import { GENE_PARTS } from "./GeneticEngineeringData";
 import { GeneSystemGrid } from "./GeneSystemGrid";
-import { ENZYME_ACTIVITIES, ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION } from "./EnzymaticImmobilisationData";
+import {
+  ENZYME_ACTIVITIES,
+  ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION,
+} from "./EnzymaticImmobilisationData";
 import { EnzymeActivityGrid } from "./EnzymeActivityGrid";
 import { EcosystemMap } from "../../components/EcosystemMap";
 import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
@@ -40,19 +62,34 @@ const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
         // A sub-block with no experiments of its own (e.g. a closing prose
         // section) has nothing to list at Level 2 — it's still a real,
         // scroll-anchored Level-1 target on its own.
-        children: subBlock.experiments?.map((experiment) => ({
-          id: `${subBlock.id}--${experiment.id}`,
-          label: experiment.tabLabel,
-          onSelect: () => document.getElementById(`folder-tab-${experiment.id}`)?.click(),
-        })),
+        children: [
+          ...(subBlock.experiments?.map((experiment) => ({
+            id: `${subBlock.id}--${experiment.id}`,
+            label: experiment.tabLabel,
+            onSelect: () =>
+              document.getElementById(`folder-tab-${experiment.id}`)?.click(),
+          })) ?? []),
+          ...(subBlock.references?.length
+            ? [{ id: `${subBlock.id}--references`, label: "References" }]
+            : []),
+        ],
       }));
+      if (block.references?.length) {
+        sections.push({ id: `${block.id}--references`, label: "References" });
+      }
       return [block.id, sections];
     }
-    const sections: PageSection[] = (block.experiments ?? []).map((experiment) => ({
-      id: `${block.id}--${experiment.id}`,
-      label: experiment.tabLabel,
-      onSelect: () => document.getElementById(`folder-tab-${experiment.id}`)?.click(),
-    }));
+    const sections: PageSection[] = (block.experiments ?? []).map(
+      (experiment) => ({
+        id: `${block.id}--${experiment.id}`,
+        label: experiment.tabLabel,
+        onSelect: () =>
+          document.getElementById(`folder-tab-${experiment.id}`)?.click(),
+      }),
+    );
+    if (block.references?.length) {
+      sections.push({ id: `${block.id}--references`, label: "References" });
+    }
     return [block.id, sections];
   }),
 );
@@ -66,26 +103,42 @@ function Figure({
   alt,
   caption,
   className = "",
+  dir = "assets/project-description",
 }: {
   src: string;
   alt: string;
   caption?: ReactNode;
   className?: string;
+  /** Folder under /public the image lives in — the pathway diagram is
+   * shared with Project Description, every other one is this page's own. */
+  dir?: string;
 }) {
   return (
-    <figure className={`vsi-figure vsi-figure--full pd-figure ${className}`.trim()}>
-      <img src={asset(`assets/project-description/${src}`)} alt={alt} />
-      {caption && <figcaption className="vsi-figure__caption">{caption}</figcaption>}
+    <figure
+      className={`vsi-figure vsi-figure--full pd-figure ${className}`.trim()}
+    >
+      <img src={asset(`${dir}/${src}`)} alt={alt} />
+      {caption && (
+        <figcaption className="vsi-figure__caption">{caption}</figcaption>
+      )}
     </figure>
   );
 }
 
-function paragraphs(text: ReactNode | ReactNode[] | undefined, className: string): ReactNode {
+/** Block, sub-block and closing prose. Each paragraph goes through Rich,
+ * the same inline-markup pass the folder cards use, so a data file can
+ * write **bold**, *italic* and [n] citations in plain strings exactly as
+ * the team's Notion pages do (a paragraph already written as JSX passes
+ * through untouched). */
+function paragraphs(
+  text: ReactNode | ReactNode[] | undefined,
+  className: string,
+): ReactNode {
   if (text === undefined || text === null) return null;
   const list = Array.isArray(text) ? text : [text];
   return list.map((paragraph, index) => (
     <p className={className} key={index}>
-      {paragraph}
+      <Rich text={paragraph} />
     </p>
   ));
 }
@@ -93,10 +146,23 @@ function paragraphs(text: ReactNode | ReactNode[] | undefined, className: string
 /** Wraps a block's folder deck in its optional palette scope (see
  * ExperimentBlockData.palette / .lab-block--mostaza) — scoped to the deck
  * only, so the block's surrounding prose keeps the page's own colours. */
-function DeckPalette({ palette, children }: { palette?: "mostaza"; children: ReactNode }) {
+function DeckPalette({
+  palette,
+  children,
+}: {
+  palette?: "mostaza";
+  children: ReactNode;
+}) {
   if (!palette) return <>{children}</>;
   return <div className={`lab-block--${palette}`}>{children}</div>;
 }
+
+/** The workflow figure a sub-block opens with, where it has one. */
+const SUBBLOCK_WORKFLOWS: Record<string, ReactNode> = {
+  "polyphosphate-accumulation-study": <PolyphosphateWorkflow />,
+  cloning: <CloningWorkflow />,
+  "knocking-out": <KnockoutWorkflow />,
+};
 
 function experimentFolders(experiments: ExperimentData[]) {
   return experiments.map((experiment, index) => ({
@@ -112,7 +178,14 @@ function experimentFolders(experiments: ExperimentData[]) {
 
 export function Experiments() {
   const [activeBlockId, setActiveBlockId] = useState(EXPERIMENT_BLOCKS[0].id);
-  const activeBlock = EXPERIMENT_BLOCKS.find((block) => block.id === activeBlockId) ?? EXPERIMENT_BLOCKS[0];
+  const activeBlock =
+    EXPERIMENT_BLOCKS.find((block) => block.id === activeBlockId) ??
+    EXPERIMENT_BLOCKS[0];
+  // Figure and table numbers for the block on screen, restarting with it.
+  const numbering = useMemo(
+    () => numberExperiments(activeBlock.subBlocks ?? [activeBlock]),
+    [activeBlock],
+  );
 
   return (
     <div className="lab-folders">
@@ -129,7 +202,10 @@ export function Experiments() {
 
       <div className="lab-folders__menu">
         <SectionTabs
-          tabs={EXPERIMENT_BLOCKS.map((block) => ({ id: block.id, label: block.label }))}
+          tabs={EXPERIMENT_BLOCKS.map((block) => ({
+            id: block.id,
+            label: block.label,
+          }))}
           activeId={activeBlockId}
           onChange={setActiveBlockId}
           ariaLabel="Experiment blocks"
@@ -144,162 +220,227 @@ export function Experiments() {
         />
 
         <div className="lab-content-wrap">
-          <div
-            className="lab-block"
-            key={activeBlock.id}
-            style={{ "--folder-accent": activeBlock.accent } as AccentStyle}
-          >
-            {/* No block-level heading here on purpose — the block's name is
-                already the selected pill above (.lab-folders__menu), so
-                repeating it as an on-page title would be a redundant
-                heading. The block's own intro, when it has one, still runs
-                narrow and centered like ProjectDescription's prose. */}
-            {activeBlock.intro && <div className="lab-prose">{paragraphs(activeBlock.intro, "lab-block__intro")}</div>}
-
-            {/* Genetic engineering's conceptual "five parts of the system"
-                sits between the block intro and its two workflow
-                sub-blocks — a bespoke visual, not a folder deck, since none
-                of the five are experiments (see GeneSystemGrid.tsx). Wide,
-                like the folder decks below it, not capped to .lab-prose. */}
-            {activeBlock.id === "genetic-engineering" && (
-              <>
+          <NumberingContext.Provider value={numbering}>
+            <div
+              className="lab-block"
+              key={activeBlock.id}
+              style={{ "--folder-accent": activeBlock.accent } as AccentStyle}
+            >
+              {/* No block-level heading here on purpose — the block's name is
+                  already the selected pill above (.lab-folders__menu), so
+                  repeating it as an on-page title would be a redundant
+                  heading. The block's own intro, when it has one, still runs
+                  narrow and centered like ProjectDescription's prose. */}
+              {activeBlock.intro && (
                 <div className="lab-prose">
-                  <Figure
-                    src="engineered-phosphorus-pathway.webp"
-                    alt="Schematic of P. putida KT2440 redesigned as a phosphate-accumulating organism, with PPK1 and PstSCAB added in green and Ppx, PpkB and PitB inactivated in red"
-                    caption="Schematic of P. putida KT2440 redesigned as a PAO. In green, the functions we add (PPK1 and PstSCAB); in red, the ones we inactivate (Ppx, PpkB/PPK2 and PitB). The arrows follow the phosphate: it enters through PstSCAB, is fixed as polyP by PPK1, and both the exits (PitB) and the degradation/consumption of polyP (Ppx, PpkB) are blocked."
-                    className="lab-figure--pathway"
-                  />
+                  {paragraphs(activeBlock.intro, "lab-block__intro")}
                 </div>
-                <section className="lab-subblock" aria-label="The five parts of the system">
-                  <div className="lab-prose">
-                    <h2 className="lab-block__subtitle">The five parts of the system</h2>
-                  </div>
-                  <GeneSystemGrid parts={GENE_PARTS} />
-                </section>
-              </>
-            )}
+              )}
 
-            {/* Enzymatic immobilisation's own conceptual "four parts of the
-                system" (PLA/PLC/NAP/Phytases) — same bespoke placement as
-                Genetic engineering's five parts, above. The source mentions
-                a schematic of "the functionalised rePhlow sphere" but never
-                actually embeds it (an empty callout carrying only the
-                figure's own caption) — kept honest as a real, captioned
-                placeholder rather than silently dropped or faked. */}
-            {activeBlock.id === "enzymatic-immobilisation" && (
-              <>
-                <div className="lab-prose">
-                  <figure className="record-figure" style={{ margin: "8px 0 24px" }}>
-                    <div className="record-figure__placeholder" aria-hidden="true">
-                      [ figure placeholder ]
-                    </div>
-                    <figcaption>{ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION}</figcaption>
-                  </figure>
-                </div>
-                <section className="lab-subblock" aria-label="The four parts of the system">
-                  <div className="lab-prose">
-                    <h2 className="lab-block__subtitle">The four parts of the system</h2>
-                    <p className="lab-block__intro">
-                      The degumming stream is not hydrolysed by a single enzyme, but by a cocktail that acts
-                      synergistically, each activity attacking a different bond of the substrate. Four catalytic
-                      activities were targeted, all selected to retain function at the pH 5.0 and 30 ºC of the
-                      acid-degummed effluent.
-                    </p>
-                  </div>
-                  <EnzymeActivityGrid activities={ENZYME_ACTIVITIES} />
-                  <div className="lab-prose">
-                    <p className="lab-block__intro" style={{ marginTop: 20 }}>
-                      Overall, a hierarchical bioinformatic screen narrowed thousands of candidates down to{" "}
-                      <strong>7 enzymes</strong> covering these four activities (two representatives each, except
-                      PLA, which is covered by Lecitase® Ultra as the immobilisation model). Their selection,
-                      production and characterisation form the first block; the chemistry used to fix them onto the
-                      support forms the second.
-                    </p>
-                  </div>
-                </section>
-              </>
-            )}
+              {/* Revalorisation's workflow closes its intro, where the
+                  original image sat — redrawn, with linked panels. */}
+              {activeBlock.id === "revalorisation" && (
+                <RevalorisationWorkflow />
+              )}
 
-            {activeBlock.subBlocks ? (
-              /* A block with multiple labelled sub-sections (e.g. Alginate
-                 encapsulation's "1. ..."/"2. ..." threads) — each gets its
-                 own heading, intro and independent folder-tab row/deck, so
-                 switching folders in one never disturbs the others. With no
-                 block-level heading above it, the sub-block heading is the
-                 page's real, promoted section title (h2, not h3). A
-                 sub-block with no experiments (e.g. a closing synthesis)
-                 renders as heading + intro only, no folder deck. */
-              activeBlock.subBlocks.map((subBlock) => (
-                <section className="lab-subblock" id={subBlock.id} key={subBlock.id}>
+              {/* Alginate encapsulation's two intro diagrams: the coaxial
+                  setup the whole block is built around, and the twelve-stage
+                  workflow its experiments walk through — the latter redrawn
+                  as a vector figure whose panels open their experiments. */}
+              {activeBlock.id === "encapsulation" && (
+                <>
                   <div className="lab-prose">
-                    <h2 className="lab-subblock__heading">{subBlock.heading}</h2>
-                    {paragraphs(subBlock.intro, "lab-subblock__intro")}
-                    {!!subBlock.references?.length && (
-                      <ul className="lab-subblock__references">
-                        {subBlock.references.map((reference, index) => (
-                          <ReferenceItem scope={subBlock.id} text={reference} key={index} />
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                  {subBlock.experiments && (
-                    <DeckPalette palette={activeBlock.palette}>
-                      <FolderStack
-                        ariaLabel={`${subBlock.heading} experiments`}
-                        folders={experimentFolders(subBlock.experiments)}
+                    {ALGINATE_ENCAPSULATION_FIGURES.map((figure) => (
+                      <Figure
+                        key={figure.src}
+                        dir="assets/experiments/encapsulation"
+                        src={figure.src}
+                        alt={figure.alt}
+                        caption={figure.caption}
                       />
-                    </DeckPalette>
-                  )}
-                  {subBlock.outro && (
-                    <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
-                  )}
-                </section>
-              ))
-            ) : null}
-
-            {/* A single reference list shared by the whole block (see
-                ExperimentBlockData.references) — e.g. Enzymatic
-                immobilisation, whose source cites across both sub-blocks
-                from one numbered list rather than keeping a separate list
-                per sub-block. Rendered once, after every sub-block, as its
-                own section so it gets the same section-break spacing as
-                every sub-block transition (see .lab-subblock + .lab-subblock). */}
-            {!!activeBlock.references?.length && (
-              <section className="lab-subblock">
-                <div className="lab-prose">
-                  <h2 className="lab-subblock__heading lab-block__references-heading">References</h2>
-                  <ul className="lab-block__references">
-                    {activeBlock.references.map((reference, index) => (
-                      <ReferenceItem scope={activeBlock.id} text={reference} key={index} />
                     ))}
-                  </ul>
-                </div>
-              </section>
-            )}
+                  </div>
+                  <EncapsulationWorkflow />
+                </>
+              )}
 
-            {!activeBlock.subBlocks && (
-              <DeckPalette palette={activeBlock.palette}>
-              <FolderStack
-                ariaLabel={`${activeBlock.label} experiments`}
-                folders={[
-                  ...experimentFolders(activeBlock.experiments ?? []),
-                  {
-                    id: "protocols",
-                    label: "Notebook",
-                    variant: "protocols" as const,
-                    content: (
-                      <PdfViewer
-                        src={asset(activeBlock.protocolsPdfSrc)}
-                        title={`${activeBlock.label} notebook`}
-                      />
-                    ),
-                  },
-                ]}
-              />
-              </DeckPalette>
-            )}
-          </div>
+              {/* Genetic engineering's conceptual "five parts of the system"
+                  sits between the block intro and its two workflow
+                  sub-blocks — a bespoke visual, not a folder deck, since none
+                  of the five are experiments (see GeneSystemGrid.tsx). Wide,
+                  like the folder decks below it, not capped to .lab-prose. */}
+              {activeBlock.id === "genetic-engineering" && (
+                <>
+                  <div className="lab-prose">
+                    <Figure
+                      src="engineered-phosphorus-pathway.webp"
+                      alt="Schematic of P. putida KT2440 redesigned as a phosphate-accumulating organism, with PPK1 and PstSCAB added in green and Ppx, PpkB and PitB inactivated in red"
+                      caption="Schematic of P. putida KT2440 redesigned as a PAO. In green, the functions we add (PPK1 and PstSCAB); in red, the ones we inactivate (Ppx, PpkB/PPK2 and PitB). The arrows follow the phosphate: it enters through PstSCAB, is fixed as polyP by PPK1, and both the exits (PitB) and the degradation/consumption of polyP (Ppx, PpkB) are blocked."
+                      className="lab-figure--pathway"
+                    />
+                  </div>
+                  <section
+                    className="lab-subblock"
+                    aria-label="The five parts of the system"
+                  >
+                    <div className="lab-prose">
+                      <h2 className="lab-block__subtitle">
+                        The five parts of the system
+                      </h2>
+                    </div>
+                    <GeneSystemGrid parts={GENE_PARTS} />
+                  </section>
+                </>
+              )}
+
+              {/* Enzymatic immobilisation's own conceptual "four parts of the
+                  system" (PLA/PLC/NAP/Phytases) — same bespoke placement as
+                  Genetic engineering's five parts, above. The source mentions
+                  a schematic of "the functionalised rePhlow sphere" but never
+                  actually embeds it (an empty callout carrying only the
+                  figure's own caption) — kept honest as a real, captioned
+                  placeholder rather than silently dropped or faked. */}
+              {activeBlock.id === "enzymatic-immobilisation" && (
+                <>
+                  {/* The six-step figure, redrawn, with linked panels. */}
+                  <EnzymaticWorkflow />
+                  <div className="lab-prose">
+                    <figure
+                      className="record-figure"
+                      style={{ margin: "8px 0 24px" }}
+                    >
+                      <div
+                        className="record-figure__placeholder"
+                        aria-hidden="true"
+                      >
+                        [ figure placeholder ]
+                      </div>
+                      <figcaption>
+                        {ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION}
+                      </figcaption>
+                    </figure>
+                  </div>
+                  <section
+                    className="lab-subblock"
+                    aria-label="The four parts of the system"
+                  >
+                    <div className="lab-prose">
+                      <h2 className="lab-block__subtitle">
+                        The four parts of the system
+                      </h2>
+                      <p className="lab-block__intro">
+                        The degumming stream is not hydrolysed by a single
+                        enzyme, but by a cocktail that acts synergistically,
+                        each activity attacking a different bond of the
+                        substrate. Four catalytic activities were targeted, all
+                        selected to retain function at the pH 5.0 and 30 ºC of
+                        the acid-degummed effluent.
+                      </p>
+                    </div>
+                    <EnzymeActivityGrid activities={ENZYME_ACTIVITIES} />
+                    <div className="lab-prose">
+                      <p className="lab-block__intro" style={{ marginTop: 20 }}>
+                        Overall, a hierarchical bioinformatic screen narrowed
+                        thousands of candidates down to{" "}
+                        <strong>7 enzymes</strong> covering these four
+                        activities (two representatives each, except PLA, which
+                        is covered by Lecitase® Ultra as the immobilisation
+                        model). Their selection, production and characterisation
+                        form the first block; the chemistry used to fix them
+                        onto the support forms the second.
+                      </p>
+                    </div>
+                  </section>
+                </>
+              )}
+
+              {activeBlock.subBlocks
+                ? /* A block with multiple labelled sub-sections (e.g. Alginate
+                   encapsulation's "1. ..."/"2. ..." threads) — each gets its
+                   own heading, intro and independent folder-tab row/deck, so
+                   switching folders in one never disturbs the others. With no
+                   block-level heading above it, the sub-block heading is the
+                   page's real, promoted section title (h2, not h3). A
+                   sub-block with no experiments (e.g. a closing synthesis)
+                   renders as heading + intro only, no folder deck. */
+                  activeBlock.subBlocks.map((subBlock) => (
+                    <section
+                      className="lab-subblock"
+                      id={subBlock.id}
+                      key={subBlock.id}
+                    >
+                      <div className="lab-prose">
+                        <h2 className="lab-subblock__heading">
+                          {subBlock.heading}
+                        </h2>
+                        {paragraphs(subBlock.intro, "lab-subblock__intro")}
+                      </div>
+                      {/* Genetic engineering's three workflows, redrawn: each
+                        closes its sub-block's intro, where the original image
+                        sat, and its panels open the experiments below. */}
+                      {SUBBLOCK_WORKFLOWS[subBlock.id]}
+                      {subBlock.experiments && (
+                        <DeckPalette palette={activeBlock.palette}>
+                          <FolderStack
+                            ariaLabel={`${subBlock.heading} experiments`}
+                            folders={experimentFolders(subBlock.experiments)}
+                          />
+                        </DeckPalette>
+                      )}
+                      {subBlock.outro && (
+                        <div className="lab-prose">
+                          {paragraphs(subBlock.outro, "lab-subblock__outro")}
+                        </div>
+                      )}
+                      {/* A sub-block that keeps its own numbered list (rather
+                        than sharing the block's) folds it away here, at the
+                        end of its own section. */}
+                      {!!subBlock.references?.length && (
+                        <BlockReferences
+                          id={`${subBlock.id}--references`}
+                          scope={subBlock.id}
+                          items={subBlock.references}
+                        />
+                      )}
+                    </section>
+                  ))
+                : null}
+
+              {/* A single reference list shared by the whole block (see
+                  ExperimentBlockData.references), folded away at the foot
+                  of the page; an inline "[n]" anywhere above opens it on
+                  the way down (see BlockReferences). */}
+              {!!activeBlock.references?.length && (
+                <BlockReferences
+                  id={`${activeBlock.id}--references`}
+                  scope={activeBlock.id}
+                  items={activeBlock.references}
+                />
+              )}
+
+              {!activeBlock.subBlocks && (
+                <DeckPalette palette={activeBlock.palette}>
+                  <FolderStack
+                    ariaLabel={`${activeBlock.label} experiments`}
+                    folders={[
+                      ...experimentFolders(activeBlock.experiments ?? []),
+                      {
+                        id: "protocols",
+                        label: "Notebook",
+                        variant: "protocols" as const,
+                        content: (
+                          <PdfViewer
+                            src={asset(activeBlock.protocolsPdfSrc)}
+                            title={`${activeBlock.label} notebook`}
+                          />
+                        ),
+                      },
+                    ]}
+                  />
+                </DeckPalette>
+              )}
+            </div>
+          </NumberingContext.Provider>
         </div>
       </div>
     </div>

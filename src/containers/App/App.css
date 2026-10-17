@@ -35,6 +35,7 @@
   /* Tipografía */
   --font-display: "Space Grotesk", "Segoe UI", sans-serif;
   --font-body: "Inter", "Segoe UI", sans-serif;
+  --font-chalk: "Kalam", "Segoe Print", cursive;
 
   /* Alturas de las secciones — AJUSTA AQUÍ el "recorrido" del problema.
      Más alto = scroll más lento y dramático. */

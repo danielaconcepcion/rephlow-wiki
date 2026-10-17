@@ -493,6 +493,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource/kalam@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource/kalam@npm:5.3.0"
+  checksum: 10c0/ecf6d70e36e3f1aeb3d66b5cd2d05f8377750b4626cb023e8added5b5c4d3ced21eb4d9ea06f5a10f178fe4c6a059685c7ec0872c4e36721c7d54e8a32b6d693
+  languageName: node
+  linkType: hard
+
 "@fontsource/space-grotesk@npm:^5.2.8":
   version: 5.2.10
   resolution: "@fontsource/space-grotesk@npm:5.2.10"
@@ -2738,6 +2745,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.36.0"
     "@fontsource/inter": "npm:^5.2.8"
+    "@fontsource/kalam": "npm:^5.3.0"
     "@fontsource/space-grotesk": "npm:^5.2.8"
     "@types/d3-force": "npm:3.0.10"
     "@types/d3-selection": "npm:3.0.11"

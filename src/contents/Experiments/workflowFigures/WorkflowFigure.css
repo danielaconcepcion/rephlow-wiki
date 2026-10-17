@@ -1,0 +1,51 @@
+/* The redrawn workflow figures (see shared.tsx). Each keeps its original
+   composition at every width: narrower than its minimum, the figure
+   scrolls sideways rather than reflowing. */
+
+.wff {
+  max-width: 1060px;
+  margin: 28px auto 30px;
+}
+
+.wff__scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.wff__svg {
+  display: block;
+  width: 100%;
+  min-width: 700px;
+  height: auto;
+}
+
+.wff-panel {
+  cursor: pointer;
+}
+
+.wff-panel__bg {
+  stroke: transparent;
+  stroke-width: 4;
+  transition:
+    stroke 0.18s ease,
+    filter 0.18s ease;
+}
+
+.wff-panel:hover .wff-panel__bg,
+.wff-panel:focus-visible .wff-panel__bg {
+  stroke: #1b2340;
+  filter: brightness(1.03);
+}
+
+.wff-panel:focus-visible {
+  outline: none;
+}
+
+.wff__caption {
+  margin: 12px auto 0;
+  max-width: 790px;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.55;
+  text-align: center;
+}

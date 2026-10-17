@@ -8,7 +8,7 @@ export { Model } from "./Model/Model.tsx";
 export { Hardware } from "./Hardware.tsx";
 // Laboratory
 export { Experiments } from "./Experiments/Experiments.tsx";
-export { Measurements } from "./Measurements.tsx";
+export { Measurements } from "./Measurements/Measurements.tsx";
 export { Results } from "./Results/Results.tsx";
 export { Safety } from "./Safety.tsx";
 // Engagement

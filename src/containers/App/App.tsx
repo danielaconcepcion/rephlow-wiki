@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { stringToSlug } from "../../utils";
 import { getPathMapping } from "../../utils/getPathMapping";
 import { useEffect, useLayoutEffect, useRef } from "react";
@@ -76,6 +76,14 @@ const App = () => {
             />
           ),
         )}
+        {/* The measurement page is judged at iGEM's standard URL, which
+            is singular (see pages.ts); the plural it used to live at keeps
+            working for anything already linking to it. */}
+        <Route
+          path="/measurements"
+          element={<Navigate to="/measurement" replace />}
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
 
