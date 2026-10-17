@@ -85,13 +85,13 @@ const MINING: ResultData = {
               "Phospholipase C (PLC)",
               "plc_Tk",
               "*Thermococcus kodakarensis*",
-              "*Clostridium perfringens* or *Bacillus cereus* [Sigma Aldrich] plc",
+              "*Clostridium perfringens* or *Bacillus cereus* plc [Sigma-Aldrich]",
             ],
             [
               "Phospholipase C (PLC)",
               "cerA_Bc",
               "*Bacillus cereus*",
-              "*Clostridium perfringens* or *Bacillus cereus* [Sigma Aldrich] plc",
+              "*Clostridium perfringens* or *Bacillus cereus* plc [Sigma-Aldrich]",
             ],
             [
               "Phospholipase A (PLA)",
@@ -190,7 +190,7 @@ const IN_SILICO: ResultData = {
         },
       ],
       figuresCaption:
-        "Structural modelling of the candidate enzymes in PyMOL. The spectrum colouring highlights the three-dimensional topology from the N-terminal end (blue) to the C-terminal (red), showing the accessibility for the fusion of the His tag. For multi-homomeric structures, only one subunit is shown coloured.",
+        "Structural modelling of the candidate enzymes in PyMOL. The spectrum colouring highlights the topology from the N-terminus (blue) to the C-terminus (red), used to judge the accessibility for the His-tag fusion. For multi-homomeric structures, only one subunit is shown coloured.",
       downloadsLabel: "PyMOL sessions (termini)",
       downloads: terminiSessions,
     },
@@ -400,12 +400,6 @@ const EXPRESSION: ResultData = {
             "SDS-PAGE of the recombinant expression of the Addgene constructs under IPTG induction at 20 ºC. Lanes: (M) NZYBlue® marker; total (T) and soluble (S) fractions of pET-28a(+) (1); AphA (2); pET-22b(+) (3); CerA (4). The black arrows mark the band corresponding to the enzyme, where present.",
         },
       ],
-      observations:
-        "The two phospholipases C were **cytotoxic**: Plc and CerA caused a sharp OD₆₀₀ drop the morning after induction, CerA partly compensable with about thirty times the culture volume and Plc not compensable at all.",
-      interpretation:
-        "Because the toxicity is a property of the enzyme and not a parameter that can be tuned in a live cell, PLC was redirected to cell-free in vitro transcription and translation (IVTT), a system that does not depend on host viability [7], rather than being forced through a route that could not work. The more consequential reading of these gels, however, is what the soluble lanes did not show, and that is the subject of the next step.",
-      expectation:
-        "That IPTG should outperform auto-induction was expected, following from the full derepression of the lacUV5 promoter against the slower, density-linked induction of the auto-induction medium [5]. The PLC cytotoxicity had been anticipated as a risk, since these enzymes hydrolyse the host's own membrane phospholipids [6], so its appearance confirmed the design rather than contradicting it.",
     },
   ],
 };
@@ -526,7 +520,7 @@ const LECITASE: ResultData = {
           src: `${FIGURES}/lecitase-stock-concentration.png`,
           alt: "Interpolation of the Lecitase Ultra dilutions on the BSA standard line.",
           caption:
-            "Determination of the concentration of the Lecitase® Ultra stock. In green, the interpolation of the concentrations falling in the linear range of the standard line, in blue.",
+            "Determination of the concentration of the Lecitase® Ultra stock. In green, the interpolation of the dilutions falling in the linear range on the standard line (blue).",
         },
       ],
       tables: [
@@ -596,7 +590,7 @@ const STRATEGY_A: ResultData = {
           src: `${FIGURES}/strategy-a-time-course.png`,
           alt: "Time course of immobilisation on the preactivated support, with and without Triton X-100.",
           caption:
-            "Time course of immobilisation on glutaraldehyde-activated MANAE-agarose. (A) Without Triton X-100 and (B) with Triton X-100, following the activity of the immobilisation suspension (circles) and of the clarified supernatant (squares) over time against the no-immobilisation control (dashed). (C) Immobilisation yield over time for the two conditions.",
+            "Time course of immobilisation on glutaraldehyde-activated MANAE-agarose. (A) Without Triton X-100 and (B) with Triton X-100, following the activity of the immobilisation suspension (circles) and of the clarified supernatant (squares) over time against the no-immobilisation control (dashed). (C) Immobilisation yield (%) over time for the two conditions, without (circles) and with (squares) Triton X-100.",
         },
       ],
       observations:
@@ -622,7 +616,7 @@ const STRATEGY_B: ResultData = {
           src: `${FIGURES}/strategy-b-time-course.png`,
           alt: "Time course of ionic adsorption followed by glutaraldehyde crosslinking, with and without Triton X-100.",
           caption:
-            "Time course of immobilisation on MANAE-agarose with subsequent glutaraldehyde crosslinking. (A) Without Triton X-100 and (B) with Triton X-100, following the activity of the suspension and the clarified supernatant at 24 h of adsorption, 1 h after adding glutaraldehyde (25 h) and 24 h after removing it (49 h). (C) Immobilisation yield over time for the two conditions.",
+            "Time course of immobilisation on MANAE-agarose with subsequent glutaraldehyde crosslinking. (A) Without Triton X-100 and (B) with Triton X-100, following the activity of the suspension and the clarified supernatant at 24 h of adsorption, 1 h after adding glutaraldehyde (25 h) and 24 h after removing it (49 h). (C) Immobilisation yield (%) over time for the two conditions, without (circles) and with (squares) Triton X-100.",
         },
       ],
       observations:
