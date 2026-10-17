@@ -6211,6 +6211,7 @@ export function Sustainability() {
               Reading 1: what one cubic metre gives back
             </h3>
             <div
+              className="sus-narrow"
               ref={kpiRef}
               style={{
                 display: "grid",
@@ -6430,6 +6431,7 @@ export function Sustainability() {
               use, against the conventional chemical route.
             </p>
             <div
+              className="sus-narrow"
               style={{
                 margin: "10px 0 28px",
                 overflowX: "auto",
@@ -10094,7 +10096,7 @@ export function Sustainability() {
               </strong>
               .
             </p>
-            <figure style={{ margin: "34px 0" }}>
+            <figure className="sus-narrow" style={{ margin: "34px 0" }}>
               <div
                 style={{
                   borderRadius: "18px",
@@ -13361,7 +13363,7 @@ export function Sustainability() {
                 </div>
               </button>
             </div>
-            <figure style={{ margin: "34px 0" }}>
+            <figure className="sus-narrow" style={{ margin: "34px 0" }}>
               <div
                 style={{
                   borderRadius: "18px",
