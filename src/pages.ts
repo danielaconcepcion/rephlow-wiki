@@ -144,10 +144,12 @@ const Pages: Page[] = [
     name: "Human practices",
     title: "Human Practices",
     lead: "Science shaped by society.",
-    hideHeader: true,
     path: "/human-practices",
     component: HumanPractices,
     docTitle: "Human Practices — The Phosphorus Route — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 41,
   },
   {
     name: "Collaboration and Partnership",

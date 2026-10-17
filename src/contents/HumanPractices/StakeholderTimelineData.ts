@@ -23,14 +23,6 @@ export interface StakeholderEvent {
   fullEntryHtml: string;
 }
 
-export interface PendingEntry {
-  id: string;
-  name: string;
-  category: Category;
-  status: string;
-  note: string;
-}
-
 export interface UserRow {
   stakeholder: string;
   relationship: string;
@@ -487,43 +479,6 @@ export const EVENTS: StakeholderEvent[] = [
   },
 ];
 
-export const PENDING_ENTRIES: PendingEntry[] = [
-  {
-    id: "donana",
-    name: "Doñana Natural Space",
-    category: "Environment",
-    status: "Interviewee, date and full entry to confirm",
-    note: "Our route physically passed through the wetlands and estuarine systems around Huelva, near Doñana, a UNESCO World Heritage site and critical stopover for migratory birds, whose water balance is threatened by agricultural over-extraction and nutrient runoff.",
-  },
-  {
-    id: "canal-imdea",
-    name: "Canal de Isabel II / IMDEA",
-    category: "Environment",
-    status: "Date to confirm",
-    note: "Consulted as large-scale water-treatment entities. They made clear that conventional methods, chemical precipitation among them, remain the backbone of most treatment systems, and that these entities are not looking to replace their infrastructure overnight. RePhlow's realistic destination is to complement, not substitute, these methods. What this community needs above all is confidence: safety, continuous monitoring and a credible path to scalability.",
-  },
-  {
-    id: "beehives-stakeholder",
-    name: "Beehives",
-    category: "Environment",
-    status: "Pending — content not yet documented as a stakeholder interview",
-    note: "The field visit itself, and what it revealed about phosphorus as both pollutant and essential nutrient, is documented in Travel Archive.",
-  },
-  {
-    id: "entrepreneurship-pending",
-    name: "Entrepreneurship (PCM, ComplUemprende, APTE, ENISA)",
-    category: "Entrepreneurship",
-    status: "Pending — full consultation details not yet available",
-    note: "These consultations shaped rePhlow's implementation strategy: modular deployment, retrofit compatibility, and the treated-water-reuse and phosphorus-recovery model referenced as design responses in the Access & Fairness and Industrial Feasibility values of the Guiding Compass.",
-  },
-  {
-    id: "bio-oils-interviewee",
-    name: "Bio-Oils Huelva interviewee",
-    category: "Industry",
-    status: "Interviewee name to confirm",
-    note: "The organisation and the substance of the consultation are documented in chronological entry 1; the individual interviewee still needs to be confirmed.",
-  },
-] as PendingEntry[];
 
 export const USER_ROWS: UserRow[] = [
   {

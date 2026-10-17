@@ -2,6 +2,21 @@
    hierarchy). Each section's own CSS file (WhyPhosphorus.css,
    DesignCompass.css, etc.) owns its visual identity. */
 
+/* The page's opening paragraph, under the shared lab hero (the same hero
+   Collaboration and Partnership uses): the editorial column and justified
+   setting of .cp-notion-intro. */
+.hp-page-intro {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 0 20px;
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.72;
+  text-align: justify;
+  text-align-last: center;
+  hyphens: auto;
+}
+
 .human-practices-sections {
   display: flex;
   flex-direction: column;
@@ -89,7 +104,6 @@
 .hp-compass__area > p:not(.hp-central-question),
 .hp-compass__intro,
 .hp-compass__prose,
-.hp-timeline-pending,
 .hp-users > h3,
 .hp-users > h4,
 .hp-users > p,
@@ -119,7 +133,6 @@
 .hp-timeline__panel
   > p:not(.hp-timeline__question):not(.hp-timeline__panel-meta),
 .hp-timeline__readmore p,
-.hp-timeline-pending__note,
 .hp-users > p,
 .hp-stop__content > p:not(.hp-stop__evidence-boundary):not(.hp-stop__crosslink),
 .hp-stepper > p,
@@ -147,7 +160,6 @@
   .hp-timeline__panel
     > p:not(.hp-timeline__question):not(.hp-timeline__panel-meta),
   .hp-timeline__readmore p,
-  .hp-timeline-pending__note,
   .hp-users > p,
   .hp-stop__content
     > p:not(.hp-stop__evidence-boundary):not(.hp-stop__crosslink),

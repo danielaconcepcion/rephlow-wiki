@@ -88,19 +88,13 @@ const HUMAN_PRACTICES_SECTIONS: PageSection[] = [
 
 export function HumanPractices() {
   return (
-    <main className="human-practices-page">
-      <div className="page-shell">
-        <section className="page-hero" id="top">
-          <h1 className="page-hero__title">Human Practices</h1>
-          <p className="page-hero__lede">
-            Human Practices was not a collection of interviews for rePhlow. It
-            was the process that followed phosphorus from an industrial
-            degumming tank to a collapsing lagoon, a reservoir, a laboratory
-            bench and back — and let what we found along the way change the
-            project itself.
-          </p>
-        </section>
-      </div>
+    <div className="human-practices-page">
+      <p className="hp-page-intro">
+        Human Practices was not a collection of interviews for rePhlow. It was
+        the process that followed phosphorus from an industrial degumming tank
+        to a collapsing lagoon, a reservoir, a laboratory bench and back — and
+        let what we found along the way change the project itself.
+      </p>
 
       <div className="page-with-section-nav">
         <PageSectionNav
@@ -118,6 +112,6 @@ export function HumanPractices() {
           <WhatRouteRevealed />
         </div>
       </div>
-    </main>
+    </div>
   );
 }
