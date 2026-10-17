@@ -1319,6 +1319,74 @@
 }
 .pdf-viewer__download { align-self: flex-start; }
 
+.record-download:is(button) {
+  font: inherit;
+  cursor: pointer;
+}
+
+.protocol-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 32px);
+  background: rgba(8, 25, 31, 0.66);
+  backdrop-filter: blur(8px);
+}
+
+.protocol-modal__dialog {
+  width: min(1120px, 100%);
+  height: min(88vh, 900px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 28px 80px rgba(4, 20, 25, 0.34);
+}
+
+.protocol-modal__bar {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 12px 10px 22px;
+  border-bottom: 1px solid var(--lab-line);
+}
+
+.protocol-modal__close {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(24, 62, 71, 0.08);
+  color: var(--ink);
+  font: 400 1.8rem/1 var(--font-body);
+  cursor: pointer;
+}
+
+.protocol-modal__close:hover {
+  background: rgba(24, 62, 71, 0.15);
+}
+
+.protocol-modal__frame {
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  border: 0;
+  background: #ececeb;
+}
+
+.protocol-modal__frame > p {
+  padding: 2rem;
+}
+
 /* --------------------------------------------------------------------------
    Results: numbered captions and content-width tables
    -------------------------------------------------------------------------- */

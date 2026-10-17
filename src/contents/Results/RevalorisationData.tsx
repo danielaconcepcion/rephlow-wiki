@@ -176,49 +176,138 @@ const SDS_PAGE: ResultData = {
   tabLabel: "SDS-PAGE read-out",
   title: "Expression read-out by SDS-PAGE",
   description:
-    "Production was read on polyacrylamide gels of the crude extracts and, alongside them, of the fractions from the Co²⁺ resin binding test (IMAC chromatography), so that the same gel reports both how much enzyme is present and whether it behaves as a His tagged protein should. Two gels were run, and they are presented here in the order they were run: the first screened the two synthetic DHAK constructs, and the second, run afterwards, tested the recovered 2021 strain and the first purified PROSS 5.",
+    "Production was read on polyacrylamide gels [9] of the crude extracts, which is where expression itself is visible. The gels are presented in the order they were run, because each one was the reason the next was needed. Some of these gels also carry purification fractions; those lanes are read in the purification block and are not discussed here.",
   subsections: [
     {
       id: "gel-1",
+      title: "PPK2 expresses, the original DHAK wild type does not",
       figures: [
         {
-          src: `${FIGURES}/sds-page-dhak-wt-pross5.jpg`,
-          alt: "SDS-PAGE of the crude extracts of DHAK WT and DHAK PROSS 5 and of their Co2+ resin fractions.",
-          caption: "Crude extracts of DHAK WT and DHAK PROSS 5, and binding to Co²⁺ resin.",
+          src: `${FIGURES}/sds-page-ppk2-wt.png`,
+          alt: "SDS-PAGE of the crude extract of PPK2 and the original DHAK wild type.",
+          caption: "SDS-PAGE of the crude extract of PPK2 and of the original DHAK wild type. Lane contents are given in the accompanying table.",
         },
       ],
-      observations:
-        "**DHAK PROSS 5 is expressed and binds the resin well**, appearing both in the crude extract and, enriched, in the resin fractions. **DHAK WT gave no detectable expression**, in the extract or on the resin. As can be seen there is an unknown pollutant of a higher molecular weight.",
-      interpretation:
-        "The stabilised variant survives the whole route from gene to soluble, tagged protein, which is the outcome the block needed in order to move on to purification and activity. The wild type does not, and since both constructs were transformed, grown, induced and lysed under identical conditions, the failure has to lie in the construct or in its expression rather than in the handling. This can also be attributed to the age of the sample as it may have been damaged in the passing of years due to repeated thawing and freezing or faulty storage methods.",
-      expectation:
-        "No, and specifically not for the wild type. A freshly transformed, newly ordered synthetic gene is the case where expression is most likely to work, and the supplier's construct data were checked without anything unusual coming up. This is what turned the wild type into an open question rather than a setback to absorb, and what motivated both the search for milder induction conditions and the decision to recover the older strain in parallel.",
+      tables: [{
+        headers: ["Lane", "Sample"],
+        rows: [
+          ["4", "Molecular mass markers"],
+          ["5", "Crude extract, PPK2"],
+          ["6", "Flow-through, PPK2 (purification block)"],
+          ["7", "Dialysed IMAC eluate, PPK2 (purification block)"],
+          ["9", "Crude extract, DHAK WT (1)"],
+          ["10", "Crude extract, DHAK WT (2)"],
+        ],
+      }],
+      observations: "The first gel was run to confirm the production of PPK2, whose expression conditions had already been optimised by the host laboratory [6], so only the crude extract had to be checked. A band at the position expected for PPK2-III stands out over the normal pattern of host proteins in lane 5. The same gel also carried the crude extract of the original DHAK wild type in lanes 9 and 10, and there no band appears at the expected mass.",
+      interpretation: "PPK2 and this strain were carried forward unchanged for the rest of the module. The route opened by the failure of the original DHAK wild type is followed in Engineering, Iteration 1.",
+      expectation: "The PPK2 result was expected. The absence of the DHAK wild-type band was not.",
     },
     {
       id: "gel-2",
+      title: "Confirming the wild-type failure and checking the designed variant",
       figures: [
         {
-          src: `${FIGURES}/sds-page-2021-strain-and-purified-pross5.jpg`,
-          alt: "SDS-PAGE of the 2021 strain crude extracts, its resin fractions and purified DHAK PROSS 5.",
-          caption: "Crude extracts of the 2021 DHAK strain, resin fractions and purified DHAK PROSS 5.",
+          src: `${FIGURES}/sds-page-dhak-wt-pross5.jpg`,
+          alt: "SDS-PAGE of the crude extracts of DHAK WT and DHAK PROSS 5.",
+          caption: "SDS-PAGE of the crude extracts of DHAK WT and DHAK PROSS 5. Lane contents are given in the accompanying table.",
         },
       ],
-      body: [
-        "Three things on one gel. The **crude extracts of the old 2021 glycerol stocks** (wells 1 and 2) show a **band at about 60 kDa**, slightly below the fifth marker band from the top. It is not the strong overexpression that would be expected of a hyperproducing strain, but the enzyme is present and recoverable.",
-        "The **resin fractions of that same material** (lanes 10 and 11) show the band **enriched but not fully pure**.",
-        "The **purified DHAK PROSS 5** (lanes 3 and 9), again shows **two bands**, one of them running **slightly above 60 kDa**, higher than the mass expected for the monomer.",
-      ],
-      interpretation:
-        "Three separate conclusions, one per observation. First, the DHAK line is not lost: the 2021 strain expresses, and its CFE is material that can be purified and assayed, which is what unblocked the block after the wild type failure. Second, the partial enrichment on the resin is a **known behaviour of this particular DHAK**, which binds immobilised metal resin poorly through its tags. It is not evidence against the construct, and it is the reason the purification is not left at the affinity step but continued by FPLC (see Purification). Third, the two bands of purified PROSS 5 are not explained by a disulfide bridge or a non covalent interaction, since they persist in the presence of β-mercaptoethanol, and the larger species runs above the expected mass. This could come from the construct itself, but it is not established, as it can also be a bacterial protein.",
-      expectation:
-        "Partly, and in the most useful direction. Recovering the 2021 strain was a deliberate fallback rather than a hope, and it delivered. The anomalous double band of PROSS 5 was not expected and remains unresolved; it was recorded and set aside because the priority at this point is to establish whether the stabilised variant is **active**, not only stable and expressible.",
+      tables: [{
+        headers: ["Lane", "Sample"],
+        rows: [
+          ["1", "Not loaded"],
+          ["2", "Crude extract, DHAK WT DSM 30040 (1)"],
+          ["3", "Crude extract, DHAK WT DSM 30040 (2)"],
+          ["4", "Crude extract, DHAK PROSS 5 (1)"],
+          ["5", "Crude extract, DHAK PROSS 5 (2)"],
+          ["6", "Molecular mass markers"],
+          ["7", "DHAK WT DSM 30040, express purification eluates (1) (purification block)"],
+          ["8", "DHAK PROSS 5, express purification eluates (1) (purification block)"],
+          ["9", "DHAK WT DSM 30040, express purification eluates (2) (purification block)"],
+          ["10", "DHAK PROSS 5, express purification eluates (2) (purification block)"],
+        ],
+      }],
+      observations: "Because the first gel gave no DHAK band, a second one was run with the crude extracts of DHAK WT and DHAK PROSS 5. For the wild type it confirms the first read-out, since its extracts again show only the host proteome with nothing at the expected mass. **DHAK PROSS 5 appears here for the first time and is clearly expressed**, accompanied by a contaminating band of higher molecular mass in the upper part of the gel.",
+      interpretation: "Both results are checked again on the third gel. On the strength of this read-out, PROSS 5 was taken forward to purification and then to activity, on the same path as PPK2.",
+      expectation: "The expression of PROSS 5 was the intended outcome. The persistent failure of the original wild type was unexpected.",
+    },
+    {
+      id: "gel-3",
+      title: "Introducing an alternative strain before discarding anything",
+      figures: [{
+        src: `${FIGURES}/sds-page-2021-pross5-wt.png`,
+        alt: "SDS-PAGE of the DHAK CECT 4626 2021 strain, DHAK PROSS 5 and the original DHAK wild type.",
+        caption: "SDS-PAGE of the crude extracts of the DHAK CECT 4626 2021 strain, DHAK PROSS 5 and the original DHAK wild type. Lane contents are given in the accompanying table.",
+      }],
+      tables: [{
+        headers: ["Lane", "Sample"],
+        rows: [
+          ["1", "Crude extract, DHAK CECT 4626 2021 (1)"],
+          ["2", "Crude extract, DHAK CECT 4626 2021 (2)"],
+          ["3", "Crude extract, DHAK PROSS 5"],
+          ["4", "Crude extract, DHAK WT (1)"],
+          ["5", "Crude extract, DHAK WT (2)"],
+          ["6", "Molecular mass markers"],
+          ["7", "IMAC eluates, DHAK CECT 4626 2021 (1) (purification block)"],
+          ["8", "IMAC eluates, DHAK CECT 4626 2021 (2) (purification block)"],
+          ["9", "IMAC eluate, DHAK PROSS 5 (purification block)"],
+          ["10", "IMAC eluates, DHAK WT (1) (purification block)"],
+          ["11", "IMAC eluates, DHAK WT (2) (purification block)"],
+          ["12", "Dialysed IMAC eluate, DHAK PROSS 5 (purification block)"],
+        ],
+      }],
+      observations: "Rather than discard the original wild type on two gels alone, a third gel was run in which the alternative DHAK CECT 4626 was loaded for the first time. The new 2021 strain in lanes 1 and 2 shows no band either; PROSS 5 in lane 3 is confirmed as expressing, again with the higher-mass contaminant; and the original wild type in lanes 4 and 5 is confirmed as not expressing.",
+      interpretation: "Neither of the two silent constructs was discarded on this evidence. The absence of a band was weighed against the activity of their crude extracts, and only then was the original wild type definitively set aside. The same applies to the 2021 strain, whose fate was likewise left to the activity measurements.",
+      expectation: "The 2021 stock was chosen because the host laboratory had shown it to be the most active DHAK available and because the more recent material was expected to have suffered less from long-term storage. Its missing band was therefore unexpected.",
+    },
+    {
+      id: "gel-4",
+      title: "Confirming expression of the CECT 4626 2012 stock",
+      figures: [{
+        src: `${FIGURES}/sds-page-2012-imac.png`,
+        alt: "SDS-PAGE of DHAK CECT 4626 2012 crude extract and its IMAC eluates.",
+        caption: "SDS-PAGE of the crude extract of DHAK CECT 4626 2012 and of the two fractions eluted from its purification by IMAC. The crude extract shows the band expected for DHAK at 60 kDa.",
+      }],
+      tables: [{
+        headers: ["Lane", "Sample"],
+        rows: [
+          ["1", "Molecular mass markers"],
+          ["2", "CFE, crude extract of DHAK CECT 4626 2012"],
+          ["3", "F-1, IMAC eluate (purification block)"],
+          ["4", "F-2, IMAC eluate after dialysis (purification block)"],
+        ],
+      }],
+      observations: "Until this point the expression of the CECT 4626 2012 stock had been taken for granted from its activity, without being checked on a gel. The gel run on the preparation that fed the coupled reaction closes that gap. The crude extract shows a distinct band at the mass expected for DHAK [10], standing out over the dense host pattern that fills the rest of the lane.",
+      interpretation: "This confirms directly what the activity had already indicated indirectly: this strain produces the enzyme in appreciable amount. The same gel carries the two fractions eluted from its purification, which are read in the purification block.",
+      expectation: "The result was expected. This is the only one of the four DHAK constructs examined on a gel that gives the expected expression read-out.",
+    },
+    {
+      id: "gel-5",
+      title: "Confirming PPK2 expression in the assay preparation",
+      figures: [{
+        src: `${FIGURES}/sds-page-ppk2-imac.png`,
+        alt: "SDS-PAGE of PPK2 crude extract and its IMAC eluates.",
+        caption: "SDS-PAGE of the crude extract of PPK2 and of the two fractions eluted from its purification by IMAC. The crude extract shows the band expected for PPK2 at 32 kDa.",
+      }],
+      tables: [{
+        headers: ["Lane", "Sample"],
+        rows: [
+          ["1", "Molecular mass markers"],
+          ["2", "CFE, crude extract of PPK2"],
+          ["3", "F-1, IMAC eluate (purification block)"],
+          ["4", "F-2, IMAC eluate after dialysis (purification block)"],
+        ],
+      }],
+      observations: "The PPK2 crude extract gives a band at 32 kDa, the mass calculated for the tagged subunit. The band is modest against the host background, which is consistent with a construct expressed in soluble form at a level sufficient for the assay rather than one that dominates the lysate.",
+      interpretation: "Since the enzyme is used in catalytic support of DHAK and not as the measured species, that level was taken as adequate and the construct was carried straight to purification.",
+      expectation: "The result was expected and confirms that the behaviour already optimised by the host laboratory was reproduced here.",
     },
   ],
   discussion: [
-    "**What follows from this.** The read-out sets three lines of work, in the order in which they were agreed.",
-    "1. **Re-grow both constructs under milder conditions**, 0.2 mM IPTG and 20 ºC, to test whether a slower induction increases the soluble fraction. The 30 ºC condition used here already trades rate for folding, and this pushes that trade further.",
-    "2. **Purify DHAK PROSS 5 from the frozen CFEs and measure its activity**, since stability and expression say nothing about whether the designed variant still works.",
-    "3. **Recover the older DHAK strain**, which expresses better, as a parallel source of enzyme independent of the synthetic constructs.",
+    "For DHAK nothing went as planned. The original wild type was checked twice before its missing band was accepted. The CECT 4626 2021 stock also gave no visible band. DHAK PROSS 5 expressed strongly on both gels in which it was loaded, but with a contaminating protein of higher molecular mass whose identity remains unresolved.",
+    "The five gels establish that the production routine works, since the same protocol gave clear bands for PPK2, PROSS 5 and the 2012 stock while the other constructs gave none. They do not prove that nothing was made by the silent constructs, because a gel resolves only what is abundant and a weakly expressed enzyme can still be active.",
+    "With time and material limited, the silent constructs were carried forward to the activity assays, where turnover was read directly. PROSS 5 moved on to purification and activity alongside PPK2. The choice of the reference DHAK against which the designed variant would be judged was settled in the activity block, not here.",
   ],
 };
 
@@ -312,7 +401,7 @@ const DHAK_2012: ResultData = {
     {
       id: "cect-2012-first-batch",
       observations:
-        "When we recovered this stock, its **cell-free extract (CFE)** showed **exceptional** kinase activity, the steepest trace of the whole study, an initial rate of **581.1 mOD/min** (R² = 1.00), equal to a **DHAP formation rate of 93.4 nmol/min** and a **volumetric activity of ~18.7 U/mL** (5 µL assayed). Bradford on this extract, against a linear BSA curve (R² = 0.994), gave **~1.8 mg/mL** of protein, so its **specific activity was ~10 U/mg**.",
+        "The cell-free extract of the 2012 stock gave the **steepest trace of the whole study**, an initial rate of **581.1 mOD/min** (R² = 1.00), equal to **93.4 nmol DHAP/min** and a volumetric activity of **~18.7 U/mL** from 5 µL assayed. The rate and the volumetric activity depend only on the assay and the volume of extract added, not on any protein measurement, and by both the preparation is **far more active than any other DHAK tested** in this work. The protein concentration, however, **could not be measured reliably**. The Bradford [13] readings sat just above the assay blank (standard-curve intercept 0.319), at the lower limit of the determination, and the two sample volumes **did not agree**: the 1 µL and 5 µL loads gave **1.35 and 0.37 mg/mL**, values that should coincide for the same extract and instead differ about fourfold. Because the concentration is not trustworthy, **no specific activity (U/mg) can be assigned** to this extract, and any figure derived from this Bradford would carry that error.",
     },
     {
       id: "cect-2012-working-batch",
@@ -335,8 +424,8 @@ const DHAK_2012: ResultData = {
             ["R²", "1.00", "1.00"],
             ["DHAP formation rate", "**93.4 nmol/min**", "**31.9 nmol/min**"],
             ["Volumetric activity (5 µL assayed)", "**18.7 U/mL**", "**6.4 U/mL**"],
-            ["Protein (Bradford)", "~1.8 mg/mL", "not measured"],
-            ["Specific activity", "**~10 U/mg**", "not determined"],
+            ["Protein (Bradford)", "not reliably determined", "not measured"],
+            ["Specific activity", "not determined", "not determined"],
           ],
         },
       ],
@@ -349,7 +438,7 @@ const DHAK_2012: ResultData = {
           src: `${FIGURES}/dhak-activity-cect4626-2012-cfe.png`,
           alt: "Absorbance at 340 nm against time for the first batch of 2012 cell-free extract, the steepest trace of the series.",
           caption:
-            "DHAK activity assay of the CECT 4626 variant, 2012 stock, cell-free extract — first batch. Steepest trace of the series, initial rate 581.1 mOD/min (R² = 1.00), about 93.4 nmol DHAP/min, ~18.7 U/mL, and a specific activity of ~10 U/mg (5 µL assayed; Bradford quantification alongside).",
+            "DHAK activity assay of the CECT 4626 variant, 2012 stock, cell-free extract, first batch. Steepest trace of the series: initial rate 581.1 mOD/min (R² = 1.00), about 93.4 nmol DHAP/min and ~18.7 U/mL (5 µL assayed).",
         },
         {
           src: `${FIGURES}/dhak-activity-cect4626-2012-purified.png`,
@@ -361,11 +450,11 @@ const DHAK_2012: ResultData = {
           src: `${FIGURES}/bradford-2012-cfe.png`,
           alt: "Bradford standard curve of BSA used to quantify the protein in the first batch of 2012 cell-free extract.",
           caption:
-            "Bradford protein quantification of the first-batch CFE against a linear BSA standard curve (R² = 0.994), used to convert its activity into a specific activity.",
+            "Bradford protein quantification of the DHAK crude extract at two sample volumes, against a BSA standard curve (y = 0.319 + 0.020·x, R² = 0.994). The 1 µL and 5 µL loads give inconsistent values and sit close to the assay blank, so no reliable concentration could be assigned.",
         },
       ],
       interpretation:
-        "The DHAK from this stock is **highly active as a crude extract**. The ~10 U/mg of the first batch sits just below the ~12 µmol·min⁻¹·mg⁻¹ reported for the purified enzyme [3], which means **DHAK makes up a large fraction of the soluble protein** in this strongly expressing stock. The drop between the first and the working batch reflects **batch-to-batch variation in expression**, and both remain well within a usable range. Purification, by contrast, **was not viable here**, so the CFE is not only the simpler option but the one that **actually preserved the activity**.",
+        "What the experiment does establish is **clear from the activity trace alone**. The 2012 extract is the **only DHAK preparation that is strongly and cleanly active** (R² = 1.00), and its rate towers over the flat traces of the DSM 30040 wild type and the 2021 stock. That is consistent with CECT 4626 being the **most catalytically efficient DHAK reported** [10], and it is enough to select this stock as the **reference enzyme for the rest of the module**, through purification and into the coupled assay with PPK2.",
       expectation:
         "**Partly.** High activity in the CFE was expected from such a strongly expressing stock; the **repeated purification failures were not**, and they are the reason the decision below was forced rather than merely preferred. Losing a protein peak or activity on purification can happen with enzymes sensitive to the chromatography or concentration steps, as explained above in the *Purification* section of this page. Because purification repeatedly failed while the CFE stayed active and simpler to prepare, we kept the DHAK in CFE form. This choice is also backed by previous work on related multienzyme systems, where a cell-free extract containing the overexpressed enzyme was as effective as the purified protein and made the expensive purification step unnecessary, saving time and resources. We therefore used the CFE for all subsequent coupled DHAK–PPK2 experiments.",
     },
@@ -493,9 +582,18 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
 ];
 
 export const REVALORISATION_REFERENCES = [
-  "[1] Thermo Fisher Scientific. BL21(DE3) chemically competent E. coli (cat. no. EC0114) product information. Available from: https://www.thermofisher.com/order/catalog/product/EC0114",
-  "[2] Bastida A, Fernández-Mayoralas A, Gómez Arrayás R, Iradier F, Carretero JC, García-Junceda E. Heterologous over-expression of α-1,6-fucosyltransferase from Rhizobium sp.: application to the synthesis of the trisaccharide β-D-GlcNAc(1→4)-[α-L-Fuc-(1→6)]-D-GlcNAc, study of the acceptor specificity and evaluation of polyhydroxylated indolizidines as inhibitors. Chemistry. 2001. Available from: https://doi.org/10.1002/chin.200206232",
-  "[3] Sánchez-Moreno I. Dihidroxiacetona quinasa de Citrobacter freundii CECT 4626 [doctoral thesis]. Madrid: Universidad Complutense de Madrid.",
-  "[4] Sánchez-Moreno, I., Benito-Arenas, R., Montero-Calle, P., Hermida, C., García-Junceda, E., & Fernández-Mayoralas, A. (2019). Simple and practical multigram synthesis of D-xylonate using a recombinant xylose dehydrogenase. ACS Omega, 4(6), 10593–10598. https://doi.org/10.1021/acsomega.9b01090",
-  "[5] RCSB Protein Data Bank. Entry 1UN9, dihydroxyacetone kinase from Citrobacter freundii. Available from: https://doi.org/10.2210/pdb1UN9/pdb",
+  "[1] Goldenzweig A, Goldsmith M, Hill SE, Gertman O, Laurino P, Ashani Y, et al. Automated Structure- and Sequence-Based design of proteins for high bacterial expression and stability. Molecular Cell [Internet]. 2016 Jul 1;63(2):337–46. Available from: https://doi.org/10.1016/j.molcel.2016.06.012",
+  "[2] Siebold C, Arnold I, Garcia-Alles LF, Baumann U, Erni B. Crystal Structure of the Citrobacter freundii Dihydroxyacetone Kinase Reveals an Eight-stranded α-Helical Barrel ATP-binding Domain. Journal of Biological Chemistry [Internet]. 2003 Nov 1;278(48):48236–44. Available from: https://doi.org/10.1074/jbc.m305942200",
+  "[3] Schrödinger, LLC. The PyMOL Molecular Graphics System [software]. Version 2.5. New York: Schrödinger, LLC; 2021.",
+  "[4] Keeble AH, Howarth M. Power to the protein: enhancing and combining activities using the Spy toolbox. Chemical Science [Internet]. 2020 Jan 1;11(28):7281–91. Available from: https://doi.org/10.1039/d0sc01878c",
+  "[5] Jumper J, Evans R, Pritzel A, Green T, Figurnov M, Ronneberger O, et al. Highly accurate protein structure prediction with AlphaFold. Nature [Internet]. 2021 Jul 15;596(7873):583–9. Available from: https://doi.org/10.1038/s41586-021-03819-2",
+  "[6] Monterrey DT, Azcona L, Revuelta J, Sánchez-Moreno I, García-Junceda E. Polyphosphate Kinase from Burkholderia cenocepacia, One Enzyme Catalyzing a Two-Step Cascade Reaction to Synthesize ATP from AMP. International Journal of Molecular Sciences [Internet]. 2024 Dec 3;25(23):12995. Available from: https://doi.org/10.3390/ijms252312995",
+  "[7] Passaro S, Corso G, Wohlwend J, Reveiz M, Thaler S, Somnath VR, et al. Boltz-2: towards accurate and efficient binding affinity prediction. bioRxiv (Cold Spring Harbor Laboratory) [Internet]. 2025 Jun 18; Available from: https://doi.org/10.1101/2025.06.14.659707",
+  "[8] Sambrook J, Russell DW. Molecular cloning: a laboratory manual. 3rd ed. Cold Spring Harbor (NY): Cold Spring Harbor Laboratory Press; 2001.",
+  "[9] Laemmli UK. Cleavage of Structural Proteins during the Assembly of the Head of Bacteriophage T4. Nature [Internet]. 1970 Aug 1;227(5259):680–5. Available from: https://doi.org/10.1038/227680a0",
+  "[10] Sánchez-Moreno I. Dihidroxiacetona quinasa de Citrobacter freundii CECT 4626: una aproximación integral a un nuevo biocatalizador para la formación de enlaces C–C [doctoral thesis]. Madrid: Universidad Autónoma de Madrid; 2009. http://hdl.handle.net/10486/3594",
+  "[11] Bastida A, Fernández-Mayoralas A, Gómez Arrayás R, Iradier F, Carretero JC, García-Junceda E. Heterologous over-expression of α-1,6-fucosyltransferase from Rhizobium sp. Chem Eur J. 2001;7(11):2390-6. Available from: https://doi.org/10.1002/1521-3765(20010601)7:11<2390::AID-CHEM23900>3.0.CO;2-0",
+  "[12] Gauss D, Sánchez‐Moreno I, Oroz‐Guinea I, García‐Junceda E, Wohlgemuth R. Phosphorylation catalyzed by dihydroxyacetone kinase. European Journal of Organic Chemistry [Internet]. 2018 Mar 25;2018(23):2892–5. Available from: https://doi.org/10.1002/ejoc.201800350",
+  "[13] Bradford M. A rapid and sensitive method for the quantitation of microgram quantities of protein utilizing the principle of Protein-Dye binding. Analytical Biochemistry [Internet]. 1976 May 1;72(1–2):248–54. Available from: https://doi.org/10.1006/abio.1976.9999",
+  "[14] Sánchez-Moreno I, Benito-Arenas R, Montero-Calle P, Hermida C, García-Junceda E, Fernández-Mayoralas A. Simple and Practical Multigram Synthesis of d-Xylonate Using a Recombinant Xylose Dehydrogenase. ACS Omega [Internet]. 2019 Jun 18;4(6):10593–8. Available from: https://doi.org/10.1021/acsomega.9b01090",
 ];

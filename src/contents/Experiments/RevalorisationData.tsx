@@ -172,9 +172,27 @@ export const REVALORISATION_INTRO: ReactNode[] = [
     50 µg/mL and induced with IPTG. Purification used{" "}
     <strong>Co²⁺-IDA-agarose</strong> resin in disposable SPE cartridges, with
     all buffers prepared in ultrapure water (Milli-Q) immediately before use and
-    filtered before application. Activity assays were carried out in a
-    spectrophotometer in 1 cm cuvettes, using α-glycerophosphate dehydrogenase
-    and triosephosphate isomerase as coupling enzymes.
+    filtered before application. Activity assays used α-glycerophosphate
+    dehydrogenase and triosephosphate isomerase as coupling enzymes, read as the
+    fall in absorbance at 340 nm and converted with the NADH extinction
+    coefficient, <strong>ε₃₄₀ = 6220 M⁻¹cm⁻¹</strong>. Format was chosen by
+    convenience rather than by assay, with the continuous DHAK assay run mostly
+    in <strong>1 cm cuvettes</strong> and occasionally in microplate, and the
+    endpoint coupled assay in <strong>microplate</strong> throughout, so the path
+    length of the format used is applied in every conversion. Throughout this
+    module, <strong>one unit (U) is the amount of enzyme forming one µmol of
+    product per minute</strong> under the assay conditions, DHAP for DHAK and ATP
+    for PPK2. The expected masses on a denaturing gel are <strong>about 60 kDa
+    for the DHAK subunit</strong>, a protein of around 556 residues that is native
+    as a <strong>homodimer of about 118 kDa</strong>, and <strong>about 33 kDa for
+    PPK2</strong>, whose theoretical mass is 32 kDa, both including the roughly
+    1 kDa added by the hexahistidine tag. The polyphosphate used is a commercial
+    sodium polyphosphate with a chain length of <strong>12 phosphate units</strong>,
+    and all polyphosphate concentrations in this module are given as
+    <strong>millimolar chains</strong>, so one millimolar supplies <strong>12 mM
+    of transferable phosphate</strong>. That distinction matters because the
+    reaction consumes phosphate residues rather than whole chains, and PPK2 can
+    draw repeatedly on the same chain.
   </>,
   <>
     Together, these experiments provide the evidence required to show that the
@@ -185,18 +203,18 @@ export const REVALORISATION_INTRO: ReactNode[] = [
 ];
 
 export const REVALORISATION_REFERENCES: string[] = [
-  "Sánchez-Moreno I, García-García JF, Bastida A, García-Junceda E. Multienzyme system for dihydroxyacetone phosphate-dependent aldolase catalyzed C–C bond formation from dihydroxyacetone. Chem Commun. 2004;(14):1634–5. https://doi.org/10.1039/b405220j",
-  "Sánchez-Moreno I. Dihidroxiacetona quinasa de *Citrobacter freundii* CECT 4626: una aproximación integral a un nuevo biocatalizador para la formación de enlaces C–C [doctoral thesis]. Madrid: Universidad Autónoma de Madrid; 2009. http://hdl.handle.net/10486/3594",
-  "Monterrey DT, Azcona L, Revuelta J, Sánchez-Moreno I, García-Junceda E. Polyphosphate kinase from *Burkholderia cenocepacia*, one enzyme catalyzing a two-step cascade reaction to synthesize ATP from AMP. Int J Mol Sci. 2024;25(23):12995. https://doi.org/10.3390/ijms252312995",
-  "Goldenzweig A, Goldsmith M, Hill SE, Gertman O, Laurino P, Ashani Y, Dym O, Unger T, Albeck S, Prilusky J, Lieberman RL, Aharoni A, Silman I, Sussman JL, Tawfik DS, Fleishman SJ. Automated structure- and sequence-based design of proteins for high bacterial expression and stability. Mol Cell. 2016;63(2):337–46. https://doi.org/10.1016/j.molcel.2016.06.012",
-  "Gauss D, Sánchez-Moreno I, Oroz-Guinea I, García-Junceda E, Wohlgemuth R. Phosphorylation catalyzed by dihydroxyacetone kinase. Eur J Org Chem. 2018;2018(23):2892–5. https://doi.org/10.1002/ejoc.201800350",
-  "Keeble AH, Howarth M. Power to the protein: enhancing and combining activities using the Spy toolbox. Chem Sci. 2020;11(28):7281–91. https://doi.org/10.1039/d0sc01878c",
-  "Sambrook J, Russell DW. Molecular cloning: a laboratory manual. 3rd ed. Cold Spring Harbor (NY): Cold Spring Harbor Laboratory Press; 2001.",
-  "Bastida A, Fernández-Mayoralas A, Gómez Arrayás R, Iradier F, Carretero JC, García-Junceda E. Heterologous over-expression of α-1,6-fucosyltransferase from *Rhizobium* sp.: application to the synthesis of the trisaccharide β-D-GlcNAc(1→4)-[α-L-Fuc-(1→6)]-D-GlcNAc, study of the acceptor specificity and evaluation of polyhydroxylated indolizidines as inhibitors. ChemInform. 2002;33(6). https://doi.org/10.1002/chin.200206232",
-  "Laemmli UK. Cleavage of structural proteins during the assembly of the head of bacteriophage T4. Nature. 1970;227(5259):680–5. https://doi.org/10.1038/227680a0",
-  "Bradford MM. A rapid and sensitive method for the quantitation of microgram quantities of protein utilizing the principle of protein–dye binding. Anal Biochem. 1976;72(1–2):248–54. https://doi.org/10.1016/0003-2697(76)90527-3",
-  "Merck Millipore. Amicon Ultra-15 centrifugal filter devices: user guide. Darmstadt: Merck KGaA; [cited 2026 Oct 13]. https://www.merckmillipore.com",
-  "Merck Millipore. Amicon Ultra-0.5 centrifugal filter devices: user guide. Darmstadt: Merck KGaA; [cited 2026 Oct 13]. https://www.merckmillipore.com",
+  "[1] Sánchez-Moreno I, García-García JF, Bastida A, García-Junceda E. Multienzyme system for dihydroxyacetone phosphate-dependent aldolase catalyzed C–C bond formation from dihydroxyacetone. Chemical Communications [Internet]. 2004 Jan 1;(14):1634–5. Available from: https://doi.org/10.1039/b405220j",
+  "[2] Sánchez-Moreno I. Dihidroxiacetona quinasa de Citrobacter freundii CECT 4626: una aproximación integral a un nuevo biocatalizador para la formación de enlaces C–C [doctoral thesis]. Madrid: Universidad Autónoma de Madrid; 2009. http://hdl.handle.net/10486/3594",
+  "[3] Monterrey DT, Azcona L, Revuelta J, Sánchez-Moreno I, García-Junceda E. Polyphosphate Kinase from Burkholderia cenocepacia, One Enzyme Catalyzing a Two-Step Cascade Reaction to Synthesize ATP from AMP. International Journal of Molecular Sciences [Internet]. 2024 Dec 3;25(23):12995. Available from: https://doi.org/10.3390/ijms252312995",
+  "[4] Goldenzweig A, Goldsmith M, Hill SE, Gertman O, Laurino P, Ashani Y, et al. Automated Structure- and Sequence-Based design of proteins for high bacterial expression and stability. Molecular Cell [Internet]. 2016 Jul 1;63(2):337–46. Available from: https://doi.org/10.1016/j.molcel.2016.06.012",
+  "[5] Gauss D, Sánchez‐Moreno I, Oroz‐Guinea I, García‐Junceda E, Wohlgemuth R. Phosphorylation catalyzed by dihydroxyacetone kinase. European Journal of Organic Chemistry [Internet]. 2018 Mar 25;2018(23):2892–5. Available from: https://doi.org/10.1002/ejoc.201800350",
+  "[6] Keeble AH, Howarth M. Power to the protein: enhancing and combining activities using the Spy toolbox. Chemical Science [Internet]. 2020 Jan 1;11(28):7281–91. Available from: https://doi.org/10.1039/d0sc01878c",
+  "[7] Sambrook J, Russell DW. Molecular cloning: a laboratory manual. 3rd ed. Cold Spring Harbor (NY): Cold Spring Harbor Laboratory Press; 2001.",
+  "[8] Bastida A, Fernandez‐Mayoralas A, Arrayas RG, Iradier F, Carretero JC, Garcia‐Junceda E. ChemInform Abstract: Heterologous Over‐Expression of α‐1,6‐Fucosyltransferase from Rhizobium sp.: Application to the Synthesis of the Trisaccharide β‐D‐GlcNAc(1→4)‐[α‐L‐Fuc‐(1→6)]‐D‐GlcNAc, Study of the Acceptor Specificity and Evaluation of Polyhydroxylated Indolizidines as Inhibitors. ChemInform [Internet]. 2002 Feb 12;33(6). Available from: https://doi.org/10.1002/chin.200206232",
+  "[9] Laemmli UK. Cleavage of Structural Proteins during the Assembly of the Head of Bacteriophage T4. Nature [Internet]. 1970 Aug 1;227(5259):680–5. Available from: https://doi.org/10.1038/227680a0",
+  "[10] Bradford M. A rapid and sensitive method for the quantitation of microgram quantities of protein utilizing the principle of Protein-Dye binding. Analytical Biochemistry [Internet]. 1976 May 1;72(1–2):248–54. Available from: https://doi.org/10.1006/abio.1976.9999",
+  "[11] Merck Millipore. Amicon Ultra-15 centrifugal filter devices: user guide. Darmstadt: Merck KGaA; [cited 2026 Oct 13]. https://www.merckmillipore.com",
+  "[12] Merck Millipore. Amicon Ultra-0.5 centrifugal filter devices: user guide. Darmstadt: Merck KGaA; [cited 2026 Oct 13]. https://www.merckmillipore.com",
 ];
 
 export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
@@ -1112,15 +1130,15 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             title: "Experimental design and controls",
             paragraphs: [
-              "The reaction contains DHA, polyphosphate, Mg²⁺, both enzymes and a **substoichiometric** amount of adenine nucleotide. Supplying less adenine nucleotide than the DHAP that can be formed is what makes the **experiment conclusive**: the result cannot be explained unless the nucleotide pool turns over more than once.",
-              "The control is the **same reaction without PPK2**. With no way to regenerate ATP, DHAP formation stops once the initial ATP is spent, so comparing the two **isolates the contribution of the regeneration step from everything else in the mixture.**",
-              "DHAP was tracked over the course of the reaction. Aliquots were taken at **0, 1, 3, 5 and 7 hours** and frozen immediately to stop the reaction, then measured by an **endpoint version** of the α-GDH/TIM assay described above: adding α-GDH and TIM gives a fall in absorbance at 340 nm proportional to the DHAP present, which the NADH extinction coefficient converts to µmol. The endpoint format is used here because the reaction runs for hours rather than minutes, so it cannot be followed continuously in a cuvette.",
-              "The decisive read-out is the **DHAP formed relative to the ATP supplied at the start**. A value above one means that each adenine nucleotide molecule has been turned over more than once, which is the proof of concept that the multienzymatic system works.",
+              "The reaction contains DHA, polyphosphate, Mg²⁺, both enzymes and a **substoichiometric** amount of adenine nucleotide. Supplying less adenine nucleotide than the DHAP that can be formed is what makes the **experiment informative**: the result cannot be explained unless the nucleotide pool turns over more than once.",
+              "Two design parameters control whether the determination can be read at all. The **volume of sample taken into each well** must be small enough that the DHAP it carries stays below the NADH supplied, otherwise every well saturates at the same ceiling and the signal marks the limit of the assay rather than the product formed. And that ceiling must sit **above the ATP supplied**, since a saturated signal below it cannot show that DHAP exceeded the nucleotide. How these were set, and what happened when they were set wrongly, is reported in **Results** and in **Engineering (Iteration 9)**.",
+              "DHAP was tracked by an **endpoint version** of the α-GDH/TIM assay described above. Samples were taken during the reaction and frozen immediately to stop it, then measured by adding α-GDH and TIM, which gives a fall in absorbance at 340 nm proportional to the DHAP present and is converted to concentration against a DHAP standard curve. The endpoint format is used here because the reaction runs for hours rather than minutes, so it cannot be followed continuously in a cuvette, and for the same reason it is read in **microplate**. The sampling times and the polyphosphate feeds differ between rounds and are reported in **Results**.",
+              "The decisive read-out is the **DHAP formed relative to the ATP supplied at the start**. A value above one means that each adenine nucleotide molecule has been turned over more than once, which is the proof of concept that the multienzymatic system works. **The control this design calls for is the same reaction without PPK2**, in which DHAP formation should stop once the initial ATP is spent, and which is what would isolate the contribution of the regeneration step from everything else in the mixture. **That condition was not run within the time available.** The regeneration reported in Results is therefore inferred from the stoichiometry of the nucleotide supplied rather than measured against a non-regenerating reaction, and running this control is the first thing a future round should do.",
             ],
             callouts: [
               {
                 kind: "outcome",
-                text: "A time course of DHAP formation with and without PPK2, and the DHAP-to-ATP ratio that shows whether the adenine nucleotide pool is being recycled.",
+                text: "A time course of DHAP formation and the DHAP-to-ATP ratio that shows whether the adenine nucleotide pool is being recycled.",
               },
             ],
           },
@@ -1161,21 +1179,24 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
         Each stage carries its own control, and that is what makes the set
         interpretable: the wild-type enzyme controls its stabilised design,
         every purification keeps and analyses all of its fractions, and
-        activities are converted to absolute units so that measurements made on
-        different days remain comparable. The four blocks then converge in the{" "}
+        activities are reported as rates and, where the protein concentration
+        could be measured reliably, as specific activities in absolute units,
+        so that measurements made on different days remain comparable. The four
+        blocks then converge in the{" "}
         <strong>coupled DHAK–PPK2 assay</strong>, the only experiment that tests
-        the module as a whole, where DHAP formation is followed against the same
-        reaction without PPK2 to show whether ATP is genuinely recycled rather
-        than consumed.
+        the module as a whole.
       </>,
       <>
         What we deliberately left undone is also part of the design. The{" "}
         <strong>SpyTag/SpyCatcher complex</strong> was designed but not built,
-        and the <strong>bead-derived polyphosphate</strong> was replaced by a
-        commercial equivalent so that the biochemistry could be characterised
-        independently of the upstream hardware. In both cases the limit is
-        stated, the reasoning is documented, and the work is left in a state
-        where another team can take it up.
+        the <strong>PROSS 1 construct</strong> was transformed but not induced,
+        expressed or assayed, the{" "}
+        <strong>control without PPK2</strong> was not run, and the{" "}
+        <strong>bead-derived polyphosphate</strong> was replaced by a commercial
+        equivalent so that the biochemistry could be characterised independently
+        of the upstream hardware. In every case the limit is stated, the
+        reasoning is documented, and the work is left in a state where another
+        team can take it up.
       </>,
     ],
   },

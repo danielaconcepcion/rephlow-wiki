@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import type {
   BodyCallout,
   ExperimentBodyBlock,
@@ -9,6 +9,7 @@ import type {
 import { asset } from "../../utils";
 import { Caption } from "./Caption";
 import { Rich } from "./RichText";
+import { ProtocolModal } from "./ProtocolModal";
 
 function DataTable({
   table,
@@ -316,6 +317,10 @@ function BodyBlock({ block }: { block: ExperimentBodyBlock }) {
  * without touching this component.
  */
 export function ExperimentCard({ data }: { data: ExperimentData }) {
+  const [openProtocol, setOpenProtocol] = useState<{
+    src: string;
+    title: string;
+  } | null>(null);
   const hasBody = !!data.body?.length;
   const hasMaterials = !!(
     data.materialsTable?.length || data.materialsList?.length
@@ -494,25 +499,46 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
               <span className="record-protocols__label">Protocols:</span>
               <div className="record-protocols__list">
                 {data.protocols!.map((protocol, index) => (
-                  <a
+                  <button
+                    type="button"
                     className="record-download record-download--compact"
-                    href={asset(protocol.href)}
-                    download
+                    onClick={() =>
+                      setOpenProtocol({
+                        src: asset(protocol.href),
+                        title: protocol.label,
+                      })
+                    }
                     key={index}
                   >
                     {protocol.label} (PDF)
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
           )}
 
           {data.pdfHref && (
-            <a className="record-download" href={asset(data.pdfHref)} download>
+            <button
+              type="button"
+              className="record-download"
+              onClick={() =>
+                setOpenProtocol({
+                  src: asset(data.pdfHref!),
+                  title: `${data.title} protocol`,
+                })
+              }
+            >
               Download protocol (PDF)
-            </a>
+            </button>
           )}
         </footer>
+      )}
+      {openProtocol && (
+        <ProtocolModal
+          src={openProtocol.src}
+          title={openProtocol.title}
+          onClose={() => setOpenProtocol(null)}
+        />
       )}
     </article>
   );
