@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { asset } from "../../utils/asset";
 import { Caption } from "./Caption";
 import { Rich } from "./RichText";
+import { ZoomableImage } from "./ZoomableImage";
 import type { RecordTable, ResultData, ResultSubsection } from "./types";
 
 function Table({ table }: { table: RecordTable & { caption?: string } }) {
@@ -47,7 +48,8 @@ function Table({ table }: { table: RecordTable & { caption?: string } }) {
 }
 
 function FigureGrid({ subsection }: { subsection: ResultSubsection }) {
-  if (!subsection.figures?.length) return null;
+  const figures = subsection.figures;
+  if (!figures?.length) return null;
   const style = subsection.figuresColumns
     ? ({
         "--figure-columns": subsection.figuresColumns,
@@ -62,7 +64,7 @@ function FigureGrid({ subsection }: { subsection: ResultSubsection }) {
       }
       style={style}
     >
-      {subsection.figures.map((figure, index) => (
+      {figures.map((figure, index) => (
         <figure
           className={
             figure.wide ? "record-figure record-figure--wide" : "record-figure"
@@ -73,7 +75,7 @@ function FigureGrid({ subsection }: { subsection: ResultSubsection }) {
             <p className="record-figure-group__item-title">{figure.title}</p>
           )}
           {figure.src ? (
-            <img
+            <ZoomableImage
               className={
                 figure.kind === "chart"
                   ? "record-figure__photo record-figure__photo--chart"
@@ -81,6 +83,24 @@ function FigureGrid({ subsection }: { subsection: ResultSubsection }) {
               }
               src={asset(figure.src)}
               alt={figure.alt ?? ""}
+              title={figure.title}
+              caption={
+                subsection.figuresCaption ? (
+                  <Caption
+                    kind="Figure"
+                    item={figures}
+                    text={subsection.figuresCaption}
+                  />
+                ) : (
+                  figure.caption && (
+                    <Caption
+                      kind="Figure"
+                      item={figure}
+                      text={figure.caption}
+                    />
+                  )
+                )
+              }
             />
           ) : (
             <div className="record-figure__placeholder" aria-hidden="true">
@@ -98,7 +118,7 @@ function FigureGrid({ subsection }: { subsection: ResultSubsection }) {
         <p className="record-figure-grid__caption">
           <Caption
             kind="Figure"
-            item={subsection.figures}
+            item={figures}
             text={subsection.figuresCaption}
           />
         </p>
@@ -137,10 +157,20 @@ function FigureMatrix({
           <Fragment key={row.label}>
             <p className="record-figure-matrix__row-head">{row.label}</p>
             {row.figures.map((figure, index) => (
-              <img
+              <ZoomableImage
                 className="record-figure-matrix__photo"
                 src={asset(figure.src)}
                 alt={figure.alt}
+                title={`${row.label} — ${matrix.columns[index] ?? ""}`}
+                caption={
+                  matrix.caption && (
+                    <Caption
+                      kind="Figure"
+                      item={matrix}
+                      text={matrix.caption}
+                    />
+                  )
+                }
                 key={index}
               />
             ))}
