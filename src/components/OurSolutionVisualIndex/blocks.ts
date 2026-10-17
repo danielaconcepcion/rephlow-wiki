@@ -107,8 +107,8 @@ export const RAW_BLOCKS: VisualIndexBlock[] = [
     title: "Model",
     accent: "var(--ink-soft)",
     overlayImage: asset("assets/our-solution/model-clean.webp"),
-    box: { l: 0.79, t: 0.735, w: 0.145, h: 0.183 },
-    labelPos: { left: 86, top: 91 },
+    box: { l: 0.765, t: 0.695, w: 0.17, h: 0.214 },
+    labelPos: { left: 77, top: 88 },
     description:
       "Genome-scale and kinetic models guide genetic edits, operating conditions and phosphate-accumulation performance.",
     sectionId: "model",
