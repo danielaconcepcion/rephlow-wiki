@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 
-import { PhotoStrip } from "../../components/PhotoStrip";
 import { Rich } from "../../components/LabFolders/RichText";
 import { ACTIVITIES } from "./educationData";
 
@@ -11,7 +10,8 @@ import { ACTIVITIES } from "./educationData";
    ←/→, and Esc or the backdrop to close.
 
    The board stays the index; what used to be the chronicle underneath it
-   is now what the dialog shows.
+   is now what the dialog shows, photographs included — there are two or
+   three per activity at most, so they are all on screen at once.
    -------------------------------------------------------------------------- */
 
 /** The purple of the Engagement section, as on the Collaboration iGEM table. */
@@ -132,26 +132,24 @@ export function ActivityModal({
               </a>
             )}
 
-            {/* One photo is shown whole, capped so a portrait still leaves
-                the text visible; several become the same strip the
-                Collaboration dialogs use. */}
-            {cur.photos.length === 1 && (
-              <figure
-                className="ec-modal__photo"
-                style={{
-                  aspectRatio: cur.photos[0].ratio,
-                  width: `min(100%, calc(56vh * (${cur.photos[0].ratio})))`,
-                }}
+            {/* Two or three photos at most per activity, so they are all
+                shown at once rather than hidden behind a carousel. */}
+            {cur.photos.length > 0 && (
+              <div
+                className={`ec-modal__photos${
+                  cur.photos.length === 1 ? " ec-modal__photos--single" : ""
+                }`}
               >
-                <img
-                  src={cur.photos[0].src}
-                  alt={cur.photos[0].alt}
-                  loading="lazy"
-                />
-              </figure>
-            )}
-            {cur.photos.length > 1 && (
-              <PhotoStrip photos={cur.photos} alt={cur.title} />
+                {cur.photos.map((photo) => (
+                  <figure
+                    key={photo.src}
+                    className="ec-modal__photo"
+                    style={{ aspectRatio: photo.ratio }}
+                  >
+                    <img src={photo.src} alt={photo.alt} loading="lazy" />
+                  </figure>
+                ))}
+              </div>
             )}
           </div>
         </div>
