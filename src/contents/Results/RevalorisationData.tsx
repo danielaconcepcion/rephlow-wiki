@@ -32,36 +32,95 @@ const DESIGN_DSM: ResultData = {
   id: "design-dhak-dsm-30040",
   tabLabel: "Stabilisation, DSM 30040",
   title: "In silico stabilisation of DHAK from *C. freundii* DSM 30040",
-  subsections: [{
-    id: "pross-cycle-1",
-    observations: "PROSS returned **nine designs**, from 21 substitutions (3.9%) to 119 (22.2%). With budget for one gene, **design 5** was selected as the mid-range option: **56 substitutions (10.4%)**. The underlying alignment contained more than 3,000 homologues with high coverage.",
-    interpretation: "Structural superposition preserved the K- and L-domains and the dimer interface, and no residue within 4 Å of AMP-PNP, DHA or Mg²⁺ was changed. This established that the design was structurally plausible, not that it remained active.",
-    expectation: "The structural checks passed, but design 5 later proved inactive. That result redirected stabilisation onto the active CECT 4626 background.",
-  }],
+  subsections: [
+    {
+      id: "pross-cycle-1",
+      body: [
+        "Running **PROSS** on the DSM 30040 reference sequence returned **nine candidate designs**, ranging from a conservative **21 substitutions (3.9% of the sequence)** to an aggressive **119 (22.2%)** [1]. The multiple-sequence alignment behind the design was **deep and well-covered**, with over **3,000 homologous sequences**, coverage above 95% for almost all of them and sequence identity concentrated between **40% and 60%**, a broad but informative evolutionary sampling for the stability predictions.",
+      ],
+      tables: [
+        {
+          caption:
+            "PROSS designs returned for DHAK from *C. freundii* DSM 30040, from the most conservative (21 substitutions) to the most aggressive (119). **Design 5**, a mid-range option with 56 substitutions (10.4%), was selected for expression. The full list of substitutions for every design is given in the supplementary material.",
+          headers: ["Design", "# Mutations", "% Mutations"],
+          rows: [
+            ["DHAK_3_design_1", "21", "3.91"],
+            ["DHAK_3_design_2", "34", "6.33"],
+            ["DHAK_3_design_3", "37", "6.89"],
+            ["DHAK_3_design_4", "43", "8.01"],
+            ["**DHAK_3_design_5 (selected)**", "**56**", "**10.43**"],
+            ["DHAK_3_design_6", "69", "12.85"],
+            ["DHAK_3_design_7", "83", "15.46"],
+            ["DHAK_3_design_8", "99", "18.44"],
+            ["DHAK_3_design_9", "119", "22.16"],
+          ],
+        },
+      ],
+      bodyAfter: [
+        "**Why design 5.** The nine designs form a ladder, and the standard way to sample it is to order three constructs, one conservative, one intermediate and one aggressive, so that the trade-off between predicted stability and mutational load can be read directly from the bench. **Our budget allowed a single synthetic gene**, so the ladder had to be sampled once. We chose **design 5 (56 substitutions, 10.4%)** as a **mid-range compromise** between predicted stability gain and mutational load, and carried it forward with the wild type as reference. A conservative design risks gaining too little stability to measure, an aggressive one risks losing function outright, and the middle of the range is the position from which either outcome would still be informative.",
+        "**Checking the design before ordering it.** The design was superposed on the wild-type structure in PyMOL [2,3]. The **overall fold is unchanged**, with the K- and L-domains and the dimer interface preserved, and **none of the residues within 4 Å of AMP-PNP, DHA or Mg²⁺ carries a substitution**: the mutations sit on the surface and in the second shell, away from the catalytic and cofactor-binding regions. The server did what it was instructed to do, and the construct entered the bench round as a structurally conservative change on paper.",
+      ],
+    },
+    {
+      id: "pross-cycle-1-reading",
+      continued: true,
+      interpretation:
+        "That the fold is preserved and the active site untouched is the minimum condition for a design to be worth testing, and it was met. What it does not establish is function: a model superposes well because the backbone is predicted to fold the same way, not because the enzyme still turns over substrate.",
+      expectation:
+        "**Design 5 proved inactive when expressed**, which is not a contradiction of this result but its limit, and it is what redirected the stabilisation effort onto the active CECT 4626 variant. One process note for future teams: the PROSS server was down on the first attempt and the run had to be repeated, so the selected design comes from the second submission.",
+    },
+  ],
 };
 
 const DESIGN_CECT: ResultData = {
   id: "design-dhak-cect-4626",
   tabLabel: "Stabilisation, CECT 4626",
   title: "In silico stabilisation of DHAK CECT 4626",
-  subsections: [{
-    id: "pross-cycle-2",
-    observations: "The stabilisation was rebuilt on the active **CECT 4626** sequence. The most conservative design was selected: **design 1, 21 substitutions (3.9%)**, transferred position by position while distinguishing natural strain differences from PROSS substitutions.",
-    interpretation: "Using the conservative design minimised the mutations added on top of the approximately 22 positions at which CECT 4626 naturally differs from DSM 30040. A codon-optimised gene was generated, ordered and transformed.",
-    expectation: "The design was completed, but it was **not induced or assayed**, so no conclusion can yet be drawn about stability or activity.",
-  }],
+  subsections: [
+    {
+      id: "pross-cycle-2",
+      body: [
+        "**Why a second design, and why on a different sequence.** Two results forced this round. Design 5 showed no measurable activity, so the mutational load carried on the reference sequence had disturbed function. More decisive, the **wild-type DSM 30040 construct was not expressing**, which left us with **no working control**: without an active reference we could not tell whether the inactivity came from the mutations or from the purification. The host laboratory already had an active DHAK, the **CECT 4626** variant, which had been shown to express and work. Moving the stabilisation onto that sequence was not a preference but the only route to a comparison that means anything, since a stabilised variant can only be judged against a wild type that works.",
+        "**Why the most conservative design.** Again only one construct could be ordered, and two considerations pointed the same way. The first is the lesson from design 5: 56 substitutions were enough to abolish activity, so the next attempt had to carry far fewer. The second is specific to this round. The final construct does not carry the PROSS mutations alone; it carries them **on top of the ~22 positions at which CECT 4626 naturally differs** from the sequence the design was generated on, so the two sources of variation compound. Choosing **design 1 (21 substitutions, 3.9%)**, the most conservative of the nine, keeps the number of changes added on top of those natural differences to a minimum, so that the stabilised construct stays as close as possible to a sequence already known to be active.",
+        "**Result of the transfer.** The transfer was done position by position between the PROSS 1 design and the natural CECT 4626 sequence, and every differing position was assigned to one of three classes: **natural differences between the two strains**, **PROSS substitutions**, and **positions where a natural difference coincides with a PROSS substitution**. This third class is the most informative, since there the algorithm proposed a residue that evolution had already fixed in the active variant; those positions need no mutation at all and are the best-supported part of the design. A **codon-optimised gene** was generated and ordered for synthesis.",
+      ],
+      interpretation:
+        "This is what the round was aiming for: a small, evidence-ranked set of stabilising changes on the enzyme that actually works, with the unmodified CECT 4626 sequence available as its control.",
+      expectation:
+        "The design was completed, ordered as a synthetic gene and transformed into the expression host, but the time lost to the problems described above left none to measure its activity, so nothing can be concluded here about how the stabilisation performed. The round is documented in full, including the criterion used to select the mutations, so that a future team can take the transformed construct straight to expression and make the comparison against the wild type that we could not.",
+    },
+  ],
 };
 
 const DESIGN_CHANNELLING: ResultData = {
   id: "design-channelling",
   tabLabel: "SpyTag/SpyCatcher",
   title: "Channelling the biocatalytic complex (SpyTag/SpyCatcher)",
-  subsections: [{
-    id: "spytag-spycatcher-design",
-    observations: "DHAK–SpyTag and PPK2–SpyCatcher were explored with AlphaFold and Boltz2. Modelling each split element alone failed for PPK2, while modelling each enzyme with the complete SpyTag/SpyCatcher system produced well-folded partners that could be superposed through the interface.",
-    interpretation: "The final model provides a viable geometry in which both enzymes retain their folds and the joining module is structured. It also shows why split systems may need to be modelled as a complete unit even when the proteins are expressed separately.",
-    expectation: "The work remained **computational only**: the fusion was not expressed or tested experimentally.",
-  }],
+  subsections: [
+    {
+      id: "spytag-spycatcher-round-1",
+      title: "Round 1: each enzyme fused to its own element",
+      body: [
+        "To channel the ATP intermediate directly between the two enzymes, the DHAK–PPK2 pair was modelled *in silico* as a SpyTag/SpyCatcher fusion [4], with the SpyTag on DHAK and the SpyCatcher on PPK2.",
+        "In the first round each enzyme was modelled carrying only its half of the system. **DHAK with the SpyTag at the N-terminus was predicted cleanly by AlphaFold [5]**: the enzyme adopts its expected fold and the tag protrudes as a **disordered extension**, which is what a short peptide of that kind should look like. Superposing the model on the crystal structure of the wild-type enzyme in PyMOL confirms that the fusion leaves the fold unchanged. The reference used for this comparison is the DSM 30040 variant, since no crystal structure is available for CECT 4626.",
+        "**PPK2 with the SpyCatcher at the N-terminus could not be predicted reliably.** AlphaFold returned a model in which the SpyCatcher was disordered and, more seriously, PPK2 itself did not resemble the free enzyme, so nothing about the geometry of the complex could be judged from it. Modelled without any fusion, PPK2 adopts a fold that agrees with the structure described for BcPPK2-III [6], which is what makes the fusion model's failure legible.",
+        "The contrast between the two enzymes is informative: a short peptide can be appended to a folded enzyme without disturbing the prediction, but a whole domain cannot. That half of the round failed was not expected, and it is what prompted the change of strategy below.",
+      ],
+    },
+    {
+      id: "spytag-spycatcher-round-2",
+      continued: true,
+      title: "Round 2: modelling the complete SpyTag/SpyCatcher system",
+      body: [
+        "The failure is not surprising once the nature of the system is considered. SpyTag and SpyCatcher are **two fragments of a single bacterial protein**, split by their designers into complementary halves; a model trained on natural proteins has no reason to fold one half correctly on its own. We therefore modelled each enzyme fused to the **complete SpyTag/SpyCatcher system**, each attached through the side that corresponds to it in the final construct, **PPK2 through the SpyCatcher and DHAK through the SpyTag**, and changed the prediction interface to **Boltz2** [7].",
+        "This resolved it. **PPK2 with the complete system at its N-terminus** gave a good model, with the module well structured and PPK2 adopting a fold comparable to the published structure of the free enzyme. **DHAK was then remodelled with the complete system at its C-terminus**, also in Boltz2, and likewise matched free DHAK. With both partners modelled reliably, the two models were **superposed through their SpyTag/SpyCatcher interfaces in PyMOL**, giving a model of the assembled complex.",
+      ],
+      interpretation:
+        "The outcome is a **viable fusion geometry**: both enzymes keep their folds and the module joining them is structured rather than disordered. The method is worth recording in its own right, since the constructs are ultimately expressed as **separate proteins** that meet only on mixing, yet they can only be modelled as a complete unit. That is a limitation of the prediction tools rather than of the design, and future teams modelling split systems should expect it.",
+      expectation:
+        "The work remained **computational only**: the fusion was not expressed or tested experimentally.",
+    },
+  ],
 };
 
 /* ---------- Enzyme expression ---------- */
@@ -595,24 +654,34 @@ const COUPLED_ASSAY_ROUND_2: ResultData = {
     {
       id: "coupled-assay-round-2",
       observations:
-        "The reaction was repeated with **purified DHAK and purified PPK2** and a much smaller sample volume per well. The 25 and 50 mM DHAP standards now gave distinct, unsaturated signals. Under the same substrate conditions, R1 (45 mM polyphosphate) formed **16.44 mM DHAP**, while R2 (90 mM polyphosphate) formed **49.15 mM DHAP**, with reported yields of **97.2%** and **97.6%**.",
+        "For this round PPK2 was **produced again** and purified by IMAC. Its protein was **1.331 mg/mL** by Bradford and, taking the host-laboratory specific activity as the reference (**2 U/mg** for the ADP-to-ATP reaction [6]), the stock stands at **~2.2 U/mL**, so **0.63 U of PPK2** entered the reaction. The coupled reaction was then run with **both enzymes purified**, **3 U of DHAK** and **0.63 U of PPK2**, **50 mM DHA** and a **substoichiometric 1.7 mM ATP**. Polyphosphate was supplied **fed-batch**, in seven additions over the first hour, reaching a final **16.9 mM chains (R1)** and **50.4 mM chains (R2)**; at an average of 12 phosphate units per chain, those feeds carry **202.8 mM and 604.8 mM of transferable phosphate**. A **much smaller sample volume per well** kept the endpoint \u03b1-GDH/TIM determination within the linear range, so the 25 and 50 mM DHAP standards now gave distinct, unsaturated signals.",
       tables: [
         {
-          caption: "Coupled DHAK–PPK2 endpoint assay with both enzymes purified.",
-          headers: ["Sample", "A₃₄₀ before", "A₃₄₀ after", "ΔA₃₄₀", "DHAP (mM)", "Yield"],
+          caption:
+            "Coupled DHAK\u2013PPK2 endpoint assay with both enzymes purified. A\u2083\u2084\u2080 before and after addition of \u03b1-GDH/TIM, with DHAP interpolated against the 25 and 50 mM standards. Polyphosphate is given as millimolar chains, and the phosphate column converts it at 12 phosphate units per chain. Conversion is referred to the 50 mM dihydroxyacetone supplied.",
+          headers: [
+            "Sample",
+            "A\u2083\u2084\u2080 before",
+            "A\u2083\u2084\u2080 after",
+            "\u0394A\u2083\u2084\u2080",
+            "DHAP (mM)",
+            "Conversion of DHA",
+            "Phosphate supplied (mM)",
+            "Phosphate transferred",
+          ],
           rows: [
-            ["Control (−)", "0.897", "0.878", "0.019", "0.00", "—"],
-            ["DHAP 25 mM standard", "0.914", "0.452", "0.462", "25.00", "—"],
-            ["DHAP 50 mM standard", "0.917", "0.044", "0.873", "50.00", "—"],
-            ["R1 (45 mM polyP, 1.5 h)", "0.941", "0.636", "0.305", "16.44", "97.2%"],
-            ["R2 (90 mM polyP, 1.5 h)", "0.934", "0.070", "0.864", "49.15", "97.6%"],
+            ["Control (\u2212)", "0.897", "0.878", "0.019", "0.00", "\u2014", "\u2014", "\u2014"],
+            ["DHAP 25 mM (standard)", "0.914", "0.452", "0.462", "25.00", "\u2014", "\u2014", "\u2014"],
+            ["DHAP 50 mM (standard)", "0.917", "0.044", "0.873", "50.00", "\u2014", "\u2014", "\u2014"],
+            ["R1 (16.9 mM polyP chains, 1.5 h)", "0.941", "0.636", "0.305", "16.44", "**32.9%**", "202.8", "**8.1%**"],
+            ["R2 (50.4 mM polyP chains, 1.5 h)", "0.934", "0.070", "0.864", "49.15", "**98.3%**", "604.8", "**8.1%**"],
           ],
         },
       ],
       interpretation:
-        "With only **1.7 mM ATP** supplied, these product concentrations require ATP regeneration: the nucleotide pool was recycled about **10 times in R1** and **29 times in R2**. R2 reached essentially full conversion of the 50 mM DHA, and the extent of conversion scaled with the polyphosphate supplied.",
+        "R1 formed **16.44 mM DHAP** and R2 formed **49.15 mM DHAP**, which is **32.9% and 98.3% conversion of the 50 mM dihydroxyacetone**, with R2 reaching essentially full conversion of the substrate. Because only **1.7 mM ATP** was supplied, these amounts required that the **ATP be regenerated**, with the nucleotide pool recycled **about 10 times in R1 and about 29 times in R2**, obtained by dividing the DHAP formed by the ATP supplied. Polyphosphate was in **large excess in both conditions**: only about **8% of the phosphate supplied** was transferred in either case, so the donor was never close to being exhausted and the limit on R1 was the **amount of polyphosphate fed**, not the amount of phosphate still available within it. That is what the larger feed in R2 changed, carrying the conversion from a third of the substrate to near-complete.",
       expectation:
-        "**Yes.** This is the quantitative proof of concept that round 1 could not provide: the coupled system regenerates ATP and sustains DHAK turnover far beyond the nucleotide added at the start.",
+        "This is the result round 1 could not give. There, the sample volume drove every well to full NADH consumption, so the signal sat at the ceiling and no value could be read. With the **smaller aliquot** and both enzymes **purified**, the determination is linear, the standards resolve, and the DHAP formed is measured directly. The coupled system therefore **regenerates ATP** and sustains DHAK turnover **far beyond the nucleotide added at the start**, and the extent **scales with the polyphosphate supplied**.",
     },
   ],
 };
@@ -621,7 +690,11 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
   {
     id: "computational-design",
     heading: "1. Computational protein design",
+    intro:
+      "Computational design served two purposes: a **DHAK that is more stable without losing activity**, and a **physical coupling of DHAK and PPK2** so that regenerated ATP passes directly from one active site to the other. The stabilisation line was first run on the reference DHAK and then rebuilt on the active variant once the activity assays had identified it, and the coupling line explored a **SpyTag/SpyCatcher fusion** in silico.",
     results: [DESIGN_DSM, DESIGN_CECT, DESIGN_CHANNELLING],
+    outro:
+      "**Conclusion.** Computational design delivered two outputs for the next build round. First, a **conservative PROSS stabilising set (design 1, 21 substitutions)** transferred onto the **active CECT 4626 DHAK**, chosen after the mid-range design 5 on the DSM 30040 reference proved inactive at the bench. The construct was synthesised, transformed and **expressed**, but the gene arrived late enough that **no activity measurement could be made before the wiki freeze**, so nothing is claimed here about whether the stabilisation works. Second, an **in silico model of a SpyTag/SpyCatcher-fused DHAK–PPK2 complex** with both folds preserved and a structured joining module, supporting direct channelling of the ATP intermediate. Both are **predictions awaiting experimental test**, and the transformed strain is available for a future team to take straight to expression.",
   },
   {
     id: "expression",
@@ -629,12 +702,18 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
     intro:
       "The module needs DHAK and PPK2 produced in house, and it needs the **wild type** and the stabilised **PROSS 5** variant of DHAK made under identical conditions so that the comparison between them means something. This is where the producing strains are built, the induction conditions are fixed and production is first read out.",
     results: [TRANSFORMATION, GROWTH, INDUCTION, HARVEST, SDS_PAGE],
-    outro:
-      "**Conclusion.** This sub-block did not deliver the intended side by side comparison of wild type and PROSS 5, because the wild type did not express. What it did deliver is what the rest of the module depends on: a transformation and induction routine that reliably produces PPK2 and DHAK PROSS 5 in *E. coli* BL21 (DE3), an enzymatic lysis route that gives a clear cell free extract without sonication or streptomycin sulfate, evidence on gel that PROSS 5 is expressed and binds immobilised metal resin, and a recovered 2021 strain that provides DHAK while the wild type construct is investigated. Two questions are carried forward, the silent wild type and the identity of the extra band in purified PROSS 5, and both are read-out questions about specific constructs rather than problems with the production route itself.",
+    outro: [
+      "**Conclusion.** This sub-block **delivered** a working production routine: fresh constructs transformed under a known kanamycin marker, reproducible growth and induction, ample biomass, and enzymatic lysis alone giving a clear crude extract, so any missing signal reports on the construct rather than on the handling. **PPK2** was confirmed as expressed and carried forward unchanged, and **DHAK PROSS 5** expressed well, always with an unidentified contaminant of higher molecular mass.",
+      "What it **did not deliver** is the comparison it was built for: neither the original **DHAK wild type nor the CECT 4626 2021** stock gave a visible band. Both are therefore taken to the activity assays, where it is decided whether they are discarded; and a further **CECT 4626 stock** is assayed in parallel to decide whether it can serve as the reference enzyme.",
+    ],
   },
   {
     id: "purification",
     heading: "3. Enzyme purification",
+    intro: [
+      "The module needs each enzyme in a preparation clean enough to measure activity without interference, not a homogeneous protein. This is where the affinity step and the dialysis that follows it are applied to PPK2 and to DHAK, where a reduced-scale version of the same step is used to tell a purification problem apart from an expression one, and where size exclusion is tested as a route independent of metal affinity.",
+      "The gels read in this block are the same ones shown in the expression block. There they were read for how much enzyme each construct produces; here they are read again for how that enzyme behaves through the purification, which is what the flow-through, eluate and dialysate lanes report. The activity of the fractions obtained by each route is reported in the activity block.",
+    ],
     results: [
       PURIFICATION_IMAC,
       PURIFICATION_DIALYSIS,
@@ -648,7 +727,20 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
     intro:
       "The revalorisation module depends on **two enzymatic activities working together**, the phosphorylation of dihydroxyacetone by DHAK and the regeneration of ATP by PPK2. We tested them in two steps. First, DHAK was assayed on its own to confirm that the purified enzyme is catalytically active and to fix a baseline rate. Then the two enzymes were run together, with **polyphosphate as the phosphate donor**, to test the system as it is meant to operate, where **PPK2 rebuilds the ATP that DHAK spends** so that the reaction is no longer limited by the small amount of nucleotide added at the start. Both assays read out the same product, dihydroxyacetone phosphate (DHAP), through the coupled α-GDH/TIM reaction, which ties the NADH signal to the DHAP formed and lets the single-enzyme and coupled results be compared on the same scale.",
     results: [DHAK_DSM, DHAK_2021, DHAK_2012, DHAK_PROSS, PURIFIED_2012_STOCK, ACTIVE_DIALYSED_IMAC, COUPLED_ASSAY, COUPLED_ASSAY_ROUND_2],
+    outro: [
+      "**Conclusion.** The activity work delivered an **active DHAK preparation** and a **coupled DHAK\u2013PPK2 system that recycles its ATP pool**.",
+      "The working enzyme was the **CECT 4626 variant, 2012 stock**, reaching **~10 U/mg** as a purified preparation, close to the **10.7 U/mg reported for the fully purified enzyme** [10]. The **DSM 30040 reference** was too weakly active to serve as a control, which is what removed the comparison the module had been built around. Of the two PROSS-stabilised variants, **design 5 lost all measurable activity**, and the more conservative **design 1 was expressed but not assayed**, since it arrived too late in the season for the activity measurement. No conclusion is drawn here about whether PROSS stabilisation of this enzyme works.",
+      "The decisive test coupled **purified DHAK to purified PPK2** with polyphosphate as the phosphoryl donor. A first round on cell-free extract saturated the endpoint determination, so DHAP could only be bounded below rather than measured. The assay was redesigned with a smaller aliquot per well and repeated with both enzymes purified. With **1.7 mM ATP supplied**, the reaction formed **16.44 and 49.15 mM DHAP** at the two polyphosphate feeds, which corresponds to the nucleotide pool turning over about **10 and 29 times**.",
+      "**Two limits qualify this.** The determination was run **once per condition at a single time point**, with no replicates and no uncertainty attached to the figures. And the experiment **carries no condition lacking PPK2**, so the ATP recycling is inferred from the stoichiometry of the nucleotide supplied rather than measured against a non-regenerating control. Both are the first things a future round should close.",
+      "Within those limits, the **module works as designed**. **DHAK phosphorylates dihydroxyacetone, PPK2 rebuilds the ATP it spends from polyphosphate**, and conversion scales with the polyphosphate supplied.",
+    ],
   },
+];
+
+export const REVALORISATION_OUTRO = [
+  "**The module delivers a working two-enzyme reaction.** DHAK phosphorylates dihydroxyacetone, PPK2 rebuilds the ATP that DHAK spends, and the phosphate comes from inorganic polyphosphate rather than from a stoichiometric nucleotide feed. This is the step the whole project rests on, and it runs.",
+  "The nucleotide budget is what proves it. The reaction was supplied with **1.7 mM ATP** and formed **49.15 mM of DHAP**, so each ATP molecule was used and rebuilt close to **thirty times**. A system that consumed its nucleotide would have stopped at 1.7 mM. The ATP here behaves as a **catalyst, not a reagent**, which is what makes this chemistry affordable outside a laboratory.",
+  "Two things are missing. Every figure quoted here comes from a **single determination**, so the numbers are solid as a demonstration and provisional as a measurement. And the **DHAK variant stabilised with the PROSS algorithm** was expressed but never assayed, so the question that justified the whole design round, whether the computational stabilisation improves the enzyme, is still open. Replicating the coupled reaction and measuring that variant against the wild type are the next iteration.",
 ];
 
 export const REVALORISATION_REFERENCES = [

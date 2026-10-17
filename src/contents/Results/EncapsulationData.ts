@@ -438,7 +438,7 @@ const CORE_SHELL_FLOW_RATIO: ResultData = {
       tables: [
         {
           caption:
-            "Shell thickness (μm) of core-shell capsules produced with 3% and 3.5% (w/v) alginate at different outer and inner flow rates (mean ± SD between capsules, n = 10 capsules; ∗n = 6). Each capsule value is the mean of approximately 10 measurements taken around the shell.",
+            "Shell thickness (μm) of core-shell capsules produced with 3% and 3.5% (w/v) alginate at different outer and inner flow rates (mean ± SD between capsules, n = 10 capsules; ∗n = 6). Each capsule value is the mean of 10 measurements taken around the shell, five on each half of the bisected capsule.",
           headers: ["Qe / Qi (μL/min)", "Qe/Qi", "3%", "3.5%"],
           rows: [
             ["600 / 150", "4:1", "360 ± 78", "418 ± 149"],
@@ -489,7 +489,7 @@ const CORE_SHELL_MECHANICAL: ResultData = {
         },
       ],
       bodyAfter: [
-        "Capsules do not all start out equally spherical, so comparing absolute sphericity under load would confound resistance to compression with the shape the capsule had to begin with. Each condition is therefore expressed as the fraction of its own unloaded sphericity retained at each load.",
+        "As set out at the top of this page, sphericity under load is reported relative to each condition's unloaded value (s/s₀). What is compared is therefore how much of its own shape each condition keeps, so a capsule that started slightly elongated is not penalised for it.",
       ],
     },
     {
@@ -498,7 +498,7 @@ const CORE_SHELL_MECHANICAL: ResultData = {
       tables: [
         {
           caption:
-            "Sphericity retained at the maximum load (s/s₀ at 20.4 g), for freshly prepared capsules and capsules stored for one week. Conditions ranked from highest to lowest retained sphericity. The selected condition is shown in bold.",
+            "Sphericity retained at the maximum load (s/s₀ at 20.4 g, mean ± SD), for freshly prepared capsules and capsules stored for one week. SD is that of sphericity at the maximum load, expressed relative to the mean unloaded sphericity of the same condition. n = 9 capsules per condition, except 3% (w/v) 600/150 (n = 6) and 3% (w/v) 300/50 (n = 8), fresh, at the maximum load. Conditions ranked from highest to lowest mean retained sphericity. The selected condition is shown in bold.",
           headers: ["Alginate", "Qe/Qi (μL/min)", "Ratio", "Fresh", "Stored", "Mean"],
           rows: [
             ["3.5%", "300/50", "6:1", "0.624", "0.607", "0.616"],
@@ -592,7 +592,7 @@ const CORE_SHELL_PRESERVATION: ResultData = {
       figures: [
         {
           caption:
-            "Equivalent diameter of core-shell capsules stored in different chemical environments over time (mean ± SD). Capsules in 1×, ½× and ¼× PBS and in the equivalent sodium-free buffer dissolved within the first day and are not shown. Capsules stored in industrial wastewater came from a different synthesis batch and were larger at day 0 than those in the other media, so this series should be read for its trend over time rather than compared in absolute size with the others.",
+            "Equivalent diameter of core-shell capsules stored in different chemical environments over time (mean ± SD, n = 8–10). Capsules in 1×, ½× and ¼× PBS and in the equivalent sodium-free buffer had broken down beyond imaging within the first day, and capsules in basified wastewater fragmented; neither is shown. Only capsules in untreated wastewater were followed to day 7. Capsules stored in industrial wastewater came from a different synthesis batch and were larger at day 0 than those in the other media, so this series should be read for its trend over time rather than compared in absolute size with the others.",
         },
       ],
     },
@@ -600,7 +600,7 @@ const CORE_SHELL_PRESERVATION: ResultData = {
       id: "preservation-ph",
       continued: true,
       body: [
-        "**Effect of pH.** Capsules stored in water at pH 1.73 shrank during the first day, with their projected area decreasing by approximately 25%, and then remained approximately constant until the end of the experiment. In contrast, capsules stored in water at pH 3, 5 and 5.78 swelled moderately, by approximately 10–30% in projected area, during the first one to three days and then stabilised. Capsule shape was preserved in all cases, and no capsules lost their integrity.",
+        "**Effect of pH.** Capsules stored in water at pH 1.73 shrank progressively, losing approximately 20% of their projected area during the first day and 25% by day 3. In contrast, capsules stored in water at pH 3, 5 and 5.78, the last being unadjusted distilled water, swelled by approximately 15–20% during the first day. At pH 3 and 5 they then stabilised at 10–15% above their initial area, whereas at pH 5.78 they continued to swell slowly, reaching approximately 33% by day 3. Capsule shape was preserved in all cases, and no capsules lost their integrity during the first three days. With longer exposure, however, capsules at the lower pH values became too fragile to handle without breaking, so the pH series was not imaged beyond day 3 in order to keep all pH values on the same footing.",
       ],
       figures: [
         {
@@ -614,7 +614,7 @@ const CORE_SHELL_PRESERVATION: ResultData = {
           alt: "Core-shell capsules in water at pH 1.73 after three days.",
           title: "pH 1.73 · day 3",
           caption:
-            "Representative images of core-shell capsules stored in water at pH 1.73, 3, 5 and 5.78 (rows) over time (columns: days 0, 1, 2, 3 and 7).",
+            "Representative images of core-shell capsules stored in water at pH 1.73, 3, 5 and 5.78 (rows) over time (columns: days 0, 1, 2 and 3).",
         },
       ],
     },
@@ -622,7 +622,7 @@ const CORE_SHELL_PRESERVATION: ResultData = {
       id: "preservation-phosphate",
       continued: true,
       body: [
-        "**Effect of sodium, phosphate and ionic strength.** Capsules stored in 1×, ½× and ¼× PBS dissolved so rapidly that they could no longer be imaged after the first day, and the same behaviour was observed in the sodium-free phosphate buffer at the same dilutions. At the ⅛× dilution, capsules in both PBS and the sodium-free phosphate buffer swelled during the first day, by approximately 25% and 35% in projected area respectively, and then remained stable and intact for up to one week. The two buffers therefore produced the same response at each equivalent ionic strength, regardless of the presence of sodium.",
+        "**Effect of sodium, phosphate and ionic strength.** Capsules stored in 1×, ½× and ¼× PBS broke down so rapidly that they could no longer be imaged after the first day, and the same behaviour was observed in the sodium-free phosphate buffer at the same dilutions. At the ⅛× dilution, capsules in both PBS and the sodium-free phosphate buffer swelled during the first day, by approximately 25% and 35% in projected area respectively, and remained intact over the three days monitored. Capsules in PBS held that size, while those in the sodium-free buffer swelled further, to about 55% above their initial area by day 3, with a marked increase in the variability between capsules. The two buffers therefore produced the same qualitative response at each dilution, regardless of the presence of sodium.",
       ],
       figures: [
         {
@@ -636,7 +636,7 @@ const CORE_SHELL_PRESERVATION: ResultData = {
           alt: "Core-shell capsules in one-eighth-strength PBS after three days.",
           title: "⅛× PBS · day 3",
           caption:
-            "Representative images of core-shell capsules stored in ⅛× PBS and ⅛× sodium-free phosphate buffer (rows) over time (columns: days 0, 1, 2, 3 and 7). Capsules stored in 1×, ½× and ¼× buffers dissolved within the first day and are not shown.",
+            "Representative images of core-shell capsules stored in ⅛× PBS and ⅛× sodium-free phosphate buffer (rows) over time (columns: days 0, 1, 2 and 3). Capsules stored in 1×, ½× and ¼× buffers had broken down beyond imaging within the first day and are not shown.",
         },
       ],
     },
@@ -644,7 +644,7 @@ const CORE_SHELL_PRESERVATION: ResultData = {
       id: "preservation-wastewater",
       continued: true,
       body: [
-        "**Industrial wastewater.** Within the first day, all capsules stored in industrial wastewater, whether untreated or basified, took on the brown colour of the wastewater. Capsules stored in untreated wastewater (pH 1.76) shrank by approximately 25% in projected area during the first day, similarly to capsules stored in water at low pH, and then remained approximately constant. They did not break or dissolve during storage, but they became noticeably more fragile than those stored in distilled water, and some broke during handling for imaging. When the wastewater was basified, capsule integrity was compromised much more severely. Within the first day, capsules in wastewater basified with NaOH or KOH lost their regular shape and began to break apart, and over the following days they progressively fragmented into smaller pieces. Capsules in wastewater basified with NH₄OH degraded most severely, completely losing their spherical shape and disintegrating into a soft, paste-like mass.",
+        "**Industrial wastewater.** Within the first day, all capsules stored in industrial wastewater, whether untreated or basified, took on the brown colour of the wastewater. Capsules stored in untreated wastewater (pH 1.76) shrank by approximately 25% in projected area during the first day, similarly to capsules stored in water at low pH, and then remained approximately constant up to day 7, the only condition in which capsules were followed for a full week. They did not break or dissolve during storage, but they became noticeably more fragile than those stored in distilled water, and some broke during handling for imaging. When the wastewater was basified to pH 5, capsule integrity was compromised much more severely. Within the first day, capsules in wastewater basified with NaOH or KOH lost their regular shape and began to break apart, and over the following days they progressively fragmented into smaller pieces, so that none remained intact enough to be followed to day 7. Capsules in wastewater basified with NH₄OH degraded most severely, completely losing their spherical shape and disintegrating into a soft, paste-like mass within the first day.",
         "Two of these behaviours are hard to convey in still images, because one only becomes apparent when the capsules are handled and the other concerns the consistency of what remains: the fragility of capsules after a week in untreated wastewater (Video 1), and the paste into which capsules in NH₄OH-basified wastewater had turned after a single day (Video 2).",
       ],
       figures: [
@@ -677,7 +677,7 @@ const CORE_SHELL_PRESERVATION: ResultData = {
           alt: "Core-shell material after one day in wastewater basified with ammonium hydroxide.",
           title: "NH₄OH · day 1",
           caption:
-            "Representative images of core-shell capsules stored in untreated industrial wastewater and in industrial wastewater basified with NaOH, KOH and NH₄OH (rows) over time (columns: days 0, 1, 2, 3 and 7). Capsules basified with NH₄OH had turned into a paste by day 1 and could not be imaged thereafter, so that row ends there; empty cells elsewhere indicate that no capsules remained intact enough to be imaged.",
+            "Representative images of core-shell capsules stored in untreated industrial wastewater and in industrial wastewater basified to pH 5 with NaOH, KOH and NH₄OH (rows) over time (columns: days 0, 1, 2, 3 and 7). Only capsules in untreated wastewater were imaged at day 7. Capsules basified with NH₄OH had turned into a paste by day 1 and could not be imaged thereafter, so that row ends there; empty cells elsewhere indicate that no capsules remained intact enough to be imaged.",
         },
       ],
     },
@@ -687,36 +687,22 @@ const CORE_SHELL_PRESERVATION: ResultData = {
       tables: [
         {
           caption:
-            "Projected area (mm²) of core-shell capsules (3.5% (w/v) alginate, Qe/Qi = 6:1) stored in different media over time (mean ± SD, n = 8–10).",
+            "Equivalent diameter (Deq, mm) of core-shell capsules (3.5% (w/v) alginate, Qe/Qi = 600/100 μL/min) stored in different media over time (mean ± SD, n = 8–10). Only capsules in untreated wastewater were followed to day 7.",
           headers: ["Medium", "Day 0", "Day 1", "Day 2", "Day 3", "Day 7"],
           rows: [
-            ["Water pH 1.73", "8.80 ± 0.75", "7.12 ± 0.51", "6.74 ± 0.61", "6.63 ± 0.51", "7.74 ± 1.49"],
-            ["Water pH 3", "8.49 ± 0.91", "9.99 ± 1.01", "10.31 ± 1.20", "9.71 ± 1.11", "9.41 ± 0.95"],
-            ["Water pH 5", "8.35 ± 0.49", "9.70 ± 0.66", "9.17 ± 0.82", "9.24 ± 0.53", "9.68 ± 0.47"],
-            ["Water pH 5.78", "7.69 ± 0.81", "9.19 ± 1.21", "9.41 ± 1.23", "10.21 ± 1.31", "9.82 ± 0.89"],
-            ["⅛× PBS", "9.33 ± 0.78", "11.67 ± 0.99", "11.61 ± 0.86", "11.52 ± 0.81", "10.71 ± 1.12"],
-            [
-              "⅛× Na-free buffer",
-              "8.91 ± 0.79",
-              "12.05 ± 1.31",
-              "11.92 ± 1.09",
-              "13.79 ± 2.11",
-              "11.07 ± 0.64",
-            ],
-            [
-              "Wastewater (pH 1.76)",
-              "11.53 ± 0.67",
-              "8.69 ± 0.45",
-              "9.21 ± 0.47",
-              "8.98 ± 0.56",
-              "9.00 ± 0.82",
-            ],
+            ["Water pH 1.73", "3.34 ± 0.14", "3.01 ± 0.11", "2.93 ± 0.13", "2.90 ± 0.11", "—"],
+            ["Water pH 3", "3.28 ± 0.17", "3.56 ± 0.18", "3.62 ± 0.21", "3.51 ± 0.20", "—"],
+            ["Water pH 5", "3.26 ± 0.09", "3.51 ± 0.12", "3.41 ± 0.15", "3.43 ± 0.10", "—"],
+            ["Water pH 5.78", "3.13 ± 0.16", "3.41 ± 0.22", "3.46 ± 0.22", "3.60 ± 0.23", "—"],
+            ["⅛× PBS", "3.44 ± 0.14", "3.85 ± 0.17", "3.84 ± 0.14", "3.83 ± 0.13", "—"],
+            ["⅛× Na-free buffer", "3.36 ± 0.15", "3.91 ± 0.21", "3.89 ± 0.17", "4.18 ± 0.31", "—"],
+            ["Wastewater (pH 1.76)", "3.83 ± 0.11", "3.33 ± 0.09", "3.42 ± 0.09", "3.38 ± 0.11", "3.38 ± 0.16"],
           ],
         },
       ],
       bodyAfter: [
-        "These results show that **pH alone did not compromise capsule integrity** within the range tested: acidic conditions caused contraction of the alginate network, consistent with the protonation of its carboxylate groups, whereas mildly acidic to near-neutral conditions caused moderate swelling, but capsules remained intact in all cases. In the phosphate buffers, capsule integrity depended on concentration but not on the presence of sodium: both PBS and the sodium-free buffer dissolved the capsules at the three highest concentrations, and both were tolerated at the ⅛× dilution. This indicates that the degradation previously observed in PBS was driven by the overall ionic strength and phosphate content of the medium, rather than by sodium specifically, as phosphate can sequester the calcium ions that crosslink the alginate network. The brown colouring of all capsules stored in wastewater indicates that coloured components of the wastewater diffused into the alginate network, which suggests that the shell is permeable to dissolved compounds from the target medium, a necessary condition for the encapsulated bacteria to access the phosphate to be removed.",
-        "The most critical finding concerns the industrial wastewater. Although capsules did not break in the untreated acidic wastewater, they became more fragile, and **basifying the wastewater**, which would be required before engineered bacteria could be exposed to it, **caused severe degradation with all three bases tested**. NaOH and KOH led to fragmentation of the capsules, and NH₄OH to their complete disintegration. Since KOH and NaOH produced a similar effect, the degradation cannot be attributed to sodium specifically. It is more likely related to the combination of increased pH, the high ionic strength resulting from neutralising a strongly acidic medium, and the presence of components in the wastewater able to compete with calcium for the alginate network. The particularly severe effect of NH₄OH suggests an additional mechanism, possibly related to the ability of ammonia to complex calcium ions.",
+        "These results show that, over the first three days, **pH alone did not compromise capsule integrity** within the range tested: acidic conditions caused contraction of the alginate network, consistent with the protonation of its carboxylate groups [9,14], whereas mildly acidic to near-neutral conditions caused moderate swelling, and capsules remained intact in all cases. The fragility that developed at the lowest pH values with longer exposure nonetheless indicates that sustained contact with strongly acidic media weakens the network. In the phosphate buffers, capsule integrity depended on concentration but not on the presence of sodium: both PBS and the sodium-free buffer broke down the capsules at the three highest concentrations, and both were tolerated at the ⅛× dilution. This indicates that the degradation previously observed in PBS is not specific to sodium. It does not identify the cause: the sodium-free buffer replaces sodium with potassium, another monovalent cation able to compete with calcium for the carboxylate groups [9,13], and because phosphate concentration and ionic strength fall together on dilution, the experiment cannot separate sequestration of calcium by phosphate [12] from exchange with monovalent cations. Whatever the mechanism, the threshold lies between ⅛× and ¼× PBS, approximately 1.5–3 mM total phosphate. The phosphate concentration of the target wastewater was not determined. Capsules did survive a week in the untreated wastewater, but at pH 1.76 phosphate is largely protonated and less able to bind calcium, so this does not establish whether phosphate would threaten the capsules once the wastewater is neutralised. The brown colouring of all capsules stored in wastewater indicates that coloured components of the wastewater diffused into the alginate network, which suggests that the shell is permeable to dissolved compounds from the target medium, a necessary condition for the encapsulated bacteria to access the phosphate to be removed.",
+        "The most critical finding concerns the industrial wastewater. In the untreated acidic wastewater the capsules did not break and could still be handled and imaged after a week, although they became increasingly fragile. **Basifying the wastewater**, which would be required before engineered bacteria could be exposed to it, **caused severe degradation with all three bases tested**: NaOH and KOH led to fragmentation of the capsules, and NH₄OH to their complete disintegration. Since KOH and NaOH produced a similar effect, the degradation cannot be attributed to sodium specifically, and since capsules in water at the same pH of 5 remained intact, it cannot be attributed to the pH reached either. It is more likely related to the high concentration of monovalent cations introduced when neutralising a strongly acidic medium, together with components of the wastewater able to compete with or sequester calcium, both of which may act more strongly once the carboxylate groups are deprotonated at the higher pH. The particularly severe effect of NH₄OH suggests an additional mechanism, possibly related to the ability of ammonia to complex calcium ions.",
         "These results partially matched our expectations. The contraction at low pH and the stability of the capsules in water were consistent with the known behaviour of calcium alginate gels, and the comparison between PBS and the sodium-free buffer clarified that the degradation previously observed in PBS was not caused by sodium. However, the severe degradation of capsules in basified wastewater was more pronounced than anticipated, and indicates that the current core-shell formulation is not compatible with direct exposure to pH-adjusted industrial wastewater. This represents a key limitation for the application of the encapsulation platform, and points to the need for strategies that reinforce the alginate network, such as additional crosslinking, polymer coatings or the use of barium instead of calcium, or to the adjustment of the wastewater pre-treatment before contact with the capsules.",
       ],
     },
@@ -728,7 +714,7 @@ const CORE_SHELL_PRESERVATION: ResultData = {
 const THERMAL: ResultData = {
   id: "thermal-characterisation",
   tabLabel: "TGA-DSC",
-  title: "Thermal characterisation (TGA-DSC)",
+  title: "Thermal characterisation (TGA)",
   subsections: [
     {
       id: "tga-summary",
@@ -737,7 +723,8 @@ const THERMAL: ResultData = {
       ],
       tables: [
         {
-          caption: "Summary of the thermogravimetric runs on hydrated and dried core-shell capsules.",
+          caption:
+            "Thermogravimetric results for hydrated and air-dried core-shell capsules of the optimised formulation (3.5% (w/v) alginate, Qe/Qi = 600/100 μL/min). Mass lost as water and residue are given as a percentage of the initial mass; the main DTG peak is the temperature of maximum mass-loss rate. The residue of hydrated capsule 1 could not be quantified because of a baseline error in that run.",
           headers: [
             "Sample",
             "State",
@@ -842,10 +829,9 @@ const MICROSTRUCTURE: ResultData = {
       bodyAfter: [
         "At 90× both capsules have collapsed and folded in on themselves. One is lobed, with a deep crease across it and a bright crust along one edge; the other is plumper and split by a central cleft. Neither is spherical any more, and the two buckled in different ways. They lost about the same volume, but the shape of the collapse is not repeatable, which fits a shell that simply gives way wherever it yields first.",
         "At 400× the surface is smooth and unbroken across a wide, gently curved area. One capsule shows a single fine crack, and that is the only break anywhere in either series. **No pinholes, tears or peeling patches appear**, which says the shell comes through extrusion, gelation and washing intact. The crack is most likely from drying rather than a flaw in the capsule itself.",
-        "From 2000× to 20000× both capsules follow the same progression. At 2000× the surface looks flat and finely stippled. At 7000× that stippling resolves into a bumpy, granular relief. At 20000× it turns craggy, with raised ridges, pits and some open pores. Seeing the same sequence in two separately made capsules means this is how the dried material looks in general, not how one specimen happened to turn out.",
-        "The second area imaged on one capsule shows the surface is not the same everywhere. At each magnification it is smoother than the first area at 2000×, ridged at 7000×, and craggier at 20000×. Same kind of texture, different amount of relief. This tracks how the membrane folded as it dried: flat where it pressed against itself, ridged where it buckled, open and pitted where it tore.",
-        "The pores at high magnification are not the pores of a working capsule. A hydrated network is far more open than this, and drying does not preserve that structure; it preserves the creases and tears left when it collapsed. Permeability has to come from the transport experiments, not from these images.",
-        "One feature is compositional rather than topographic: the bright crust along the rim of one capsule, clearly brighter than the polymer around it. Brightness like this usually means a higher mean atomic number, and the elemental analysis finds only calcium and chlorine as heavy elements besides the coating. Salt from the curing bath, crystallised on the surface as the capsule dried, is the obvious explanation, and it matches the angular translucent bits seen optically at the capsule edge.",
+        "From 2000× to 20000× both capsules follow the same progression: smooth at the lowest magnification, visibly rough at the intermediate one, and resolved into an open network with pores at the highest. The second area imaged on one capsule goes through the same three stages, flatter in one place and more folded in another, which tracks how the membrane creased as it dried.",
+        "Seeing the same sequence in two independently made capsules is what allows these textures to be described as characteristic of the dried material rather than of one specimen. It also sets the limit of the technique here: the pores visible at high magnification are not the pores of a working capsule, because air-drying does not preserve the open structure of a hydrated network, it preserves the creases and tears left when that network collapsed [16,17]. Permeability would have to come from transport measurements, which were not part of this work, rather than from these images.",
+        "One feature is compositional rather than topographic: the bright crust along the rim of one capsule, clearly brighter than the polymer around it. If that brightness reflects composition rather than the edge and charging effects that also brighten secondary-electron images, it points to a higher mean atomic number, and the elemental analysis finds only calcium and chlorine as heavy elements besides the coating. Salt from the curing bath, crystallised on the surface as the capsule dried, is the obvious explanation, and it matches the angular translucent bits seen optically at the capsule edge.",
       ],
     },
     {
@@ -866,11 +852,11 @@ const MICROSTRUCTURE: ResultData = {
       ],
       bodyAfter: [
         "Nothing in the spectrum appears to be foreign to the capsule. Five elements appear, and each belongs to something that went into making it. Carbon and oxygen dominate, as predictable from the polysaccharide composition; gold comes from the coating. The information is in calcium and chlorine, and above all in the relationship between them.",
-        "Calcium is abundant at 6.97 at%, while chlorine is comparatively scarce at 2.13 at%. If the calcium were simply unreacted calcium chloride trapped in the material, there would be two chlorines for every calcium. Instead there is about three times more calcium than that allows, so only around one atom in six can be leftover salt. The rest has no chloride with it, and the only other partner available is the carboxylate group on the alginate chain. **The calcium is bound to the polymer**, which confirms the crosslinking actually happened rather than just confirming the capsule met a calcium solution.",
-        "There also seems to be more bound calcium than crosslinking strictly needs. Ionic gelation works by one calcium bridging two carboxylates, so a fully crosslinked network needs one calcium per two monomer units, and the measured composition points to noticeably more than that. The measurement cannot establish precisely how much calcium the network holds beyond what the junction zones require, since that comparison would rest on the carbon signal, which standardless EDS quantifies poorly.",
+        "Calcium is abundant at 6.97 at%, while chlorine is comparatively scarce at 2.13 at%. If the calcium were simply unreacted calcium chloride trapped in the material, there would be two chlorines for every calcium. Instead there is about six times more calcium than that allows, so only around one atom in six or seven can be leftover salt. The rest has no chloride with it, and the obvious partner is the carboxylate group on the alginate chain, which indicates that **most of the calcium is bound to the polymer** rather than simply left behind by the bath.",
+        "There also seems to be more calcium than crosslinking strictly needs. Ionic gelation works by one calcium bridging two carboxylates [10], so a fully crosslinked network needs one calcium per two monomer units, and the measured composition points to noticeably more than that. In fact the apparent excess is large enough that the carboxylates alone could not balance it, so either part of the calcium is paired with another anion, such as carbonate formed on contact with air, or the excess partly reflects the uncertainty of the quantification. The measurement cannot settle which, since the comparison rests on the carbon signal, which standardless EDS quantifies poorly.",
         "The presence of chlorine, on the other hand, shows that washing does not remove all of the bath salt, while its low level relative to calcium shows that most of it did come off. A capsule that had simply dried with bath solution on it would carry chloride in step with calcium, and this one does not.",
-        "**No sodium is detected**, which matters because the alginate used is the sodium salt and gelation occurs by exchanging sodium for calcium. The absence of a sodium signal indicates that the exchange went essentially to completion in the area sampled. Taken with the calcium result, the two observations describe a capsule whose polymer has genuinely been converted to calcium alginate, rather than one gelled only at its surface.",
-        "None of this was unexpected, and that is precisely what the measurement was for: it confirms the chemistry the encapsulation protocol assumes. The one finding that goes beyond confirmation is the size of the calcium excess, which suggests the capsules retain more calcium than the network requires and could be followed up by comparing different curing times or a more thorough wash.",
+        "**No sodium is detected** above the detection limit, which matters because the alginate used is the sodium salt and gelation occurs by exchanging sodium for calcium. The absence of a sodium signal indicates that the exchange went essentially to completion in the area sampled. Taken with the calcium result, the two observations describe a capsule surface whose polymer has been converted to calcium alginate. Because EDS samples only the outer micrometre or so, this does not speak directly to the interior of the shell.",
+        "None of this was unexpected, and that is precisely what the measurement was for: it confirms the chemistry the encapsulation protocol assumes. The one finding that goes beyond confirmation is the size of the calcium excess, which may reflect calcium held beyond what the junction zones require or a limitation of the quantification, and could be followed up by comparing different curing times or a more thorough wash.",
       ],
     },
   ],
@@ -900,7 +886,7 @@ export const ENCAPSULATION_SUBBLOCKS: ResultSubBlock[] = [
     ],
     outro: [
       "**Conclusion.** The coaxial system required its own composition window rather than an adaptation of the bead protocol: 3 and 3.5% (w/v) alginate with no more than 0.5% (w/v) calcium chloride in the core, above which gelation at the injector tip prevented drops from detaching. Within that window, shell thickness proved too variable to choose between the 4:1 and 6:1 flow-rate ratios, and the decision was made instead on resistance to compression, which separated them unambiguously and in the expected direction.",
-      "The configuration carried forward is **3.5% (w/v) alginate at Qe/Qi = 600/100 μL/min**, selected on mechanical performance and reproducibility, with the production rate deciding the absolute flow rate once mechanics had settled the ratio. Validated against the three demands of the bioreactor, that configuration holds its cargo through synthesis and storage, deforms rather than fails under loads far above anything it will meet in operation, and becomes more resistant after a week in water rather than less. Its limit is chemical: phosphate above roughly a 1/8 dilution of PBS dissolves the shell, and raising the pH of the industrial wastewater destroys the capsules whichever base is used, which leaves the pH-adjustment step, rather than the capsule, as the part of the process still to be solved.",
+      "The configuration carried forward is **3.5% (w/v) alginate at Qe/Qi = 600/100 μL/min**, selected on mechanical performance and reproducibility, with the production rate deciding the absolute flow rate once mechanics had settled the ratio. Validated against the three demands of the bioreactor, that configuration retains particles embedded in its shell through synthesis and storage, deforms rather than fails up to the highest load tested, and in most conditions becomes more resistant after a week in water rather than less. Its limit is chemical: phosphate buffer more concentrated than roughly ⅛× PBS dissolves the shell, prolonged exposure to strongly acidic media makes it fragile, and basifying the industrial wastewater destroys the capsules whichever base is used, even though the capsules tolerate the same pH in water, which leaves the pH-adjustment step, rather than the capsule, as the part of the process still to be solved.",
     ],
   },
   {

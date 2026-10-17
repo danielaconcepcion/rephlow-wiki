@@ -592,32 +592,31 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             ],
           },
           {
-            title: "DHAK constructs",
+            title: "DHAK preparations",
             enzymes: ["DHAK"],
             paragraphs: [
               <>
-                Four DHAK constructs were transformed in total, two natural
-                sequences and their two stabilised designs, but they were{" "}
-                <strong>not handled in parallel</strong>. They entered the
-                pipeline in successive rounds, each one prompted by what the
-                previous round showed; the reasoning behind each change is
-                developed in{" "}
+                The DHAK work ran across <strong>five preparations</strong>,
+                which were <strong>not handled in parallel</strong>. They
+                entered the pipeline in successive rounds, each one prompted by
+                what the previous round showed; the reasoning behind each change
+                is developed in{" "}
                 <Link className="lab-wikilink" to="/engineering">
                   Engineering
-                </Link>
-                .
+                </Link>{" "}
+                (Iterations 1 to 5).
               </>,
               <>
                 <strong>First round.</strong> The reference sequence{" "}
-                <strong>DHAK(1UN9)</strong>, from <em>C. freundii</em> DSM
-                30040, was transformed together with its stabilised design{" "}
+                <strong>DHAK DSM 30040</strong>, the variant crystallised as PDB
+                1UN9, was transformed together with its stabilised design{" "}
                 <strong>PROSS 5</strong>, so that a direct
                 wild-type-versus-variant comparison of stability and activity
                 was possible.
               </>,
-              "**Second round.** When neither of those two constructs gave a usable enzyme, the wild-type **DHAK(CECT 4626)** was transformed, this being the variant reported as the most catalytically efficient DHAK described to date.",
-              "**Third round.** Finally, the conservative design built on that background, **PROSS 1 on CECT 4626**, was transformed, in order to combine the higher catalytic efficiency of the new sequence with a stabilisation carrying far fewer mutations than the first design. **The construct entered the pipeline but did not complete it: the time consumed by the problems of the previous rounds left none to induce it, read its expression or measure its activity, so the comparison it was designed to make against the unmodified CECT 4626 sequence is set up but not yet performed.**",
-              "In every round the **wild-type sequence is the control of its own stabilised design**, since the two differ only in the introduced mutations.",
+              "**Second round.** When neither of those two constructs gave a usable enzyme, we turned to the wild-type **DHAK(CECT 4626)**, the variant reported as the most catalytically efficient DHAK described to date. **This enzyme was not transformed by us.** Two **expressible stocks already held by the host laboratory**, from **2021 and 2012**, were recovered and taken through the same induction, harvest and lysis route as the constructs above, the 2021 stock first on the assumption that more recent material would have been better preserved.",
+              "**Third round.** Finally, the conservative design built on that background, **PROSS 1 on CECT 4626**, was transformed, in order to combine the higher catalytic efficiency of the new sequence with a stabilisation carrying far fewer mutations than the first design. **The gene arrived late in the season. The construct was transformed and expressed, but there was no time left to measure its activity before the wiki freeze, so the comparison it was designed to make against the unmodified CECT 4626 sequence is set up and awaits that one measurement.**",
+              "In the first and third rounds the **wild-type sequence is the control of its own stabilised design**, since the two differ only in the introduced mutations.",
             ],
             callouts: [
               {
@@ -845,10 +844,16 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
               </em>,
               "This shows whether the enzyme bound the resin, whether any was lost during the wash, and how much the eluate was enriched compared with the starting CFE. The success of the purification was judged by **specific activity** (U/mg protein), which should rise after purification even though total activity always falls.",
               <em>
-                The protein concentration of each sample was measured by the
+                The protein concentration of the samples was measured by the
                 Bradford assay against a BSA standard curve <Cite n={10} />,
                 which is what converts a measured activity into a specific
-                activity.
+                activity. Readings close to the assay blank are not reliable,
+                and where that was the case no specific activity is assigned, as
+                reported in{" "}
+                <Link className="lab-wikilink" to="/results">
+                  Results
+                </Link>
+                .
               </em>,
             ],
             callouts: [
@@ -895,7 +900,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             title: "Concentrating the dialysed sample",
             paragraphs: [
-              "Both enzymes were concentrated after dialysis by ultrafiltration in **Amicon Ultra centrifugal filters** (Merck Millipore), following the protocol supplied by the manufacturer. In each case the molecular weight cut-off was chosen well below the molecular weight of the enzyme, so that the protein is retained above the membrane while water and small molecules pass through. The reason for concentrating differed between the two enzymes.",
+              "Where the preparation came out too dilute to assay, it was concentrated after dialysis by **centrifugal ultrafiltration** in **Amicon Ultra centrifugal filters** (Merck Millipore), following the protocol supplied by the manufacturer. In each case the molecular weight cut-off was chosen well below the molecular weight of the enzyme, so that the protein is retained above the membrane while water and small molecules pass through. **This was not applied to every preparation**, and when it was added later to an affinity eluate of the active enzyme it made a difference worth recording, as reported in Results. The reason for concentrating differed between the two enzymes.",
               <>
                 <strong>DHAK.</strong> In one purification the elution volume
                 exceeded the volume of CFE loaded, so the eluate came out
@@ -983,7 +988,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 .
               </>,
               "**Size-exclusion chromatography (SEC)**, also called gel filtration, separates proteins by size rather than by affinity. Large aggregates elute first, DHAK elutes at its characteristic volume, and smaller proteins, nucleotides and other small molecules from the extract elute last. For DHAK this approach has two advantages: the enzyme is never exposed to metal ions or imidazole, and it elutes directly in the running buffer, so no dialysis is needed before the activity assays.",
-              "The run was performed on an **ÄKTAprime plus FPLC system** with a preparative **HiLoad 26/60 Superdex 200 pg** column. Unlike the gravity-flow steps, FPLC pumps the buffer at a controlled flow rate and pressure and records the **UV absorbance at 280 nm** in real time. The DHAK peak can be followed as it leaves the column, so the fractions to keep are chosen from the chromatogram rather than blindly.",
+              "The runs were performed on an **ÄKTAprime plus FPLC system** with a preparative **HiLoad 26/60 Superdex 200 pg** column. Unlike the gravity-flow steps, FPLC pumps the buffer at a controlled flow rate and pressure and records the **UV absorbance at 280 nm** in real time. The DHAK peak can be followed as it leaves the column, so the fractions to keep are chosen from the chromatogram rather than blindly. On this column the **void volume is about 110 mL** and the **total volume about 320 mL**, which places the window where DHAK is expected at approximately **220 to 270 mL**.",
             ],
           },
           {
@@ -1006,7 +1011,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             callouts: [
               {
                 kind: "learn",
-                text: "The ÄKTAprime always starts a run in pause mode, so a run that seems to have started may not be running at all. Releasing the pause after every start is now an explicit step in the protocol. Air trapped in the system causes a noisy baseline and pressure problems, so the system must be purged every time the mobile phase is connected or removed. We did it the day before the run, when connecting the buffer for the overnight equilibration.",
+                text: "Three operating points are worth recording for anyone using this instrument. The ÄKTAprime always starts a run in pause mode, so a run that seems to have started may not be running at all, and releasing the pause is now an explicit step in our protocol. Air trapped in the system causes a noisy baseline and pressure problems, so the system must be purged every time the mobile phase is connected or removed, which we do the day before, when connecting the buffer for the overnight equilibration. And the fraction collector must be started before the peak reaches the outlet, which is now a timed step rather than a judgement made at the console, because in one run the best separation of the whole series was lost to it.",
               },
               {
                 kind: "outcome",

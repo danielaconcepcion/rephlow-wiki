@@ -15,6 +15,7 @@ import {
 } from "./GeneticEngineeringData";
 import {
   REVALORISATION_INTRO,
+  REVALORISATION_OUTRO,
   REVALORISATION_REFERENCES,
   REVALORISATION_SUBBLOCKS,
 } from "./RevalorisationData";
@@ -65,6 +66,7 @@ export const RESULT_BLOCKS: ResultBlockData[] = [
     palette: "mostaza",
     intro: REVALORISATION_INTRO,
     subBlocks: REVALORISATION_SUBBLOCKS,
+    outro: REVALORISATION_OUTRO,
     references: REVALORISATION_REFERENCES,
   },
 ];
