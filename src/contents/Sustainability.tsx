@@ -19,10 +19,88 @@ import "./Sustainability/Sustainability.css";
    -------------------------------------------------------------------------- */
 
 const SECTIONS: PageSection[] = [
-  { id: "r01", label: "01 · The diagnostic lobby" },
-  { id: "r02", label: "02 · The operations core" },
-  { id: "r03", label: "03 · The control and metrics panel" },
-  { id: "r04", label: "04 · The impact amphitheatre" },
+  {
+    id: "r01",
+    label: "01 · The diagnostic lobby",
+    children: [
+      {
+        id: "r01-the-three-main-goals-we-answer-to",
+        label: "The three main goals we answer to",
+      },
+      {
+        id: "r01-goal-9-and-goal-13-two-goals-we-touch-wi",
+        label: "Goals 9 and 13, without claiming",
+      },
+      {
+        id: "r01-reading-the-interactions-the-nilsson-sca",
+        label: "Reading the interactions",
+      },
+      {
+        id: "r01-three-tensions-we-are-not-going-to-smoot",
+        label: "Three tensions",
+      },
+    ],
+  },
+  {
+    id: "r02",
+    label: "02 · The operations core",
+    children: [
+      {
+        id: "r02-the-blueprint-on-the-wall-our-sustainabi",
+        label: "The blueprint on the wall",
+      },
+      {
+        id: "r02-an-honest-word-about-what-sdg-stakeholde",
+        label: "What “SDG stakeholder” means",
+      },
+      { id: "r02-closing-the-loops", label: "Closing the loops" },
+      {
+        id: "r02-cedex-roberto-arranz-arranz",
+        label: "CEDEX — Roberto Arranz",
+      },
+      { id: "r02-what-stays-open", label: "What stays open" },
+      {
+        id: "r02-what-has-to-be-true-next",
+        label: "What has to be true next",
+      },
+    ],
+  },
+  {
+    id: "r03",
+    label: "03 · The control and metrics panel",
+    children: [
+      {
+        id: "r03-reading-1-what-one-cubic-metre-gives-bac",
+        label: "Reading 1: one cubic metre",
+      },
+      {
+        id: "r03-reading-2-the-carbon-footprint-including",
+        label: "Reading 2: the carbon footprint",
+      },
+      {
+        id: "r03-reading-3-the-full-sixteen-and-the-targe",
+        label: "Reading 3: the full sixteen",
+      },
+      {
+        id: "r03-critical-reflection-where-sustainability",
+        label: "Critical reflection",
+      },
+    ],
+  },
+  {
+    id: "r04",
+    label: "04 · The impact amphitheatre",
+    children: [
+      {
+        id: "r04-the-round-table-four-seats-that-rarely-s",
+        label: "The round table",
+      },
+      {
+        id: "r04-closing-reflection-the-ethics-of-a-conta",
+        label: "Closing reflection",
+      },
+    ],
+  },
 ];
 
 /** The capacity sweep, as Table 4 reports it. */
@@ -1908,6 +1986,7 @@ export function Sustainability() {
               Goal 6 — Clean water and sanitation
             </h5>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -1955,19 +2034,9 @@ export function Sustainability() {
                   Support and strengthen the participation of local communities
                   in improving water and sanitation management.
                 </em>
-                <sup
-                  style={{
-                    fontSize: "0.68em",
-                    lineHeight: "0",
-                    verticalAlign: "super",
-                    color: "#4A5170",
-                    fontWeight: "600",
-                    marginLeft: "1px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <a className="lab-citation" href="#ref-r01-1">
                   [1]
-                </sup>
+                </a>
               </p>
             </div>
             <p
@@ -1997,19 +2066,9 @@ export function Sustainability() {
                 0.5 mg/L
               </strong>{" "}
               for larger facilities, phased in between 2033 and 2045.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-2">
                 [2]
-              </sup>
+              </a>
             </p>
             <p
               style={{
@@ -2067,19 +2126,9 @@ export function Sustainability() {
               load does not automatically undo the damage: past a certain point,
               a degraded water body can hold that state on its own, and the way
               back does not undo the damage already done.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-3">
                 [3]
-              </sup>{" "}
+              </a>{" "}
               That asymmetry is the entire argument for acting early.
               Restoration is a slower and more expensive process compared to
               never crossing the line. This is why rePhlow is designed to act at
@@ -2101,19 +2150,9 @@ export function Sustainability() {
               assessment, covering more than 120,000 surface water bodies, found
               that only 37% reached good or high ecological status in the
               2015-2021 period.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-4">
                 [4]
-              </sup>{" "}
+              </a>{" "}
               Ecological status is a complex measure and nutrient levels are
               only one of the many pressures behind it, but the direction is
               unambiguous: the majority of Europe’s surface water is already
@@ -2135,37 +2174,17 @@ export function Sustainability() {
                 0.01-0.02 mg/L{" "}
               </strong>
               in the receiving water.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-5">
                 [5]
-              </sup>{" "}
+              </a>{" "}
               The discharge limit that target 6.3 translates into is{" "}
               <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
                 0.7 mg/L
               </strong>{" "}
               at the outfall.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-2">
                 [2]
-              </sup>{" "}
+              </a>{" "}
               These measurements are not comparable, as one is measured in
               bodies of water and the other in a pipe, with dilution in between.
               The order of magnitude between them is the reason 6.3 and 6.6 are
@@ -2191,16 +2210,7 @@ export function Sustainability() {
               stayed in the lab. A resident of the San Juan reservoir told us
               that she had watched the water change for decades without being
               explained the reason why.{" "}
-              <a
-                href="#r04"
-                style={{
-                  color: "#4d6a2a",
-                  fontWeight: "500",
-                  textDecoration: "underline",
-                  textDecorationColor: "rgba(124,154,78,0.55)",
-                  textUnderlineOffset: "3px",
-                }}
-              >
+              <a href="#r04" className="lab-wikilink">
                 Check out room 04
               </a>{" "}
               A treatment nobody can explain to the people living beside the
@@ -2221,6 +2231,7 @@ export function Sustainability() {
               Goal 12 — Responsible consumption and production
             </h5>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -2269,19 +2280,9 @@ export function Sustainability() {
                   By 2030, substantially reduce waste generation through
                   prevention, reduction, recycling and reuse.{" "}
                 </em>
-                <sup
-                  style={{
-                    fontSize: "0.68em",
-                    lineHeight: "0",
-                    verticalAlign: "super",
-                    color: "#4A5170",
-                    fontWeight: "600",
-                    marginLeft: "1px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <a className="lab-citation" href="#ref-r01-6">
                   [6]
-                </sup>
+                </a>
               </p>
             </div>
             <p
@@ -2302,34 +2303,14 @@ export function Sustainability() {
               Phosphate rock is non-renewable and phosphorus is irreplaceable in
               our diet; estimated data place the peak of global production
               within decades rather than centuries.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-7">
                 [7]
-              </sup>{" "}
+              </a>{" "}
               Its reserves are also extremely concentrated, with around 70% of
               the world’s known reserves being located in a single country.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-8">
                 [8]
-              </sup>{" "}
+              </a>{" "}
               Every kilogramme of phosphorus found in wastewater sludge is a
               kilogramme that needs to be mined.
             </p>
@@ -2347,6 +2328,7 @@ export function Sustainability() {
               efficient waste and resource management.
             </p>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -2450,19 +2432,9 @@ export function Sustainability() {
               whole life cycle, and it is also where we justify <em>where </em>
               we intervene. Directive (EU) 2024/3019 strengthens the control of
               non-domestic wastewater entering urban collecting systems,{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-2">
                 [2]
-              </sup>{" "}
+              </a>{" "}
               which is one of several routes by which tightening nutrient rules
               reach an industrial site. The others run through the facility’s
               own discharge permit and through national implementation, and
@@ -2523,16 +2495,7 @@ export function Sustainability() {
               answer for its end of life. When the reactor changed, that
               component became redundant, so it was removed. The cleanest form
               of waste reduction is the component you never build.{" "}
-              <a
-                href="#r04"
-                style={{
-                  color: "#4d6a2a",
-                  fontWeight: "500",
-                  textDecoration: "underline",
-                  textDecorationColor: "rgba(124,154,78,0.55)",
-                  textUnderlineOffset: "3px",
-                }}
-              >
+              <a href="#r04" className="lab-wikilink">
                 See Room 04
               </a>
             </p>
@@ -2550,6 +2513,7 @@ export function Sustainability() {
               Goal 14 — Life below water
             </h5>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -2574,19 +2538,9 @@ export function Sustainability() {
                   all kinds, in particular from land-based activities, including
                   marine debris and nutrient pollution.
                 </em>
-                <sup
-                  style={{
-                    fontSize: "0.68em",
-                    lineHeight: "0",
-                    verticalAlign: "super",
-                    color: "#4A5170",
-                    fontWeight: "600",
-                    marginLeft: "1px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <a className="lab-citation" href="#ref-r01-9">
                   [9]
-                </sup>
+                </a>
               </p>
             </div>
             <p
@@ -2604,19 +2558,9 @@ export function Sustainability() {
               Satellite monitoring has identified roughly 1.15 million km² of
               coastal water with eutrophication potential, with deteriorating
               areas being double the amount against recovering ones.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-10">
                 [10]
-              </sup>
+              </a>
             </p>
             <p
               style={{
@@ -2633,19 +2577,9 @@ export function Sustainability() {
               algal bloom, followed by an episode of oxygen depletion and mass
               mortality in 2019 due to a flood, and a further anoxic event in
               2021.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-11">
                 [11]
-              </sup>
+              </a>
             </p>
             <p
               style={{
@@ -2661,19 +2595,9 @@ export function Sustainability() {
               just phosphorus-driven, in marine and estuarine systems, nitrogen
               is the common limiting nutrient. Controlling only one of the two
               resources may make no difference.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-12">
                 [12]
-              </sup>{" "}
+              </a>{" "}
               That is why we chose <em>Pseudomonas putida</em>, as it can
               assimilate both, giving us a biological advantage rather than an
               engineering choice.
@@ -2743,6 +2667,7 @@ export function Sustainability() {
               Goal 9 — Industry, innovation and infrastructure
             </h5>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -2792,19 +2717,9 @@ export function Sustainability() {
                   countries, least developed countries, landlocked developing
                   countries and small island developing States.
                 </em>
-                <sup
-                  style={{
-                    fontSize: "0.68em",
-                    lineHeight: "0",
-                    verticalAlign: "super",
-                    color: "#4A5170",
-                    fontWeight: "600",
-                    marginLeft: "1px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <a className="lab-citation" href="#ref-r01-14">
                   [14]
-                </sup>
+                </a>
               </p>
             </div>
             <p
@@ -2857,6 +2772,7 @@ export function Sustainability() {
               Goal 13 — Climate action
             </h5>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -2880,19 +2796,9 @@ export function Sustainability() {
                   Integrate climate change measures into national policies,
                   strategies and planning.
                 </em>
-                <sup
-                  style={{
-                    fontSize: "0.68em",
-                    lineHeight: "0",
-                    verticalAlign: "super",
-                    color: "#4A5170",
-                    fontWeight: "600",
-                    marginLeft: "1px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <a className="lab-citation" href="#ref-r01-15">
                   [15]
-                </sup>
+                </a>
               </p>
             </div>
             <p
@@ -2932,19 +2838,9 @@ export function Sustainability() {
               , not to technologies: they concern national planning, climate
               finance, adaptive capacity and education, and none of them asks a
               process to lower its emissions.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-15">
                 [15]
-              </sup>{" "}
+              </a>{" "}
               Target 13.2, which focuses on the integration of climate measures
               into national policy, reaches rePhlow’s goal indirectly, as the
               industrial technology designed was built alongside the planning.
@@ -2998,19 +2894,9 @@ export function Sustainability() {
               Goals do not stand in separate rooms. To avoid calling every
               interaction ‘positive’ and moving on, we scored them on the
               seven-point scale proposed by Nilsson, Griggs and Visbeck,{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r01-17">
                 [17]
-              </sup>{" "}
+              </a>{" "}
               running from +3 (indivisible) through 0 (consistent) to -3
               (cancelling).
             </p>
@@ -3143,19 +3029,9 @@ export function Sustainability() {
                     >
                       Nutrients stopped at an industrial outfall never reach the
                       coast, nitrogen as well as phosphorus.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <a className="lab-citation" href="#ref-r01-12">
                         [12]
-                      </sup>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -3197,19 +3073,9 @@ export function Sustainability() {
                     >
                       Recovery is what stops water treatment from becoming
                       sludge production.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <a className="lab-citation" href="#ref-r01-13">
                         [13]
-                      </sup>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -3292,19 +3158,9 @@ export function Sustainability() {
                     >
                       Every kilogramme recovered is a kilogramme not mined from
                       phosphate rock.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <a className="lab-citation" href="#ref-r01-7">
                         [7]
-                      </sup>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -3347,16 +3203,7 @@ export function Sustainability() {
                       A modular design allows existing facilities to upgrade
                       their existing equipment without rebuilding their
                       treatment lines (see{" "}
-                      <a
-                        href="/hardware"
-                        style={{
-                          color: "#4d6a2a",
-                          fontWeight: "500",
-                          textDecoration: "underline",
-                          textDecorationColor: "rgba(124,154,78,0.55)",
-                          textUnderlineOffset: "3px",
-                        }}
-                      >
+                      <a href="/hardware" className="lab-wikilink">
                         Hardware
                       </a>
                       )
@@ -3442,19 +3289,9 @@ export function Sustainability() {
                     >
                       Continuous operation and downstream recovery consume
                       energy that chemical dosing does not.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <a className="lab-citation" href="#ref-r01-13">
                         [13]
-                      </sup>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -3497,19 +3334,9 @@ export function Sustainability() {
                       A contained biological module is more expensive and
                       skill-dependent compared to the traditional chemical
                       method.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <a className="lab-citation" href="#ref-r01-13">
                         [13]
-                      </sup>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -3551,25 +3378,16 @@ export function Sustainability() {
                     >
                       An engineered organism in a waste stream is a risk to the
                       same waters it protects, unless containment holds.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <a className="lab-citation" href="#ref-r01-16">
                         [16]
-                      </sup>
+                      </a>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -3589,19 +3407,9 @@ export function Sustainability() {
                 Scores of this kind depend on the context and on the assumptions
                 behind them, as the authors of the framework themselves
                 acknowledge.{" "}
-                <sup
-                  style={{
-                    fontSize: "0.68em",
-                    lineHeight: "0",
-                    verticalAlign: "super",
-                    color: "#4A5170",
-                    fontWeight: "600",
-                    marginLeft: "1px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <a className="lab-citation" href="#ref-r01-18">
                   [18]
-                </sup>{" "}
+                </a>{" "}
                 Ours assume a mid-sized European industrial facility, current
                 bead performance, and an intact containment barrier. Change any
                 of those and the score changes with it.
@@ -3625,19 +3433,9 @@ export function Sustainability() {
                 boundary cuts the other way: phosphorus recovered is phosphorus
                 that does not have to be mined, and mining carries an energy and
                 emissions cost of its own.{" "}
-                <sup
-                  style={{
-                    fontSize: "0.68em",
-                    lineHeight: "0",
-                    verticalAlign: "super",
-                    color: "#4A5170",
-                    fontWeight: "600",
-                    marginLeft: "1px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <a className="lab-citation" href="#ref-r01-19">
                   [19]
-                </sup>{" "}
+                </a>{" "}
                 We score the interaction as it stands today, and name what would
                 move it.
               </p>
@@ -3692,19 +3490,9 @@ export function Sustainability() {
                 <p style={{ margin: "0" }}>
                   Directive (EU) 2024/3019 raises the bar for everyone, not only
                   for us.{" "}
-                  <sup
-                    style={{
-                      fontSize: "0.68em",
-                      lineHeight: "0",
-                      verticalAlign: "super",
-                      color: "#4A5170",
-                      fontWeight: "600",
-                      marginLeft: "1px",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
+                  <a className="lab-citation" href="#ref-r01-2">
                     [2]
-                  </sup>{" "}
+                  </a>{" "}
                   The chemical precipitation of 2033 will be better optimised
                   than the chemical precipitation we benchmarked against in Room
                   03, so being an improvement on today’s practice is not the
@@ -3739,19 +3527,9 @@ export function Sustainability() {
                 <p style={{ margin: "0" }}>
                   Iron (III) chloride is cheap, being readily available to
                   almost any operator in the world to use.{" "}
-                  <sup
-                    style={{
-                      fontSize: "0.68em",
-                      lineHeight: "0",
-                      verticalAlign: "super",
-                      color: "#4A5170",
-                      fontWeight: "600",
-                      marginLeft: "1px",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
+                  <a className="lab-citation" href="#ref-r01-13">
                     [13]
-                  </sup>{" "}
+                  </a>{" "}
                   rePhlow needs capsules, a reactor, and someone trained to run
                   it. If our technology works, the facilities that adopt it
                   first will be well-resourced and in well-regulated countries —
@@ -3791,31 +3569,13 @@ export function Sustainability() {
                   retention exist for that reason, and an industrial operator
                   told us plainly that nothing else would be discussed until
                   that evidence existed.{" "}
-                  <a
-                    href="#r04"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
-                  >
+                  <a href="#r04" className="lab-wikilink">
                     see Room 04
                   </a>{" "}
                   Two pieces of that evidence now exist: the core–shell
                   architecture has been confirmed experimentally, and the
                   capsules hold their integrity under reactor operation. (See{" "}
-                  <a
-                    href="/hardware"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
-                  >
+                  <a href="/hardware" className="lab-wikilink">
                     Hardware
                   </a>
                   ) Structural integrity is not the same as biological
@@ -3855,6 +3615,7 @@ export function Sustainability() {
                 }}
               >
                 <li
+                  id="ref-r01-1"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -3868,13 +3629,7 @@ export function Sustainability() {
                   [cited 2026 Oct 7]. Available from:{" "}
                   <a
                     href="https://sdgs.un.org/goals/goal6"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -3882,6 +3637,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-2"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -3895,13 +3651,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://eur-lex.europa.eu/eli/dir/2024/3019/oj/eng"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -3909,6 +3659,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-3"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -3921,13 +3672,7 @@ export function Sustainability() {
                   continuum. WIREs Water. 2019;6(5):e1373. Available from:{" "}
                   <a
                     href="https://doi.org/10.1002/wat2.1373"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -3935,6 +3680,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-4"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -3948,13 +3694,7 @@ export function Sustainability() {
                   No.: 07/2024. Available from:{" "}
                   <a
                     href="https://www.eea.europa.eu/en/analysis/publications/europes-state-of-water-2024"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -3962,6 +3702,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-5"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -3974,13 +3715,7 @@ export function Sustainability() {
                   eutrophication. Water. 2021;13(2):225. Available from:{" "}
                   <a
                     href="https://doi.org/10.3390/w13020225"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -3988,6 +3723,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-6"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4001,13 +3737,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://sdgs.un.org/goals/goal12"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4015,6 +3745,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-7"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4027,13 +3758,7 @@ export function Sustainability() {
                   Change. 2009;19(2):292–305. Available from:{" "}
                   <a
                     href="https://doi.org/10.1016/j.gloenvcha.2008.10.009"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4041,6 +3766,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-8"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4053,13 +3779,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://doi.org/10.3133/mcs2026"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4067,6 +3787,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-9"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4080,13 +3801,7 @@ export function Sustainability() {
                   United Nations; [cited 2026 Oct 7]. Available from:{" "}
                   <a
                     href="https://sdgs.un.org/goals/goal14"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4094,6 +3809,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-10"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4106,13 +3822,7 @@ export function Sustainability() {
                   Commun. 2021;12:6142. Available from:{" "}
                   <a
                     href="https://doi.org/10.1038/s41467-021-26391-9"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4120,6 +3830,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-11"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4132,13 +3843,7 @@ export function Sustainability() {
                   the Mar Menor. Ambio. 2023;52(6):1112–24. Available from:{" "}
                   <a
                     href="https://doi.org/10.1007/s13280-023-01846-z"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4146,6 +3851,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-12"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4158,13 +3864,7 @@ export function Sustainability() {
                   phosphorus. Science. 2009;323(5917):1014–5. Available from:{" "}
                   <a
                     href="https://doi.org/10.1126/science.1167755"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4172,6 +3872,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-13"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4184,6 +3885,7 @@ export function Sustainability() {
                   Education; 2020.
                 </li>
                 <li
+                  id="ref-r01-14"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4198,13 +3900,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://sdgs.un.org/goals/goal9"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4212,6 +3908,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-15"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4225,13 +3922,7 @@ export function Sustainability() {
                   7]. Available from:{" "}
                   <a
                     href="https://sdgs.un.org/goals/goal13"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4239,6 +3930,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-16"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4252,13 +3944,7 @@ export function Sustainability() {
                   21;L 125:75–97. Available from:{" "}
                   <a
                     href="https://eur-lex.europa.eu/eli/dir/2009/41/oj"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4266,6 +3952,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-17"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4278,13 +3965,7 @@ export function Sustainability() {
                   2016;534(7607):320–2. Available from:{" "}
                   <a
                     href="https://doi.org/10.1038/534320a"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4292,6 +3973,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-18"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4305,13 +3987,7 @@ export function Sustainability() {
                   forward. Sustain Sci. 2018;13(6):1489–503. Available from:{" "}
                   <a
                     href="https://doi.org/10.1007/s11625-018-0604-z"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4319,6 +3995,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r01-19"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -4332,13 +4009,7 @@ export function Sustainability() {
                   Environ Manage. 2023;344:118653. Available from:{" "}
                   <a
                     href="https://doi.org/10.1016/j.jenvman.2023.118653"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -4539,31 +4210,15 @@ export function Sustainability() {
               Model Canvas, built on the format developed by{" "}
               <a
                 href="https://2024.igem.wiki/hangzhou-biox/sustainable"
-                style={{
-                  color: "#4d6a2a",
-                  fontWeight: "500",
-                  textDecoration: "underline",
-                  textDecorationColor: "rgba(124,154,78,0.55)",
-                  textUnderlineOffset: "3px",
-                }}
+                className="lab-wikilink"
                 target="_blank"
                 rel="noopener"
               >
                 iGEM Team Hangzhou Bio-X (2024)
               </a>
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r02-1">
                 [1]
-              </sup>
+              </a>
               , sets the stages of the rePhlow route against the goals each
               stage touches and the people who hold a stake in it. The left side
               of the SMC shows where our decisions land on the SDGs; the right
@@ -4616,16 +4271,7 @@ export function Sustainability() {
                 panel). Participation here refers to involvement in the system
                 itself, not the extent of our engagement with each group: who we
                 spoke to is documented separately in{" "}
-                <a
-                  href="/human-practices"
-                  style={{
-                    color: "#4d6a2a",
-                    fontWeight: "500",
-                    textDecoration: "underline",
-                    textDecorationColor: "rgba(124,154,78,0.55)",
-                    textUnderlineOffset: "3px",
-                  }}
-                >
+                <a href="/human-practices" className="lab-wikilink">
                   Human Practices
                 </a>
                 .{" "}
@@ -4635,35 +4281,16 @@ export function Sustainability() {
                 Regulation-compliant discharge is the target the process is the
                 reference that guides the engineering and design; the polishing
                 stage that would deliver it has not yet been validated, and{" "}
-                <a
-                  href="#r03"
-                  style={{
-                    color: "#4d6a2a",
-                    fontWeight: "500",
-                    textDecoration: "underline",
-                    textDecorationColor: "rgba(124,154,78,0.55)",
-                    textUnderlineOffset: "3px",
-                  }}
-                >
+                <a href="#r03" className="lab-wikilink">
                   Room 03
                 </a>{" "}
                 reports those water figures as projections. A single group can
                 hold several roles at once: Bio-Oils is simultaneously an
                 effluent producer, a potential end user and a source of design
                 constraints. Format adapted from iGEM Hangzhou-BioX (2024),{" "}
-                <sup
-                  style={{
-                    fontSize: "0.68em",
-                    lineHeight: "0",
-                    verticalAlign: "super",
-                    color: "#4A5170",
-                    fontWeight: "600",
-                    marginLeft: "1px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <a className="lab-citation" href="#ref-r02-1">
                   [1]
-                </sup>{" "}
+                </a>{" "}
                 whose canvas maps an entire industry; ours maps a single route
                 through the phosphorus cycle, in which rePhlow is one node
                 rather than the system itself.
@@ -4699,16 +4326,7 @@ export function Sustainability() {
               our objectives and goals. Seven of them changed how rePhlow works
               against a specific goal, which are detailed below. The rest are
               recorded in full in{" "}
-              <a
-                href="/human-practices"
-                style={{
-                  color: "#4d6a2a",
-                  fontWeight: "500",
-                  textDecoration: "underline",
-                  textDecorationColor: "rgba(124,154,78,0.55)",
-                  textUnderlineOffset: "3px",
-                }}
-              >
+              <a href="/human-practices" className="lab-wikilink">
                 Human Practices
               </a>
               .
@@ -5233,6 +4851,7 @@ export function Sustainability() {
               anywhere else.
             </p>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -5319,6 +4938,7 @@ export function Sustainability() {
               CEDEX — Roberto Arranz Arranz
             </h4>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -5556,19 +5176,9 @@ export function Sustainability() {
               or a 14.5% reduction in transport greenhouse-gas intensity by
               2030, with a binding sub-target of 5.5% for advanced biofuels and
               renewable fuels of non-biological origin.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r02-2">
                 [2]
-              </sup>{" "}
+              </a>{" "}
               Applied to phosphorus, if mineral fertiliser were required to
               contain a fraction of nutrient recovered from wastewater, the
               demand would follow — and it would be demand for a pure product,
@@ -5593,19 +5203,9 @@ export function Sustainability() {
               set a minimum combined reuse and recycling rate for phosphorus
               from sludge and urban wastewater, and asks Member States to
               encourage the purchase of recovered nutrients.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r02-3">
                 [3]
-              </sup>{" "}
+              </a>{" "}
               Roberto reached the mechanism from the market side; the Directive
               reaches it from the regulatory side. That convergence is the
               strongest evidence we have that target 12.2 has a route and not
@@ -5771,16 +5371,7 @@ export function Sustainability() {
               </strong>
               The traceable record of concerns raised and limitations still open
               is in the{" "}
-              <a
-                href="/human-practices"
-                style={{
-                  color: "#4d6a2a",
-                  fontWeight: "500",
-                  textDecoration: "underline",
-                  textDecorationColor: "rgba(124,154,78,0.55)",
-                  textUnderlineOffset: "3px",
-                }}
-              >
+              <a href="/human-practices" className="lab-wikilink">
                 Responsibility Checkpoint
               </a>
               .
@@ -6083,19 +5674,9 @@ export function Sustainability() {
                     A mandated recycled-phosphorus content.
                   </strong>{" "}
                   Directive (EU) 2024/3019{" "}
-                  <sup
-                    style={{
-                      fontSize: "0.68em",
-                      lineHeight: "0",
-                      verticalAlign: "super",
-                      color: "#4A5170",
-                      fontWeight: "600",
-                      marginLeft: "1px",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
+                  <a className="lab-citation" href="#ref-r02-2">
                     [2]
-                  </sup>{" "}
+                  </a>{" "}
                   empowers the Commission to set a minimum combined reuse and
                   recycling rate for phosphorus and asks Member States to
                   encourage the purchase of recovered nutrients. Whether that
@@ -6175,6 +5756,7 @@ export function Sustainability() {
                 }}
               >
                 <li
+                  id="ref-r02-1"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -6187,13 +5769,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://2024.igem.wiki/hangzhou-biox/sustainable"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -6201,6 +5777,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r02-2"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -6216,13 +5793,7 @@ export function Sustainability() {
                   31;L 2023/2413. Available from:{" "}
                   <a
                     href="https://eur-lex.europa.eu/eli/dir/2023/2413/oj"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -6230,6 +5801,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r02-3"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -6243,13 +5815,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://eur-lex.europa.eu/eli/dir/2024/3019/oj/eng"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -6433,37 +5999,17 @@ export function Sustainability() {
                 life cycle assessment
               </strong>{" "}
               under ISO 14040/44,{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r03-1">
                 [1]
-              </sup>{" "}
+              </a>{" "}
               scored with the European Commission's{" "}
               <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
                 Environmental Footprint (EF 3.1)
               </strong>{" "}
               method,{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r03-2">
                 [2]
-              </sup>{" "}
+              </a>{" "}
               the reference framework for environmental claims in the EU. It
               does not hand out one convenient green light: it hands out{" "}
               <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
@@ -6471,19 +6017,9 @@ export function Sustainability() {
               </strong>{" "}
               readings, each normalised against the yearly impact of an average
               world citizen,{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r03-9">
                 [9]
-              </sup>{" "}
+              </a>{" "}
               and it forces us to source every figure. The inventory was built
               in{" "}
               <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
@@ -6497,6 +6033,7 @@ export function Sustainability() {
               attributional, prospective, screening-level study.
             </p>
             <div
+              className="sus-prose-panel"
               style={{
                 margin: "26px 0",
                 padding: "22px 26px",
@@ -6526,19 +6063,9 @@ export function Sustainability() {
                   2,290 mg P/L to below the EU discharge limit of 0.7 mg/L
                 </strong>{" "}
                 (0.5 mg/L for the largest plants).{" "}
-                <sup
-                  style={{
-                    fontSize: "0.68em",
-                    lineHeight: "0",
-                    verticalAlign: "super",
-                    color: "#4A5170",
-                    fontWeight: "600",
-                    marginLeft: "1px",
-                    whiteSpace: "nowrap",
-                  }}
-                >
+                <a className="lab-citation" href="#ref-r03-3">
                   [3]
-                </sup>{" "}
+                </a>{" "}
                 Same task, same yardstick, fair comparison.
               </p>
             </div>
@@ -7238,32 +6765,12 @@ export function Sustainability() {
               </strong>
               , and producing and shaping that alginate, together with the
               immobilised phosphatase enzymes it carries,{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r03-6">
                 [6]
-              </sup>
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              </a>
+              <a className="lab-citation" href="#ref-r03-7">
                 [7]
-              </sup>{" "}
+              </a>{" "}
               is the hotspot that puts us above the chemical route at low bead
               loadings. We are{" "}
               <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
@@ -7295,19 +6802,9 @@ export function Sustainability() {
                 crude glycerol
               </strong>
               , a by-product of biodiesel, using a nitrogen-fixing bacterium.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r03-10">
                 [10]
-              </sup>{" "}
+              </a>{" "}
               That route would both lower the per-gram carbon of the beads and
               close a second loop with biodiesel producers such as our partner
               Bio-Oils. Until it is demonstrated, it stays in this page as a
@@ -8025,19 +7522,9 @@ export function Sustainability() {
                 15 to 30% of their dry weight
               </strong>
               ,{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r03-8">
                 [8]
-              </sup>{" "}
+              </a>{" "}
               far above our cautious starting point, so this is an engineering
               gap, not a biological ceiling. The two carbon levers are therefore
               complementary:{" "}
@@ -11378,19 +10865,9 @@ export function Sustainability() {
               </strong>
               , because our bacteria assimilate nitrogen as well as phosphorus,
               which iron precipitation does not touch.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r03-11">
                 [11]
-              </sup>
+              </a>
             </p>
             <figure style={{ margin: "34px 0" }}>
               <div
@@ -12069,50 +11546,17 @@ export function Sustainability() {
               the prospective-LCA literature argues is the whole point of
               assessing an emerging technology early: not to grade a finished
               product, but to steer one while its design is still open.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r03-1">
                 [1]
-              </sup>
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                [19]
-              </sup>{" "}
-              Because the whole environmental case turns on a single lever, the
-              phosphorus each gram of bead captures, the LCA hands the wet lab a
-              number to aim at rather than a slogan to defend. Three thresholds
-              matter, and none is fantasy against a biological ceiling of 15 to
-              30% of dry weight as phosphorus:{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              </a>
+              [19] Because the whole environmental case turns on a single lever,
+              the phosphorus each gram of bead captures, the LCA hands the wet
+              lab a number to aim at rather than a slogan to defend. Three
+              thresholds matter, and none is fantasy against a biological
+              ceiling of 15 to 30% of dry weight as phosphorus:{" "}
+              <a className="lab-citation" href="#ref-r03-8">
                 [8]
-              </sup>
+              </a>
             </p>
             <div
               style={{
@@ -12232,19 +11676,9 @@ export function Sustainability() {
               </strong>{" "}
               under reactor conditions, which the biology already does
               intracellularly,{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r03-8">
                 [8]
-              </sup>{" "}
+              </a>{" "}
               and the climate and fossil-resource readings follow the rest of
               the sixteen downward. A second, parallel reflection follows from
               Reading 2: the same result can be reached from the carbon side by
@@ -12254,40 +11688,14 @@ export function Sustainability() {
               literature frames exactly this double move, higher recovery
               efficiency plus lower-impact materials, as the condition under
               which nutrient recovery becomes a net environmental good rather
-              than a tidier waste.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                [14]
-              </sup>
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                [19]
-              </sup>{" "}
-              Sustainability and experimental design are not two conversations
-              here; the LCA is the bridge between them, and it says plainly that
-              the next gram of phosphorus retained per gram of bead is worth
-              more than any rephrasing of the result. That is the measurable
-              sense in which rePhlow addresses its SDGs: not by claiming the
-              finish line, but by naming exactly how far the bench still has to
-              carry it, and proving the distance is short.
+              than a tidier waste. [14][19] Sustainability and experimental
+              design are not two conversations here; the LCA is the bridge
+              between them, and it says plainly that the next gram of phosphorus
+              retained per gram of bead is worth more than any rephrasing of the
+              result. That is the measurable sense in which rePhlow addresses
+              its SDGs: not by claiming the finish line, but by naming exactly
+              how far the bench still has to carry it, and proving the distance
+              is short.
             </p>
             <details
               style={{
@@ -12319,6 +11727,7 @@ export function Sustainability() {
                 }}
               >
                 <li
+                  id="ref-r03-1"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12332,6 +11741,7 @@ export function Sustainability() {
                   Geneva: ISO; 2006.
                 </li>
                 <li
+                  id="ref-r03-2"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12346,6 +11756,7 @@ export function Sustainability() {
                   (EU) 2021/2279.
                 </li>
                 <li
+                  id="ref-r03-3"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12359,13 +11770,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://eur-lex.europa.eu/eli/dir/2024/3019/oj/eng"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -12373,6 +11778,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r03-4"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12384,6 +11790,7 @@ export function Sustainability() {
                   Eng. 2022;45:102531.
                 </li>
                 <li
+                  id="ref-r03-5"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12395,6 +11802,7 @@ export function Sustainability() {
                   products. Int J Life Cycle Assess. 2007;12(6):432–8.
                 </li>
                 <li
+                  id="ref-r03-6"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12406,6 +11814,7 @@ export function Sustainability() {
                   principles and applications. New York: McGraw-Hill; 2001.
                 </li>
                 <li
+                  id="ref-r03-7"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12419,6 +11828,7 @@ export function Sustainability() {
                   Report No.: JRC109878.
                 </li>
                 <li
+                  id="ref-r03-8"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12431,6 +11841,7 @@ export function Sustainability() {
                   2023;9(5):426. doi:10.3390/fermentation9050426.
                 </li>
                 <li
+                  id="ref-r03-9"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12443,6 +11854,7 @@ export function Sustainability() {
                   doi:10.1126/science.1167755.
                 </li>
                 <li
+                  id="ref-r03-10"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12455,6 +11867,7 @@ export function Sustainability() {
                   doi:10.1039/D0CS01150A.
                 </li>
                 <li
+                  id="ref-r03-11"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -12675,47 +12088,17 @@ export function Sustainability() {
               Phosphorus has no substitute in agriculture and comes almost
               entirely from finite phosphate rock, a Critical Raw Material whose
               production is forecast to peak around mid-century;{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r04-1">
                 [1]
-              </sup>
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              </a>
+              <a className="lab-citation" href="#ref-r04-8">
                 [8]
-              </sup>{" "}
+              </a>{" "}
               discharging it is the principal driver of the eutrophication that
               turns living water into oxygen-poor dead zones.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r04-2">
                 [2]
-              </sup>{" "}
+              </a>{" "}
               rePhlow intervenes exactly where that element is most concentrated
               and most recoverable.
             </p>
@@ -12835,20 +12218,7 @@ export function Sustainability() {
                     >
                       Cleaner water returned to the environment; no hazardous
                       metal sludge produced; phosphorus pulled from a waste
-                      stream instead of discharged.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        [14]
-                      </sup>
+                      stream instead of discharged. [14]
                     </td>
                     <td
                       style={{
@@ -12863,32 +12233,10 @@ export function Sustainability() {
                       Phosphorus kept in the loop at scale, less mined rock and
                       less eutrophication; a measurable contribution to closing
                       the nutrient cycle.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <a className="lab-citation" href="#ref-r04-3">
                         [3]
-                      </sup>
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        [14]
-                      </sup>
+                      </a>
+                      [14]
                     </td>
                   </tr>
                   <tr>
@@ -12935,20 +12283,8 @@ export function Sustainability() {
                     >
                       A rebound risk: cheap, easy recovery could normalise
                       continued high phosphorus use instead of reducing it at
-                      source; grid and material impacts scale with deployment.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        [19]
-                      </sup>
+                      source; grid and material impacts scale with deployment.
+                      [19]
                     </td>
                   </tr>
                 </tbody>
@@ -12980,38 +12316,18 @@ export function Sustainability() {
             >
               Clean water and food are the stakes. Excess nutrients damage
               fisheries, drinking water and the communities that depend on them,{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r04-2">
                 [2]
-              </sup>{" "}
+              </a>{" "}
               and because there is no substitute for phosphorus in fertiliser,{" "}
               <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
                 phosphorus security is food security
               </strong>
               : the 2008 phosphate-rock price spike fed straight through into
               global food prices.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
+              <a className="lab-citation" href="#ref-r04-1">
                 [1]
-              </sup>
+              </a>
             </p>
             <p
               style={{
@@ -13144,32 +12460,12 @@ export function Sustainability() {
                       A local, renewable source of a critical import loosens
                       dependence on a few foreign mines; stronger regional food
                       and water resilience.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <a className="lab-citation" href="#ref-r04-1">
                         [1]
-                      </sup>
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      </a>
+                      <a className="lab-citation" href="#ref-r04-3">
                         [3]
-                      </sup>
+                      </a>
                     </td>
                   </tr>
                   <tr>
@@ -13250,20 +12546,7 @@ export function Sustainability() {
               for reagents to treat it and pay again to dispose of the hazardous
               sludge. rePhlow flips that accounting, avoiding roughly 24 kg of
               FeCl₃ and 13.7 kg of sludge per m³ while yielding ~1.95 kg of
-              recovered phosphorus and ~1 m³ of reusable water.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                [14]
-              </sup>
+              recovered phosphorus and ~1 m³ of reusable water. [14]
             </p>
             <p
               style={{
@@ -13396,32 +12679,10 @@ export function Sustainability() {
                       A treatment plant becomes a resource-recovery facility;
                       with a policy-created market for recycled phosphorus, a
                       cost centre becomes a revenue line.{" "}
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
+                      <a className="lab-citation" href="#ref-r04-3">
                         [3]
-                      </sup>
-                      <sup
-                        style={{
-                          fontSize: "0.68em",
-                          lineHeight: "0",
-                          verticalAlign: "super",
-                          color: "#4A5170",
-                          fontWeight: "600",
-                          marginLeft: "1px",
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        [14]
-                      </sup>
+                      </a>
+                      [14]
                     </td>
                   </tr>
                   <tr>
@@ -13616,19 +12877,9 @@ export function Sustainability() {
                   Spain and the Mediterranean arc face structural water
                   scarcity, and treated wastewater is already one of the
                   region's most important non-conventional resources.{" "}
-                  <sup
-                    style={{
-                      fontSize: "0.68em",
-                      lineHeight: "0",
-                      verticalAlign: "super",
-                      color: "#4A5170",
-                      fontWeight: "600",
-                      marginLeft: "1px",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
+                  <a className="lab-citation" href="#ref-r04-5">
                     [5]
-                  </sup>{" "}
+                  </a>{" "}
                   Because rePhlow returns roughly a full cubic metre of
                   ultrafiltered, salt-free water per cubic metre treated, it
                   does not just clean water, it gives water back, where water is
@@ -14213,22 +13464,9 @@ export function Sustainability() {
               reactor, which is why containment is not a feature we added to
               reassure a regulator; it is the precondition that makes the whole
               project permissible, and it is the reason the EU governs contained
-              use of modified micro-organisms as a category of its own.{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                [17]
-              </sup>{" "}
-              An industrial operator told us nothing else would be discussed
-              until that evidence existed, and he was right to.
+              use of modified micro-organisms as a category of its own. [17] An
+              industrial operator told us nothing else would be discussed until
+              that evidence existed, and he was right to.
             </p>
             <p
               style={{
@@ -14242,21 +13480,8 @@ export function Sustainability() {
               There is a deeper tension the round table named and we should not
               paper over. A technology that makes phosphorus recovery cheap and
               routine could, perversely, remove the pressure to use less of it
-              at source, the rebound that haunts every efficiency gain;{" "}
-              <sup
-                style={{
-                  fontSize: "0.68em",
-                  lineHeight: "0",
-                  verticalAlign: "super",
-                  color: "#4A5170",
-                  fontWeight: "600",
-                  marginLeft: "1px",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                [19]
-              </sup>{" "}
-              and a tool this capital- and skill-intensive could reach the
+              at source, the rebound that haunts every efficiency gain; [19] and
+              a tool this capital- and skill-intensive could reach the
               well-resourced first and widen the very gap SDGs 9 and 10 ask us
               to close. We do not have clean answers to either, and we think
               saying so is part of doing this responsibly. What we can do is be
@@ -14318,6 +13543,7 @@ export function Sustainability() {
                 }}
               >
                 <li
+                  id="ref-r04-1"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14331,13 +13557,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://doi.org/10.1016/j.gloenvcha.2008.10.009"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -14345,6 +13565,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r04-2"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14358,13 +13579,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://doi.org/10.1126/science.1167755"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -14372,6 +13587,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r04-3"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14385,13 +13601,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://doi.org/10.1039/d0cs01150a"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -14399,6 +13609,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r04-4"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14413,13 +13624,7 @@ export function Sustainability() {
                   2015 Jun 23;6(1):72–81. Available from:{" "}
                   <a
                     href="https://doi.org/10.2166/wrd.2015.147"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -14427,6 +13632,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r04-5"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14439,13 +13645,7 @@ export function Sustainability() {
                   Oct 12]. Available from:{" "}
                   <a
                     href="https://doi.org/10.3133/mcs2026"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -14453,6 +13653,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r04-6"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14464,6 +13665,7 @@ export function Sustainability() {
                   principles and applications. New York: McGraw-Hill; 2001.
                 </li>
                 <li
+                  id="ref-r04-7"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14477,13 +13679,7 @@ export function Sustainability() {
                   21;L 125:75–97. Available from:{" "}
                   <a
                     href="https://eur-lex.europa.eu/eli/dir/2009/41/oj"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -14491,6 +13687,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r04-8"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14505,13 +13702,7 @@ export function Sustainability() {
                   19;344:118653. Available from:{" "}
                   <a
                     href="https://doi.org/10.1016/j.jenvman.2023.118653"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >
@@ -14519,6 +13710,7 @@ export function Sustainability() {
                   </a>
                 </li>
                 <li
+                  id="ref-r04-9"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14532,6 +13724,7 @@ export function Sustainability() {
                   Commission; 2018.
                 </li>
                 <li
+                  id="ref-r04-10"
                   style={{
                     fontSize: "13px",
                     lineHeight: "1.55",
@@ -14546,13 +13739,7 @@ export function Sustainability() {
                   Available from:{" "}
                   <a
                     href="https://www.youtube.com/live/sFQMw0fIar0"
-                    style={{
-                      color: "#4d6a2a",
-                      fontWeight: "500",
-                      textDecoration: "underline",
-                      textDecorationColor: "rgba(124,154,78,0.55)",
-                      textUnderlineOffset: "3px",
-                    }}
+                    className="record-reference-link"
                     target="_blank"
                     rel="noopener"
                   >

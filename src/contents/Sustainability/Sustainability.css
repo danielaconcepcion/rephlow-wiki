@@ -1,22 +1,39 @@
 /* --------------------------------------------------------------------------
    Sustainability — the page carried over from Claude Design
    (Sustainability.dc.html). The markup keeps the design's inline styles, so
-   all that lives here is what inline styles cannot express: the keyframes,
-   the hover states the prototype declared as `style-hover`, and the page's
-   own link colour.
+   what lives here is what inline styles cannot express: the keyframes, the
+   hover states the prototype declared as `style-hover`, and the few places
+   where the page has to follow the wiki rather than the prototype — the
+   width of a column of text, and the accent its links and citations read
+   from (see .lab-wikilink / .lab-citation in LabFolders.css).
    -------------------------------------------------------------------------- */
 
 .sus-design {
+  /* The page's own accent: the olive green the design gives its links, as
+     the token .lab-wikilink and .lab-citation resolve. */
+  --folder-accent: #7c9a4e;
+  --folder-accent-strong: #4d6a2a;
   color: var(--ink);
   font-family: var(--font-body);
 }
 
-.sus-design a {
-  color: #4d6a2a;
-}
-
-.sus-design a:hover {
-  color: #2c3520;
+/* A column of text is the wiki's width everywhere else (.lab-prose, 790px),
+   not the width of the grid cell. Figures, tables, the plant map and the
+   panels keep the full column — only running text is narrowed. The design
+   sets its margins inline, so the centring has to win over that. */
+.sus-design main > section > p,
+.sus-design main > section > h3,
+.sus-design main > section > h4,
+.sus-design main > section > h5,
+.sus-design main > section > ul,
+.sus-design main > section > ol,
+.sus-design main > section > blockquote,
+.sus-design main > section > details,
+.sus-design main > section > aside,
+.sus-design .sus-prose-panel {
+  max-width: 790px;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 @keyframes flow {
