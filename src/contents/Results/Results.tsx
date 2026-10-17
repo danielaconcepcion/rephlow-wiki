@@ -40,12 +40,20 @@ const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
       const sections: PageSection[] = block.subBlocks.map((subBlock) => ({
         id: subBlock.id,
         label: subBlock.heading.replace(/^\d+\.\s*/, ""),
-        children: subBlock.results?.map((result) => ({
-          id: `${subBlock.id}--${result.id}`,
-          label: result.tabLabel,
-          onSelect: () => document.getElementById(`folder-tab-${result.id}`)?.click(),
-        })),
+        children: [
+          ...(subBlock.results?.map((result) => ({
+            id: `${subBlock.id}--${result.id}`,
+            label: result.tabLabel,
+            onSelect: () => document.getElementById(`folder-tab-${result.id}`)?.click(),
+          })) ?? []),
+          ...(subBlock.references?.length
+            ? [{ id: `${subBlock.id}--references`, label: "References" }]
+            : []),
+        ],
       }));
+      if (block.references?.length) {
+        sections.push({ id: `${block.id}--references`, label: "References" });
+      }
       return [block.id, sections];
     }
     const sections: PageSection[] = (block.results ?? []).map((result) => ({
@@ -53,6 +61,9 @@ const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
       label: result.tabLabel,
       onSelect: () => document.getElementById(`folder-tab-${result.id}`)?.click(),
     }));
+    if (block.references?.length) {
+      sections.push({ id: `${block.id}--references`, label: "References" });
+    }
     return [block.id, sections];
   }),
 );
@@ -150,6 +161,7 @@ export function Results() {
                         )}
                         {!!subBlock.references?.length && (
                           <BlockReferences
+                            id={`${subBlock.id}--references`}
                             scope={`${activeBlock.id}-${subBlock.id}`}
                             items={subBlock.references}
                           />
@@ -181,7 +193,11 @@ export function Results() {
                   "[n]" anywhere above links down to its entry and opens
                   the list on the way (see BlockReferences). */}
               {!!activeBlock.references?.length && (
-                <BlockReferences scope={activeBlock.id} items={activeBlock.references} />
+                <BlockReferences
+                  id={`${activeBlock.id}--references`}
+                  scope={activeBlock.id}
+                  items={activeBlock.references}
+                />
               )}
 
               </div>

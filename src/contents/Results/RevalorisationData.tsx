@@ -317,28 +317,98 @@ const PURIFICATION_IMAC: ResultData = {
   id: "purification-imac",
   tabLabel: "IMAC",
   title: "Immobilised Metal Affinity Chromatography (Co²⁺-IDA-Agarose)",
-  subsections: [{ id: "imac-result", observations: "PPK2 was retained by the Co²⁺ resin and recovered as the dominant species in the dialysed eluate. For DHAK, the first affinity run separated two problems: empty wild-type and 2021 eluates reflected the absence of protein in their extracts, while PROSS 5 bound and eluted as two persistent bands.", interpretation: "The affinity step worked whenever target protein was present. PPK2 supplied a preparation clean enough for the coupled assay; the unidentified upper PROSS 5 band remained unresolved.", expectation: "PPK2 purified as intended. DHAK recovery was construct-dependent and prompted activity-led troubleshooting." }],
+  subsections: [{
+    id: "imac-result",
+    body: [
+      "Dialysis is reported together with IMAC rather than as an independent experiment, because it is the step that immediately follows elution: every eluate goes straight into a dialysis bag, and the same gel carries the affinity fractions and the dialysed sample. Separating them would split one gel across two sections and lose the comparison that makes the dialysis result visible. The affinity step follows the procedure established in this laboratory for related His-tagged enzymes [11].",
+      "For PPK2, the crude extract gives the expected band at 32 kDa, and the dialysed IMAC eluate retains that band while removing most of the host-protein background. PPK2 was therefore retained by the Co²⁺ resin and recovered as the dominant species in the dialysed eluate.",
+      "For the first DHAK affinity run, the wild-type and CECT 4626 2021 eluates were empty because their crude extracts contained no visible target protein. PROSS 5 did bind and elute, but it consistently appeared together with an unidentified band of higher molecular mass. Dialysis visibly concentrated that preparation but did not separate the two species.",
+      "The previous gel allowed the affinity step to be judged only on PROSS 5, because that was the one construct with enough protein on it. Returning to IMAC with the 2012 stock, now with an enzyme known to be strongly active at the outset, finally gives that reading. The crude extract carried the full host background, whereas the two eluted fractions carried a dominant band at 60 kDa and had lost most of the host species. The first fraction was more concentrated, as expected. Two minor species remained, so the preparation was enriched rather than homogeneous.",
+      "What this establishes is that the affinity step works on this enzyme too: the resin retains it and gives it back. The step was not quantified, since no flow-through or wash lane was run and the gel was not loaded on equal protein, so neither loss to the resin nor recovery can be stated from the image.",
+    ],
+    interpretation: "The affinity step worked whenever target protein was present. PPK2 supplied a preparation clean enough for the coupled assay; the unidentified upper PROSS 5 band remained unresolved, and the 2012 stock required activity measurements to determine whether purification had preserved function.",
+    expectation: "PPK2 purified as intended. DHAK recovery was construct-dependent and prompted activity-led troubleshooting.",
+  }],
 };
 
 const PURIFICATION_DIALYSIS: ResultData = {
   id: "purification-dialysis",
   tabLabel: "Dialysis",
   title: "Dialysis of IMAC eluates",
-  subsections: [{ id: "dialysis-result", observations: "Dialysis removed imidazole and salt from every eluate and visibly concentrated the PROSS 5 preparation on the gel.", interpretation: "Dialysis functioned as both buffer exchange and a practical concentration step before activity measurement.", expectation: "The buffer exchange was expected; the concentrating effect was not." }],
+  subsections: [{ id: "dialysis-result", body: ["Every IMAC eluate went directly into dialysis to remove imidazole and salt before activity measurement. The dialysed samples were compared on the same gels as the crude extracts and affinity fractions, rather than treated as a separate experiment.", "Dialysis removed the small-molecule components of the elution buffer and visibly concentrated the PROSS 5 preparation on the gel. The same buffer-exchange step was used for PPK2 and for the later CECT 4626 2012 preparations."], interpretation: "Dialysis functioned as both buffer exchange and a practical concentration step before activity measurement.", expectation: "The buffer exchange was expected; the concentrating effect was not." }],
 };
 
 const PURIFICATION_EXPRESS_IMAC: ResultData = {
   id: "purification-express-imac",
   tabLabel: "Express IMAC",
   title: "Express Immobilised Metal Affinity Chromatography (Co²⁺-IDA-Agarose)",
-  subsections: [{ id: "express-imac-result", observations: "Microlitre-scale express IMAC recovered PROSS 5 in its eluates, while wild-type DHAK appeared neither in the crude extract nor in the eluates.", interpretation: "Because the resin recovered protein when protein was present, the wild-type failure lay in expression rather than purification.", expectation: "The diagnostic resolved the ambiguity as intended, but against the construct rather than the resin." }],
+  subsections: [{ id: "express-imac-result", body: ["The express IMAC was run to settle a single question: when a DHAK construct yields nothing after purification, is it because the enzyme was never made, or because the purification is losing it?", "DHAK PROSS 5 appeared in its eluates as the only intense species, accompanied by the same unidentified second band seen on the preparative gel, so the resin binds it and gives it back. The wild type appeared nowhere, neither in its crude extract nor in its eluates.", "Taken together, the two observations separate the two possibilities. Because the resin recovers the protein whenever the protein is there, the affinity step itself is working, and because the wild type is absent from its own extract before any resin is involved, its failure must lie in expression rather than in purification. The express protocol obtained that discrimination from microlitre volumes in a fraction of the time a full column run would have taken."], interpretation: "The affinity step was working; the wild-type failure lay in expression rather than purification.", expectation: "That the test would resolve the ambiguity was expected; that it would resolve it against the construct was not." }],
 };
 
 const PURIFICATION_SEC: ResultData = {
   id: "purification-sec",
   tabLabel: "SEC (FPLC)",
   title: "Size-exclusion chromatography (FPLC)",
-  subsections: [{ id: "sec-result", observations: "Four size-exclusion runs were performed on an ÄKTAprime plus with a HiLoad 26/60 Superdex 200 column. Separation was not reproducible: most absorbance appeared outside the expected DHAK window, the only narrow symmetric peak was missed by late fraction collection, and collected features were broad or overlapping.", interpretation: "Size exclusion did not provide a reliable second route to purified DHAK. Fractions were carried into the activity assay to decide whether any active enzyme had nevertheless been recovered.", expectation: "No. The method failed to stabilise across four runs, so the workflow returned to affinity purification." }],
+  subsections: [{
+    id: "sec-result",
+    body: [
+      "Four runs were performed and are reported in chronological order as runs 1 to 4. For each one the full chromatogram was examined together with an enlargement of the region from which fractions were collected.",
+      "Three reference volumes make the traces interpretable. On this column the void volume is about 110 mL, where everything too large to enter the pores elutes together, and the total volume is about 320 mL, where small molecules that fully penetrate the matrix elute. Between them, DHAK is expected at approximately 220–270 mL.",
+      "Run 1 was almost empty in absorbance terms. The whole trace stayed below 7.5 mAU, and the collected region showed three faint shoulders rather than resolved peaks. A very low rise near 290 mL lay past the DHAK window and close to the total volume, so it was unlikely to correspond to a protein of this size.",
+      "Run 2 gave real absorbance for the first time, but most of it fell outside the region of interest. The collected DHAK window contained a broad, poorly defined feature rather than a narrow symmetric peak. The dominant peak at about 288 mL and a later one at about 330 mL indicated that most of what left the column was small-molecule material from the crude extract.",
+      "Run 3 was the only one that behaved as size exclusion should. A narrow, symmetric peak fell squarely inside the 220–270 mL window, with a clean return to baseline on both sides. The run was nonetheless lost because the fraction collector was started after the peak had already left the system, so no fraction could be assayed.",
+      "Run 4 showed a candidate peak at about 261 mL, inside the DHAK window, but it overlapped with a much larger peak near 290 mL. The overlap limited the purity obtainable, while the void peak indicated that more of this sample had aggregated.",
+      "In the three runs that produced real absorbance, most of the signal eluted near the total volume and little appeared in the expected DHAK window. The chromatograms show that the separation was not reproducible, not that the enzyme was absent, so fractions from runs 1, 2 and 4 were carried to the activity assays.",
+    ],
+    interpretation: "Size exclusion did not provide a reliable second route to purified DHAK. Fractions were carried into the activity assay to decide whether any active enzyme had nevertheless been recovered.",
+    expectation: "None of this was expected. The method never stabilised, and the only clean separation was lost to a fraction collector started too late. With no time to develop it further, the work returned to IMAC.",
+  }],
+};
+
+const PURIFIED_2012_STOCK: ResultData = {
+  id: "purified-2012-stock",
+  tabLabel: "Purifying the 2012 stock",
+  title: "Purifying the CECT 4626 2012 stock",
+  subsections: [
+    {
+      id: "sec-fractions",
+      title: "Size-exclusion fractions",
+      body: [
+        "The crude extract was active, so the next question was whether that activity survived purification. Both routes were applied to this material and the fractions assayed by the same coupled α-GDH/TIM method, so the results are directly comparable with the extract they came from.",
+        "In run 1, fraction 27 gave −8.40 mOD/min with R² = 0.957, while fraction 46 gave −1.51 mOD/min with R² = 0.571 and fraction 56 −0.16 mOD/min with R² = 0.035. Nothing usable was recovered: the only fitted rate was two orders of magnitude below the extract loaded, and the other traces were noise.",
+        "Run 2 was different. Fraction 46 gave −42.91 mOD/min with R² = 0.998, the steepest and cleanest trace obtained from any size-exclusion fraction in the study, and fraction 27 gave −16.64 mOD/min with R² = 0.989. Fraction 56 remained inactive at −0.16 mOD/min with R² = 0.035. Activity appeared in the two fractions taken from the protein region and was absent from the late fraction, although recovery remained modest against the starting extract.",
+        "Run 3 produced no sample because its well-resolved peak passed into waste before fraction collection began. In run 4, the collected peak gave −11.12 mOD/min with R² = 0.566, too poor a fit to extract a reliable rate. A method that yielded active fractions in one run and nothing in the next could not be relied on with the time left.",
+      ],
+    },
+    {
+      id: "imac-return",
+      title: "Returning to affinity purification",
+      body: [
+        "The affinity route had never been tried on this stock. The enzyme was purified by IMAC and the dialysed eluate assayed. The trace gave −1.41 mOD/min with R² = 0.928: a clean fit on a signal that barely falls, which amounts to no measurable activity.",
+        "Read together, the eight traces make the problem specific rather than general. The enzyme is clearly active in the crude extract, and in run 2 it is also active in fractions from the protein region. What it does not do is survive purification reproducibly: of the eight purified fractions assayed across the two methods, two were active and six were not. This was not expected, and it is why the decision to work with the crude extract directly was forced rather than merely preferred.",
+      ],
+    },
+  ],
+};
+
+const ACTIVE_DIALYSED_IMAC: ResultData = {
+  id: "active-dialysed-imac",
+  tabLabel: "Active IMAC eluate",
+  title: "Dialysed IMAC eluate, DHAK CECT 4626 2012 stock",
+  description: "This was a separate preparation produced from a fresh expression of the same 2012 stock and concentrated by centrifugal ultrafiltration after dialysis. The difference from the earlier inactive eluate was not controlled, so the comparison is descriptive rather than causal.",
+  subsections: [{
+    id: "active-imac-result",
+    body: [
+      "Before setting up the coupled assay with purified enzyme, the dialysed IMAC eluate concentrated by Centricon was assayed on its own, so that the amount of active DHAK entering the reaction was known rather than assumed. The trace gave an initial rate of **850.1 mOD/min** (R² = 0.999), equivalent to approximately **20 U/mL**. Bradford against a BSA standard curve gave **1.990 mg/mL** of protein, so the specific activity was approximately **10 U/mg**.",
+      "This is the measurement that was missing from the purification line: an affinity preparation of this enzyme that is active. At approximately 10 U/mg, its specific activity is essentially the 10.7 U/mg reported for the fully purified enzyme [10]. The eluate was concentrated by centrifugal ultrafiltration rather than left dilute, so activity was retained and concentrated instead of lost.",
+      "The result was not expected in light of the earlier purification failures. It made it possible to run the coupled assay with purified enzyme, with a known amount of DHAK entering the reaction.",
+    ],
+    tables: [{
+      caption: "Protein quantification of the purified DHAK preparation (IMAC + Centricon) by the Bradford assay, against a BSA standard curve.",
+      headers: ["Sample", "Absorbance (A₅₉₅, mean)", "Protein (mg/mL)", "Standard curve R²"],
+      rows: [["DHAK purified (IMAC + Centricon), 2 µL", "0.269", "1.990", "0.994"]],
+    }],
+  }],
 };
 
 /* ---------- Enzyme activity assay ---------- */
@@ -577,7 +647,7 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
     heading: "4. Enzyme activity assay",
     intro:
       "The revalorisation module depends on **two enzymatic activities working together**, the phosphorylation of dihydroxyacetone by DHAK and the regeneration of ATP by PPK2. We tested them in two steps. First, DHAK was assayed on its own to confirm that the purified enzyme is catalytically active and to fix a baseline rate. Then the two enzymes were run together, with **polyphosphate as the phosphate donor**, to test the system as it is meant to operate, where **PPK2 rebuilds the ATP that DHAK spends** so that the reaction is no longer limited by the small amount of nucleotide added at the start. Both assays read out the same product, dihydroxyacetone phosphate (DHAP), through the coupled α-GDH/TIM reaction, which ties the NADH signal to the DHAP formed and lets the single-enzyme and coupled results be compared on the same scale.",
-    results: [DHAK_DSM, DHAK_2021, DHAK_2012, DHAK_PROSS, COUPLED_ASSAY, COUPLED_ASSAY_ROUND_2],
+    results: [DHAK_DSM, DHAK_2021, DHAK_2012, DHAK_PROSS, PURIFIED_2012_STOCK, ACTIVE_DIALYSED_IMAC, COUPLED_ASSAY, COUPLED_ASSAY_ROUND_2],
   },
 ];
 

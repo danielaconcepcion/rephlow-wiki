@@ -16,9 +16,11 @@ import { ReferenceItem } from "./ExperimentCard";
  * any citation link pointing into this list opens it first.
  */
 export function BlockReferences({
+  id,
   scope,
   items,
 }: {
+  id?: string;
   scope: string;
   items: string[];
 }) {
@@ -39,7 +41,7 @@ export function BlockReferences({
   }, [scope]);
 
   return (
-    <section className="lab-subblock">
+    <section className="lab-subblock" id={id ?? "references"}>
       <details ref={ref} className="lab-refs">
         <summary className="lab-refs__summary">
           <span className="lab-refs__title">References</span>

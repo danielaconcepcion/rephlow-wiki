@@ -1320,7 +1320,10 @@
 .pdf-viewer__download { align-self: flex-start; }
 
 .record-download:is(button) {
-  font: inherit;
+  appearance: none;
+  border: 0;
+  font-family: inherit;
+  text-align: left;
   cursor: pointer;
 }
 
@@ -1495,8 +1498,7 @@
    it was always open — same display face and size as every other section
    heading on the page — with only a chevron added to say it opens. */
 .lab-refs {
-  border-top: 1px solid var(--lab-line);
-  padding-top: 18px;
+  padding-top: 0;
 }
 .lab-refs__summary {
   display: flex;

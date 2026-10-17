@@ -62,13 +62,21 @@ const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
         // A sub-block with no experiments of its own (e.g. a closing prose
         // section) has nothing to list at Level 2 — it's still a real,
         // scroll-anchored Level-1 target on its own.
-        children: subBlock.experiments?.map((experiment) => ({
-          id: `${subBlock.id}--${experiment.id}`,
-          label: experiment.tabLabel,
-          onSelect: () =>
-            document.getElementById(`folder-tab-${experiment.id}`)?.click(),
-        })),
+        children: [
+          ...(subBlock.experiments?.map((experiment) => ({
+            id: `${subBlock.id}--${experiment.id}`,
+            label: experiment.tabLabel,
+            onSelect: () =>
+              document.getElementById(`folder-tab-${experiment.id}`)?.click(),
+          })) ?? []),
+          ...(subBlock.references?.length
+            ? [{ id: `${subBlock.id}--references`, label: "References" }]
+            : []),
+        ],
       }));
+      if (block.references?.length) {
+        sections.push({ id: `${block.id}--references`, label: "References" });
+      }
       return [block.id, sections];
     }
     const sections: PageSection[] = (block.experiments ?? []).map(
@@ -79,6 +87,9 @@ const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
           document.getElementById(`folder-tab-${experiment.id}`)?.click(),
       }),
     );
+    if (block.references?.length) {
+      sections.push({ id: `${block.id}--references`, label: "References" });
+    }
     return [block.id, sections];
   }),
 );
@@ -386,6 +397,7 @@ export function Experiments() {
                         end of its own section. */}
                       {!!subBlock.references?.length && (
                         <BlockReferences
+                          id={`${subBlock.id}--references`}
                           scope={subBlock.id}
                           items={subBlock.references}
                         />
@@ -400,6 +412,7 @@ export function Experiments() {
                   the way down (see BlockReferences). */}
               {!!activeBlock.references?.length && (
                 <BlockReferences
+                  id={`${activeBlock.id}--references`}
                   scope={activeBlock.id}
                   items={activeBlock.references}
                 />
