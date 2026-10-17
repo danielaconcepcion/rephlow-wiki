@@ -105,16 +105,18 @@ function Figure({
   caption?: ReactNode;
   className?: string;
 }) {
+  const figureAsset = (path: string) =>
+    asset(path.includes("/") ? path : `assets/project-description/${path}`);
   const image = fallbackSrc ? (
     <picture>
       <source
-        srcSet={asset(`assets/project-description/${src}`)}
+        srcSet={figureAsset(src)}
         type="image/svg+xml"
       />
-      <img src={asset(`assets/project-description/${fallbackSrc}`)} alt={alt} />
+      <img src={figureAsset(fallbackSrc)} alt={alt} />
     </picture>
   ) : (
-    <img src={asset(`assets/project-description/${src}`)} alt={alt} />
+    <img src={figureAsset(src)} alt={alt} />
   );
   return (
     <figure
@@ -1508,8 +1510,12 @@ export function ProjectDescription() {
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>Heterologous expression</td>
+                      <tr className="pd-table__row--addition">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--addition">
+                            Addition · heterologous expression
+                          </span>
+                        </td>
                         <td>↑ Uptake</td>
                         <td>
                           <em>pstSCAB</em>
@@ -1523,8 +1529,12 @@ export function ProjectDescription() {
                           importer.
                         </td>
                       </tr>
-                      <tr>
-                        <td>Heterologous expression</td>
+                      <tr className="pd-table__row--addition">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--addition">
+                            Addition · heterologous expression
+                          </span>
+                        </td>
                         <td>↑ Synthesis</td>
                         <td>
                           <em>ppk1</em>
@@ -1535,8 +1545,12 @@ export function ProjectDescription() {
                           polyphosphate.
                         </td>
                       </tr>
-                      <tr>
-                        <td>Functional inactivation</td>
+                      <tr className="pd-table__row--inactivation">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--inactivation">
+                            Deletion · functional inactivation
+                          </span>
+                        </td>
                         <td>↓ Degradation</td>
                         <td>
                           <em>ppx</em>
@@ -1547,8 +1561,12 @@ export function ProjectDescription() {
                           pool.
                         </td>
                       </tr>
-                      <tr>
-                        <td>Functional inactivation</td>
+                      <tr className="pd-table__row--inactivation">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--inactivation">
+                            Deletion · functional inactivation
+                          </span>
+                        </td>
                         <td>↓ Consumption</td>
                         <td>
                           <em>ppkB</em>
@@ -1559,8 +1577,12 @@ export function ProjectDescription() {
                           regeneration.
                         </td>
                       </tr>
-                      <tr>
-                        <td>Functional inactivation</td>
+                      <tr className="pd-table__row--inactivation">
+                        <td>
+                          <span className="pd-table__strategy pd-table__strategy--inactivation">
+                            Deletion · functional inactivation
+                          </span>
+                        </td>
                         <td>↓ Efflux</td>
                         <td>
                           <em>pitB</em>
@@ -1889,112 +1911,96 @@ export function ProjectDescription() {
                 image="assets/our-solution/revalorizacion-callout-icon.webp"
                 alt="Illustration of the phosphate revalorisation workflow"
               >
-                A multi-enzyme system that uses recovered polyphosphate to
-                regenerate ATP and drive the synthesis of value-added
-                phosphorylated products.
+                A coupled enzymatic system that uses accumulated polyphosphate
+                to regenerate ATP and produce dihydroxyacetone phosphate,
+                closing the phosphorus loop with a value-added product.
               </BlockIntro>
 
               <div className="pd-subsection">
-                <h3>From stored phosphate to a useful donor</h3>
+                <h3>Closing the phosphorus loop</h3>
                 <p>
-                  In the complete system, recovered beads are lysed to release a
-                  concentrated stock of inorganic polyphosphate. For
-                  module-level experiments we decoupled this block from upstream
-                  bead recovery and used commercial polyphosphate, allowing the
-                  conversion biochemistry to be characterised independently
-                  before full integration.
+                  The final module of rePhlow converts intracellular
+                  polyphosphate into a useful phosphorylated product. The
+                  strategy couples ATP regeneration from polyphosphate with an
+                  ATP-dependent reaction, so the phosphate accumulated by the
+                  engineered bacterium becomes the input for a new biocatalytic
+                  process.
                 </p>
               </div>
 
               <div className="pd-subsection">
-                <h3>Drawing energy from polyphosphate: the PPK2 module</h3>
+                <h3>Polyphosphate-driven ATP regeneration</h3>
                 <p>
-                  Polyphosphate kinases transfer phosphate reversibly between
-                  polyphosphate and nucleotides. PPK1 preferentially uses ATP to
-                  synthesise polyphosphate, whereas PPK2 preferentially uses
-                  polyphosphate to phosphorylate nucleotides
-                  <Cite group="revalorisation" numbers={[5, 6]} />. PPK2
-                  therefore allows us to spend the accumulated reserve
-                  deliberately.
-                </p>
-                <p>
-                  This is the opposite role to the endogenous <em>ppk2</em>{" "}
-                  deletion in the
-                  <SectionLink href="#genetic">
-                    {" "}
-                    genetic engineering block
-                  </SectionLink>
-                  . PPK2 is suppressed inside the living cell to retain
-                  polyphosphate, but added later in vitro to release its
-                  chemical potential.
-                </p>
-                <p>
-                  PPK2-I converts ADP to ATP, PPK2-II converts AMP to ADP and
-                  bifunctional PPK2-III can carry AMP through to ATP
-                  <Cite group="revalorisation" numbers={[5, 9]} />. We selected
-                  BcPPK2-III from <em>Burkholderia cenocepacia</em> because it
-                  accepts AMP and ADP and remains active across a broad pH range
-                  <Cite group="revalorisation" numbers={[5]} />.
+                  We selected the class III polyphosphate kinase BcPPK2 from
+                  <em> Burkholderia cenocepacia</em>. It accepts both AMP and
+                  ADP, is thermostable and remains active between pH 6.0 and
+                  9.0. The enzyme uses polyphosphate as a phosphate donor to
+                  regenerate ATP for the coupled reaction.
                 </p>
                 <Figure
-                  src="atp-regeneration-module.webp"
-                  alt="Polyphosphate kinase regenerating ATP to support an ATP-dependent phosphorylation reaction"
+                  src="assets/results/revalorisation/dhak-ppk2-complex.png"
+                  alt="Model of the coupled DHAK and PPK2 enzyme system"
                   className="pd-figure--compact"
                   caption={
                     <>
-                      <strong>Figure 3.</strong> Coupling polyphosphate-driven
-                      ATP regeneration to an ATP-dependent kinase.
+                      <strong>Figure 3.</strong> Structural representation of
+                      the coupled DHAK–PPK2 enzymatic system.
                     </>
                   }
                 />
               </div>
 
               <div className="pd-subsection">
-                <h3>Why regenerate ATP rather than add it?</h3>
+                <h3>From regenerated ATP to DHAP</h3>
                 <p>
-                  Supplying ATP stoichiometrically is a standard obstacle in
-                  ATP-dependent biocatalysis
-                  <Cite group="revalorisation" numbers={[1, 5]} />. Regeneration
-                  keeps the reaction running on a small recycled nucleotide pool
-                  rather than continuously consuming an expensive cofactor. It
-                  also removes ADP as it forms, shifting the equilibrium towards
-                  product and preventing inhibitory ADP accumulation
-                  <Cite group="revalorisation" numbers={[1, 9]} />.
+                  Dihydroxyacetone kinase from <em>Citrobacter freundii</em>
+                  uses the regenerated ATP to phosphorylate dihydroxyacetone and
+                  produce dihydroxyacetone phosphate (DHAP). DHAP can then serve
+                  as a building block in routes towards rare sugars and
+                  iminosugars.
                 </p>
               </div>
 
               <div className="pd-subsection">
-                <h3>Proof of concept: polyphosphate-driven DHAP synthesis</h3>
+                <h3>Stabilising and connecting the enzymes</h3>
                 <p>
-                  To demonstrate useful chemistry, we coupled ATP regeneration
-                  to dihydroxyacetone kinase (DHAK), which phosphorylates
-                  dihydroxyacetone to dihydroxyacetone phosphate using ATP
-                  <Cite group="revalorisation" numbers={[2]} />. DHAP is the
-                  obligate donor for DHAP-dependent aldolases, which form
-                  carbon–carbon bonds with strict stereochemical control and
-                  enable access to rare sugars and iminosugars.
+                  Because DHAK showed stability limitations, we mapped its
+                  active site in PyMOL, protected the catalytic residues and
+                  used PROSS to generate ten redesigns. The fifth design showed
+                  almost no activity: its larger number of mutations may have
+                  altered active-site geometry or domain packing. We therefore
+                  retained the wild-type enzyme as the working system while
+                  prioritising more conservative PROSS variants for further
+                  testing.
                 </p>
                 <Figure
-                  src="dhak-cascade.webp"
-                  alt="Dihydroxyacetone kinase reaction coupled to polyphosphate-driven ATP regeneration"
+                  src="assets/results/revalorisation/pross-msa-quality.png"
+                  alt="Sequence comparison used to assess PROSS-designed DHAK variants"
                   caption={
                     <>
-                      <strong>Figure 4.</strong> Proof-of-concept cascade
-                      coupling DHAK to PPK2-mediated ATP regeneration.
+                      <strong>Figure 4.</strong> Sequence analysis of the
+                      PROSS-designed DHAK variants.
                     </>
                   }
                   className="pd-figure--pathway"
                 />
                 <p>
-                  DHAK from <em>Citrobacter freundii</em> is strongly inhibited
-                  by ADP
-                  <Cite group="revalorisation" numbers={[8]} />. As DHAK
-                  consumes ATP, the PPK2 module regenerates it from
-                  polyphosphate and simultaneously removes the ADP that would
-                  otherwise stall the reaction. The performance of the coupled
-                  system is reported in{" "}
-                  <WikiLink to="/results">Results</WikiLink>.
+                  In parallel, the SpyCatcher–SpyTag system is being explored to
+                  connect PPK2 and DHAK covalently. Bringing both enzymes closer
+                  together could improve substrate channelling within the
+                  coupled reaction.
                 </p>
+                <Figure
+                  src="assets/results/revalorisation/dhak-spy-system-boltz2.png"
+                  alt="Predicted model of the DHAK SpyTag and PPK2 SpyCatcher system"
+                  caption={
+                    <>
+                      <strong>Figure 5.</strong> Predicted architecture of the
+                      SpyTag–SpyCatcher-linked enzymatic system.
+                    </>
+                  }
+                  className="pd-figure--compact"
+                />
               </div>
 
               <AccordionSection
