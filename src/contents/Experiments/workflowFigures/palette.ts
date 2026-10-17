@@ -29,9 +29,10 @@ export const C = {
 };
 
 /** Scroll to the sub-block, then open the experiment's folder — the same
- * two moves the section nav makes. */
-export function openExperiment(section: string, target: string) {
+ * two moves the section nav makes. A stage with no experiment of its own
+ * (no `target`) only scrolls to its section. */
+export function openExperiment(section: string, target?: string) {
   const el = document.getElementById(section);
   el?.scrollIntoView({ behavior: "smooth", block: "start" });
-  document.getElementById(`folder-tab-${target}`)?.click();
+  if (target) document.getElementById(`folder-tab-${target}`)?.click();
 }

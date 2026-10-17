@@ -39,7 +39,8 @@ export function Panel({
   h: number;
   fill: string;
   section: string;
-  target: string;
+  /** The experiment to open; omit for a stage with none of its own. */
+  target?: string;
   /** Accessible name: the panel's own title. */
   label: string;
   children: ReactNode;
@@ -344,5 +345,59 @@ export function Tangle({
         />
       ))}
     </g>
+  );
+}
+
+/** A title of one or more centred lines, as the originals set them, with
+ * *asterisks* marking the species names they print in italics. A line
+ * longer than `maxWidth` is narrowed to fit rather than re-broken. */
+export function TitleLines({
+  x,
+  y,
+  size,
+  lines,
+  maxWidth,
+  lineHeight = 1.22,
+}: {
+  x: number;
+  y: number;
+  size: number;
+  lines: string[];
+  maxWidth: number;
+  lineHeight?: number;
+}) {
+  return (
+    <>
+      {lines.map((line, i) => {
+        const plain = line.replace(/\*/g, "");
+        const estimate = plain.length * size * 0.57;
+        const parts = line.split(/(\*[^*]+\*)/).filter(Boolean);
+        return (
+          <text
+            key={i}
+            x={x}
+            y={y + i * size * lineHeight}
+            textAnchor="middle"
+            fontFamily="var(--font-display)"
+            fontWeight={700}
+            fontSize={size}
+            letterSpacing="-0.01em"
+            fill={C.ink}
+            textLength={estimate > maxWidth ? maxWidth : undefined}
+            lengthAdjust={estimate > maxWidth ? "spacingAndGlyphs" : undefined}
+          >
+            {parts.map((part, j) =>
+              part.startsWith("*") ? (
+                <tspan key={j} fontStyle="italic">
+                  {part.slice(1, -1)}
+                </tspan>
+              ) : (
+                <tspan key={j}>{part}</tspan>
+              ),
+            )}
+          </text>
+        );
+      })}
+    </>
   );
 }
