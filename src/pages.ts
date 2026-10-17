@@ -65,6 +65,8 @@ const Pages: Page[] = [
     component: ProjectDescription,
     hideEyebrow: true,
     docTitle: "Project Description — rePhlow iGEM Wiki",
+    labHero: true,
+    moleculeSeed: 17,
   },
   {
     name: "Engineering",
@@ -151,10 +153,12 @@ const Pages: Page[] = [
     name: "Human practices",
     title: "Human Practices",
     lead: "Science shaped by society.",
-    hideHeader: true,
     path: "/human-practices",
     component: HumanPractices,
     docTitle: "Human Practices — The Phosphorus Route — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 41,
   },
   {
     name: "Collaboration and Partnership",
@@ -197,6 +201,9 @@ const Pages: Page[] = [
     path: "/sustainability",
     component: Sustainability,
     docTitle: "Sustainability — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 37,
   },
   {
     name: "Contribution",

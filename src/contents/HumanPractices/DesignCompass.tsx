@@ -2,7 +2,6 @@ import {
   useEffect,
   useRef,
   useState,
-  type CSSProperties,
   type ReactNode,
 } from "react";
 import { Link } from "react-router-dom";
@@ -11,9 +10,8 @@ import { CompassGlyph } from "./HeroObjects";
 import { ProjectBlockLink } from "../../components/ProjectBlockLink";
 import type { BlockId } from "../../components/OurSolutionVisualIndex/blocks";
 import { asset } from "../../utils/asset";
+import { LoopDiagram } from "./LoopDiagram";
 import "./DesignCompass.css";
-
-type StepStyle = CSSProperties & { "--step-i": number };
 
 function Cite({ numbers }: { numbers: number[] }) {
   return (
@@ -429,40 +427,6 @@ const MISSING_GROUPS: string[] = [
   "Recovered-product users",
 ];
 
-interface LoopStage {
-  label: string;
-  definition: string;
-}
-
-const LOOP_STAGES: LoopStage[] = [
-  {
-    label: "Perspective documented",
-    definition: "Relevant knowledge or concern was recorded.",
-  },
-  {
-    label: "Decision changed",
-    definition: "The input produced a traceable modification.",
-  },
-  {
-    label: "Change implemented",
-    definition:
-      "The modification entered a construct, protocol, experiment, model or communication output.",
-  },
-  {
-    label: "Change evaluated",
-    definition: "Evidence was generated to assess the modified design.",
-  },
-  {
-    label: "Returned to stakeholder",
-    definition:
-      "The revised design or evidence was brought back to the person or community whose input initiated the change.",
-  },
-  {
-    label: "Further iteration completed",
-    definition: "Their subsequent response produced another modification.",
-  },
-];
-
 export function DesignCompass() {
   const [selectedId, setSelectedId] = useState<string>(COMPASS_VALUES[0].id);
   const [openId, setOpenId] = useState<string | null>(COMPASS_VALUES[0].id);
@@ -848,10 +812,10 @@ export function DesignCompass() {
         </p>
         <p>
           Responsibility was not about making the correct decision at the first
-          attempt. It was about maintaining the ability to change direction
-          when stronger evidence, a better argument or an overlooked risk
-          emerged. Several decisions made rePhlow narrower rather than more
-          ambitious, but also more interpretable, testable and defensible.
+          attempt. It was about maintaining the ability to change direction when
+          stronger evidence, a better argument or an overlooked risk emerged.
+          Several decisions made rePhlow narrower rather than more ambitious,
+          but also more interpretable, testable and defensible.
         </p>
         <p>
           <em>
@@ -932,34 +896,25 @@ export function DesignCompass() {
         <h3>When is a Human Practices loop closed?</h3>
         <p>
           Changing a design in response to feedback demonstrates integration,
-          but does not automatically mean the feedback loop has been closed. We
-          distinguish interactions by the furthest stage supported by evidence:
+          but it does not automatically mean that the feedback loop has been
+          closed. We therefore classify each interaction according to the
+          furthest stage supported by evidence.
         </p>
-        <ol
-          className="hp-loop-stairs"
-          aria-label="The six stages of a closed Human Practices loop"
-        >
-          {LOOP_STAGES.map((stage, i) => (
-            <li
-              className="hp-loop-stairs__step"
-              key={stage.label}
-              style={{ "--step-i": i } as StepStyle}
-            >
-              <span className="hp-loop-stairs__number">{i + 1}</span>
-              <span className="hp-loop-stairs__copy">
-                <span className="hp-loop-stairs__label">{stage.label}</span>
-                <span className="hp-loop-stairs__definition">
-                  {stage.definition}
-                </span>
-              </span>
-            </li>
-          ))}
-        </ol>
         <p>
-          Where a modification has not yet been returned to the original
-          stakeholder, we describe the loop as open rather than complete. This
-          distinction allows us to show both what our Human Practices has
-          already achieved and where further engagement is still needed.
+          The diagram below separates two things that are easy to conflate.
+          Stages 1 to 4 show integration: what we heard changed what we
+          designed, built or tested. Stages 5 and 6 show loop closure: the
+          change was taken back to the people who prompted it, and their
+          response shaped the project again. Select any stage to see what it
+          requires and where it appears in rePhlow.
+        </p>
+        <LoopDiagram />
+        <p>
+          Not every rePhlow interaction has reached the final stage. Where a
+          modification has not yet been returned to the original stakeholder, we
+          describe the loop as open rather than complete. This distinction
+          allows us to show both what our Human Practices has already achieved
+          and where further engagement is still needed.
         </p>
       </div>
 

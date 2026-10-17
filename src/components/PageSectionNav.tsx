@@ -57,25 +57,22 @@ export function PageSectionNav({
   ariaLabel = "Page sections",
 }: PageSectionNavProps) {
   const [activeId, setActiveId] = useState(sections[0]?.id ?? "");
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  // Clicking a link jumps straight to that id, but the destination is
-  // often already inside the observed band (or only briefly leaves it
-  // during the scroll), so the IntersectionObserver may never re-fire —
-  // leaving the previously-active link highlighted. Set activeId
-  // optimistically on click, then ignore the observer's noisy
-  // mid-scroll callbacks until the smooth scroll has actually settled,
-  // so it doesn't fight the click with a stale intermediate target.
-  const suppressObserverRef = useRef(false);
+  // Clicking a link jumps straight to that id, but the smooth scroll
+  // takes a moment to get there. Set activeId optimistically on click,
+  // then ignore the spy's noisy mid-scroll readings until the scroll has
+  // actually settled, so it doesn't fight the click with a stale
+  // intermediate target.
+  const suppressSpyRef = useRef(false);
   const suppressTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
 
   function handleNavClick(id: string) {
     setActiveId(id);
-    suppressObserverRef.current = true;
+    suppressSpyRef.current = true;
     clearTimeout(suppressTimerRef.current);
     suppressTimerRef.current = setTimeout(() => {
-      suppressObserverRef.current = false;
+      suppressSpyRef.current = false;
     }, 900);
   }
 
@@ -95,62 +92,67 @@ export function PageSectionNav({
   const activeSectionId = parentMap[activeId] ?? sections[0]?.id ?? "";
 
   useEffect(() => {
-    // Only observe leaf targets: a section's own id when it has no
-    // children (unchanged from before — e.g. Medals), or its children's
-    // ids when it does. Observing a parent section element as well would
-    // make its (much taller) bounding box dominate the "topmost" pick
-    // below for as long as any of its subsections are in view — *unless*
-    // none of its children actually correspond to a real, independently
-    // scrollable element (e.g. Experiments' individual experiments, which
-    // are selected via onSelect rather than scrolled to; see
-    // PageSubsection.onSelect above). In that case there is nothing else to
-    // observe, so the section itself is the correct, and only, fallback.
-    const ids = sections.flatMap((section) => {
-      if (!section.children || section.children.length === 0)
-        return [section.id];
-      const realChildIds = section.children
-        .map((child) => child.id)
-        .filter((id) => document.getElementById(id) !== null);
-      return realChildIds.length > 0 ? realChildIds : [section.id];
-    });
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
+    // The spy's targets: every section's own id, plus the ids of its
+    // children where those are real, independently scrollable elements.
+    // Children that only exist as click targets (e.g. Experiments'
+    // individual experiments, which are switched via onSelect rather than
+    // scrolled to; see PageSubsection.onSelect above) have no element, so
+    // they simply don't take part.
+    const ids = sections.flatMap((section) => [
+      section.id,
+      ...(section.children?.map((child) => child.id) ?? []),
+    ]);
 
-    if (!elements.length) return;
+    const read = () =>
+      ids
+        .map((id) => document.getElementById(id))
+        .filter((el): el is HTMLElement => el !== null);
+
+    if (!read().length) return;
 
     // Read the actual sticky-nav offset from CSS (rather than a
-    // hardcoded duplicate of --section-nav-offset) so the observed band
-    // always starts exactly where content stops being hidden behind the
-    // sticky nav, even if that offset ever changes.
+    // hardcoded duplicate of --section-nav-offset) so the band the spy
+    // reads from always starts exactly where content stops being hidden
+    // behind the sticky nav, even if that offset ever changes.
     const offsetRaw = getComputedStyle(document.documentElement)
       .getPropertyValue("--section-nav-offset")
       .trim();
     const offset = parseFloat(offsetRaw) || 110;
 
-    // Treat a thin band near the top of the viewport (just below the
-    // floating main navbar) as "current". Whichever heading is inside
-    // that band is the active one.
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (suppressObserverRef.current) return;
-        const intersecting = entries.filter((entry) => entry.isIntersecting);
-        if (intersecting.length === 0) return;
+    // The last target whose top has passed just below the floating main
+    // navbar is the current one. Reading positions (rather than watching
+    // a band go in and out of view) is what makes the highlight follow
+    // *any* way of arriving at a section — the links here, a #hash, or a
+    // page's own scrollIntoView, as Sustainability's plant map uses.
+    const pick = () => {
+      if (suppressSpyRef.current) return;
+      const elements = read();
+      if (!elements.length) return;
+      let current = elements[0].id;
+      for (const el of elements) {
+        if (el.getBoundingClientRect().top <= offset + 4) current = el.id;
+        else break;
+      }
+      setActiveId(current);
+    };
 
-        const topMost = intersecting.reduce((a, b) =>
-          a.boundingClientRect.top < b.boundingClientRect.top ? a : b,
-        );
-        setActiveId(topMost.target.id);
-      },
-      { rootMargin: `-${offset}px 0px -70% 0px`, threshold: 0 },
-    );
+    let frame = 0;
+    const onScroll = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        pick();
+      });
+    };
 
-    elements.forEach((el) => observer.observe(el));
-    observerRef.current = observer;
+    pick();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
 
     return () => {
-      observer.disconnect();
-      observerRef.current = null;
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(frame);
     };
   }, [sections]);
 

@@ -1,0 +1,109 @@
+/* --------------------------------------------------------------------------
+   Sustainability — the page carried over from Claude Design
+   (Sustainability.dc.html). The markup keeps the design's inline styles, so
+   what lives here is what inline styles cannot express: the keyframes, the
+   hover states the prototype declared as `style-hover`, and the few places
+   where the page has to follow the wiki rather than the prototype — the
+   width of a column of text, and the accent its links and citations read
+   from (see .lab-wikilink / .lab-citation in LabFolders.css).
+   -------------------------------------------------------------------------- */
+
+.sus-design {
+  /* The page's own accent: the olive green the design gives its links, as
+     the token .lab-wikilink and .lab-citation resolve. */
+  --folder-accent: #7c9a4e;
+  --folder-accent-strong: #4d6a2a;
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+/* A column of text is the wiki's width everywhere else (.lab-prose, 790px),
+   not the width of the grid cell. Figures, tables, the plant map and the
+   panels keep the full column — only running text is narrowed. The design
+   sets its margins inline, so the centring has to win over that. */
+.sus-design main > section > p,
+.sus-design main > section > h3,
+.sus-design main > section > h4,
+.sus-design main > section > h5,
+.sus-design main > section > ul,
+.sus-design main > section > ol,
+.sus-design main > section > blockquote,
+.sus-design main > section > details,
+.sus-design main > section > aside,
+.sus-design .sus-prose-panel {
+  max-width: 790px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* The welcome paragraph reads like Collaboration and Partnership's own
+   opening paragraph (.cp-notion-intro): the same size, the same top margin
+   and the same justified setting — centred on the page. */
+.sus-design .sus-intro {
+  max-width: 820px;
+  margin: 0 auto;
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.72;
+  text-align: justify;
+  text-align-last: center;
+  hyphens: auto;
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -44;
+  }
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+[data-hover="dcH1"] {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+[data-hover="dcH1"]:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+}
+
+[data-hover="dcH2"] {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+[data-hover="dcH2"]:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sus-design *,
+  .sus-design *::before,
+  .sus-design *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

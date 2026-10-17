@@ -4,19 +4,11 @@
    editorial copy, figures, tables and references around it.
    -------------------------------------------------------------------------- */
 
-/* Relative anchor for PDBackground.tsx's absolutely-positioned decor
-   layer, which spans the full width of this wrapper (not the narrower,
-   centred .page-with-section-nav box) so its molecule/blob field can use
-   real page margins — including the space behind the section nav — not
-   just the gutters either side of the prose column. */
-.pd-page {
-  position: relative;
-}
-
-.pd-page > .page-with-section-nav {
-  position: relative;
-  z-index: 1;
-}
+/* The decor layer itself is the shared MoleculeBackdrop (see
+   .mbg-host in MoleculeBackdrop.css): it spans the full width of this
+   wrapper, not the narrower, centred .page-with-section-nav box, so its
+   molecule/blob field can use real page margins — including the space
+   behind the section nav. */
 
 .pd-content-wrap {
   padding: 6vh 20px 10vh;
@@ -349,7 +341,7 @@
 .pd-references-accordion {
   margin-top: 42px;
   background: color-mix(in srgb, var(--water-mid) 7%, transparent);
-  border: 1px solid rgba(27, 35, 64, .08);
+  border: 1px solid rgba(27, 35, 64, 0.08);
   border-radius: var(--radius-md);
   padding: 4px 22px;
 }

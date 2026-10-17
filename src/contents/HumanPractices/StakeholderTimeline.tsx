@@ -3,7 +3,6 @@ import {
   CATEGORIES,
   CATEGORY_DESCRIPTIONS,
   EVENTS,
-  PENDING_ENTRIES,
   type Category,
 } from "./StakeholderTimelineData";
 import { AccordionSection } from "./AccordionSection";
@@ -49,12 +48,6 @@ export function StakeholderTimeline() {
       return;
     }
 
-    const firstPending = PENDING_ENTRIES.find(
-      (entry) => entry.category === category,
-    );
-    document
-      .getElementById(`hp-timeline-pending-${firstPending?.id}`)
-      ?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   useEffect(() => {
@@ -221,39 +214,6 @@ export function StakeholderTimeline() {
             )}
           </div>
         </div>
-      </div>
-
-      <div className="hp-timeline-pending">
-        <h4>Pending stakeholder entries</h4>
-        <p className="hp-timeline-pending__note">
-          These entries are referenced in our records but are missing a
-          confirmed date, name or full write-up. Flagged here rather than
-          filled in.
-        </p>
-        <ul>
-          {PENDING_ENTRIES.map((entry) => (
-            <li
-              key={entry.id}
-              id={`hp-timeline-pending-${entry.id}`}
-              className="hp-timeline-pending__item"
-              style={
-                { "--cat-color": CATEGORY_COLOR[entry.category] } as AccentStyle
-              }
-            >
-              <span className="hp-timeline-pending__dot" aria-hidden="true" />
-              <div>
-                <p className="hp-timeline-pending__name">
-                  {entry.name}{" "}
-                  <span className="hp-timeline-pending__category">
-                    · {entry.category}
-                  </span>
-                </p>
-                <p className="hp-timeline-pending__status">{entry.status}</p>
-                <p className="hp-timeline-pending__body">{entry.note}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
 
       <div className="hp-users" id="s2-users">

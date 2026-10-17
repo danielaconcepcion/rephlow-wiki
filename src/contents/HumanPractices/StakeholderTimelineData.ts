@@ -23,14 +23,6 @@ export interface StakeholderEvent {
   fullEntryHtml: string;
 }
 
-export interface PendingEntry {
-  id: string;
-  name: string;
-  category: Category;
-  status: string;
-  note: string;
-}
-
 export interface UserRow {
   stakeholder: string;
   relationship: string;
@@ -63,16 +55,16 @@ export const EVENTS: StakeholderEvent[] = [
     month: "March 2025",
     name: "Bio-Oils Huelva",
     category: "Industry",
-    date: "20 March 2025",
+    date: "20 March 2025 · follow-up visit planned",
     question:
       "What does phosphorus pollution look like in a real vegetable-oil refining process?",
     inputLabel: "Input",
     inputText:
-      "The degumming stream has specific phosphorus, pH and temperature conditions, and any new treatment must fit around existing infrastructure.",
+      "The degumming stream has specific phosphorus, pH and temperature conditions, and any new treatment must fit around existing infrastructure. Bio-Oils later gave us a sample of their real effluent.",
     responseText:
-      "We moved from generic wastewater to a defined industrial use case and adopted modular, retrofit-compatible implementation as a design principle.",
+      "We moved from generic wastewater to a defined industrial use case and adopted modular, retrofit-compatible implementation as a design principle. When we tested our strain on the real effluent, it accumulated more phosphorus than the wild type and did not die, giving us our first evidence that rePhlow can work on an authentic industrial stream.",
     fullEntryHtml:
-      "<p><strong>Why we contacted this stakeholder.</strong> Bio-Oils Huelva was the company that turned phosphorus from an abstract pollutant into a concrete industrial problem. As a biodiesel producer, they use phosphoric acid during the degumming stage of production, generating a phosphorus-rich wastewater stream. We wanted to understand what a real effluent looks like before designing a bioreactor around an idealised one.</p>\n<p><strong>What we learned from this interview.</strong> Bio-Oils explained the typical phosphorus concentration range in their degumming wastewater, the temperature and pH conditions of the stream, and the discharge limits they are already required to meet, as well as the future that awaits: even stricter discharge limits. They were candid about the real constraint industry faces: any new technology has to fit into existing infrastructure, because shutting down a line for a full treatment-plant rebuild is economically unworkable for a mid-sized producer.</p>\n<p><strong>What changed in rePhlow.</strong> This was the moment our target stopped being a generic, idealised wastewater and became a real one. We used Bio-Oils' concentration ranges, temperature and pH as the realistic operating conditions our bioreactor and bacterium would eventually need to tolerate, and we took their infrastructure constraint seriously: rePhlow had to be conceived as something that could slot into an existing line, not replace it. In practice, this conversation is also where our wet-lab work began: the concentration, pH and temperature ranges Bio-Oils gave us became the recipe for a synthetic wastewater stream, which we used to run our first phosphorus-assay approximations before we had access to any real effluent.</p>\n<p><strong>What this opened next.</strong> A real use case gave us numbers to design against, but it also raised a question our own team couldn't answer alone: which biological chassis could realistically survive and work in that stream? We needed a public-sector view on accepted treatment baselines and analytical rigour too, a thread we picked up later that year with CEDEX (see below), but the more immediate question was biological, and it sent us straight into the lab.</p>",
+      '<p><strong>Why we contacted this stakeholder.</strong> Bio-Oils Huelva was the company that turned phosphorus from an abstract pollutant into a concrete industrial problem. As a biodiesel producer, they use phosphoric acid during the degumming stage of production, generating a phosphorus-rich wastewater stream. We wanted to understand what a real effluent looks like before designing a bioreactor around an idealised one.</p>\n<p><strong>What we learned from this interview.</strong> Bio-Oils explained the typical phosphorus concentration range in their degumming wastewater, the temperature and pH conditions of the stream, and the discharge limits they are already required to meet, as well as what lies ahead: even stricter discharge limits. They were candid about the real constraint industry faces: any new technology has to fit into existing infrastructure, because shutting down a line for a full treatment-plant rebuild is economically unworkable for a mid-sized producer. They also shared the characterisation of two samples of their effluent:</p>\n<div class="hp-source-table-wrap"><table class="hp-source-table"><caption>Characterisation of Bio-Oils degumming effluent, as provided by the company</caption><thead><tr><th scope="col">Parameter</th><th scope="col">65V001B (1)</th><th scope="col">65V001A (2)</th></tr></thead><tbody><tr><th scope="row">pH (20 ºC)</th><td>5.3</td><td>3.2</td></tr><tr><th scope="row">Suspended solids (mg/l)</th><td>3,250</td><td>1,607</td></tr><tr><th scope="row">Total organic carbon, TOC (mg/l)</th><td>23,500</td><td>21,520</td></tr><tr><th scope="row">Oils and fats (mg/l)</th><td>5,000</td><td>1,900</td></tr><tr><th scope="row">Total nitrogen (mg N/l)</th><td>91</td><td>105.2</td></tr><tr><th scope="row">Total phosphorus (mg P/l)</th><td>2,290</td><td>2,090</td></tr><tr><th scope="row">Conductivity</th><td>48,000</td><td>17,600</td></tr></tbody></table></div>\n<p><strong>What changed in rePhlow.</strong> This was the moment our target stopped being a generic, idealised wastewater and became a real one. We used Bio-Oils\' concentration ranges, temperature and pH as the realistic operating conditions our bioreactor and bacterium would eventually need to tolerate, and we took their infrastructure constraint seriously: rePhlow had to be conceived as something that could slot into an existing line, not replace it. In practice, this conversation is also where our wet-lab work began: the concentration, pH and temperature ranges Bio-Oils gave us became the recipe for a synthetic wastewater stream, which we used to run our first phosphorus-assay approximations before we had access to any real effluent.</p>\n<p>Bio-Oils then went a step further and gave us a sample of their real degumming effluent, which let us test our engineered strain on the stream it was designed for. The results were encouraging: the strain accumulated more phosphorus than the wild type and did not die in the effluent, which means it can tolerate the conditions of a real industrial stream (see Results for the full data on phosphorus accumulation and cell viability).</p>\n<p><strong>What this opened next.</strong> A real use case gave us numbers to design against, but it also raised a question our own team couldn\'t answer alone: which biological chassis could realistically survive and work in that stream? We needed a public-sector view on accepted treatment baselines and analytical rigour too, a thread we picked up later that year with CEDEX (see below), but the more immediate question was biological, and it sent us straight into the lab.</p>\n<p>Our results on the real sample then raised a new question: do they hold beyond a single sample, and inside a real plant? That is why we have planned a visit to the Bio-Oils facility in Huelva (see Travel Archive → Next stop: Bio-Oils Huelva).</p>\n<p><strong>Planned follow-up: site visit and second interview.</strong> During the visit we will hold a new interview with the Bio-Oils team, building on this conversation. We have prepared the following questions, which come from what we still do not know and from the open points in our Responsibility Checkpoint:</p>\n<ol><li>Our strain worked well in the sample you gave us. How representative is that sample of your effluent over time? What variation (batch, oil type, season, cleaning cycles, residual oils or solids) should we expect?</li><li>Where in your treatment line would a modular unit make the most sense? What space, downtime and operating requirements could you realistically assume?</li><li>Which discharge limits apply to you, and how do you expect them to change with Directive (EU) 2024/3019?</li><li>What would worry you most about using a genetically modified organism inside your facility, and what containment evidence would you need to see?</li><li>How much does managing phosphorus in this effluent cost you today, and what saving would justify adopting a new technology?</li><li>Would you see value in recovering the phosphorus as a product, or would you prefer to reuse it within your own process?</li></ol>\n<p>Once the interview has taken place, we will add it here in the same format as our other conversations: who we spoke to, when, what was said and what changed in rePhlow as a result. Until then, this loop remains open: the evidence generated with their effluent has not yet been taken back to Bio-Oils.</p>',
   },
   {
     id: "jorge-fernandez",
@@ -486,44 +478,6 @@ export const EVENTS: StakeholderEvent[] = [
       "<p><strong>Why we contacted this stakeholder.</strong> After selecting the basket-type rotating-bed reactor as our final design, we wanted to ensure that our proof of concept reproduced the most relevant engineering features of commercial systems. Rather than simply building a functional prototype, we aimed to understand which design choices were essential for preserving hydrodynamics, protecting the alginate core-shell capsules, and enabling future scale-up. Juan Manuel Bolívar and his laboratory specialise in immobilised bioreactions, using several types of bioreactors, including rotating-bed bioreactors of similar volume to our proof of concept.</p>\n<p><strong>What we learned from this interview.</strong> During the laboratory visit, we observed the configuration of a commercial rotating-bed bioreactor and discussed the rationale behind its design. We learned that the rotating basket typically occupies approximately one third of the reactor volume, providing sufficient space for fluid circulation while maintaining efficient contact between the liquid phase and the immobilised biocatalyst. We also discussed the importance of maximising the flow through the basket to improve mass transfer around the capsules while maintaining laminar flow conditions to minimise mechanical stress. To achieve an appropriate packing density, Juan Manuel suggested that, if necessary, inert highly cross-linked alginate beads could be added to the basket to optimise flow distribution without compromising capsule integrity. Finally, we identified the key operational parameters that should be monitored in our proof of concept, including basket rotation speed, hydrodynamic behaviour, and flow patterns, acknowledging that although our prototype would not match the level of automation of commercial equipment, it should reproduce its fundamental operating principles.</p>\n<p><strong>What changed in rePhlow.</strong> The visit provided practical validation for our hardware design and led us to define the geometric proportions of the reactor and basket according to commercial practice. It also guided the internal packing strategy of the basket and reinforced the need to characterise fluid dynamics experimentally through mixing and residence-time studies. These observations increased our confidence that our prototype represents a realistic laboratory-scale model of an industrial rotating-bed bioreactor.</p>\n<p><strong>What this opened next.</strong> This closes the record of external interlocutors to date: the genetic, containment, enzyme, revalorisation, hardware and industrial threads all converge here into one buildable, testable system.</p>",
   },
 ];
-
-export const PENDING_ENTRIES: PendingEntry[] = [
-  {
-    id: "donana",
-    name: "Doñana Natural Space",
-    category: "Environment",
-    status: "Interviewee, date and full entry to confirm",
-    note: "Our route physically passed through the wetlands and estuarine systems around Huelva, near Doñana, a UNESCO World Heritage site and critical stopover for migratory birds, whose water balance is threatened by agricultural over-extraction and nutrient runoff.",
-  },
-  {
-    id: "canal-imdea",
-    name: "Canal de Isabel II / IMDEA",
-    category: "Environment",
-    status: "Date to confirm",
-    note: "Consulted as large-scale water-treatment entities. They made clear that conventional methods, chemical precipitation among them, remain the backbone of most treatment systems, and that these entities are not looking to replace their infrastructure overnight. RePhlow's realistic destination is to complement, not substitute, these methods. What this community needs above all is confidence: safety, continuous monitoring and a credible path to scalability.",
-  },
-  {
-    id: "beehives-stakeholder",
-    name: "Beehives",
-    category: "Environment",
-    status: "Pending — content not yet documented as a stakeholder interview",
-    note: "The field visit itself, and what it revealed about phosphorus as both pollutant and essential nutrient, is documented in Travel Archive.",
-  },
-  {
-    id: "entrepreneurship-pending",
-    name: "Entrepreneurship (PCM, ComplUemprende, APTE, ENISA)",
-    category: "Entrepreneurship",
-    status: "Pending — full consultation details not yet available",
-    note: "These consultations shaped rePhlow's implementation strategy: modular deployment, retrofit compatibility, and the treated-water-reuse and phosphorus-recovery model referenced as design responses in the Access & Fairness and Industrial Feasibility values of the Guiding Compass.",
-  },
-  {
-    id: "bio-oils-interviewee",
-    name: "Bio-Oils Huelva interviewee",
-    category: "Industry",
-    status: "Interviewee name to confirm",
-    note: "The organisation and the substance of the consultation are documented in chronological entry 1; the individual interviewee still needs to be confirmed.",
-  },
-] as PendingEntry[];
 
 export const USER_ROWS: UserRow[] = [
   {

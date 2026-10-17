@@ -32,7 +32,10 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.14) 1px,
+    transparent 1px
+  );
   background-size: 22px 22px;
   pointer-events: none;
 }
@@ -103,13 +106,17 @@
   transition: width 0.1s linear;
 }
 @media (prefers-reduced-motion: reduce) {
-  .hp-route-progress__fill { transition: none; }
+  .hp-route-progress__fill {
+    transition: none;
+  }
 }
 
 /* --- Local "route stops" index: secondary and page-local, entirely
    separate from the shared PageSectionNav rendered in HumanPractices.tsx
    (that one keeps controlling the site-wide "Jump to section" list). --- */
-.hp-route-select { display: none; }
+.hp-route-select {
+  display: none;
+}
 .hp-route-select__label {
   position: absolute;
   width: 1px;
@@ -254,7 +261,9 @@
   gap: 16px;
   margin-bottom: 14px;
 }
-.hp-stop__head h3 { font-size: 1.25rem; }
+.hp-stop__head h3 {
+  font-size: 1.25rem;
+}
 
 .hp-stop__stamp {
   flex-shrink: 0;
@@ -339,7 +348,9 @@
   position: relative;
   margin: 0;
   min-height: 190px;
-  background: linear-gradient(135deg, rgba(23, 53, 47, 0.05), rgba(47, 125, 105, 0.12)), var(--ta-sand);
+  background:
+    linear-gradient(135deg, rgba(23, 53, 47, 0.05), rgba(47, 125, 105, 0.12)),
+    var(--ta-sand);
 }
 .hp-stop__photo--large {
   min-height: 260px;
@@ -390,7 +401,11 @@
   color: var(--ink-soft);
 }
 
-.hp-stop__content p { line-height: 1.65; margin-bottom: 12px; color: var(--ink); }
+.hp-stop__content p {
+  line-height: 1.65;
+  margin-bottom: 12px;
+  color: var(--ink);
+}
 
 /* --- "What we saw / Why it mattered / What it opened" --- */
 .hp-stop__scan-row {
@@ -413,7 +428,11 @@
   text-transform: uppercase;
   margin-bottom: 6px;
 }
-.hp-stop__scan span { font-size: 0.86rem; line-height: 1.5; color: var(--ink-soft); }
+.hp-stop__scan span {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
 
 /* --- Evidence blocks (row of three, or a single standalone item) --- */
 .hp-stop__evidence-row {
@@ -429,7 +448,9 @@
   border-radius: var(--radius-md);
   padding: 14px 16px;
 }
-.hp-stop__evidence-row > .hp-stop__evidence { margin: 0; }
+.hp-stop__evidence-row > .hp-stop__evidence {
+  margin: 0;
+}
 .hp-stop__evidence b {
   display: block;
   color: var(--ta-accent);
@@ -438,7 +459,11 @@
   text-transform: uppercase;
   margin-bottom: 6px;
 }
-.hp-stop__evidence span { font-size: 0.86rem; line-height: 1.5; color: var(--ink-soft); }
+.hp-stop__evidence span {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
 
 /* --- Pull quotes: pale-green field-journal callouts --- */
 .hp-stop__pullquote {
@@ -446,7 +471,11 @@
   padding: 20px 22px;
   border-left: 4px solid var(--ta-accent);
   border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  background: linear-gradient(135deg, rgba(47, 125, 95, 0.1), rgba(47, 125, 95, 0.03));
+  background: linear-gradient(
+    135deg,
+    rgba(47, 125, 95, 0.1),
+    rgba(47, 125, 95, 0.03)
+  );
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 1.15rem;
@@ -462,7 +491,9 @@
   border-radius: var(--radius-md);
   background: rgba(255, 253, 247, 0.6);
 }
-.hp-stop__details .hp-accordion__title { font-size: 0.98rem; }
+.hp-stop__details .hp-accordion__title {
+  font-size: 0.98rem;
+}
 
 /* --- Cross-links to Stakeholders & Voices --- */
 .hp-stop__crosslink {
@@ -635,22 +666,47 @@
     width: 100%;
     max-width: 260px;
   }
-  .ta-hero .hp-passport__title { font-size: 1.7rem; }
+  .ta-hero .hp-passport__title {
+    font-size: 1.7rem;
+  }
 
-  .hp-stop { grid-template-columns: 40px 1fr; gap: 12px; }
-  .hp-stop__marker { width: 40px; height: 40px; font-size: 0.9rem; }
-  .hp-stop__content { padding: 18px 18px; }
-  .hp-stop__head { flex-direction: column; }
-  .hp-stop__stamp { align-items: flex-start; }
+  .hp-stop {
+    grid-template-columns: 40px 1fr;
+    gap: 12px;
+  }
+  .hp-stop__marker {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  .hp-stop__content {
+    padding: 18px 18px;
+  }
+  .hp-stop__head {
+    flex-direction: column;
+  }
+  .hp-stop__stamp {
+    align-items: flex-start;
+  }
 
-  .hp-route::before { left: 19px; }
-  .hp-route-break { margin-left: 52px; }
+  .hp-route::before {
+    left: 19px;
+  }
+  .hp-route-break {
+    margin-left: 52px;
+  }
   .hp-route-final-wrap {
     grid-template-columns: 40px 1fr;
     gap: 12px;
   }
-  .hp-route-final__marker { width: 40px; height: 40px; }
-  .hp-route-final__marker svg { width: 15px; height: 15px; }
+  .hp-route-final__marker {
+    width: 40px;
+    height: 40px;
+  }
+  .hp-route-final__marker svg {
+    width: 15px;
+    height: 15px;
+  }
 
   .hp-stop__photo-grid,
   .hp-stop__photo-grid--single,
@@ -678,5 +734,31 @@
     object-fit: initial;
   }
 
-  .hp-stop__crosslink { flex-direction: column; align-items: flex-start; }
+  .hp-stop__crosslink {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* --- A stop we have not made yet: dashed marker and card, and the
+   closing break that says the route stays open. --- */
+.hp-stop--planned .hp-stop__marker {
+  border-style: dashed;
+  background: var(--ta-paper);
+}
+
+.hp-stop--planned .hp-stop__content {
+  border: 2px dashed color-mix(in srgb, var(--ta-accent) 45%, transparent);
+  box-shadow: none;
+}
+
+@media (min-width: 641px) {
+  .hp-stop--planned .hp-stop__scan-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.hp-route-break--open {
+  margin-top: 24px;
+  background: linear-gradient(120deg, #2f5d53, #5b8a73);
 }
