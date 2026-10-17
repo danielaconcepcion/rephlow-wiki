@@ -2122,7 +2122,15 @@ function Slate() {
   );
 }
 
-export function Blackboard({ onSelect }: { onSelect: (id: string) => void }) {
+export function Blackboard({
+  onSelect,
+  currentId,
+}: {
+  onSelect: (id: string) => void;
+  /** The activity whose dialog is open, hopped and ringed on the board so
+   * it stays findable behind the dialog and after it closes. */
+  currentId?: string | null;
+}) {
   return (
     <div className="ec-board-scroll">
       <nav className="ec-board" aria-label="Activities, in order">
@@ -2131,7 +2139,9 @@ export function Blackboard({ onSelect }: { onSelect: (id: string) => void }) {
         {ITEMS.map((item, index) => (
           <a
             key={item.id}
-            className={`ec-object${item.paper ? " ec-object--paper" : ""}`}
+            className={`ec-object${item.paper ? " ec-object--paper" : ""}${
+              item.id === currentId ? " is-current" : ""
+            }`}
             href={`#${item.id}`}
             aria-label={`${index + 1}. ${item.label}, ${item.spoken}`}
             style={{ left: item.left, top: item.top, width: item.width }}

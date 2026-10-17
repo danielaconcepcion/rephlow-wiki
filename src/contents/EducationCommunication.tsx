@@ -104,7 +104,7 @@ export function EducationCommunication() {
           </p>
 
           {wide ? (
-            <Blackboard onSelect={select} />
+            <Blackboard onSelect={select} currentId={openId} />
           ) : (
             <div className="ec-board-frame">
               <nav
