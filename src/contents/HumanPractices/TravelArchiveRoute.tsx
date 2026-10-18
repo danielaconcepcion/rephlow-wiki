@@ -2,6 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { asset } from "../../utils/asset";
 import { AccordionSection } from "./AccordionSection";
 import { PassportGlyph } from "./HeroObjects";
+import travelMap from "../../assets/human-practices/travel-archive-index/map.webp";
+import bioOilsLayer from "../../assets/human-practices/travel-archive-index/bio-oils.webp";
+import donanaLayer from "../../assets/human-practices/travel-archive-index/donana.webp";
+import marMenorLayer from "../../assets/human-practices/travel-archive-index/mar-menor.webp";
+import sanJuanLayer from "../../assets/human-practices/travel-archive-index/embalse-san-juan.webp";
+import cedexLayer from "../../assets/human-practices/travel-archive-index/cedex.webp";
+import repsolLayer from "../../assets/human-practices/travel-archive-index/repsol.webp";
+import beehivesLayer from "../../assets/human-practices/travel-archive-index/beehives.webp";
 import "./TravelArchiveRoute.css";
 
 /**
@@ -12,9 +20,9 @@ import "./TravelArchiveRoute.css";
  * disclosures, pull quotes and a route-progress bar — kept literally,
  * ported directly from the prototype rather than genericised. The
  * prototype's own sticky topbar (brand/progress/button) is dropped per the
- * approved brief; its side-nav becomes a secondary, page-local "route
- * stops" index (desktop sticky list / mobile <select>), entirely separate
- * from the shared PageSectionNav rendered by HumanPractices.tsx.
+ * approved brief; route navigation is provided by the responsive visual
+ * map index, entirely separate from the shared PageSectionNav rendered by
+ * HumanPractices.tsx.
  *
  * Photos: real Notion-attached photos exist for Embalse de San Juan, CEDEX
  * and Beehives (one each); every other photo slot — including the second,
@@ -148,10 +156,7 @@ const STOPS: Stop[] = [
     date: "Date to confirm",
     dateConfirmed: false,
     dateNote: "Not documented in the current record",
-    photos: [
-      { kind: "placeholder", caption: "Photo: Mar Menor lagoon" },
-      { kind: "placeholder", caption: "Optional: archival/local team photo" },
-    ],
+    photos: [],
     blocks: [
       {
         type: "p",
@@ -659,37 +664,181 @@ const FINAL_CARD = {
   text: "We were asking how to put it back in the right place.",
 };
 
-/** The route as the nav and the jump-to select list it: the stops we have
- * made, then the one still ahead. */
-const ALL_STOPS = [...STOPS, PLANNED_STOP];
-const STOP_IDS = ALL_STOPS.map((stop) => `s3-${stop.id}`);
+interface TravelIndexLayer {
+  id: string;
+  title: string;
+  stopId: string;
+  image: string;
+  description: string;
+  box: { left: number; top: number; width: number; height: number };
+}
 
-function useActiveStop(ids: string[]) {
-  const [active, setActive] = useState(ids[0] ?? "");
+/** Percentages of the original 7680 × 4320 map, calculated by matching
+ * each supplied transparent illustration against the baked map artwork. */
+const TRAVEL_INDEX_LAYERS: TravelIndexLayer[] = [
+  {
+    id: "bio-oils",
+    title: "Bio-Oils Huelva",
+    stopId: "bio-oils-donana",
+    image: bioOilsLayer,
+    description:
+      "The industrial starting point of our route and the process context rePhlow must fit into.",
+    box: { left: 21.0449, top: 68.2292, width: 14.7461, height: 13.7153 },
+  },
+  {
+    id: "donana",
+    title: "Doñana",
+    stopId: "bio-oils-donana",
+    image: donanaLayer,
+    description:
+      "The sensitive wetland context that connected an industrial discharge to a wider water system.",
+    box: { left: 37.207, top: 76.1285, width: 10.498, height: 9.0278 },
+  },
+  {
+    id: "mar-menor-index",
+    title: "Mar Menor",
+    stopId: "mar-menor",
+    image: marMenorLayer,
+    description:
+      "A visible example of the ecological consequences of prolonged nutrient imbalance.",
+    box: { left: 67.041, top: 71.0938, width: 16.3574, height: 10.8507 },
+  },
+  {
+    id: "san-juan-index",
+    title: "Embalse de San Juan",
+    stopId: "san-juan",
+    image: sanJuanLayer,
+    description:
+      "The stop where observation became environmental sampling and measurement.",
+    box: { left: 42.3828, top: 53.559, width: 12.6953, height: 9.9826 },
+  },
+  {
+    id: "cedex-index",
+    title: "CEDEX",
+    stopId: "cedex",
+    image: cedexLayer,
+    description:
+      "A research perspective on water quality, evidence and responsible interpretation.",
+    box: { left: 54.9316, top: 39.3229, width: 12.8906, height: 14.4097 },
+  },
+  {
+    id: "repsol-index",
+    title: "Repsol Technology Lab",
+    stopId: "repsol",
+    image: repsolLayer,
+    description:
+      "The industrial innovation stop where implementation and scale became concrete questions.",
+    box: { left: 28.7109, top: 40.9722, width: 9.2773, height: 13.7153 },
+  },
+  {
+    id: "beehives-index",
+    title: "Beehives",
+    stopId: "beehives",
+    image: beehivesLayer,
+    description:
+      "A final stop about circularity, ecosystems and learning from biological systems.",
+    box: { left: 41.8945, top: 28.2118, width: 12.5, height: 12.2396 },
+  },
+];
 
-  useEffect(() => {
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
-    if (!elements.length) return;
+function TravelArchiveIndex() {
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const activeLayer =
+    TRAVEL_INDEX_LAYERS.find((layer) => layer.id === activeId) ?? null;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const intersecting = entries.filter((entry) => entry.isIntersecting);
-        if (intersecting.length === 0) return;
-        const topMost = intersecting.reduce((a, b) =>
-          a.boundingClientRect.top < b.boundingClientRect.top ? a : b,
-        );
-        setActive(topMost.target.id);
-      },
-      { rootMargin: "-110px 0px -70% 0px", threshold: 0 },
-    );
+  return (
+    <div className="ta-map-index" aria-labelledby="ta-map-index-title">
+      <div className="ta-map-index__intro">
+        <h3 id="ta-map-index-title">Explore the Travel Archive</h3>
+        <p>
+          Follow the six stops on our route. Select a place on the map to jump
+          directly to its field record.
+        </p>
+      </div>
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [ids]);
+      <div
+        className={`ta-map-index__illustration${activeLayer ? " is-active" : ""}`}
+        onMouseLeave={() => setActiveId(null)}
+      >
+        <img
+          className="ta-map-index__base"
+          src={travelMap}
+          alt="Map of Spain showing the six Travel Archive stops: Bio-Oils Huelva and Doñana, Mar Menor, Embalse de San Juan, CEDEX, Repsol and Beehives."
+        />
 
-  return active;
+        {TRAVEL_INDEX_LAYERS.map((layer) => {
+          const style = {
+            left: `${layer.box.left}%`,
+            top: `${layer.box.top}%`,
+            width: `${layer.box.width}%`,
+            height: `${layer.box.height}%`,
+          };
+          return (
+            <img
+              key={layer.id}
+              className={`ta-map-index__layer ta-map-index__layer--${layer.id}${activeId === layer.id ? " is-active" : ""}`}
+              src={layer.image}
+              alt=""
+              style={style}
+            />
+          );
+        })}
+
+        {TRAVEL_INDEX_LAYERS.map((layer) => {
+          const style = {
+            left: `${layer.box.left}%`,
+            top: `${layer.box.top}%`,
+            width: `${layer.box.width}%`,
+            height: `${layer.box.height}%`,
+          };
+          return (
+            <a
+              key={layer.id}
+              className="ta-map-index__hitbox"
+              href={`#s3-${layer.stopId}`}
+              aria-label={`${layer.title} — jump to this Travel Archive stop`}
+              aria-describedby={
+                activeId === layer.id ? "ta-map-index-card" : undefined
+              }
+              style={style}
+              onMouseEnter={() => setActiveId(layer.id)}
+              onFocus={() => setActiveId(layer.id)}
+              onBlur={() => setActiveId(null)}
+            />
+          );
+        })}
+
+        {activeLayer && (
+          <div
+            className="ta-map-index__card"
+            id="ta-map-index-card"
+            role="status"
+          >
+            <small>Travel Archive stop</small>
+            <strong>{activeLayer.title}</strong>
+            <span>{activeLayer.description}</span>
+            <span className="ta-map-index__card-cta">Open field record ↓</span>
+          </div>
+        )}
+      </div>
+
+      <nav
+        className="ta-map-index__mobile-links"
+        aria-label="Travel Archive map links"
+      >
+        <ul>
+          {STOPS.map((stop) => (
+            <li key={stop.id}>
+              <a href={`#s3-${stop.id}`}>
+                <span>{stop.number}</span>
+                {stop.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
 }
 
 function PhotoFigure({ photo, large }: { photo: Photo; large: boolean }) {
@@ -869,7 +1018,6 @@ function StopCard({ stop }: { stop: Stop }) {
 export function TravelArchiveRoute() {
   const [progress, setProgress] = useState(0);
   const routeRef = useRef<HTMLDivElement>(null);
-  const activeStopId = useActiveStop(STOP_IDS);
 
   useEffect(() => {
     function onScroll() {
@@ -924,6 +1072,8 @@ export function TravelArchiveRoute() {
         </p>
       </div>
 
+      <TravelArchiveIndex />
+
       <div className="hp-route-progress" aria-hidden="true">
         <div
           className="hp-route-progress__fill"
@@ -931,49 +1081,7 @@ export function TravelArchiveRoute() {
         />
       </div>
 
-      <div className="hp-route-select">
-        <label className="hp-route-select__label" htmlFor="ta-stop-select">
-          Jump to a stop
-        </label>
-        <select
-          id="ta-stop-select"
-          value={activeStopId || STOP_IDS[0]}
-          onChange={(e) => {
-            window.location.hash = e.target.value;
-          }}
-        >
-          {ALL_STOPS.map((stop) => (
-            <option key={stop.id} value={`s3-${stop.id}`}>
-              {stop.title}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="hp-route-layout">
-        <aside className="hp-route-nav" aria-label="Travel Archive stops">
-          <h3>Route stops</h3>
-          <ul>
-            {ALL_STOPS.map((stop) => {
-              const targetId = `s3-${stop.id}`;
-              const isActive = activeStopId === targetId;
-              return (
-                <li key={stop.id}>
-                  <a
-                    href={`#${targetId}`}
-                    className={isActive ? "is-active" : ""}
-                    aria-current={isActive ? "true" : undefined}
-                  >
-                    <span className="hp-route-nav__dot" aria-hidden="true" />
-                    {stop.title}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </aside>
-
-        <div className="hp-route" ref={routeRef}>
+      <div className="hp-route" ref={routeRef}>
           {beforeBreak.map((stop) => (
             <StopCard stop={stop} key={stop.id} />
           ))}
@@ -1018,7 +1126,6 @@ export function TravelArchiveRoute() {
             <h3>{ROUTE_OPEN.title}</h3>
             <p>{ROUTE_OPEN.text}</p>
           </div>
-        </div>
       </div>
     </section>
   );
