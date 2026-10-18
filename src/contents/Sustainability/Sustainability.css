@@ -441,3 +441,257 @@
     margin: 0 auto;
   }
 }
+
+/* --------------------------------------------------------------------------
+   The Nilsson scale. Three views of the same nine rows: the scale filters,
+   the map draws them, the list names them. Wide enough to read the two
+   columns of targets, so it steps outside the 790px text column.
+   -------------------------------------------------------------------------- */
+.sus-design .sus-nilsson {
+  margin: 10px 0 28px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.sus-design .sus-nilsson__scale {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.sus-design .sus-nilsson__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 8px 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.sus-design .sus-nilsson__step:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.sus-design .sus-nilsson__step b {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.sus-design .sus-nilsson__step small {
+  font-size: 10.5px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.sus-design .sus-nilsson__count {
+  font-size: 10.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__step.has:not(:disabled):hover {
+  border-color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__step.on.p {
+  border-color: rgba(47, 122, 79, 0.5);
+  background: rgba(47, 122, 79, 0.1);
+}
+
+.sus-design .sus-nilsson__step.on.n {
+  border-color: rgba(176, 60, 27, 0.5);
+  background: rgba(176, 60, 27, 0.1);
+}
+
+.sus-design .sus-nilsson__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  margin-top: 14px;
+}
+
+.sus-design .sus-nilsson__map {
+  width: 100%;
+  height: auto;
+}
+
+.sus-design .sus-nilsson__colh {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__link {
+  fill: none;
+  opacity: 0.85;
+  transition:
+    opacity 0.18s ease,
+    stroke-width 0.18s ease;
+}
+
+.sus-design .sus-nilsson__link.dim {
+  opacity: 0.12;
+}
+
+.sus-design .sus-nilsson__link.sel {
+  opacity: 1;
+  filter: drop-shadow(0 0 4px rgba(27, 35, 64, 0.25));
+}
+
+.sus-design .sus-nilsson__hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 16;
+  cursor: pointer;
+}
+
+.sus-design .sus-nilsson__hit:focus-visible {
+  outline: none;
+  stroke: rgba(27, 35, 64, 0.25);
+}
+
+.sus-design .sus-nilsson__node rect {
+  fill: var(--paper-soft);
+  stroke: var(--line);
+}
+
+.sus-design .sus-nilsson__node text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__node text.code {
+  font-family: var(--font-display);
+  font-weight: 600;
+  fill: var(--ink);
+}
+
+.sus-design .sus-nilsson__node.dim {
+  opacity: 0.35;
+}
+
+.sus-design .sus-nilsson__detail {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper-soft);
+}
+
+.sus-design .sus-nilsson__pair {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sus-design .sus-nilsson__names {
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__score {
+  display: inline-block;
+  margin: 10px 0 8px;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 12.5px;
+}
+
+.sus-design .sus-nilsson__score.p {
+  color: #2f7a4f;
+  border-color: rgba(47, 122, 79, 0.4);
+  background: rgba(47, 122, 79, 0.07);
+}
+
+.sus-design .sus-nilsson__score.n {
+  color: #b03c1b;
+  border-color: rgba(176, 60, 27, 0.4);
+  background: rgba(176, 60, 27, 0.07);
+}
+
+.sus-design .sus-nilsson__why {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__source {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.sus-design .sus-nilsson__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.sus-design .sus-nilsson__chip.dim {
+  opacity: 0.3;
+}
+
+.sus-design .sus-nilsson__chip.on {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.sus-design .sus-nilsson__chip-score {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.sus-design .sus-nilsson__chip.p .sus-nilsson__chip-score {
+  color: #2f7a4f;
+}
+
+.sus-design .sus-nilsson__chip.n .sus-nilsson__chip-score {
+  color: #b03c1b;
+}
+
+@media (max-width: 860px) {
+  .sus-design .sus-nilsson__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sus-design .sus-nilsson__scale {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
