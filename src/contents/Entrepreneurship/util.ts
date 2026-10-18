@@ -1,5 +1,4 @@
 import type { CSSProperties } from "react";
-import { asset } from "../../utils/asset";
 
 /** Inline style helper that also accepts CSS custom properties (--c, --gc…). */
 export const sx = (o: Record<string, string | number>) => o as CSSProperties;
@@ -9,12 +8,12 @@ export const cx = (...c: (string | false | null | undefined)[]) =>
   c.filter(Boolean).join(" ");
 
 /**
- * Entrepreneurship assets live in public/assets/entrepreneurship/.
- * "img/process.jpg" → assets/entrepreneurship/process.jpg (see asset.ts for
- * the static.igem.wiki migration note).
+ * Entrepreneurship photos, logos and PDFs are served from the iGEM Uploads
+ * server (folder "entrepreneurship" of team 6124), as the wiki rules require.
+ * "img/process.jpg" → <STATIC>/process.jpg
  */
-export const A = (p: string) =>
-  asset("assets/entrepreneurship/" + p.replace(/^(img|docs)\//, ""));
+export const STATIC = "https://static.igem.wiki/teams/6124/wiki/entrepreneurship/";
+export const A = (p: string) => STATIC + p.replace(/^(img|docs)\//, "");
 
 /** Photo n of the Notion export (img7.jpg … img49.jpg). */
 export const photo = (n: number) => A(`img/img${n}.jpg`);

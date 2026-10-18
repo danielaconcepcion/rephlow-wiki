@@ -298,7 +298,7 @@ export function PdfButton({
 }
 
 /** Bio-Oils Huelva mark in the centre of the empathy map. Drop the logo in
- * public/assets/entrepreneurship/logo-bio-oils.png and it replaces the text. */
+ * the Uploads folder "entrepreneurship" as logo-bio-oils.png and it replaces the text. */
 export function BioOilsMark({ src }: { src: string }) {
   const [failed, setFailed] = useState(false);
   if (failed)

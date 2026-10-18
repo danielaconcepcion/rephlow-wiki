@@ -577,7 +577,7 @@ export function S2() {
             </div>
           </details>
           <PdfButton
-            pdf={A("docs/rePhlow_MVP_Technical_Specification.pdf")}
+            pdf={A("docs/rephlow-mvp-technical-specification.pdf")}
             title="rePhlow MVP Technical Specification"
           >
             <Icon n="doc" />
