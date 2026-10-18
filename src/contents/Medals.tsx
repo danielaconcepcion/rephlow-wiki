@@ -214,17 +214,7 @@ const BALLOT_AWARDS: BallotAward[] = [
 
 export function Medals() {
   return (
-    <main className="medals-page">
-      {/* Hero / intro */}
-      <section className="page-hero medals-hero" id="top">
-        <p className="hero__eyebrow">Judging roadmap</p>
-        <h1 className="page-hero__title">Medals</h1>
-        <p className="page-hero__lede">
-          This page serves as a map of rePhlow's evidence for the 2026 medal
-          criteria. Details are available on the linked pages.
-        </p>
-      </section>
-
+    <div className="medals-page">
       <div className="page-with-section-nav">
         <PageSectionNav
           sections={MEDAL_SECTIONS}
@@ -484,6 +474,6 @@ export function Medals() {
           </section>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

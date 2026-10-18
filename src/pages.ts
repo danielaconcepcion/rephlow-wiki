@@ -241,11 +241,13 @@ const Pages: Page[] = [
   {
     name: "Medals",
     title: "Medals",
-    lead: "",
+    lead: "A map of rePhlow's evidence for the 2026 medal criteria.",
     path: "/medals",
     component: Medals,
     docTitle: "Medals — rePhlow iGEM Wiki",
-    hideHeader: true,
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 53,
   },
   {
     // Internal reference page, deliberately not listed in Navbar.tsx's
