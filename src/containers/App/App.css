@@ -1446,6 +1446,18 @@ img {
   background: rgba(244, 211, 94, 0.32);
 }
 
+/* A special prize is not a medal, so it carries the same pill with a
+   gradient of its own — gold into the project's own water-green, which
+   keeps it legible on both the gold panel and a page header. */
+.medals-tier-badge--prize {
+  color: var(--medal-gold);
+  background: linear-gradient(
+    100deg,
+    rgba(244, 211, 94, 0.34),
+    rgba(156, 201, 184, 0.34)
+  );
+}
+
 /* Gold's Special-Award mechanism is the one bit of framing that isn't
    already said by the badge, so it keeps a short explanatory note. */
 .medals-gold-note {
@@ -1525,59 +1537,7 @@ img {
 }
 
 /* --- Gold: three candidate Special Award cards --- */
-.medals-award-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  margin-top: 6vh;
-}
-
-.medals-card {
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 26px 24px;
-  box-shadow: var(--shadow-card);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.medals-card__category {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-
-.medals-card__title {
-  font-family: var(--font-display);
-  font-size: 1.04rem;
-  font-weight: 600;
-  color: var(--ink);
-}
-
-.medals-card__body {
-  font-size: 0.92rem;
-  color: var(--ink-soft);
-}
-
-.medals-card .medals-links {
-  margin-top: auto;
-  padding-top: 6px;
-}
-
-@media (max-width: 900px) {
-  .medals-award-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 @media (max-width: 640px) {
-  .medals-award-grid {
-    grid-template-columns: 1fr;
-  }
   .medals-item {
     grid-template-columns: 1fr;
     gap: 6px;
@@ -1698,56 +1658,93 @@ img {
   }
 }
 
-/* The ballot questions under the Gold awards: an editorial column, since
-   these are paragraphs to read rather than cards to scan. */
-.medals-ballot {
-  margin-top: 6vh;
+/* Gold is three stacked blocks, one per award: the award, what it is for,
+   its page, and its ballot questions as accordions. No card inside the
+   panel, no coloured rule — the gold panel is already the frame. */
+.medals-gold-awards {
+  margin-top: 5vh;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 34px;
 }
 
-.medals-ballot__title {
+.medals-gold-award {
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.medals-gold-award:first-child {
+  padding-top: 0;
+  border-top: none;
+}
+
+.medals-gold-award__title {
   font-family: var(--font-display);
   font-size: 1.14rem;
   font-weight: 600;
   color: var(--ink);
 }
 
-.medals-ballot__lede {
-  max-width: 68ch;
-  font-size: 0.92rem;
+.medals-gold-award__body {
+  max-width: 76ch;
+  margin-top: 8px;
+  font-size: 0.95rem;
   color: var(--ink-soft);
 }
 
-.medals-ballot__award {
-  margin-top: 26px;
-  padding-top: 20px;
+.medals-gold-award .medals-links {
+  margin-top: 14px;
+}
+
+.medals-gold-award__questions {
+  margin-top: 20px;
   border-top: 1px solid var(--line);
 }
 
-.medals-ballot__award-title {
-  font-family: var(--font-display);
-  font-size: 1rem;
+/* The wiki's own accordion, quieter: a question is a line of text with a
+   chevron, and its answer slides open rather than appearing. */
+.medals-ballot-accordion {
+  border-bottom: 1px solid var(--line);
+}
+
+.medals-ballot-accordion .hp-accordion__trigger {
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 0;
+}
+
+.medals-ballot-accordion .hp-accordion__chevron {
+  margin-top: 7px;
+}
+
+.medals-ballot-accordion .hp-accordion__title {
+  font-family: var(--font-body);
+  font-size: 0.97rem;
   font-weight: 600;
-  color: var(--ink);
+  line-height: 1.5;
 }
 
-.medals-ballot__list {
-  margin: 14px 0 0;
-  padding-left: 1.3em;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-
-.medals-ballot__item {
+.medals-ballot-accordion .hp-accordion__content {
   max-width: 76ch;
+  padding: 0 0 18px 22px;
+  animation: medals-ballot-open 0.22s ease both;
 }
 
-.medals-ballot__question {
-  font-weight: 600;
-  color: var(--ink);
+@keyframes medals-ballot-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medals-ballot-accordion .hp-accordion__content {
+    animation: none;
+  }
 }
 
 .medals-ballot__answer {

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { PageSectionNav, type PageSection } from "../components/PageSectionNav";
 import { Rich } from "../components/LabFolders/RichText";
+import { AwardBadge } from "../components/AwardBadge";
+import { AccordionSection } from "./HumanPractices/AccordionSection";
 
 const MEDAL_SECTIONS: PageSection[] = [
   { id: "bronze", label: "Bronze" },
@@ -24,6 +26,12 @@ type BallotQuestion = {
 type BallotAward = {
   id: string;
   award: string;
+  /** The award's description, as the card above the questions used to
+   * carry it. */
+  body: string;
+  /** The page the award is judged on. */
+  page: string;
+  pageLabel: string;
   questions: BallotQuestion[];
 };
 
@@ -32,8 +40,11 @@ const SUS = "/sustainability";
 
 const BALLOT_AWARDS: BallotAward[] = [
   {
-    id: "ballot-measurement",
+    id: "gold-measurement",
     award: "Best Measurement",
+    body: "Reproducible protocols quantify phosphate removal and polyphosphate accumulation with a measurable, documented basis.",
+    page: "/measurement",
+    pageLabel: "Measurements",
     questions: [
       {
         question: "Could the measurement(s) be reproduced by other iGEM teams?",
@@ -61,8 +72,11 @@ const BALLOT_AWARDS: BallotAward[] = [
     ],
   },
   {
-    id: "ballot-ihp",
+    id: "gold-ihp",
     award: "Best Integrated Human Practices",
+    body: "Stakeholder input from wastewater treatment and biodiesel production contexts shaped rePhlow's direction and implementation.",
+    page: HP,
+    pageLabel: "Human Practices",
     questions: [
       {
         question:
@@ -132,8 +146,11 @@ const BALLOT_AWARDS: BallotAward[] = [
     ],
   },
   {
-    id: "ballot-sustainability",
+    id: "gold-sustainability",
     award: "Best Sustainable Development Impact",
+    body: "rePhlow connects phosphorus recovery to circular nutrient reuse and a lower risk of eutrophication.",
+    page: SUS,
+    pageLabel: "Sustainability",
     questions: [
       {
         question:
@@ -195,20 +212,6 @@ const BALLOT_AWARDS: BallotAward[] = [
   },
 ];
 
-const MEDAL_ICON = (
-  <svg
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="9" r="5" />
-    <path d="M8.5 13.5L6 21l6-3.5L18 21l-2.5-7.5" />
-  </svg>
-);
-
 export function Medals() {
   return (
     <main className="medals-page">
@@ -237,10 +240,7 @@ export function Medals() {
           >
             <div className="medals-panel__inner">
               <div className="medals-tier__head">
-                <h2 className="medals-tier-badge medals-tier-badge--bronze">
-                  {MEDAL_ICON}
-                  Bronze Medal
-                </h2>
+                <AwardBadge as="h2" variant="bronze" label="Bronze Medal" />
               </div>
 
               <div className="medals-list">
@@ -366,10 +366,7 @@ export function Medals() {
           >
             <div className="medals-panel__inner">
               <div className="medals-tier__head">
-                <h2 className="medals-tier-badge medals-tier-badge--silver">
-                  {MEDAL_ICON}
-                  Silver Medal
-                </h2>
+                <AwardBadge as="h2" variant="silver" label="Silver Medal" />
               </div>
 
               <div className="medals-list">
@@ -418,10 +415,7 @@ export function Medals() {
           >
             <div className="medals-panel__inner">
               <div className="medals-tier__head">
-                <h2 className="medals-tier-badge medals-tier-badge--gold">
-                  {MEDAL_ICON}
-                  Gold Medal
-                </h2>
+                <AwardBadge as="h2" variant="gold" label="Gold Medal" />
                 {/* <p className="medals-gold-note">
                   For 2026, Gold is assessed through three Special Awards selected on the Judging Form rather than a
                   separate written narrative — each judge scores those awards on their own rubric, and Gold requires
@@ -430,80 +424,33 @@ export function Medals() {
                 </p> */}
               </div>
 
-              <div className="medals-award-grid">
-                <article className="medals-card" id="gold-measurement">
-                  <p className="medals-card__category">
-                    General Bio Engineering
-                  </p>
-                  <h3 className="medals-card__title">Best Measurement</h3>
-                  <p className="medals-card__body">
-                    Reproducible protocols quantify phosphate removal and
-                    polyphosphate accumulation with a measurable, documented
-                    basis.
-                  </p>
-                  <div className="medals-links">
-                    <Link className="medals-link-btn" to="/measurement">
-                      Measurements
-                    </Link>
-                  </div>
-                </article>
+              <p className="medals-gold-note">
+                One block per award, each with the questions judges score and
+                our answer to every one of them.
+              </p>
 
-                <article className="medals-card" id="gold-ihp">
-                  <p className="medals-card__category">Specialization</p>
-                  <h3 className="medals-card__title">
-                    Best Integrated Human Practices
-                  </h3>
-                  <p className="medals-card__body">
-                    Stakeholder input from wastewater treatment and biodiesel
-                    production contexts shaped rePhlow's direction and
-                    implementation.
-                  </p>
-                  <div className="medals-links">
-                    <Link className="medals-link-btn" to="/human-practices">
-                      Human Practices
-                    </Link>
-                  </div>
-                </article>
-
-                <article className="medals-card" id="gold-sustainability">
-                  <p className="medals-card__category">Specialization</p>
-                  <h3 className="medals-card__title">
-                    Best Sustainable Development Impact
-                  </h3>
-                  <p className="medals-card__body">
-                    rePhlow connects phosphorus recovery to circular nutrient
-                    reuse and a lower risk of eutrophication.
-                  </p>
-                  <div className="medals-links">
-                    <Link className="medals-link-btn" to="/sustainability">
-                      Sustainability
-                    </Link>
-                  </div>
-                </article>
-              </div>
-
-              <div className="medals-ballot">
-                <h3 className="medals-ballot__title">Ballot questions</h3>
-                <p className="medals-ballot__lede">
-                  The questions judges score for each of these awards, answered
-                  here with the section of the wiki that carries the evidence.
-                </p>
-
+              <div className="medals-gold-awards">
                 {BALLOT_AWARDS.map((award) => (
                   <section
-                    className="medals-ballot__award"
+                    className="medals-gold-award"
                     id={award.id}
                     key={award.id}
                   >
-                    <h4 className="medals-ballot__award-title">
-                      {award.award}
-                    </h4>
-                    <ol className="medals-ballot__list">
+                    <h3 className="medals-gold-award__title">{award.award}</h3>
+                    <p className="medals-gold-award__body">{award.body}</p>
+                    <div className="medals-links">
+                      <Link className="medals-link-btn" to={award.page}>
+                        {award.pageLabel}
+                      </Link>
+                    </div>
+
+                    <div className="medals-gold-award__questions">
                       {award.questions.map((item) => (
-                        <li className="medals-ballot__item" key={item.question}>
-                          <p className="medals-ballot__question">
-                            {item.question}
-                          </p>
+                        <AccordionSection
+                          key={item.question}
+                          className="medals-ballot-accordion"
+                          title={item.question}
+                        >
                           {(Array.isArray(item.answer)
                             ? item.answer
                             : [item.answer]
@@ -527,9 +474,9 @@ export function Medals() {
                               .
                             </p>
                           )}
-                        </li>
+                        </AccordionSection>
                       ))}
-                    </ol>
+                    </div>
                   </section>
                 ))}
               </div>

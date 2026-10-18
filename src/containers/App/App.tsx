@@ -52,6 +52,7 @@ const App = () => {
               compactHero,
               labHero,
               moleculeSeed,
+              awards,
               component: Component,
             },
           ]) => (
@@ -68,6 +69,7 @@ const App = () => {
                       compactHero={compactHero}
                       labHero={labHero}
                       moleculeSeed={moleculeSeed}
+                      awards={awards}
                     />
                   )}
                   <Component />

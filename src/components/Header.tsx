@@ -1,4 +1,5 @@
 import { HeaderMoleculeField } from "./HeaderMoleculeField";
+import { AwardBadge, type Award } from "./AwardBadge";
 import "./Header.css";
 
 interface HeaderProps {
@@ -20,6 +21,9 @@ interface HeaderProps {
    * (the default) keeps the original page-shell look untouched.
    */
   moleculeSeed?: number;
+  /** Medals and special prizes this page is judged for, shown as badges
+   * above the title (see AwardBadge). */
+  awards?: Award[];
 }
 
 /**
@@ -34,6 +38,7 @@ export function Header({
   compactHero = false,
   labHero = false,
   moleculeSeed,
+  awards,
 }: HeaderProps) {
   const molecule = moleculeSeed !== undefined;
   const size = labHero ? "--lab" : compactHero ? "--compact" : "";
@@ -45,6 +50,13 @@ export function Header({
     >
       {molecule && <HeaderMoleculeField seed={moleculeSeed} />}
       <section className={`page-hero${size ? ` page-hero${size}` : ""}`}>
+        {awards && awards.length > 0 && (
+          <div className="page-hero__awards">
+            {awards.map((award) => (
+              <AwardBadge key={award.label} {...award} />
+            ))}
+          </div>
+        )}
         {!hideEyebrow && (
           <p className="hero__eyebrow">
             Web page currently under construction!

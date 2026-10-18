@@ -1,3 +1,4 @@
+import type { Award } from "./components/AwardBadge";
 import {
   Home,
   Team,
@@ -44,6 +45,9 @@ export interface Page {
    * Claude Design MoleculeField edge/light treatment, currently used only
    * by Experiments and Results. The number just seeds the composition. */
   moleculeSeed?: number;
+  /** Medals and special prizes this page is judged for; Header renders
+   * them as badges above the title. */
+  awards?: Award[];
 }
 
 const Pages: Page[] = [
@@ -65,6 +69,7 @@ const Pages: Page[] = [
     component: ProjectDescription,
     hideEyebrow: true,
     docTitle: "Project Description — rePhlow iGEM Wiki",
+    awards: [{ label: "Bronze Medal", variant: "bronze" }],
     labHero: true,
     moleculeSeed: 17,
   },
@@ -76,6 +81,7 @@ const Pages: Page[] = [
     path: "/engineering",
     component: Engineering,
     docTitle: "Engineering — rePhlow iGEM Wiki",
+    awards: [{ label: "Silver Medal", variant: "silver" }],
     hideEyebrow: true,
     compactHero: true,
   },
@@ -121,6 +127,7 @@ const Pages: Page[] = [
     path: "/measurement",
     component: Measurements,
     docTitle: "Measurements — rePhlow iGEM Wiki",
+    awards: [{ label: "Best Measurement", variant: "prize" }],
     hideEyebrow: true,
     labHero: true,
     moleculeSeed: 17,
@@ -156,6 +163,10 @@ const Pages: Page[] = [
     path: "/human-practices",
     component: HumanPractices,
     docTitle: "Human Practices — The Phosphorus Route — rePhlow iGEM Wiki",
+    awards: [
+      { label: "Silver Medal", variant: "silver" },
+      { label: "Best Integrated Human Practices", variant: "prize" },
+    ],
     hideEyebrow: true,
     labHero: true,
     moleculeSeed: 41,
@@ -201,6 +212,9 @@ const Pages: Page[] = [
     path: "/sustainability",
     component: Sustainability,
     docTitle: "Sustainability — rePhlow iGEM Wiki",
+    awards: [
+      { label: "Best Sustainable Development Impact", variant: "prize" },
+    ],
     hideEyebrow: true,
     labHero: true,
     moleculeSeed: 37,
@@ -213,6 +227,7 @@ const Pages: Page[] = [
     path: "/contribution",
     component: Contribution,
     docTitle: "Contribution — rePhlow iGEM Wiki",
+    awards: [{ label: "Bronze Medal", variant: "bronze" }],
   },
   {
     name: "Team",
