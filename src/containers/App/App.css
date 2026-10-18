@@ -557,6 +557,7 @@ img {
 .explore {
   background: var(--paper-soft);
   padding: 8vh 24px 12vh;
+  counter-reset: explore-card;
 }
 
 .explore__title {
@@ -578,27 +579,25 @@ img {
 .card-grid {
   max-width: 1080px;
   margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
 }
 
 .card {
-  flex: 1 1 168px;
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  min-height: 136px;
+  min-height: 168px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
-  padding: 16px 16px 18px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  padding: 16px;
+  display: grid;
+  grid-template-rows: auto 1fr;
   align-items: flex-start;
   text-align: left;
-  gap: 24px;
+  gap: 8px;
+  counter-increment: explore-card;
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
@@ -611,36 +610,22 @@ img {
    the row rather than being pinned to a fixed span -- a group of four and
    a group of six both end up with full, flush rows. */
 .card--feature {
-  flex: 2 1 348px;
   border-color: transparent;
 }
 
-.explore__group--engagement .card {
-  flex-basis: 120px;
-  min-width: 0;
-}
-
-.explore__group--engagement .card--feature {
-  flex-basis: 240px;
+.explore__group--engagement .card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 /* On a phone the full-size basis leaves one tile per row and a very long
    column; a smaller basis fits two plain tiles side by side, with the
    feature tile keeping the full width it needs to stay the entry point. */
 @media (max-width: 520px) {
-  .card {
-    flex-basis: 132px;
-    min-height: 112px;
+  .card-grid,
+  .explore__group--engagement .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .card--feature {
-    flex-basis: 100%;
-  }
-  .explore__group--engagement .card {
-    flex-basis: 132px;
-  }
-  .explore__group--engagement .card--feature {
-    flex-basis: 100%;
-  }
+  .card { min-height: 150px; padding: 13px; }
 }
 
 .card:hover {
@@ -650,35 +635,65 @@ img {
 }
 
 .card__icon,
-.card__title {
+.card__title,
+.card::before {
   position: relative;
   z-index: 1;
 }
 
+.card::before {
+  content: counter(explore-card);
+  position: absolute;
+  top: 13px;
+  right: 14px;
+  color: rgba(27, 35, 64, 0.42);
+  font: 600 0.64rem/1 var(--font-display);
+  letter-spacing: 0.08em;
+}
+.card--feature::before { color: rgba(255, 255, 255, 0.78); }
+
 .card__icon {
-  color: var(--ink-soft);
+  width: 100%;
+  height: 105px;
+  align-self: stretch;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  filter: drop-shadow(0 10px 12px rgba(27, 35, 64, 0.14));
+  transition: transform 0.3s ease;
 }
-.card__icon svg {
-  width: 22px;
-  height: 22px;
-  display: block;
-}
-.card--feature .card__icon {
-  color: #fffaf1;
-}
+.card:hover .card__icon { transform: translateY(-3px) rotate(-1deg); }
+.card__icon svg { display: none; }
+.card__icon--project { background-image: url("../../assets/home-index/description.png"); }
+.card__icon--engineering { background-image: url("../../assets/home-index/engineering.png"); }
+.card__icon--model { background-image: url("../../assets/home-index/model.png"); }
+.card__icon--hardware { background-image: url("../../assets/home-index/hardware.png"); }
+.card__icon--experiments { background-image: url("../../assets/home-index/experiments.png"); }
+.card__icon--measurements { background-image: url("../../assets/home-index/measurements.png"); }
+.card__icon--results { background-image: url("../../assets/home-index/results.png"); }
+.card__icon--safety { background-image: url("../../assets/home-index/safety.png"); }
+.card__icon--hp { background-image: url("../../assets/home-index/human-practices.png"); }
+.card__icon--collab { background-image: url("../../assets/home-index/collaborations.png"); }
+.card__icon--education { background-image: url("../../assets/home-index/education.png"); }
+.card__icon--entrepreneurship { background-image: url("../../assets/home-index/entrepreneurship.png"); }
+.card__icon--sustain { background-image: url("../../assets/home-index/sustainability.png"); }
+.card__icon--contribution { background-image: url("../../assets/home-index/contribution.png"); }
+.card__icon--team { background-image: url("../../assets/home-index/team.png"); }
+.card__icon--medals { background-image: url("../../assets/home-index/medals.png"); }
 
 .card__title {
+  order: -1;
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.25;
   color: var(--ink);
-  max-width: 14ch;
+  max-width: calc(100% - 26px);
 }
 .card--feature .card__title {
   font-size: 1.12rem;
   color: #fffaf1;
-  max-width: 18ch;
+  max-width: calc(100% - 26px);
 }
 
 /* --- Grouped card sections in "Explore rePhlow!" --- */
@@ -703,6 +718,7 @@ img {
 
 .explore__group-row .card-grid {
   height: calc(100% - 2.4vh - 1rem);
+  grid-template-columns: 1fr;
 }
 
 .explore__group-row .card {
@@ -724,6 +740,20 @@ img {
   text-align: center;
   color: var(--ink-soft);
   margin-bottom: 2.4vh;
+}
+
+@media (max-width: 900px) {
+  .card-grid,
+  .explore__group--engagement .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 380px) {
+  .card-grid,
+  .explore__group--engagement .card-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* --------------------------------------------------------------------------
