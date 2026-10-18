@@ -127,6 +127,44 @@ function Figure({
   );
 }
 
+function VideoFigure({
+  src,
+  poster,
+  label,
+  caption,
+  className = "",
+}: {
+  src: string;
+  poster: string;
+  /** Spoken description of what the animation shows, since a <video> has no
+   * alt text of its own. */
+  label: string;
+  caption?: ReactNode;
+  className?: string;
+}) {
+  return (
+    <figure
+      className={`vsi-figure vsi-figure--full pd-figure pd-video-figure ${className}`.trim()}
+    >
+      <video
+        controls
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        poster={asset(poster)}
+        aria-label={label}
+      >
+        <source src={asset(src)} type="video/mp4" />
+        Your browser does not support embedded video.
+      </video>
+      {caption && (
+        <figcaption className="vsi-figure__caption">{caption}</figcaption>
+      )}
+    </figure>
+  );
+}
+
 function BlockIntro({
   image,
   alt,
@@ -2064,6 +2102,29 @@ export function ProjectDescription() {
                     </>
                   }
                 />
+                <p>
+                  To illustrate the molecular mechanism underlying this coupled
+                  system, we produced a 3D animation of the coordinated action
+                  of PPK2 and DHAK (Figure 5). It shows how polyphosphate-driven
+                  ATP regeneration supplies the energy required for substrate
+                  phosphorylation, and how the ADP released can be taken back up
+                  by PPK2 to regenerate ATP.
+                </p>
+                <VideoFigure
+                  src="assets/videos/ppk2-dhak-animation.mp4"
+                  poster="assets/project-description/ppk2-dhak-animation-poster.webp"
+                  label="3D molecular animation of the PPK2 and DHAK enzymatic cascade"
+                  className="pd-figure--pathway"
+                  caption={
+                    <>
+                      <strong>Figure 5.</strong> 3D molecular animation of the
+                      PPK2–DHAK enzymatic cascade, illustrating
+                      polyphosphate-driven ATP regeneration and the subsequent
+                      phosphorylation of dihydroxyacetone to produce
+                      dihydroxyacetone phosphate.
+                    </>
+                  }
+                />
               </div>
 
               <div className="pd-subsection">
@@ -2155,7 +2216,7 @@ export function ProjectDescription() {
                     alt="Three-dimensional models of the SpyTag- and SpyCatcher-fused enzymes of the regeneration couple"
                     caption={
                       <>
-                        <strong>Figure 5.</strong> 3D models of the SpyTag- and
+                        <strong>Figure 6.</strong> 3D models of the SpyTag- and
                         SpyCatcher-fused enzymes of the regeneration couple.
                         PPK2 in blue, DHAK in green, SpyTag/SpyCatcher in
                         yellow.

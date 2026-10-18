@@ -472,3 +472,13 @@
     margin: 18px auto 20px;
   }
 }
+
+/* A video figure sits in the same frame as an image one: the player fills
+   the figure's width and keeps the clip's own proportions. */
+.pd-content .pd-video-figure video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  background: #000;
+}
