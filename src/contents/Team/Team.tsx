@@ -524,6 +524,15 @@ export function Team() {
               panelRefs.current[category] = el;
             }}
           >
+            {category === "members" && (
+              <figure className="team-group-photo">
+                <img
+                  src={asset("assets/team/team-group.webp")}
+                  alt="The rePhlow team"
+                />
+                <figcaption>rePhlow team, 2026.</figcaption>
+              </figure>
+            )}
             <div className="team-grid">
               {TEAM_DATA.filter((p) => p.category === category).map((person) => (
                 <PersonCard key={person.id} person={person} onOpen={openModal} />
