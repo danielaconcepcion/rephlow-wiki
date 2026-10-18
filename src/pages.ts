@@ -174,8 +174,6 @@ const Pages: Page[] = [
     path: "/entrepreneurship",
     component: Entrepreneurship,
     docTitle: "Entrepreneurship — rePhlow iGEM Wiki",
-    hideEyebrow: true,
-    moleculeSeed: 31,
   },
   {
     name: "Sustainability",
