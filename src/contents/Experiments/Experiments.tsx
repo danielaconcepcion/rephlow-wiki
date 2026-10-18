@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 import {
   PageSectionNav,
   type PageSection,
@@ -30,10 +30,10 @@ import { GENE_PARTS } from "./GeneticEngineeringData";
 import { GeneSystemGrid } from "./GeneSystemGrid";
 import {
   ENZYME_ACTIVITIES,
-  ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION,
 } from "./EnzymaticImmobilisationData";
 import { EnzymeActivityGrid } from "./EnzymeActivityGrid";
 import { EcosystemMap } from "../../components/EcosystemMap";
+import { LabCornerIndex } from "../../components/LabFolders/LabCornerIndex";
 import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
 import "../../components/LabFolders/LabFolders.css";
 
@@ -181,6 +181,11 @@ export function Experiments() {
   const activeBlock =
     EXPERIMENT_BLOCKS.find((block) => block.id === activeBlockId) ??
     EXPERIMENT_BLOCKS[0];
+  // The two landmarks the corner index reads -- the block pills directly
+  // under the full-size map, and the sentinel at the foot of the page.
+  // See LabCornerIndex, shared with Measurements and Results.
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const pageEndRef = useRef<HTMLDivElement | null>(null);
   // Figure and table numbers for the block on screen, restarting with it.
   const numbering = useMemo(
     () => numberExperiments(activeBlock.subBlocks ?? [activeBlock]),
@@ -200,7 +205,17 @@ export function Experiments() {
         onSelect={(id) => id !== null && setActiveBlockId(id)}
       />
 
-      <div className="lab-folders__menu">
+      {/* The corner "you are here" index, shown once the map above has
+          scrolled away -- same spheres, same colours and the same active
+          block, so either index switches the page the same way. */}
+      <LabCornerIndex
+        activeBlockId={activeBlockId}
+        onSelect={setActiveBlockId}
+        after={menuRef}
+        until={pageEndRef}
+      />
+
+      <div className="lab-folders__menu" ref={menuRef}>
         <SectionTabs
           tabs={EXPERIMENT_BLOCKS.map((block) => ({
             id: block.id,
@@ -295,31 +310,11 @@ export function Experiments() {
 
               {/* Enzymatic immobilisation's own conceptual "four parts of the
                   system" (PLA/PLC/NAP/Phytases) — same bespoke placement as
-                  Genetic engineering's five parts, above. The source mentions
-                  a schematic of "the functionalised rePhlow sphere" but never
-                  actually embeds it (an empty callout carrying only the
-                  figure's own caption) — kept honest as a real, captioned
-                  placeholder rather than silently dropped or faked. */}
+                  Genetic engineering's five parts, above. */}
               {activeBlock.id === "enzymatic-immobilisation" && (
                 <>
                   {/* The six-step figure, redrawn, with linked panels. */}
                   <EnzymaticWorkflow />
-                  <div className="lab-prose">
-                    <figure
-                      className="record-figure"
-                      style={{ margin: "8px 0 24px" }}
-                    >
-                      <div
-                        className="record-figure__placeholder"
-                        aria-hidden="true"
-                      >
-                        [ figure placeholder ]
-                      </div>
-                      <figcaption>
-                        {ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION}
-                      </figcaption>
-                    </figure>
-                  </div>
                   <section
                     className="lab-subblock"
                     aria-label="The four parts of the system"
@@ -443,6 +438,16 @@ export function Experiments() {
           </NumberingContext.Provider>
         </div>
       </div>
+
+      {/* Scroll-position sentinel only -- the last thing in the page, so it
+          comes into view exactly when the shared Previous/Next handoff
+          below it does and the corner index steps aside instead of sitting
+          on top of it. */}
+      <div
+        className="ecosystem-map-mini-sentinel"
+        ref={pageEndRef}
+        aria-hidden="true"
+      />
     </div>
   );
 }

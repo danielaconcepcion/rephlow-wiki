@@ -252,6 +252,28 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
           </p>
         </div>
       )}
+
+      {/* The project files behind the figures, as the same row of download
+          pills the experiment cards use for their protocols. */}
+      {subsection.downloads?.length && (
+        <div className="record-protocols">
+          <span className="record-protocols__label">
+            {subsection.downloadsLabel ?? "Files"}:
+          </span>
+          <div className="record-protocols__list">
+            {subsection.downloads.map((file) => (
+              <a
+                className="record-download record-download--compact"
+                href={asset(file.href)}
+                download
+                key={file.href}
+              >
+                {file.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </>
   );
 

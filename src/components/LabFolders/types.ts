@@ -353,6 +353,14 @@ export interface ResultSubsection {
   interpretation?: string;
   /** "Was it expected, and why?" */
   expectation?: string;
+  /** Project files this section's reader may want to open for themselves —
+   * the PyMOL sessions behind the structural figures, a SnapGene map. They
+   * are not literature, so they do not belong in `references`; they render
+   * as the same row of download pills the experiment cards already use for
+   * their protocols (see .record-protocols / .record-download--compact). */
+  downloads?: { label: string; href: string }[];
+  /** The word that introduces that row, e.g. "PyMOL sessions". */
+  downloadsLabel?: string;
 }
 
 export interface ResultData {

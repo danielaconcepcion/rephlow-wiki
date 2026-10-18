@@ -279,7 +279,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "To evaluate this variable, beads were synthesised using the previously optimised alginate concentration and drop height while varying only the residence time in the calcium chloride bath. All remaining synthesis parameters were kept constant. The experimental conditions were as follows:",
+              "To evaluate this variable, beads were synthesised using the previously optimised alginate concentration drop height and flow rate while varying only the residence time in the calcium chloride bath. All remaining synthesis parameters were kept constant. The experimental conditions were as follows:",
             ],
             pairedResource: {
               kind: "table",
@@ -302,7 +302,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             paragraphs: [
               "For each condition, **10 beads** were imaged after crosslinking and analysed using **ImageJ**, following the image-taking and image-analysis protocols described on the Protocols page. Bead size was characterised through the **projected area**, **perimeter**, **equivalent diameter (Deq)** and maximum (**Dmax**) and minimum (**Dmin**) **Feret diameters**, while bead shape was characterised through **sphericity (s = minor axis / major axis)**. Changes in bead size were used to assess compaction of the alginate network with increasing crosslinking time, and the variability between the beads of each condition was used as an indicator of reproducibility.",
-              "The expected outcome was to determine whether extending the crosslinking time produced measurable changes in bead morphology or compaction. If no significant differences were observed, the **30 min** crosslinking time commonly reported in the literature would be retained, as it would provide fully formed beads without unnecessarily extending production time.",
+              "The expected outcome was to determine whether extending the crosslinking time produced measurable changes in bead morphology or compaction. If no significant differences were observed, a crosslinking time of **30 min**, within the range commonly reported in the literature [3,10,11], would be retained, as it would provide fully formed beads without unnecessarily extending production time.",
             ],
           },
         ],
@@ -339,7 +339,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 assess the effect of different storage media on alginate
                 integrity.
               </>,
-              "10 beads synthesised under the previously optimised conditions were transferred to each storage medium immediately after crosslinking. Their morphology was monitored by photographs taken after **0, 24, 48 and 72 h, and after one week**. Beads stored in **PBS lost their structural integrity** during the first days, and once a bead had broken each fragment was measured as a separate bead, so this medium was followed qualitatively rather than quantified; images from the remaining conditions were analysed quantitatively to compare the evolution of bead morphology over time.",
+              "10 beads synthesised under the previously optimised conditions were transferred to a container with **8 mL** of each storage medium immediately after crosslinking, and kept at room temperature. Their morphology was monitored by photographs taken after **0, 24, 48 and 72 h, and after one week**. Beads stored in **PBS lost their structural integrity** during the first days, and once a bead had broken each fragment was measured as a separate bead, so this medium was followed qualitatively rather than quantified; images from the remaining conditions were analysed quantitatively to compare the evolution of bead morphology over time.",
             ],
           },
           {
@@ -436,7 +436,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
               kind: "table",
               table: {
                 caption:
-                  "∗Not all calcium chloride concentrations were evaluated for every alginate concentration. The screening was refined based on capsule or jet formation, as shown in this experimental matrix.",
+                  "∗Not all calcium chloride concentrations were evaluated for every alginate concentration. The screening was refined based on capsule or jet formation, as shown in the experimental matrix below.",
                 headers: [
                   "[Alg] (%)",
                   "[CaCl₂] core (%)",
@@ -475,7 +475,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
         body: [
           {
             paragraphs: [
-              "The aim of this experiment was to optimise the **outer-to-inner flow-rate ratio (Qe/Qi)** for the production of homogeneous and mechanically robust core-shell capsules. Following the identification of suitable alginate and inner calcium chloride concentrations, the flow-rate ratio became the main process variable governing capsule formation, as it determines the **relative volumes of the core and shell**, influences **shell thickness** and affects the **stability of the coaxial flow** during encapsulation. Although several Qe/Qi ratios have been reported in the literature, their performance depends strongly on the physicochemical properties of each encapsulation system. Therefore, rather than adopting published conditions directly, we evaluated two literature-based ratios (**4:1** and **6:1**) to determine which provided the best performance under our synthesis conditions.",
+              "The aim of this experiment was to optimise the **outer-to-inner flow-rate ratio (Qe/Qi)** for the production of homogeneous and mechanically robust core-shell capsules. Following the identification of suitable alginate and inner calcium chloride concentrations, the flow-rate ratio became the main process variable governing capsule formation, as it determines the **relative volumes of the core and shell**, influences **shell thickness** and affects the **stability of the coaxial flow** during encapsulation. Although several Qe/Qi ratios have been reported in the literature for coaxial core-shell systems [3,4,13], their performance depends strongly on the physicochemical properties of each encapsulation system. Therefore, rather than adopting published conditions directly, we evaluated two literature-based ratios (**4:1** and **6:1**) to determine which provided the best performance under our synthesis conditions.",
               "The same 4:1 or 6:1 proportion can be delivered at different paces, so each ratio was tested at **two outer flow rates** to separate the effect of the proportion from that of the flow itself. **600 μL/min** was carried over from the optimised bead protocol. **300 μL/min** was included to test whether slower drop formation benefits the core-shell architecture, since the longer the drop takes to detach, the more time the inner phase has to settle symmetrically within the surrounding alginate; at 6:1 this setting already requires an inner flow of 50 μL/min, which we considered too slow to reduce further. Flow rates above 600 μL/min were not investigated, as the bead experiments had shown that drops grow with increasing flow and the drop now has to accommodate a liquid core in addition to its shell.",
             ],
           },
@@ -506,8 +506,61 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "Following synthesis, the resulting core-shell capsules were **frozen with liquid nitrogen**, cut in two, and imaged under an **optical microscope** to evaluate shell continuity, overall morphology and the presence of defects such as deformation, rupture or incomplete shell formation. Micrographs were subsequently analysed using **ImageJ** to measure **shell thickness**, allowing a quantitative comparison between the different outer-to-inner flow-rate ratios. Approximately 10 capsules were analysed per condition, with several thickness measurements taken around the shell of each capsule, so that variation around a single capsule and variation between capsules of the same condition could be distinguished. The most promising conditions would then be selected for mechanical resistance testing.",
+              "Following synthesis, the resulting core-shell capsules were **frozen with liquid nitrogen**, cut in two, and imaged under an **optical microscope** to evaluate shell continuity, overall morphology and the presence of defects such as deformation, rupture or incomplete shell formation. Micrographs were subsequently analysed using **ImageJ** to measure **shell thickness**, allowing a quantitative comparison between the different outer-to-inner flow-rate ratios. Ten capsules were analysed per condition, six for 3.5% (w/v) alginate at 300/75 μL/min, with ten thickness measurements per capsule, five on each half, so that variation around a single capsule and variation between capsules of the same condition could be distinguished. The most promising conditions would then be selected for mechanical resistance testing.",
               "The expected outcome was to determine the outer-to-inner flow-rate ratio that consistently produced reproducible core-shell capsules with a uniform shell thickness and well-defined morphology, with the **higher ratio** anticipated to yield **thicker shells** since it delivers a larger proportion of alginate per capsule. The lower outer flow rate was expected to produce more consistent capsules if the time available for the two streams to arrange themselves before detachment is a limiting factor. These conditions would subsequently be used for the remaining preservation and characterisation experiments.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "mechanical-resistance",
+        tabLabel: "Mechanical resistance",
+        title: "Mechanical resistance of core-shell capsules",
+        body: [
+          {
+            paragraphs: [
+              "The aim of this experiment was to compare the **mechanical resistance** of the core-shell capsule formulations and identify the configuration best suited for handling, transport and operation inside the bioreactor. Besides maintaining a well-defined morphology, the capsules must withstand external loads without collapsing or undergoing permanent deformation.",
+              "Mechanical resistance also served a second purpose. The shell-thickness measurements had proved too variable to distinguish the two outer-to-inner flow-rate ratios, and resistance to compression measures the property that shell thickness was only a proxy for. It also captures the uniformity of the shell as well as its average thickness, since a capsule with a thick but uneven shell has a weak point that a mean value does not reveal.",
+            ],
+          },
+          {
+            paragraphs: [
+              "Core-shell capsules produced under the eight conditions carried forward from the previous experiments were subjected to **increasing compressive loads** by placing **calibrated masses (1, 2, 5, 10 and 20 g)** on a microscope coverslip (**0.4 g**) resting on **groups of three capsules**. Each mass was applied independently, and after every loading step the capsules were photographed before removing the weight and replacing it with the next mass.",
+              "Two independent batches were tested: one **on the day of synthesis** and one **after one week of storage** in distilled water. This would allow the effect of storage time to be observed, which is relevant because capsules will not be used on the day they are produced.",
+            ],
+            pairedResource: {
+              kind: "table",
+              table: {
+                headers: ["Parameter", "Status", "Value"],
+                rows: [
+                  [
+                    "Capsule formulation",
+                    "Variable",
+                    "3% and 3.5% (w/v) alginate; Qe/Qi 4:1 and 6:1; Qe 600 and 300 μL/min",
+                  ],
+                  [
+                    "Storage",
+                    "Variable",
+                    "Freshly made and after 1 week in distilled water",
+                  ],
+                  [
+                    "Applied mass",
+                    "Variable",
+                    "0, 0.4, 1.4, 2.4, 5.4, 10.4 and 20.4 g",
+                  ],
+                  [
+                    "Loading procedure",
+                    "Constant",
+                    "Sequential application of individual masses",
+                  ],
+                ],
+              },
+            },
+          },
+          {
+            paragraphs: [
+              "The photographs obtained at each loading step were analysed using **ImageJ** following the image-analysis protocol described on the Protocols page, using **sphericity** as the descriptor of deformation. Each condition was expressed as the fraction of its own unloaded sphericity retained at each load, since capsules do not all start out equally spherical and an absolute comparison would confound resistance to compression with initial shape.",
+              "The expected outcome was to identify the formulation that best resisted compressive loading while preserving its geometry and shell integrity. The **6:1** ratio was anticipated to perform better, since a higher proportion of outer phase delivers more alginate per capsule, whereas no difference was expected between the 300 and 600 μL/min outer flow rates, as these change the rate of production rather than the composition of each capsule. Any difference between freshly synthesised capsules and stored ones would be useful in predicting their behaviour inside of the bioreactor. This information would support the selection of the most mechanically robust capsule design for subsequent biological experiments and integration into the modular bioreactor.",
             ],
           },
         ],
@@ -551,59 +604,6 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
               "Capsules were synthesised on Day 0, and the calcium chloride crosslinking bath was collected immediately after encapsulation. The capsules were subsequently transferred to distilled water for storage. On Day 1, UV-Vis spectra were acquired from the recovered calcium chloride bath, to evaluate particle loss during synthesis, and from the storage water, to assess leakage during storage. On **Day 3**, the storage water was measured again to evaluate whether additional leakage occurred during prolonged storage, and capsules taken from it were deliberately dissolved in phosphate-buffered saline (PBS) and the resulting solution measured, to confirm the presence of magnetite inside the capsules. Reference spectra of a magnetite suspension and of a diluted magnetite suspension were also recorded.",
               "Absorbance measurements were performed using a **GENESYS 10S UV–Vis spectrophotometer** (Thermo Scientific) with **quartz cuvettes**, as the spectra extended into the ultraviolet range, where conventional plastic cuvettes exhibit significant background absorbance. Full spectra between **200 and 1000 nm** were recorded for each sample, using the corresponding medium (calcium chloride solution, distilled water or PBS) as the instrumental blank. Capsules without magnetite and a magnetite suspension were measured as references, to establish the spectral regions in which each component absorbs. Since the capsule material was expected to absorb mainly in the ultraviolet, whereas magnetite absorbs broadly across the ultraviolet and visible range, the presence of magnetite was to be assessed in the visible region, where the contribution of the capsule material should be negligible. For each medium, the spectrum of the corresponding control (capsules without magnetite) was subtracted from those of the magnetite-containing samples, and the **mean absorbance difference between 450 and 600 nm** was used as an indicator of the amount of magnetite present.",
               "The expected outcome was that **negligible magnetite** would be detected in the calcium chloride bath and storage medium, whereas the **highest absorbance** would be observed after dissolution of the capsules in PBS, indicating that the encapsulated material remained effectively retained until intentional degradation of the alginate matrix. This would demonstrate that the optimised core-shell architecture provides effective physical containment throughout synthesis and storage, supporting its suitability for the encapsulation of engineered bacteria.",
-            ],
-          },
-        ],
-      },
-      {
-        id: "mechanical-resistance",
-        tabLabel: "Mechanical resistance",
-        title: "Mechanical resistance of core-shell capsules",
-        body: [
-          {
-            paragraphs: [
-              "The aim of this experiment was to compare the **mechanical resistance** of the core-shell capsule formulations and identify the configuration best suited for handling, transport and operation inside the bioreactor. Besides maintaining a well-defined morphology, the capsules must withstand external loads without collapsing or undergoing permanent deformation.",
-              "Mechanical resistance also served a second purpose. The shell-thickness measurements had proved too variable to distinguish the two outer-to-inner flow-rate ratios, and resistance to compression measures the property that shell thickness was only a proxy for. It also captures the uniformity of the shell as well as its average thickness, since a capsule with a thick but uneven shell has a weak point that a mean value does not reveal.",
-            ],
-          },
-          {
-            paragraphs: [
-              "Core-shell capsules produced under the eight conditions carried forward from the previous experiments were subjected to **increasing compressive loads** by placing **calibrated masses (1, 2, 5, 10 and 20 g)** on a microscope coverslip (**0.4 g**) resting on **groups of three capsules**. Each mass was applied independently, and after every loading step the capsules were photographed before removing the weight and replacing it with the next mass.",
-              "Two independent batches were tested: one **on the day of synthesis** and one **after one week of storage** in distilled water. This would allow the effect of storage time to be observed, which is relevant because capsules will not be used on the day they are produced.",
-            ],
-            pairedResource: {
-              kind: "table",
-              table: {
-                headers: ["Parameter", "Status", "Value"],
-                rows: [
-                  [
-                    "Capsule formulation",
-                    "Variable",
-                    "3% and 3.5% (w/v) alginate; Qe/Qi 4:1 and 6:1; Qe 600 and 300 μL/min",
-                  ],
-                  [
-                    "Storage",
-                    "Variable",
-                    "Freshly made and after 1 week in distilled water",
-                  ],
-                  [
-                    "Applied mass",
-                    "Variable",
-                    "0.4, 1.4, 2.4, 5.4, 10.4 and 20.4 g",
-                  ],
-                  [
-                    "Loading procedure",
-                    "Constant",
-                    "Sequential application of individual masses",
-                  ],
-                ],
-              },
-            },
-          },
-          {
-            paragraphs: [
-              "The photographs obtained at each loading step were analysed using **ImageJ** following the image-analysis protocol described on the Protocols page, using **sphericity** as the descriptor of deformation. Each condition was expressed as the fraction of its own unloaded sphericity retained at each load, since capsules do not all start out equally spherical and an absolute comparison would confound resistance to compression with initial shape.",
-              "The expected outcome was to identify the formulation that best resisted compressive loading while preserving its geometry and shell integrity. The **6:1** ratio was anticipated to perform better, since a higher proportion of outer phase delivers more alginate per capsule, whereas no difference was expected between the 300 and 600 μL/min outer flow rates, as these change the rate of production rather than the composition of each capsule. Any difference between freshly synthesised capsules and stored ones would be useful in predicting their behaviour inside of the bioreactor. This information would support the selection of the most mechanically robust capsule design for subsequent biological experiments and integration into the modular bioreactor.",
             ],
           },
         ],
@@ -677,7 +677,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "Capsule integrity was monitored by photographing the capsules after **0, 24, 48 and 72 h, and 1 week** of incubation, allowing qualitative comparison of the progression of degradation under each chemical environment.",
+              "Capsule integrity was monitored by photographing the capsules after **0, 24, 48 and 72 h, and 1 week** of incubation, allowing qualitative and quantitative comparison of the progression of degradation under each chemical environment.",
               <>
                 The expected outcome was to isolate the specific effect of each
                 variable on capsule integrity. For pH alone, using the
@@ -739,9 +739,9 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                   [
                     "Sample mass",
                     "Variable",
-                    "11.22 and 11.75 mg (one hydrated capsule each); 1.30 mg (two dried capsules)",
+                    "11.220 and 11.748 mg (one hydrated capsule each); 1.300 mg (two dried capsules)",
                   ],
-                  ["Instrument", "Constant", "SDT Q600 (TA Instruments)"],
+                  ["Instrument", "Constant", "SDT Q600 (TA Instruments), software version 20.9"],
                   [
                     "Temperature range",
                     "Constant",
@@ -845,7 +845,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "The dried capsules were inspected under an optical microscope, at a magnification high enough to judge how far the drying had deformed them and whether the surface was intact, so that a suitable specimen could be chosen before committing it to the coating step. Because alginate is not intrinsically conductive, the dried capsules required a **conductive coating** before imaging to prevent **charging artefacts**. **Graphite** was considered first, as it adds no element that would interfere with the analysis of an organic matrix, but **gold** was used instead, as it gives a more uniform conductive layer and better image quality on an irregular, collapsed surface.",
+              "The dried capsules were inspected under an optical microscope, at a magnification high enough to judge how far the drying had deformed them and whether the surface was intact, so that a suitable specimen could be chosen before committing it to the coating step. Because alginate is not intrinsically conductive, the dried capsules required a **conductive coating** before imaging to prevent **charging artefacts**. **Gold** was used, as it gives a uniform conductive layer and good image quality on an irregular, collapsed surface.",
             ],
             pairedResource: {
               kind: "table",
@@ -935,7 +935,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
     // ExperimentSubBlock.outro).
     outro: [
       "The experiments on this page were chosen to answer a fixed sequence of questions rather than to characterise the system exhaustively, and each one exists because the next decision could not be made without it. The raw material was characterised first because every later result depends on what the alginate is. Beads came before capsules because four production variables can be separated in a single-phase system and cannot be separated in a coaxial one. Each variable was then tested until it either proved to matter or demonstrably did not, and the ones that did not, crosslinking time and the upper end of the flow-rate range, were dropped rather than optimised further. Where a measurement failed to discriminate, as shell thickness did, the response was to change the measurement rather than to repeat it with more replicates.",
-      "The scope was also set by the circumstances of the project rather than by what would be ideal. A mechanical assay built from calibrated masses, grid paper and a camera replaced an instrumented compression tester we did not have, and it answered the comparative question that needed answering even though it yields no modulus. Magnetite stood in for bacteria because the encapsulation setup sits in a physics laboratory with no biosafety containment, which is also why containment was validated with a conservative surrogate rather than with live cells. Dried specimens were used for thermal and electron imaging because no cryogenic or critical-point preparation was available, and the resulting limitations are stated rather than glossed. What is missing from this page is therefore missing for stated reasons, and in each case the experiment that would close the gap is named alongside the one that was done.",
+      "The scope was also set by the circumstances of the project rather than by what would be ideal. A mechanical assay built from calibrated masses, a coverslip and a camera replaced an instrumented compression tester we did not have, and it answered the comparative question that needed answering even though it yields no modulus. Magnetite stood in for bacteria because the encapsulation setup sits in a physics laboratory with no biosafety containment, which is also why containment was validated with a conservative surrogate rather than with live cells. Dried specimens were used for thermal and electron imaging because no cryogenic or critical-point preparation was available, and the resulting limitations are stated rather than glossed. What is missing from this page is therefore missing for stated reasons, and in each case the experiment that would close the gap is named alongside the one that was done.",
     ],
   },
 ];

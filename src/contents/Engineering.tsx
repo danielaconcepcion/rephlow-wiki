@@ -5,6 +5,7 @@ import {
 } from "../components/EcosystemMap";
 import { asset } from "../utils";
 import { EcosystemMapMini } from "../components/EcosystemMapMini";
+import { useCornerIndexVisible } from "../components/useCornerIndexVisible";
 import "../components/LabFolders/LabFolders.css";
 import "./Engineering.css";
 import {
@@ -219,12 +220,21 @@ const CRISPR_PALETTE = slicePalette(
 );
 
 export function Engineering() {
-  // No block is selected on load -- the ecosystem map starts fully
-  // neutral (see EcosystemMap's own doc comment) and the page shows a
-  // plain prompt below it (.engineering-empty-state) until a sphere is
-  // actually clicked. `null` is also what a click outside the map, or
-  // re-clicking the pinned sphere, hands back via handleTabChange.
-  const [activeTab, setActiveTab] = useState<string | null>(null);
+  // The first block in the map (the left-most sphere) is selected on
+  // load, so the page opens on real content instead of an empty prompt --
+  // no click needed. Deliberately just the initial state: nothing scrolls
+  // on load, since handleTabChange (which does scroll) only runs on an
+  // actual switch, so the reader still arrives at the header and the full
+  // map with the first block already open below them.
+  //
+  // `null` is still a reachable state -- a click on the map's blank
+  // background, re-clicking the pinned sphere, or a click on the page
+  // header all hand it back -- and the map then goes fully neutral with
+  // the plain prompt below it (.engineering-empty-state), exactly as
+  // before.
+  const [activeTab, setActiveTab] = useState<string | null>(
+    ENGINEERING_ECOSYSTEM_ITEMS[0].id,
+  );
   const pageRef = useRef<HTMLDivElement | null>(null);
   const dividerRef = useRef<HTMLHRElement | null>(null);
 
@@ -245,25 +255,6 @@ export function Engineering() {
     return () => document.removeEventListener("click", handleHeroClick);
   }, []);
 
-  // The persistent corner sphere (EcosystemMapMini) only makes sense once
-  // the full-size index has scrolled out of view — otherwise the same
-  // block would be shown twice at once. `top < 0` (not just "not
-  // intersecting", which is also true before the page has scrolled at
-  // all) is what actually means "scrolled past", not "not reached yet".
-  const [pastIndex, setPastIndex] = useState(false);
-  useEffect(() => {
-    const el = dividerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setPastIndex(entry.boundingClientRect.top < 0),
-      {
-        threshold: 0,
-      },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   // The lateral DbtlSectionNav (below) no longer needs a scroll-visibility
   // signal of its own at all -- it's now a structural grid item
   // (.engineering-nav-layout, rendered below) sticky-positioned exactly
@@ -273,31 +264,18 @@ export function Engineering() {
   // decide when it starts/stops sticking — no IntersectionObserver, no
   // JS visibility state, matching Experiments/Project Description exactly.
 
-  // Marks "reached the end of this block's own content" -- a sentinel
-  // sitting right above the prev/next footer nav (see the render below),
-  // so it comes into view exactly when the last DbtlCycle's tall
-  // sticky-scroller has fully scrolled past. That is also the moment the
-  // corner EcosystemMapMini (a "back to the full map" affordance) should
-  // step aside for the footer nav instead of overlapping it. Unlike
-  // pastIndex above, this sentinel lives inside the per-tab conditional and
-  // is a fresh DOM node on every tab switch, so the effect re-subscribes on
-  // `activeTab` (and resets to false first -- otherwise the new tab would
-  // briefly inherit the previous tab's "reached the end" state).
-  const [pastBlockEnd, setPastBlockEnd] = useState(false);
+  // When the corner EcosystemMapMini is on screen: once the divider under
+  // the full-size map has scrolled past, and until the sentinel just above
+  // this block's prev/next footer nav comes into view -- see
+  // useCornerIndexVisible, shared with Experiments/Measurements/Results.
+  // That sentinel lives inside the per-tab conditional and so is a fresh
+  // node on every switch, which is what `resetKey` re-measures against.
   const blockEndRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    setPastBlockEnd(false);
-    const el = blockEndRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setPastBlockEnd(entry.isIntersecting),
-      {
-        threshold: 0,
-      },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [activeTab]);
+  const cornerIndexVisible = useCornerIndexVisible({
+    after: dividerRef,
+    until: blockEndRef,
+    resetKey: activeTab,
+  });
 
   // Switching tabs swaps in a completely different DbtlCycle (a different
   // spiral, a different total scroll length) via its `key` — if the page
@@ -478,7 +456,7 @@ export function Engineering() {
           items={ENGINEERING_ECOSYSTEM_ITEMS}
           activeId={activeTab}
           onSelect={handleTabChange}
-          visible={pastIndex && !pastBlockEnd}
+          visible={cornerIndexVisible}
         />
       )}
       {activeTab === null ? (
@@ -701,12 +679,12 @@ export function Engineering() {
 
       {activeTab && (prevBlock || nextBlock) && (
         <>
-          {/* Purely a scroll-position sentinel -- see the pastBlockEnd
-              effect above. Sits right before the nav it gates so "reached
-              the end" and "the nav is now the thing to look at" are the
-              same moment. */}
+          {/* Purely a scroll-position sentinel -- the `until` landmark of
+              the corner index's gate above. Sits right before the nav it
+              gates so "reached the end" and "the nav is now the thing to
+              look at" are the same moment. */}
           <div
-            className="engineering-block-nav-sentinel"
+            className="ecosystem-map-mini-sentinel"
             ref={blockEndRef}
             aria-hidden="true"
           />

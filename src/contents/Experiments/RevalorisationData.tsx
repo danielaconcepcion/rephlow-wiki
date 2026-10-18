@@ -311,13 +311,6 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 stabilises the rest of the protein.
               </>,
             ],
-            pairedResource: {
-              kind: "image",
-              src: `${IMG_DIR}/dhak-pross5-mutations.png`,
-              alt: "DHAK dimer surface (chains A and B) and chain A cartoon with the PROSS design 5 mutations highlighted in yellow",
-              caption:
-                "Mutated positions of PROSS design 5 relative to wild-type DHAK",
-            },
           },
           {
             title: "Experimental design",
@@ -332,23 +325,13 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 attributable to the design itself. Which position of the
                 gradient to choose is the real decision of this stage, since it
                 sets how much stabilisation is pursued and how much risk to
-                catalytic function is accepted. The design selected and the
-                reasoning behind it are reported in{" "}
+                catalytic function is accepted. The design selected, and the
+                reasoning behind that choice, are reported in{" "}
                 <Link className="lab-wikilink" to="/results">
                   Results
                 </Link>
                 .
               </>,
-            ],
-            callouts: [
-              {
-                kind: "learn",
-                text: "The PROSS server was unavailable on the first attempt and the submission had to be repeated, which is why the selected design comes from the second run. This is recorded so that a future team allows for server downtime when planning this step.",
-              },
-              {
-                kind: "outcome",
-                text: "One concrete stabilised variant **(PROSS 5)** and the wild-type reference, taken forward for expression.",
-              },
             ],
           },
         ],
@@ -403,7 +386,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             title:
               "The additional step: transferring the mutations to CECT 4626",
             paragraphs: [
-              "Because the design was produced on the DSM 30040 sequence, it cannot simply be applied to the new strain. An **additional comparison step** was therefore introduced: the PROSS 1 design was aligned, position by position, with the natural sequence of DHAK CECT 4626, and three categories of position were distinguished.",
+              "A PROSS design is tied to the sequence it was generated from, so it cannot be applied directly to a homologous enzyme from another strain, even one sharing about 96% identity. An **additional comparison step** was therefore introduced: the PROSS 1 design was aligned, position by position, with the natural sequence of DHAK CECT 4626, and three categories of position were distinguished.",
               "**Positions that differ naturally between the two strains.** The two DHAKs share about 96% amino-acid identity, so these mark where the new enzyme already departs from the reference.",
               "**Positions where the natural CECT 4626 residue is the one PROSS proposed.** These are changes the algorithm predicted as stabilising and that evolution had already fixed in the other strain, which is the strongest argument for keeping them, and they need no mutation at all in the new background.",
               "**Positions where PROSS proposes a residue present in neither natural sequence.** These are the genuinely new mutations, and the ones that carry the real risk.",
@@ -413,7 +396,9 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 lets the mutations be ranked by evidence rather than by
                 predicted energy alone, so that only the changes that are both
                 predicted to stabilise and absent from the new sequence are
-                introduced into it. Which positions fell into each category, and
+                introduced into it, and it is what kept us from introducing
+                mutations the new enzyme already carried naturally. Which
+                positions fell into each category, and
                 which mutations were finally selected, are reported in{" "}
                 <Link className="lab-wikilink" to="/results">
                   Results
@@ -425,17 +410,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             title: "Experimental design",
             paragraphs: [
-              "From this analysis a **new plasmid was designed**, carrying the selected mutations on the CECT 4626 background, and ordered as a synthetic gene. As in the first design, the **unmodified CECT 4626 sequence is the control**, so that expression, stability and activity can be compared between the natural enzyme and its stabilised version under identical conditions. Comparing the two stabilisation designs, the aggressive one and this conservative one, also tests directly whether the loss of activity observed earlier was caused by the number of mutations.",
-            ],
-            callouts: [
-              {
-                kind: "learn",
-                text: "A PROSS design is tied to the sequence it was generated from, so it cannot be applied directly to a homologous enzyme from another strain, even one sharing about 96% identity. Comparing the design with the new sequence before transferring it saved us from introducing mutations the new enzyme already carried naturally.",
-              },
-              {
-                kind: "outcome",
-                text: "A conservative, evidence-ranked set of stabilising mutations transferred to the CECT 4626 background, and a new plasmid designed and ordered from it.",
-              },
+              "From this analysis a **new plasmid was designed**, carrying the selected mutations on the CECT 4626 background, and ordered as a synthetic gene. As in the first design, the **unmodified CECT 4626 sequence is the control**, so that expression, stability and activity can be compared between the natural enzyme and its stabilised version under identical conditions. Comparing the two stabilisation designs, the aggressive one and this conservative one, would also test directly whether the earlier loss of activity was caused by the number of mutations. **That comparison is set up and awaits the activity measurement**, which the arrival date of the gene left no time for, as reported in Results.",
             ],
           },
         ],
@@ -480,7 +455,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
               "The experimental design therefore has two levels. First, the two possible **assignments of the elements**: **SpyTag–DHAK** with **SpyCatcher–PPK2** (the arrangement designed here), and **SpyCatcher–DHAK** with **SpyTag–PPK2** (the reciprocal arrangement, not designed yet).",
               "Second, within each assignment, the **position of the fusion** on each enzyme. Because we cannot predict how much the attachment point affects folding, activity or the geometry of the complex, as many combinations as possible should be built and compared, placing each element at the N- or the C-terminus of its enzyme. Comparing them is the only way to tell whether the position is what limits the system and to arrive at the most favourable configuration.",
               "Each fusion would first be checked on its own, for expression, solubility and retained activity against the corresponding unfused enzyme as a control. Only the fusions that keep their activity would then be combined, and the assembled complex compared with the **free enzyme mixture** in the coupled assay, which is the control that tells whether joining the enzymes actually helps. This is what would show which combination, if any, produces a functional channelled complex.",
-              "**This stage remained at the level of experimental design.** Only one assignment of the elements was designed, and only for part of the possible placements; the reciprocal arrangement was left as a planned comparison and has not been designed. None of the constructs was taken to the bench within the time available, so no fusion was expressed or assayed. We document the reasoning, what was designed and the comparisons that still have to be made so that a future team can take them up.",
+              "**This stage remained at the level of experimental design.** Only one assignment of the elements was designed, and only for part of the possible placements; the reciprocal arrangement was left as a planned comparison and has not been designed. None of the constructs was taken to the bench within the time available, so no fusion was expressed or assayed. We document the reasoning, what was designed and the comparisons that still have to be made so that a future team can take them up. **The models produced are in Results.**",
             ],
           },
         ],
@@ -623,16 +598,6 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
               "**Third round.** Finally, the conservative design built on that background, **PROSS 1 on CECT 4626**, was transformed, in order to combine the higher catalytic efficiency of the new sequence with a stabilisation carrying far fewer mutations than the first design. **The gene arrived late in the season. The construct was transformed and expressed, but there was no time left to measure its activity before the wiki freeze, so the comparison it was designed to make against the unmodified CECT 4626 sequence is set up and awaits that one measurement.**",
               "In the first and third rounds the **wild-type sequence is the control of its own stabilised design**, since the two differ only in the introduced mutations.",
             ],
-            callouts: [
-              {
-                kind: "learn",
-                text: "An earlier attempt using a set of pre-existing strains **failed for DHAK**, because those cells carried a resistance marker other than kanamycin and did not survive kanamycin selection. The response was to re-order the gene as a fresh synthetic construct with a known kanamycin-resistant vector and transform it directly into **BL21(DE3)**. This is why the block relies on ordered constructs with a verified marker rather than on the original strains.",
-              },
-              {
-                kind: "outcome",
-                text: "BL21(DE3) transformed with the pET-28a(+) construct, ready to be plated under kanamycin selection.",
-              },
-            ],
           },
           {
             title: "PPK2 construct",
@@ -653,14 +618,8 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             paragraphs: [
               "The goal of this stage was to obtain isolated, verified colonies of each construct and grow them to the point of induction. The transformation mixture was plated on LB agar containing kanamycin and incubated overnight at 37 °C. Only cells that took up the plasmid, and therefore express the resistance gene, form colonies, so the plate itself is the first selection.",
-              "Individual colonies were picked into LB with kanamycin (50 µg/mL) and grown overnight at 37 °C as pre-inocula. Two colonies were picked per construct, so a second independent clone is available in case one carries an unwanted mutation. Each pre-inoculum was then diluted roughly fiftyfold into a larger volume of LB with kanamycin (for example 1 mL into 50 mL) and grown at 37 °C with shaking at 180 rpm. Diluting into fresh medium returns the cells to exponential growth, the state in which they are most transcriptionally and translationally active and therefore best prepared for induction.",
+              "Individual colonies were picked into LB with kanamycin (50 µg/mL) and grown overnight at 37 °C as pre-inocula. Two colonies were picked per construct, so a second independent clone is available in case one carries an unwanted mutation, which also allows a single anomalous flask to be set aside without restarting the stage. Each pre-inoculum was then diluted roughly fiftyfold into a larger volume of LB with kanamycin (for example 1 mL into 50 mL) and grown at 37 °C with shaking at 180 rpm. Diluting into fresh medium returns the cells to exponential growth, the state in which they are most transcriptionally and translationally active and therefore best prepared for induction.",
               "Growth was followed by optical density at 600 nm until the culture reached roughly OD₆₀₀ 0.5 to 0.7. This window sets up the decision in the next stage, because inducing during exponential phase gives the highest yield of soluble protein.",
-            ],
-            callouts: [
-              {
-                kind: "outcome",
-                text: "Exponential-phase cultures of each verified clone at OD₆₀₀ 0.5 to 0.7, ready for induction.",
-              },
             ],
           },
         ],
@@ -677,12 +636,6 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
               "The goal of this stage was to switch on production once enough biomass had accumulated. Expression is driven by the **T7 / lacUV5 system**. In BL21(DE3) the T7 RNA polymerase gene sits in the chromosome under a lac-derived promoter, while the enzyme gene sits on the plasmid under a T7 promoter. As long as the lac repressor is bound, neither is transcribed, so the cell spends the growth phase building biomass rather than making foreign protein.",
               "**IPTG** (isopropyl β-D-1-thiogalactopyranoside) is a non-hydrolysable analogue of allolactose. It binds and releases the lac repressor without being consumed, giving a stable, sustained induction. Releasing the repressor lets the cell transcribe the T7 RNA polymerase, which then transcribes the enzyme gene from the strong T7 promoter, so a small molecule triggers a large amount of protein.",
               "When the culture reached the target optical density, **IPTG** was added to a final concentration of about **0.4 mM**, and the culture was shifted to **30 °C** and incubated overnight with shaking at 140 rpm. The temperature was lowered deliberately, because slower expression at 30 °C gives the nascent protein more time to fold correctly, favouring soluble, active enzyme over misfolded protein trapped in inclusion bodies.",
-            ],
-            callouts: [
-              {
-                kind: "outcome",
-                text: "Induced cultures expressing the enzyme, grown overnight at 30 °C and ready to harvest.",
-              },
             ],
           },
         ],
@@ -730,16 +683,6 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             title: "Clarification",
             paragraphs: [
               "The lysate was centrifuged (8500 rpm, 10 °C, 10 min) and the **supernatant was retained as the cell-free extract**. The soluble enzyme stays in the supernatant, while cell debris, membranes and any insoluble misfolded protein are discarded in the pellet.",
-            ],
-            callouts: [
-              {
-                kind: "not-done",
-                text: "Some reference protocols for this enzyme add two further steps, mechanical disruption by sonication and removal of nucleic acids by streptomycin-sulfate precipitation. Neither was used here. The clarified extract came out clear and only slightly turbid, so the streptomycin-sulfate step to precipitate DNA fragments was judged unnecessary, and enzymatic lysis with lysozyme plus DNase gave a workable soluble extract without sonication. These steps are noted only so our procedure is not confused with the fuller protocols in the source material.",
-              },
-              {
-                kind: "outcome",
-                text: "A clarified crude extract containing soluble DHAK or PPK2, the input for the purification and activity stages that follow.",
-              },
             ],
           },
         ],
@@ -847,7 +790,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 weight and shows the enzyme as a band at its expected size{" "}
                 <Cite n={9} />.
               </em>,
-              "This shows whether the enzyme bound the resin, whether any was lost during the wash, and how much the eluate was enriched compared with the starting CFE. The success of the purification was judged by **specific activity** (U/mg protein), which should rise after purification even though total activity always falls.",
+              "This shows whether the enzyme bound the resin, whether any was lost during the wash, and how much the eluate was enriched compared with the starting CFE. Where the protein concentration can be measured reliably, the purification is also judged by **specific activity** (U/mg protein), which should rise after purification even though total activity always falls.",
               <em>
                 The protein concentration of the samples was measured by the
                 Bradford assay against a BSA standard curve <Cite n={10} />,
@@ -860,16 +803,6 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 </Link>
                 .
               </em>,
-            ],
-            callouts: [
-              {
-                kind: "learn",
-                text: "In our first purification the whole sample was lost because the outlet of the column was not closed before the CFE was loaded. The protocol now explicitly marks every point where the outlet must be capped. In another purification we added too much Elution Buffer, and the protein came out too diluted. Since then, the elution volume never exceeds the volume of sample loaded, so the eluate stays concentrated.",
-              },
-              {
-                kind: "outcome",
-                text: "An eluate enriched in His-tagged DHAK or PPK2, ready for dialysis.",
-              },
             ],
           },
         ],
@@ -893,7 +826,8 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 PPK2 is used in a coupled assay with DHAK, so any imidazole left
                 in its eluate would end up in the same reaction <Cite n={2} />.
               </>,
-              "Dialysis was chosen because it is gentle, inexpensive and well suited to the millilitre volumes produced by our IMAC. The eluate is sealed in a semi-permeable membrane that retains the protein, while small molecules such as imidazole and NaCl diffuse out into a much larger volume of buffer until both sides reach equilibrium. It was carried out **overnight at 4 °C**, a temperature that protects the enzymes during the long exchange.",
+              "Dialysis was chosen because it is gentle, inexpensive and well suited to the millilitre volumes produced by our IMAC. The eluate is sealed in a semi-permeable membrane that retains the protein, while small molecules such as imidazole and NaCl diffuse out into a much larger volume of buffer until both sides reach equilibrium. It was carried out **overnight at 4 °C**, a temperature that protects the enzymes during the long exchange. Two practical points.",
+              "The **sample volume increases during dialysis**, because water enters the bag when the eluate, rich in imidazole, has a higher solute concentration than the buffer, so free space must be left in the bag to keep it from bursting. And a single bath may not remove all the imidazole, so **the buffer is changed at least once**, which removes far more than a single bath of the same total volume.",
             ],
           },
           {
@@ -905,16 +839,15 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             title: "Concentrating the dialysed sample",
             paragraphs: [
-              "Where the preparation came out too dilute to assay, it was concentrated after dialysis by **centrifugal ultrafiltration** in **Amicon Ultra centrifugal filters** (Merck Millipore), following the protocol supplied by the manufacturer. In each case the molecular weight cut-off was chosen well below the molecular weight of the enzyme, so that the protein is retained above the membrane while water and small molecules pass through. **This was not applied to every preparation**, and when it was added later to an affinity eluate of the active enzyme it made a difference worth recording, as reported in Results. The reason for concentrating differed between the two enzymes.",
+              "Where the preparation came out too dilute to assay, it was concentrated after dialysis by **centrifugal ultrafiltration**, following the protocol supplied by the manufacturer. In each case the molecular weight cut-off was chosen well below the molecular weight of the enzyme, so that the protein is retained above the membrane while water and small molecules pass through. **This was not applied to every preparation**, and when it was added later to an affinity eluate of the active enzyme it made a difference worth recording, as reported in Results. The reason for concentrating differed between the two enzymes.",
               <>
                 <strong>DHAK.</strong> In one purification the elution volume
                 exceeded the volume of CFE loaded, so the eluate came out
                 diluted, and dialysis diluted it further as water entered the
-                bag. The dialysed sample was therefore concentrated in an{" "}
-                <strong>Amicon Ultra-15</strong> device with a{" "}
-                <strong>30 kDa</strong> cut-off (cat. UFC9030), whose 15 mL
-                capacity suits the volumes produced by the column{" "}
-                <Cite n={11} />.
+                bag. The dialysed sample was therefore concentrated in a device
+                with a <strong>30 kDa</strong> cut-off, well below the roughly
+                60 kDa of the subunit, and with a capacity suited to the volumes
+                produced by the column <Cite n={11} />.
               </>,
               <>
                 <strong>PPK2.</strong> Here the eluate was not unusually dilute;
@@ -922,22 +855,11 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 use as little of it as possible in each assay. Working with a
                 concentrated sample means a smaller volume per reaction, so the
                 same preparation lasts for more measurements. Since the volumes
-                involved were much smaller, an <strong>Amicon Ultra-0.5</strong>{" "}
-                device was used, with a <strong>10 kDa</strong> cut-off (cat.
-                UFC5010), chosen because PPK2 is a much smaller protein than
-                DHAK and a 30 kDa membrane would risk letting it through{" "}
-                <Cite n={12} />.
+                involved were much smaller, a small-format device was used
+                with a <strong>10 kDa</strong> cut-off, chosen because PPK2 is a
+                much smaller protein, at about 33 kDa, and a 30 kDa membrane
+                would risk letting it through <Cite n={12} />.
               </>,
-            ],
-            callouts: [
-              {
-                kind: "learn",
-                text: "The sample volume increased during dialysis, because water enters the bag when the eluate, rich in imidazole, has a higher solute concentration than the buffer. Leaving free space in the bag prevents it from bursting. A single bath may also not remove all the imidazole. Changing the buffer at least once removes much more imidazole than a single bath of the same total volume.",
-              },
-              {
-                kind: "outcome",
-                text: "Purified DHAK and PPK2 in low-concentration phosphate buffer, free of imidazole and ready for activity assays or freeze-drying.",
-              },
             ],
           },
         ],
@@ -960,13 +882,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             paragraphs: [
               "The express protocol keeps the principle of IMAC but scales it down to **microlitre volumes in Eppendorf tubes**. A single batch of resin was washed and equilibrated, then split into separate tubes, each mixed with a small volume of a different CFE. This lets several constructs be tested in parallel under identical conditions.",
               "The key design choice is the elution. Instead of imidazole, the bound protein is released with **SDS-PAGE loading buffer and heat**, the same treatment used to prepare CFE samples for electrophoresis. This denatures the enzyme and detaches it from the resin, so the protocol is **analytical rather than preparative**: the sample can only be used for SDS-PAGE, not for activity assays. For the same reason a simple **phosphate buffer without NaCl or imidazole** was used, since detecting the enzyme mattered more here than obtaining a pure fraction.",
-              "Each test is controlled by running the starting CFE (Load) on the same gel as the resin eluate. A band at the expected molecular weight of DHAK that is enriched in the eluate compared with the Load confirms that the construct expresses a His-tagged enzyme that binds the resin.",
-            ],
-            callouts: [
-              {
-                kind: "outcome",
-                text: "A rapid, low-sample check of whether DHAK is present in the extract and is retained by and recovered from the Co²⁺-IDA resin. This tells us whether the loss of activity comes from the IMAC purification or from another step.",
-              },
+              "Each test is controlled by running the starting CFE (Load) on the same gel as the resin eluate. A band at the expected molecular weight of DHAK that is enriched in the eluate compared with the Load confirms that the construct expresses a His-tagged enzyme that binds the resin. **What the test showed, and which of the two possibilities it ruled out, is reported in Results.**",
             ],
           },
         ],
@@ -1011,17 +927,8 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 that the baseline was stable and the peaks could be read
                 clearly.
               </>,
-              "The cell-free extract (CFE) was clarified by centrifugation before injection, to protect the column. The chromatogram served as the main control of each run. All fractions forming the DHAK peak were kept, so that no enzyme was lost, and they were matched to the fraction numbers recorded by the software before going on to the activity assays.",
-            ],
-            callouts: [
-              {
-                kind: "learn",
-                text: "Three operating points are worth recording for anyone using this instrument. The ÄKTAprime always starts a run in pause mode, so a run that seems to have started may not be running at all, and releasing the pause is now an explicit step in our protocol. Air trapped in the system causes a noisy baseline and pressure problems, so the system must be purged every time the mobile phase is connected or removed, which we do the day before, when connecting the buffer for the overnight equilibration. And the fraction collector must be started before the peak reaches the outlet, which is now a timed step rather than a judgement made at the console, because in one run the best separation of the whole series was lost to it.",
-              },
-              {
-                kind: "outcome",
-                text: "DHAK fractions separated from the cell-free extract by size, selected from the A₂₈₀ chromatogram and ready for the activity assays without dialysis.",
-              },
+              "The cell-free extract (CFE) was clarified by centrifugation before injection, to protect the column. The chromatogram served as the main control of each run, with the fractions to keep selected from it and matched to the fraction numbers recorded by the software before going on to the activity assays. **Four runs were performed in total**, and the separation did not behave the same way across them, which is reported in Results.",
+              "Three operating points are worth recording for anyone using this instrument. The ÄKTAprime always **starts a run in pause mode**, so a run that seems to have started may not be running at all, and releasing the pause is now an explicit step in our protocol. Air trapped in the system causes a noisy baseline and pressure problems, so the system must be **purged every time the mobile phase is connected or removed**, which we do the day before, when connecting the buffer for the overnight equilibration. And the **fraction collector must be started before the peak reaches the outlet**, which is now a timed step rather than a judgement made at the console, because in one run the best separation of the whole series was lost to it.",
             ],
           },
         ],
@@ -1109,12 +1016,6 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 them with published figures.
               </>,
             ],
-            callouts: [
-              {
-                kind: "outcome",
-                text: "A quantitative, absolute measurement of DHAK activity, applicable to every purified variant on the same scale.",
-              },
-            ],
           },
         ],
         protocols: protocolLinks("dhak-activity"),
@@ -1144,12 +1045,6 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
               "Two design parameters control whether the determination can be read at all. The **volume of sample taken into each well** must be small enough that the DHAP it carries stays below the NADH supplied, otherwise every well saturates at the same ceiling and the signal marks the limit of the assay rather than the product formed. And that ceiling must sit **above the ATP supplied**, since a saturated signal below it cannot show that DHAP exceeded the nucleotide. How these were set, and what happened when they were set wrongly, is reported in **Results** and in **Engineering (Iteration 9)**.",
               "DHAP was tracked by an **endpoint version** of the α-GDH/TIM assay described above. Samples were taken during the reaction and frozen immediately to stop it, then measured by adding α-GDH and TIM, which gives a fall in absorbance at 340 nm proportional to the DHAP present and is converted to concentration against a DHAP standard curve. The endpoint format is used here because the reaction runs for hours rather than minutes, so it cannot be followed continuously in a cuvette, and for the same reason it is read in **microplate**. The sampling times and the polyphosphate feeds differ between rounds and are reported in **Results**.",
               "The decisive read-out is the **DHAP formed relative to the ATP supplied at the start**. A value above one means that each adenine nucleotide molecule has been turned over more than once, which is the proof of concept that the multienzymatic system works. **The control this design calls for is the same reaction without PPK2**, in which DHAP formation should stop once the initial ATP is spent, and which is what would isolate the contribution of the regeneration step from everything else in the mixture. **That condition was not run within the time available.** The regeneration reported in Results is therefore inferred from the stoichiometry of the nucleotide supplied rather than measured against a non-regenerating reaction, and running this control is the first thing a future round should do.",
-            ],
-            callouts: [
-              {
-                kind: "outcome",
-                text: "A time course of DHAP formation and the DHAP-to-ATP ratio that shows whether the adenine nucleotide pool is being recycled.",
-              },
             ],
           },
         ],
