@@ -1276,9 +1276,11 @@ img {
   color: var(--ink-soft);
 }
 
-/* Engineering/Experiments: no eyebrow banner, and a visual index sits
-   immediately below the header, so the hero collapses to just clear the
-   fixed navbar instead of centering in a tall 60vh shell. */
+/* A tighter band than --lab below: no eyebrow banner, and the hero
+   collapses to just clear the fixed navbar instead of centering in a tall
+   60vh shell. Engineering used this before it moved to the shared lab
+   hero; no page uses it at the moment (see pages.ts's compactHero), and it
+   stays here for the next one that wants a shorter header than --lab. */
 .page-shell--compact {
   min-height: 0;
 }
@@ -1286,8 +1288,9 @@ img {
   padding: 190px 24px 85px;
 }
 
-/* Experiments + Results: one shared hero, halfway between the two bands
-   those pages used to have.
+/* The shared hero of the pages that open on a visual index (Experiments,
+   Results, Project Description, Measurements, Engineering, ...) — halfway
+   between the two bands Experiments and Results used to have.
 
    Experiments had the compact hero (a fixed 396px band) and Results the
    default one, whose 60vh min-height made its band 540px on a 900px-tall
@@ -1309,7 +1312,7 @@ img {
 
 /* On a short or narrow window a fixed 468px band eats most of the screen
    before any content shows, so the two edges come back towards the
-   compact hero's. Both pages share this, so they still match. */
+   compact hero's. Every page on this hero shares it, so they still match. */
 @media (max-width: 760px), (max-height: 760px) {
   .page-hero--lab {
     padding: 185px 24px 90px;

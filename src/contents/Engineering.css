@@ -5,11 +5,12 @@
    used elsewhere in the wiki rather than a heavy card border.
 
    .content-page's own 6vh top padding (shared with every other simple
-   content page) is redundant here: the compact hero right above it
-   already provides its own breathing room, so stacking both left an
-   oversized gap before the map. Scoped to "directly follows the compact
-   hero and the map is the first thing in it" so no other .content-page
-   user is affected. */
+   content page) is redundant here: the hero right above it already
+   provides its own breathing room, so stacking both left an oversized gap
+   before the map. Scoped to "the map is the first thing in it" so no other
+   .content-page user is affected. The offset is the same -40px Experiments
+   and Results apply to their own first-child map (see LabFolders.css), so
+   now that all three wear the same lab hero their indexes line up. */
 .content-page > .ecosystem-map:first-child {
   margin-top: -40px;
 }
@@ -188,10 +189,6 @@
    deliberately plain typographic links, not the pill/card treatment a
    generic pagination control would use, so it reads as an editorial
    footnote pointing onward rather than an app-style "next page" bar. */
-.engineering-block-nav-sentinel {
-  height: 1px;
-}
-
 .engineering-block-nav {
   display: flex;
   align-items: center;
