@@ -43,11 +43,27 @@ export interface TableCell {
   /** Semantic colour for a data cell — e.g. a pass/fail screening result.
    * Purely visual, doesn't affect the cell's text. */
   tone?: "good" | "bad";
+  /** Renders this body cell as a row header (`<th scope="row">`) rather
+   * than a data cell — for the stub column of a cross-tabulation, whose
+   * left-hand entries label their row the way the column headers label
+   * their column. See headCell() below. */
+  head?: boolean;
+  /** Cells this one is merged across, as in the source table. A cell with
+   * rowSpan swallows the same position in the rows below it, which then
+   * carry one cell fewer. */
+  rowSpan?: number;
+  colSpan?: number;
 }
 
 export interface TableBlock {
   type: "table";
-  headers: string[];
+  /** One header row, or several for a table whose columns are a scale
+   * under a shared title (see the jetting grid in
+   * BacterialEncapsulationData). In either case an empty string means
+   * "merged into the cell on its left", exactly as Notion exports a
+   * merged header — and a run of empties with nothing on its left is a
+   * genuinely blank corner cell spanning that run, not a cell to drop. */
+  headers: string[] | string[][];
   rows: TableCell[][];
   caption?: string;
 }
@@ -96,8 +112,16 @@ export function cell(text: string, tone?: TableCell["tone"]): TableCell {
   return { text, tone };
 }
 
+/** A cell in a table's stub column — the left-hand labels of a
+ * cross-tabulation, which head their row the way `headers` head their
+ * column. `rowSpan` is for a label that covers several rows in the source
+ * table, e.g. one axis name standing over all of its values. */
+export function headCell(text: string, rowSpan?: number): TableCell {
+  return { text, head: true, rowSpan };
+}
+
 export function table(
-  headers: string[],
+  headers: string[] | string[][],
   rows: TableCell[][],
   caption?: string,
 ): TableBlock {

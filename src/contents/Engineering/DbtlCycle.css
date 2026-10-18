@@ -621,6 +621,14 @@
 .dbtl-cycle__table td {
   color: var(--ink-soft);
 }
+/* A row header in the body is the stub column of a cross-tabulation (see
+   headCell in dbtlData.ts). The only one that exists stands over four
+   rows at once, and a label that tall reads as belonging to its whole
+   group only if it sits in the middle of it, not pinned to the top edge
+   like every other cell. */
+.dbtl-cycle__table tbody th {
+  vertical-align: middle;
+}
 .dbtl-cycle__cell--good {
   color: #1f7a4d;
   background: rgba(31, 122, 77, 0.1);

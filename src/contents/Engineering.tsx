@@ -18,10 +18,11 @@ import {
 import { ENGINEERING_BLOCKS } from "./Engineering/blocks";
 
 /**
- * Five sub-pages. Tab switching is pure client state (no route change) —
+ * Four sub-pages — the same four wet-lab blocks Experiments and Results
+ * are built from. Tab switching is pure client state (no route change) —
  * the index between them is the shared EcosystemMap component (see
  * src/components/EcosystemMap.tsx), same visual language and behaviour as
- * Experiments' own, with a fifth sphere (Hardware) added.
+ * Experiments' own.
  *
  * Bacterial encapsulation has the team's real 5-iteration write-up
  * (Engineering/BacterialEncapsulationData.ts) as one DBTL spiral, remounted
@@ -40,18 +41,21 @@ import { ENGINEERING_BLOCKS } from "./Engineering/blocks";
  *
  * Revalorisation has its real 4-iteration write-up
  * (Engineering/RevalorisationData.ts) as one spiral, framed by its own
- * intro and closing Reflection. Hardware still uses the generic placeholder
- * content in Engineering/dbtlData.ts.
+ * intro and closing Reflection.
  */
-// The five Engineering tabs as glass spheres — see EcosystemMap's own doc
+// The four Engineering tabs as glass spheres — see EcosystemMap's own doc
 // comment for the shared component's behaviour. Colours and illustrations
-// reuse Experiments' own ecosystem map wherever the block is the same —
-// see Experiments.tsx's own comment for why encapsulation/revalorisation
-// are pushed away from --lab-encapsulation/the original mustard. Hardware
-// is new to this page, so it gets its own coral accent (--phosphate,
-// otherwise unused by either map now that Revalorisation uses gold) and
-// its own reactor/filter illustration (assets/experiments/ecosystem-map/
-// hardware.png) rather than the generic bolt icon tried first.
+// are Experiments' own ecosystem map's, block for block — see
+// Experiments.tsx's own comment for why encapsulation/revalorisation are
+// pushed away from --lab-encapsulation/the original mustard.
+//
+// A fifth sphere, Hardware, used to sit between Enzymatic immobilisation
+// and Revalorisation on placeholder content; that block is not part of
+// the project's engineering work, so it is gone and the four that remain
+// take the same four slots (left/top and physics anchor) Experiments'
+// own four-sphere map uses, rather than keeping the five-sphere spacing
+// with a hole in it. Each keeps its own width/imageSize, which are tuned
+// to its illustration, not to its position.
 const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
   {
     id: "genetic-engineering",
@@ -59,11 +63,11 @@ const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
     color: "#3f7d4a",
     image: "assets/experiments/ecosystem-map/bacteria.png",
     alt: "Engineered bacterium illustration",
-    left: 2,
-    top: 30,
+    left: 4.2,
+    top: 28,
     width: 12.5,
     imageSize: 84,
-    home: [50, 190],
+    home: [140, 175],
   },
   {
     id: "bacterial-encapsulation",
@@ -71,11 +75,11 @@ const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
     color: "#1568a3",
     image: "assets/experiments/ecosystem-map/alginate.png",
     alt: "Alginate capsule illustration",
-    left: 22.5,
-    top: 6,
+    left: 29.4,
+    top: 4,
     width: 13,
     imageSize: 88,
-    home: [320, 80],
+    home: [450, 90],
   },
   {
     id: "enzymatic-immobilisation",
@@ -83,23 +87,11 @@ const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
     color: "#6b4e9a",
     image: "assets/experiments/ecosystem-map/enzyme.png",
     alt: "Protein ribbon structure illustration",
-    left: 43,
-    top: 40,
+    left: 53.1,
+    top: 38,
     width: 12,
     imageSize: 80,
-    home: [590, 220],
-  },
-  {
-    id: "hardware",
-    label: ["Hardware"],
-    color: "var(--phosphate)",
-    image: "assets/experiments/ecosystem-map/hardware.png",
-    alt: "Reactor filter cartridge illustration",
-    left: 63.5,
-    top: 16,
-    width: 12.5,
-    imageSize: 82,
-    home: [860, 130],
+    home: [760, 215],
   },
   {
     id: "revalorisation",
@@ -107,11 +99,11 @@ const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
     color: "#c99a06",
     image: "assets/experiments/ecosystem-map/revalorisation.png",
     alt: "Star illustration",
-    left: 84,
-    top: 24,
+    left: 78.8,
+    top: 17,
     width: 12.5,
     imageSize: 70,
-    home: [1130, 170],
+    home: [1090, 140],
   },
 ];
 

@@ -10,7 +10,15 @@
  * revision of the page can be brought over the same way.
  */
 
-import { cell, p, phase, table, ul, type Iteration } from "./dbtlData";
+import {
+  cell,
+  headCell,
+  p,
+  phase,
+  table,
+  ul,
+  type Iteration,
+} from "./dbtlData";
 
 export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
   {
@@ -395,21 +403,21 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "No: jetting was not observed (stable dripping)",
           "n/t: not tested",
         ]),
+        /* A cross-tabulation, not a flat list: the five columns are the
+           internal calcium chloride concentration under one shared title,
+           and the four rows the alginate concentration under another. The
+           two header rows and the row-label column below say exactly that,
+           the way the source table does — see headCell and
+           TableBlock.headers. */
         table(
-          ["", "", "Calcium chloride concentration (% w/v)", "", "", "", ""],
+          [
+            ["", "", "Calcium chloride concentration (% w/v)", "", "", "", ""],
+            ["", "", "0", "0.5", "1", "1.5", "2"],
+          ],
           [
             [
-              cell(""),
-              cell(""),
-              cell("0"),
-              cell("0.5"),
-              cell("1"),
-              cell("1.5"),
-              cell("2"),
-            ],
-            [
-              cell("Alginate concentration (% w/v)"),
-              cell("2"),
+              headCell("Alginate concentration (% w/v)", 4),
+              headCell("2"),
               cell("No"),
               cell("No"),
               cell("No"),
@@ -417,8 +425,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
               cell("Yes"),
             ],
             [
-              cell(""),
-              cell("2.5"),
+              headCell("2.5"),
               cell("No"),
               cell("No"),
               cell("Yes"),
@@ -426,8 +433,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
               cell("n/t"),
             ],
             [
-              cell(""),
-              cell("3"),
+              headCell("3"),
               cell("No"),
               cell("No"),
               cell("Yes"),
@@ -435,8 +441,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
               cell("n/t"),
             ],
             [
-              cell(""),
-              cell("3.5"),
+              headCell("3.5"),
               cell("No"),
               cell("No"),
               cell("Yes"),
