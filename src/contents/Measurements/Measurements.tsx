@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { EcosystemMap } from "../../components/EcosystemMap";
+import { LabCornerIndex } from "../../components/LabFolders/LabCornerIndex";
 import { ExperimentCard } from "../../components/LabFolders/ExperimentCard";
 import { FolderStack } from "../../components/LabFolders/FolderStack";
 import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
@@ -97,6 +98,12 @@ export function Measurements() {
     () => numberExperiments([{ experiments: activeBlock.measurements }]),
     [activeBlock],
   );
+  // The corner index's two landmarks -- see Experiments.tsx's own, and
+  // LabCornerIndex. This page opens with its own intro prose above the map,
+  // so "the map is behind us" is still read off the block pills directly
+  // below it rather than off anything higher up.
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const pageEndRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <div className="lab-folders ms-page">
@@ -112,7 +119,17 @@ export function Measurements() {
         onSelect={(id) => id !== null && setActiveBlockId(id)}
       />
 
-      <div className="lab-folders__menu">
+      {/* The corner "you are here" index, shown once the map above has
+          scrolled away -- same spheres, same colours and the same active
+          block, so either index switches the page the same way. */}
+      <LabCornerIndex
+        activeBlockId={activeBlockId}
+        onSelect={setActiveBlockId}
+        after={menuRef}
+        until={pageEndRef}
+      />
+
+      <div className="lab-folders__menu" ref={menuRef}>
         <SectionTabs
           tabs={MEASUREMENT_BLOCKS.map((block) => ({
             id: block.id,
@@ -198,6 +215,13 @@ export function Measurements() {
           </div>
         </section>
       </div>
+
+      {/* Scroll-position sentinel only -- see Experiments.tsx's own. */}
+      <div
+        className="ecosystem-map-mini-sentinel"
+        ref={pageEndRef}
+        aria-hidden="true"
+      />
     </div>
   );
 }

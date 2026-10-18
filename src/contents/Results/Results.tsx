@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactNode } from "react";
+import { useMemo, useRef, useState, type ReactNode } from "react";
 import { PageSectionNav, type PageSection } from "../../components/PageSectionNav";
 import { SectionTabs } from "../../components/LabFolders/SectionTabs";
 import { FolderStack } from "../../components/LabFolders/FolderStack";
@@ -10,6 +10,7 @@ import { NumberingContext, numberResults } from "../../components/LabFolders/num
 import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
 import type { AccentStyle, ResultData } from "../../components/LabFolders/types";
 import { EcosystemMap } from "../../components/EcosystemMap";
+import { LabCornerIndex } from "../../components/LabFolders/LabCornerIndex";
 import { RESULT_BLOCKS } from "./data";
 import "../../components/LabFolders/LabFolders.css";
 
@@ -99,6 +100,10 @@ export function Results() {
     () => numberResults(activeBlock.subBlocks ?? [activeBlock]),
     [activeBlock],
   );
+  // The corner index's two landmarks -- see Experiments.tsx's own, and
+  // LabCornerIndex.
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const pageEndRef = useRef<HTMLDivElement | null>(null);
 
   return (
     <div className="lab-folders">
@@ -111,7 +116,17 @@ export function Results() {
         onSelect={(id) => id !== null && setActiveBlockId(id)}
       />
 
-      <div className="lab-folders__menu">
+      {/* The corner "you are here" index, shown once the map above has
+          scrolled away -- same spheres, same colours and the same active
+          block, so either index switches the page the same way. */}
+      <LabCornerIndex
+        activeBlockId={activeBlockId}
+        onSelect={setActiveBlockId}
+        after={menuRef}
+        until={pageEndRef}
+      />
+
+      <div className="lab-folders__menu" ref={menuRef}>
         <SectionTabs
           tabs={RESULT_BLOCKS.map((block) => ({ id: block.id, label: block.label }))}
           activeId={activeBlockId}
@@ -205,6 +220,13 @@ export function Results() {
           </NumberingContext.Provider>
         </div>
       </div>
+
+      {/* Scroll-position sentinel only -- see Experiments.tsx's own. */}
+      <div
+        className="ecosystem-map-mini-sentinel"
+        ref={pageEndRef}
+        aria-hidden="true"
+      />
     </div>
   );
 }

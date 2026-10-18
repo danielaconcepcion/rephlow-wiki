@@ -37,13 +37,19 @@ export interface Page {
   hideHeader?: boolean;
   hideEyebrow?: boolean;
   /** Shrinks page-hero's padding/min-height so the header sits close to
-   * whatever comes right below it (e.g. Engineering/Experiments' ecosystem
-   * map, meant to fit in the initial viewport together with the header). */
+   * whatever comes right below it. No page uses it now that Engineering
+   * has moved to the shared lab hero below; kept, with its CSS, for a
+   * page that needs a tighter band than --lab's. */
   compactHero?: boolean;
+  /** The hero band shared by the pages that open on a visual index —
+   * Project Description, Experiments, Measurements, Results, Engineering
+   * and the Human-Practices-side pages (see App.css .page-hero--lab).
+   * One fixed band on every window height, so those headers all match. */
   labHero?: boolean;
   /** Opt-in "molecule field" header background (see Header.tsx) — the
-   * Claude Design MoleculeField edge/light treatment, currently used only
-   * by Experiments and Results. The number just seeds the composition. */
+   * Claude Design MoleculeField edge/light treatment that goes with the
+   * lab hero above. The number just seeds the composition, so two pages
+   * using it don't draw an identical field. */
   moleculeSeed?: number;
   /** Medals and special prizes this page is judged for; Header renders
    * them as badges above the title. */
@@ -83,7 +89,12 @@ const Pages: Page[] = [
     docTitle: "Engineering — rePhlow iGEM Wiki",
     awards: [{ label: "Silver Medal", variant: "silver" }],
     hideEyebrow: true,
-    compactHero: true,
+    // The same header Project Description wears — the shared lab hero
+    // band plus the molecule field behind it, at its own seed. Engineering
+    // opens on a visual index exactly as that page does, so it gets the
+    // same header rather than a tighter one of its own.
+    labHero: true,
+    moleculeSeed: 29,
   },
   {
     name: "Model",
