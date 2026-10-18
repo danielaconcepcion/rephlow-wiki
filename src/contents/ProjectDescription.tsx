@@ -1944,8 +1944,8 @@ export function ProjectDescription() {
                 image="assets/our-solution/revalorizacion-callout-icon.webp"
                 alt="Illustration of the phosphate revalorisation workflow"
               >
-                A multi-enzyme system that converts the recovered phosphate into
-                high-value-added products.
+                A multi-enzyme system for converting waste into high-value-added
+                products.
               </BlockIntro>
 
               <div className="pd-subsection">
@@ -1960,7 +1960,9 @@ export function ProjectDescription() {
                   upstream hardware, and used commercial polyphosphate as the
                   donor. This isolates the biochemistry of the conversion module
                   so that it can be characterised on its own terms; substituting
-                  bead-derived polyphosphate is a later integration step.
+                  bead-derived polyphosphate is a later integration step. What
+                  follows is the multi-enzyme system that turns that
+                  polyphosphate into defined high-value phosphorylated products.
                 </p>
               </div>
 
@@ -1977,24 +1979,28 @@ export function ProjectDescription() {
                   deliberately.
                 </p>
                 <p>
-                  This is the opposite role to the endogenous <em>ppk2</em>{" "}
-                  deletion in the
+                  This is a different use of PPK2 from the one in the
                   <SectionLink href="#genetic">
                     {" "}
                     genetic engineering block
                   </SectionLink>
-                  . The same enzyme family is used towards opposite ends in two
-                  separate compartments: suppressed inside <em>P. putida</em> so
-                  that the living cell cannot draw down the reserve it is
-                  building, and supplied in vitro in the reactor to release it.
+                  . There, the endogenous <em>ppk2</em> of <em>P. putida</em>{" "}
+                  was deleted so that the living cell could not draw down its
+                  own polyphosphate store while it was still accumulating. Here,
+                  a heterologous PPK2 is supplied in vitro to polyphosphate
+                  outside the cell. The same enzyme family is used towards
+                  opposite ends in two separate compartments: suppressed inside{" "}
+                  <em>P. putida</em> to build the reserve, added in the reactor
+                  to release it.
                 </p>
                 <p>
                   PPK2-I converts ADP to ATP, PPK2-II converts AMP to ADP and
                   bifunctional PPK2-III carries AMP through to ATP in a single
                   polypeptide
-                  <Cite group="revalorisation" numbers={[5, 9]} />, which
-                  collapses the regeneration step into one biocatalyst. We
-                  selected the class III polyphosphate kinase BcPPK2 from{" "}
+                  <Cite group="revalorisation" numbers={[5, 9]} />. A
+                  bifunctional enzyme collapses the regeneration step into one
+                  biocatalyst, which simplifies both the system and its later
+                  optimisation. We selected BcPPK2-III from{" "}
                   <em>Burkholderia cenocepacia</em> for two reasons. It accepts
                   both AMP and ADP, so the regeneration module can be coupled to
                   downstream enzymes whether they release ADP or AMP; and it is
@@ -2041,7 +2047,10 @@ export function ProjectDescription() {
               </div>
 
               <div className="pd-subsection">
-                <h3>Proof of concept: polyphosphate-driven DHAP synthesis</h3>
+                <h3>
+                  Proof of concept: coupling phosphorylation to
+                  polyphosphate-driven ATP regeneration
+                </h3>
                 <p>
                   To show that ATP regenerated from polyphosphate can drive
                   useful chemistry, we built and tested a cascade coupling the
@@ -2087,7 +2096,8 @@ export function ProjectDescription() {
                   consumes ATP and releases ADP, the PPK2 module regenerates ATP
                   from polyphosphate and clears the ADP that would otherwise
                   stall the reaction, so PPK2 both feeds DHAK and relieves its
-                  product inhibition.
+                  product inhibition. The final coupled system is shown in
+                  Figure 4.
                 </p>
                 <Figure
                   src="atp-regeneration-module.webp"
@@ -2097,8 +2107,10 @@ export function ProjectDescription() {
                     <>
                       <strong>Figure 4.</strong> Conceptual representation of
                       the coupling between the ATP regeneration and
-                      phosphorylation modules, with the kinase reaction written
-                      for any substrate rather than for dihydroxyacetone alone.
+                      phosphorylation modules. PPK2 regenerates ATP from
+                      polyphosphate and ADP, supplying the ATP required for
+                      substrate phosphorylation while reducing ADP accumulation,
+                      which inhibits DHAK activity.
                     </>
                   }
                 />
@@ -2186,19 +2198,19 @@ export function ProjectDescription() {
                 </p>
                 <p>
                   We designed a stapled version of the regeneration couple, one
-                  half fused to BcPPK2 and the other to DHAK, so that mixing the
-                  two purified fusions yields a covalent one-to-one conjugate.
-                  The aim is to raise the yield of the catalytic cycle itself:
-                  the covalent link fixes the stoichiometry at any dilution and
-                  keeps ATP regeneration next to ATP consumption, which should
-                  limit the free ADP that inhibits DHAK. A cascade that holds
-                  its ratio and its coupling without re-optimisation at every
-                  dilution is far simpler to scale industrially, since the
-                  assembly step becomes a single mixing operation rather than a
-                  tuning problem. The reaction also reaches essentially complete
-                  conversion across a broad range of temperatures, buffers and
-                  pH values, so it fits the conditions used elsewhere in the
-                  cascade
+                  half fused to BcPPK2-III and the other to DHAK, so that mixing
+                  the two purified fusions yields a covalent one-to-one
+                  conjugate. The aim is to raise the yield of the catalytic
+                  cycle itself: the covalent link fixes the stoichiometry at any
+                  dilution and keeps ATP regeneration next to ATP consumption,
+                  which should limit the free ADP that inhibits DHAK. A cascade
+                  that holds its ratio and its coupling without re-optimisation
+                  at every dilution is far simpler to scale industrially, since
+                  the assembly step becomes a single mixing operation rather
+                  than a tuning problem. The reaction also reaches essentially
+                  complete conversion across a broad range of temperatures,
+                  buffers and pH values, so it fits the conditions used
+                  elsewhere in the cascade
                   <Cite group="revalorisation" numbers={[10]} />.
                 </p>
                 <div className="pd-revalorisation-pair">
