@@ -19,74 +19,69 @@ export interface PageNavEntry {
   icon: string;
 }
 
-/** Shown while a page is still waiting for its own illustration. */
-const PLACEHOLDER_ICON = "assets/content-patterns/water-drop.webp";
-
 export const PAGE_NAV_ORDER: PageNavEntry[] = [
   {
     path: "/project-description",
     label: "Project Description",
-    icon: "assets/content-patterns/icons/11-environmental-water-sampling.svg",
+    icon: "assets/nav-icons/project-description.webp",
   },
   {
     path: "/engineering",
     label: "Engineering",
-    icon: "assets/content-patterns/icons/06-dna-editing.svg",
+    icon: "assets/nav-icons/engineering.webp",
   },
-  { path: "/model", label: "Model", icon: "assets/model-icon.png" },
-  { path: "/hardware", label: "Hardware", icon: "assets/hardware-icon.png" },
+  { path: "/model", label: "Model", icon: "assets/nav-icons/model.webp" },
+  {
+    path: "/hardware",
+    label: "Hardware",
+    icon: "assets/nav-icons/hardware.webp",
+  },
   {
     path: "/experiments",
     label: "Experiments",
-    icon: "assets/content-patterns/icons/02-petri-dish.svg",
+    icon: "assets/nav-icons/experiments.webp",
   },
   {
     path: "/measurement",
     label: "Measurements",
-    icon: "assets/content-patterns/icons/03-microscope.svg",
+    icon: "assets/nav-icons/measurements.webp",
   },
-  {
-    path: "/results",
-    label: "Results",
-    icon: "assets/content-patterns/icons/07-microcentrifuge-tube.svg",
-  },
-  {
-    path: "/safety",
-    label: "Safety",
-    icon: "assets/content-patterns/icons/14-bacteria.svg",
-  },
+  { path: "/results", label: "Results", icon: "assets/nav-icons/results.webp" },
+  { path: "/safety", label: "Safety", icon: "assets/nav-icons/safety.webp" },
   {
     path: "/human-practices",
     label: "Human Practices",
-    icon: "assets/human-practices-icon.png",
+    icon: "assets/nav-icons/human-practices.webp",
   },
   {
     path: "/collaboration-partnership",
     label: "Collaboration and Partnership",
-    icon: PLACEHOLDER_ICON,
+    icon: "assets/nav-icons/collaboration.webp",
   },
   {
     path: "/education-communication",
     label: "Education and Communication",
-    icon: PLACEHOLDER_ICON,
+    icon: "assets/nav-icons/education.webp",
   },
   {
     path: "/entrepreneurship",
     label: "Entrepreneurship",
-    icon: PLACEHOLDER_ICON,
+    icon: "assets/nav-icons/entrepreneurship.webp",
   },
   {
     path: "/sustainability",
     label: "Sustainability",
-    icon: "assets/sustainability-icon.png",
+    icon: "assets/nav-icons/sustainability.webp",
   },
   {
+    // The team's icon set has no Contribution illustration of its own;
+    // the spare microcentrifuge tube from the same set stands in.
     path: "/contribution",
     label: "Contribution",
-    icon: "assets/lab-protocols-icon.png",
+    icon: "assets/nav-icons/contribution.webp",
   },
-  { path: "/team", label: "Team", icon: PLACEHOLDER_ICON },
-  { path: "/medals", label: "Medals", icon: PLACEHOLDER_ICON },
+  { path: "/team", label: "Team", icon: "assets/nav-icons/team.webp" },
+  { path: "/medals", label: "Medals", icon: "assets/nav-icons/medals.webp" },
 ];
 
 /** The entries to put before and after `path`, or undefined at the ends. */
