@@ -354,7 +354,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
             [
               cell("Internal calcium chloride concentration"),
               cell("Variable"),
-              cell("**0, 0.5, 1, 1.5 and 2% (w/v)***"),
+              cell("**0, 0.5, 1, 1.5 and 2% (w/v)**\\*"),
             ],
             [
               cell("External calcium chloride bath"),
@@ -381,7 +381,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           ],
         ),
         p(
-          "*Not all internal calcium chloride concentrations were tested: if a certain calcium chloride concentration produced jetting for a certain alginate concentration, no higher calcium chloride concentrations were tested for said alginate concentration.",
+          "\\*Not all internal calcium chloride concentrations were tested: if a certain calcium chloride concentration produced jetting for a certain alginate concentration, no higher calcium chloride concentrations were tested for said alginate concentration.",
         ),
       ]),
       phase("Test", [

@@ -10,15 +10,19 @@ import { CitationScope } from "./citationScope";
  *
  *   **bold**   → <strong>
  *   *italic*   → <em>  (species and gene names)
+ *   ***both***  → the two nested, as Notion writes a species name inside
+ *                 a bold run ("**… from *Burkholderia cenocepacia***")
+ *   \*         → a literal asterisk (a footnote marker, not a mark)
  *   [3], [1, 2], [4–6] → links to that block's reference list
  *
- * Whitespace inside a mark ("**iGEM teams **") is moved outside it, so a
- * bold run never swallows the space before the next word. A citation only
- * becomes a link when the block has a reference list to point at (see
- * CitationScope); otherwise it is left as the plain text it is.
+ * A run of asterisks toggles the marks it carries rather than being
+ * matched as a pair, which is what makes the nested case above come out
+ * as emphasis instead of leaving a stray asterisk on the page. A citation
+ * only becomes a link when the block has a reference list to point at
+ * (see CitationScope); otherwise it is left as the plain text it is.
  */
 
-const TOKEN = /(\*\*[^*]+?\*\*|\*(?!\s)[^*]+?\*|\[\d+(?:\s*[,–-]\s*\d+)*\])/g;
+const TOKEN = /(\\\*|\*{1,3}|\[\d+(?:\s*[,–-]\s*\d+)*\])/g;
 
 function Citation({ raw }: { raw: string }) {
   const scope = useContext(CitationScope);
@@ -47,40 +51,41 @@ function Citation({ raw }: { raw: string }) {
   );
 }
 
-/** Wrap `inner` in `Tag`, keeping any leading/trailing spaces outside. */
-function mark(
-  content: string,
-  wrap: (text: ReactNode) => ReactNode,
-): ReactNode {
-  const lead = content.match(/^\s*/)?.[0] ?? "";
-  const trail = content.match(/\s*$/)?.[0] ?? "";
-  const core = content.slice(lead.length, content.length - trail.length);
-  return (
-    <>
-      {lead}
-      {wrap(parse(core))}
-      {trail}
-    </>
-  );
-}
-
 function parse(text: string): ReactNode[] {
   const out: ReactNode[] = [];
   let last = 0;
+  let bold = false;
+  let italic = false;
+
+  /** Wraps a node in whichever marks are open where it appeared. */
+  function marked(node: ReactNode): ReactNode {
+    let wrapped = node;
+    if (italic) wrapped = <em>{wrapped}</em>;
+    if (bold) wrapped = <strong>{wrapped}</strong>;
+    return wrapped;
+  }
+
   for (const match of text.matchAll(TOKEN)) {
     const token = match[0];
     const at = match.index ?? 0;
-    if (at > last) out.push(text.slice(last, at));
-    if (token.startsWith("**")) {
-      out.push(mark(token.slice(2, -2), (inner) => <strong>{inner}</strong>));
+    if (at > last) out.push(marked(text.slice(last, at)));
+    if (token === "\\*") {
+      // An escaped asterisk: a literal one, not markup.
+      out.push(marked("*"));
     } else if (token.startsWith("*")) {
-      out.push(mark(token.slice(1, -1), (inner) => <em>{inner}</em>));
+      // A run of asterisks toggles the marks it carries: one is italic,
+      // two are bold, three are both. Written this way rather than as
+      // matched pairs because the team's pages set a species name inside
+      // a bold sentence, which closes as `*...***` and leaves a stray
+      // asterisk on screen for any pair-matching reader.
+      if (token.length !== 2) italic = !italic;
+      if (token.length !== 1) bold = !bold;
     } else {
-      out.push(<Citation raw={token} />);
+      out.push(marked(<Citation raw={token} />));
     }
     last = at + token.length;
   }
-  if (last < text.length) out.push(text.slice(last));
+  if (last < text.length) out.push(marked(text.slice(last)));
   return out.map((node, index) => <Fragment key={index}>{node}</Fragment>);
 }
 

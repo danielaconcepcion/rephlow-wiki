@@ -391,30 +391,54 @@ type IterColorStyle = CSSProperties & { "--iter-color": string };
  * ExperimentCard's own protocol links use, and opened in a new tab like
  * those are), or `pending:<what>` for a destination that doesn't exist yet
  * — rendered as a clearly-marked, non-navigable placeholder rather than a
- * guessed URL (see .dbtl-cycle__link--pending in DbtlCycle.css). Bold is
- * matched before italic in the alternation below, so `**text**` is never
- * misread as an empty italic run followed by stray asterisks; the link
- * pattern is matched before italic too, so a single `*` inside a link's
- * `(href)` (none of ours have one, but link text itself could in
- * principle) can't be mistaken for an italic delimiter. */
+ * guessed URL (see .dbtl-cycle__link--pending in DbtlCycle.css).
+ *
+ * Emphasis is read as a run of asterisks that *toggles* a state rather
+ * than as a pair matched by a regex: one `*` flips italic, two flip bold
+ * and three flip both. That is what the team's own pages write — a
+ * species name inside a bold sentence ends up as `*...***` — and a
+ * pattern-matching reader leaves a stray asterisk on screen in exactly
+ * that case. */
 export function renderRich(text: string): ReactNode[] {
   const nodes: ReactNode[] = [];
   const regex =
-    /\*\*(.+?)\*\*|\{\{(.+?)\}\}|\[([^\]]+)\]\(([^)]*)\)|\*(.+?)\*|\n/g;
+    /\\\*|(\*{1,3})|\{\{(.+?)\}\}|\[([^\]]+)\]\(([^)]*)\)|\n/g;
   let lastIndex = 0;
   let m: RegExpExecArray | null;
   let key = 0;
+  let bold = false;
+  let italic = false;
+
+  /** Wraps a node in whichever marks are open where it appeared. */
+  function marked(node: ReactNode): ReactNode {
+    let out = node;
+    if (italic) out = <em key={`i-${key++}`}>{out}</em>;
+    if (bold) out = <strong key={`b-${key++}`}>{out}</strong>;
+    return out;
+  }
+  function pushText(slice: string) {
+    if (!slice) return;
+    nodes.push(bold || italic ? marked(slice) : slice);
+  }
+
   while ((m = regex.exec(text))) {
-    if (m.index > lastIndex) nodes.push(text.slice(lastIndex, m.index));
-    if (m[0] === "\n") {
-      nodes.push(<br key={`br-${key++}`} />);
+    pushText(text.slice(lastIndex, m.index));
+    if (m[0] === "\\*") {
+      // An escaped asterisk: a literal one (a footnote marker), not markup.
+      pushText("*");
     } else if (m[1] !== undefined) {
-      nodes.push(<strong key={`b-${key++}`}>{m[1]}</strong>);
+      // A run of asterisks: toggle the marks it carries.
+      if (m[1].length !== 2) italic = !italic;
+      if (m[1].length !== 1) bold = !bold;
+    } else if (m[0] === "\n") {
+      nodes.push(<br key={`br-${key++}`} />);
     } else if (m[2] !== undefined) {
       nodes.push(
-        <span key={`pend-${key++}`} className="dbtl-cycle__pending">
-          {m[2]}
-        </span>,
+        marked(
+          <span key={`pend-${key++}`} className="dbtl-cycle__pending">
+            {m[2]}
+          </span>,
+        ),
       );
     } else if (m[3] !== undefined) {
       const linkText = m[3];
@@ -422,39 +446,43 @@ export function renderRich(text: string): ReactNode[] {
       if (href.startsWith("pending:")) {
         const what = href.slice("pending:".length).replace(/-/g, " ");
         nodes.push(
-          <span
-            key={`link-${key++}`}
-            className="dbtl-cycle__link dbtl-cycle__link--pending"
-            title={`Link destination pending — ${what}`}
-          >
-            {linkText}
-          </span>,
+          marked(
+            <span
+              key={`link-${key++}`}
+              className="dbtl-cycle__link dbtl-cycle__link--pending"
+              title={`Link destination pending — ${what}`}
+            >
+              {linkText}
+            </span>,
+          ),
         );
       } else if (href.startsWith("/")) {
         nodes.push(
-          <Link key={`link-${key++}`} to={href} className="dbtl-cycle__link">
-            {linkText}
-          </Link>,
+          marked(
+            <Link key={`link-${key++}`} to={href} className="dbtl-cycle__link">
+              {linkText}
+            </Link>,
+          ),
         );
       } else {
         nodes.push(
-          <a
-            key={`link-${key++}`}
-            href={asset(href)}
-            className="dbtl-cycle__link"
-            target="_blank"
-            rel="noreferrer"
-          >
-            {linkText}
-          </a>,
+          marked(
+            <a
+              key={`link-${key++}`}
+              href={asset(href)}
+              className="dbtl-cycle__link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {linkText}
+            </a>,
+          ),
         );
       }
-    } else if (m[5] !== undefined) {
-      nodes.push(<em key={`i-${key++}`}>{m[5]}</em>);
     }
     lastIndex = regex.lastIndex;
   }
-  if (lastIndex < text.length) nodes.push(text.slice(lastIndex));
+  pushText(text.slice(lastIndex));
   return nodes;
 }
 
@@ -492,6 +520,9 @@ function renderBlock(block: ContentBlock, blockKey: number): ReactNode {
   }
   return (
     <div key={blockKey} className="dbtl-cycle__table-wrap">
+      {block.caption && (
+        <p className="dbtl-cycle__table-title">{renderRich(block.caption)}</p>
+      )}
       <table className="dbtl-cycle__table">
         <thead>
           <tr>
@@ -515,9 +546,6 @@ function renderBlock(block: ContentBlock, blockKey: number): ReactNode {
           ))}
         </tbody>
       </table>
-      {block.caption && (
-        <p className="dbtl-cycle__table-caption">{block.caption}</p>
-      )}
     </div>
   );
 }

@@ -631,10 +631,9 @@
   background: rgba(176, 64, 47, 0.1);
   font-weight: 600;
 }
-.dbtl-cycle__table-caption {
-  margin: 6px 0 0;
+.dbtl-cycle__table-title {
+  margin: 0 0 8px;
   font-size: 0.78rem;
-  font-style: italic;
   color: var(--ink-soft);
 }
 
