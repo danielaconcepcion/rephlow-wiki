@@ -39,9 +39,9 @@
 
   /* Alturas de las secciones — AJUSTA AQUÍ el "recorrido" del problema.
      Más alto = scroll más lento y dramático. */
-  --problem-height: 340vh;
+  --problem-height: 360vh;
   --beat-gap: 18vh; /* separación vertical entre cada paso de la narrativa */
-  --beat-row-height: 64vh; /* altura de cada franja narrativa: más alto = steps más separados */
+  --beat-row-height: 70vh; /* altura de cada franja narrativa: más alto = steps más separados */
 
   --radius-lg: 28px;
   --radius-md: 18px;
@@ -302,22 +302,9 @@ img {
   color: var(--paper);
 }
 
-/* --------------------------------------------------------------------------
-   3. HERO — agua limpia, punto de partida
-   -------------------------------------------------------------------------- */
-.hero {
-  min-height: 92vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 60px 24px 100px;
-  background: linear-gradient(to bottom, #ffffff 0%, var(--water-clear) 100%);
-  position: relative;
-  overflow: hidden;
-}
-
+/* The "under construction" banner Header puts above a page's title (see
+   Header.tsx) — the hero it was named after moved to Home.css, this one
+   did not. */
 /*.hero__eyebrow {
   font-size: 0.78rem;
   font-weight: 600;
@@ -353,64 +340,11 @@ img {
   -webkit-backdrop-filter: blur(16px) saturate(1.25);
 }
 
-/* The hero's title is the rePhlow wordmark (the same logo the footer
-   uses), not typeset text — but it is still the h1, so the sizing below
-   is on the box rather than on a font.
-
-   The widths reproduce exactly what the typeset title used to occupy, so
-   swapping in the logo did not move the hero around: "rePhlow" rendered
-   at clamp(3.2rem, 10vw, 6.5rem) was 3.77x its own font-size wide, which
-   multiplies through to the clamp here (392px at 1440px, 289px at 768px,
-   193px at 390px — the three the old title measured). */
-.hero__title {
-  width: clamp(12rem, 37.7vw, 24.5rem);
-  margin: 0;
-  line-height: 0;
-}
-.hero__title img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.hero__subtitle {
-  margin-top: 22px;
-  max-width: 520px;
-  font-size: 1.08rem;
-  color: var(--ink-soft);
-}
-
-.hero__scroll-cue {
-  position: absolute;
-  bottom: 40px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-
-.hero__scroll-cue span.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--water-mid);
-  animation: sink 1.8s ease-in-out infinite;
-}
-
-@keyframes sink {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(14px);
-    opacity: 0;
-  }
-}
+/* --------------------------------------------------------------------------
+   3-4. HERO + THE PROBLEM — these two live in contents/Home/Home.css, the
+   only page that uses them (see that file: the hero water, the gauge and
+   the four illustrated scenes came over together from the prototype).
+   -------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------
    3b. PROMOTION VIDEO — multilingual player
@@ -541,278 +475,6 @@ img {
 
   .promotion-video__language:hover {
     transform: translateY(-2px);
-  }
-}
-
-/* --------------------------------------------------------------------------
-   4. THE PROBLEM — descenso al agua eutrofizada
-   Un único contenedor alto con gradiente vertical continuo.
-   -------------------------------------------------------------------------- */
-.problem {
-  position: relative;
-  min-height: var(--problem-height);
-  background: linear-gradient(
-    to bottom,
-    var(--water-light) 0%,
-    var(--water-mid) 30%,
-    var(--algae) 62%,
-    var(--eutrophic) 85%,
-    var(--eutrophic-deep) 100%
-  );
-  overflow: hidden;
-  padding-bottom: 12vh;
-}
-
-.problem__header {
-  padding: 10vh 24px 4vh;
-  text-align: center;
-  max-width: 620px;
-  margin: 0 auto;
-}
-
-.problem__eyebrow {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(27, 35, 64, 0.65);
-}
-
-.problem__title {
-  margin-top: 10px;
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
-  color: var(--ink);
-}
-
-/* Eje científico — elemento firma: sigue el descenso con lecturas reales */
-.gauge {
-  position: absolute;
-  left: 8%;
-  top: 26vh;
-  bottom: 10vh;
-  width: 2px;
-  background: linear-gradient(
-    to bottom,
-    rgba(27, 35, 64, 0.35),
-    rgba(255, 255, 255, 0.5)
-  );
-  z-index: 1;
-}
-.gauge::before,
-.gauge::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--paper);
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
-}
-.gauge::before {
-  top: -4px;
-}
-.gauge::after {
-  bottom: -4px;
-}
-
-.gauge__mark {
-  position: absolute;
-  left: 8%;
-  transform: translate(18px, -50%);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.gauge__mark .gauge__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.25);
-}
-.gauge__mark .gauge__reading {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.92);
-  white-space: nowrap;
-}
-
-/* Cada "beat" narrativo de la historia */
-.beat {
-  position: relative;
-  z-index: 2;
-  /*max-width: 460px;
-  margin: 0 8vw 0 auto;
-  padding: 0 6vw;
-  margin-bottom: var(--beat-gap);*/
-  padding-top: 16vh;
-  padding-bottom: 12vh;
-}
-
-.beat-row {
-  min-height: var(--beat-row-height);
-  display: flex;
-  align-items: center;
-}
-
-.beat-row--01 {
-  align-items: flex-start;
-  padding-top: 7vh;
-}
-
-.beat-row--04 {
-  align-items: flex-end;
-}
-
-/* Cada "beat" narrativo de la historia */
-.beat {
-  max-width: 550px;
-  padding: 0 6vw;
-}
-
-.beat--left {
-  margin-left: 12vw;
-  margin-right: auto;
-}
-
-.beat--right {
-  margin-left: auto;
-  margin-right: 8vw;
-}
-
-.beat__step {
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  opacity: 0.75;
-  margin-bottom: 10px;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-.beat__text {
-  font-size: clamp(1.4rem, 3.4vw, 2rem);
-  font-weight: 600;
-  color: var(--paper);
-  line-height: 1.25;
-}
-
-.beat__body {
-  margin-top: 2rem;
-  max-width: 34rem;
-  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
-  font-weight: 400;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.beat--dark .beat__text,
-.beat--dark .beat__step {
-  color: var(--ink);
-}
-
-.beat--dark .beat__body {
-  color: rgba(27, 35, 64, 0.78);
-}
-
-/* Colapso final: centrado, máximo peso visual */
-.beat--collapse {
-  max-width: 640px;
-  margin-inline: auto;
-  text-align: center;
-  padding: 0 24px;
-}
-
-/* --- Elementos flotantes decorativos --- */
-.decor {
-  position: absolute;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.bubble {
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.85),
-    rgba(255, 255, 255, 0.05)
-  );
-  filter: blur(0.2px);
-}
-
-.molecule-wrap {
-  position: absolute;
-  right: 8%;
-  top: 55vh;
-  width: clamp(190px, 16vw, 300px);
-  height: clamp(190px, 16vw, 300px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.molecule-wrap .molecule-fallback {
-  position: absolute;
-  inset: 0;
-}
-
-.phosphate-img {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.algae-blob {
-  border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
-  background:
-    radial-gradient(
-      circle at 35% 35%,
-      rgba(255, 255, 255, 0.18),
-      transparent 60%
-    ),
-    var(--algae);
-  opacity: 0.55;
-}
-
-.microbe {
-  border-radius: 50%;
-  background: var(--microbe);
-  opacity: 0.7;
-}
-
-.algae-wrap {
-  left: 14%;
-  top: 38%;
-  width: clamp(450px, 27vw, 500px);
-  transform: rotate(-13deg);
-}
-
-/* --- Parallax drift (JS sets --px/--py via requestAnimationFrame) --- */
-.parallax-decor {
-  --px: 0px;
-  --py: 0px;
-  transform: translate3d(var(--px), var(--py), 0);
-}
-
-/* Higher specificity than .algae-wrap so the drift composes with,
-   instead of replacing, its existing rotation. */
-.algae-wrap.parallax-decor {
-  transform: translate3d(var(--px), var(--py), 0) rotate(-13deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .parallax-decor {
-    transform: none !important;
-  }
-  .algae-wrap.parallax-decor {
-    transform: rotate(-13deg) !important;
   }
 }
 
@@ -1626,32 +1288,8 @@ img {
   .card-grid {
     grid-template-columns: 1fr;
   }
-  .beats {
-    padding-top: 10vh;
-    padding-bottom: 10vh;
-  }
-  .beat-row {
-    min-height: var(--beat-row-height);
-  }
-  .beat,
-  .beat--left,
-  .beat--right {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 90vw;
-    padding: 0 20px;
-  }
-  .gauge__mark .gauge__reading {
-    display: none;
-  } /* en móvil solo se ven los puntos, sin etiquetas */
-  .molecule-wrap {
-    position: relative;
-    right: auto;
-    top: auto;
-    margin: 0 auto 20px;
-    width: 110px;
-    height: 110px;
-  }
+  /* The narrow-screen layout of the beats, the scenes and the gauge
+     readings lives with the rest of the home in contents/Home/Home.css. */
 }
 
 /* Gold is three stacked blocks, one per award: the award, what it is for,
