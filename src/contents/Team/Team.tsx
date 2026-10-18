@@ -34,7 +34,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m1", category: "members", isPlaceholder: false,
     name: "María Gómez Gómez", education: "4th year Chemistry & Biochemistry student", role: "Team Leader",
-    facultyColor: "green", image: "assets/team/maria.webp",
+    facultyColor: "green", image: "assets/team/maria-2026.webp",
     bio: <>
       María studies Chemistry and Biochemistry because being busy is not just a habit, it is a personality trait. As long as she has had at least ten hours of sleep and a coffee with extra energy, she can usually be found jumping between rePhlow, university, friends, pilates (preferably with time for a good <em>aperitivo</em> in between) and somehow still saying out loud what everyone else wisely decided to keep as an inside thought.
     </>,
@@ -45,7 +45,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m2", category: "members", isPlaceholder: false,
     name: "Marta Gil Alarcón", education: "4th year Biochemistry student", role: "Entrepreneurship coordinator",
-    facultyColor: "yellow", image: "assets/team/marta.webp",
+    facultyColor: "yellow", image: "assets/team/marta-2026.webp",
     bio: "Marta studies Biochemistry at Universidad Complutense de Madrid because sitting still has never really been her style. As long as there's a laugh to share and a to-do list to conquer, she can usually be found bouncing between the lab, fundraising meetings, the gym, and a trip abroad she's already half-planned, all while somehow still managing to gather everyone around a table for good food and better conversation.",
     strength: "Turning chaos into a schedule. She can rally a team, beat a deadline, and defuse a conflict before it even knows it's a conflict.",
     weakness: "A stubborn perfectionist streak that makes delegating feel like handing over her firstborn. She's working on it, one shared task at a time.",
@@ -63,7 +63,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m4", category: "members", isPlaceholder: false,
     name: "Adriana Cuadro López", education: "4th year Biochemistry student", role: "Human Practices coordinator",
-    facultyColor: "yellow", image: "assets/team/adriana.webp",
+    facultyColor: "yellow", image: "assets/team/adriana-2026.webp",
     bio: "Adriana is a Biochemistry student with an unstoppable, sunny energy. She's the kind of person who can turn a stressful lab meeting into a laugh, and still get everyone back on track five minutes later. Cheerful, outgoing and stubborn as they come, she's also remarkably calm, disciplined and organized, staying steady and clear headed even when deadlines pile up. Her real superpower is keeping her cool under pressure, while everyone else is losing theirs. Outside the lab, she's just as much in motion: spiking volleyballs, hiking through nature, sketching or strumming her guitar, cooking up something good, and never turning down a good plan with friends, especially if food is involved. She also loves to travel, always on the lookout for the next adventure. Fun fact: she has a dog, and her very first word was in English, a little souvenir from a spell in Canada during her childhood.",
     strength: "Keeping chaos organized. She juggles deadlines, calms nerves and solves conflicts before they even become conflicts, and her stubbornness definitely helps here.",
     weakness: "Perfectionism. She'll happily double check a protocol three times, and redo an experiment as many times as it takes until it comes out exactly right.",
@@ -81,7 +81,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m6", category: "members", isPlaceholder: false,
     name: "Ángel Vilar Martín", education: "BSc in Biology specialised in Biotechnology. MSc student in Biophysics.", role: "Dry Lab Coordinator",
-    facultyColor: "yellow", image: "assets/team/angel.webp",
+    facultyColor: "yellow", image: "assets/team/angel-2026.webp",
     bio: "Ángel Vilar Martín is a biologist specialised in Biotechnology from Universidad Complutense de Madrid, currently pursuing a Master's degree in Biophysics at Universidad Autónoma de Madrid, usually calm and focused, unless the experiment decides otherwise. Outside the lab, he loves spending hours walking around the city with music on, taking in the streets, and is a true fan of the internet age, often falling down Google rabbit holes or picking up a project just to see if he can master it. He also enjoys long, unplanned plans, a terrace with a glass of wine, and generally has a hard time knowing when to call it a day. Fun fact: before starting university he used to practise archery.",
     strength: "He tackles every task with effectiveness and organisation, and somehow manages to be genuinely skilled across more fields than seems fair.",
     weakness: "Extreme impatience (especially when waiting for an experiment to work), a tendency to overthink and an unfortunate inability to say no.",
@@ -117,7 +117,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m9", category: "members", isPlaceholder: false,
     name: "Santiago Rodríguez Aranguren", education: "Materials Engineering student at Universidad Complutense de Madrid", role: "Hardware Prototyping Specialist",
-    facultyColor: "coral", image: "assets/team/santiago.webp",
+    facultyColor: "coral", image: "assets/team/santiago-2026.webp",
     bio: "Santiago studies Materials Engineering at Universidad Complutense de Madrid and still uses the calculator for simple operations. He is not much of a talker, but he still cracks jokes in the lab to relieve stress and lighten the mood. Outside the lab he has an artistic side: he plays several instruments, such as the drums and guitar, and likes to paint in his free time.",
     strength: "Quick problem solver, proving to be the team’s resident MacGyver.",
     weakness: "Hey there! I am using WhatsApp.",
