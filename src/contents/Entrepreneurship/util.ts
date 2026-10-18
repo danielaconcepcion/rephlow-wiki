@@ -13,7 +13,9 @@ export const cx = (...c: (string | false | null | undefined)[]) =>
  * "img/process.jpg" → <STATIC>/process.jpg
  */
 export const STATIC = "https://static.igem.wiki/teams/6124/wiki/entrepreneurship/";
-export const A = (p: string) => STATIC + p.replace(/^(img|docs)\//, "");
+/** Uploads converts every .jpg/.png to .avif (PDFs keep their name). */
+export const A = (p: string) =>
+  STATIC + p.replace(/^(img|docs)\//, "").replace(/\.(jpe?g|png)$/i, ".avif");
 
 /** Photo n of the Notion export (img7.jpg … img49.jpg). */
 export const photo = (n: number) => A(`img/img${n}.jpg`);
