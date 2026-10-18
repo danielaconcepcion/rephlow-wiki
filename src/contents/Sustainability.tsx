@@ -2628,241 +2628,183 @@ export function Sustainability() {
               These two are ours: one where we have a positive impact without it
               being intentional, and one where, today, we are the problem.
             </p>
-            <figure
-              style={{
-                margin: "30px 0",
-                borderRadius: "28px",
-                background:
-                  "radial-gradient(ellipse at 50% 40%,#ffffff 0%,var(--water-clear) 100%)",
-                border: "1px solid var(--line)",
-                padding: "12px",
-              }}
-            >
-              <img
-                src={asset("assets/sustainability/sdg-secondary-sm.png")}
-                alt="Sustainable Development Goals 9 and 13"
-                style={{
-                  display: "block",
-                  width: "100%",
-                  maxWidth: "560px",
-                  margin: "0 auto",
-                  height: "auto",
-                }}
-              />
-            </figure>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 9 — Industry, innovation and infrastructure
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
+            <div className="sus-unclaimed">
+              <article
+                className="sus-unclaimed__card"
+                style={{ "--sdg": "#FD6925" } as CSSProperties}
               >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 9.4:{" "}
-                </strong>
-                <em>
-                  By 2030, upgrade infrastructure and retrofit industries to
-                  make them sustainable, with increased resource-use efficiency
-                  and greater adoption of clean and environmentally sound
-                  technologies and industrial processes, with all countries
-                  taking action in accordance with their respective
-                  capabilities.
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  <br />
-                  Target 9.5:{" "}
-                </strong>
-                <em>
-                  Enhance scientific research, upgrade the technological
-                  capabilities of industrial sectors, in particular developing
-                  countries, by 2030, encouraging innovation and substantially
-                  increasing the number of research and development workers per
-                  1 million people and public and private research and
-                  development spending. <br />
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 9.a:{"\u00a0"}
-                </strong>
-                <em>
-                  Facilitate sustainable and resilient infrastructure
-                  development in developing countries through enhanced
-                  financial, technological and technical support to African
-                  countries, least developed countries, landlocked developing
-                  countries and small island developing States.
-                </em>
-                <a className="lab-citation" href="#ref-r01-14">
-                  [14]
-                </a>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Goal 9 is the one we reach without aiming at it. Modularity was
-              not adopted to upgrade industrial infrastructure; it was adopted
-              because Bio-Oils told us a mid-sized producer cannot shut down a
-              line to rebuild a treatment plant around an experiment. The result
-              happens to be what target 9.4 asks for — a retrofit that raises
-              resource efficiency without replacing what is already there — but
-              it was a commercial constraint before it was a sustainability
-              contribution, and we would rather say so than claim the goal as an
-              intention.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Target 9.5 we touch only in the ordinary way any student project
-              does, and we do not claim it. What we would claim instead is the
-              opposite sign: the same design that serves 9.4 works against 9.a,
-              because a contained biological module needs capsules, a reactor
-              and trained staff where chemical dosing needs none of them. That
-              interaction is scored in the table below, and the tension is set
-              out in full further down this room.
-            </p>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 13 — Climate action
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
+                <div className="sus-unclaimed__top">
+                  <span className="sus-unclaimed__num">9</span>
+                  <div>
+                    <h5 className="sus-unclaimed__title">
+                      Industry, innovation and infrastructure
+                    </h5>
+                    <span className="sus-unclaimed__sign sus-unclaimed__sign--pos">
+                      reached, not aimed at
+                    </span>
+                  </div>
+                </div>
+                <p className="sus-unclaimed__text">
+                  Goal 9 is the one we reach without aiming at it. Modularity
+                  was not adopted to upgrade industrial infrastructure; it was
+                  adopted because Bio-Oils told us a mid-sized producer cannot
+                  shut down a line to rebuild a treatment plant around an
+                  experiment. The result happens to be what target 9.4 asks for
+                  — a retrofit that raises resource efficiency without replacing
+                  what is already there — but it was a commercial constraint
+                  before it was a sustainability contribution, and we would
+                  rather say so than claim the goal as an intention.
+                </p>
+                <p className="sus-unclaimed__text">
+                  Target 9.5 we touch only in the ordinary way any student
+                  project does, and we do not claim it. What we would claim
+                  instead is the opposite sign: the same design that serves 9.4
+                  works against 9.a, because a contained biological module needs
+                  capsules, a reactor and trained staff where chemical dosing
+                  needs none of them. That interaction is scored in the table
+                  below, and the tension is set out in full further down this
+                  room.
+                </p>
+                <AccordionSection
+                  className="sus-unclaimed__targets"
+                  title="Targets 9.4, 9.5 and 9.a"
+                >
+                  <p className="sus-unclaimed__official">
+                    <strong>Target 9.4: </strong>
+                    <em>
+                      By 2030, upgrade infrastructure and retrofit industries to
+                      make them sustainable, with increased resource-use
+                      efficiency and greater adoption of clean and
+                      environmentally sound technologies and industrial
+                      processes, with all countries taking action in accordance
+                      with their respective capabilities.
+                    </em>
+                    <strong>
+                      <br />
+                      Target 9.5:{" "}
+                    </strong>
+                    <em>
+                      Enhance scientific research, upgrade the technological
+                      capabilities of industrial sectors, in particular
+                      developing countries, by 2030, encouraging innovation and
+                      substantially increasing the number of research and
+                      development workers per 1 million people and public and
+                      private research and development spending. <br />
+                    </em>
+                    <strong>Target 9.a:{" "}</strong>
+                    <em>
+                      Facilitate sustainable and resilient infrastructure
+                      development in developing countries through enhanced
+                      financial, technological and technical support to African
+                      countries, least developed countries, landlocked
+                      developing countries and small island developing States.
+                    </em>
+                    <a className="lab-citation" href="#ref-r01-14">
+                      [14]
+                    </a>
+                  </p>
+                </AccordionSection>
+              </article>
+
+              <figure className="sus-unclaimed__sdg">
+                <img
+                  src={asset("assets/sustainability/sdg-secondary-trimmed.webp")}
+                  alt="Sustainable Development Goals 9 and 13"
+                />
+              </figure>
+
+              <article
+                className="sus-unclaimed__card"
+                style={{ "--sdg": "#3F7E44" } as CSSProperties}
               >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 13.2:{" "}
-                </strong>
-                <em>
-                  Integrate climate change measures into national policies,
-                  strategies and planning.
-                </em>
-                <a className="lab-citation" href="#ref-r01-15">
-                  [15]
-                </a>
-              </p>
+                <div className="sus-unclaimed__top">
+                  <span className="sus-unclaimed__num">13</span>
+                  <div>
+                    <h5 className="sus-unclaimed__title">Climate action</h5>
+                    <span className="sus-unclaimed__sign sus-unclaimed__sign--neg">
+                      a declared cost
+                    </span>
+                  </div>
+                </div>
+                <p className="sus-unclaimed__text">
+                  We interact with goal 13, but we do not claim it. Our own life
+                  cycle assessment places rePhlow <strong>above </strong>
+                  the chemical route on climate change at current bead
+                  performance, and we are not going to list as an achievement
+                  something our own instruments contradict. The analysis and the
+                  single variable that would reverse it are in Room 03.
+                </p>
+                <p className="sus-unclaimed__text">
+                  There is another relevant reason to why this goal sits here
+                  rather than among the three we analysed before. Goal 13’s
+                  targets are addressed to <strong>states</strong>, not to
+                  technologies: they concern national planning, climate finance,
+                  adaptive capacity and education, and none of them asks a
+                  process to lower its emissions.{" "}
+                  <a className="lab-citation" href="#ref-r01-15">
+                    [15]
+                  </a>{" "}
+                  Target 13.2, which focuses on the integration of climate
+                  measures into national policy, reaches rePhlow’s goal
+                  indirectly, as the industrial technology designed was built
+                  alongside the planning.
+                </p>
+                <p className="sus-unclaimed__text">
+                  What makes this a constraint rather than a contradiction is
+                  that it answers to one number, which is phosphorus captured
+                  per gram of bead. After a threshold our own sensitivity
+                  analysis identifies, this flips completely. We are not there
+                  yet, and we will not score ourselves as if we were. Until
+                  then, climate is a <strong>declared cost</strong> of this
+                  project rather than a contribution to it, and it is marked as
+                  a tension on our <em>Sustainability Model Canvas</em> (see
+                  Room 04) rather than as a goal.
+                </p>
+                <div className="sus-climate-strip">
+                  <div>
+                    <span className="sus-climate-strip__k">
+                      rePhlow today, kg CO₂-eq/m³
+                    </span>
+                    <span className="sus-climate-strip__v sus-climate-strip__v--neg">
+                      37
+                    </span>
+                  </div>
+                  <div>
+                    <span className="sus-climate-strip__k">
+                      Chemical route, kg CO₂-eq/m³
+                    </span>
+                    <span className="sus-climate-strip__v">12.2</span>
+                  </div>
+                  <div>
+                    <span className="sus-climate-strip__k">
+                      Parity at, mg P/g bead
+                    </span>
+                    <span className="sus-climate-strip__v">≈3.8</span>
+                  </div>
+                  <a
+                    className="sus-climate-strip__btn"
+                    href="#r03-reading-3-the-full-sixteen-and-the-targe"
+                  >
+                    Move the bead capacity in Room 03
+                  </a>
+                </div>
+                <AccordionSection
+                  className="sus-unclaimed__targets"
+                  title="Target 13.2"
+                >
+                  <p className="sus-unclaimed__official">
+                    <strong>Target 13.2: </strong>
+                    <em>
+                      Integrate climate change measures into national policies,
+                      strategies and planning.
+                    </em>
+                    <a className="lab-citation" href="#ref-r01-15">
+                      [15]
+                    </a>
+                  </p>
+                </AccordionSection>
+              </article>
             </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              We interact with goal 13, but we do not claim it. Our own life
-              cycle assessment places rePhlow{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                above{" "}
-              </strong>
-              the chemical route on climate change at current bead performance,
-              and we are not going to list as an achievement something our own
-              instruments contradict. The analysis and the single variable that
-              would reverse it are in Room 03.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              There is another relevant reason to why this goal sits here rather
-              than among the three we analysed before. Goal 13’s targets are
-              addressed to{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                states
-              </strong>
-              , not to technologies: they concern national planning, climate
-              finance, adaptive capacity and education, and none of them asks a
-              process to lower its emissions.{" "}
-              <a className="lab-citation" href="#ref-r01-15">
-                [15]
-              </a>{" "}
-              Target 13.2, which focuses on the integration of climate measures
-              into national policy, reaches rePhlow’s goal indirectly, as the
-              industrial technology designed was built alongside the planning.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              What makes this a constraint rather than a contradiction is that
-              it answers to one number, which is phosphorus captured per gram of
-              bead. After a threshold our own sensitivity analysis identifies,
-              this flips completely. We are not there yet, and we will not score
-              ourselves as if we were. Until then, climate is a{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                declared cost
-              </strong>{" "}
-              of this project rather than a contribution to it, and it is marked
-              as a tension on our <em>Sustainability Model Canvas</em> (see Room
-              04) rather than as a goal.
-            </p>
             <h4
               id="r01-reading-the-interactions-the-nilsson-sca"
               style={{

@@ -240,3 +240,204 @@
     animation: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Goals 9 and 13 — the two we touch without claiming. One card each, with
+   the SDG artwork between them rather than beside the pair, and with the
+   official target wording folded away behind the page's own accordion.
+   -------------------------------------------------------------------------- */
+.sus-design .sus-unclaimed {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 190px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin: 26px 0 30px;
+}
+
+.sus-design .sus-unclaimed__card {
+  min-width: 0;
+  padding: 18px 20px 14px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--sdg);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.sus-design .sus-unclaimed__top {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.sus-design .sus-unclaimed__num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--sdg);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sus-design .sus-unclaimed__title {
+  margin: 0 0 5px;
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sus-design .sus-unclaimed__sign {
+  display: inline-block;
+  padding: 2px 10px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+}
+
+.sus-design .sus-unclaimed__sign--pos {
+  color: #2f7a4f;
+  border-color: rgba(47, 122, 79, 0.4);
+  background: rgba(47, 122, 79, 0.07);
+}
+
+.sus-design .sus-unclaimed__sign--neg {
+  color: #b03c1b;
+  border-color: rgba(176, 60, 27, 0.4);
+  background: rgba(176, 60, 27, 0.07);
+}
+
+.sus-design .sus-unclaimed__text {
+  margin: 0 0 12px;
+  font-size: 14.5px;
+  line-height: 1.68;
+  color: var(--ink-soft);
+  text-align: justify;
+  text-align-last: left;
+  text-wrap: pretty;
+}
+
+.sus-design .sus-unclaimed__targets {
+  border-top: 1px solid var(--line);
+}
+
+.sus-design .sus-unclaimed__targets .hp-accordion__trigger {
+  padding: 11px 0;
+  gap: 9px;
+}
+
+.sus-design .sus-unclaimed__targets .hp-accordion__title {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.sus-design .sus-unclaimed__targets .hp-accordion__content {
+  padding: 0 0 12px;
+  gap: 0;
+  animation: sus-disclosure-open 0.22s ease both;
+}
+
+.sus-design .sus-unclaimed__official {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sdg);
+  border-radius: 0 12px 12px 0;
+  background: var(--paper-soft);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-unclaimed__official strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* The artwork sits between the two cards, on the page's own paper — no
+   dark plate behind it. */
+.sus-design .sus-unclaimed__sdg {
+  margin: 0;
+  align-self: center;
+}
+
+.sus-design .sus-unclaimed__sdg img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The three climate readouts, as the card states them. */
+.sus-design .sus-climate-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 4px 0 14px;
+}
+
+.sus-design .sus-climate-strip > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper-soft);
+}
+
+.sus-design .sus-climate-strip__k {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-climate-strip__v {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.sus-design .sus-climate-strip__v--neg {
+  color: #b03c1b;
+}
+
+.sus-design .sus-climate-strip__btn {
+  grid-column: 1 / -1;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.sus-design .sus-climate-strip__btn:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .sus-design .sus-unclaimed {
+    grid-template-columns: 1fr;
+  }
+
+  .sus-design .sus-unclaimed__sdg {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+}
