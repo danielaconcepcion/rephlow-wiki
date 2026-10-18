@@ -1,15 +1,18 @@
 import type { EcosystemMapItem } from "../EcosystemMap";
 
 /**
- * The four wet-lab blocks as glass spheres, shared by the Experiments and
- * Results pages so both open on the same visual index and the same block
- * reads the same colour on either page.
+ * The four wet-lab blocks as glass spheres, shared by the Experiments,
+ * Measurements and Results pages — as the full EcosystemMap each opens on
+ * and as the corner index that takes over once that map scrolls away (see
+ * LabCornerIndex) — so all three read the same visual index and a block
+ * reads the same colour wherever it appears.
  *
  * This list used to live inside Experiments.tsx; it moved here when
  * Results adopted the same structure, because two copies of a set of
  * hand-placed coordinates and colours would drift apart on the first
- * tweak. The block ids match EXPERIMENT_BLOCKS and RESULT_BLOCKS, which is
- * what lets one map drive either page's selection.
+ * tweak. The block ids match EXPERIMENT_BLOCKS, MEASUREMENT_BLOCKS and
+ * RESULT_BLOCKS, which is what lets one map drive any of those pages'
+ * selection.
  *
  * Encapsulation is pushed bluer than --lab-encapsulation's own teal
  * (#146b78) so it reads as clearly distinct from Genetic engineering's

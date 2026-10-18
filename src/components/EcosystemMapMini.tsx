@@ -6,9 +6,10 @@ import "./EcosystemMapMini.css";
 /**
  * A tiny, corner-pinned "you are here" companion to EcosystemMap (see that
  * component's own doc comment). Shown only once the full map has scrolled
- * out of view (`visible`, gated by the caller from an IntersectionObserver
- * on whatever marks the boundary — see Engineering.tsx), so it never
- * competes with the full map for attention.
+ * out of view (`visible`, which every caller derives from the shared
+ * useCornerIndexVisible gate), so it never competes with the full map for
+ * attention. Engineering mounts it against its own five-sphere map;
+ * Experiments, Measurements and Results all go through LabCornerIndex.
  *
  * Collapsed, it shows only the active block's own sphere — same
  * glass/glow/--eco-color treatment as EcosystemMap, just smaller. Hovering

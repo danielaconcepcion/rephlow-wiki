@@ -164,3 +164,12 @@
     bottom: 14px;
   }
 }
+
+/* Bare scroll-position sentinel for useCornerIndexVisible's `until` (see
+   EcosystemMapMini.tsx) — not a visual at all, just a 1px node to place
+   just above whatever footer nav the corner sphere has to step aside for.
+   Shared by every page that mounts the corner index rather than each
+   declaring its own identical rule. */
+.ecosystem-map-mini-sentinel {
+  height: 1px;
+}
