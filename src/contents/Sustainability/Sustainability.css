@@ -18,9 +18,10 @@
 }
 
 /* A column of text is the wiki's width everywhere else (.lab-prose, 790px),
-   not the width of the grid cell. Figures, tables, the plant map and the
-   panels keep the full column — only running text is narrowed. The design
-   sets its margins inline, so the centring has to win over that. */
+   not the width of the grid cell. The plant map, the reading panels and
+   most figures and tables keep the full column; the few that read better
+   in the text column opt in with .sus-narrow. The design sets its margins
+   inline, so the centring has to win over that. */
 .sus-design main > section > p,
 .sus-design main > section > h3,
 .sus-design main > section > h4,
