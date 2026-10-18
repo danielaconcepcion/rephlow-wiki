@@ -13,7 +13,6 @@
 
 import { slicePalette, type DbtlPalette } from "./DbtlCycle";
 import type { Iteration } from "./dbtlData";
-import { ITERATIONS } from "./dbtlData";
 import { BACTERIAL_ENCAPSULATION_ITERATIONS } from "./BacterialEncapsulationData";
 import {
   ENZYME_PRODUCTION_ITERATIONS,
@@ -50,8 +49,7 @@ export interface EngineeringBlock {
 // above. Bacterial encapsulation keeps the original teal → --microbe
 // purple scale exactly; the others stay within their own section's
 // accent hue instead of sweeping across an unrelated stretch of the hue
-// wheel. Hardware's previous blue-grey sweep is kept below as
-// HARDWARE_GRADIENT_REFERENCE, unused but preserved for possible reuse.
+// wheel.
 export const ENGINEERING_PALETTES: Record<string, DbtlPalette> = {
   "genetic-engineering": {
     hFrom: 122,
@@ -77,7 +75,6 @@ export const ENGINEERING_PALETTES: Record<string, DbtlPalette> = {
     lFrom: 42,
     lTo: 52,
   },
-  hardware: { hFrom: 6, hTo: 20, sFrom: 58, sTo: 68, lFrom: 46, lTo: 54 },
   revalorisation: {
     hFrom: 38,
     hTo: 50,
@@ -87,19 +84,6 @@ export const ENGINEERING_PALETTES: Record<string, DbtlPalette> = {
     lTo: 52,
   },
 };
-
-// Kept only as a reference for the colour treatment — not wired into
-// ENGINEERING_PALETTES above. Hardware's spiral now uses the coral accent
-// shared with its ecosystem-map sphere instead.
-const HARDWARE_GRADIENT_REFERENCE: DbtlPalette = {
-  hFrom: 214,
-  hTo: 238,
-  sFrom: 16,
-  sTo: 24,
-  lFrom: 40,
-  lTo: 50,
-};
-void HARDWARE_GRADIENT_REFERENCE;
 
 /** Cuts a block's scale into `count` consecutive slices, one per thread,
  * with a small gap between them so each thread still reads as its own
@@ -155,9 +139,6 @@ export const ENGINEERING_BLOCKS: Record<string, EngineeringBlock> = {
         iterations: IMMOBILISATION_CHEMISTRY_ITERATIONS,
       },
     ]),
-  },
-  hardware: {
-    threads: threads("hardware", [{ key: "hardware", iterations: ITERATIONS }]),
   },
   revalorisation: {
     intro:
