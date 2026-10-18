@@ -546,12 +546,22 @@
 }
 
 .sus-design .sus-nilsson__link.dim {
-  opacity: 0.12;
+  opacity: 0.08;
+}
+
+/* Everything that is not the selected link steps back far enough that the
+   selected one reads at a glance, filtered or not. */
+.sus-design .sus-nilsson__link.off {
+  opacity: 0.22;
 }
 
 .sus-design .sus-nilsson__link.sel {
   opacity: 1;
-  filter: drop-shadow(0 0 4px rgba(27, 35, 64, 0.25));
+  filter: drop-shadow(0 1px 3px rgba(27, 35, 64, 0.3));
+}
+
+.sus-design .sus-nilsson__link.dim.off {
+  opacity: 0.08;
 }
 
 .sus-design .sus-nilsson__hit {
@@ -585,6 +595,18 @@
 
 .sus-design .sus-nilsson__node.dim {
   opacity: 0.35;
+}
+
+/* The two ends of the selected interaction are named, so the curve is not
+   the only thing carrying the selection. */
+.sus-design .sus-nilsson__node.sel rect {
+  fill: #fff;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+}
+
+.sus-design .sus-nilsson__node.sel text {
+  fill: var(--ink);
 }
 
 .sus-design .sus-nilsson__detail {

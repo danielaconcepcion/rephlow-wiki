@@ -266,10 +266,10 @@ export function NilssonMap() {
                 key={`link-${d.from}-${d.to}`}
                 d={path}
                 className={`sus-nilsson__link${visible(d) ? "" : " dim"}${
-                  i === selected ? " sel" : ""
+                  i === selected ? " sel" : " off"
                 }`}
                 stroke={d.score > 0 ? "#2f7a4f" : "#b03c1b"}
-                strokeWidth={d.score > 1 ? 5 : 2.6}
+                strokeWidth={(d.score > 1 ? 5 : 2.6) + (i === selected ? 2 : 0)}
                 strokeDasharray={conditional ? "7 5" : undefined}
               />
             );
@@ -303,7 +303,9 @@ export function NilssonMap() {
           {LEFT.map(([code, label]) => (
             <g
               key={`l-${code}`}
-              className={`sus-nilsson__node${usedLeft.has(`L${code}`) ? "" : " dim"}`}
+              className={`sus-nilsson__node${usedLeft.has(`L${code}`) ? "" : " dim"}${
+                code === current.from ? " sel" : ""
+              }`}
             >
               <rect
                 x={LX}
@@ -324,7 +326,9 @@ export function NilssonMap() {
           {RIGHT.map(([code, label]) => (
             <g
               key={`r-${code}`}
-              className={`sus-nilsson__node${usedRight.has(`R${code}`) ? "" : " dim"}`}
+              className={`sus-nilsson__node${usedRight.has(`R${code}`) ? "" : " dim"}${
+                code === current.to ? " sel" : ""
+              }`}
             >
               <rect
                 x={RX}
