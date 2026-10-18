@@ -699,6 +699,16 @@
 .dbtl-cycle__figure {
   margin: 10px 0 16px;
 }
+/* A real figure: the image sits on the same white paper the rest of the
+   panel uses, with a hairline instead of the placeholder's dashes. */
+.dbtl-cycle__figure-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper);
+}
 .dbtl-cycle__figure-placeholder {
   aspect-ratio: 16 / 9;
   display: flex;

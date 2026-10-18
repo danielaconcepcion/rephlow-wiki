@@ -61,6 +61,11 @@ export interface TableBlock {
 export interface FigureBlock {
   type: "figure";
   caption: string;
+  /** Path of the real image, relative to the wiki's asset root. Without
+   * it the block renders as the labelled stand-in described above. */
+  src?: string;
+  /** Alternative text; falls back to the caption. */
+  alt?: string;
 }
 
 export type ContentBlock =
@@ -99,8 +104,12 @@ export function table(
   return { type: "table", headers, rows, caption };
 }
 
-export function figure(caption: string): FigureBlock {
-  return { type: "figure", caption };
+export function figure(
+  caption: string,
+  src?: string,
+  alt?: string,
+): FigureBlock {
+  return { type: "figure", caption, src, alt };
 }
 
 export function phase(name: PhaseName, blocks: ContentBlock[]): Phase {

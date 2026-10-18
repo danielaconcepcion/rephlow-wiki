@@ -10,22 +10,11 @@ import "./Engineering.css";
 import {
   DbtlCycle,
   DbtlSectionNav,
-  slicePalette,
+  renderRich,
   type DbtlCycleHandle,
   type DbtlNavGroup,
-  type DbtlPalette,
 } from "./Engineering/DbtlCycle";
-import { BACTERIAL_ENCAPSULATION_ITERATIONS } from "./Engineering/BacterialEncapsulationData";
-import {
-  ENZYME_PRODUCTION_ITERATIONS,
-  IMMOBILISATION_CHEMISTRY_ITERATIONS,
-} from "./Engineering/EnzymaticImmobilisationData";
-import {
-  CLONING_ITERATIONS,
-  CRISPR_ITERATIONS,
-} from "./Engineering/GeneticEngineeringData";
-import { REVALORISATION_ITERATIONS } from "./Engineering/RevalorisationData";
-import { ITERATIONS, type Iteration } from "./Engineering/dbtlData";
+import { ENGINEERING_BLOCKS } from "./Engineering/blocks";
 
 /**
  * Five sub-pages. Tab switching is pure client state (no route change) —
@@ -53,10 +42,6 @@ import { ITERATIONS, type Iteration } from "./Engineering/dbtlData";
  * intro and closing Reflection. Hardware still uses the generic placeholder
  * content in Engineering/dbtlData.ts.
  */
-const TAB_ITERATIONS: Record<string, Iteration[] | undefined> = {
-  "bacterial-encapsulation": BACTERIAL_ENCAPSULATION_ITERATIONS,
-  revalorisation: REVALORISATION_ITERATIONS,
-};
 // The five Engineering tabs as glass spheres — see EcosystemMap's own doc
 // comment for the shared component's behaviour. Colours and illustrations
 // reuse Experiments' own ecosystem map wherever the block is the same —
@@ -129,102 +114,17 @@ const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
   },
 ];
 
-// Bacterial encapsulation keeps the original teal → --microbe purple scale
-// exactly — untouched, per explicit request. The other four now stay
-// within their own section's accent hue (matching the ecosystem map above)
-// instead of sweeping across an unrelated stretch of the hue wheel.
-// Hardware's previous blue-grey sweep is kept below as
-// HARDWARE_GRADIENT_REFERENCE, unused but preserved for possible reuse.
-const ENGINEERING_PALETTES: Record<string, DbtlPalette> = {
-  "genetic-engineering": {
-    hFrom: 122,
-    hTo: 138,
-    sFrom: 34,
-    sTo: 46,
-    lFrom: 38,
-    lTo: 48,
-  },
-  "bacterial-encapsulation": {
-    hFrom: 182,
-    hTo: 257,
-    sFrom: 46,
-    sTo: 27,
-    lFrom: 37,
-    lTo: 47,
-  },
-  "enzymatic-immobilisation": {
-    hFrom: 255,
-    hTo: 271,
-    sFrom: 34,
-    sTo: 46,
-    lFrom: 42,
-    lTo: 52,
-  },
-  hardware: { hFrom: 6, hTo: 20, sFrom: 58, sTo: 68, lFrom: 46, lTo: 54 },
-  revalorisation: {
-    hFrom: 38,
-    hTo: 50,
-    sFrom: 60,
-    sTo: 72,
-    lFrom: 42,
-    lTo: 52,
-  },
-};
-
-// Kept only as a reference for the colour treatment — not wired into
-// ENGINEERING_PALETTES above. Hardware's spiral now uses the coral accent
-// shared with its ecosystem-map sphere instead.
-const HARDWARE_GRADIENT_REFERENCE: DbtlPalette = {
-  hFrom: 214,
-  hTo: 238,
-  sFrom: 16,
-  sTo: 24,
-  lFrom: 40,
-  lTo: 50,
-};
-void HARDWARE_GRADIENT_REFERENCE;
-
-// Enzymatic immobilisation's real write-up splits its original 5-iteration
-// palette scale into two spirals of 3 and 2 iterations each (positions 0-2
-// and 3-4 of that scale — see slicePalette in DbtlCycle.tsx) rather than
-// each spiral getting the full hue range on its own, which is what keeps
-// the second spiral's gradient a continuation of the first's instead of a
-// restart.
-const ENZYME_PRODUCTION_PALETTE = slicePalette(
-  ENGINEERING_PALETTES["enzymatic-immobilisation"],
-  0,
-  0.5,
-);
-const IMMOBILISATION_CHEMISTRY_PALETTE = slicePalette(
-  ENGINEERING_PALETTES["enzymatic-immobilisation"],
-  0.75,
-  1,
-);
-
-// Genetic engineering's real write-up follows the same two-thread, one-
-// continuous-palette pattern as Enzymatic immobilisation above: "Cloning"
-// (3 iterations) and "CRISPR" (2 iterations) split the same 5-step
-// genetic-engineering palette scale rather than each getting the full hue
-// range, so CRISPR's spiral continues Cloning's gradient instead of
-// restarting it.
-const CLONING_PALETTE = slicePalette(
-  ENGINEERING_PALETTES["genetic-engineering"],
-  0,
-  0.5,
-);
-const CRISPR_PALETTE = slicePalette(
-  ENGINEERING_PALETTES["genetic-engineering"],
-  0.75,
-  1,
-);
-
 export function Engineering() {
   // No block is selected on load -- the ecosystem map starts fully
   // neutral (see EcosystemMap's own doc comment) and the page shows a
   // plain prompt below it (.engineering-empty-state) until a sphere is
   // actually clicked. `null` is also what a click outside the map, or
   // re-clicking the pinned sphere, hands back via handleTabChange.
-  const [activeTab, setActiveTab] = useState<string | null>(null);
+  // The page opens on the first block rather than on the empty state, so
+  // a reader lands on real content; clicking the hero still clears it.
+  const [activeTab, setActiveTab] = useState<string | null>(
+    ENGINEERING_ECOSYSTEM_ITEMS[0].id,
+  );
   const pageRef = useRef<HTMLDivElement | null>(null);
   const dividerRef = useRef<HTMLHRElement | null>(null);
 
@@ -326,125 +226,46 @@ export function Engineering() {
   // DbtlCycleHandle ref is what lets a nav click jump that specific
   // spiral, even when it isn't the one the user happens to be scrolled
   // through right now (e.g. jumping straight from "Enzyme production" to
-  // "Immobilisation chemistry"). Three slots cover every shape a block can
-  // take -- a single spiral, or the two enzymatic-immobilisation threads --
-  // never more than one or two of them mounted at once.
-  const singleCycleRef = useRef<DbtlCycleHandle | null>(null);
-  const [singleActive, setSingleActive] = useState({ iteration: 0, phase: 0 });
-  const productionCycleRef = useRef<DbtlCycleHandle | null>(null);
-  const [productionActive, setProductionActive] = useState({
-    iteration: 0,
-    phase: 0,
-  });
-  const chemistryCycleRef = useRef<DbtlCycleHandle | null>(null);
-  const [chemistryActive, setChemistryActive] = useState({
-    iteration: 0,
-    phase: 0,
-  });
-  const cloningCycleRef = useRef<DbtlCycleHandle | null>(null);
-  const [cloningActive, setCloningActive] = useState({
-    iteration: 0,
-    phase: 0,
-  });
-  const crisprCycleRef = useRef<DbtlCycleHandle | null>(null);
-  const [crisprActive, setCrisprActive] = useState({ iteration: 0, phase: 0 });
+  // "Immobilisation chemistry"). Both are keyed by thread, so a block can
+  // run one spiral or five without this page knowing anything about which
+  // block it is rendering.
+  const cycleRefs = useRef<Record<string, DbtlCycleHandle | null>>({});
+  const [threadActive, setThreadActive] = useState<
+    Record<string, { iteration: number; phase: number }>
+  >({});
 
-  // Which of the two enzymatic-immobilisation threads the reader is
-  // actually scrolled into right now -- see DbtlNavGroup's own
-  // isActiveBranch doc comment for why this gates which group's Iteration
-  // list gets to expand its Design/Build/Test/Learn children. Only ever
-  // set to a thread when that thread's own spiral reports itself in range
-  // (see onRangeChange below); moving out of range never clears it, so
-  // the last thread actually read stays the active branch through any
-  // in-between resting/transition scroll. Reset to the first thread on
-  // every fresh mount of this tab, so a repeat visit doesn't inherit
-  // whichever branch was active the last time it was open.
-  const [activeGroupKey, setActiveGroupKey] = useState<
-    "production" | "chemistry"
-  >("production");
+  const block = activeTab ? ENGINEERING_BLOCKS[activeTab] : undefined;
+
+  // Which thread the reader is actually scrolled into right now -- see
+  // DbtlNavGroup's own isActiveBranch doc comment for why this gates
+  // which thread's iteration list gets to expand its Design/Build/Test/
+  // Learn children. Only ever set to a thread when that thread's own
+  // spiral reports itself in range (see onRangeChange below); moving out
+  // of range never clears it, so the last thread actually read stays the
+  // active branch through any in-between resting/transition scroll. Reset
+  // to the first thread on every fresh mount of a block, so a repeat
+  // visit doesn't inherit whichever branch was active last time.
+  const [activeThreadKey, setActiveThreadKey] = useState<string | null>(null);
   useEffect(() => {
-    setActiveGroupKey("production");
+    setActiveThreadKey(null);
+    setThreadActive({});
   }, [activeTab]);
 
-  // Same pattern as activeGroupKey above, for Genetic engineering's own
-  // two threads (Cloning / CRISPR) -- kept as a separate piece of state
-  // rather than widening activeGroupKey's own union, since the two tabs'
-  // branch pairs are never both mounted at once and don't share a reset
-  // trigger any more precisely than "activeTab changed".
-  const [geneticGroupKey, setGeneticGroupKey] = useState<"cloning" | "crispr">(
-    "cloning",
-  );
-  useEffect(() => {
-    setGeneticGroupKey("cloning");
-  }, [activeTab]);
-
-  const navGroups: DbtlNavGroup[] =
-    activeTab === null
-      ? []
-      : activeTab === "genetic-engineering"
-        ? [
-            {
-              key: "cloning",
-              heading: "Cloning",
-              isActiveBranch: geneticGroupKey === "cloning",
-              palette: CLONING_PALETTE,
-              iterations: CLONING_ITERATIONS,
-              activeIteration: cloningActive.iteration,
-              activePhase: cloningActive.phase,
-              onJump: (i: number, p: number) =>
-                cloningCycleRef.current?.jumpToPhase(i, p),
-            },
-            {
-              key: "crispr",
-              heading: "CRISPR",
-              isActiveBranch: geneticGroupKey === "crispr",
-              palette: CRISPR_PALETTE,
-              iterations: CRISPR_ITERATIONS,
-              activeIteration: crisprActive.iteration,
-              activePhase: crisprActive.phase,
-              onJump: (i: number, p: number) =>
-                crisprCycleRef.current?.jumpToPhase(i, p),
-            },
-          ]
-        : activeTab === "enzymatic-immobilisation"
-          ? [
-              {
-                key: "production",
-                heading: "Enzyme production",
-                isActiveBranch: activeGroupKey === "production",
-                palette: ENZYME_PRODUCTION_PALETTE,
-                iterations: ENZYME_PRODUCTION_ITERATIONS,
-                activeIteration: productionActive.iteration,
-                activePhase: productionActive.phase,
-                onJump: (i: number, p: number) =>
-                  productionCycleRef.current?.jumpToPhase(i, p),
-              },
-              {
-                key: "chemistry",
-                heading: "Immobilisation chemistry",
-                isActiveBranch: activeGroupKey === "chemistry",
-                palette: IMMOBILISATION_CHEMISTRY_PALETTE,
-                iterations: IMMOBILISATION_CHEMISTRY_ITERATIONS,
-                activeIteration: chemistryActive.iteration,
-                activePhase: chemistryActive.phase,
-                onJump: (i: number, p: number) =>
-                  chemistryCycleRef.current?.jumpToPhase(i, p),
-              },
-            ]
-          : [
-              {
-                key: activeTab,
-                // No heading, no sibling branch to be inactive relative to
-                // -- this lone group is always the active one.
-                isActiveBranch: true,
-                palette: ENGINEERING_PALETTES[activeTab],
-                iterations: TAB_ITERATIONS[activeTab] ?? ITERATIONS,
-                activeIteration: singleActive.iteration,
-                activePhase: singleActive.phase,
-                onJump: (i: number, p: number) =>
-                  singleCycleRef.current?.jumpToPhase(i, p),
-              },
-            ];
+  const navGroups: DbtlNavGroup[] = (block?.threads ?? []).map((thread) => ({
+    key: thread.key,
+    heading: thread.heading,
+    // A block with a single thread has no sibling to be inactive
+    // relative to, so it is always the active one.
+    isActiveBranch:
+      block!.threads.length === 1 ||
+      (activeThreadKey ?? block!.threads[0].key) === thread.key,
+    palette: thread.palette,
+    iterations: thread.iterations,
+    activeIteration: threadActive[thread.key]?.iteration ?? 0,
+    activePhase: threadActive[thread.key]?.phase ?? 0,
+    onJump: (iteration: number, phase: number) =>
+      cycleRefs.current[thread.key]?.jumpToPhase(iteration, phase),
+  }));
 
   // The footer prev/next nav (rendered at the very bottom of the block,
   // below) always steps through ENGINEERING_ECOSYSTEM_ITEMS in the same
@@ -502,199 +323,47 @@ export function Engineering() {
         <div className="engineering-nav-layout">
           <DbtlSectionNav groups={navGroups} />
           <div className="engineering-content-wrap">
-            {activeTab === "genetic-engineering" ? (
-              <div className="engineering-threads">
+            <div className="engineering-threads">
+              {block?.intro && (
                 <p className="engineering-threads__intro">
-                  The engineering of this block followed a design, build, test
-                  and learn cycle across two complementary threads. The first
-                  was to construct expression plasmids carrying <em>ppk1</em>{" "}
-                  and <em>pstSCAB</em>, the heterologous phosphate-uptake and
-                  polyphosphate-storage genes from <em>Candidatus</em>{" "}
-                  Accumulibacter phosphatis, built and verified in an{" "}
-                  <em>E. coli</em> cloning host before the more demanding
-                  transfer into <em>P. putida</em>. The second was to inactivate
-                  the native <em>ppx</em>, <em>ppkB</em> and <em>pitB</em> genes
-                  by CRISPR base editing, removing pathways that could otherwise
-                  limit intracellular phosphorus retention. The two threads ran
-                  in parallel rather than in sequence, and in both, construct
-                  identity rather than a single successful-looking result was
-                  the actual bar for moving a candidate forward.
+                  {renderRich(block.intro)}
                 </p>
-                <section className="engineering-thread">
-                  <h2 className="engineering-thread__title">1. Cloning</h2>
+              )}
+              {block?.threads.map((thread, i) => {
+                const spiral = (
                   <div className="engineering-cycle-bleed">
                     <DbtlCycle
-                      key={`${activeTab}-cloning`}
-                      ref={cloningCycleRef}
-                      palette={CLONING_PALETTE}
-                      iterations={CLONING_ITERATIONS}
+                      key={`${activeTab}-${thread.key}`}
+                      ref={(handle) => {
+                        cycleRefs.current[thread.key] = handle;
+                      }}
+                      palette={thread.palette}
+                      iterations={thread.iterations}
                       onActiveChange={(iteration, phase) =>
-                        setCloningActive({ iteration, phase })
+                        setThreadActive((current) => ({
+                          ...current,
+                          [thread.key]: { iteration, phase },
+                        }))
                       }
                       onRangeChange={(inRange) =>
-                        inRange && setGeneticGroupKey("cloning")
+                        inRange && setActiveThreadKey(thread.key)
                       }
                     />
                   </div>
-                </section>
-                <section className="engineering-thread">
-                  <h2 className="engineering-thread__title">2. CRISPR</h2>
-                  <div className="engineering-cycle-bleed">
-                    <DbtlCycle
-                      key={`${activeTab}-crispr`}
-                      ref={crisprCycleRef}
-                      palette={CRISPR_PALETTE}
-                      iterations={CRISPR_ITERATIONS}
-                      onActiveChange={(iteration, phase) =>
-                        setCrisprActive({ iteration, phase })
-                      }
-                      onRangeChange={(inRange) =>
-                        inRange && setGeneticGroupKey("crispr")
-                      }
-                    />
-                  </div>
-                </section>
-              </div>
-            ) : activeTab === "enzymatic-immobilisation" ? (
-              <div className="engineering-threads">
-                <p className="engineering-threads__intro">
-                  The engineering of this block followed a design, build, test
-                  and learn cycle across two coupled fronts. The first was to
-                  decide which phosphohydrolases to make and then to produce
-                  them in <em>E. coli</em> in soluble, active form. The second
-                  was to work out a chemistry that fixes those enzymes onto a
-                  support without destroying the very activity we needed. The
-                  two fronts are threaded: the enzymes had to exist before they
-                  could be immobilised, but the immobilisation chemistry could
-                  not wait for the full panel to be produced, so a model enzyme
-                  was used to develop it in parallel. Throughout, the useful
-                  engineering signal was rarely the first result of an
-                  experiment. It was how the question we were actually asking
-                  changed as each result came in.
-                </p>
-                <section className="engineering-thread">
-                  <h2 className="engineering-thread__title">
-                    1. Enzyme production
-                  </h2>
-                  <div className="engineering-cycle-bleed">
-                    <DbtlCycle
-                      key={`${activeTab}-production`}
-                      ref={productionCycleRef}
-                      palette={ENZYME_PRODUCTION_PALETTE}
-                      iterations={ENZYME_PRODUCTION_ITERATIONS}
-                      onActiveChange={(iteration, phase) =>
-                        setProductionActive({ iteration, phase })
-                      }
-                      onRangeChange={(inRange) =>
-                        inRange && setActiveGroupKey("production")
-                      }
-                    />
-                  </div>
-                </section>
-                <section className="engineering-thread">
-                  <h2 className="engineering-thread__title">
-                    2. Immobilisation chemistry
-                  </h2>
-                  <div className="engineering-cycle-bleed">
-                    <DbtlCycle
-                      key={`${activeTab}-chemistry`}
-                      ref={chemistryCycleRef}
-                      palette={IMMOBILISATION_CHEMISTRY_PALETTE}
-                      iterations={IMMOBILISATION_CHEMISTRY_ITERATIONS}
-                      onActiveChange={(iteration, phase) =>
-                        setChemistryActive({ iteration, phase })
-                      }
-                      onRangeChange={(inRange) =>
-                        inRange && setActiveGroupKey("chemistry")
-                      }
-                    />
-                  </div>
-                </section>
-              </div>
-            ) : activeTab === "revalorisation" ? (
-              /* One thread (a single spiral, like Bacterial encapsulation),
-                 framed by the source's own intro and closing Reflection —
-                 see Engineering/RevalorisationData.ts. */
-              <div className="engineering-threads">
-                <p className="engineering-threads__intro">
-                  Our engineering goal on this side of the project was clear
-                  from the start:{" "}
-                  <strong>
-                    transform the polyphosphate our bacteria accumulate into
-                    something of actual value
-                  </strong>
-                  , closing the cycle rather than leaving polyP as a dead end.
-                  The harder question was where to start and how, and the two
-                  iterations below are the process of turning that open
-                  question into a specific, coupled enzymatic system, and then
-                  into a system stable enough to be worth scaling.
-                </p>
-                <div className="engineering-cycle-bleed">
-                  <DbtlCycle
-                    key={activeTab}
-                    ref={singleCycleRef}
-                    palette={ENGINEERING_PALETTES[activeTab]}
-                    iterations={REVALORISATION_ITERATIONS}
-                    onActiveChange={(iteration, phase) =>
-                      setSingleActive({ iteration, phase })
-                    }
-                  />
-                </div>
-                <section className="engineering-thread engineering-reflection">
-                  <h2 className="engineering-thread__title">Reflection</h2>
-                  <p className="engineering-threads__intro">
-                    Looking back at this whole process, what stands out most is
-                    not any single result but{" "}
-                    <strong>the path it took to get there</strong>. Every
-                    choice, from picking DHAP over glucose 6-phosphate, to
-                    landing on PPK2 and DHAK, to testing a PROSS variant that
-                    turned out not to work, came from{" "}
-                    <strong>
-                      trial and error rather than a straight line planned out
-                      from day one
-                    </strong>
-                    . Design 5 failing was not a setback so much as
-                    information: it told us something real about how DHAK's
-                    stability and function are connected, and pushed us toward
-                    a smarter, more conservative next step instead of a lucky
-                    guess. The purification problem taught a related lesson
-                    from a completely different angle: even a routine,
-                    well-established method like IMAC can quietly fail on a
-                    protein it was never validated for, and the fix was not to
-                    force it, but to bring in a different technique, FPLC, that
-                    was actually suited to DHAK. And the SpyTag–SpyCatcher work
-                    is a reminder that engineering decisions keep compounding,
-                    even assigning which half of a fusion tag goes on which
-                    enzyme required reasoning back to basic properties like
-                    size and oligomeric state. None of this would have happened
-                    without the people who talked us through it along the way.{" "}
-                    <strong>Eduardo, Israel and Día</strong> did not just hand
-                    us protocols, they challenged our assumptions, pointed out
-                    things we had not considered, and helped us read our own
-                    results more critically. That kind of exchange with the
-                    wider scientific community shaped this part of the project
-                    just as much as anything we did at the bench, and it is a
-                    reminder that{" "}
-                    <strong>good science rarely happens in isolation</strong>.
-                    Staying open to being wrong, and staying in conversation
-                    with people who know more than we do, turned out to be just
-                    as important as any single experiment.
-                  </p>
-                </section>
-              </div>
-            ) : (
-              <div className="engineering-cycle-bleed">
-                <DbtlCycle
-                  key={activeTab}
-                  ref={singleCycleRef}
-                  palette={ENGINEERING_PALETTES[activeTab]}
-                  iterations={TAB_ITERATIONS[activeTab]}
-                  onActiveChange={(iteration, phase) =>
-                    setSingleActive({ iteration, phase })
-                  }
-                />
-              </div>
-            )}
+                );
+                // A single-thread block is just its spiral: no heading to
+                // tell it apart from a sibling, and no number to count.
+                if (!thread.heading) return spiral;
+                return (
+                  <section className="engineering-thread" key={thread.key}>
+                    <h2 className="engineering-thread__title">
+                      {i + 1}. {thread.heading}
+                    </h2>
+                    {spiral}
+                  </section>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

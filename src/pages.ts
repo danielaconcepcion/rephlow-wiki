@@ -83,7 +83,8 @@ const Pages: Page[] = [
     docTitle: "Engineering — rePhlow iGEM Wiki",
     awards: [{ label: "Silver Medal", variant: "silver" }],
     hideEyebrow: true,
-    compactHero: true,
+    labHero: true,
+    moleculeSeed: 29,
   },
   {
     name: "Model",

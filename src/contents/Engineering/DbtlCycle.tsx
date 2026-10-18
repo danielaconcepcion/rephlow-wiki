@@ -397,7 +397,7 @@ type IterColorStyle = CSSProperties & { "--iter-color": string };
  * pattern is matched before italic too, so a single `*` inside a link's
  * `(href)` (none of ours have one, but link text itself could in
  * principle) can't be mistaken for an italic delimiter. */
-function renderRich(text: string): ReactNode[] {
+export function renderRich(text: string): ReactNode[] {
   const nodes: ReactNode[] = [];
   const regex =
     /\*\*(.+?)\*\*|\{\{(.+?)\}\}|\[([^\]]+)\]\(([^)]*)\)|\*(.+?)\*|\n/g;
@@ -474,9 +474,18 @@ function renderBlock(block: ContentBlock, blockKey: number): ReactNode {
   if (block.type === "figure") {
     return (
       <figure key={blockKey} className="dbtl-cycle__figure">
-        <div className="dbtl-cycle__figure-placeholder" aria-hidden="true">
-          [ figure placeholder ]
-        </div>
+        {block.src ? (
+          <img
+            className="dbtl-cycle__figure-image"
+            src={asset(block.src)}
+            alt={block.alt ?? ""}
+            loading="lazy"
+          />
+        ) : (
+          <div className="dbtl-cycle__figure-placeholder" aria-hidden="true">
+            [ figure placeholder ]
+          </div>
+        )}
         <figcaption>{renderRich(block.caption)}</figcaption>
       </figure>
     );
