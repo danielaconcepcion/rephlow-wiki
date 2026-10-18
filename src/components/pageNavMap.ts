@@ -6,9 +6,11 @@
  * Pages live in pages.ts (routes, heroes, awards); this file only adds
  * what the footer navigation needs, so a page can be reordered or given
  * a different icon in one place instead of in every content file. The
- * order mirrors pages.ts — Home (the landing page) and Content Patterns
- * (internal reference, not in the Navbar) stay out of the chain, so
- * Project Description has no "Previous" and Medals no "Next".
+ * order mirrors pages.ts. Content Patterns (internal reference, not in
+ * the Navbar) stays out of the chain, and Home opens it as a
+ * destination only — Project Description points back to it, but the
+ * landing page keeps its own ending, so it shows no nav of its own and
+ * Medals has no "Next".
  */
 export interface PageNavEntry {
   /** Route, exactly as in pages.ts. */
@@ -17,9 +19,17 @@ export interface PageNavEntry {
   label: string;
   /** Illustrated icon of this page, relative to the wiki's asset root. */
   icon: string;
+  /** A destination for its neighbours, but shows no nav of its own. */
+  isDestinationOnly?: boolean;
 }
 
 export const PAGE_NAV_ORDER: PageNavEntry[] = [
+  {
+    path: "/",
+    label: "Home",
+    icon: "assets/nav-icons/home.webp",
+    isDestinationOnly: true,
+  },
   {
     path: "/project-description",
     label: "Project Description",
@@ -87,7 +97,8 @@ export const PAGE_NAV_ORDER: PageNavEntry[] = [
 /** The entries to put before and after `path`, or undefined at the ends. */
 export function getAdjacentPages(path: string) {
   const index = PAGE_NAV_ORDER.findIndex((entry) => entry.path === path);
-  if (index === -1) return { prev: undefined, next: undefined };
+  if (index === -1 || PAGE_NAV_ORDER[index].isDestinationOnly)
+    return { prev: undefined, next: undefined };
   return {
     prev: index > 0 ? PAGE_NAV_ORDER[index - 1] : undefined,
     next:

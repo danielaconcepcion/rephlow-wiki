@@ -1,10 +1,11 @@
 /* ==========================================================================
    AdjacentPageNav — the wiki's shared Previous/Next handoff. Same
    typography, sizes and rhythm as .engineering-block-nav (see
-   Engineering.css), but with a neutral circle instead of the block
-   colour: outside Engineering there is no per-page colour to carry, so
-   the illustration does the identifying on its own. No gradient, no
-   shadow — just a hairline ring on a faint neutral wash.
+   Engineering.css), and the same glass sphere, only mixed from --ink
+   instead of the block colour: outside Engineering there is no
+   per-page colour to carry, so the circle stays grey and the
+   illustration does the identifying on its own. A little wider than
+   Engineering's, too, since these icons carry more detail.
    ========================================================================== */
 
 .adjacent-page-nav {
@@ -38,12 +39,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 58px;
+  height: 58px;
   border-radius: 999px;
   overflow: hidden;
-  border: 1px solid var(--line);
-  background: color-mix(in srgb, var(--ink) 4%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--ink) 12%, transparent),
+    color-mix(in srgb, var(--ink) 4%, transparent) 60%,
+    rgba(255, 255, 255, 0.6)
+  );
+  box-shadow:
+    var(--shadow-soft),
+    inset 0 3px 6px rgba(255, 255, 255, 0.5);
   transition: transform 260ms ease;
 }
 .adjacent-page-nav__link:hover .adjacent-page-nav__icon,
@@ -51,8 +60,9 @@
   transform: scale(1.06);
 }
 .adjacent-page-nav__icon img {
-  width: 70%;
-  height: 70%;
+  position: relative;
+  width: 74%;
+  height: 74%;
   object-fit: contain;
 }
 
@@ -123,8 +133,8 @@
     justify-content: flex-end;
   }
   .adjacent-page-nav__icon {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
   }
   .adjacent-page-nav__eyebrow {
     font-size: 0.65rem;
