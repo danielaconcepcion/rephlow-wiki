@@ -25,7 +25,7 @@ export interface VisualIndexBlock {
   title: string;
   /** CSS color value (var(...) or literal hex) used for the accent dot, label, and card. */
   accent: string;
-  /** asset() path for the transparent overlay PNG. Absent for "model" (label-only, no overlay). */
+  /** asset() path for the transparent overlay image. */
   overlayImage?: string;
   box?: LayerBox;
   adjust?: LayerAdjust;
@@ -106,7 +106,9 @@ export const RAW_BLOCKS: VisualIndexBlock[] = [
     order: 5,
     title: "Model",
     accent: "var(--ink-soft)",
-    labelPos: { left: 87, top: 92 },
+    overlayImage: asset("assets/our-solution/model-clean.webp"),
+    box: { l: 0.765, t: 0.695, w: 0.17, h: 0.214 },
+    labelPos: { left: 77, top: 88 },
     description:
       "Genome-scale and kinetic models guide genetic edits, operating conditions and phosphate-accumulation performance.",
     sectionId: "model",
@@ -146,8 +148,7 @@ export function getAdjustedBox(block: VisualIndexBlock): LayerBox | undefined {
 
 /**
  * z-index per block, derived by sorting blocks that have a box by area (w*h)
- * descending — larger overlays sit behind smaller ones. "model" has no box and
- * is excluded (it never renders a layer or hitbox).
+ * descending — larger overlays sit behind smaller ones.
  */
 export const LAYER_Z: Partial<Record<BlockId, number>> = (() => {
   const withArea = RAW_BLOCKS.filter((b) => b.box)

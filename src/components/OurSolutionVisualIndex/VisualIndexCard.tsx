@@ -24,7 +24,9 @@ export function VisualIndexCard({
 
   const style: AccentStyle = isNarrow
     ? { "--vsi-accent": block.accent }
-    : { left: `${cx}%`, top: `${cy}%`, "--vsi-accent": block.accent };
+    : block.id === "model"
+      ? { right: "12px", bottom: "12px", "--vsi-accent": block.accent }
+      : { left: `${cx}%`, top: `${cy}%`, "--vsi-accent": block.accent };
 
   return (
     <div
