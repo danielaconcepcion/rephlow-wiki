@@ -748,13 +748,6 @@ function TravelArchiveIndex() {
 
   return (
     <div className="ta-map-index" aria-labelledby="ta-map-index-title">
-      <div className="ta-map-index__intro">
-        <h3 id="ta-map-index-title">Explore the Travel Archive</h3>
-        <p>
-          Follow the six stops on our route. Select a place on the map to jump
-          directly to its field record.
-        </p>
-      </div>
 
       <div
         className={`ta-map-index__illustration${activeLayer ? " is-active" : ""}`}
