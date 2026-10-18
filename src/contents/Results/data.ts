@@ -19,8 +19,6 @@ import {
   REVALORISATION_REFERENCES,
   REVALORISATION_SUBBLOCKS,
 } from "./RevalorisationData";
-import currentEditorial from "../CurrentEditorialText.json";
-import { applyResultEditorial } from "../applyEditorialText";
 
 /**
  * The Results page's four blocks, matching EXPERIMENT_BLOCKS one-for-one in
@@ -72,10 +70,3 @@ export const RESULT_BLOCKS: ResultBlockData[] = [
     references: REVALORISATION_REFERENCES,
   },
 ];
-
-applyResultEditorial(
-  RESULT_BLOCKS,
-  currentEditorial.results,
-  currentEditorial.resultBlocks,
-  currentEditorial.resultSections,
-);

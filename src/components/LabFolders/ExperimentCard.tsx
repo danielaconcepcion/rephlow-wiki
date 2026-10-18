@@ -11,7 +11,6 @@ import { Caption } from "./Caption";
 import { Rich } from "./RichText";
 import { ProtocolModal } from "./ProtocolModal";
 import { ZoomableImage } from "./ZoomableImage";
-import { EditorialText } from "./EditorialText";
 
 function DataTable({
   table,
@@ -274,13 +273,7 @@ function SectionHeading({
   );
 }
 
-function BodyBlock({
-  block,
-  level = 1,
-}: {
-  block: ExperimentBodyBlock;
-  level?: number;
-}) {
+function BodyBlock({ block, level = 1 }: { block: ExperimentBodyBlock; level?: number }) {
   const hasParagraphs = !!block.paragraphs?.length;
 
   /* A folded section: the title is the summary, the children are what it
@@ -368,8 +361,7 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
     src: string;
     title: string;
   } | null>(null);
-  const hasEditorial = !!data.editorial?.length;
-  const hasBody = !hasEditorial && !!data.body?.length;
+  const hasBody = !!data.body?.length;
   const hasMaterials = !!(
     data.materialsTable?.length || data.materialsList?.length
   );
@@ -410,32 +402,17 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
           </h3>
           <EnzymeChips enzymes={data.enzymes} />
         </div>
-        {!hasEditorial && !hasBody && !canPairTable && (
+        {!hasBody && !canPairTable && (
           <DescriptionParagraphs paragraphs={descriptionParagraphs} />
         )}
       </header>
-
-      {hasEditorial && <EditorialText blocks={data.editorial!} />}
 
       {hasBody &&
         data.body!.map((block, index) => (
           <BodyBlock block={block} key={index} />
         ))}
 
-      {hasEditorial &&
-        data.body
-          ?.filter((block) => block.pairedResource)
-          .map((block, index) => (
-            <BodyBlock
-              block={{
-                pairedResource: block.pairedResource,
-                layout: block.layout,
-              }}
-              key={`resource-${index}`}
-            />
-          ))}
-
-      {!hasEditorial && !hasBody && canPairTable && (
+      {!hasBody && canPairTable && (
         <div className="experiment-card__pair">
           <div className="experiment-card__text">
             <DescriptionParagraphs paragraphs={descriptionParagraphs} />
@@ -508,20 +485,18 @@ export function ExperimentCard({ data }: { data: ExperimentData }) {
         </section>
       )}
 
-      {(hasEditorial || !hasBody) &&
-        hasTables &&
-        (hasEditorial || !canPairTable) && (
-          <section
-            className="experiment-card__tables"
-            aria-label="Experimental parameters"
-          >
-            {data.tables!.map((table, index) => (
-              <DataTable table={table} numberKey={table} key={index} />
-            ))}
-          </section>
-        )}
+      {!hasBody && hasTables && !canPairTable && (
+        <section
+          className="experiment-card__tables"
+          aria-label="Experimental parameters"
+        >
+          {data.tables!.map((table, index) => (
+            <DataTable table={table} numberKey={table} key={index} />
+          ))}
+        </section>
+      )}
 
-      {(hasEditorial || !hasBody) && data.figure && (
+      {!hasBody && data.figure && (
         <figure className="record-figure experiment-card__figure">
           <div className="record-figure__placeholder" aria-hidden="true">
             [ figure placeholder ]

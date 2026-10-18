@@ -8,7 +8,6 @@ import { FolderStack } from "../../components/LabFolders/FolderStack";
 import { ExperimentCard } from "../../components/LabFolders/ExperimentCard";
 import { BlockReferences } from "../../components/LabFolders/BlockReferences";
 import { Rich } from "../../components/LabFolders/RichText";
-import { EditorialText } from "../../components/LabFolders/EditorialText";
 import { EncapsulationWorkflow } from "./workflowFigures/EncapsulationWorkflow";
 import { RevalorisationWorkflow } from "./workflowFigures/RevalorisationWorkflow";
 import { EnzymaticWorkflow } from "./workflowFigures/EnzymaticWorkflow";
@@ -232,16 +231,10 @@ export function Experiments() {
                   repeating it as an on-page title would be a redundant
                   heading. The block's own intro, when it has one, still runs
                   narrow and centered like ProjectDescription's prose. */}
-              {activeBlock.editorial ? (
+              {activeBlock.intro && (
                 <div className="lab-prose">
-                  <EditorialText blocks={activeBlock.editorial} />
+                  {paragraphs(activeBlock.intro, "lab-block__intro")}
                 </div>
-              ) : (
-                activeBlock.intro && (
-                  <div className="lab-prose">
-                    {paragraphs(activeBlock.intro, "lab-block__intro")}
-                  </div>
-                )
               )}
 
               {/* Revalorisation's workflow closes its intro, where the
@@ -380,11 +373,7 @@ export function Experiments() {
                         <h2 className="lab-subblock__heading">
                           {subBlock.heading}
                         </h2>
-                        {subBlock.editorial ? (
-                          <EditorialText blocks={subBlock.editorial} />
-                        ) : (
-                          paragraphs(subBlock.intro, "lab-subblock__intro")
-                        )}
+                        {paragraphs(subBlock.intro, "lab-subblock__intro")}
                       </div>
                       {/* Genetic engineering's three workflows, redrawn: each
                         closes its sub-block's intro, where the original image
