@@ -470,7 +470,7 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             title: "Where to place the fusion",
             paragraphs: [
-              "Which terminus carries each element is a second decision, independent of the first, and it cannot be made from the sequence alone. The fusion has to sit away from the catalytic regions, but it also has to leave the two active sites of the assembled complex facing each other, since that geometry is what channelling depends on. Both ends of each enzyme are in principle available, so the placement has to be examined structurally, by looking at where the tag and the catcher end up relative to the active sites, before committing to a construct.",
+              "Which terminus carries each element is a second decision, independent of the first, and it cannot be made from the sequence alone. The fusion has to sit away from the catalytic regions, but it also has to leave the two active sites of the assembled complex facing each other, since that geometry is what channelling depends on. Both ends of each enzyme are in principle available, so the placement has to be examined structurally, by looking at where the tag and the catcher end up relative to the active sites, before committing to a construct. The **hexahistidine tag of the expression vector sits at the C-terminus**, which constrains the available positions and has to be accounted for in any construct placing a fusion element at that end.",
             ],
           },
           {
@@ -481,12 +481,6 @@ export const REVALORISATION_SUBBLOCKS: ExperimentSubBlock[] = [
               "Second, within each assignment, the **position of the fusion** on each enzyme. Because we cannot predict how much the attachment point affects folding, activity or the geometry of the complex, as many combinations as possible should be built and compared, placing each element at the N- or the C-terminus of its enzyme. Comparing them is the only way to tell whether the position is what limits the system and to arrive at the most favourable configuration.",
               "Each fusion would first be checked on its own, for expression, solubility and retained activity against the corresponding unfused enzyme as a control. Only the fusions that keep their activity would then be combined, and the assembled complex compared with the **free enzyme mixture** in the coupled assay, which is the control that tells whether joining the enzymes actually helps. This is what would show which combination, if any, produces a functional channelled complex.",
               "**This stage remained at the level of experimental design.** Only one assignment of the elements was designed, and only for part of the possible placements; the reciprocal arrangement was left as a planned comparison and has not been designed. None of the constructs was taken to the bench within the time available, so no fusion was expressed or assayed. We document the reasoning, what was designed and the comparisons that still have to be made so that a future team can take them up.",
-            ],
-            callouts: [
-              {
-                kind: "outcome",
-                text: "A modelled and fully designed SpyTag–DHAK / SpyCatcher–PPK2 pair, and a defined experimental plan, including the reciprocal arrangement still to be designed.",
-              },
             ],
           },
         ],
