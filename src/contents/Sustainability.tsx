@@ -3,10 +3,18 @@ import type { CSSProperties, MouseEvent } from "react";
 
 import { PageSectionNav, type PageSection } from "../components/PageSectionNav";
 import { MoleculeBackdrop } from "../components/MoleculeBackdrop/MoleculeBackdrop";
-import { AdjacentPageNav } from "../components/AdjacentPageNav";
 import { asset } from "../utils";
 import { SEATS } from "./Sustainability/seats";
 import "./Sustainability/Sustainability.css";
+import { AccordionSection } from "./HumanPractices/AccordionSection";
+import { NilssonMap } from "./Sustainability/NilssonMap";
+import {
+  ConcentrationGap,
+  EcologicalStatusBar,
+  GoalConsole,
+  MiniReadouts,
+  WaterChain,
+} from "./Sustainability/GoalConsole";
 
 /* --------------------------------------------------------------------------
    Sustainability — the page as it was designed in Claude Design
@@ -1946,658 +1954,735 @@ export function Sustainability() {
               project that only reports the goals it advances has not finished
               looking.
             </p>
-            <figure
-              style={{
-                margin: "30px 0",
-                borderRadius: "28px",
-                background:
-                  "radial-gradient(ellipse at 50% 40%,#ffffff 0%,var(--water-clear) 100%)",
-                border: "1px solid var(--line)",
-                padding: "12px",
-              }}
-            >
-              <img
-                src={asset("assets/sustainability/sdg-main.png")}
-                alt="Sustainable Development Goals 6, 12 and 14"
-                style={{
-                  display: "block",
-                  width: "100%",
-                  maxWidth: "620px",
-                  margin: "0 auto",
-                  height: "auto",
-                }}
-              />
-            </figure>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 6 — Clean water and sanitation
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
-              >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 6.3:{" "}
-                </strong>
-                <em>
-                  By 2030, improve water quality by reducing pollution,
-                  eliminating dumping and minimizing release of hazardous
-                  chemicals and materials, halving the proportion of untreated
-                  wastewater and substantially increasing recycling and safe
-                  reuse globally. <br />
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 6.6:
-                </strong>
-                <em>By </em>
-                <em>
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    2020
-                  </strong>
-                </em>
-                <em>
-                  , protect and restore water-related ecosystems, including
-                  mountains, forests, wetlands, rivers, aquifers and lakes.
-                  <br />
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 6.b:{" "}
-                </strong>
-                <em>
-                  Support and strengthen the participation of local communities
-                  in improving water and sanitation management.
-                </em>
-                <a className="lab-citation" href="#ref-r01-1">
-                  [1]
-                </a>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 6.3
-              </strong>{" "}
-              is the centre of gravity of this project: halving untreated
-              wastewater and cutting the release of hazardous chemicals into
-              nature. But a global target does not tell you how much phosphorus
-              is too much. In our jurisdiction, that answer is written into law.
-              Directive (EU) 2024/3019, which replaces the Urban Wastewater
-              Treatment Directive from August 2027, sets total-phosphorus limits
-              of{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                0.7 mg/L{" "}
-              </strong>
-              for plants serving 10,000 to 150,000 population equivalents and{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                0.5 mg/L
-              </strong>{" "}
-              for larger facilities, phased in between 2033 and 2045.{" "}
-              <a className="lab-citation" href="#ref-r01-2">
-                [2]
-              </a>
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Those numbers are the clearest operational statement of target 6.3
-              in our jurisdiction, and we adopted them as the yardstick rePhlow
-              is designed against. They are a benchmark we chose, not a limit
-              that binds our first use case: the Directive governs urban
-              wastewater, and what an industrial discharge is actually required
-              to meet depends on its permit, its discharge route and national
-              implementation. We hold ourselves to the urban figure because it
-              is the strictest reference available and because designing against
-              a number is the difference between claiming to help with clean
-              water and being able to say whether we did.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Target 6.3 is the number. Targets{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                6.6{" "}
-              </strong>
-              and{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                6.b{" "}
-              </strong>
-              cover what happens when it is missed.{" "}
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 6.6
-              </strong>{" "}
-              asks us to protect and restore water-related ecosystems, and the
-              word carrying the weight is <em>restore</em>. Cutting the nutrient
-              load does not automatically undo the damage: past a certain point,
-              a degraded water body can hold that state on its own, and the way
-              back does not undo the damage already done.{" "}
-              <a className="lab-citation" href="#ref-r01-3">
-                [3]
-              </a>{" "}
-              That asymmetry is the entire argument for acting early.
-              Restoration is a slower and more expensive process compared to
-              never crossing the line. This is why rePhlow is designed to act at
-              an industrial outfall rather than at a lake: preventing a load
-              from entering a water body is a problem with a known solution,
-              while restoring one that has already shifted is not.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              For most of Europe, restoration is already the default task rather
-              than the contingency. The European Environment Agency’s 2024
-              assessment, covering more than 120,000 surface water bodies, found
-              that only 37% reached good or high ecological status in the
-              2015-2021 period.{" "}
-              <a className="lab-citation" href="#ref-r01-4">
-                [4]
-              </a>{" "}
-              Ecological status is a complex measure and nutrient levels are
-              only one of the many pressures behind it, but the direction is
-              unambiguous: the majority of Europe’s surface water is already
-              below the standard its own law sets for it.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              There is also a gap between the two targets that is easy to miss.
-              The concentrations at which a water body begins to shift towards
-              eutrophication are conventionally given as phosphorus above{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                0.01-0.02 mg/L{" "}
-              </strong>
-              in the receiving water.{" "}
-              <a className="lab-citation" href="#ref-r01-5">
-                [5]
-              </a>{" "}
-              The discharge limit that target 6.3 translates into is{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                0.7 mg/L
-              </strong>{" "}
-              at the outfall.{" "}
-              <a className="lab-citation" href="#ref-r01-2">
-                [2]
-              </a>{" "}
-              These measurements are not comparable, as one is measured in
-              bodies of water and the other in a pipe, with dilution in between.
-              The order of magnitude between them is the reason 6.3 and 6.6 are
-              separate targets. Complying with a discharge limit is not the same
-              as leaving an ecosystem unchanged, and we would rather focus on
-              the first while being honest that it does not guarantee the
-              second.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                6.b{" "}
-              </strong>
-              asks for the participation of local communities in improving water
-              management, and it is the target we could have missed if we just
-              stayed in the lab. A resident of the San Juan reservoir told us
-              that she had watched the water change for decades without being
-              explained the reason why.{" "}
-              <a href="#r04" className="lab-wikilink">
-                Check out room 04
-              </a>{" "}
-              A treatment nobody can explain to the people living beside the
-              water does not serve this target, despite its effectiveness. That
-              conversation is why room 04 exists.
-            </p>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 12 — Responsible consumption and production
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
-              >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 12.2:{" "}
-                </strong>
-                <em>
-                  By 2030, achieve the sustainable management and efficient use
-                  of natural resources.
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  <br />
-                  Target 12.4:{" "}
-                </strong>
-                <em>By </em>
-                <em>
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    2020
-                  </strong>
-                </em>
-                <em>
-                  , achieve the environmentally sound management of chemicals
-                  and all wastes throughout their life cycle, in accordance with
-                  agreed international frameworks, and significantly reduce
-                  their release to air, water and soil in order to minimize
-                  their adverse impacts on human health and the environment.
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  <br />
-                  Target 12.5:
-                </strong>
-                <em>
-                  By 2030, substantially reduce waste generation through
-                  prevention, reduction, recycling and reuse.{" "}
-                </em>
-                <a className="lab-citation" href="#ref-r01-6">
-                  [6]
-                </a>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 12.2{" "}
-              </strong>
-              is the one that turns our project inside out. Rather than viewing
-              phosphorus as just a pollutant that needs to be eradicated, we can
-              recognise that it is a resource that can be given a second life.
-              Phosphate rock is non-renewable and phosphorus is irreplaceable in
-              our diet; estimated data place the peak of global production
-              within decades rather than centuries.{" "}
-              <a className="lab-citation" href="#ref-r01-7">
-                [7]
-              </a>{" "}
-              Its reserves are also extremely concentrated, with around 70% of
-              the world’s known reserves being located in a single country.{" "}
-              <a className="lab-citation" href="#ref-r01-8">
-                [8]
-              </a>{" "}
-              Every kilogramme of phosphorus found in wastewater sludge is a
-              kilogramme that needs to be mined.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              This is why rePhlow does not stop at removal. Removing phosphorus
-              from water and burying it is not enough; returning it to use is
-              efficient waste and resource management.
-            </p>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(110,90,150,0.06)",
-                border: "1px solid rgba(110,90,150,0.2)",
-              }}
-            >
-              <h5
-                style={{
-                  margin: "0 0 10px",
-                  fontFamily: "var(--font-display)",
-                  fontSize: "17px",
-                  lineHeight: "1.3",
-                  fontWeight: "600",
-                  color: "#5e4c86",
-                }}
-              >
-                12.2 beyond each project’s boundary: A joint section by iGEM
-                Madrid UCM (rePhlow) and iGEM UPF Barcelona (Vinesys)
-              </h5>
-              <p
-                style={{
-                  margin: "0 0 18px",
-                  fontSize: "15px",
-                  lineHeight: "1.72",
-                  color: "var(--ink-soft)",
-                  textWrap: "pretty",
-                }}
-              >
-                The two teams work at opposite ends of the same water chain.
-                rePhlow treats water on its way out of an industrial process,
-                capturing phosphorus before it reaches sensitive waters and
-                recovering it instead of burying it in sludge. Vinesys acts
-                before the water is used, with an engineered Bacillus subtilis
-                applied to the vine rhizosphere that retains water near the
-                roots and reduces stress ethylene, so that a vineyard in Priorat
-                or Penedès needs less irrigation to sustain the same crop under
-                drought.
-              </p>
-              <p
-                style={{
-                  margin: "0 0 18px",
-                  fontSize: "15px",
-                  lineHeight: "1.72",
-                  color: "var(--ink-soft)",
-                  textWrap: "pretty",
-                }}
-              >
-                Both projects fall under Target 12.2, and each covers a question
-                the other does not. One asks what happens to water after a
-                process releases it. The other asks how much water that process
-                needs in the first place.
-              </p>
-              <p
-                style={{
-                  margin: "0 0 18px",
-                  fontSize: "15px",
-                  lineHeight: "1.72",
-                  color: "var(--ink-soft)",
-                  textWrap: "pretty",
-                }}
-              >
-                Comparing the two projects made visible where each analysis
-                stopped. Both teams had framed efficient resource use within
-                their own perimeter: rePhlow around the phosphorus in an
-                effluent, without asking where that water had come from, and
-                Vinesys around irrigation demand in the vineyard, without asking
-                what the sector discharges afterwards. Neither project changed
-                its technical design as a result, but both now state where their
-                analysis stops instead of leaving it implicit.
-              </p>
-              <p
-                style={{
-                  margin: "0 0 18px",
-                  fontSize: "15px",
-                  lineHeight: "1.72",
-                  color: "var(--ink-soft)",
-                  textWrap: "pretty",
-                }}
-              >
-                <em>
-                  This section is published on both wikis, following the social
-                  media collaboration the two teams ran earlier in the season.
-                </em>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 12.4{" "}
-              </strong>
-              is about handling chemicals and waste responsibly across their
-              whole life cycle, and it is also where we justify <em>where </em>
-              we intervene. Directive (EU) 2024/3019 strengthens the control of
-              non-domestic wastewater entering urban collecting systems,{" "}
-              <a className="lab-citation" href="#ref-r01-2">
-                [2]
-              </a>{" "}
-              which is one of several routes by which tightening nutrient rules
-              reach an industrial site. The others run through the facility’s
-              own discharge permit and through national implementation, and
-              which of them applies depends on whether the effluent goes to a
-              municipal collector or straight to a watercourse — a distinction
-              CEDEX drew for us explicitly. We designed rePhlow for an
-              industrial setting because that is where phosphorus is most
-              concentrated and where the stream is already characterised and
-              monitored, not because we can show that regulation arrives there
-              first.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              This goal also applies to our biological design — a living
-              engineered organism introduced into a waste stream is precisely
-              the kind of material this target exists to govern, which is why
-              containment is a precondition in our hardware.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 12.5{" "}
-              </strong>
-              is where a project focused on phosphorus can quietly fail.
-              Removing phosphorus from water is not the same as removing it from
-              the system. Chemical precipitation leaves the resource iron-bound
-              in a sludge that has to be transported, stored and disposed of,
-              and the target is not met by producing a tidier waste. Our process
-              does not stop when the water is clean, as recovery makes the route
-              end up with less waste.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              We have also applied this goal when working with our own
-              engineering. Our original design included a filter whose materials
-              would have generated their own waste stream, with no convincing
-              answer for its end of life. When the reactor changed, that
-              component became redundant, so it was removed. The cleanest form
-              of waste reduction is the component you never build.{" "}
-              <a href="#r04" className="lab-wikilink">
-                See Room 04
-              </a>
-            </p>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 14 — Life below water
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
-              >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 14.1:{" "}
-                </strong>
-                <em>
-                  By 2025, prevent and significantly reduce marine pollution of
-                  all kinds, in particular from land-based activities, including
-                  marine debris and nutrient pollution.
-                </em>
-                <a className="lab-citation" href="#ref-r01-9">
-                  [9]
-                </a>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Of the three goals we answer to, this is the one whose deadline
-              has already passed. Target 14.1 was set for 2025, and nutrient
-              pollution from land-based activity is named in it explicitly.
-              Satellite monitoring has identified roughly 1.15 million km² of
-              coastal water with eutrophication potential, with deteriorating
-              areas being double the amount against recovering ones.{" "}
-              <a className="lab-citation" href="#ref-r01-10">
-                [10]
-              </a>
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              We did not have to look far for evidence, as the Mar Menor, the
-              largest coastal lagoon in the western Mediterranean, was affected
-              by repeated eutrophication crises since 2016. Starting with an
-              algal bloom, followed by an episode of oxygen depletion and mass
-              mortality in 2019 due to a flood, and a further anoxic event in
-              2021.{" "}
-              <a className="lab-citation" href="#ref-r01-11">
-                [11]
-              </a>
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              There is also a biological reason this goal belongs here rather
-              than as an afterthought to goal 6 — coastal eutrophication isn’t
-              just phosphorus-driven, in marine and estuarine systems, nitrogen
-              is the common limiting nutrient. Controlling only one of the two
-              resources may make no difference.{" "}
-              <a className="lab-citation" href="#ref-r01-12">
-                [12]
-              </a>{" "}
-              That is why we chose <em>Pseudomonas putida</em>, as it can
-              assimilate both, giving us a biological advantage rather than an
-              engineering choice.
-            </p>
+            <GoalConsole
+              image={
+                <figure
+                  style={{
+                    margin: "30px 0",
+                    borderRadius: "28px",
+                    background:
+                      "radial-gradient(ellipse at 50% 40%,#ffffff 0%,var(--water-clear) 100%)",
+                    border: "1px solid var(--line)",
+                    padding: "12px",
+                  }}
+                >
+                  <img
+                    src={asset("assets/sustainability/sdg-main.png")}
+                    alt="Sustainable Development Goals 6, 12 and 14"
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      maxWidth: "620px",
+                      margin: "0 auto",
+                      height: "auto",
+                    }}
+                  />
+                </figure>
+              }
+              goals={[
+                {
+                  id: "g6",
+                  num: "6",
+                  title: "Clean water and sanitation",
+                  colour: "#26BDE2",
+                  lede: (
+                    <>
+                      Target 6.3 is the number. Targets <strong>6.6</strong> and{" "}
+                      <strong>6.b</strong> cover what happens when it is missed.
+                    </>
+                  ),
+                  targets: [
+                    {
+                      id: "63",
+                      label: "6.3",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 6.3: </strong>
+                            <em>
+                              By 2030, improve water quality by reducing
+                              pollution, eliminating dumping and minimizing
+                              release of hazardous chemicals and materials,
+                              halving the proportion of untreated wastewater and
+                              substantially increasing recycling and safe reuse
+                              globally.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-1">
+                              [1]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 6.3
+                            </strong>{" "}
+                            is the centre of gravity of this project: halving
+                            untreated wastewater and cutting the release of
+                            hazardous chemicals into nature. But a global target
+                            does not tell you how much phosphorus is too much.
+                            In our jurisdiction, that answer is written into
+                            law. Directive (EU) 2024/3019, which replaces the
+                            Urban Wastewater Treatment Directive from August
+                            2027, sets total-phosphorus limits of{" "}
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              0.7 mg/L{" "}
+                            </strong>
+                            for plants serving 10,000 to 150,000 population
+                            equivalents and{" "}
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              0.5 mg/L
+                            </strong>{" "}
+                            for larger facilities, phased in between 2033 and
+                            2045.{" "}
+                            <a className="lab-citation" href="#ref-r01-2">
+                              [2]
+                            </a>
+                          </p>
+                          <MiniReadouts
+                            items={[
+                              {
+                                value: "0.7",
+                                unit: "mg P/L",
+                                key: "10,000-150,000 p.e.",
+                              },
+                              {
+                                value: "0.5",
+                                unit: "mg P/L",
+                                key: "above 150,000 p.e.",
+                              },
+                              { value: "2027", key: "directive applies" },
+                              { value: "2033-45", key: "limits phased in" },
+                            ]}
+                          />
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            Those numbers are the clearest operational statement
+                            of target 6.3 in our jurisdiction, and we adopted
+                            them as the yardstick rePhlow is designed against.
+                            They are a benchmark we chose, not a limit that
+                            binds our first use case: the Directive governs
+                            urban wastewater, and what an industrial discharge
+                            is actually required to meet depends on its permit,
+                            its discharge route and national implementation. We
+                            hold ourselves to the urban figure because it is the
+                            strictest reference available and because designing
+                            against a number is the difference between claiming
+                            to help with clean water and being able to say
+                            whether we did.
+                          </p>
+                        </>
+                      ),
+                    },
+                    {
+                      id: "66",
+                      label: "6.6",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 6.6: </strong>
+                            <em>By </em>
+                            <em>
+                              <strong>2020</strong>
+                            </em>
+                            <em>
+                              , protect and restore water-related ecosystems,
+                              including mountains, forests, wetlands, rivers,
+                              aquifers and lakes.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-1">
+                              [1]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 6.6
+                            </strong>{" "}
+                            asks us to protect and restore water-related
+                            ecosystems, and the word carrying the weight is{" "}
+                            <em>restore</em>. Cutting the nutrient load does not
+                            automatically undo the damage: past a certain point,
+                            a degraded water body can hold that state on its
+                            own, and the way back does not undo the damage
+                            already done.{" "}
+                            <a className="lab-citation" href="#ref-r01-3">
+                              [3]
+                            </a>{" "}
+                            That asymmetry is the entire argument for acting
+                            early. Restoration is a slower and more expensive
+                            process compared to never crossing the line. This is
+                            why rePhlow is designed to act at an industrial
+                            outfall rather than at a lake: preventing a load
+                            from entering a water body is a problem with a known
+                            solution, while restoring one that has already
+                            shifted is not.
+                          </p>
+                          <EcologicalStatusBar
+                            caption={
+                              <>
+                                Ecological status of more than 120,000 EU
+                                surface water bodies, 2015-2021{" "}
+                                <a className="lab-citation" href="#ref-r01-4">
+                                  [4]
+                                </a>
+                              </>
+                            }
+                          />
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            For most of Europe, restoration is already the
+                            default task rather than the contingency. The
+                            European Environment Agency’s 2024 assessment,
+                            covering more than 120,000 surface water bodies,
+                            found that only 37% reached good or high ecological
+                            status in the 2015-2021 period.{" "}
+                            <a className="lab-citation" href="#ref-r01-4">
+                              [4]
+                            </a>{" "}
+                            Ecological status is a complex measure and nutrient
+                            levels are only one of the many pressures behind it,
+                            but the direction is unambiguous: the majority of
+                            Europe’s surface water is already below the standard
+                            its own law sets for it.
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            There is also a gap between the two targets that is
+                            easy to miss. The concentrations at which a water
+                            body begins to shift towards eutrophication are
+                            conventionally given as phosphorus above{" "}
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              0.01-0.02 mg/L{" "}
+                            </strong>
+                            in the receiving water.{" "}
+                            <a className="lab-citation" href="#ref-r01-5">
+                              [5]
+                            </a>{" "}
+                            The discharge limit that target 6.3 translates into
+                            is{" "}
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              0.7 mg/L
+                            </strong>{" "}
+                            at the outfall.{" "}
+                            <a className="lab-citation" href="#ref-r01-2">
+                              [2]
+                            </a>{" "}
+                            These measurements are not comparable, as one is
+                            measured in bodies of water and the other in a pipe,
+                            with dilution in between. The order of magnitude
+                            between them is the reason 6.3 and 6.6 are separate
+                            targets. Complying with a discharge limit is not the
+                            same as leaving an ecosystem unchanged, and we would
+                            rather focus on the first while being honest that it
+                            does not guarantee the second.
+                          </p>
+                          <ConcentrationGap />
+                        </>
+                      ),
+                    },
+                    {
+                      id: "6b",
+                      label: "6.b",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 6.b: </strong>
+                            <em>
+                              Support and strengthen the participation of local
+                              communities in improving water and sanitation
+                              management.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-1">
+                              [1]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              6.b{" "}
+                            </strong>
+                            asks for the participation of local communities in
+                            improving water management, and it is the target we
+                            could have missed if we just stayed in the lab. A
+                            resident of the San Juan reservoir told us that she
+                            had watched the water change for decades without
+                            being explained the reason why.{" "}
+                            <a href="#r04" className="lab-wikilink">
+                              Check out room 04
+                            </a>{" "}
+                            A treatment nobody can explain to the people living
+                            beside the water does not serve this target, despite
+                            its effectiveness. That conversation is why room 04
+                            exists.
+                          </p>
+                        </>
+                      ),
+                    },
+                  ],
+                },
+                {
+                  id: "g12",
+                  num: "12",
+                  title: "Responsible consumption and production",
+                  colour: "#BF8B2E",
+                  lede: "Phosphorus stops being a pollutant to eradicate and becomes a resource to give a second life.",
+                  targets: [
+                    {
+                      id: "122",
+                      label: "12.2",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 12.2: </strong>
+                            <em>
+                              By 2030, achieve the sustainable management and
+                              efficient use of natural resources.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-6">
+                              [6]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 12.2{" "}
+                            </strong>
+                            is the one that turns our project inside out. Rather
+                            than viewing phosphorus as just a pollutant that
+                            needs to be eradicated, we can recognise that it is
+                            a resource that can be given a second life.
+                            Phosphate rock is non-renewable and phosphorus is
+                            irreplaceable in our diet; estimated data place the
+                            peak of global production within decades rather than
+                            centuries.{" "}
+                            <a className="lab-citation" href="#ref-r01-7">
+                              [7]
+                            </a>{" "}
+                            Its reserves are also extremely concentrated, with
+                            around 70% of the world’s known reserves being
+                            located in a single country.{" "}
+                            <a className="lab-citation" href="#ref-r01-8">
+                              [8]
+                            </a>{" "}
+                            Every kilogramme of phosphorus found in wastewater
+                            sludge is a kilogramme that needs to be mined.
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            This is why rePhlow does not stop at removal.
+                            Removing phosphorus from water and burying it is not
+                            enough; returning it to use is efficient waste and
+                            resource management.
+                          </p>
+                          <WaterChain />
+                          <div
+                            className="sus-prose-panel"
+                            style={{
+                              margin: "26px 0",
+                              padding: "22px 26px",
+                              borderRadius: "18px",
+                              background: "rgba(110,90,150,0.06)",
+                              border: "1px solid rgba(110,90,150,0.2)",
+                            }}
+                          >
+                            <h5
+                              style={{
+                                margin: "0 0 10px",
+                                fontFamily: "var(--font-display)",
+                                fontSize: "17px",
+                                lineHeight: "1.3",
+                                fontWeight: "600",
+                                color: "#5e4c86",
+                              }}
+                            >
+                              12.2 beyond each project’s boundary: A joint
+                              section by iGEM Madrid UCM (rePhlow) and iGEM UPF
+                              Barcelona (Vinesys)
+                            </h5>
+                            <p
+                              style={{
+                                margin: "0 0 18px",
+                                fontSize: "15px",
+                                lineHeight: "1.72",
+                                color: "var(--ink-soft)",
+                                textWrap: "pretty",
+                              }}
+                            >
+                              The two teams work at opposite ends of the same
+                              water chain. rePhlow treats water on its way out
+                              of an industrial process, capturing phosphorus
+                              before it reaches sensitive waters and recovering
+                              it instead of burying it in sludge. Vinesys acts
+                              before the water is used, with an engineered
+                              Bacillus subtilis applied to the vine rhizosphere
+                              that retains water near the roots and reduces
+                              stress ethylene, so that a vineyard in Priorat or
+                              Penedès needs less irrigation to sustain the same
+                              crop under drought.
+                            </p>
+                            <p
+                              style={{
+                                margin: "0 0 18px",
+                                fontSize: "15px",
+                                lineHeight: "1.72",
+                                color: "var(--ink-soft)",
+                                textWrap: "pretty",
+                              }}
+                            >
+                              Both projects fall under Target 12.2, and each
+                              covers a question the other does not. One asks
+                              what happens to water after a process releases it.
+                              The other asks how much water that process needs
+                              in the first place.
+                            </p>
+                            <p
+                              style={{
+                                margin: "0 0 18px",
+                                fontSize: "15px",
+                                lineHeight: "1.72",
+                                color: "var(--ink-soft)",
+                                textWrap: "pretty",
+                              }}
+                            >
+                              Comparing the two projects made visible where each
+                              analysis stopped. Both teams had framed efficient
+                              resource use within their own perimeter: rePhlow
+                              around the phosphorus in an effluent, without
+                              asking where that water had come from, and Vinesys
+                              around irrigation demand in the vineyard, without
+                              asking what the sector discharges afterwards.
+                              Neither project changed its technical design as a
+                              result, but both now state where their analysis
+                              stops instead of leaving it implicit.
+                            </p>
+                            <p
+                              style={{
+                                margin: "0 0 18px",
+                                fontSize: "15px",
+                                lineHeight: "1.72",
+                                color: "var(--ink-soft)",
+                                textWrap: "pretty",
+                              }}
+                            >
+                              <em>
+                                This section is published on both wikis,
+                                following the social media collaboration the two
+                                teams ran earlier in the season.
+                              </em>
+                            </p>
+                          </div>
+                        </>
+                      ),
+                    },
+                    {
+                      id: "124",
+                      label: "12.4",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 12.4: </strong>
+                            <em>By </em>
+                            <em>
+                              <strong>2020</strong>
+                            </em>
+                            <em>
+                              , achieve the environmentally sound management of
+                              chemicals and all wastes throughout their life
+                              cycle, in accordance with agreed international
+                              frameworks, and significantly reduce their release
+                              to air, water and soil in order to minimize their
+                              adverse impacts on human health and the
+                              environment.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-6">
+                              [6]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 12.4{" "}
+                            </strong>
+                            is about handling chemicals and waste responsibly
+                            across their whole life cycle, and it is also where
+                            we justify <em>where </em>
+                            we intervene. Directive (EU) 2024/3019 strengthens
+                            the control of non-domestic wastewater entering
+                            urban collecting systems,{" "}
+                            <a className="lab-citation" href="#ref-r01-2">
+                              [2]
+                            </a>{" "}
+                            which is one of several routes by which tightening
+                            nutrient rules reach an industrial site. The others
+                            run through the facility’s own discharge permit and
+                            through national implementation, and which of them
+                            applies depends on whether the effluent goes to a
+                            municipal collector or straight to a watercourse — a
+                            distinction CEDEX drew for us explicitly. We
+                            designed rePhlow for an industrial setting because
+                            that is where phosphorus is most concentrated and
+                            where the stream is already characterised and
+                            monitored, not because we can show that regulation
+                            arrives there first.
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            This goal also applies to our biological design — a
+                            living engineered organism introduced into a waste
+                            stream is precisely the kind of material this target
+                            exists to govern, which is why containment is a
+                            precondition in our hardware.
+                          </p>
+                        </>
+                      ),
+                    },
+                    {
+                      id: "125",
+                      label: "12.5",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 12.5: </strong>
+                            <em>
+                              By 2030, substantially reduce waste generation
+                              through prevention, reduction, recycling and
+                              reuse.{" "}
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-6">
+                              [6]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 12.5{" "}
+                            </strong>
+                            is where a project focused on phosphorus can quietly
+                            fail. Removing phosphorus from water is not the same
+                            as removing it from the system. Chemical
+                            precipitation leaves the resource iron-bound in a
+                            sludge that has to be transported, stored and
+                            disposed of, and the target is not met by producing
+                            a tidier waste. Our process does not stop when the
+                            water is clean, as recovery makes the route end up
+                            with less waste.
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            We have also applied this goal when working with our
+                            own engineering. Our original design included a
+                            filter whose materials would have generated their
+                            own waste stream, with no convincing answer for its
+                            end of life. When the reactor changed, that
+                            component became redundant, so it was removed. The
+                            cleanest form of waste reduction is the component
+                            you never build.{" "}
+                            <a href="#r04" className="lab-wikilink">
+                              See Room 04
+                            </a>
+                          </p>
+                        </>
+                      ),
+                    },
+                  ],
+                },
+                {
+                  id: "g14",
+                  num: "14",
+                  title: "Life below water",
+                  colour: "#0A97D9",
+                  targets: [
+                    {
+                      id: "141",
+                      label: "14.1",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 14.1: </strong>
+                            <em>
+                              By 2025, prevent and significantly reduce marine
+                              pollution of all kinds, in particular from
+                              land-based activities, including marine debris and
+                              nutrient pollution.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-9">
+                              [9]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            Of the three goals we answer to, this is the one
+                            whose deadline has already passed. Target 14.1 was
+                            set for 2025, and nutrient pollution from land-based
+                            activity is named in it explicitly. Satellite
+                            monitoring has identified roughly 1.15 million km²
+                            of coastal water with eutrophication potential, with
+                            deteriorating areas being double the amount against
+                            recovering ones.{" "}
+                            <a className="lab-citation" href="#ref-r01-10">
+                              [10]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            We did not have to look far for evidence, as the Mar
+                            Menor, the largest coastal lagoon in the western
+                            Mediterranean, was affected by repeated
+                            eutrophication crises since 2016. Starting with an
+                            algal bloom, followed by an episode of oxygen
+                            depletion and mass mortality in 2019 due to a flood,
+                            and a further anoxic event in 2021.{" "}
+                            <a className="lab-citation" href="#ref-r01-11">
+                              [11]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            There is also a biological reason this goal belongs
+                            here rather than as an afterthought to goal 6 —
+                            coastal eutrophication isn’t just phosphorus-driven,
+                            in marine and estuarine systems, nitrogen is the
+                            common limiting nutrient. Controlling only one of
+                            the two resources may make no difference.{" "}
+                            <a className="lab-citation" href="#ref-r01-12">
+                              [12]
+                            </a>{" "}
+                            That is why we chose <em>Pseudomonas putida</em>, as
+                            it can assimilate both, giving us a biological
+                            advantage rather than an engineering choice.
+                          </p>
+                        </>
+                      ),
+                    },
+                  ],
+                },
+              ]}
+            />
             <h3
               id="r01-goal-9-and-goal-13-two-goals-we-touch-wi"
               style={{
@@ -2627,241 +2712,185 @@ export function Sustainability() {
               These two are ours: one where we have a positive impact without it
               being intentional, and one where, today, we are the problem.
             </p>
-            <figure
-              style={{
-                margin: "30px 0",
-                borderRadius: "28px",
-                background:
-                  "radial-gradient(ellipse at 50% 40%,#ffffff 0%,var(--water-clear) 100%)",
-                border: "1px solid var(--line)",
-                padding: "12px",
-              }}
-            >
-              <img
-                src={asset("assets/sustainability/sdg-secondary-sm.png")}
-                alt="Sustainable Development Goals 9 and 13"
-                style={{
-                  display: "block",
-                  width: "100%",
-                  maxWidth: "560px",
-                  margin: "0 auto",
-                  height: "auto",
-                }}
-              />
-            </figure>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 9 — Industry, innovation and infrastructure
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
+            <div className="sus-unclaimed">
+              <article
+                className="sus-unclaimed__card"
+                style={{ "--sdg": "#FD6925" } as CSSProperties}
               >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 9.4:{" "}
-                </strong>
-                <em>
-                  By 2030, upgrade infrastructure and retrofit industries to
-                  make them sustainable, with increased resource-use efficiency
-                  and greater adoption of clean and environmentally sound
-                  technologies and industrial processes, with all countries
-                  taking action in accordance with their respective
-                  capabilities.
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  <br />
-                  Target 9.5:{" "}
-                </strong>
-                <em>
-                  Enhance scientific research, upgrade the technological
-                  capabilities of industrial sectors, in particular developing
-                  countries, by 2030, encouraging innovation and substantially
-                  increasing the number of research and development workers per
-                  1 million people and public and private research and
-                  development spending. <br />
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 9.a:{"\u00a0"}
-                </strong>
-                <em>
-                  Facilitate sustainable and resilient infrastructure
-                  development in developing countries through enhanced
-                  financial, technological and technical support to African
-                  countries, least developed countries, landlocked developing
-                  countries and small island developing States.
-                </em>
-                <a className="lab-citation" href="#ref-r01-14">
-                  [14]
-                </a>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Goal 9 is the one we reach without aiming at it. Modularity was
-              not adopted to upgrade industrial infrastructure; it was adopted
-              because Bio-Oils told us a mid-sized producer cannot shut down a
-              line to rebuild a treatment plant around an experiment. The result
-              happens to be what target 9.4 asks for — a retrofit that raises
-              resource efficiency without replacing what is already there — but
-              it was a commercial constraint before it was a sustainability
-              contribution, and we would rather say so than claim the goal as an
-              intention.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Target 9.5 we touch only in the ordinary way any student project
-              does, and we do not claim it. What we would claim instead is the
-              opposite sign: the same design that serves 9.4 works against 9.a,
-              because a contained biological module needs capsules, a reactor
-              and trained staff where chemical dosing needs none of them. That
-              interaction is scored in the table below, and the tension is set
-              out in full further down this room.
-            </p>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 13 — Climate action
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
+                <div className="sus-unclaimed__top">
+                  <span className="sus-unclaimed__num">9</span>
+                  <div>
+                    <h5 className="sus-unclaimed__title">
+                      Industry, innovation and infrastructure
+                    </h5>
+                    <span className="sus-unclaimed__sign sus-unclaimed__sign--pos">
+                      reached, not aimed at
+                    </span>
+                  </div>
+                </div>
+                <p className="sus-unclaimed__text">
+                  Goal 9 is the one we reach without aiming at it. Modularity
+                  was not adopted to upgrade industrial infrastructure; it was
+                  adopted because Bio-Oils told us a mid-sized producer cannot
+                  shut down a line to rebuild a treatment plant around an
+                  experiment. The result happens to be what target 9.4 asks for
+                  — a retrofit that raises resource efficiency without replacing
+                  what is already there — but it was a commercial constraint
+                  before it was a sustainability contribution, and we would
+                  rather say so than claim the goal as an intention.
+                </p>
+                <p className="sus-unclaimed__text">
+                  Target 9.5 we touch only in the ordinary way any student
+                  project does, and we do not claim it. What we would claim
+                  instead is the opposite sign: the same design that serves 9.4
+                  works against 9.a, because a contained biological module needs
+                  capsules, a reactor and trained staff where chemical dosing
+                  needs none of them. That interaction is scored in the table
+                  below, and the tension is set out in full further down this
+                  room.
+                </p>
+                <AccordionSection
+                  className="sus-unclaimed__targets"
+                  title="Targets 9.4, 9.5 and 9.a"
+                >
+                  <p className="sus-unclaimed__official">
+                    <strong>Target 9.4: </strong>
+                    <em>
+                      By 2030, upgrade infrastructure and retrofit industries to
+                      make them sustainable, with increased resource-use
+                      efficiency and greater adoption of clean and
+                      environmentally sound technologies and industrial
+                      processes, with all countries taking action in accordance
+                      with their respective capabilities.
+                    </em>
+                    <strong>
+                      <br />
+                      Target 9.5:{" "}
+                    </strong>
+                    <em>
+                      Enhance scientific research, upgrade the technological
+                      capabilities of industrial sectors, in particular
+                      developing countries, by 2030, encouraging innovation and
+                      substantially increasing the number of research and
+                      development workers per 1 million people and public and
+                      private research and development spending. <br />
+                    </em>
+                    <strong>Target 9.a:{" "}</strong>
+                    <em>
+                      Facilitate sustainable and resilient infrastructure
+                      development in developing countries through enhanced
+                      financial, technological and technical support to African
+                      countries, least developed countries, landlocked
+                      developing countries and small island developing States.
+                    </em>
+                    <a className="lab-citation" href="#ref-r01-14">
+                      [14]
+                    </a>
+                  </p>
+                </AccordionSection>
+              </article>
+
+              <figure className="sus-unclaimed__sdg">
+                <img
+                  src={asset(
+                    "assets/sustainability/sdg-secondary-trimmed.webp",
+                  )}
+                  alt="Sustainable Development Goals 9 and 13"
+                />
+              </figure>
+
+              <article
+                className="sus-unclaimed__card"
+                style={{ "--sdg": "#3F7E44" } as CSSProperties}
               >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 13.2:{" "}
-                </strong>
-                <em>
-                  Integrate climate change measures into national policies,
-                  strategies and planning.
-                </em>
-                <a className="lab-citation" href="#ref-r01-15">
-                  [15]
-                </a>
-              </p>
+                <div className="sus-unclaimed__top">
+                  <span className="sus-unclaimed__num">13</span>
+                  <div>
+                    <h5 className="sus-unclaimed__title">Climate action</h5>
+                    <span className="sus-unclaimed__sign sus-unclaimed__sign--neg">
+                      a declared cost
+                    </span>
+                  </div>
+                </div>
+                <p className="sus-unclaimed__text">
+                  We interact with goal 13, but we do not claim it. Our own life
+                  cycle assessment places rePhlow <strong>above </strong>
+                  the chemical route on climate change at current bead
+                  performance, and we are not going to list as an achievement
+                  something our own instruments contradict. The analysis and the
+                  single variable that would reverse it are in Room 03.
+                </p>
+                <p className="sus-unclaimed__text">
+                  There is another relevant reason to why this goal sits here
+                  rather than among the three we analysed before. Goal 13’s
+                  targets are addressed to <strong>states</strong>, not to
+                  technologies: they concern national planning, climate finance,
+                  adaptive capacity and education, and none of them asks a
+                  process to lower its emissions.{" "}
+                  <a className="lab-citation" href="#ref-r01-15">
+                    [15]
+                  </a>{" "}
+                  Target 13.2, which focuses on the integration of climate
+                  measures into national policy, reaches rePhlow’s goal
+                  indirectly, as the industrial technology designed was built
+                  alongside the planning.
+                </p>
+                <p className="sus-unclaimed__text">
+                  What makes this a constraint rather than a contradiction is
+                  that it answers to one number, which is phosphorus captured
+                  per gram of bead. After a threshold our own sensitivity
+                  analysis identifies, this flips completely. We are not there
+                  yet, and we will not score ourselves as if we were. Until
+                  then, climate is a <strong>declared cost</strong> of this
+                  project rather than a contribution to it, and it is marked as
+                  a tension on our <em>Sustainability Model Canvas</em> (see
+                  Room 04) rather than as a goal.
+                </p>
+                <div className="sus-climate-strip">
+                  <div>
+                    <span className="sus-climate-strip__k">
+                      rePhlow today, kg CO₂-eq/m³
+                    </span>
+                    <span className="sus-climate-strip__v sus-climate-strip__v--neg">
+                      37
+                    </span>
+                  </div>
+                  <div>
+                    <span className="sus-climate-strip__k">
+                      Chemical route, kg CO₂-eq/m³
+                    </span>
+                    <span className="sus-climate-strip__v">12.2</span>
+                  </div>
+                  <div>
+                    <span className="sus-climate-strip__k">
+                      Parity at, mg P/g bead
+                    </span>
+                    <span className="sus-climate-strip__v">≈3.8</span>
+                  </div>
+                  <a
+                    className="sus-climate-strip__btn"
+                    href="#r03-reading-3-the-full-sixteen-and-the-targe"
+                  >
+                    Move the bead capacity in Room 03
+                  </a>
+                </div>
+                <AccordionSection
+                  className="sus-unclaimed__targets"
+                  title="Target 13.2"
+                >
+                  <p className="sus-unclaimed__official">
+                    <strong>Target 13.2: </strong>
+                    <em>
+                      Integrate climate change measures into national policies,
+                      strategies and planning.
+                    </em>
+                    <a className="lab-citation" href="#ref-r01-15">
+                      [15]
+                    </a>
+                  </p>
+                </AccordionSection>
+              </article>
             </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              We interact with goal 13, but we do not claim it. Our own life
-              cycle assessment places rePhlow{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                above{" "}
-              </strong>
-              the chemical route on climate change at current bead performance,
-              and we are not going to list as an achievement something our own
-              instruments contradict. The analysis and the single variable that
-              would reverse it are in Room 03.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              There is another relevant reason to why this goal sits here rather
-              than among the three we analysed before. Goal 13’s targets are
-              addressed to{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                states
-              </strong>
-              , not to technologies: they concern national planning, climate
-              finance, adaptive capacity and education, and none of them asks a
-              process to lower its emissions.{" "}
-              <a className="lab-citation" href="#ref-r01-15">
-                [15]
-              </a>{" "}
-              Target 13.2, which focuses on the integration of climate measures
-              into national policy, reaches rePhlow’s goal indirectly, as the
-              industrial technology designed was built alongside the planning.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              What makes this a constraint rather than a contradiction is that
-              it answers to one number, which is phosphorus captured per gram of
-              bead. After a threshold our own sensitivity analysis identifies,
-              this flips completely. We are not there yet, and we will not score
-              ourselves as if we were. Until then, climate is a{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                declared cost
-              </strong>{" "}
-              of this project rather than a contribution to it, and it is marked
-              as a tension on our <em>Sustainability Model Canvas</em> (see Room
-              04) rather than as a goal.
-            </p>
             <h4
               id="r01-reading-the-interactions-the-nilsson-sca"
               style={{
@@ -2917,471 +2946,7 @@ export function Sustainability() {
               the Nilsson–Griggs–Visbeck scale, assuming a mid-sized European
               facility, current bead performance and intact containment.
             </p>
-            <div
-              style={{
-                margin: "10px 0 28px",
-                overflowX: "auto",
-                border: "1px solid var(--line)",
-                borderRadius: "18px",
-                background: "#fff",
-                boxShadow: "var(--shadow-card)",
-              }}
-            >
-              <table
-                style={{
-                  width: "100%",
-                  borderCollapse: "collapse",
-                  fontSize: "14.5px",
-                  minWidth: "560px",
-                }}
-              >
-                <tbody>
-                  <tr>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      Interaction
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      Score
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      Why
-                    </th>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink)",
-                        whiteSpace: "nowrap",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                      }}
-                    >
-                      6.3 → 14.1
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "#4d6a2a",
-                        whiteSpace: "nowrap",
-                        fontWeight: "600",
-                      }}
-                    >
-                      +2 reinforcing
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      Nutrients stopped at an industrial outfall never reach the
-                      coast, nitrogen as well as phosphorus.{" "}
-                      <a className="lab-citation" href="#ref-r01-12">
-                        [12]
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink)",
-                        whiteSpace: "nowrap",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                      }}
-                    >
-                      12.5 → 6.3
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "#4d6a2a",
-                        whiteSpace: "nowrap",
-                        fontWeight: "600",
-                      }}
-                    >
-                      +2 reinforcing
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      Recovery is what stops water treatment from becoming
-                      sludge production.{" "}
-                      <a className="lab-citation" href="#ref-r01-13">
-                        [13]
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink)",
-                        whiteSpace: "nowrap",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                      }}
-                    >
-                      12.2 → 2.4
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "#4d6a2a",
-                        whiteSpace: "nowrap",
-                        fontWeight: "600",
-                      }}
-                    >
-                      +1 enabling
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      Recovered phosphorus is a local source of an input that
-                      currently crosses a continent. (project description)
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink)",
-                        whiteSpace: "nowrap",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                      }}
-                    >
-                      6.3 → 15.1
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "#4d6a2a",
-                        whiteSpace: "nowrap",
-                        fontWeight: "600",
-                      }}
-                    >
-                      +1 enabling
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      Every kilogramme recovered is a kilogramme not mined from
-                      phosphate rock.{" "}
-                      <a className="lab-citation" href="#ref-r01-7">
-                        [7]
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink)",
-                        whiteSpace: "nowrap",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                      }}
-                    >
-                      12.2 → 9.4
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "#4d6a2a",
-                        whiteSpace: "nowrap",
-                        fontWeight: "600",
-                      }}
-                    >
-                      +1 enabling
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      A modular design allows existing facilities to upgrade
-                      their existing equipment without rebuilding their
-                      treatment lines (see{" "}
-                      <a href="/hardware" className="lab-wikilink">
-                        Hardware
-                      </a>
-                      )
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink)",
-                        whiteSpace: "nowrap",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                      }}
-                    >
-                      12.2 → 13.2
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "#c2441f",
-                        whiteSpace: "nowrap",
-                        fontWeight: "600",
-                      }}
-                    >
-                      -1 constraining (today)
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      Bead production dominates our carbon footprint (see room
-                      03)
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink)",
-                        whiteSpace: "nowrap",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                      }}
-                    >
-                      6.3 → 7.3
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "#c2441f",
-                        whiteSpace: "nowrap",
-                        fontWeight: "600",
-                      }}
-                    >
-                      -1 constraining
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      Continuous operation and downstream recovery consume
-                      energy that chemical dosing does not.{" "}
-                      <a className="lab-citation" href="#ref-r01-13">
-                        [13]
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink)",
-                        whiteSpace: "nowrap",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                      }}
-                    >
-                      12.2 → 9.a
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "#c2441f",
-                        whiteSpace: "nowrap",
-                        fontWeight: "600",
-                      }}
-                    >
-                      -1 constraining
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "1px solid var(--line)",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      A contained biological module is more expensive and
-                      skill-dependent compared to the traditional chemical
-                      method.{" "}
-                      <a className="lab-citation" href="#ref-r01-13">
-                        [13]
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink)",
-                        whiteSpace: "nowrap",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                      }}
-                    >
-                      12.4 → 14.1
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "#c2441f",
-                        whiteSpace: "nowrap",
-                        fontWeight: "600",
-                      }}
-                    >
-                      -1 constraining (conditional)
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      An engineered organism in a waste stream is a risk to the
-                      same waters it protects, unless containment holds.{" "}
-                      <a className="lab-citation" href="#ref-r01-16">
-                        [16]
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <NilssonMap />
             <div
               className="sus-prose-panel"
               style={{
@@ -5268,110 +4833,100 @@ export function Sustainability() {
               cannot. What we can show is that the last external reading of this
               work made it narrower rather than louder.
             </p>
-            <h4
-              id="r02-what-stays-open"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "21px",
-                lineHeight: "1.3",
-                fontWeight: "600",
-                letterSpacing: "-0.01em",
-                color: "var(--ink)",
-                margin: "44px 0 12px",
-                textWrap: "balance",
-                scrollMarginTop: "110px",
-              }}
-            >
-              What stays open
-            </h4>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Closing one loop was enough to show us what the others would have
-              found. We went back to CEDEX expecting methods and limits, the
-              subjects of the first conversation, and were asked instead about
-              repair: who fixes the module, with what training, and how long the
-              line is down. That question did not expose a gap in our
-              engineering. It exposed a gap in who we had spoken to.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Everyone who redrew this project evaluates technology for a
-              living: a public water body, two large operators, three academics.
-              Not one of them would have to run the reactor at three in the
-              morning. The pattern is not random — it runs along the line of who
-              we found easy to approach. A student team writes to an institution
-              more readily than to a plant operator on shift, and our evidence
-              base shows it.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              That has a cost we can state precisely. Without an operator we
-              cannot claim anything about maintenance burden or downtime.
-              Without a permitting authority for an industrial discharge we
-              cannot claim a route to authorisation, only that the limits exist.
-              Without a farmer or a fertiliser buyer we cannot claim that
-              recovered phosphorus is wanted in the form we produce it, which is
-              the assumption our entire 12.2 argument rests on. Those are three
-              claims this project does not get to make yet, and we have left
-              them out rather than soften them.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              The next three conversations are therefore already determined, and
-              not by us: a plant operator, a permitting authority for an
-              industrial discharge, and a fertiliser user. Each one licenses a
-              claim we are currently not entitled to make. Closing those loops
-              is what the round table in Room 03 was convened to begin, and we
-              would rather publish the list of claims we have not earned than a
-              page where every voice happened to agree with us.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Where the full record lives.{" "}
-              </strong>
-              The traceable record of concerns raised and limitations still open
-              is in the{" "}
-              <a href="/human-practices" className="lab-wikilink">
-                Responsibility Checkpoint
-              </a>
-              .
-            </p>
+            <div id="r02-what-stays-open" className="sus-disclosure">
+              <AccordionSection title="What stays open">
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  Closing one loop was enough to show us what the others would
+                  have found. We went back to CEDEX expecting methods and
+                  limits, the subjects of the first conversation, and were asked
+                  instead about repair: who fixes the module, with what
+                  training, and how long the line is down. That question did not
+                  expose a gap in our engineering. It exposed a gap in who we
+                  had spoken to.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  Everyone who redrew this project evaluates technology for a
+                  living: a public water body, two large operators, three
+                  academics. Not one of them would have to run the reactor at
+                  three in the morning. The pattern is not random — it runs
+                  along the line of who we found easy to approach. A student
+                  team writes to an institution more readily than to a plant
+                  operator on shift, and our evidence base shows it.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  That has a cost we can state precisely. Without an operator we
+                  cannot claim anything about maintenance burden or downtime.
+                  Without a permitting authority for an industrial discharge we
+                  cannot claim a route to authorisation, only that the limits
+                  exist. Without a farmer or a fertiliser buyer we cannot claim
+                  that recovered phosphorus is wanted in the form we produce it,
+                  which is the assumption our entire 12.2 argument rests on.
+                  Those are three claims this project does not get to make yet,
+                  and we have left them out rather than soften them.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  The next three conversations are therefore already determined,
+                  and not by us: a plant operator, a permitting authority for an
+                  industrial discharge, and a fertiliser user. Each one licenses
+                  a claim we are currently not entitled to make. Closing those
+                  loops is what the round table in Room 03 was convened to
+                  begin, and we would rather publish the list of claims we have
+                  not earned than a page where every voice happened to agree
+                  with us.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
+                    Where the full record lives.{" "}
+                  </strong>
+                  The traceable record of concerns raised and limitations still
+                  open is in the{" "}
+                  <a href="/human-practices" className="lab-wikilink">
+                    Responsibility Checkpoint
+                  </a>
+                  .
+                </p>
+              </AccordionSection>
+            </div>
             <h3
               id="r02-what-has-to-be-true-next"
               style={{
@@ -5438,101 +4993,71 @@ export function Sustainability() {
                 >
                   At the bench
                 </h5>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Reach and hold ≥8 mg P per gram of bead under reactor conditions."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Reach and hold ≥8 mg P per gram of bead under reactor
-                    conditions.
-                  </strong>{" "}
-                  This is the single number our sensitivity analysis identifies
-                  as the lever (Room 03). Below it, the climate reading stands
-                  against us and we do not claim goal 13. Above it, the climate
-                  and fossil-resource readings follow the rest of the sixteen
-                  downward. The biology already does this intracellularly; the
-                  work is in the expression and the bead.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    This is the single number our sensitivity analysis
+                    identifies as the lever (Room 03). Below it, the climate
+                    reading stands against us and we do not claim goal 13. Above
+                    it, the climate and fossil-resource readings follow the rest
+                    of the sixteen downward. The biology already does this
+                    intracellularly; the work is in the expression and the bead.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Decarbonise the bead itself."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Decarbonise the bead itself.
-                  </strong>{" "}
-                  The same result can be reached from the materials side rather
-                  than the performance side. The bacterial-alginate route is
-                  named in Room 03 as a research direction not yet in our
-                  inventory, and it is the second of the two moves the
-                  circular-economy literature identifies as the condition for
-                  nutrient recovery to be a net environmental good rather than a
-                  tidier waste.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    The same result can be reached from the materials side
+                    rather than the performance side. The bacterial-alginate
+                    route is named in Room 03 as a research direction not yet in
+                    our inventory, and it is the second of the two moves the
+                    circular-economy literature identifies as the condition for
+                    nutrient recovery to be a net environmental good rather than
+                    a tidier waste.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Measure capsule service life under operation."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Measure capsule service life under operation.
-                  </strong>{" "}
-                  Raised by CEDEX. We report structural integrity under reactor
-                  conditions; we do not report how long that holds. Without a
-                  service life there is no replacement rate, and without a
-                  replacement rate the bead-production term that dominates our
-                  footprint is an assumption rather than a measurement. This is
-                  the item most other items depend on.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    Raised by CEDEX. We report structural integrity under
+                    reactor conditions; we do not report how long that holds.
+                    Without a service life there is no replacement rate, and
+                    without a replacement rate the bead-production term that
+                    dominates our footprint is an assumption rather than a
+                    measurement. This is the item most other items depend on.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Count viable cells in the effluent over operating time."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Count viable cells in the effluent over operating time.
-                  </strong>{" "}
-                  Structural integrity is not biological retention: an intact
-                  capsule can still release cells at its surface. Every
-                  environmental benefit claimed anywhere on this page is
-                  conditional on this measurement, and it is the one an
-                  industrial operator told us would be discussed before anything
-                  else.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    Structural integrity is not biological retention: an intact
+                    capsule can still release cells at its surface. Every
+                    environmental benefit claimed anywhere on this page is
+                    conditional on this measurement, and it is the one an
+                    industrial operator told us would be discussed before
+                    anything else.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Validate membrane polishing at achievable pressures."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Validate membrane polishing at achievable pressures.
-                  </strong>{" "}
-                  Reclassified as a scale-up concept rather than a demonstrated
-                  result, which is why the water-quality figures in Room 03 are
-                  labelled as projections. Until this is tested, the
-                  discharge-limit claim is a design target and not a result.
-                </p>
+                  <p className="sus-panel-accordion__body">
+                    Reclassified as a scale-up concept rather than a
+                    demonstrated result, which is why the water-quality figures
+                    in Room 03 are labelled as projections. Until this is
+                    tested, the discharge-limit claim is a design target and not
+                    a result.
+                  </p>
+                </AccordionSection>
               </div>
               <div
                 style={{
@@ -5557,43 +5082,30 @@ export function Sustainability() {
                 >
                   On the evidence
                 </h5>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Re-run the life cycle assessment under a renewable energy scenario."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Re-run the life cycle assessment under a renewable energy
-                    scenario.
-                  </strong>{" "}
-                  Requested by Roberto Arranz. A decarbonising grid does not
-                  improve process efficiency, which is what target 7.3 actually
-                  measures, but it does change the climate reading — and we
-                  should know by how much before we describe the energy
-                  interaction as fixed.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    Requested by Roberto Arranz. A decarbonising grid does not
+                    improve process efficiency, which is what target 7.3
+                    actually measures, but it does change the climate reading —
+                    and we should know by how much before we describe the energy
+                    interaction as fixed.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Treat repairability as a design variable."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Treat repairability as a design variable.
-                  </strong>{" "}
-                  Newly opened. Who repairs the module, with what training, and
-                  how long the line is down. Chemical dosing fails in ways every
-                  plant operator already knows how to fix; a contained
-                  biological module does not, and that asymmetry is part of the
-                  access tension rather than separate from it.
-                </p>
+                  <p className="sus-panel-accordion__body">
+                    Newly opened. Who repairs the module, with what training,
+                    and how long the line is down. Chemical dosing fails in ways
+                    every plant operator already knows how to fix; a contained
+                    biological module does not, and that asymmetry is part of
+                    the access tension rather than separate from it.
+                  </p>
+                </AccordionSection>
               </div>
               <div
                 style={{
@@ -5618,109 +5130,90 @@ export function Sustainability() {
                 >
                   With people
                 </h5>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="A plant operator, a permitting authority, and a fertiliser user."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    A plant operator, a permitting authority, and a fertiliser
-                    user.
-                  </strong>{" "}
-                  The three voices absent from this room, each of which licenses
-                  a claim we currently cannot make: maintenance burden, route to
-                  authorisation, and whether recovered phosphorus is wanted in
-                  the form we produce it.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    The three voices absent from this room, each of which
+                    licenses a claim we currently cannot make: maintenance
+                    burden, route to authorisation, and whether recovered
+                    phosphorus is wanted in the form we produce it.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="A regulatory sandbox."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    A regulatory sandbox.
-                  </strong>{" "}
-                  Two seats at our round table, from opposite ends of it,
-                  independently named the same mechanism: a sandbox is how a
-                  technology that current law cannot yet frame gets trialled and
-                  then approved on the evidence. For a contained organism that
-                  must demonstrate non-release over years rather than weeks, it
-                  is not one route among several — it is the route. Identifying
-                  the programme to apply to is a concrete next step rather than
-                  a hope.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    Two seats at our round table, from opposite ends of it,
+                    independently named the same mechanism: a sandbox is how a
+                    technology that current law cannot yet frame gets trialled
+                    and then approved on the evidence. For a contained organism
+                    that must demonstrate non-release over years rather than
+                    weeks, it is not one route among several — it is the route.
+                    Identifying the programme to apply to is a concrete next
+                    step rather than a hope.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="A mandated recycled-phosphorus content."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    A mandated recycled-phosphorus content.
-                  </strong>{" "}
-                  Directive (EU) 2024/3019{" "}
-                  <a className="lab-citation" href="#ref-r02-2">
-                    [2]
-                  </a>{" "}
-                  empowers the Commission to set a minimum combined reuse and
-                  recycling rate for phosphorus and asks Member States to
-                  encourage the purchase of recovered nutrients. Whether that
-                  rate is set, and at what level, decides whether recovered
-                  phosphorus competes with mined phosphorus on price alone. We
-                  cannot act on this one; we can state that our 12.2 argument is
-                  exposed to it.
-                </p>
+                  <p className="sus-panel-accordion__body">
+                    Directive (EU) 2024/3019{" "}
+                    <a className="lab-citation" href="#ref-r02-2">
+                      [2]
+                    </a>{" "}
+                    empowers the Commission to set a minimum combined reuse and
+                    recycling rate for phosphorus and asks Member States to
+                    encourage the purchase of recovered nutrients. Whether that
+                    rate is set, and at what level, decides whether recovered
+                    phosphorus competes with mined phosphorus on price alone. We
+                    cannot act on this one; we can state that our 12.2 argument
+                    is exposed to it.
+                  </p>
+                </AccordionSection>
               </div>
-              <div
+            </div>
+            <div
+              style={{
+                background: "rgba(226,84,45,0.06)",
+                border: "1px solid rgba(226,84,45,0.2)",
+                borderRadius: "18px",
+                padding: "20px 22px",
+                fontSize: "14.5px",
+                lineHeight: "1.62",
+                color: "var(--ink-soft)",
+              }}
+            >
+              <h5
                 style={{
-                  background: "rgba(226,84,45,0.06)",
-                  border: "1px solid rgba(226,84,45,0.2)",
-                  borderRadius: "18px",
-                  padding: "20px 22px",
-                  fontSize: "14.5px",
-                  lineHeight: "1.62",
-                  color: "var(--ink-soft)",
+                  margin: "0 0 10px",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "17px",
+                  lineHeight: "1.3",
+                  fontWeight: "600",
+                  color: "#b03c1b",
                 }}
               >
-                <h5
-                  style={{
-                    margin: "0 0 10px",
-                    fontFamily: "var(--font-display)",
-                    fontSize: "17px",
-                    lineHeight: "1.3",
-                    fontWeight: "600",
-                    color: "#b03c1b",
-                  }}
-                >
-                  What we are not claiming
-                </h5>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
-                >
-                  A screening LCA is not a certificate. Structural capsule
-                  integrity is not biological retention. A laboratory
-                  accumulation figure is not a plant running for a year.
-                  Everything above is the distance between those pairs, written
-                  down so that the distance can be checked rather than assumed.
-                </p>
-              </div>
+                What we are not claiming
+              </h5>
+              <p
+                style={{
+                  margin: "0 0 12px",
+                  fontSize: "14.5px",
+                  lineHeight: "1.65",
+                  color: "var(--ink-soft)",
+                  textWrap: "pretty",
+                }}
+              >
+                A screening LCA is not a certificate. Structural capsule
+                integrity is not biological retention. A laboratory accumulation
+                figure is not a plant running for a year. Everything above is
+                the distance between those pairs, written down so that the
+                distance can be checked rather than assumed.
+              </p>
             </div>
             <details
               style={{
@@ -7253,252 +6746,6 @@ export function Sustainability() {
                 store more phosphorus.
               </figcaption>
             </figure>
-            <div
-              style={{
-                margin: "10px 0 28px",
-                overflowX: "auto",
-                border: "1px solid var(--line)",
-                borderRadius: "18px",
-                background: "#fff",
-                boxShadow: "var(--shadow-card)",
-              }}
-            >
-              <table
-                style={{
-                  width: "100%",
-                  borderCollapse: "collapse",
-                  fontSize: "14.5px",
-                  minWidth: "560px",
-                }}
-              >
-                <tbody>
-                  <tr>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      Bead capacity (mg P/g)
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      1.5
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      3
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      6
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      9
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      12
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      15
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      Conventional
-                    </th>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      <strong
-                        style={{ color: "var(--ink)", fontWeight: "600" }}
-                      >
-                        Climate (kg CO₂-eq / m³)
-                      </strong>
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      37.0
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      16.4
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      6.2
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      2.7
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      1.0
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      ≈0
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      12.2
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
             <p
               style={{
                 margin: "0 0 18px",
@@ -13398,119 +12645,112 @@ export function Sustainability() {
                 UCM.
               </figcaption>
             </figure>
-            <h4
+            <div
               id="r04-closing-reflection-the-ethics-of-a-conta"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "21px",
-                lineHeight: "1.3",
-                fontWeight: "600",
-                letterSpacing: "-0.01em",
-                color: "var(--ink)",
-                margin: "44px 0 12px",
-                textWrap: "balance",
-                scrollMarginTop: "110px",
-              }}
+              className="sus-disclosure"
             >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Closing reflection — the ethics of a contained organism
-              </strong>
-            </h4>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                What it means to put a living thing to work on a problem we
-                made.
-              </strong>{" "}
-              Four rooms asked four questions, and read in sequence they are one
-              question. Room 01 asked whether we had weighed what our work costs
-              the goals it does not serve, and we answered by naming climate as
-              a declared cost rather than hiding it. Room 02 asked whether we
-              let other people change the project, and the honest answer was
-              that the people who redrew rePhlow most, Bio-Oils, CEDEX, Repsol,
-              a resident of a reservoir, were rarely the people we were most
-              comfortable talking to. Room 03 asked whether we had measurably
-              moved an SDG, and the instruments replied with a number and a
-              distance still to cover. This room asks about the long-term
-              consequences, and the round table answered in a voice that was not
-              ours.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              The ethical core of rePhlow is modest and specific. We are
-              proposing to place a genetically modified organism into the path
-              of water that returns to an ecosystem, in order to recover an
-              element that civilisation cannot do without and is currently
-              flushing to the sea. The benefit is real: phosphorus kept in the
-              loop, nitrogen taken down with it, a hazardous sludge never made,
-              water given back to a dry country. But every one of those benefits
-              is a promise that holds only while the organism stays inside the
-              reactor, which is why containment is not a feature we added to
-              reassure a regulator; it is the precondition that makes the whole
-              project permissible, and it is the reason the EU governs contained
-              use of modified micro-organisms as a category of its own. [17] An
-              industrial operator told us nothing else would be discussed until
-              that evidence existed, and he was right to.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              There is a deeper tension the round table named and we should not
-              paper over. A technology that makes phosphorus recovery cheap and
-              routine could, perversely, remove the pressure to use less of it
-              at source, the rebound that haunts every efficiency gain; [19] and
-              a tool this capital- and skill-intensive could reach the
-              well-resourced first and widen the very gap SDGs 9 and 10 ask us
-              to close. We do not have clean answers to either, and we think
-              saying so is part of doing this responsibly. What we can do is be
-              precise about what would have to be true for the benefit to
-              outweigh the cost: beads that hold at least eight milligrams of
-              phosphorus per gram, cells that demonstrably do not leave the
-              vessel, a decarbonised bead material, and a regulation and a
-              market, the sandbox and the mandated blend the panel described,
-              that let a recovered nutrient compete with a mined one.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              That is why we have been deliberately careful about what we claim.
-              A screening LCA is not a certificate, structural capsule integrity
-              is not biological retention, and a laboratory accumulation figure
-              is not a plant running for a year. The role of a project like this
-              in sustainability is not to arrive with a finished answer; it is
-              to show that the honest version of the answer is close enough to
-              be worth reaching, and to keep those conditions in view, alongside
-              the four questions on the walls of these rooms. Do that, and
-              rePhlow stops being a clever device and becomes what it was meant
-              to be: a small, testable argument that a waste can be a resource,
-              made by the people who will have to live with the result.
-            </p>
+              <AccordionSection title="Closing reflection — the ethics of a contained organism">
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
+                    What it means to put a living thing to work on a problem we
+                    made.
+                  </strong>{" "}
+                  Four rooms asked four questions, and read in sequence they are
+                  one question. Room 01 asked whether we had weighed what our
+                  work costs the goals it does not serve, and we answered by
+                  naming climate as a declared cost rather than hiding it. Room
+                  02 asked whether we let other people change the project, and
+                  the honest answer was that the people who redrew rePhlow most,
+                  Bio-Oils, CEDEX, Repsol, a resident of a reservoir, were
+                  rarely the people we were most comfortable talking to. Room 03
+                  asked whether we had measurably moved an SDG, and the
+                  instruments replied with a number and a distance still to
+                  cover. This room asks about the long-term consequences, and
+                  the round table answered in a voice that was not ours.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  The ethical core of rePhlow is modest and specific. We are
+                  proposing to place a genetically modified organism into the
+                  path of water that returns to an ecosystem, in order to
+                  recover an element that civilisation cannot do without and is
+                  currently flushing to the sea. The benefit is real: phosphorus
+                  kept in the loop, nitrogen taken down with it, a hazardous
+                  sludge never made, water given back to a dry country. But
+                  every one of those benefits is a promise that holds only while
+                  the organism stays inside the reactor, which is why
+                  containment is not a feature we added to reassure a regulator;
+                  it is the precondition that makes the whole project
+                  permissible, and it is the reason the EU governs contained use
+                  of modified micro-organisms as a category of its own. [17] An
+                  industrial operator told us nothing else would be discussed
+                  until that evidence existed, and he was right to.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  There is a deeper tension the round table named and we should
+                  not paper over. A technology that makes phosphorus recovery
+                  cheap and routine could, perversely, remove the pressure to
+                  use less of it at source, the rebound that haunts every
+                  efficiency gain; [19] and a tool this capital- and
+                  skill-intensive could reach the well-resourced first and widen
+                  the very gap SDGs 9 and 10 ask us to close. We do not have
+                  clean answers to either, and we think saying so is part of
+                  doing this responsibly. What we can do is be precise about
+                  what would have to be true for the benefit to outweigh the
+                  cost: beads that hold at least eight milligrams of phosphorus
+                  per gram, cells that demonstrably do not leave the vessel, a
+                  decarbonised bead material, and a regulation and a market, the
+                  sandbox and the mandated blend the panel described, that let a
+                  recovered nutrient compete with a mined one.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  That is why we have been deliberately careful about what we
+                  claim. A screening LCA is not a certificate, structural
+                  capsule integrity is not biological retention, and a
+                  laboratory accumulation figure is not a plant running for a
+                  year. The role of a project like this in sustainability is not
+                  to arrive with a finished answer; it is to show that the
+                  honest version of the answer is close enough to be worth
+                  reaching, and to keep those conditions in view, alongside the
+                  four questions on the walls of these rooms. Do that, and
+                  rePhlow stops being a clever device and becomes what it was
+                  meant to be: a small, testable argument that a waste can be a
+                  resource, made by the people who will have to live with the
+                  result.
+                </p>
+              </AccordionSection>
+            </div>
             <details
               style={{
                 margin: "48px 0 8px",
@@ -13749,15 +12989,6 @@ export function Sustainability() {
           </section>
         </main>
       </div>
-
-      <AdjacentPageNav
-        prev={{
-          to: "/entrepreneurship",
-          label: "Entrepreneurship",
-          accent: "#C9572F",
-        }}
-        next={{ to: "/contribution", label: "Contribution", accent: "#2E7D86" }}
-      />
 
       {modalOpen && (
         <div

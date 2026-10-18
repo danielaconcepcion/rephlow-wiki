@@ -7,6 +7,7 @@ import { Navbar } from "../../components/Navbar";
 import { Header } from "../../components/Header";
 import { NotFound } from "../../components/NotFound";
 import { Footer } from "../../components/Footer";
+import { AdjacentPageNav } from "../../components/AdjacentPageNav";
 
 const App = () => {
   const pathMapping = getPathMapping();
@@ -52,6 +53,7 @@ const App = () => {
               compactHero,
               labHero,
               moleculeSeed,
+              awards,
               component: Component,
             },
           ]) => (
@@ -68,9 +70,14 @@ const App = () => {
                       compactHero={compactHero}
                       labHero={labHero}
                       moleculeSeed={moleculeSeed}
+                      awards={awards}
                     />
                   )}
                   <Component />
+                  {/* One shared Previous/Next handoff for the whole
+                      wiki — order, labels and icons live in
+                      components/pageNavMap.ts. */}
+                  <AdjacentPageNav path={path} />
                 </>
               }
             />

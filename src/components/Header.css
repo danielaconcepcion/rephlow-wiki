@@ -15,3 +15,26 @@
   position: relative;
   z-index: 1;
 }
+
+/* Medal / special-prize badges above the title. They sit in the hero's
+   own column and keep its centred rhythm; the band's padding is
+   untouched. */
+.page-hero__awards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  /* The row takes the space the hero's top padding already holds, so a
+     page with badges keeps the band height of one without: 25px of pill
+     plus the 4px below it. Where the badges wrap (narrow screens, or the
+     two on Human Practices), they push the title down instead. */
+  margin-top: -29px;
+  margin-bottom: 4px;
+}
+
+@media (max-width: 640px) {
+  .page-hero__awards {
+    margin-top: 0;
+  }
+}

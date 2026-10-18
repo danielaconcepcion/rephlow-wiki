@@ -1,8 +1,11 @@
 /* ==========================================================================
-   AdjacentPageNav — generalised from .engineering-block-nav (see
-   Engineering.css). Same sphere + eyebrow + label + arrow recipe, driven
-   by --adjacent-nav-color instead of Engineering's --eco-color, and real
-   <Link>s instead of tab-switching buttons.
+   AdjacentPageNav — the wiki's shared Previous/Next handoff. Same
+   typography, sizes and rhythm as .engineering-block-nav (see
+   Engineering.css), and the same glass sphere, only mixed from --ink
+   instead of the block colour: outside Engineering there is no
+   per-page colour to carry, so the circle stays grey and the
+   illustration does the identifying on its own. A little wider than
+   Engineering's, too, since these icons carry more detail.
    ========================================================================== */
 
 .adjacent-page-nav {
@@ -10,9 +13,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  max-width: 1120px;
-  margin: 64px auto 0;
-  padding: 40px 20px 0;
+  max-width: 1280px;
+  /* Room to breathe on both sides: clear of the page's last block
+     above, clear of the footer below. */
+  margin: 96px auto 0;
+  padding: 48px 20px 104px;
   border-top: 1px solid var(--line);
 }
 
@@ -20,6 +25,7 @@
   display: flex;
   align-items: center;
   gap: 14px;
+  min-width: 0;
   color: inherit;
   text-decoration: none;
 }
@@ -28,24 +34,20 @@
   outline-offset: 6px;
 }
 
-.adjacent-page-nav__sphere {
-  position: relative;
+.adjacent-page-nav__icon {
   flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 58px;
+  height: 58px;
   border-radius: 999px;
   overflow: hidden;
-  font-size: 1.1rem;
-  color: var(--adjacent-nav-color);
-  border: 1px solid
-    color-mix(in srgb, var(--adjacent-nav-color) 30%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
   background: linear-gradient(
     155deg,
-    color-mix(in srgb, var(--adjacent-nav-color) 26%, transparent),
-    color-mix(in srgb, var(--adjacent-nav-color) 8%, transparent) 60%,
+    color-mix(in srgb, var(--ink) 12%, transparent),
+    color-mix(in srgb, var(--ink) 4%, transparent) 60%,
     rgba(255, 255, 255, 0.6)
   );
   box-shadow:
@@ -53,14 +55,14 @@
     inset 0 3px 6px rgba(255, 255, 255, 0.5);
   transition: transform 260ms ease;
 }
-.adjacent-page-nav__link:hover .adjacent-page-nav__sphere,
-.adjacent-page-nav__link:focus-visible .adjacent-page-nav__sphere {
+.adjacent-page-nav__link:hover .adjacent-page-nav__icon,
+.adjacent-page-nav__link:focus-visible .adjacent-page-nav__icon {
   transform: scale(1.06);
 }
-.adjacent-page-nav__sphere img {
+.adjacent-page-nav__icon img {
   position: relative;
-  width: 70%;
-  height: 70%;
+  width: 74%;
+  height: 74%;
   object-fit: contain;
 }
 
@@ -68,6 +70,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  min-width: 0;
 }
 .adjacent-page-nav__link--next .adjacent-page-nav__text {
   align-items: flex-end;
@@ -93,7 +96,7 @@
   color: var(--ink);
 }
 .adjacent-page-nav__arrow {
-  color: color-mix(in srgb, var(--adjacent-nav-color) 65%, var(--ink) 35%);
+  color: var(--ink-soft);
   font-size: 1.15rem;
   line-height: 1;
   transition: transform 220ms ease;
@@ -108,27 +111,35 @@
 }
 
 @media (max-width: 640px) {
+  /* Side by side, two long page names (e.g. Collaboration and
+     Partnership ↔ Entrepreneurship) run into each other long before
+     they run out of screen, so the two links stack instead: each one
+     keeps the full width of the column and stays a comfortable tap
+     target, prev first and next below it. */
   .adjacent-page-nav {
-    padding: 32px 20px 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    padding: 32px 20px 72px;
+    margin-top: 64px;
   }
-  .adjacent-page-nav__eyebrow {
+  .adjacent-page-nav > span:empty {
     display: none;
   }
-  .adjacent-page-nav__sphere {
-    width: 40px;
-    height: 40px;
+  .adjacent-page-nav__link {
+    gap: 12px;
+  }
+  .adjacent-page-nav__link--next {
+    justify-content: flex-end;
+  }
+  .adjacent-page-nav__icon {
+    width: 50px;
+    height: 50px;
+  }
+  .adjacent-page-nav__eyebrow {
+    font-size: 0.65rem;
   }
   .adjacent-page-nav__label {
     font-size: 0.96rem;
-    flex-wrap: wrap;
-  }
-  /* Two long page names (e.g. Entrepreneurship ↔ Contribution) must not
-     push the page wider than the screen. */
-  .adjacent-page-nav {
-    gap: 14px;
-  }
-  .adjacent-page-nav__link,
-  .adjacent-page-nav__text {
-    min-width: 0;
   }
 }

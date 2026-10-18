@@ -144,3 +144,1058 @@
       rgba(255, 255, 255, 0) 62%
     );
 }
+
+/* --------------------------------------------------------------------------
+   Disclosures. The page's long reflective passages (What stays open, the
+   closing reflection) and the lead-ins inside the three "what has to be
+   true next" panels fold away behind the wiki's own accordion
+   (AccordionSection), skinned to the card language this page already uses
+   for its reference lists.
+   -------------------------------------------------------------------------- */
+.sus-design .sus-disclosure {
+  max-width: 790px;
+  margin: 34px auto 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  scroll-margin-top: 110px;
+}
+
+.sus-design .sus-disclosure > .hp-accordion > .hp-accordion__trigger {
+  padding: 14px 0;
+  gap: 12px;
+}
+
+.sus-design .sus-disclosure .hp-accordion__title {
+  font-size: 21px;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.sus-design .sus-disclosure > .hp-accordion > .hp-accordion__content {
+  padding: 0 0 10px;
+  gap: 0;
+  animation: sus-disclosure-open 0.22s ease both;
+}
+
+/* The paragraphs inside are already in the page's own column, so they keep
+   its width and need no margins of their own. */
+.sus-design .sus-disclosure .hp-accordion__content > p {
+  max-width: 790px;
+}
+
+/* Inside a coloured panel the accordion is quieter still: the bold lead-in
+   becomes the question, hairlines separate them, nothing is nested. */
+.sus-design .sus-panel-accordion + .sus-panel-accordion {
+  border-top: 1px solid rgba(27, 35, 64, 0.09);
+}
+
+.sus-design .sus-panel-accordion .hp-accordion__trigger {
+  padding: 11px 0;
+  gap: 9px;
+  align-items: flex-start;
+}
+
+.sus-design .sus-panel-accordion .hp-accordion__chevron {
+  margin-top: 5px;
+  width: 9px;
+  height: 9px;
+}
+
+.sus-design .sus-panel-accordion .hp-accordion__title {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.sus-design .sus-panel-accordion .hp-accordion__content {
+  padding: 0 0 12px;
+  gap: 0;
+  animation: sus-disclosure-open 0.22s ease both;
+}
+
+.sus-design .sus-panel-accordion__body {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  text-align: justify;
+  text-align-last: left;
+  text-wrap: pretty;
+}
+
+@keyframes sus-disclosure-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sus-design .sus-disclosure > .hp-accordion > .hp-accordion__content,
+  .sus-design .sus-panel-accordion .hp-accordion__content {
+    animation: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Goals 9 and 13 — the two we touch without claiming. One card each, with
+   the SDG artwork between them rather than beside the pair, and with the
+   official target wording folded away behind the page's own accordion.
+   -------------------------------------------------------------------------- */
+.sus-design .sus-unclaimed {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(140px, 190px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin: 26px 0 30px;
+}
+
+.sus-design .sus-unclaimed__card {
+  min-width: 0;
+  padding: 18px 20px 14px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--sdg);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.sus-design .sus-unclaimed__top {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.sus-design .sus-unclaimed__num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--sdg);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sus-design .sus-unclaimed__title {
+  margin: 0 0 5px;
+  font-family: var(--font-display);
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sus-design .sus-unclaimed__sign {
+  display: inline-block;
+  padding: 2px 10px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.01em;
+}
+
+.sus-design .sus-unclaimed__sign--pos {
+  color: #2f7a4f;
+  border-color: rgba(47, 122, 79, 0.4);
+  background: rgba(47, 122, 79, 0.07);
+}
+
+.sus-design .sus-unclaimed__sign--neg {
+  color: #b03c1b;
+  border-color: rgba(176, 60, 27, 0.4);
+  background: rgba(176, 60, 27, 0.07);
+}
+
+.sus-design .sus-unclaimed__text {
+  margin: 0 0 12px;
+  font-size: 14.5px;
+  line-height: 1.68;
+  color: var(--ink-soft);
+  text-align: justify;
+  text-align-last: left;
+  text-wrap: pretty;
+}
+
+.sus-design .sus-unclaimed__targets {
+  border-top: 1px solid var(--line);
+}
+
+.sus-design .sus-unclaimed__targets .hp-accordion__trigger {
+  padding: 11px 0;
+  gap: 9px;
+}
+
+.sus-design .sus-unclaimed__targets .hp-accordion__title {
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.sus-design .sus-unclaimed__targets .hp-accordion__content {
+  padding: 0 0 12px;
+  gap: 0;
+  animation: sus-disclosure-open 0.22s ease both;
+}
+
+.sus-design .sus-unclaimed__official {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sdg);
+  border-radius: 0 12px 12px 0;
+  background: var(--paper-soft);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-unclaimed__official strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* The artwork sits between the two cards, on the page's own paper — no
+   dark plate behind it. */
+.sus-design .sus-unclaimed__sdg {
+  margin: 0;
+  align-self: center;
+}
+
+.sus-design .sus-unclaimed__sdg img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The three climate readouts, as the card states them. */
+.sus-design .sus-climate-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 4px 0 14px;
+}
+
+.sus-design .sus-climate-strip > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper-soft);
+}
+
+.sus-design .sus-climate-strip__k {
+  font-size: 11.5px;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-climate-strip__v {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.sus-design .sus-climate-strip__v--neg {
+  color: #b03c1b;
+}
+
+.sus-design .sus-climate-strip__btn {
+  grid-column: 1 / -1;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  text-align: center;
+  text-decoration: none;
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.sus-design .sus-climate-strip__btn:hover {
+  background: var(--ink);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .sus-design .sus-unclaimed {
+    grid-template-columns: 1fr;
+  }
+
+  .sus-design .sus-unclaimed__sdg {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   The Nilsson scale. Three views of the same nine rows: the scale filters,
+   the map draws them, the list names them. Wide enough to read the two
+   columns of targets, so it steps outside the 790px text column.
+   -------------------------------------------------------------------------- */
+.sus-design .sus-nilsson {
+  margin: 10px 0 28px;
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.sus-design .sus-nilsson__scale {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.sus-design .sus-nilsson__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 8px 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+.sus-design .sus-nilsson__step:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.sus-design .sus-nilsson__step b {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--ink);
+}
+
+.sus-design .sus-nilsson__step small {
+  font-size: 10.5px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.sus-design .sus-nilsson__count {
+  font-size: 10.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__step.has:not(:disabled):hover {
+  border-color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__step.on.p {
+  border-color: rgba(47, 122, 79, 0.5);
+  background: rgba(47, 122, 79, 0.1);
+}
+
+.sus-design .sus-nilsson__step.on.n {
+  border-color: rgba(176, 60, 27, 0.5);
+  background: rgba(176, 60, 27, 0.1);
+}
+
+.sus-design .sus-nilsson__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  margin-top: 14px;
+}
+
+.sus-design .sus-nilsson__map {
+  width: 100%;
+  height: auto;
+}
+
+.sus-design .sus-nilsson__colh {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__link {
+  fill: none;
+  opacity: 0.85;
+  transition:
+    opacity 0.18s ease,
+    stroke-width 0.18s ease;
+}
+
+.sus-design .sus-nilsson__link.dim {
+  opacity: 0.08;
+}
+
+/* Everything that is not the selected link steps back far enough that the
+   selected one reads at a glance, filtered or not. */
+.sus-design .sus-nilsson__link.off {
+  opacity: 0.22;
+}
+
+.sus-design .sus-nilsson__link.sel {
+  opacity: 1;
+  filter: drop-shadow(0 1px 3px rgba(27, 35, 64, 0.3));
+}
+
+.sus-design .sus-nilsson__link.dim.off {
+  opacity: 0.08;
+}
+
+.sus-design .sus-nilsson__hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 16;
+  cursor: pointer;
+}
+
+.sus-design .sus-nilsson__hit:focus-visible {
+  outline: none;
+  stroke: rgba(27, 35, 64, 0.25);
+}
+
+.sus-design .sus-nilsson__node rect {
+  fill: var(--paper-soft);
+  stroke: var(--line);
+}
+
+.sus-design .sus-nilsson__node text {
+  font-family: var(--font-body);
+  font-size: 12px;
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__node text.code {
+  font-family: var(--font-display);
+  font-weight: 600;
+  fill: var(--ink);
+}
+
+.sus-design .sus-nilsson__node.dim {
+  opacity: 0.35;
+}
+
+/* The two ends of the selected interaction are named, so the curve is not
+   the only thing carrying the selection. */
+.sus-design .sus-nilsson__node.sel rect {
+  fill: #fff;
+  stroke: var(--ink);
+  stroke-width: 1.6;
+}
+
+.sus-design .sus-nilsson__node.sel text {
+  fill: var(--ink);
+}
+
+.sus-design .sus-nilsson__detail {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper-soft);
+}
+
+.sus-design .sus-nilsson__pair {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sus-design .sus-nilsson__names {
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__score {
+  display: inline-block;
+  margin: 10px 0 8px;
+  padding: 3px 10px;
+  border: 1px solid;
+  border-radius: 999px;
+  font-size: 12.5px;
+}
+
+.sus-design .sus-nilsson__score.p {
+  color: #2f7a4f;
+  border-color: rgba(47, 122, 79, 0.4);
+  background: rgba(47, 122, 79, 0.07);
+}
+
+.sus-design .sus-nilsson__score.n {
+  color: #b03c1b;
+  border-color: rgba(176, 60, 27, 0.4);
+  background: rgba(176, 60, 27, 0.07);
+}
+
+.sus-design .sus-nilsson__why {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__source {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-nilsson__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.sus-design .sus-nilsson__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.sus-design .sus-nilsson__chip.dim {
+  opacity: 0.3;
+}
+
+.sus-design .sus-nilsson__chip.on {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.sus-design .sus-nilsson__chip-score {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.sus-design .sus-nilsson__chip.p .sus-nilsson__chip-score {
+  color: #2f7a4f;
+}
+
+.sus-design .sus-nilsson__chip.n .sus-nilsson__chip-score {
+  color: #b03c1b;
+}
+
+@media (max-width: 860px) {
+  .sus-design .sus-nilsson__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sus-design .sus-nilsson__scale {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* --------------------------------------------------------------------------
+   The three goals we answer to: a deadline board over a console. The board
+   places every target on the 2030 Agenda's own timeline and opens it below;
+   the console shows one goal, and within it one target, at a time.
+   -------------------------------------------------------------------------- */
+.sus-design .sus-console-wrap {
+  margin: 26px 0 32px;
+}
+
+.sus-design .sus-deadlines {
+  padding: 18px 20px 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.sus-design .sus-deadlines__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sus-design .sus-deadlines__lede {
+  max-width: 76ch;
+  margin: 5px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__track {
+  position: relative;
+  height: 150px;
+  margin-top: 16px;
+}
+
+.sus-design .sus-deadlines__axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 32px;
+  height: 2px;
+  background: var(--line);
+}
+
+.sus-design .sus-deadlines__past {
+  position: absolute;
+  left: 0;
+  bottom: 32px;
+  height: 2px;
+  background: rgba(27, 35, 64, 0.26);
+}
+
+.sus-design .sus-deadlines__tick {
+  position: absolute;
+  bottom: 26px;
+  width: 1px;
+  height: 12px;
+  background: var(--line);
+}
+
+.sus-design .sus-deadlines__year {
+  position: absolute;
+  bottom: 6px;
+  transform: translateX(-50%);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__today {
+  position: absolute;
+  bottom: 32px;
+  width: 1px;
+  height: 104px;
+  background: rgba(176, 60, 27, 0.5);
+}
+
+.sus-design .sus-deadlines__today span {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #b03c1b;
+  white-space: nowrap;
+}
+
+.sus-design .sus-deadlines__pin {
+  position: absolute;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-soft);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+/* The stem that ties a pin to its year on the axis. */
+.sus-design .sus-deadlines__pin::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: var(--stem, 12px);
+  background: var(--line);
+}
+
+.sus-design .sus-deadlines__pin small {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__pin.expired {
+  border-color: rgba(176, 60, 27, 0.4);
+  background: rgba(176, 60, 27, 0.07);
+}
+
+.sus-design .sus-deadlines__pin.expired small {
+  color: #b03c1b;
+}
+
+.sus-design .sus-deadlines__pin:hover {
+  border-color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__pin.on {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(27, 35, 64, 0.08);
+}
+
+.sus-design .sus-deadlines__legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sus-design .sus-deadlines__key {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-soft);
+}
+
+.sus-design .sus-deadlines__key.expired {
+  border-color: rgba(176, 60, 27, 0.5);
+  background: rgba(176, 60, 27, 0.14);
+}
+
+.sus-design .sus-deadlines__pin--nodate {
+  position: static;
+  transform: none;
+}
+
+.sus-design .sus-deadlines__pin--nodate::after {
+  display: none;
+}
+
+/* --- the console itself --- */
+.sus-design .sus-console {
+  display: grid;
+  grid-template-columns: minmax(200px, 250px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.sus-design .sus-console__side {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sus-design .sus-console__side figure {
+  margin: 0;
+}
+
+.sus-design .sus-console__tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sus-design .sus-console__tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.sus-design .sus-console__tab:hover {
+  border-color: var(--ink-soft);
+}
+
+.sus-design .sus-console__tab.on {
+  border-color: var(--sdg);
+  color: var(--ink);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--sdg) 18%, transparent);
+}
+
+.sus-design .sus-console__num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--sdg);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sus-design .sus-console__panel {
+  min-width: 0;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--sdg);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.sus-design .sus-console__head {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+}
+
+.sus-design .sus-console__goal-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sus-design .sus-console__lede {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-console__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 14px 0 4px;
+}
+
+.sus-design .sus-console__chip {
+  padding: 5px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.sus-design .sus-console__chip:hover {
+  border-color: var(--ink-soft);
+}
+
+.sus-design .sus-console__chip.on {
+  border-color: var(--sdg);
+  background: color-mix(in srgb, var(--sdg) 12%, #fff);
+  color: var(--ink);
+}
+
+.sus-design .sus-console__view {
+  margin-top: 14px;
+  animation: sus-disclosure-open 0.22s ease both;
+}
+
+/* The target's own paragraphs keep the page's reading column. */
+.sus-design .sus-console__view > p {
+  max-width: 790px;
+  margin: 0 0 16px;
+}
+
+.sus-design .sus-official {
+  max-width: 790px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sdg);
+  border-radius: 0 12px 12px 0;
+  background: var(--paper-soft);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-official strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* --- the readouts, the status bar, the two diagrams --- */
+.sus-design .sus-readouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.sus-design .sus-readouts > div {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper-soft);
+}
+
+.sus-design .sus-readouts__v {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.sus-design .sus-readouts__v small {
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-readouts__k {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-eea {
+  margin: 0 0 16px;
+}
+
+.sus-design .sus-eea__bar {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.sus-design .sus-eea__ok {
+  flex: 0 0 37%;
+  padding: 7px 10px;
+  background: rgba(124, 154, 78, 0.35);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sus-design .sus-eea__ko {
+  flex: 1;
+  padding: 7px 10px;
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+}
+
+.sus-design .sus-eea__k {
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-gap,
+.sus-design .sus-chain {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  margin: 0 0 16px;
+}
+
+.sus-design .sus-gap__tick,
+.sus-design .sus-chain__s {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-gap__sub {
+  font-family: var(--font-body);
+  font-size: 11px;
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-gap__label,
+.sus-design .sus-chain__t {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sus-design .sus-chain__t {
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-chain__i {
+  font-size: 18px;
+}
+
+@media (max-width: 860px) {
+  .sus-design .sus-console {
+    grid-template-columns: 1fr;
+  }
+
+  .sus-design .sus-console__side {
+    position: static;
+  }
+
+  .sus-design .sus-console__side figure {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .sus-design .sus-deadlines__track {
+    height: 170px;
+  }
+
+  .sus-design .sus-deadlines__pin {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+}
