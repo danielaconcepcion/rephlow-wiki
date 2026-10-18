@@ -695,3 +695,484 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+/* --------------------------------------------------------------------------
+   The three goals we answer to: a deadline board over a console. The board
+   places every target on the 2030 Agenda's own timeline and opens it below;
+   the console shows one goal, and within it one target, at a time.
+   -------------------------------------------------------------------------- */
+.sus-design .sus-console-wrap {
+  margin: 26px 0 32px;
+}
+
+.sus-design .sus-deadlines {
+  padding: 18px 20px 14px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.sus-design .sus-deadlines__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sus-design .sus-deadlines__lede {
+  max-width: 76ch;
+  margin: 5px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__track {
+  position: relative;
+  height: 150px;
+  margin-top: 16px;
+}
+
+.sus-design .sus-deadlines__axis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 32px;
+  height: 2px;
+  background: var(--line);
+}
+
+.sus-design .sus-deadlines__past {
+  position: absolute;
+  left: 0;
+  bottom: 32px;
+  height: 2px;
+  background: rgba(27, 35, 64, 0.26);
+}
+
+.sus-design .sus-deadlines__tick {
+  position: absolute;
+  bottom: 26px;
+  width: 1px;
+  height: 12px;
+  background: var(--line);
+}
+
+.sus-design .sus-deadlines__year {
+  position: absolute;
+  bottom: 6px;
+  transform: translateX(-50%);
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__today {
+  position: absolute;
+  bottom: 32px;
+  width: 1px;
+  height: 104px;
+  background: rgba(176, 60, 27, 0.5);
+}
+
+.sus-design .sus-deadlines__today span {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #b03c1b;
+  white-space: nowrap;
+}
+
+.sus-design .sus-deadlines__pin {
+  position: absolute;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-soft);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+/* The stem that ties a pin to its year on the axis. */
+.sus-design .sus-deadlines__pin::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: var(--stem, 12px);
+  background: var(--line);
+}
+
+.sus-design .sus-deadlines__pin small {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__pin.expired {
+  border-color: rgba(176, 60, 27, 0.4);
+  background: rgba(176, 60, 27, 0.07);
+}
+
+.sus-design .sus-deadlines__pin.expired small {
+  color: #b03c1b;
+}
+
+.sus-design .sus-deadlines__pin:hover {
+  border-color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__pin.on {
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(27, 35, 64, 0.08);
+}
+
+.sus-design .sus-deadlines__legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 10px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-deadlines__legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sus-design .sus-deadlines__key {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-soft);
+}
+
+.sus-design .sus-deadlines__key.expired {
+  border-color: rgba(176, 60, 27, 0.5);
+  background: rgba(176, 60, 27, 0.14);
+}
+
+.sus-design .sus-deadlines__pin--nodate {
+  position: static;
+  transform: none;
+}
+
+.sus-design .sus-deadlines__pin--nodate::after {
+  display: none;
+}
+
+/* --- the console itself --- */
+.sus-design .sus-console {
+  display: grid;
+  grid-template-columns: minmax(200px, 250px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  margin-top: 18px;
+}
+
+.sus-design .sus-console__side {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sus-design .sus-console__side figure {
+  margin: 0;
+}
+
+.sus-design .sus-console__tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sus-design .sus-console__tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: #fff;
+  color: var(--ink-soft);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.sus-design .sus-console__tab:hover {
+  border-color: var(--ink-soft);
+}
+
+.sus-design .sus-console__tab.on {
+  border-color: var(--sdg);
+  color: var(--ink);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--sdg) 18%, transparent);
+}
+
+.sus-design .sus-console__num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--sdg);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.sus-design .sus-console__panel {
+  min-width: 0;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--sdg);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: var(--shadow-card);
+}
+
+.sus-design .sus-console__head {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+}
+
+.sus-design .sus-console__goal-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 19px;
+  line-height: 1.3;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.sus-design .sus-console__lede {
+  margin: 4px 0 0;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-console__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 14px 0 4px;
+}
+
+.sus-design .sus-console__chip {
+  padding: 5px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.sus-design .sus-console__chip:hover {
+  border-color: var(--ink-soft);
+}
+
+.sus-design .sus-console__chip.on {
+  border-color: var(--sdg);
+  background: color-mix(in srgb, var(--sdg) 12%, #fff);
+  color: var(--ink);
+}
+
+.sus-design .sus-console__view {
+  margin-top: 14px;
+  animation: sus-disclosure-open 0.22s ease both;
+}
+
+/* The target's own paragraphs keep the page's reading column. */
+.sus-design .sus-console__view > p {
+  max-width: 790px;
+  margin: 0 0 16px;
+}
+
+.sus-design .sus-official {
+  max-width: 790px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--sdg);
+  border-radius: 0 12px 12px 0;
+  background: var(--paper-soft);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-official strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* --- the readouts, the status bar, the two diagrams --- */
+.sus-design .sus-readouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 150px), 1fr));
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+.sus-design .sus-readouts > div {
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper-soft);
+}
+
+.sus-design .sus-readouts__v {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.sus-design .sus-readouts__v small {
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-readouts__k {
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-eea {
+  margin: 0 0 16px;
+}
+
+.sus-design .sus-eea__bar {
+  display: flex;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.sus-design .sus-eea__ok {
+  flex: 0 0 37%;
+  padding: 7px 10px;
+  background: rgba(124, 154, 78, 0.35);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sus-design .sus-eea__ko {
+  flex: 1;
+  padding: 7px 10px;
+  background: var(--paper-soft);
+  color: var(--ink-soft);
+  font-size: 12.5px;
+}
+
+.sus-design .sus-eea__k {
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+}
+
+.sus-design .sus-gap,
+.sus-design .sus-chain {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: auto;
+  margin: 0 0 16px;
+}
+
+.sus-design .sus-gap__tick,
+.sus-design .sus-chain__s {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-gap__sub {
+  font-family: var(--font-body);
+  font-size: 11px;
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-gap__label,
+.sus-design .sus-chain__t {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.sus-design .sus-chain__t {
+  fill: var(--ink-soft);
+}
+
+.sus-design .sus-chain__i {
+  font-size: 18px;
+}
+
+@media (max-width: 860px) {
+  .sus-design .sus-console {
+    grid-template-columns: 1fr;
+  }
+
+  .sus-design .sus-console__side {
+    position: static;
+  }
+
+  .sus-design .sus-console__side figure {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .sus-design .sus-deadlines__track {
+    height: 170px;
+  }
+
+  .sus-design .sus-deadlines__pin {
+    font-size: 12px;
+    padding: 3px 8px;
+  }
+}

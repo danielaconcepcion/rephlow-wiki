@@ -9,6 +9,13 @@ import { SEATS } from "./Sustainability/seats";
 import "./Sustainability/Sustainability.css";
 import { AccordionSection } from "./HumanPractices/AccordionSection";
 import { NilssonMap } from "./Sustainability/NilssonMap";
+import {
+  ConcentrationGap,
+  EcologicalStatusBar,
+  GoalConsole,
+  MiniReadouts,
+  WaterChain,
+} from "./Sustainability/GoalConsole";
 
 /* --------------------------------------------------------------------------
    Sustainability — the page as it was designed in Claude Design
@@ -1948,658 +1955,735 @@ export function Sustainability() {
               project that only reports the goals it advances has not finished
               looking.
             </p>
-            <figure
-              style={{
-                margin: "30px 0",
-                borderRadius: "28px",
-                background:
-                  "radial-gradient(ellipse at 50% 40%,#ffffff 0%,var(--water-clear) 100%)",
-                border: "1px solid var(--line)",
-                padding: "12px",
-              }}
-            >
-              <img
-                src={asset("assets/sustainability/sdg-main.png")}
-                alt="Sustainable Development Goals 6, 12 and 14"
-                style={{
-                  display: "block",
-                  width: "100%",
-                  maxWidth: "620px",
-                  margin: "0 auto",
-                  height: "auto",
-                }}
-              />
-            </figure>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 6 — Clean water and sanitation
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
-              >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 6.3:{" "}
-                </strong>
-                <em>
-                  By 2030, improve water quality by reducing pollution,
-                  eliminating dumping and minimizing release of hazardous
-                  chemicals and materials, halving the proportion of untreated
-                  wastewater and substantially increasing recycling and safe
-                  reuse globally. <br />
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 6.6:
-                </strong>
-                <em>By </em>
-                <em>
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    2020
-                  </strong>
-                </em>
-                <em>
-                  , protect and restore water-related ecosystems, including
-                  mountains, forests, wetlands, rivers, aquifers and lakes.
-                  <br />
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 6.b:{" "}
-                </strong>
-                <em>
-                  Support and strengthen the participation of local communities
-                  in improving water and sanitation management.
-                </em>
-                <a className="lab-citation" href="#ref-r01-1">
-                  [1]
-                </a>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 6.3
-              </strong>{" "}
-              is the centre of gravity of this project: halving untreated
-              wastewater and cutting the release of hazardous chemicals into
-              nature. But a global target does not tell you how much phosphorus
-              is too much. In our jurisdiction, that answer is written into law.
-              Directive (EU) 2024/3019, which replaces the Urban Wastewater
-              Treatment Directive from August 2027, sets total-phosphorus limits
-              of{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                0.7 mg/L{" "}
-              </strong>
-              for plants serving 10,000 to 150,000 population equivalents and{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                0.5 mg/L
-              </strong>{" "}
-              for larger facilities, phased in between 2033 and 2045.{" "}
-              <a className="lab-citation" href="#ref-r01-2">
-                [2]
-              </a>
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Those numbers are the clearest operational statement of target 6.3
-              in our jurisdiction, and we adopted them as the yardstick rePhlow
-              is designed against. They are a benchmark we chose, not a limit
-              that binds our first use case: the Directive governs urban
-              wastewater, and what an industrial discharge is actually required
-              to meet depends on its permit, its discharge route and national
-              implementation. We hold ourselves to the urban figure because it
-              is the strictest reference available and because designing against
-              a number is the difference between claiming to help with clean
-              water and being able to say whether we did.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Target 6.3 is the number. Targets{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                6.6{" "}
-              </strong>
-              and{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                6.b{" "}
-              </strong>
-              cover what happens when it is missed.{" "}
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 6.6
-              </strong>{" "}
-              asks us to protect and restore water-related ecosystems, and the
-              word carrying the weight is <em>restore</em>. Cutting the nutrient
-              load does not automatically undo the damage: past a certain point,
-              a degraded water body can hold that state on its own, and the way
-              back does not undo the damage already done.{" "}
-              <a className="lab-citation" href="#ref-r01-3">
-                [3]
-              </a>{" "}
-              That asymmetry is the entire argument for acting early.
-              Restoration is a slower and more expensive process compared to
-              never crossing the line. This is why rePhlow is designed to act at
-              an industrial outfall rather than at a lake: preventing a load
-              from entering a water body is a problem with a known solution,
-              while restoring one that has already shifted is not.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              For most of Europe, restoration is already the default task rather
-              than the contingency. The European Environment Agency’s 2024
-              assessment, covering more than 120,000 surface water bodies, found
-              that only 37% reached good or high ecological status in the
-              2015-2021 period.{" "}
-              <a className="lab-citation" href="#ref-r01-4">
-                [4]
-              </a>{" "}
-              Ecological status is a complex measure and nutrient levels are
-              only one of the many pressures behind it, but the direction is
-              unambiguous: the majority of Europe’s surface water is already
-              below the standard its own law sets for it.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              There is also a gap between the two targets that is easy to miss.
-              The concentrations at which a water body begins to shift towards
-              eutrophication are conventionally given as phosphorus above{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                0.01-0.02 mg/L{" "}
-              </strong>
-              in the receiving water.{" "}
-              <a className="lab-citation" href="#ref-r01-5">
-                [5]
-              </a>{" "}
-              The discharge limit that target 6.3 translates into is{" "}
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                0.7 mg/L
-              </strong>{" "}
-              at the outfall.{" "}
-              <a className="lab-citation" href="#ref-r01-2">
-                [2]
-              </a>{" "}
-              These measurements are not comparable, as one is measured in
-              bodies of water and the other in a pipe, with dilution in between.
-              The order of magnitude between them is the reason 6.3 and 6.6 are
-              separate targets. Complying with a discharge limit is not the same
-              as leaving an ecosystem unchanged, and we would rather focus on
-              the first while being honest that it does not guarantee the
-              second.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                6.b{" "}
-              </strong>
-              asks for the participation of local communities in improving water
-              management, and it is the target we could have missed if we just
-              stayed in the lab. A resident of the San Juan reservoir told us
-              that she had watched the water change for decades without being
-              explained the reason why.{" "}
-              <a href="#r04" className="lab-wikilink">
-                Check out room 04
-              </a>{" "}
-              A treatment nobody can explain to the people living beside the
-              water does not serve this target, despite its effectiveness. That
-              conversation is why room 04 exists.
-            </p>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 12 — Responsible consumption and production
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
-              >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 12.2:{" "}
-                </strong>
-                <em>
-                  By 2030, achieve the sustainable management and efficient use
-                  of natural resources.
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  <br />
-                  Target 12.4:{" "}
-                </strong>
-                <em>By </em>
-                <em>
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    2020
-                  </strong>
-                </em>
-                <em>
-                  , achieve the environmentally sound management of chemicals
-                  and all wastes throughout their life cycle, in accordance with
-                  agreed international frameworks, and significantly reduce
-                  their release to air, water and soil in order to minimize
-                  their adverse impacts on human health and the environment.
-                </em>
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  <br />
-                  Target 12.5:
-                </strong>
-                <em>
-                  By 2030, substantially reduce waste generation through
-                  prevention, reduction, recycling and reuse.{" "}
-                </em>
-                <a className="lab-citation" href="#ref-r01-6">
-                  [6]
-                </a>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 12.2{" "}
-              </strong>
-              is the one that turns our project inside out. Rather than viewing
-              phosphorus as just a pollutant that needs to be eradicated, we can
-              recognise that it is a resource that can be given a second life.
-              Phosphate rock is non-renewable and phosphorus is irreplaceable in
-              our diet; estimated data place the peak of global production
-              within decades rather than centuries.{" "}
-              <a className="lab-citation" href="#ref-r01-7">
-                [7]
-              </a>{" "}
-              Its reserves are also extremely concentrated, with around 70% of
-              the world’s known reserves being located in a single country.{" "}
-              <a className="lab-citation" href="#ref-r01-8">
-                [8]
-              </a>{" "}
-              Every kilogramme of phosphorus found in wastewater sludge is a
-              kilogramme that needs to be mined.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              This is why rePhlow does not stop at removal. Removing phosphorus
-              from water and burying it is not enough; returning it to use is
-              efficient waste and resource management.
-            </p>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(110,90,150,0.06)",
-                border: "1px solid rgba(110,90,150,0.2)",
-              }}
-            >
-              <h5
-                style={{
-                  margin: "0 0 10px",
-                  fontFamily: "var(--font-display)",
-                  fontSize: "17px",
-                  lineHeight: "1.3",
-                  fontWeight: "600",
-                  color: "#5e4c86",
-                }}
-              >
-                12.2 beyond each project’s boundary: A joint section by iGEM
-                Madrid UCM (rePhlow) and iGEM UPF Barcelona (Vinesys)
-              </h5>
-              <p
-                style={{
-                  margin: "0 0 18px",
-                  fontSize: "15px",
-                  lineHeight: "1.72",
-                  color: "var(--ink-soft)",
-                  textWrap: "pretty",
-                }}
-              >
-                The two teams work at opposite ends of the same water chain.
-                rePhlow treats water on its way out of an industrial process,
-                capturing phosphorus before it reaches sensitive waters and
-                recovering it instead of burying it in sludge. Vinesys acts
-                before the water is used, with an engineered Bacillus subtilis
-                applied to the vine rhizosphere that retains water near the
-                roots and reduces stress ethylene, so that a vineyard in Priorat
-                or Penedès needs less irrigation to sustain the same crop under
-                drought.
-              </p>
-              <p
-                style={{
-                  margin: "0 0 18px",
-                  fontSize: "15px",
-                  lineHeight: "1.72",
-                  color: "var(--ink-soft)",
-                  textWrap: "pretty",
-                }}
-              >
-                Both projects fall under Target 12.2, and each covers a question
-                the other does not. One asks what happens to water after a
-                process releases it. The other asks how much water that process
-                needs in the first place.
-              </p>
-              <p
-                style={{
-                  margin: "0 0 18px",
-                  fontSize: "15px",
-                  lineHeight: "1.72",
-                  color: "var(--ink-soft)",
-                  textWrap: "pretty",
-                }}
-              >
-                Comparing the two projects made visible where each analysis
-                stopped. Both teams had framed efficient resource use within
-                their own perimeter: rePhlow around the phosphorus in an
-                effluent, without asking where that water had come from, and
-                Vinesys around irrigation demand in the vineyard, without asking
-                what the sector discharges afterwards. Neither project changed
-                its technical design as a result, but both now state where their
-                analysis stops instead of leaving it implicit.
-              </p>
-              <p
-                style={{
-                  margin: "0 0 18px",
-                  fontSize: "15px",
-                  lineHeight: "1.72",
-                  color: "var(--ink-soft)",
-                  textWrap: "pretty",
-                }}
-              >
-                <em>
-                  This section is published on both wikis, following the social
-                  media collaboration the two teams ran earlier in the season.
-                </em>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 12.4{" "}
-              </strong>
-              is about handling chemicals and waste responsibly across their
-              whole life cycle, and it is also where we justify <em>where </em>
-              we intervene. Directive (EU) 2024/3019 strengthens the control of
-              non-domestic wastewater entering urban collecting systems,{" "}
-              <a className="lab-citation" href="#ref-r01-2">
-                [2]
-              </a>{" "}
-              which is one of several routes by which tightening nutrient rules
-              reach an industrial site. The others run through the facility’s
-              own discharge permit and through national implementation, and
-              which of them applies depends on whether the effluent goes to a
-              municipal collector or straight to a watercourse — a distinction
-              CEDEX drew for us explicitly. We designed rePhlow for an
-              industrial setting because that is where phosphorus is most
-              concentrated and where the stream is already characterised and
-              monitored, not because we can show that regulation arrives there
-              first.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              This goal also applies to our biological design — a living
-              engineered organism introduced into a waste stream is precisely
-              the kind of material this target exists to govern, which is why
-              containment is a precondition in our hardware.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Target 12.5{" "}
-              </strong>
-              is where a project focused on phosphorus can quietly fail.
-              Removing phosphorus from water is not the same as removing it from
-              the system. Chemical precipitation leaves the resource iron-bound
-              in a sludge that has to be transported, stored and disposed of,
-              and the target is not met by producing a tidier waste. Our process
-              does not stop when the water is clean, as recovery makes the route
-              end up with less waste.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              We have also applied this goal when working with our own
-              engineering. Our original design included a filter whose materials
-              would have generated their own waste stream, with no convincing
-              answer for its end of life. When the reactor changed, that
-              component became redundant, so it was removed. The cleanest form
-              of waste reduction is the component you never build.{" "}
-              <a href="#r04" className="lab-wikilink">
-                See Room 04
-              </a>
-            </p>
-            <h5
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "18px",
-                lineHeight: "1.35",
-                fontWeight: "600",
-                color: "#1f6f7d",
-                margin: "36px 0 10px",
-                textWrap: "balance",
-              }}
-            >
-              Goal 14 — Life below water
-            </h5>
-            <div
-              className="sus-prose-panel"
-              style={{
-                margin: "26px 0",
-                padding: "22px 26px",
-                borderRadius: "18px",
-                background: "rgba(31,124,140,0.07)",
-                border: "1px solid rgba(31,124,140,0.18)",
-              }}
-            >
-              <p
-                style={{
-                  margin: "0",
-                  fontSize: "14.5px",
-                  lineHeight: "1.7",
-                  color: "var(--ink-soft)",
-                }}
-              >
-                <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                  Target 14.1:{" "}
-                </strong>
-                <em>
-                  By 2025, prevent and significantly reduce marine pollution of
-                  all kinds, in particular from land-based activities, including
-                  marine debris and nutrient pollution.
-                </em>
-                <a className="lab-citation" href="#ref-r01-9">
-                  [9]
-                </a>
-              </p>
-            </div>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Of the three goals we answer to, this is the one whose deadline
-              has already passed. Target 14.1 was set for 2025, and nutrient
-              pollution from land-based activity is named in it explicitly.
-              Satellite monitoring has identified roughly 1.15 million km² of
-              coastal water with eutrophication potential, with deteriorating
-              areas being double the amount against recovering ones.{" "}
-              <a className="lab-citation" href="#ref-r01-10">
-                [10]
-              </a>
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              We did not have to look far for evidence, as the Mar Menor, the
-              largest coastal lagoon in the western Mediterranean, was affected
-              by repeated eutrophication crises since 2016. Starting with an
-              algal bloom, followed by an episode of oxygen depletion and mass
-              mortality in 2019 due to a flood, and a further anoxic event in
-              2021.{" "}
-              <a className="lab-citation" href="#ref-r01-11">
-                [11]
-              </a>
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              There is also a biological reason this goal belongs here rather
-              than as an afterthought to goal 6 — coastal eutrophication isn’t
-              just phosphorus-driven, in marine and estuarine systems, nitrogen
-              is the common limiting nutrient. Controlling only one of the two
-              resources may make no difference.{" "}
-              <a className="lab-citation" href="#ref-r01-12">
-                [12]
-              </a>{" "}
-              That is why we chose <em>Pseudomonas putida</em>, as it can
-              assimilate both, giving us a biological advantage rather than an
-              engineering choice.
-            </p>
+            <GoalConsole
+              image={
+                <figure
+                  style={{
+                    margin: "30px 0",
+                    borderRadius: "28px",
+                    background:
+                      "radial-gradient(ellipse at 50% 40%,#ffffff 0%,var(--water-clear) 100%)",
+                    border: "1px solid var(--line)",
+                    padding: "12px",
+                  }}
+                >
+                  <img
+                    src={asset("assets/sustainability/sdg-main.png")}
+                    alt="Sustainable Development Goals 6, 12 and 14"
+                    style={{
+                      display: "block",
+                      width: "100%",
+                      maxWidth: "620px",
+                      margin: "0 auto",
+                      height: "auto",
+                    }}
+                  />
+                </figure>
+              }
+              goals={[
+                {
+                  id: "g6",
+                  num: "6",
+                  title: "Clean water and sanitation",
+                  colour: "#26BDE2",
+                  lede: (
+                    <>
+                      Target 6.3 is the number. Targets <strong>6.6</strong> and{" "}
+                      <strong>6.b</strong> cover what happens when it is missed.
+                    </>
+                  ),
+                  targets: [
+                    {
+                      id: "63",
+                      label: "6.3",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 6.3: </strong>
+                            <em>
+                              By 2030, improve water quality by reducing
+                              pollution, eliminating dumping and minimizing
+                              release of hazardous chemicals and materials,
+                              halving the proportion of untreated wastewater and
+                              substantially increasing recycling and safe reuse
+                              globally.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-1">
+                              [1]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 6.3
+                            </strong>{" "}
+                            is the centre of gravity of this project: halving
+                            untreated wastewater and cutting the release of
+                            hazardous chemicals into nature. But a global target
+                            does not tell you how much phosphorus is too much.
+                            In our jurisdiction, that answer is written into
+                            law. Directive (EU) 2024/3019, which replaces the
+                            Urban Wastewater Treatment Directive from August
+                            2027, sets total-phosphorus limits of{" "}
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              0.7 mg/L{" "}
+                            </strong>
+                            for plants serving 10,000 to 150,000 population
+                            equivalents and{" "}
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              0.5 mg/L
+                            </strong>{" "}
+                            for larger facilities, phased in between 2033 and
+                            2045.{" "}
+                            <a className="lab-citation" href="#ref-r01-2">
+                              [2]
+                            </a>
+                          </p>
+                          <MiniReadouts
+                            items={[
+                              {
+                                value: "0.7",
+                                unit: "mg P/L",
+                                key: "10,000-150,000 p.e.",
+                              },
+                              {
+                                value: "0.5",
+                                unit: "mg P/L",
+                                key: "above 150,000 p.e.",
+                              },
+                              { value: "2027", key: "directive applies" },
+                              { value: "2033-45", key: "limits phased in" },
+                            ]}
+                          />
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            Those numbers are the clearest operational statement
+                            of target 6.3 in our jurisdiction, and we adopted
+                            them as the yardstick rePhlow is designed against.
+                            They are a benchmark we chose, not a limit that
+                            binds our first use case: the Directive governs
+                            urban wastewater, and what an industrial discharge
+                            is actually required to meet depends on its permit,
+                            its discharge route and national implementation. We
+                            hold ourselves to the urban figure because it is the
+                            strictest reference available and because designing
+                            against a number is the difference between claiming
+                            to help with clean water and being able to say
+                            whether we did.
+                          </p>
+                        </>
+                      ),
+                    },
+                    {
+                      id: "66",
+                      label: "6.6",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 6.6: </strong>
+                            <em>By </em>
+                            <em>
+                              <strong>2020</strong>
+                            </em>
+                            <em>
+                              , protect and restore water-related ecosystems,
+                              including mountains, forests, wetlands, rivers,
+                              aquifers and lakes.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-1">
+                              [1]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 6.6
+                            </strong>{" "}
+                            asks us to protect and restore water-related
+                            ecosystems, and the word carrying the weight is{" "}
+                            <em>restore</em>. Cutting the nutrient load does not
+                            automatically undo the damage: past a certain point,
+                            a degraded water body can hold that state on its
+                            own, and the way back does not undo the damage
+                            already done.{" "}
+                            <a className="lab-citation" href="#ref-r01-3">
+                              [3]
+                            </a>{" "}
+                            That asymmetry is the entire argument for acting
+                            early. Restoration is a slower and more expensive
+                            process compared to never crossing the line. This is
+                            why rePhlow is designed to act at an industrial
+                            outfall rather than at a lake: preventing a load
+                            from entering a water body is a problem with a known
+                            solution, while restoring one that has already
+                            shifted is not.
+                          </p>
+                          <EcologicalStatusBar
+                            caption={
+                              <>
+                                Ecological status of more than 120,000 EU
+                                surface water bodies, 2015-2021{" "}
+                                <a className="lab-citation" href="#ref-r01-4">
+                                  [4]
+                                </a>
+                              </>
+                            }
+                          />
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            For most of Europe, restoration is already the
+                            default task rather than the contingency. The
+                            European Environment Agency’s 2024 assessment,
+                            covering more than 120,000 surface water bodies,
+                            found that only 37% reached good or high ecological
+                            status in the 2015-2021 period.{" "}
+                            <a className="lab-citation" href="#ref-r01-4">
+                              [4]
+                            </a>{" "}
+                            Ecological status is a complex measure and nutrient
+                            levels are only one of the many pressures behind it,
+                            but the direction is unambiguous: the majority of
+                            Europe’s surface water is already below the standard
+                            its own law sets for it.
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            There is also a gap between the two targets that is
+                            easy to miss. The concentrations at which a water
+                            body begins to shift towards eutrophication are
+                            conventionally given as phosphorus above{" "}
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              0.01-0.02 mg/L{" "}
+                            </strong>
+                            in the receiving water.{" "}
+                            <a className="lab-citation" href="#ref-r01-5">
+                              [5]
+                            </a>{" "}
+                            The discharge limit that target 6.3 translates into
+                            is{" "}
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              0.7 mg/L
+                            </strong>{" "}
+                            at the outfall.{" "}
+                            <a className="lab-citation" href="#ref-r01-2">
+                              [2]
+                            </a>{" "}
+                            These measurements are not comparable, as one is
+                            measured in bodies of water and the other in a pipe,
+                            with dilution in between. The order of magnitude
+                            between them is the reason 6.3 and 6.6 are separate
+                            targets. Complying with a discharge limit is not the
+                            same as leaving an ecosystem unchanged, and we would
+                            rather focus on the first while being honest that it
+                            does not guarantee the second.
+                          </p>
+                          <ConcentrationGap />
+                        </>
+                      ),
+                    },
+                    {
+                      id: "6b",
+                      label: "6.b",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 6.b: </strong>
+                            <em>
+                              Support and strengthen the participation of local
+                              communities in improving water and sanitation
+                              management.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-1">
+                              [1]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              6.b{" "}
+                            </strong>
+                            asks for the participation of local communities in
+                            improving water management, and it is the target we
+                            could have missed if we just stayed in the lab. A
+                            resident of the San Juan reservoir told us that she
+                            had watched the water change for decades without
+                            being explained the reason why.{" "}
+                            <a href="#r04" className="lab-wikilink">
+                              Check out room 04
+                            </a>{" "}
+                            A treatment nobody can explain to the people living
+                            beside the water does not serve this target, despite
+                            its effectiveness. That conversation is why room 04
+                            exists.
+                          </p>
+                        </>
+                      ),
+                    },
+                  ],
+                },
+                {
+                  id: "g12",
+                  num: "12",
+                  title: "Responsible consumption and production",
+                  colour: "#BF8B2E",
+                  lede: "Phosphorus stops being a pollutant to eradicate and becomes a resource to give a second life.",
+                  targets: [
+                    {
+                      id: "122",
+                      label: "12.2",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 12.2: </strong>
+                            <em>
+                              By 2030, achieve the sustainable management and
+                              efficient use of natural resources.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-6">
+                              [6]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 12.2{" "}
+                            </strong>
+                            is the one that turns our project inside out. Rather
+                            than viewing phosphorus as just a pollutant that
+                            needs to be eradicated, we can recognise that it is
+                            a resource that can be given a second life.
+                            Phosphate rock is non-renewable and phosphorus is
+                            irreplaceable in our diet; estimated data place the
+                            peak of global production within decades rather than
+                            centuries.{" "}
+                            <a className="lab-citation" href="#ref-r01-7">
+                              [7]
+                            </a>{" "}
+                            Its reserves are also extremely concentrated, with
+                            around 70% of the world’s known reserves being
+                            located in a single country.{" "}
+                            <a className="lab-citation" href="#ref-r01-8">
+                              [8]
+                            </a>{" "}
+                            Every kilogramme of phosphorus found in wastewater
+                            sludge is a kilogramme that needs to be mined.
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            This is why rePhlow does not stop at removal.
+                            Removing phosphorus from water and burying it is not
+                            enough; returning it to use is efficient waste and
+                            resource management.
+                          </p>
+                          <WaterChain />
+                          <div
+                            className="sus-prose-panel"
+                            style={{
+                              margin: "26px 0",
+                              padding: "22px 26px",
+                              borderRadius: "18px",
+                              background: "rgba(110,90,150,0.06)",
+                              border: "1px solid rgba(110,90,150,0.2)",
+                            }}
+                          >
+                            <h5
+                              style={{
+                                margin: "0 0 10px",
+                                fontFamily: "var(--font-display)",
+                                fontSize: "17px",
+                                lineHeight: "1.3",
+                                fontWeight: "600",
+                                color: "#5e4c86",
+                              }}
+                            >
+                              12.2 beyond each project’s boundary: A joint
+                              section by iGEM Madrid UCM (rePhlow) and iGEM UPF
+                              Barcelona (Vinesys)
+                            </h5>
+                            <p
+                              style={{
+                                margin: "0 0 18px",
+                                fontSize: "15px",
+                                lineHeight: "1.72",
+                                color: "var(--ink-soft)",
+                                textWrap: "pretty",
+                              }}
+                            >
+                              The two teams work at opposite ends of the same
+                              water chain. rePhlow treats water on its way out
+                              of an industrial process, capturing phosphorus
+                              before it reaches sensitive waters and recovering
+                              it instead of burying it in sludge. Vinesys acts
+                              before the water is used, with an engineered
+                              Bacillus subtilis applied to the vine rhizosphere
+                              that retains water near the roots and reduces
+                              stress ethylene, so that a vineyard in Priorat or
+                              Penedès needs less irrigation to sustain the same
+                              crop under drought.
+                            </p>
+                            <p
+                              style={{
+                                margin: "0 0 18px",
+                                fontSize: "15px",
+                                lineHeight: "1.72",
+                                color: "var(--ink-soft)",
+                                textWrap: "pretty",
+                              }}
+                            >
+                              Both projects fall under Target 12.2, and each
+                              covers a question the other does not. One asks
+                              what happens to water after a process releases it.
+                              The other asks how much water that process needs
+                              in the first place.
+                            </p>
+                            <p
+                              style={{
+                                margin: "0 0 18px",
+                                fontSize: "15px",
+                                lineHeight: "1.72",
+                                color: "var(--ink-soft)",
+                                textWrap: "pretty",
+                              }}
+                            >
+                              Comparing the two projects made visible where each
+                              analysis stopped. Both teams had framed efficient
+                              resource use within their own perimeter: rePhlow
+                              around the phosphorus in an effluent, without
+                              asking where that water had come from, and Vinesys
+                              around irrigation demand in the vineyard, without
+                              asking what the sector discharges afterwards.
+                              Neither project changed its technical design as a
+                              result, but both now state where their analysis
+                              stops instead of leaving it implicit.
+                            </p>
+                            <p
+                              style={{
+                                margin: "0 0 18px",
+                                fontSize: "15px",
+                                lineHeight: "1.72",
+                                color: "var(--ink-soft)",
+                                textWrap: "pretty",
+                              }}
+                            >
+                              <em>
+                                This section is published on both wikis,
+                                following the social media collaboration the two
+                                teams ran earlier in the season.
+                              </em>
+                            </p>
+                          </div>
+                        </>
+                      ),
+                    },
+                    {
+                      id: "124",
+                      label: "12.4",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 12.4: </strong>
+                            <em>By </em>
+                            <em>
+                              <strong>2020</strong>
+                            </em>
+                            <em>
+                              , achieve the environmentally sound management of
+                              chemicals and all wastes throughout their life
+                              cycle, in accordance with agreed international
+                              frameworks, and significantly reduce their release
+                              to air, water and soil in order to minimize their
+                              adverse impacts on human health and the
+                              environment.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-6">
+                              [6]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 12.4{" "}
+                            </strong>
+                            is about handling chemicals and waste responsibly
+                            across their whole life cycle, and it is also where
+                            we justify <em>where </em>
+                            we intervene. Directive (EU) 2024/3019 strengthens
+                            the control of non-domestic wastewater entering
+                            urban collecting systems,{" "}
+                            <a className="lab-citation" href="#ref-r01-2">
+                              [2]
+                            </a>{" "}
+                            which is one of several routes by which tightening
+                            nutrient rules reach an industrial site. The others
+                            run through the facility’s own discharge permit and
+                            through national implementation, and which of them
+                            applies depends on whether the effluent goes to a
+                            municipal collector or straight to a watercourse — a
+                            distinction CEDEX drew for us explicitly. We
+                            designed rePhlow for an industrial setting because
+                            that is where phosphorus is most concentrated and
+                            where the stream is already characterised and
+                            monitored, not because we can show that regulation
+                            arrives there first.
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            This goal also applies to our biological design — a
+                            living engineered organism introduced into a waste
+                            stream is precisely the kind of material this target
+                            exists to govern, which is why containment is a
+                            precondition in our hardware.
+                          </p>
+                        </>
+                      ),
+                    },
+                    {
+                      id: "125",
+                      label: "12.5",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 12.5: </strong>
+                            <em>
+                              By 2030, substantially reduce waste generation
+                              through prevention, reduction, recycling and
+                              reuse.{" "}
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-6">
+                              [6]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            <strong
+                              style={{ color: "var(--ink)", fontWeight: "600" }}
+                            >
+                              Target 12.5{" "}
+                            </strong>
+                            is where a project focused on phosphorus can quietly
+                            fail. Removing phosphorus from water is not the same
+                            as removing it from the system. Chemical
+                            precipitation leaves the resource iron-bound in a
+                            sludge that has to be transported, stored and
+                            disposed of, and the target is not met by producing
+                            a tidier waste. Our process does not stop when the
+                            water is clean, as recovery makes the route end up
+                            with less waste.
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            We have also applied this goal when working with our
+                            own engineering. Our original design included a
+                            filter whose materials would have generated their
+                            own waste stream, with no convincing answer for its
+                            end of life. When the reactor changed, that
+                            component became redundant, so it was removed. The
+                            cleanest form of waste reduction is the component
+                            you never build.{" "}
+                            <a href="#r04" className="lab-wikilink">
+                              See Room 04
+                            </a>
+                          </p>
+                        </>
+                      ),
+                    },
+                  ],
+                },
+                {
+                  id: "g14",
+                  num: "14",
+                  title: "Life below water",
+                  colour: "#0A97D9",
+                  targets: [
+                    {
+                      id: "141",
+                      label: "14.1",
+                      content: (
+                        <>
+                          <p className="sus-official">
+                            <strong>Target 14.1: </strong>
+                            <em>
+                              By 2025, prevent and significantly reduce marine
+                              pollution of all kinds, in particular from
+                              land-based activities, including marine debris and
+                              nutrient pollution.
+                            </em>
+                            <a className="lab-citation" href="#ref-r01-9">
+                              [9]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            Of the three goals we answer to, this is the one
+                            whose deadline has already passed. Target 14.1 was
+                            set for 2025, and nutrient pollution from land-based
+                            activity is named in it explicitly. Satellite
+                            monitoring has identified roughly 1.15 million km²
+                            of coastal water with eutrophication potential, with
+                            deteriorating areas being double the amount against
+                            recovering ones.{" "}
+                            <a className="lab-citation" href="#ref-r01-10">
+                              [10]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            We did not have to look far for evidence, as the Mar
+                            Menor, the largest coastal lagoon in the western
+                            Mediterranean, was affected by repeated
+                            eutrophication crises since 2016. Starting with an
+                            algal bloom, followed by an episode of oxygen
+                            depletion and mass mortality in 2019 due to a flood,
+                            and a further anoxic event in 2021.{" "}
+                            <a className="lab-citation" href="#ref-r01-11">
+                              [11]
+                            </a>
+                          </p>
+                          <p
+                            style={{
+                              margin: "0 0 18px",
+                              fontSize: "16px",
+                              lineHeight: "1.72",
+                              color: "var(--ink-soft)",
+                              textWrap: "pretty",
+                            }}
+                          >
+                            There is also a biological reason this goal belongs
+                            here rather than as an afterthought to goal 6 —
+                            coastal eutrophication isn’t just phosphorus-driven,
+                            in marine and estuarine systems, nitrogen is the
+                            common limiting nutrient. Controlling only one of
+                            the two resources may make no difference.{" "}
+                            <a className="lab-citation" href="#ref-r01-12">
+                              [12]
+                            </a>{" "}
+                            That is why we chose <em>Pseudomonas putida</em>, as
+                            it can assimilate both, giving us a biological
+                            advantage rather than an engineering choice.
+                          </p>
+                        </>
+                      ),
+                    },
+                  ],
+                },
+              ]}
+            />
             <h3
               id="r01-goal-9-and-goal-13-two-goals-we-touch-wi"
               style={{
