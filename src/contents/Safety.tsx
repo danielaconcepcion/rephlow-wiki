@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { MouseEvent } from "react";
 import { PageSectionNav } from "../components/PageSectionNav";
 import type { PageSection } from "../components/PageSectionNav";
-import { AdjacentPageNav } from "../components/AdjacentPageNav";
 import { LeafletCover, LeafletSpread } from "./Safety/Leaflet";
 import { LEAFLETS } from "./Safety/safetyContent";
 import type { LeafletId } from "./Safety/safetyContent";
@@ -69,15 +68,6 @@ export function Safety() {
           ))}
         </div>
       </div>
-
-      <AdjacentPageNav
-        prev={{ to: "/results", label: "Results", accent: "#2E7D86" }}
-        next={{
-          to: "/human-practices",
-          label: "Human Practices",
-          accent: "#6E5A96",
-        }}
-      />
     </>
   );
 }

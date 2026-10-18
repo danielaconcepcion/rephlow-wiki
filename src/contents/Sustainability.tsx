@@ -3,7 +3,6 @@ import type { CSSProperties, MouseEvent } from "react";
 
 import { PageSectionNav, type PageSection } from "../components/PageSectionNav";
 import { MoleculeBackdrop } from "../components/MoleculeBackdrop/MoleculeBackdrop";
-import { AdjacentPageNav } from "../components/AdjacentPageNav";
 import { asset } from "../utils";
 import { SEATS } from "./Sustainability/seats";
 import "./Sustainability/Sustainability.css";
@@ -12990,15 +12989,6 @@ export function Sustainability() {
           </section>
         </main>
       </div>
-
-      <AdjacentPageNav
-        prev={{
-          to: "/entrepreneurship",
-          label: "Entrepreneurship",
-          accent: "#C9572F",
-        }}
-        next={{ to: "/contribution", label: "Contribution", accent: "#2E7D86" }}
-      />
 
       {modalOpen && (
         <div

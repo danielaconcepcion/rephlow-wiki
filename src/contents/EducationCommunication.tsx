@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { PageSectionNav } from "../components/PageSectionNav";
 import type { PageSection } from "../components/PageSectionNav";
-import { AdjacentPageNav } from "../components/AdjacentPageNav";
 import { Rich } from "../components/LabFolders/RichText";
 import { ActivityModal } from "./EducationCommunication/ActivityModal";
 import { Blackboard } from "./EducationCommunication/Blackboard";
@@ -142,19 +141,6 @@ export function EducationCommunication() {
       {openId && (
         <ActivityModal openId={openId} onNavigate={select} onClose={close} />
       )}
-
-      <AdjacentPageNav
-        prev={{
-          to: "/collaboration-partnership",
-          label: "Collaboration and Partnership",
-          accent: "#6E5A96",
-        }}
-        next={{
-          to: "/entrepreneurship",
-          label: "Entrepreneurship",
-          accent: "#C9572F",
-        }}
-      />
     </>
   );
 }

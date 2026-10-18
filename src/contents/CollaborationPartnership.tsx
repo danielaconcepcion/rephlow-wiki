@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { PageSectionNav } from "../components/PageSectionNav";
 import type { PageSection } from "../components/PageSectionNav";
-import { AdjacentPageNav } from "../components/AdjacentPageNav";
 import {
   ENTRIES,
   GROUPS,
@@ -15,7 +14,10 @@ import {
   STACK_RIGHT,
   STACK_WIDTH,
 } from "./CollaborationPartnership/collaborationData";
-import type { EntryId, GroupId } from "./CollaborationPartnership/collaborationData";
+import type {
+  EntryId,
+  GroupId,
+} from "./CollaborationPartnership/collaborationData";
 import {
   BarcelonaArt,
   BioOilsArt,
@@ -41,9 +43,12 @@ import "./CollaborationPartnership/CollaborationPartnership.css";
    Implements the Claude Design mock-up "Collaboration and Partnership v2".
    -------------------------------------------------------------------------- */
 
-const SECTIONS: PageSection[] = (["igem", "research", "industry"] as GroupId[]).map(
-  (g, i) => ({ id: GROUPS[g].sectionId, label: `${i + 1}. ${GROUPS[g].label}` }),
-);
+const SECTIONS: PageSection[] = (
+  ["igem", "research", "industry"] as GroupId[]
+).map((g, i) => ({
+  id: GROUPS[g].sectionId,
+  label: `${i + 1}. ${GROUPS[g].label}`,
+}));
 
 /** Below this table width the objects stack instead of sitting on a 16:10 table. */
 const WIDE_MIN = 560;
@@ -53,7 +58,9 @@ const ART: Record<EntryId, ReactNode> = {
   malaga: <MalagaArt photo={MALAGA_GALLERY[0].src} />,
   msp: <MspArt />,
   tcg: <TcgArt />,
-  barcelona: <BarcelonaArt photo={BARCELONA_VISIT} slide={BARCELONA_CAROUSEL[1].src} />,
+  barcelona: (
+    <BarcelonaArt photo={BARCELONA_VISIT} slide={BARCELONA_CAROUSEL[1].src} />
+  ),
   cbm: <CbmArt />,
   iqog: <IqogArt />,
   cib: <CibArt />,
@@ -107,8 +114,9 @@ export function CollaborationPartnership() {
             essential to the development of rePhlow. By bringing together
             diverse perspectives, expertise and resources, these connections
             have helped us overcome technical challenges, refine our approach
-            and explore the <strong>real-world potential of our solution</strong>.
-            Beyond strengthening our project, they have shown us that meaningful
+            and explore the{" "}
+            <strong>real-world potential of our solution</strong>. Beyond
+            strengthening our project, they have shown us that meaningful
             scientific progress is driven by{" "}
             <strong>
               teamwork, knowledge-sharing and a shared commitment to innovation.
@@ -126,7 +134,10 @@ export function CollaborationPartnership() {
               className={`cp-table-section cp-table-section--${g}`}
             >
               <header className="cp-table-head">
-                <span className="cp-table-head__num" style={{ color: GROUPS[g].accent }}>
+                <span
+                  className="cp-table-head__num"
+                  style={{ color: GROUPS[g].accent }}
+                >
                   {i + 1}
                 </span>
                 <h2 className="cp-table-head__title">{GROUPS[g].label}</h2>
@@ -136,14 +147,17 @@ export function CollaborationPartnership() {
                 <div className={`cp-table${wide ? " cp-table--wide" : ""}`}>
                   {wide && DECOR[g]}
                   {ENTRIES.filter(
-                    (e) => e.group === g && (!e.placeholder || SHOW_PLACEHOLDERS),
+                    (e) =>
+                      e.group === g && (!e.placeholder || SHOW_PLACEHOLDERS),
                   ).map((e) => {
                     const [l, t, w] = POSITION[e.id];
                     const style = wide
                       ? { left: `${l}%`, top: `${t}%`, width: `${w}%` }
                       : {
                           width: STACK_WIDTH[e.id],
-                          alignSelf: STACK_RIGHT[e.id] ? "flex-end" : "flex-start",
+                          alignSelf: STACK_RIGHT[e.id]
+                            ? "flex-end"
+                            : "flex-start",
                         };
                     return (
                       <button
@@ -156,7 +170,10 @@ export function CollaborationPartnership() {
                       >
                         {ART[e.id]}
                         <span className="cp-pill">
-                          <span className="cp-pill__plus" style={{ background: GROUPS[g].accent }}>
+                          <span
+                            className="cp-pill__plus"
+                            style={{ background: GROUPS[g].accent }}
+                          >
                             +
                           </span>
                           {e.pill}
@@ -171,20 +188,15 @@ export function CollaborationPartnership() {
         </div>
       </div>
 
-      <AdjacentPageNav
-        prev={{ to: "/human-practices", label: "Human Practices", accent: "#6E5A96" }}
-        next={{
-          to: "/education-communication",
-          label: "Education and Communication",
-          accent: "#2E7D86",
-        }}
-      />
-
       {/* Warm the cache for the Málaga strip so the dialog opens on real photos. */}
       <link rel="prefetch" href={IMG.compluConversation} />
 
       {openId && (
-        <CollaborationModal openId={openId} onNavigate={setOpenId} onClose={close} />
+        <CollaborationModal
+          openId={openId}
+          onNavigate={setOpenId}
+          onClose={close}
+        />
       )}
     </>
   );
