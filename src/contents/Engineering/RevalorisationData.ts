@@ -1,8 +1,9 @@
 /**
- * Revalorisation content for the Engineering page — transcribed straight from the team's own Notion write-up
- * (the "Engineering / Revalorisation" page, exported 18 October 2026). The
- * export's wording, emphasis, tables and figures are reproduced as they
- * stand; the only thing left out is the team's internal planning notes.
+ * Revalorisation content for the Engineering page — transcribed straight
+ * from the team's own Notion write-up (the "Engineering / Revalorisation"
+ * page, exported 18 October 2026). The export's wording, emphasis,
+ * tables and figures are reproduced as they stand; the only thing left
+ * out is the team's internal planning notes.
  *
  * Generated from that export rather than edited by hand, so a later
  * revision of the page can be brought over the same way.
@@ -354,13 +355,21 @@ export const REVALORISATION_PURIFICATION: Iteration[] = [
         ),
         table(
           ["**Buffer**", "**DHAK**", "", "**PPK2**", ""],
-          [[cell("**Equilibration**"), cell("0mM imidazole")]],
-          "**Table 7.** Imidazole and NaCl concentration in the IMAC equilibration, wash and elution buffers for DHAK and PPK2.",
-        ),
-        p("0mM NaCl | 30mM imidazole | 150mM NaCl |"),
-        table(
-          ["**Wash**", "0mM imidazole", "", "30mM imidazole", ""],
           [
+            [
+              cell("**Equilibration**"),
+              cell("0mM imidazole"),
+              cell("0mM NaCl"),
+              cell("30mM imidazole"),
+              cell("150mM NaCl"),
+            ],
+            [
+              cell("**Wash**"),
+              cell("0mM imidazole"),
+              cell(""),
+              cell("30mM imidazole"),
+              cell(""),
+            ],
             [
               cell("**Elution**"),
               cell("1M imidazole"),
@@ -369,6 +378,7 @@ export const REVALORISATION_PURIFICATION: Iteration[] = [
               cell("0mM NaCl"),
             ],
           ],
+          "**Table 7.** Imidazole and NaCl concentration in the IMAC equilibration, wash and elution buffers for DHAK and PPK2.",
         ),
         p(
           "Every run was **internally controlled** by keeping Load, flow-through, wash and eluate for SDS-PAGE, and each eluate went straight into **overnight dialysis**, since the imidazole would otherwise interfere with the assay.",

@@ -401,8 +401,7 @@ type IterColorStyle = CSSProperties & { "--iter-color": string };
  * that case. */
 export function renderRich(text: string): ReactNode[] {
   const nodes: ReactNode[] = [];
-  const regex =
-    /\\\*|(\*{1,3})|\{\{(.+?)\}\}|\[([^\]]+)\]\(([^)]*)\)|\n/g;
+  const regex = /\\\*|(\*{1,3})|\{\{(.+?)\}\}|\[([^\]]+)\]\(([^)]*)\)|\n/g;
   let lastIndex = 0;
   let m: RegExpExecArray | null;
   let key = 0;
@@ -486,6 +485,14 @@ export function renderRich(text: string): ReactNode[] {
   return nodes;
 }
 
+/** How many columns the header at `i` covers: itself plus the empty
+ * cells that follow it (Notion's export of a merged header cell). */
+function headerSpan(headers: string[], i: number): number {
+  let span = 1;
+  while (i + span < headers.length && !headers[i + span].trim()) span++;
+  return span;
+}
+
 function renderBlock(block: ContentBlock, blockKey: number): ReactNode {
   if (block.type === "p") {
     return <p key={blockKey}>{renderRich(block.text)}</p>;
@@ -526,9 +533,16 @@ function renderBlock(block: ContentBlock, blockKey: number): ReactNode {
       <table className="dbtl-cycle__table">
         <thead>
           <tr>
-            {block.headers.map((h, i) => (
-              <th key={i}>{renderRich(h)}</th>
-            ))}
+            {/* A header cell that Notion merged across columns exports as
+                the label followed by empty cells, so an empty header is
+                read back as "part of the one before it". */}
+            {block.headers.map((header, i) =>
+              header.trim() ? (
+                <th key={i} colSpan={headerSpan(block.headers, i)}>
+                  {renderRich(header)}
+                </th>
+              ) : null,
+            )}
           </tr>
         </thead>
         <tbody>

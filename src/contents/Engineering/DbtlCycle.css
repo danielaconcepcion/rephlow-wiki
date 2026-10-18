@@ -702,8 +702,15 @@
    panel uses, with a hairline instead of the placeholder's dashes. */
 .dbtl-cycle__figure-image {
   display: block;
-  width: 100%;
+  /* A tall figure (a gel, a portrait chromatogram) would otherwise push
+     its own caption off the panel, so height is capped as well as width.
+     Both dimensions stay auto, so the image shrinks whole instead of
+     being squashed into the box. */
+  width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: 58vh;
+  margin: 0 auto;
   border: 1px solid var(--line);
   border-radius: 4px;
   background: var(--paper);

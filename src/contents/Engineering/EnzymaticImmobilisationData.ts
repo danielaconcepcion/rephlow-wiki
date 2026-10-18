@@ -1,8 +1,9 @@
 /**
- * Enzymatic immobilisation content for the Engineering page — transcribed straight from the team's own Notion write-up
- * (the "Engineering / Enzymatic immobilisation" page, exported 18 October 2026). The
- * export's wording, emphasis, tables and figures are reproduced as they
- * stand; the only thing left out is the team's internal planning notes.
+ * Enzymatic immobilisation content for the Engineering page — transcribed straight
+ * from the team's own Notion write-up (the "Engineering / Enzymatic immobilisation"
+ * page, exported 18 October 2026). The export's wording, emphasis,
+ * tables and figures are reproduced as they stand; the only thing left
+ * out is the team's internal planning notes.
  *
  * Generated from that export rather than edited by hand, so a later
  * revision of the page can be brought over the same way.
@@ -51,13 +52,8 @@ export const ENZYME_PRODUCTION_ITERATIONS: Iteration[] = [
             "**Enzyme activity**",
             "**Gene**",
             "**Microorganisms of origin**",
-            "**Alternative**",
+            "**Alternative** **Commercial**",
           ],
-          [],
-        ),
-        p("**Commercial** |"),
-        table(
-          ["---", "---", "---", "---"],
           [
             [
               cell("**Phospholipase C (PLC)**"),
@@ -92,12 +88,11 @@ export const ENZYME_PRODUCTION_ITERATIONS: Iteration[] = [
               cell("**Acid Phosphatase (NAP)**"),
               cell("*M2-32_MG*"),
               cell("Metagenome"),
-              cell("Acid phosphatase from potatoes or wheat germ"),
+              cell("Acid phosphatase from potatoes or wheat germ [Merck]"),
             ],
+            [cell(""), cell("*aphA_Ec*"), cell("*Escherichia coli*"), cell("")],
           ],
         ),
-        p("[Merck] |"),
-        table(["", "*aphA_Ec*", "*Escherichia coli*", ""], []),
       ]),
       phase("Learn", [
         p(

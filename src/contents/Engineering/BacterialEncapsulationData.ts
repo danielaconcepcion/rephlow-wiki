@@ -1,8 +1,9 @@
 /**
- * Bacterial encapsulation content for the Engineering page — transcribed straight from the team's own Notion write-up
- * (the "Engineering / Bacterial encapsulation" page, exported 18 October 2026). The
- * export's wording, emphasis, tables and figures are reproduced as they
- * stand; the only thing left out is the team's internal planning notes.
+ * Bacterial encapsulation content for the Engineering page — transcribed straight
+ * from the team's own Notion write-up (the "Engineering / Bacterial encapsulation"
+ * page, exported 18 October 2026). The export's wording, emphasis,
+ * tables and figures are reproduced as they stand; the only thing left
+ * out is the team's internal planning notes.
  *
  * Generated from that export rather than edited by hand, so a later
  * revision of the page can be brought over the same way.
