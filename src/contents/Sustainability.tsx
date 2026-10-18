@@ -7,6 +7,7 @@ import { AdjacentPageNav } from "../components/AdjacentPageNav";
 import { asset } from "../utils";
 import { SEATS } from "./Sustainability/seats";
 import "./Sustainability/Sustainability.css";
+import { AccordionSection } from "./HumanPractices/AccordionSection";
 
 /* --------------------------------------------------------------------------
    Sustainability — the page as it was designed in Claude Design
@@ -5268,110 +5269,100 @@ export function Sustainability() {
               cannot. What we can show is that the last external reading of this
               work made it narrower rather than louder.
             </p>
-            <h4
-              id="r02-what-stays-open"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "21px",
-                lineHeight: "1.3",
-                fontWeight: "600",
-                letterSpacing: "-0.01em",
-                color: "var(--ink)",
-                margin: "44px 0 12px",
-                textWrap: "balance",
-                scrollMarginTop: "110px",
-              }}
-            >
-              What stays open
-            </h4>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Closing one loop was enough to show us what the others would have
-              found. We went back to CEDEX expecting methods and limits, the
-              subjects of the first conversation, and were asked instead about
-              repair: who fixes the module, with what training, and how long the
-              line is down. That question did not expose a gap in our
-              engineering. It exposed a gap in who we had spoken to.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              Everyone who redrew this project evaluates technology for a
-              living: a public water body, two large operators, three academics.
-              Not one of them would have to run the reactor at three in the
-              morning. The pattern is not random — it runs along the line of who
-              we found easy to approach. A student team writes to an institution
-              more readily than to a plant operator on shift, and our evidence
-              base shows it.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              That has a cost we can state precisely. Without an operator we
-              cannot claim anything about maintenance burden or downtime.
-              Without a permitting authority for an industrial discharge we
-              cannot claim a route to authorisation, only that the limits exist.
-              Without a farmer or a fertiliser buyer we cannot claim that
-              recovered phosphorus is wanted in the form we produce it, which is
-              the assumption our entire 12.2 argument rests on. Those are three
-              claims this project does not get to make yet, and we have left
-              them out rather than soften them.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              The next three conversations are therefore already determined, and
-              not by us: a plant operator, a permitting authority for an
-              industrial discharge, and a fertiliser user. Each one licenses a
-              claim we are currently not entitled to make. Closing those loops
-              is what the round table in Room 03 was convened to begin, and we
-              would rather publish the list of claims we have not earned than a
-              page where every voice happened to agree with us.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Where the full record lives.{" "}
-              </strong>
-              The traceable record of concerns raised and limitations still open
-              is in the{" "}
-              <a href="/human-practices" className="lab-wikilink">
-                Responsibility Checkpoint
-              </a>
-              .
-            </p>
+            <div id="r02-what-stays-open" className="sus-disclosure">
+              <AccordionSection title="What stays open">
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  Closing one loop was enough to show us what the others would
+                  have found. We went back to CEDEX expecting methods and
+                  limits, the subjects of the first conversation, and were asked
+                  instead about repair: who fixes the module, with what
+                  training, and how long the line is down. That question did not
+                  expose a gap in our engineering. It exposed a gap in who we
+                  had spoken to.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  Everyone who redrew this project evaluates technology for a
+                  living: a public water body, two large operators, three
+                  academics. Not one of them would have to run the reactor at
+                  three in the morning. The pattern is not random — it runs
+                  along the line of who we found easy to approach. A student
+                  team writes to an institution more readily than to a plant
+                  operator on shift, and our evidence base shows it.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  That has a cost we can state precisely. Without an operator we
+                  cannot claim anything about maintenance burden or downtime.
+                  Without a permitting authority for an industrial discharge we
+                  cannot claim a route to authorisation, only that the limits
+                  exist. Without a farmer or a fertiliser buyer we cannot claim
+                  that recovered phosphorus is wanted in the form we produce it,
+                  which is the assumption our entire 12.2 argument rests on.
+                  Those are three claims this project does not get to make yet,
+                  and we have left them out rather than soften them.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  The next three conversations are therefore already determined,
+                  and not by us: a plant operator, a permitting authority for an
+                  industrial discharge, and a fertiliser user. Each one licenses
+                  a claim we are currently not entitled to make. Closing those
+                  loops is what the round table in Room 03 was convened to
+                  begin, and we would rather publish the list of claims we have
+                  not earned than a page where every voice happened to agree
+                  with us.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
+                    Where the full record lives.{" "}
+                  </strong>
+                  The traceable record of concerns raised and limitations still
+                  open is in the{" "}
+                  <a href="/human-practices" className="lab-wikilink">
+                    Responsibility Checkpoint
+                  </a>
+                  .
+                </p>
+              </AccordionSection>
+            </div>
             <h3
               id="r02-what-has-to-be-true-next"
               style={{
@@ -5438,101 +5429,71 @@ export function Sustainability() {
                 >
                   At the bench
                 </h5>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Reach and hold ≥8 mg P per gram of bead under reactor conditions."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Reach and hold ≥8 mg P per gram of bead under reactor
-                    conditions.
-                  </strong>{" "}
-                  This is the single number our sensitivity analysis identifies
-                  as the lever (Room 03). Below it, the climate reading stands
-                  against us and we do not claim goal 13. Above it, the climate
-                  and fossil-resource readings follow the rest of the sixteen
-                  downward. The biology already does this intracellularly; the
-                  work is in the expression and the bead.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    This is the single number our sensitivity analysis
+                    identifies as the lever (Room 03). Below it, the climate
+                    reading stands against us and we do not claim goal 13. Above
+                    it, the climate and fossil-resource readings follow the rest
+                    of the sixteen downward. The biology already does this
+                    intracellularly; the work is in the expression and the bead.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Decarbonise the bead itself."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Decarbonise the bead itself.
-                  </strong>{" "}
-                  The same result can be reached from the materials side rather
-                  than the performance side. The bacterial-alginate route is
-                  named in Room 03 as a research direction not yet in our
-                  inventory, and it is the second of the two moves the
-                  circular-economy literature identifies as the condition for
-                  nutrient recovery to be a net environmental good rather than a
-                  tidier waste.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    The same result can be reached from the materials side
+                    rather than the performance side. The bacterial-alginate
+                    route is named in Room 03 as a research direction not yet in
+                    our inventory, and it is the second of the two moves the
+                    circular-economy literature identifies as the condition for
+                    nutrient recovery to be a net environmental good rather than
+                    a tidier waste.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Measure capsule service life under operation."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Measure capsule service life under operation.
-                  </strong>{" "}
-                  Raised by CEDEX. We report structural integrity under reactor
-                  conditions; we do not report how long that holds. Without a
-                  service life there is no replacement rate, and without a
-                  replacement rate the bead-production term that dominates our
-                  footprint is an assumption rather than a measurement. This is
-                  the item most other items depend on.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    Raised by CEDEX. We report structural integrity under
+                    reactor conditions; we do not report how long that holds.
+                    Without a service life there is no replacement rate, and
+                    without a replacement rate the bead-production term that
+                    dominates our footprint is an assumption rather than a
+                    measurement. This is the item most other items depend on.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Count viable cells in the effluent over operating time."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Count viable cells in the effluent over operating time.
-                  </strong>{" "}
-                  Structural integrity is not biological retention: an intact
-                  capsule can still release cells at its surface. Every
-                  environmental benefit claimed anywhere on this page is
-                  conditional on this measurement, and it is the one an
-                  industrial operator told us would be discussed before anything
-                  else.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    Structural integrity is not biological retention: an intact
+                    capsule can still release cells at its surface. Every
+                    environmental benefit claimed anywhere on this page is
+                    conditional on this measurement, and it is the one an
+                    industrial operator told us would be discussed before
+                    anything else.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Validate membrane polishing at achievable pressures."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Validate membrane polishing at achievable pressures.
-                  </strong>{" "}
-                  Reclassified as a scale-up concept rather than a demonstrated
-                  result, which is why the water-quality figures in Room 03 are
-                  labelled as projections. Until this is tested, the
-                  discharge-limit claim is a design target and not a result.
-                </p>
+                  <p className="sus-panel-accordion__body">
+                    Reclassified as a scale-up concept rather than a
+                    demonstrated result, which is why the water-quality figures
+                    in Room 03 are labelled as projections. Until this is
+                    tested, the discharge-limit claim is a design target and not
+                    a result.
+                  </p>
+                </AccordionSection>
               </div>
               <div
                 style={{
@@ -5557,43 +5518,30 @@ export function Sustainability() {
                 >
                   On the evidence
                 </h5>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Re-run the life cycle assessment under a renewable energy scenario."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Re-run the life cycle assessment under a renewable energy
-                    scenario.
-                  </strong>{" "}
-                  Requested by Roberto Arranz. A decarbonising grid does not
-                  improve process efficiency, which is what target 7.3 actually
-                  measures, but it does change the climate reading — and we
-                  should know by how much before we describe the energy
-                  interaction as fixed.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    Requested by Roberto Arranz. A decarbonising grid does not
+                    improve process efficiency, which is what target 7.3
+                    actually measures, but it does change the climate reading —
+                    and we should know by how much before we describe the energy
+                    interaction as fixed.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="Treat repairability as a design variable."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    Treat repairability as a design variable.
-                  </strong>{" "}
-                  Newly opened. Who repairs the module, with what training, and
-                  how long the line is down. Chemical dosing fails in ways every
-                  plant operator already knows how to fix; a contained
-                  biological module does not, and that asymmetry is part of the
-                  access tension rather than separate from it.
-                </p>
+                  <p className="sus-panel-accordion__body">
+                    Newly opened. Who repairs the module, with what training,
+                    and how long the line is down. Chemical dosing fails in ways
+                    every plant operator already knows how to fix; a contained
+                    biological module does not, and that asymmetry is part of
+                    the access tension rather than separate from it.
+                  </p>
+                </AccordionSection>
               </div>
               <div
                 style={{
@@ -5618,109 +5566,90 @@ export function Sustainability() {
                 >
                   With people
                 </h5>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="A plant operator, a permitting authority, and a fertiliser user."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    A plant operator, a permitting authority, and a fertiliser
-                    user.
-                  </strong>{" "}
-                  The three voices absent from this room, each of which licenses
-                  a claim we currently cannot make: maintenance burden, route to
-                  authorisation, and whether recovered phosphorus is wanted in
-                  the form we produce it.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    The three voices absent from this room, each of which
+                    licenses a claim we currently cannot make: maintenance
+                    burden, route to authorisation, and whether recovered
+                    phosphorus is wanted in the form we produce it.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="A regulatory sandbox."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    A regulatory sandbox.
-                  </strong>{" "}
-                  Two seats at our round table, from opposite ends of it,
-                  independently named the same mechanism: a sandbox is how a
-                  technology that current law cannot yet frame gets trialled and
-                  then approved on the evidence. For a contained organism that
-                  must demonstrate non-release over years rather than weeks, it
-                  is not one route among several — it is the route. Identifying
-                  the programme to apply to is a concrete next step rather than
-                  a hope.
-                </p>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
+                  <p className="sus-panel-accordion__body">
+                    Two seats at our round table, from opposite ends of it,
+                    independently named the same mechanism: a sandbox is how a
+                    technology that current law cannot yet frame gets trialled
+                    and then approved on the evidence. For a contained organism
+                    that must demonstrate non-release over years rather than
+                    weeks, it is not one route among several — it is the route.
+                    Identifying the programme to apply to is a concrete next
+                    step rather than a hope.
+                  </p>
+                </AccordionSection>
+                <AccordionSection
+                  className="sus-panel-accordion"
+                  title="A mandated recycled-phosphorus content."
                 >
-                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                    A mandated recycled-phosphorus content.
-                  </strong>{" "}
-                  Directive (EU) 2024/3019{" "}
-                  <a className="lab-citation" href="#ref-r02-2">
-                    [2]
-                  </a>{" "}
-                  empowers the Commission to set a minimum combined reuse and
-                  recycling rate for phosphorus and asks Member States to
-                  encourage the purchase of recovered nutrients. Whether that
-                  rate is set, and at what level, decides whether recovered
-                  phosphorus competes with mined phosphorus on price alone. We
-                  cannot act on this one; we can state that our 12.2 argument is
-                  exposed to it.
-                </p>
+                  <p className="sus-panel-accordion__body">
+                    Directive (EU) 2024/3019{" "}
+                    <a className="lab-citation" href="#ref-r02-2">
+                      [2]
+                    </a>{" "}
+                    empowers the Commission to set a minimum combined reuse and
+                    recycling rate for phosphorus and asks Member States to
+                    encourage the purchase of recovered nutrients. Whether that
+                    rate is set, and at what level, decides whether recovered
+                    phosphorus competes with mined phosphorus on price alone. We
+                    cannot act on this one; we can state that our 12.2 argument
+                    is exposed to it.
+                  </p>
+                </AccordionSection>
               </div>
-              <div
+            </div>
+            <div
+              style={{
+                background: "rgba(226,84,45,0.06)",
+                border: "1px solid rgba(226,84,45,0.2)",
+                borderRadius: "18px",
+                padding: "20px 22px",
+                fontSize: "14.5px",
+                lineHeight: "1.62",
+                color: "var(--ink-soft)",
+              }}
+            >
+              <h5
                 style={{
-                  background: "rgba(226,84,45,0.06)",
-                  border: "1px solid rgba(226,84,45,0.2)",
-                  borderRadius: "18px",
-                  padding: "20px 22px",
-                  fontSize: "14.5px",
-                  lineHeight: "1.62",
-                  color: "var(--ink-soft)",
+                  margin: "0 0 10px",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "17px",
+                  lineHeight: "1.3",
+                  fontWeight: "600",
+                  color: "#b03c1b",
                 }}
               >
-                <h5
-                  style={{
-                    margin: "0 0 10px",
-                    fontFamily: "var(--font-display)",
-                    fontSize: "17px",
-                    lineHeight: "1.3",
-                    fontWeight: "600",
-                    color: "#b03c1b",
-                  }}
-                >
-                  What we are not claiming
-                </h5>
-                <p
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "14.5px",
-                    lineHeight: "1.65",
-                    color: "var(--ink-soft)",
-                    textWrap: "pretty",
-                  }}
-                >
-                  A screening LCA is not a certificate. Structural capsule
-                  integrity is not biological retention. A laboratory
-                  accumulation figure is not a plant running for a year.
-                  Everything above is the distance between those pairs, written
-                  down so that the distance can be checked rather than assumed.
-                </p>
-              </div>
+                What we are not claiming
+              </h5>
+              <p
+                style={{
+                  margin: "0 0 12px",
+                  fontSize: "14.5px",
+                  lineHeight: "1.65",
+                  color: "var(--ink-soft)",
+                  textWrap: "pretty",
+                }}
+              >
+                A screening LCA is not a certificate. Structural capsule
+                integrity is not biological retention. A laboratory accumulation
+                figure is not a plant running for a year. Everything above is
+                the distance between those pairs, written down so that the
+                distance can be checked rather than assumed.
+              </p>
             </div>
             <details
               style={{
@@ -7253,252 +7182,6 @@ export function Sustainability() {
                 store more phosphorus.
               </figcaption>
             </figure>
-            <div
-              style={{
-                margin: "10px 0 28px",
-                overflowX: "auto",
-                border: "1px solid var(--line)",
-                borderRadius: "18px",
-                background: "#fff",
-                boxShadow: "var(--shadow-card)",
-              }}
-            >
-              <table
-                style={{
-                  width: "100%",
-                  borderCollapse: "collapse",
-                  fontSize: "14.5px",
-                  minWidth: "560px",
-                }}
-              >
-                <tbody>
-                  <tr>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      Bead capacity (mg P/g)
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      1.5
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      3
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      6
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      9
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      12
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      15
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        padding: "12px 16px",
-                        fontFamily: "var(--font-display)",
-                        fontWeight: "600",
-                        fontSize: "13.5px",
-                        lineHeight: "1.35",
-                        color: "var(--ink)",
-                        background: "var(--paper-soft)",
-                        borderBottom: "1px solid rgba(27,35,64,0.12)",
-                        verticalAlign: "bottom",
-                      }}
-                    >
-                      Conventional
-                    </th>
-                  </tr>
-                  <tr>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      <strong
-                        style={{ color: "var(--ink)", fontWeight: "600" }}
-                      >
-                        Climate (kg CO₂-eq / m³)
-                      </strong>
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      37.0
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      16.4
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      6.2
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      2.7
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      1.0
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      ≈0
-                    </td>
-                    <td
-                      style={{
-                        padding: "12px 16px",
-                        borderBottom: "none",
-                        verticalAlign: "top",
-                        lineHeight: "1.55",
-                        color: "var(--ink-soft)",
-                      }}
-                    >
-                      12.2
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
             <p
               style={{
                 margin: "0 0 18px",
@@ -13398,119 +13081,112 @@ export function Sustainability() {
                 UCM.
               </figcaption>
             </figure>
-            <h4
+            <div
               id="r04-closing-reflection-the-ethics-of-a-conta"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "21px",
-                lineHeight: "1.3",
-                fontWeight: "600",
-                letterSpacing: "-0.01em",
-                color: "var(--ink)",
-                margin: "44px 0 12px",
-                textWrap: "balance",
-                scrollMarginTop: "110px",
-              }}
+              className="sus-disclosure"
             >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                Closing reflection — the ethics of a contained organism
-              </strong>
-            </h4>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
-                What it means to put a living thing to work on a problem we
-                made.
-              </strong>{" "}
-              Four rooms asked four questions, and read in sequence they are one
-              question. Room 01 asked whether we had weighed what our work costs
-              the goals it does not serve, and we answered by naming climate as
-              a declared cost rather than hiding it. Room 02 asked whether we
-              let other people change the project, and the honest answer was
-              that the people who redrew rePhlow most, Bio-Oils, CEDEX, Repsol,
-              a resident of a reservoir, were rarely the people we were most
-              comfortable talking to. Room 03 asked whether we had measurably
-              moved an SDG, and the instruments replied with a number and a
-              distance still to cover. This room asks about the long-term
-              consequences, and the round table answered in a voice that was not
-              ours.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              The ethical core of rePhlow is modest and specific. We are
-              proposing to place a genetically modified organism into the path
-              of water that returns to an ecosystem, in order to recover an
-              element that civilisation cannot do without and is currently
-              flushing to the sea. The benefit is real: phosphorus kept in the
-              loop, nitrogen taken down with it, a hazardous sludge never made,
-              water given back to a dry country. But every one of those benefits
-              is a promise that holds only while the organism stays inside the
-              reactor, which is why containment is not a feature we added to
-              reassure a regulator; it is the precondition that makes the whole
-              project permissible, and it is the reason the EU governs contained
-              use of modified micro-organisms as a category of its own. [17] An
-              industrial operator told us nothing else would be discussed until
-              that evidence existed, and he was right to.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              There is a deeper tension the round table named and we should not
-              paper over. A technology that makes phosphorus recovery cheap and
-              routine could, perversely, remove the pressure to use less of it
-              at source, the rebound that haunts every efficiency gain; [19] and
-              a tool this capital- and skill-intensive could reach the
-              well-resourced first and widen the very gap SDGs 9 and 10 ask us
-              to close. We do not have clean answers to either, and we think
-              saying so is part of doing this responsibly. What we can do is be
-              precise about what would have to be true for the benefit to
-              outweigh the cost: beads that hold at least eight milligrams of
-              phosphorus per gram, cells that demonstrably do not leave the
-              vessel, a decarbonised bead material, and a regulation and a
-              market, the sandbox and the mandated blend the panel described,
-              that let a recovered nutrient compete with a mined one.
-            </p>
-            <p
-              style={{
-                margin: "0 0 18px",
-                fontSize: "16px",
-                lineHeight: "1.72",
-                color: "var(--ink-soft)",
-                textWrap: "pretty",
-              }}
-            >
-              That is why we have been deliberately careful about what we claim.
-              A screening LCA is not a certificate, structural capsule integrity
-              is not biological retention, and a laboratory accumulation figure
-              is not a plant running for a year. The role of a project like this
-              in sustainability is not to arrive with a finished answer; it is
-              to show that the honest version of the answer is close enough to
-              be worth reaching, and to keep those conditions in view, alongside
-              the four questions on the walls of these rooms. Do that, and
-              rePhlow stops being a clever device and becomes what it was meant
-              to be: a small, testable argument that a waste can be a resource,
-              made by the people who will have to live with the result.
-            </p>
+              <AccordionSection title="Closing reflection — the ethics of a contained organism">
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
+                    What it means to put a living thing to work on a problem we
+                    made.
+                  </strong>{" "}
+                  Four rooms asked four questions, and read in sequence they are
+                  one question. Room 01 asked whether we had weighed what our
+                  work costs the goals it does not serve, and we answered by
+                  naming climate as a declared cost rather than hiding it. Room
+                  02 asked whether we let other people change the project, and
+                  the honest answer was that the people who redrew rePhlow most,
+                  Bio-Oils, CEDEX, Repsol, a resident of a reservoir, were
+                  rarely the people we were most comfortable talking to. Room 03
+                  asked whether we had measurably moved an SDG, and the
+                  instruments replied with a number and a distance still to
+                  cover. This room asks about the long-term consequences, and
+                  the round table answered in a voice that was not ours.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  The ethical core of rePhlow is modest and specific. We are
+                  proposing to place a genetically modified organism into the
+                  path of water that returns to an ecosystem, in order to
+                  recover an element that civilisation cannot do without and is
+                  currently flushing to the sea. The benefit is real: phosphorus
+                  kept in the loop, nitrogen taken down with it, a hazardous
+                  sludge never made, water given back to a dry country. But
+                  every one of those benefits is a promise that holds only while
+                  the organism stays inside the reactor, which is why
+                  containment is not a feature we added to reassure a regulator;
+                  it is the precondition that makes the whole project
+                  permissible, and it is the reason the EU governs contained use
+                  of modified micro-organisms as a category of its own. [17] An
+                  industrial operator told us nothing else would be discussed
+                  until that evidence existed, and he was right to.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  There is a deeper tension the round table named and we should
+                  not paper over. A technology that makes phosphorus recovery
+                  cheap and routine could, perversely, remove the pressure to
+                  use less of it at source, the rebound that haunts every
+                  efficiency gain; [19] and a tool this capital- and
+                  skill-intensive could reach the well-resourced first and widen
+                  the very gap SDGs 9 and 10 ask us to close. We do not have
+                  clean answers to either, and we think saying so is part of
+                  doing this responsibly. What we can do is be precise about
+                  what would have to be true for the benefit to outweigh the
+                  cost: beads that hold at least eight milligrams of phosphorus
+                  per gram, cells that demonstrably do not leave the vessel, a
+                  decarbonised bead material, and a regulation and a market, the
+                  sandbox and the mandated blend the panel described, that let a
+                  recovered nutrient compete with a mined one.
+                </p>
+                <p
+                  style={{
+                    margin: "0 0 18px",
+                    fontSize: "16px",
+                    lineHeight: "1.72",
+                    color: "var(--ink-soft)",
+                    textWrap: "pretty",
+                  }}
+                >
+                  That is why we have been deliberately careful about what we
+                  claim. A screening LCA is not a certificate, structural
+                  capsule integrity is not biological retention, and a
+                  laboratory accumulation figure is not a plant running for a
+                  year. The role of a project like this in sustainability is not
+                  to arrive with a finished answer; it is to show that the
+                  honest version of the answer is close enough to be worth
+                  reaching, and to keep those conditions in view, alongside the
+                  four questions on the walls of these rooms. Do that, and
+                  rePhlow stops being a clever device and becomes what it was
+                  meant to be: a small, testable argument that a waste can be a
+                  resource, made by the people who will have to live with the
+                  result.
+                </p>
+              </AccordionSection>
+            </div>
             <details
               style={{
                 margin: "48px 0 8px",

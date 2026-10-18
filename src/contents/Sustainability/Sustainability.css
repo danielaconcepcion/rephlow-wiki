@@ -144,3 +144,99 @@
       rgba(255, 255, 255, 0) 62%
     );
 }
+
+/* --------------------------------------------------------------------------
+   Disclosures. The page's long reflective passages (What stays open, the
+   closing reflection) and the lead-ins inside the three "what has to be
+   true next" panels fold away behind the wiki's own accordion
+   (AccordionSection), skinned to the card language this page already uses
+   for its reference lists.
+   -------------------------------------------------------------------------- */
+.sus-design .sus-disclosure {
+  margin: 44px 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--paper-soft);
+  scroll-margin-top: 110px;
+}
+
+.sus-design .sus-disclosure > .hp-accordion > .hp-accordion__trigger {
+  padding: 15px 22px;
+  gap: 12px;
+}
+
+.sus-design .sus-disclosure .hp-accordion__title {
+  font-size: 21px;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.sus-design .sus-disclosure > .hp-accordion > .hp-accordion__content {
+  padding: 0 22px 10px;
+  gap: 0;
+  animation: sus-disclosure-open 0.22s ease both;
+}
+
+/* The paragraphs inside keep the page's own measure and rhythm. */
+.sus-design .sus-disclosure .hp-accordion__content > p {
+  max-width: 790px;
+}
+
+/* Inside a coloured panel the accordion is quieter still: the bold lead-in
+   becomes the question, hairlines separate them, nothing is nested. */
+.sus-design .sus-panel-accordion + .sus-panel-accordion {
+  border-top: 1px solid rgba(27, 35, 64, 0.09);
+}
+
+.sus-design .sus-panel-accordion .hp-accordion__trigger {
+  padding: 11px 0;
+  gap: 9px;
+  align-items: flex-start;
+}
+
+.sus-design .sus-panel-accordion .hp-accordion__chevron {
+  margin-top: 5px;
+  width: 9px;
+  height: 9px;
+}
+
+.sus-design .sus-panel-accordion .hp-accordion__title {
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.sus-design .sus-panel-accordion .hp-accordion__content {
+  padding: 0 0 12px;
+  gap: 0;
+  animation: sus-disclosure-open 0.22s ease both;
+}
+
+.sus-design .sus-panel-accordion__body {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  text-align: justify;
+  text-align-last: left;
+  text-wrap: pretty;
+}
+
+@keyframes sus-disclosure-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sus-design .sus-disclosure > .hp-accordion > .hp-accordion__content,
+  .sus-design .sus-panel-accordion .hp-accordion__content {
+    animation: none;
+  }
+}
