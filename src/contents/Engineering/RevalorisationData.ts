@@ -3,7 +3,8 @@
  * from the team's own Notion write-up (the "Engineering / Revalorisation"
  * page, exported 18 October 2026). The export's wording, emphasis,
  * tables and figures are reproduced as they stand; the only thing left
- * out is the team's internal planning notes.
+ * out is the team's internal planning notes, and the one thing added is
+ * a real link wherever the text points at another page of the wiki.
  *
  * Generated from that export rather than edited by hand, so a later
  * revision of the page can be brought over the same way.
@@ -138,7 +139,7 @@ export const REVALORISATION_PROSS: Iteration[] = [
       ]),
       phase("Build", [
         p(
-          "PROSS returned **nine designs**, from **21 substitutions (3.9 %)** to **119 (22.2 %) (Table 2)**, built on an alignment of over 3,000 homologous sequences (see Results).",
+          "PROSS returned **nine designs**, from **21 substitutions (3.9 %)** to **119 (22.2 %) (Table 2)**, built on an alignment of over 3,000 homologous sequences ([see Results](/results)).",
         ),
         table(
           ["Design", "# Mutations", "% Mutations"],

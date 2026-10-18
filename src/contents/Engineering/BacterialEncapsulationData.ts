@@ -3,7 +3,8 @@
  * from the team's own Notion write-up (the "Engineering / Bacterial encapsulation"
  * page, exported 18 October 2026). The export's wording, emphasis,
  * tables and figures are reproduced as they stand; the only thing left
- * out is the team's internal planning notes.
+ * out is the team's internal planning notes, and the one thing added is
+ * a real link wherever the text points at another page of the wiki.
  *
  * Generated from that export rather than edited by hand, so a later
  * revision of the page can be brought over the same way.
@@ -673,7 +674,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "Protocols for PBS and the sodium-free buffer can be found in the Protocols page.",
         ),
         p(
-          "As in the bead preservation study, 10 capsules were placed in a container with 8 mL of the corresponding medium. All samples were kept at room temperature and photographed at 0, 24, 48 and 72 h, following the same imaging schedule used for the bead preservation study so that the two architectures could be compared. Capsules in untreated wastewater were also imaged after one week; the pH series was not imaged beyond 72 h, because capsules at the lowest pH values had become too fragile to handle and the comparison between pH values would have been lost. Basified wastewater dissolved or broke the capsules even earlier, so they were imaged until it was no longer posible (see Results).",
+          "As in the bead preservation study, 10 capsules were placed in a container with 8 mL of the corresponding medium. All samples were kept at room temperature and photographed at 0, 24, 48 and 72 h, following the same imaging schedule used for the bead preservation study so that the two architectures could be compared. Capsules in untreated wastewater were also imaged after one week; the pH series was not imaged beyond 72 h, because capsules at the lowest pH values had become too fragile to handle and the comparison between pH values would have been lost. Basified wastewater dissolved or broke the capsules even earlier, so they were imaged until it was no longer posible ([see Results](/results)).",
         ),
       ]),
       phase("Test", [
