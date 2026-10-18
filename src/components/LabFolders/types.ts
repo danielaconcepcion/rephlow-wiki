@@ -191,6 +191,9 @@ export interface ExperimentData {
   id: string;
   tabLabel: string;
   title: string;
+  /** Canonical current editorial copy. When present, it replaces every
+   * older prose field while the card retains its existing resources. */
+  editorial?: string[];
   /** Which enzyme(s) the stage belongs to, shown as a chip beside the
    * title. The sources mark this in the stage heading itself ("DHAK",
    * "DHAK   PPK2"); here it is data, not part of the title string. */
@@ -238,6 +241,7 @@ export interface ExperimentSubBlock {
   id: string;
   /** Rendered as-is, e.g. "1. Alginate characterisation & bead optimisation". */
   heading: string;
+  editorial?: string[];
   intro?: ReactNode | ReactNode[];
   /** Omit for a sub-block that's pure narrative (e.g. a closing synthesis
    * section) with no experiments of its own — it then renders as heading +
@@ -269,6 +273,7 @@ export interface ExperimentBlockData {
   protocolsPdfSrc: string;
   /** Shown once, above everything else in the block. */
   intro?: ReactNode | ReactNode[];
+  editorial?: string[];
   /** A flat block has one folder-tab row: set `experiments`. A block with
    * multiple labelled sub-sections (its own heading + its own folder-tab
    * row each) sets `subBlocks` instead — see Experiments.tsx, which
@@ -359,6 +364,8 @@ export interface ResultData {
   id: string;
   tabLabel: string;
   title: string;
+  /** Canonical current editorial copy; resources remain in subsections. */
+  editorial?: string[];
   description?: string;
   /** Results pages state the aim on Experiments rather than per record, so
    * this is optional and usually unset. */
@@ -382,6 +389,7 @@ export interface ResultSubBlock {
   id: string;
   /** Rendered as-is, e.g. "1. Polyphosphate accumulation in the wild type". */
   heading: string;
+  editorial?: string[];
   intro?: ReactNode | ReactNode[];
   results?: ResultData[];
   outro?: ReactNode | ReactNode[];
@@ -398,6 +406,7 @@ export interface ResultBlockData {
   palette?: "mostaza";
   /** Shown once, above everything else in the block. */
   intro?: ReactNode | ReactNode[];
+  editorial?: string[];
   /** A flat block has one folder-tab row: set `results`. A block with
    * multiple labelled sub-sections sets `subBlocks` instead — Results.tsx
    * branches on which one is present, exactly as Experiments.tsx does. */

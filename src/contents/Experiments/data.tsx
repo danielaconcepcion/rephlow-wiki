@@ -14,7 +14,13 @@ import {
   ENZYMATIC_IMMOBILISATION_REFERENCES,
   ENZYMATIC_IMMOBILISATION_SUBBLOCKS,
 } from "./EnzymaticImmobilisationData";
-import { REVALORISATION_INTRO, REVALORISATION_REFERENCES, REVALORISATION_SUBBLOCKS } from "./RevalorisationData";
+import {
+  REVALORISATION_INTRO,
+  REVALORISATION_REFERENCES,
+  REVALORISATION_SUBBLOCKS,
+} from "./RevalorisationData";
+import currentEditorial from "../CurrentEditorialText.json";
+import { applyExperimentEditorial } from "../applyEditorialText";
 
 /**
  * The 4 official experiment blocks (matching the project's own modules —
@@ -66,3 +72,10 @@ export const EXPERIMENT_BLOCKS: ExperimentBlockData[] = [
     references: REVALORISATION_REFERENCES,
   },
 ];
+
+applyExperimentEditorial(
+  EXPERIMENT_BLOCKS,
+  currentEditorial.experiments,
+  currentEditorial.experimentBlocks,
+  currentEditorial.experimentSections,
+);

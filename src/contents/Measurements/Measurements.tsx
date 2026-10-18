@@ -8,7 +8,7 @@ import {
   NumberingContext,
   numberExperiments,
 } from "../../components/LabFolders/numbering";
-import { Rich } from "../../components/LabFolders/RichText";
+import { EditorialText } from "../../components/LabFolders/EditorialText";
 import { SectionTabs } from "../../components/LabFolders/SectionTabs";
 import type { AccentStyle } from "../../components/LabFolders/types";
 import {
@@ -75,15 +75,7 @@ function Prose({
   paragraphs: string[];
   className: string;
 }) {
-  return (
-    <>
-      {paragraphs.map((paragraph, index) => (
-        <p className={className} key={index}>
-          <Rich text={paragraph} />
-        </p>
-      ))}
-    </>
-  );
+  return <EditorialText blocks={paragraphs} className={className} />;
 }
 
 export function Measurements() {

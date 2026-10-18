@@ -29,6 +29,8 @@ import {
   GENETIC_ENGINEERING_INTRO,
   REVALORISATION_INTRO,
 } from "./pageProse";
+import currentEditorial from "../CurrentEditorialText.json";
+import { applyMeasurementEditorial } from "../applyEditorialText";
 
 /**
  * The same four wet-lab blocks as Experiments and Results, in the same
@@ -98,3 +100,18 @@ export const MEASUREMENT_BLOCKS: MeasurementBlock[] = [
     conclusions: REVALORISATION_CONCLUSIONS,
   },
 ];
+
+MEASUREMENT_BLOCKS.forEach((block) => {
+  const key = block.label.toLowerCase();
+  const intros = currentEditorial.measurementBlocks as Record<string, string[]>;
+  const characterisation =
+    currentEditorial.measurementCharacterisation as Record<string, string[]>;
+  const conclusions = currentEditorial.measurementConclusions as Record<
+    string,
+    string[]
+  >;
+  block.intro = intros[key] ?? block.intro;
+  block.characterisation = characterisation[key] ?? block.characterisation;
+  block.conclusions = conclusions[key] ?? block.conclusions;
+  applyMeasurementEditorial(block.measurements, currentEditorial.measurements);
+});

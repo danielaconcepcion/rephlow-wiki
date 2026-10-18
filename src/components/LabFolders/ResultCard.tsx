@@ -5,6 +5,7 @@ import { asset } from "../../utils/asset";
 import { Caption } from "./Caption";
 import { Rich } from "./RichText";
 import { ZoomableImage } from "./ZoomableImage";
+import { EditorialText } from "./EditorialText";
 import type { RecordTable, ResultData, ResultSubsection } from "./types";
 
 function Table({ table }: { table: RecordTable & { caption?: string } }) {
@@ -296,34 +297,37 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
  * continuous scientific record — no collapsible sections.
  */
 export function ResultCard({ data }: { data: ResultData }) {
+  const hasEditorial = !!data.editorial?.length;
   return (
     <article className="result-card">
       <header className="result-card__header">
         <h3 className="result-card__title">
           <Rich text={data.title} />
         </h3>
-        {data.description && (
+        {!hasEditorial && data.description && (
           <p className="result-card__desc">
             <Rich text={data.description} />
           </p>
         )}
       </header>
 
-      {data.pending && (
+      {hasEditorial && <EditorialText blocks={data.editorial!} />}
+
+      {!hasEditorial && data.pending && (
         <p className="result-card__pending">
           This experiment was run, but its write-up is still pending: the team's
           notes carry the entry without its results yet.
         </p>
       )}
 
-      {data.aim && (
+      {!hasEditorial && data.aim && (
         <div className="result-card__aim">
           <h4 className="record-rule-heading">Aim</h4>
           <p>{data.aim}</p>
         </div>
       )}
 
-      {!!data.background?.length && (
+      {!hasEditorial && !!data.background?.length && (
         <div className="result-card__background">
           <h4>Background</h4>
           {data.background.map((paragraph, index) => (
@@ -335,12 +339,36 @@ export function ResultCard({ data }: { data: ResultData }) {
       )}
 
       <div className="result-card__subsections">
-        {data.subsections.map((subsection) => (
-          <Subsection subsection={subsection} key={subsection.id} />
-        ))}
+        {data.subsections
+          .filter(
+            (subsection) =>
+              !hasEditorial ||
+              !!subsection.figures?.length ||
+              !!subsection.figureMatrix ||
+              !!subsection.tables?.length ||
+              !!subsection.custom,
+          )
+          .map((subsection) => (
+            <Subsection
+              subsection={
+                hasEditorial
+                  ? {
+                      ...subsection,
+                      title: undefined,
+                      body: undefined,
+                      bodyAfter: undefined,
+                      observations: undefined,
+                      interpretation: undefined,
+                      expectation: undefined,
+                    }
+                  : subsection
+              }
+              key={subsection.id}
+            />
+          ))}
       </div>
 
-      {!!data.discussion?.length && (
+      {!hasEditorial && !!data.discussion?.length && (
         <section className="result-card__discussion">
           <h4 className="record-rule-heading record-rule-heading--discussion">
             Discussion
