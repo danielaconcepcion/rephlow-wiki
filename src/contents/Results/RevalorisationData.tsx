@@ -682,10 +682,10 @@ const PURIFIED_2012_STOCK: ResultData = {
       id: "sec-fractions",
       title: "Size-exclusion fractions",
       body: [
-        "The crude extract was active, so the next question was whether that activity survived purification. Both routes were applied to this material and the fractions assayed by the same coupled α-GDH/TIM method, so the results are directly comparable with the extract they came from.",
+        "The crude extract was active, so the next question was whether that **activity survives a purification**. Both routes were applied to this material (**Engineering, Iterations 6 and 7**) and the fractions assayed by the same coupled α-GDH/TIM method, so the results are directly comparable with the extract they came from. Not every fraction assayed is reported here: for each run we show the traces that are enough to reach a conclusion about it, one figure per fraction shown.",
         "In run 1, fraction 27 gave −8.40 mOD/min with R² = 0.957, while fraction 46 gave −1.51 mOD/min with R² = 0.571 and fraction 56 −0.16 mOD/min with R² = 0.035. Nothing usable was recovered: the only fitted rate was two orders of magnitude below the extract loaded, and the other traces were noise.",
         "Run 2 was different. Fraction 46 gave −42.91 mOD/min with R² = 0.998, the steepest and cleanest trace obtained from any size-exclusion fraction in the study, and fraction 27 gave −16.64 mOD/min with R² = 0.989. Fraction 56 remained inactive at −0.16 mOD/min with R² = 0.035. Activity appeared in the two fractions taken from the protein region and was absent from the late fraction, although recovery remained modest against the starting extract.",
-        "Run 3 produced no sample because its well-resolved peak passed into waste before fraction collection began. In run 4, the collected peak gave −11.12 mOD/min with R² = 0.566, too poor a fit to extract a reliable rate. A method that yielded active fractions in one run and nothing in the next could not be relied on with the time left.",
+        "Run 3 produced no sample because its well-resolved peak passed into waste before fraction collection began. In run 4, the collected peak gave −11.12 mOD/min with R² = 0.566, too poor a fit to extract a reliable rate. A method that yields active fractions in one run and nothing in the next, and whose only clean separation was lost to a handling error, **cannot be relied on with the time left**. Following the engineering cycle documented in **Engineering, Iteration 8**, the decision was to return to IMAC.",
       ],
       figuresColumns: 3,
       figures: [
@@ -745,7 +745,7 @@ const PURIFIED_2012_STOCK: ResultData = {
         },
       ],
       body: [
-        "The affinity route had never been tried on this stock. The enzyme was purified by IMAC and the dialysed eluate assayed. The trace gave −1.41 mOD/min with R² = 0.928: a clean fit on a signal that barely falls, which amounts to no measurable activity.",
+        "The affinity route had never been tried on this stock: the 2012 enzyme had gone straight to size exclusion, and the problems that had made us abandon IMAC came from constructs that either did not express or could not be compared against a working control. With an enzyme now known to be strongly active, there was no evidence that IMAC would fail on it, and testing it was the only way to find out how this particular DHAK behaves on the resin. The enzyme was therefore purified again by affinity chromatography and the dialysed eluate assayed. The trace gave −1.41 mOD/min with R² = 0.928: a clean fit on a signal that barely falls, which amounts to no measurable activity. Returning to the affinity route did not recover activity either, so **neither of the two purification methods delivers a preparation of this enzyme that can be used in the coupled assay.**",
         "Read together, the eight traces make the problem specific rather than general. The enzyme is clearly active in the crude extract, and in run 2 it is also active in fractions from the protein region. What it does not do is survive purification reproducibly: of the eight purified fractions assayed across the two methods, two were active and six were not. This was not expected, and it is why the decision to work with the crude extract directly was forced rather than merely preferred.",
       ],
     },
