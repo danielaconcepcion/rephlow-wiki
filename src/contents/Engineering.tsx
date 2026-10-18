@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import {
   EcosystemMap,
   type EcosystemMapItem,
@@ -127,6 +128,24 @@ export function Engineering() {
   );
   const pageRef = useRef<HTMLDivElement | null>(null);
   const dividerRef = useRef<HTMLHRElement | null>(null);
+
+  // A block has no route of its own -- it is client state -- so a link to
+  // one (from another block's write-up, or from anywhere else in the
+  // wiki) addresses it by hash: /engineering#bacterial-encapsulation.
+  // Reacting to location.hash rather than reading it once also covers a
+  // link followed while already on this page, where the component never
+  // remounts.
+  const { hash } = useLocation();
+  useEffect(() => {
+    const id = hash.replace(/^#/, "");
+    if (!id) return;
+    if (!ENGINEERING_ECOSYSTEM_ITEMS.some((item) => item.id === id)) return;
+    setActiveTab(id);
+    const el = pageRef.current;
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - 24;
+    window.scrollTo({ top, behavior: "smooth" });
+  }, [hash]);
 
   // Clicking the page header/hero above the map (rendered as a sibling by
   // <Header>, see App.tsx's route table) also returns to the neutral

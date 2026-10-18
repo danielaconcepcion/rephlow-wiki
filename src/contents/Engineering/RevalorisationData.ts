@@ -51,7 +51,7 @@ export const REVALORISATION_WILD_TYPE: Iteration[] = [
     phases: [
       phase("Design", [
         p(
-          "The **CECT 4626** variant had been isolated and characterised by our laboratory supervisor, **Israel Sánchez-Moreno**, who keeps aliquots of the strain from two years, **2021 and 2012**. It is a close natural variant of the reference rather than a different enzyme. Its gene differs from the DSM 30040 sequence at **117 nucleotides (92.9 % identity)**, but most of those changes are silent, so the protein differs at only **22 residues (4 %), with 96 % amino-acid identity**. The substitutions are **not evenly spread**: twelve fall in the **ATP-binding L-domain**, six in the **DHA-binding K-domain** and four in the **connector** between them, a concentration in the nucleotide-binding region that fits its reported behaviour. The variant is deposited as GenBank **DQ473522** and is described as the **most catalytically efficient DHAK recorded** (kcat ≈ 24 s⁻¹, Km for DHA ≈ 1.2 µM, kcat/Km ≈ 2×10⁷ M⁻¹s⁻¹). The literature sources for this variant, and for every published figure quoted on this page, are cited on the **Results** page. We began with the **2021 stock**, on the reasoning that the **more recent aliquot** would have been better preserved.",
+          "The **CECT 4626** variant had been isolated and characterised by our laboratory supervisor, **Israel Sánchez-Moreno**, who keeps aliquots of the strain from two years, **2021 and 2012**. It is a close natural variant of the reference rather than a different enzyme. Its gene differs from the DSM 30040 sequence at **117 nucleotides (92.9 % identity)**, but most of those changes are silent, so the protein differs at only **22 residues (4 %), with 96 % amino-acid identity**. The substitutions are **not evenly spread**: twelve fall in the **ATP-binding L-domain**, six in the **DHA-binding K-domain** and four in the **connector** between them, a concentration in the nucleotide-binding region that fits its reported behaviour. The variant is deposited as GenBank **DQ473522** and is described as the **most catalytically efficient DHAK recorded** (kcat ≈ 24 s⁻¹, Km for DHA ≈ 1.2 µM, kcat/Km ≈ 2×10⁷ M⁻¹s⁻¹). The literature sources for this variant, and for every published figure quoted on this page, are cited on the **[Results](/results)** page. We began with the **2021 stock**, on the reasoning that the **more recent aliquot** would have been better preserved.",
         ),
       ]),
       phase("Build", [
@@ -473,7 +473,7 @@ export const REVALORISATION_PURIFICATION: Iteration[] = [
       ]),
       phase("Test", [
         p(
-          "The four runs are summarised in Table 10, and the activity of every fraction assayed from them in Table 11; the chromatograms themselves are on the **Results** page. They are reported chronologically, because **the series as a whole is the result**, and what it shows is that **no two runs behaved the same way**.",
+          "The four runs are summarised in Table 10, and the activity of every fraction assayed from them in Table 11; the chromatograms themselves are on the **[Results](/results)** page. They are reported chronologically, because **the series as a whole is the result**, and what it shows is that **no two runs behaved the same way**.",
         ),
         ul([
           "Run 1 was almost empty.",
@@ -536,7 +536,7 @@ export const REVALORISATION_PURIFICATION: Iteration[] = [
               cell("See run 4 in Results"),
             ],
           ],
-          "**Table 10.** Summary of the four size-exclusion runs. Elution volumes in mL, with the peak falling inside the 220–270 mL DHAK window in bold where one is present. Full chromatograms are given on the Results page.",
+          "**Table 10.** Summary of the four size-exclusion runs. Elution volumes in mL, with the peak falling inside the 220–270 mL DHAK window in bold where one is present. Full chromatograms are given on the [Results](/results) page.",
         ),
         table(
           [
