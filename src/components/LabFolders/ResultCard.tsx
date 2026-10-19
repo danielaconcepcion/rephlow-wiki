@@ -186,14 +186,53 @@ function FigureMatrix({
   );
 }
 
-function Subsection({ subsection }: { subsection: ResultSubsection }) {
-  const prose = (
-    <>
-      {subsection.body?.map((paragraph, index) => (
-        <p key={index}>
+function NarrativeParagraph({ text }: { text: string }) {
+  const lead = text.match(/^\*\*([^*]+)\*\*\s*(.*)$/s);
+
+  if (!lead) {
+    return (
+      <p>
+        <Rich text={text} />
+      </p>
+    );
+  }
+
+  const [, heading, rawRemainder] = lead;
+  const remainder = rawRemainder.replace(/^,\s*/, "");
+  const paragraph = rawRemainder.startsWith(",")
+    ? remainder.replace(/^./, (character) => character.toUpperCase())
+    : remainder;
+  return (
+    <div className="result-subsection__field result-subsection__field--narrative">
+      <h5>{heading}</h5>
+      {paragraph && (
+        <p>
           <Rich text={paragraph} />
         </p>
-      ))}
+      )}
+    </div>
+  );
+}
+
+function Subsection({
+  subsection,
+  narrative = false,
+}: {
+  subsection: ResultSubsection;
+  narrative?: boolean;
+}) {
+  const renderParagraph = (paragraph: string, index: number) =>
+    narrative ? (
+      <NarrativeParagraph text={paragraph} key={index} />
+    ) : (
+      <p key={index}>
+        <Rich text={paragraph} />
+      </p>
+    );
+
+  const prose = (
+    <>
+      {subsection.body?.map(renderParagraph)}
 
       {subsection.custom && (
         <figure className="record-figure record-figure--custom">
@@ -220,13 +259,12 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
         <Table table={table} key={index} />
       ))}
 
-      {subsection.bodyAfter?.map((paragraph, index) => (
-        <p key={index}>
-          <Rich text={paragraph} />
-        </p>
-      ))}
+      {subsection.bodyAfter?.map(renderParagraph)}
 
-      {subsection.observations && (
+      {narrative && subsection.observations && (
+        <NarrativeParagraph text={subsection.observations} />
+      )}
+      {!narrative && subsection.observations && (
         <div className="result-subsection__field">
           <h5>What was obtained</h5>
           <p>
@@ -235,7 +273,10 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
         </div>
       )}
 
-      {subsection.interpretation && (
+      {narrative && subsection.interpretation && (
+        <NarrativeParagraph text={subsection.interpretation} />
+      )}
+      {!narrative && subsection.interpretation && (
         <div className="result-subsection__field">
           <h5>What it means</h5>
           <p>
@@ -244,7 +285,10 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
         </div>
       )}
 
-      {subsection.expectation && (
+      {narrative && subsection.expectation && (
+        <NarrativeParagraph text={subsection.expectation} />
+      )}
+      {!narrative && subsection.expectation && (
         <div className="result-subsection__field">
           <h5>Was it expected?</h5>
           <p>
@@ -336,7 +380,11 @@ export function ResultCard({ data }: { data: ResultData }) {
 
       <div className="result-card__subsections">
         {data.subsections.map((subsection) => (
-          <Subsection subsection={subsection} key={subsection.id} />
+          <Subsection
+            subsection={subsection}
+            narrative={data.narrative}
+            key={subsection.id}
+          />
         ))}
       </div>
 

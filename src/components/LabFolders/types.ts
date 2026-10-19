@@ -366,6 +366,11 @@ export interface ResultData {
   background?: string[];
   subsections: ResultSubsection[];
   discussion?: string[];
+  /** Render the three legacy result fields as continuous prose, without
+   * their old "What was obtained / What it means / Was it expected?"
+   * labels. Leading bold sentences become the same small editorial
+   * headings those labels used, while the remaining text stays as prose. */
+  narrative?: boolean;
   /** Set when the source has the entry but has not written it up yet (its
    * "what was obtained" still reads [XXX]). The card then says so plainly
    * instead of the record looking finished-but-empty, and nothing is
