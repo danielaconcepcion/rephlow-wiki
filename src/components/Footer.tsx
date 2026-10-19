@@ -13,11 +13,7 @@ export function Footer() {
 
       <div className="site-footer__panel">
         <div className="site-footer__inner">
-          <Link
-            className="site-footer__logo"
-            to="/"
-            aria-label="rePhlow home"
-          >
+          <Link className="site-footer__logo" to="/" aria-label="rePhlow home">
             <img
               src={asset("assets/rephlow-logo-transparent.png")}
               alt="rePhlow logo"
@@ -46,12 +42,18 @@ export function Footer() {
                 >
                   <rect x="3" y="3" width="18" height="18" rx="5" />
                   <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                  <circle
+                    cx="17.5"
+                    cy="6.5"
+                    r="1"
+                    fill="currentColor"
+                    stroke="none"
+                  />
                 </svg>
               </a>
               <a
                 className="site-footer__social"
-                href="mailto:rephlow@example.com"
+                href="mailto:rephlow@ucm.es"
                 aria-label="Email"
               >
                 <svg
@@ -83,7 +85,13 @@ export function Footer() {
                 >
                   <rect x="3" y="3" width="18" height="18" rx="4" />
                   <line x1="7" y1="10" x2="7" y2="17" />
-                  <circle cx="7" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                  <circle
+                    cx="7"
+                    cy="6.5"
+                    r="1"
+                    fill="currentColor"
+                    stroke="none"
+                  />
                   <path d="M11 17v-4.5a2.5 2.5 0 0 1 5 0V17" />
                   <line x1="11" y1="10" x2="11" y2="17" />
                 </svg>
@@ -94,7 +102,7 @@ export function Footer() {
 
         {/* MUST mention license AND have a link to team wiki's repository on gitlab.igem.org */}
         <p className="site-footer__legal">
-          © 2024 - Content on this site is licensed under a Creative Commons
+          © 2026 - Content on this site is licensed under a Creative Commons
           Attribution 4.0 International license.
           <br />
           The repository used to create this website is available at{" "}
