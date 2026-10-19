@@ -10,7 +10,8 @@ interface HeaderProps {
  * - hideEyebrow: drop the "under construction" label.
  * - moleculeSeed: draw the molecule field background (same seed = same layout).
  */
-const HERO_OPTIONS: Record<string, { hideEyebrow?: boolean; moleculeSeed?: number; award?: string }> = {
+const HERO_OPTIONS: Record<string, { hide?: boolean; hideEyebrow?: boolean; moleculeSeed?: number; award?: string }> = {
+  "rePhlow": { hide: true },
   Entrepreneurship: { hideEyebrow: true, moleculeSeed: 31 },
   Measurements: { hideEyebrow: true, moleculeSeed: 17, award: "Best Measurements" },
 };
@@ -94,6 +95,7 @@ function MoleculeField({ seed }: { seed: number }) {
  */
 export function Header({ title, lead }: HeaderProps) {
   const opt = HERO_OPTIONS[title] ?? {};
+  if (opt.hide) return null;
   const molecules = opt.moleculeSeed !== undefined;
   return (
     <main className="page-shell" style={molecules ? { position: "relative" } : undefined}>
