@@ -14,7 +14,7 @@ import { asset } from "../../utils";
    The board is the index; the chronicle is the record.
    -------------------------------------------------------------------------- */
 
-const A = (name: string) => asset(`assets/education/${name}`);
+export const A = (name: string) => asset(`assets/education/${name}`);
 
 export interface Photo {
   src: string;

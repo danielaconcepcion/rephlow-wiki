@@ -93,8 +93,8 @@ export const ACTIVITIES: Activity[] = [
     ],
     link: null,
     photos: [
-      photo("dis-01", "Diego and Mar\u00eda presenting rePhlow to the DIS Abroad Scandinavia students at Compluemprende", "4 / 3"),
       photo("dis-02", "Mar\u00eda explaining where the phosphate in the effluent comes from", "4 / 3"),
+      photo("dis-01", "Diego and Mar\u00eda presenting rePhlow to the DIS Abroad Scandinavia students at Compluemprende", "4 / 3"),
     ],
   },
   {

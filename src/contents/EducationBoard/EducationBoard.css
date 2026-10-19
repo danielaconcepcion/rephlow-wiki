@@ -449,3 +449,16 @@
   .ec-slate__swipe { display: block; }
 }
 
+
+/* ---------- Click-to-enlarge photos (own copy, so it works without the Hardware page) ---------- */
+.ec-dialog ~ .hw-lightbox, .hw-lightbox { position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 56px 16px 24px; background: rgba(12, 17, 32, 0.95); animation: ec-lightbox-in 0.18s ease-out; }
+.hw-lightbox__figure { margin: 0; max-width: min(1200px, 100%); display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 0; }
+.hw-lightbox__figure img { display: block; max-width: 100%; max-height: 76vh; object-fit: contain; border-radius: 10px; background: #fff; cursor: default; }
+.hw-lightbox__figure figcaption { max-width: 900px; max-height: 16vh; overflow-y: auto; color: #eef2f8; font-size: 0.9rem; line-height: 1.55; text-align: center; }
+.hw-lightbox__close, .hw-lightbox__nav { border: 0; border-radius: 999px; background: rgba(255, 255, 255, 0.12); color: #fff; cursor: pointer; line-height: 1; transition: background 0.15s ease; }
+.hw-lightbox__close:hover, .hw-lightbox__nav:hover { background: rgba(255, 255, 255, 0.26); }
+.hw-lightbox__close { position: absolute; top: 14px; right: 16px; width: 40px; height: 40px; font-size: 26px; }
+.hw-lightbox__nav { flex: none; width: 44px; height: 44px; font-size: 30px; }
+@media (max-width: 640px) { .hw-lightbox__nav { position: absolute; bottom: 14px; } .hw-lightbox__nav--prev { left: 16px; } .hw-lightbox__nav--next { right: 16px; } }
+@keyframes ec-lightbox-in { from { opacity: 0; } }
+.ec-dialog .ec-modal__photo, .ec-dialog .cp-gallery__item { cursor: zoom-in; }
