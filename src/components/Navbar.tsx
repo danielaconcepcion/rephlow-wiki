@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 
@@ -71,6 +71,132 @@ const NAV_GROUPS: NavGroup[] = [
   },
 ];
 
+interface SearchEntry {
+  label: string;
+  path: string;
+  section: string;
+  terms: string;
+}
+
+const SEARCH_ENTRIES: SearchEntry[] = [
+  {
+    label: "Home",
+    path: "/",
+    section: "Overview",
+    terms:
+      "rephlow phosphate wastewater eutrophication solution promotion video",
+  },
+  {
+    label: "Project Description",
+    path: "/project-description",
+    section: "Project",
+    terms:
+      "problem eutrophication solution hardware encapsulation enzyme genetic engineering model revalorisation",
+  },
+  {
+    label: "Engineering",
+    path: "/engineering",
+    section: "Project",
+    terms:
+      "design build test learn dbtl bacterial encapsulation enzymatic immobilisation genetics revalorisation",
+  },
+  {
+    label: "Model",
+    path: "/model",
+    section: "Project",
+    terms:
+      "flux balance analysis fba metabolic network sensitivity growth polyp accumulation",
+  },
+  {
+    label: "Hardware",
+    path: "/hardware",
+    section: "Project",
+    terms: "device bioreactor prototype design",
+  },
+  {
+    label: "Experiments",
+    path: "/experiments",
+    section: "Laboratory",
+    terms:
+      "protocols alginate core shell enzyme genetic engineering revalorisation",
+  },
+  {
+    label: "Measurements",
+    path: "/measurement",
+    section: "Laboratory",
+    terms:
+      "quantification calibration morphology stability enzyme activity phosphorus recovery",
+  },
+  {
+    label: "Results",
+    path: "/results",
+    section: "Laboratory",
+    terms: "data analysis conclusions alginate enzyme genetics revalorisation",
+  },
+  {
+    label: "Safety",
+    path: "/safety",
+    section: "Laboratory",
+    terms: "biosafety containment bsl1 organisms risks laboratory solution",
+  },
+  {
+    label: "Human Practices",
+    path: "/human-practices",
+    section: "Engagement",
+    terms: "stakeholders design compass travel archive implementation impact",
+  },
+  {
+    label: "Collaboration and Partnership",
+    path: "/collaboration-partnership",
+    section: "Engagement",
+    terms: "igem community research partners industry entrepreneurship",
+  },
+  {
+    label: "Education and Communication",
+    path: "/education-communication",
+    section: "Engagement",
+    terms: "outreach schools museums congress events learning dialogue",
+  },
+  {
+    label: "Entrepreneurship",
+    path: "/entrepreneurship",
+    section: "Engagement",
+    terms: "customers market business scalable product development impact",
+  },
+  {
+    label: "Sustainability",
+    path: "/sustainability",
+    section: "Engagement",
+    terms: "sdg goals impact circular economy environment",
+  },
+  {
+    label: "Contribution",
+    path: "/contribution",
+    section: "Engagement",
+    terms: "resources protocols registry parts reuse troubleshooting",
+  },
+  {
+    label: "Team",
+    path: "/team",
+    section: "Team",
+    terms: "members advisors mentors attributions",
+  },
+  {
+    label: "Medals",
+    path: "/medals",
+    section: "Judging",
+    terms: "bronze silver gold deliverables awards criteria",
+  },
+];
+
+function normalizeSearch(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim();
+}
+
 function getSubmenuId(label: string) {
   return `navbar-submenu-${label.toLowerCase().replace(/\s+/g, "-")}`;
 }
@@ -80,8 +206,11 @@ export function Navbar() {
   const [openGroup, setOpenGroup] = useState<string | null>(null);
   const [isTouchLayout, setIsTouchLayout] = useState(false);
   const [dropdownTop, setDropdownTop] = useState(0);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const navRef = useRef<HTMLElement>(null);
   const portalRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const triggerRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
 
   // Coarse-pointer / no-hover devices (phones, most tablets) get a tap-to-open
@@ -99,7 +228,20 @@ export function Navbar() {
   // Close whichever dropdown is open whenever the route changes.
   useEffect(() => {
     setOpenGroup(null);
+    setSearchOpen(false);
+    setSearchQuery("");
   }, [pathname]);
+
+  useEffect(() => {
+    if (!searchOpen) return;
+    searchInputRef.current?.focus();
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [searchOpen]);
 
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
@@ -109,7 +251,14 @@ export function Navbar() {
       setOpenGroup(null);
     }
     function onDocKeydown(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setSearchOpen(true);
+        setOpenGroup(null);
+        return;
+      }
       if (e.key !== "Escape") return;
+      setSearchOpen(false);
       setOpenGroup((current) => {
         if (current) triggerRefs.current[current]?.focus();
         return null;
@@ -168,6 +317,16 @@ export function Navbar() {
   }
 
   const openNavGroup = NAV_GROUPS.find((group) => group.label === openGroup);
+  const searchResults = useMemo(() => {
+    const words = normalizeSearch(searchQuery).split(/\s+/).filter(Boolean);
+    if (!words.length) return SEARCH_ENTRIES;
+    return SEARCH_ENTRIES.filter((entry) => {
+      const haystack = normalizeSearch(
+        `${entry.label} ${entry.section} ${entry.terms}`,
+      );
+      return words.every((word) => haystack.includes(word));
+    });
+  }, [searchQuery]);
 
   return (
     <nav className="navbar" aria-label="Main navigation" ref={navRef}>
@@ -229,7 +388,17 @@ export function Navbar() {
           );
         })}
 
-        <a className="navbar__search" href="#" aria-label="Search">
+        <button
+          className="navbar__search"
+          type="button"
+          aria-label="Search the wiki"
+          aria-haspopup="dialog"
+          aria-expanded={searchOpen}
+          onClick={() => {
+            setOpenGroup(null);
+            setSearchOpen(true);
+          }}
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -240,7 +409,7 @@ export function Navbar() {
             <circle cx="11" cy="11" r="7"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
-        </a>
+        </button>
       </div>
 
       {/*
@@ -267,6 +436,70 @@ export function Navbar() {
             ref={portalRef}
           >
             {renderDropdownLinks(openNavGroup)}
+          </div>,
+          document.body,
+        )}
+
+      {searchOpen &&
+        createPortal(
+          <div
+            className="wiki-search"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="wiki-search-title"
+            onMouseDown={(event) => {
+              if (event.target === event.currentTarget) setSearchOpen(false);
+            }}
+          >
+            <div className="wiki-search__panel">
+              <div className="wiki-search__header">
+                <div>
+                  <p className="wiki-search__eyebrow">Search rePhlow</p>
+                  <h2 id="wiki-search-title">Find a page or topic</h2>
+                </div>
+                <button
+                  className="wiki-search__close"
+                  type="button"
+                  aria-label="Close search"
+                  onClick={() => setSearchOpen(false)}
+                >
+                  ×
+                </button>
+              </div>
+              <label className="wiki-search__field">
+                <span className="sr-only">Search the wiki</span>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <circle cx="11" cy="11" r="7" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input
+                  ref={searchInputRef}
+                  type="search"
+                  value={searchQuery}
+                  onChange={(event) => setSearchQuery(event.target.value)}
+                  placeholder="Try “phosphate”, “safety” or “stakeholders”"
+                />
+                <kbd>Esc</kbd>
+              </label>
+              <div className="wiki-search__results" aria-live="polite">
+                {searchResults.length ? (
+                  searchResults.map((entry) => (
+                    <Link
+                      className="wiki-search__result"
+                      key={entry.path}
+                      to={entry.path}
+                    >
+                      <span>{entry.label}</span>
+                      <small>{entry.section}</small>
+                    </Link>
+                  ))
+                ) : (
+                  <p className="wiki-search__empty">
+                    No matching page or topic. Try a broader term.
+                  </p>
+                )}
+              </div>
+            </div>
           </div>,
           document.body,
         )}

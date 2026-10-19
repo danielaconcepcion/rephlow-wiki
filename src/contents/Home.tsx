@@ -871,7 +871,11 @@ export function Home() {
           it can drive this collapse, turning a pollutant into a resource.
         </p>
 
-        <div className="promotion-video" aria-label="Promotion video">
+        <div
+          className="promotion-video"
+          id="promotion-video"
+          aria-label="Promotion video"
+        >
           <div className="promotion-video__layout">
             <div className="promotion-video__frame">
               <video
