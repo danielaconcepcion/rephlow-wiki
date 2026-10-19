@@ -38,3 +38,9 @@
     margin-top: 0;
   }
 }
+
+/* Award badge in the page header (e.g. Best Integrated Human Practices): solid yellow, no gradient */
+.page-hero__awards .medals-tier-badge--prize,
+.page-hero__awards [class*="--prize"] {
+  background: #f4d35e57 !important;
+}
