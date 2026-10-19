@@ -414,7 +414,7 @@ export function ProjectDescription() {
                 </p>
                 <p>
                   This industrial dimension became tangible through{" "}
-                  <strong>Bio-Oils Huelva</strong>. Before transesterification,
+                  <strong>bio-diesel refinery industries</strong>. Before transesterification,
                   the raw oil must undergo <strong>degumming</strong> to remove
                   phospholipids and other impurities. Some phospholipids can be
                   removed with water, whereas others remain bound to calcium,
