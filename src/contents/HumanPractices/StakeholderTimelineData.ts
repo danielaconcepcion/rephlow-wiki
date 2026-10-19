@@ -321,8 +321,52 @@ export const EVENTS: StakeholderEvent[] = [
       "<p><strong>Why this discussion took place.</strong> After Aurelio's feedback, we presented the developing enzyme module to Silvia as part of a broader project update. At that stage, our reasoning appeared straightforward: immobilising the enzymes on a solid support would allow them to be recovered and reused, avoiding the continuous release or replacement associated with a secreted catalyst. However, while we were explaining the module, Silvia asked a question that our previous design work had not answered: how could we be certain that the enzyme would remain attached to the support during operation? The question was especially relevant because rePhlow was being designed for repeated use under flow, agitation and changing wastewater conditions.</p>\n<p><strong>What we learned from this interview.</strong> Silvia did not challenge the decision to immobilise the enzymes. She challenged the safety assumption we had attached to that decision. Until then, our main criteria had been whether the enzyme retained catalytic activity, whether it could be recovered, and whether the support could be reused. Her question added a further criterion: whether the enzyme remained bound strongly enough to prevent its uncontrolled release into the treated water. This made us distinguish between three concepts we had previously used too loosely: <strong>immobilisation</strong> (the enzyme is attached to a support at the beginning of the process), <strong>recoverability</strong> (the enzyme–support system can be physically removed from the reaction), and <strong>containment</strong> (the enzyme remains associated with that support during operation and repeated use). The first two did not automatically demonstrate the third. We also recognised that different attachment strategies might produce different risk profiles: a weak adsorption method could preserve high initial activity but allow greater detachment, whereas a stronger covalent attachment could improve retention while potentially affecting enzyme structure or catalytic performance.</p>\n<p><strong>What changed in rePhlow.</strong> From that point onwards, attachment strength and resistance to leaching also became explicit design criteria. We therefore stopped treating adsorption as automatically sufficient and introduced covalent immobilisation as a potentially more robust alternative that would need to be compared under controlled conditions. Future repeated-use experiments would have to assess not only how much activity remained after each cycle, but also whether the enzyme continued to stay bound to the support and whether any activity or protein could be detected in the surrounding liquid. This precaution will be especially important if the potentially harmful candidates in our panel, such as certain phospholipases, are successfully expressed in soluble and active form.</p>\n<p><strong>What this opened next.</strong> We now needed to compare attachment strategies under controlled conditions, and doing so directly with seven newly expressed enzymes, a complex final support and an unvalidated assay would introduce too many variables at once. Building that simplified, fair comparison would take Juan Manuel Bolívar most of the following winter (see below). That same autumn, though, the project's industrial and regulatory picture also needed catching up: Bio-Oils had given us a real effluent back in March, but we still needed an external, public-sector view of the standards a technology like ours would actually be measured against.</p>",
   },
   {
-    id: "cedex",
+    id: "fabrica-ucm",
     index: 15,
+    month: "September 2025",
+    name: "Fábrica UCM programme",
+    category: "Entrepreneurship",
+    date: "24 September – 10 December 2025",
+    affiliation: "Complutense University of Madrid's in-house entrepreneurship programme",
+    question:
+      "How do we turn a synthetic-biology lab result into a real, investable business, and prove it in front of an external jury?",
+    inputLabel: "Challenge raised",
+    inputText:
+      "Across eleven weeks, Fábrica UCM's instructors pushed us from a purely technical framing of rePhlow towards a tested value proposition, a full business model, a scoped MVP, a funding roadmap and a storytelling-driven pitch.",
+    responseText:
+      "rePhlow entered Fábrica UCM as a laboratory technology with no business framing and left it with a validated business model and a pitch that could hold its own in front of an expert jury.",
+    fullEntryHtml: `<p><strong>Why we contacted these stakeholders.</strong> We joined Fábrica UCM, Complutense's in-house entrepreneurship programme, at a point when rePhlow existed mainly as a synthetic-biology concept (engineered <em>Pseudomonas putida</em> for phosphorus recovery) with no business framing around it. As biochemistry and lab-trained students with no formal innovation background, we needed a structured, beginner-level path from "we have interesting science" to "we have a credible business".</p>
+<p><strong>Programme sessions.</strong></p>
+<div class="hp-source-table-wrap"><table class="hp-source-table"><thead><tr><th scope="col">Date</th><th scope="col">Instructor / event</th><th scope="col">Session</th></tr></thead><tbody><tr><td>24 Sep 2025</td><td>Ana Castillo</td><td>Design Thinking: creative, user-focused ideation</td></tr><tr><td>8 Oct 2025</td><td>Jaime Fernández Truchado</td><td>Lean Startup, value proposition &amp; impact measurement</td></tr><tr><td>22 Oct 2025</td><td>Luis Nouel Trenard</td><td>Business Model Canvas in practice</td></tr><tr><td>5 Nov 2025</td><td>María Luke</td><td>Minimum Viable Product for early-stage start-ups</td></tr><tr><td>19 Nov 2025</td><td>Clara Isabel Vega</td><td>Public/private financing sources &amp; legal basics</td></tr><tr><td>3 Dec 2025</td><td>Juan Carlos Requena</td><td>High-impact pitching &amp; storytelling</td></tr><tr><td>10 Dec 2025</td><td>Demo Day</td><td>Final pitch, expert jury feedback</td></tr></tbody></table></div>
+<p><strong>What we learned from this programme.</strong> The programme moved us step by step through the core start-up toolkit, building each piece on top of the last. Ana Castillo opened with Design Thinking, taking us through the empathise–define–ideate–prototype–test cycle so that we would reframe rePhlow around the people actually experiencing the phosphorus problem (wastewater-treatment operators, industrial dischargers) rather than around the science itself. Jaime Fernández Truchado followed with Lean Startup, teaching us to treat our value proposition as a hypothesis to build, measure and learn from, rather than something to simply assume was correct. Luis Nouel Trenard then walked us through the Business Model Canvas in practice, giving us our first single-page view of the whole business: customer segments, key partners, resources, cost structure and revenue streams together. María Luke introduced the Minimum Viable Product concept, pushing us to scope a realistic, testable near-term pilot instead of conflating it with our full industrial vision. Clara Isabel Vega covered the public and private financing routes realistically open to a pre-revenue student project, along with the basic legal groundwork we would need before approaching investors. Juan Carlos Requena closed the curriculum with high-impact, story-driven pitching, teaching us to build a narrative arc around the project rather than a linear technical walkthrough. The closing Demo Day then tested all of it live, for the first time, in front of an external expert jury.</p>
+<p><strong>What changed in rePhlow.</strong> We moved from describing rePhlow as "an engineered bacterium that recovers phosphorus" to framing it around a specific customer pain point; built our first full Business Model Canvas; scoped a bench/pilot-scale MVP instead of a full industrial deployment; drafted a first realistic funding roadmap; and rebuilt our pitch around a narrative arc instead of a technical walkthrough. By the Demo Day, we could answer every business-model question the jury raised without difficulty, and the only concrete suggestion left was to add a go-to-market timeline or Gantt chart to future pitches.</p>
+<p><strong>What this opened next.</strong> Fábrica UCM gave us the basic toolkit and the confidence that the business side of rePhlow could hold up under evaluation, which we carried straight into APTenisa Launch, a longer and more deep-tech-specific accelerator.</p>`,
+  },
+  {
+    id: "aptenisa",
+    index: 16,
+    month: "September 2025",
+    name: "APTenisa Launch programme",
+    category: "Entrepreneurship",
+    date: "17 September 2025 – 26 February 2026",
+    affiliation: "Run by La Salle Technova Barcelona, subsidised by ENISA",
+    question:
+      "Can rePhlow survive six months of deep-tech-specific scrutiny, funding checkpoints and a national investor audience, and come out the other side with a business model that actually holds up?",
+    inputLabel: "Challenge raised",
+    inputText:
+      "Over six months, APTenisa's curriculum sessions built out every block of our business model in depth, while three rounds of 1:1 mentorship (Arnau Pla & Jordi Martí Gascón, Miguel Ángel López Trujillo, and Nina Alastruey's final sessions) repeatedly stress-tested and corrected our actual project.",
+    responseText:
+      "rePhlow left APTenisa with a deepened, deep-tech-specific business model, a three-stream revenue model, and a pitch that held up under a national investor panel's questions.",
+    fullEntryHtml: `<p><strong>Why we contacted these stakeholders.</strong> We joined APTenisa Launch, run by La Salle Technova Barcelona and subsidised by ENISA, specifically to deepen rePhlow's business plan and Business Model Canvas beyond what Fábrica UCM had covered. APTenisa selects specifically for deep-tech and science-based teams and runs a longer, six-month track with dedicated legal, financial and IP modules. Our selection pitch in September had already flagged exactly what we needed to fix: an unclear technical explanation for non-scientific audiences and weak answers on the business model.</p>
+<p><strong>Programme sessions.</strong></p>
+<div class="hp-source-table-wrap"><table class="hp-source-table"><thead><tr><th scope="col">Date</th><th scope="col">Instructor / event</th><th scope="col">Session</th></tr></thead><tbody><tr><td>17 Sep 2025</td><td>Selection-phase pitch</td><td>Qualification pitch to Parque Científico de Madrid</td></tr><tr><td>6–8 Oct 2025</td><td>Fernando Ozores, LLP1</td><td>Lean Launchpad framework, BMC introduction</td></tr><tr><td>15 Oct 2025</td><td>Fernando Ozores, Workshop 1</td><td>Customer discovery interviews &amp; role-play</td></tr><tr><td>20–22 Oct 2025</td><td>Xavier Balagué, LLP2</td><td>Value Proposition Canvas, MVP &amp; prototyping</td></tr><tr><td>27 Oct 2025</td><td>Xavier Balagué, Workshop 2</td><td>B2B digital marketing &amp; sales tools</td></tr><tr><td>3–5 Nov 2025</td><td>Fernando Ozores, LLP3</td><td>Customer segmentation &amp; product–market fit</td></tr><tr><td>10 Nov 2025</td><td>Robert Burgell, Workshop 3</td><td>Legal structuring, shareholder pacts &amp; VC governance</td></tr><tr><td>17–19 Nov 2025</td><td>Xavier Balagué, LLP4</td><td>Distribution channels &amp; channel economics</td></tr><tr><td>20 Nov 2025</td><td>Arnau Pla &amp; Jordi Martí Gascón, 1:1 mentorship</td><td>Business model, funding &amp; technical roadmap check-in</td></tr><tr><td>24 Nov 2025</td><td>Juan Carlos Artigas (Herrero &amp; Asociados), Workshop 4</td><td>IP protection: patents vs. trade secrets</td></tr><tr><td>27 Nov 2025</td><td>Miguel Ángel López Trujillo, 1:1 mentorship</td><td>Structuring customer interviews</td></tr><tr><td>1–3 Dec 2025</td><td>Xavier Balagué, LLP5</td><td>Customer relationships &amp; lifetime value</td></tr><tr><td>9–10 Dec 2025</td><td>Esther Somoza, Workshop 7</td><td>High-performance team leadership</td></tr><tr><td>15–17 Dec 2025</td><td>Miguel Ángel Trujillo, LLP6</td><td>Revenue models &amp; value-based pricing</td></tr><tr><td>12–14 Jan 2026</td><td>Miguel Ángel Trujillo, LLP7</td><td>Key partnerships &amp; operational risk</td></tr><tr><td>19 Jan 2026</td><td>Miguel Ángel Trujillo, Workshop 6</td><td>Finance, investment readiness &amp; investor deck</td></tr><tr><td>20 Jan 2026</td><td>Nina Alastruey, Workshop 5</td><td>Persuasive communication &amp; investor pitch</td></tr><tr><td>26–28 Jan 2026</td><td>Fernando Ozores, LLP8</td><td>Cost structure, TAM-SAM-SOM &amp; break-even</td></tr><tr><td>28 Jan 2026</td><td>Arnau Pla &amp; Jordi Martí Gascón, 1:1 mentorship</td><td>Funding &amp; roadmap check-in</td></tr><tr><td>12 Feb 2026</td><td>Arnau Pla &amp; Jordi Martí Gascón, 1:1 mentorship</td><td>Pre-Transfiere check-in</td></tr><tr><td>17 &amp; 19 Feb 2026</td><td>Nina Alastruey, 1:1 mentorship</td><td>Final pitch &amp; value-proposition stress test</td></tr><tr><td>24–26 Feb 2026</td><td>Foro Transfiere, Málaga</td><td>Official Demo Day, national investor panel</td></tr></tbody></table></div>
+<p><strong>What we learned from this programme.</strong> The curriculum sessions rebuilt every block of our business model with deep-tech rigour: customer discovery and segmentation, the Value Proposition Canvas and MVP definition, distribution channels, IP strategy (patents versus trade secrets, with Herrero &amp; Asociados), customer relationships and lifetime value, revenue models, key partnerships and risk, and finally investment readiness, cost structure and break-even analysis. The three rounds of 1:1 mentorship had the most direct influence on the project itself. Arnau Pla and Jordi Martí Gascón met with us three times during the programme (20 November, 28 January and 12 February) for general check-ins on funding, next steps and our technical development timeline, reviewing rePhlow's real state each time rather than teaching a fixed framework. Miguel Ángel López Trujillo (27 November) worked specifically on how to structure customer interviews: whom to contact, how to get past polite non-answers, and how to feed what we heard into the business model. Nina Alastruey's final two sessions (17 and 19 February), one week before Transfiere, pushed us to rethink our one-liner and how we framed the problem itself (not just phosphorus regulation, but the fact that existing solutions do not actually solve it), and to restructure our revenue model into three distinct B2B streams.</p>
+<p><strong>What changed in rePhlow.</strong> The curriculum work deepened nearly every block of our business model: a specific beachhead customer archetype, realistic distribution channels, a trade-secret-first IP strategy for our encapsulation process, an ongoing service-relationship model with a first lifetime-value estimate, a compared set of revenue-model options, a mapped set of key partners and risks, a dedicated investor deck, and a first TAM-SAM-SOM and break-even estimate. The 1:1 mentorships drove the sharpest, most concrete changes: a tightened, role-specific customer-interview process after working with Miguel Ángel López Trujillo; and, after Nina Alastruey's final sessions, a rewritten one-liner, a reframed problem statement and a restructured business model built around three revenue streams (the bioreactor itself, consumables, and a Software as a Service layer, the first time SaaS entered our model). The recurring check-ins with Arnau Pla and Jordi Martí Gascón kept our funding search and laboratory timeline aligned throughout, rather than letting them drift apart.</p>
+<p><strong>What this opened next.</strong> All of this fed directly into Foro Transfiere in Málaga, APTenisa's closing Demo Day: rePhlow delivered its strongest pitch of the programme, handling jury questions on EU GMO regulation for the encapsulated strain and on our revenue model without difficulty. The one open gap left was a concrete, phase-by-phase fundraising roadmap to build beyond the accelerator programmes.</p>`,
+  },
+  {
+    id: "cedex",
+    index: 17,
     month: "October 2025",
     name: "CEDEX",
     category: "Industry",
@@ -341,7 +385,7 @@ export const EVENTS: StakeholderEvent[] = [
   },
   {
     id: "alvaro-2",
-    index: 16,
+    index: 18,
     month: "October 2025",
     name: "Álvaro Ferrero Veintemilla",
     category: "Science",
@@ -361,7 +405,7 @@ export const EVENTS: StakeholderEvent[] = [
   },
   {
     id: "israel",
-    index: 17,
+    index: 19,
     month: "October 2025",
     name: "Israel Sánchez Moreno",
     category: "Science",
@@ -380,7 +424,7 @@ export const EVENTS: StakeholderEvent[] = [
   },
   {
     id: "juanma-1",
-    index: 18,
+    index: 20,
     month: "October 2025",
     name: "Juan Manuel Bolívar",
     category: "Science",
@@ -400,7 +444,7 @@ export const EVENTS: StakeholderEvent[] = [
   },
   {
     id: "repsol",
-    index: 19,
+    index: 21,
     month: "October 2025",
     name: "Repsol",
     category: "Industry",
@@ -419,7 +463,7 @@ export const EVENTS: StakeholderEvent[] = [
   },
   {
     id: "victoria-juanma",
-    index: 20,
+    index: 22,
     month: "March 2026",
     name: "Victoria E. Santos Mazorra & Juan Manuel Bolívar",
     category: "Science",
@@ -439,7 +483,7 @@ export const EVENTS: StakeholderEvent[] = [
   },
   {
     id: "carmen-loreto-alvaro-2",
-    index: 21,
+    index: 23,
     month: "March 2026",
     name: "Mª Carmen García Payo, Loreto García Fernández & Álvaro Ferrero Veintemilla",
     category: "Science",
@@ -459,7 +503,7 @@ export const EVENTS: StakeholderEvent[] = [
   },
   {
     id: "juanma-2",
-    index: 22,
+    index: 24,
     month: "March 2026",
     name: "Juan Manuel Bolívar",
     category: "Science",
@@ -476,6 +520,26 @@ export const EVENTS: StakeholderEvent[] = [
       "We visited Juan Manuel Bolívar's laboratory to examine a commercial rotating-bed bioreactor and identify the key engineering parameters required for our prototype. The visit allowed us to validate the operating principles of our design and establish the critical aspects that should be maintained.",
     fullEntryHtml:
       "<p><strong>Why we contacted this stakeholder.</strong> After selecting the basket-type rotating-bed reactor as our final design, we wanted to ensure that our proof of concept reproduced the most relevant engineering features of commercial systems. Rather than simply building a functional prototype, we aimed to understand which design choices were essential for preserving hydrodynamics, protecting the alginate core-shell capsules, and enabling future scale-up. Juan Manuel Bolívar and his laboratory specialise in immobilised bioreactions, using several types of bioreactors, including rotating-bed bioreactors of similar volume to our proof of concept.</p>\n<p><strong>What we learned from this interview.</strong> During the laboratory visit, we observed the configuration of a commercial rotating-bed bioreactor and discussed the rationale behind its design. We learned that the rotating basket typically occupies approximately one third of the reactor volume, providing sufficient space for fluid circulation while maintaining efficient contact between the liquid phase and the immobilised biocatalyst. We also discussed the importance of maximising the flow through the basket to improve mass transfer around the capsules while maintaining laminar flow conditions to minimise mechanical stress. To achieve an appropriate packing density, Juan Manuel suggested that, if necessary, inert highly cross-linked alginate beads could be added to the basket to optimise flow distribution without compromising capsule integrity. Finally, we identified the key operational parameters that should be monitored in our proof of concept, including basket rotation speed, hydrodynamic behaviour, and flow patterns, acknowledging that although our prototype would not match the level of automation of commercial equipment, it should reproduce its fundamental operating principles.</p>\n<p><strong>What changed in rePhlow.</strong> The visit provided practical validation for our hardware design and led us to define the geometric proportions of the reactor and basket according to commercial practice. It also guided the internal packing strategy of the basket and reinforced the need to characterise fluid dynamics experimentally through mixing and residence-time studies. These observations increased our confidence that our prototype represents a realistic laboratory-scale model of an industrial rotating-bed bioreactor.</p>\n<p><strong>What this opened next.</strong> This closes the record of external interlocutors to date: the genetic, containment, enzyme, revalorisation, hardware and industrial threads all converge here into one buildable, testable system.</p>",
+  },
+  {
+    id: "paula",
+    index: 25,
+    month: "March 2026",
+    name: "Paula Sánchez-Blanco Sánchez",
+    category: "Entrepreneurship",
+    date: "25 March 2026",
+    affiliation: "Viroque Energy; iGEM team mentor & former iGEM 2024 participant, rePET project",
+    question:
+      "As a first-time iGEM team, how do we take our earliest real steps into business development, and later, how do we sharpen what we have built into a genuinely strong go-to-market strategy?",
+    inputLabel: "Input",
+    inputText:
+      "Paula guided our first business-development steps for grant and accelerator applications, then later reviewed our progress and helped us build up the strongest points of our proposal.",
+    responseText:
+      "rePhlow went from having no internal roadmap for grants and accelerators to a proposal with a clearly reinforced go-to-market strategy.",
+    fullEntryHtml: `<p><strong>Why we contacted this stakeholder.</strong> As a first-time iGEM team, we had no internal precedent for how to approach the entrepreneurship side of the project (applications, grants and accelerators) within the Complutense ecosystem. Paula Sánchez-Blanco, who had been through exactly that as part of rePET, iGEM UCM's 2024 team, was a natural person to turn to, both for that first-hand experience and as an ongoing mentor throughout the project.</p>
+<p><strong>What we learned from these conversations.</strong> In the early phase, Paula helped us take our first steps into business development: how to approach and apply to the different grants and accelerators available to us within the Complutense environment. Later, once the formal training programmes and competitions were behind us and we moved into medal and wiki development, she shifted into a feedback role, reviewing our overall progress and helping us identify and strengthen the points of our proposal that were already strong but underdeveloped.</p>
+<p><strong>What changed in rePhlow.</strong> Her early guidance shaped which grants and accelerators we actually applied to, and how we approached those applications in the first place. In the later phase, her feedback helped us sharpen specific strong points in our proposal that fed directly into a better go-to-market strategy, rather than leaving them as underused strengths.</p>
+<p><strong>What this opened next.</strong> Her input has continued alongside the rest of the project's business development, feeding into the go-to-market work reflected in our business plan and wiki as the project moves towards submission.</p>`,
   },
 ];
 
