@@ -36,7 +36,16 @@ const RENAMED_FOLDERS: Record<string, string> = {
   collaboration: "collaborations",
 };
 
+/** Files that went up at the root of the uploaded tree rather than under
+ * assets/, so asset()'s usual prefix would miss them. */
+const AT_UPLOADS_ROOT: Record<string, string> = {
+  "assets/rephlow-logo-transparent.png": "rephlow-logo-transparent.avif",
+};
+
 export function asset(path: string): string {
+  const atRoot = AT_UPLOADS_ROOT[path];
+  if (atRoot) return `${UPLOADS}${atRoot}`;
+
   if (!path.startsWith("assets/")) {
     return `${import.meta.env.BASE_URL}${path}`;
   }

@@ -109,6 +109,9 @@ const Pages: Page[] = [
     path: "/model",
     component: Model,
     docTitle: "Model — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 73,
   },
   {
     name: "Hardware",
@@ -231,6 +234,9 @@ const Pages: Page[] = [
     path: "/entrepreneurship",
     component: Entrepreneurship,
     docTitle: "Entrepreneurship — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 79,
   },
   {
     name: "Sustainability",
