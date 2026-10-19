@@ -45,8 +45,24 @@ const OUT_DIR = path.join(ROOT, "public", "generated", "scenarios");
 async function main() {
   await mkdir(OUT_DIR, { recursive: true });
 
-  const entries = await readdir(SRC_DIR, { withFileTypes: true });
-  const files = entries.filter((e) => e.isFile() && e.name.endsWith(".json")).map((e) => e.name);
+  // The scenario sources are pushed to the official repository in their
+  // own commit, so there is a moment when this script runs without them.
+  // Missing input is not a build failure: the Model page fetches each
+  // scenario on demand and already handles a fetch that does not resolve
+  // (see scenarioData.ts), so the rest of the wiki must still build.
+  const entries = await readdir(SRC_DIR, { withFileTypes: true }).catch(
+    (err) => {
+      if (err.code !== "ENOENT") throw err;
+      console.warn(
+        `[sync-metabolic-network-scenarios] ${path.relative(ROOT, SRC_DIR)} not found — skipping; the Model page's network graph will have no scenarios.`,
+      );
+      return null;
+    },
+  );
+  if (!entries) return;
+  const files = entries
+    .filter((e) => e.isFile() && e.name.endsWith(".json"))
+    .map((e) => e.name);
 
   let copied = 0;
   let skipped = 0;
