@@ -1,6 +1,10 @@
 import type { Award } from "./components/AwardBadge";
 import {
   Home,
+  Design,
+  Protocols,
+  Attributions,
+  Sponsors,
   Team,
   Medals,
   ProjectDescription,
@@ -74,6 +78,18 @@ const Pages: Page[] = [
     moleculeSeed: 17,
   },
   {
+    name: "Design",
+    title: "Design",
+    lead: "Blueprints for biology.",
+    /*A space for the design principles and decisions behind our biological system.*/
+    path: "/design",
+    component: Design,
+    docTitle: "Design — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 13,
+  },
+  {
     name: "Engineering",
     title: "Engineering",
     lead: "Design. Build. Test. Learn.",
@@ -132,6 +148,18 @@ const Pages: Page[] = [
     hideEyebrow: true,
     labHero: true,
     moleculeSeed: 17,
+  },
+  {
+    name: "Protocols",
+    title: "Protocols",
+    lead: "Reliable. Repeatable. Reproducible.",
+    /*A space for the laboratory protocols and procedures used by the team.*/
+    path: "/protocols",
+    component: Protocols,
+    docTitle: "Protocols — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 37,
   },
   {
     name: "Results",
@@ -238,6 +266,30 @@ const Pages: Page[] = [
     component: Team,
     docTitle: "Team — rePhlow iGEM Wiki",
     hideHeader: true,
+  },
+  {
+    name: "Attributions",
+    title: "Attributions",
+    lead: "Credit where it's due.",
+    /*A space for acknowledging the work and responsibilities of team members and contributors.*/
+    path: "/attributions",
+    component: Attributions,
+    docTitle: "Attributions — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 53,
+  },
+  {
+    name: "Sponsors",
+    title: "Sponsors",
+    lead: "Made possible together.",
+    /*A space for acknowledging the support received from sponsors and institutions.*/
+    path: "/sponsors",
+    component: Sponsors,
+    docTitle: "Sponsors — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 67,
   },
   {
     name: "Medals",

@@ -91,6 +91,20 @@ const App = () => {
           element={<Navigate to="/measurement" replace />}
         />
 
+        {/* The official repository served Safety and Education at these two
+            addresses for a while. The wiki's own pages link to the slugs
+            below (Home's card grid among them), so those are the ones the
+            route table keeps -- and these redirects mean nothing that was
+            published at the old addresses stops working. */}
+        <Route
+          path="/safety-and-security"
+          element={<Navigate to="/safety" replace />}
+        />
+        <Route
+          path="/education"
+          element={<Navigate to="/education-communication" replace />}
+        />
+
         <Route path="*" element={<NotFound />} />
       </Routes>
 

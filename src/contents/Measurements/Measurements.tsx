@@ -1,227 +1,54 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, type RefObject } from "react";
 
-import { EcosystemMap } from "../../components/EcosystemMap";
-import { LabCornerIndex } from "../../components/LabFolders/LabCornerIndex";
-import { ExperimentCard } from "../../components/LabFolders/ExperimentCard";
-import { FolderStack } from "../../components/LabFolders/FolderStack";
-import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
-import {
-  NumberingContext,
-  numberExperiments,
-} from "../../components/LabFolders/numbering";
-import { Rich } from "../../components/LabFolders/RichText";
-import { SectionTabs } from "../../components/LabFolders/SectionTabs";
-import type { AccentStyle } from "../../components/LabFolders/types";
-import {
-  PageSectionNav,
-  type PageSection,
-} from "../../components/PageSectionNav";
-import { MEASUREMENT_BLOCKS } from "./data";
-import { MEASUREMENTS_CONCLUSIONS, MEASUREMENTS_INTRO } from "./pageProse";
-import "../../components/LabFolders/LabFolders.css";
+import { initMeasurements } from "./behaviour";
+import { image, originalOf } from "./images";
+import { MARKUP } from "./markup";
 import "./Measurements.css";
 
 /* --------------------------------------------------------------------------
-   Measurements — the four wet-lab blocks again, each read through the
-   techniques that measured it. The page is the Experiments shell (glass
-   spheres, block pills, folder deck, lateral index), so a reader who has
-   been through Experiments or Results already knows how to move in it; what
-   changes is the record itself, which folds into the sections a method is
-   read by: what it is applied to, what the technique needs, how the sample
-   was prepared, and what came out.
+   Measurements: the four wet-lab blocks read through the eleven techniques
+   that measured them. The content is the approved standalone page
+   (markup.ts) with its own styles (Measurements.css, scoped to .ms-page so
+   nothing here touches the rest of the wiki) and its behaviour
+   (behaviour.ts). The wiki's navbar, header and footer frame it as on every
+   other page.
    -------------------------------------------------------------------------- */
 
-/** Built once at module scope — PageSectionNav keeps an observer keyed on
- * this array, so it must not be rebuilt on every render. Level 1 is the
- * block's techniques (each re-triggers its own folder tab rather than
- * scrolling, since the deck mounts one card at a time), level 2 the folded
- * sections of the technique on screen, which are real anchors. */
-const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
-  MEASUREMENT_BLOCKS.map((block) => [
-    block.id,
-    block.measurements.map((measurement) => ({
-      id: `${block.id}--${measurement.id}`,
-      label: measurement.tabLabel,
-      onSelect: () =>
-        document.getElementById(`folder-tab-${measurement.id}`)?.click(),
-      /* A record that measures several things lists those groups; one that
-         measures a single thing lists its own sections, which is what the
-         groups would otherwise repeat verbatim. */
-      children: ((blocks) =>
-        blocks.some((block) => block.group)
-          ? blocks.filter((block) => block.group)
-          : blocks.filter((block) => block.foldable))(
-        (measurement.body ?? []).filter((block) => block.id && block.title),
-      ).map((section) => ({
-        id: section.id!,
-        label: section.title!,
-        // Opening the index entry opens the section it points at, which
-        // is otherwise folded away and so impossible to scroll to. A
-        // group heading is already on the page, so it only scrolls.
-        onSelect: () => {
-          const target = document.getElementById(section.id!);
-          if (!target) return;
-          if (target instanceof HTMLDetailsElement) target.open = true;
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-        },
-      })),
-    })),
-  ]),
-);
-
-function Prose({
-  paragraphs,
-  className,
-}: {
-  paragraphs: string[];
-  className: string;
-}) {
-  return (
-    <>
-      {paragraphs.map((paragraph, index) => (
-        <p className={className} key={index}>
-          <Rich text={paragraph} />
-        </p>
-      ))}
-    </>
-  );
+/** If an image from iGEM Uploads fails to load as .avif, try it once more
+ * with its original name (see images.ts). */
+function useImageFallback(root: RefObject<HTMLDivElement | null>) {
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const onError = (event: Event) => {
+      const img = event.target;
+      if (!(img instanceof HTMLImageElement)) return;
+      const fallback = originalOf(img.src);
+      if (fallback && img.src !== fallback) img.src = fallback;
+    };
+    el.addEventListener("error", onError, true);
+    return () => el.removeEventListener("error", onError, true);
+  }, [root]);
 }
 
 export function Measurements() {
-  const [activeBlockId, setActiveBlockId] = useState(MEASUREMENT_BLOCKS[0].id);
-  const activeBlock =
-    MEASUREMENT_BLOCKS.find((block) => block.id === activeBlockId) ??
-    MEASUREMENT_BLOCKS[0];
-  // Figure and table numbers restart with the block on screen, as on
-  // Experiments and Results.
-  const numbering = useMemo(
-    () => numberExperiments([{ experiments: activeBlock.measurements }]),
-    [activeBlock],
+  const ref = useRef<HTMLDivElement | null>(null);
+  const html = useMemo(
+    () => MARKUP.replace(/%IMG:([^%]+)%/g, (_, name: string) => image(name)),
+    [],
   );
-  // The corner index's two landmarks -- see Experiments.tsx's own, and
-  // LabCornerIndex. This page opens with its own intro prose above the map,
-  // so "the map is behind us" is still read off the block pills directly
-  // below it rather than off anything higher up.
-  const menuRef = useRef<HTMLDivElement | null>(null);
-  const pageEndRef = useRef<HTMLDivElement | null>(null);
+
+  useImageFallback(ref);
+  useEffect(() => {
+    if (!ref.current) return;
+    return initMeasurements(ref.current);
+  }, []);
 
   return (
-    <div className="lab-folders ms-page">
-      <div className="lab-content-wrap">
-        <div className="lab-prose">
-          <Prose paragraphs={MEASUREMENTS_INTRO} className="lab-block__intro" />
-        </div>
-      </div>
-
-      <EcosystemMap
-        items={LAB_BLOCK_SPHERES}
-        activeId={activeBlockId}
-        onSelect={(id) => id !== null && setActiveBlockId(id)}
-      />
-
-      {/* The corner "you are here" index, shown once the map above has
-          scrolled away -- same spheres, same colours and the same active
-          block, so either index switches the page the same way. */}
-      <LabCornerIndex
-        activeBlockId={activeBlockId}
-        onSelect={setActiveBlockId}
-        after={menuRef}
-        until={pageEndRef}
-      />
-
-      <div className="lab-folders__menu" ref={menuRef}>
-        <SectionTabs
-          tabs={MEASUREMENT_BLOCKS.map((block) => ({
-            id: block.id,
-            label: block.label,
-          }))}
-          activeId={activeBlockId}
-          onChange={setActiveBlockId}
-          ariaLabel="Measurement areas"
-        />
-      </div>
-
-      <div className="page-with-section-nav">
-        <PageSectionNav
-          key={activeBlock.id}
-          sections={SECTIONS_BY_BLOCK[activeBlock.id] ?? []}
-          ariaLabel={`Jump to a ${activeBlock.label} measurement`}
-        />
-
-        <div className="lab-content-wrap">
-          <NumberingContext.Provider value={numbering}>
-            <div
-              className="lab-block"
-              key={activeBlock.id}
-              style={{ "--folder-accent": activeBlock.accent } as AccentStyle}
-            >
-              <div className="lab-prose">
-                <p className="ms-summary">{activeBlock.summary}</p>
-                <Prose
-                  paragraphs={activeBlock.intro}
-                  className="lab-block__intro"
-                />
-                <div className="ms-characterisation">
-                  <Prose
-                    paragraphs={activeBlock.characterisation}
-                    className="ms-characterisation__text"
-                  />
-                </div>
-              </div>
-
-              <div
-                className={
-                  activeBlock.palette ? `lab-block--${activeBlock.palette}` : ""
-                }
-              >
-                <FolderStack
-                  ariaLabel={`${activeBlock.label} measurements`}
-                  folders={activeBlock.measurements.map(
-                    (measurement, index) => ({
-                      id: measurement.id,
-                      label: measurement.tabLabel,
-                      content: <ExperimentCard data={measurement} />,
-                      order: index + 1,
-                    }),
-                  )}
-                />
-              </div>
-
-              <section
-                className="lab-subblock"
-                id={`${activeBlock.id}--conclusions`}
-              >
-                <div className="lab-prose">
-                  <h2 className="lab-subblock__heading">Conclusions</h2>
-                  <Prose
-                    paragraphs={activeBlock.conclusions}
-                    className="lab-subblock__outro"
-                  />
-                </div>
-              </section>
-            </div>
-          </NumberingContext.Provider>
-        </div>
-      </div>
-
-      <div className="lab-content-wrap">
-        <section className="lab-subblock" id="general-conclusions">
-          <div className="lab-prose">
-            <h2 className="lab-subblock__heading">General conclusions</h2>
-            <Prose
-              paragraphs={MEASUREMENTS_CONCLUSIONS}
-              className="lab-subblock__outro"
-            />
-          </div>
-        </section>
-      </div>
-
-      {/* Scroll-position sentinel only -- see Experiments.tsx's own. */}
-      <div
-        className="ecosystem-map-mini-sentinel"
-        ref={pageEndRef}
-        aria-hidden="true"
-      />
-    </div>
+    <div
+      className="ms-page"
+      ref={ref}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
   );
 }

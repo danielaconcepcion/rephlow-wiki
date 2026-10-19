@@ -1,13 +1,93 @@
+/* rePhlow Home: the approved standalone homepage's styles. Every class is
+   prefixed rh- and every rule is scoped to .rh-page, so nothing left in the
+   wiki's global stylesheet from the old Home (.card, .explore, .solution...)
+   can reach this page, and nothing here can reach any other page. */
+
 /* ==========================================================================
-   Home — hero, the problem (the descent into eutrophic water) and the four
-   illustrated scenes. Ported from the team's own `rephlow-home v2`
-   prototype in Claude Design; the sections after the transition wave
-   (solution, video, explore, footer) keep living in App.css, which the
-   whole wiki shares.
-   ========================================================================== */
+       rePhlow — Wiki Homepage
+       Sistema de diseño: agua limpia -> agua eutrofizada -> solución
+       ========================================================================== */
+
+/* 1. TOKENS -------------------------------------------------------------- */
+.rh-page {
+  /* Paleta de agua: de limpia a eutrofizada */
+  --water-clear: #eaf6fa;
+  --water-light: #bfe3ee;
+  --water-mid: #9cc9b8;
+  --algae: #7c9a4e;
+  --eutrophic: #3e4a2a;
+  --eutrophic-deep: #2c3520;
+
+  /* Acentos científicos */
+  --phosphate: #e2542d;
+  --microbe: #6e5a96;
+  --oxygen: #f4faf9;
+
+  /* Neutros / texto */
+  --ink: #1b2340;
+  --ink-soft: #4a5170;
+  --paper: #ffffff;
+  --paper-soft: #f7fafb;
+  --line: rgba(27, 35, 64, 0.08);
+
+  --font-display: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+
+  /* Recorrido del problema: más alto = scroll más lento y dramático */
+  --problem-height: 360vh;
+  --beat-row-height: 70vh;
+
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --shadow-soft: 0 12px 40px rgba(27, 35, 64, 0.08);
+}
+
+.rh-page * {
+  box-sizing: border-box;
+}
+.rh-page {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+.rh-page h1,
+.rh-page h2,
+.rh-page h3 {
+  font-family: var(--font-display);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+.rh-page p {
+  margin: 0;
+  line-height: 1.6;
+}
+.rh-page a {
+  color: inherit;
+  text-decoration: none;
+}
+.rh-page img {
+  max-width: 100%;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rh-page *,
+  .rh-page *::before,
+  .rh-page *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* 2. NAVBAR — píldora flotante centrada --------------------------------- */
 
 /* 3. HERO — el logo flota sobre agua limpia ----------------------------- */
-.hero {
+.rh-page .rh-hero {
   position: relative;
   min-height: 100vh;
   display: flex;
@@ -15,7 +95,7 @@
   overflow: hidden;
   background: linear-gradient(to bottom, #ffffff 0%, #f5fbfd 100%);
 }
-.hero__sky {
+.rh-page .rh-hero__sky {
   flex: 1 1 54%;
   display: flex;
   flex-direction: column;
@@ -24,17 +104,37 @@
   padding: 120px 24px clamp(16px, 3vh, 28px);
   text-align: center;
 }
-.hero__title {
+.rh-page .rh-hero__eyebrow {
+  display: inline-flex;
+  margin: 0 auto clamp(20px, 4vh, 34px);
+  padding: 0.55rem 1rem;
+  border-radius: 18px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(91, 74, 20, 0.82);
+  background: rgba(255, 229, 122, 0.36);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 10px 28px rgba(129, 104, 32, 0.1);
+  backdrop-filter: blur(16px) saturate(1.25);
+  -webkit-backdrop-filter: blur(16px) saturate(1.25);
+  opacity: 0;
+  animation: rh-rise-in 0.9s ease forwards;
+}
+.rh-page .rh-hero__title {
   width: clamp(13rem, 40vw, 26rem);
   margin: 0;
   line-height: 0;
 }
-.hero__title img {
+.rh-page .rh-hero__title img {
   width: 100%;
   height: auto;
-  animation: bob 5s ease-in-out infinite;
+  animation: rh-bob 5s ease-in-out infinite;
 }
-@keyframes bob {
+@keyframes rh-bob {
   0%,
   100% {
     transform: translateY(0) rotate(-0.4deg);
@@ -44,7 +144,7 @@
   }
 }
 
-.hero__water {
+.rh-page .rh-hero__water {
   flex: 1 1 46%;
   position: relative;
   display: flex;
@@ -54,13 +154,13 @@
   text-align: center;
   background: linear-gradient(to bottom, #dcf0f6 0%, var(--water-light) 100%);
 }
-.hero__water > *:not(.hero__waves):not(.ripple) {
+.rh-page .rh-hero__water > *:not(.rh-hero__waves):not(.rh-ripple) {
   position: relative;
   z-index: 1;
 }
 
 /* Superficie: tres capas de olas que se desplazan en bucle */
-.hero__waves {
+.rh-page .rh-hero__waves {
   position: absolute;
   left: 0;
   right: 0;
@@ -69,36 +169,36 @@
   overflow: hidden;
   pointer-events: none;
 }
-.hero__wave {
+.rh-page .rh-hero__wave {
   position: absolute;
   bottom: -1px;
   left: 0;
   width: 200%;
-  animation: drift linear infinite;
+  animation: rh-drift linear infinite;
 }
-.hero__wave--back {
+.rh-page .rh-hero__wave--back {
   height: 100%;
   animation-duration: 19s;
   opacity: 0.55;
 }
-.hero__wave--mid {
+.rh-page .rh-hero__wave--mid {
   height: 78%;
   animation-duration: 13s;
   animation-direction: reverse;
   opacity: 0.85;
 }
-.hero__wave--front {
+.rh-page .rh-hero__wave--front {
   height: 56%;
   animation-duration: 9s;
 }
-@keyframes drift {
+@keyframes rh-drift {
   to {
     transform: translateX(-25%);
   }
 }
 
 /* Reflejo del logo en el agua, ondulado con un filtro SVG */
-.hero__reflection {
+.rh-page .rh-hero__reflection {
   width: clamp(13rem, 40vw, 26rem);
   margin-top: 4px;
   opacity: 0.3;
@@ -108,11 +208,11 @@
   mask-image: linear-gradient(to top, #000 0%, transparent 85%);
   pointer-events: none;
 }
-.hero__reflection img {
+.rh-page .rh-hero__reflection img {
   width: 100%;
-  animation: bob-mirror 5s ease-in-out infinite;
+  animation: rh-bob-mirror 5s ease-in-out infinite;
 }
-@keyframes bob-mirror {
+@keyframes rh-bob-mirror {
   0%,
   100% {
     transform: translateY(0) rotate(0.4deg);
@@ -123,7 +223,7 @@
 }
 
 /* Eslogan: "flow" ondula, "grow" brota */
-.hero__slogan {
+.rh-page .rh-hero__slogan {
   margin-top: clamp(14px, 3.5vh, 36px);
   display: flex;
   flex-wrap: wrap;
@@ -136,28 +236,28 @@
   line-height: 1.3;
   color: var(--ink);
 }
-.hero__line {
+.rh-page .rh-hero__line {
   opacity: 0;
   transform: translateY(14px);
-  animation: rise-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s forwards;
+  animation: rh-rise-in 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s forwards;
 }
-.hero__line + .hero__line {
+.rh-page .rh-hero__line + .rh-hero__line {
   animation-delay: 0.4s;
 }
-@keyframes rise-in {
+@keyframes rh-rise-in {
   to {
     opacity: 1;
     transform: none;
   }
 }
 
-.word-flow {
+.rh-page .rh-word-flow {
   position: relative;
   display: inline-block;
   font-style: normal;
   color: #2b6caf;
 }
-.word-flow::after {
+.rh-page .rh-word-flow::after {
   content: "";
   position: absolute;
   left: -2px;
@@ -167,22 +267,22 @@
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='8' viewBox='0 0 20 8'%3E%3Cpath d='M0 4 Q5 0 10 4 T20 4' fill='none' stroke='%232b6caf' stroke-width='2'/%3E%3C/svg%3E")
     repeat-x;
   background-size: 20px 8px;
-  animation: flow-line 1.1s linear infinite;
+  animation: rh-flow-line 1.1s linear infinite;
 }
-@keyframes flow-line {
+@keyframes rh-flow-line {
   to {
     background-position-x: 20px;
   }
 }
 
-.word-grow {
+.rh-page .rh-word-grow {
   position: relative;
   display: inline-block;
   font-style: normal;
   color: #5d8f34;
 }
 
-.hero__choose {
+.rh-page .rh-hero__choose {
   margin-top: clamp(18px, 3vh, 28px);
   display: inline-flex;
   align-items: center;
@@ -199,15 +299,15 @@
   box-shadow: 0 14px 30px rgba(43, 108, 175, 0.22);
   cursor: pointer;
   opacity: 0;
-  animation: rise-in 0.9s ease 0.7s forwards;
+  animation: rh-rise-in 0.9s ease 0.7s forwards;
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
 }
-.hero__choose strong {
+.rh-page .rh-hero__choose strong {
   font-weight: 700;
 }
-.hero__choose .arrow {
+.rh-page .rh-hero__choose .rh-arrow {
   display: grid;
   place-items: center;
   width: 30px;
@@ -216,15 +316,15 @@
   background: rgba(255, 255, 255, 0.28);
   transition: transform 0.2s ease;
 }
-.hero__choose:hover {
+.rh-page .rh-hero__choose:hover {
   transform: translateY(-2px);
   box-shadow: 0 18px 36px rgba(43, 108, 175, 0.28);
 }
-.hero__choose:hover .arrow {
+.rh-page .rh-hero__choose:hover .rh-arrow {
   transform: translateX(3px);
 }
 
-.hero__dive {
+.rh-page .rh-hero__dive {
   position: absolute !important;
   bottom: 30px;
   left: 50%;
@@ -242,12 +342,12 @@
   border: 0;
   cursor: pointer;
 }
-.hero__dive svg {
+.rh-page .rh-hero__dive svg {
   width: 12px;
   height: 16px;
-  animation: sink 1.8s ease-in-out infinite;
+  animation: rh-sink 1.8s ease-in-out infinite;
 }
-@keyframes sink {
+@keyframes rh-sink {
   0% {
     transform: translateY(0);
     opacity: 1;
@@ -259,7 +359,7 @@
 }
 
 /* Ondas que deja el cursor sobre el agua */
-.ripple {
+.rh-page .rh-ripple {
   position: absolute;
   width: 46px;
   height: 14px;
@@ -268,13 +368,13 @@
   border: 1.5px solid rgba(255, 255, 255, 0.95);
   pointer-events: none;
   z-index: 0;
-  animation: ripple 1.5s ease-out forwards;
+  animation: rh-ripple 1.5s ease-out forwards;
 }
-.ripple--big {
+.rh-page .rh-ripple--big {
   border-width: 2px;
   animation-duration: 2s;
 }
-@keyframes ripple {
+@keyframes rh-ripple {
   from {
     transform: scale(0.2);
     opacity: 0.9;
@@ -284,10 +384,10 @@
     opacity: 0;
   }
 }
-.ripple--big {
-  animation-name: ripple-big;
+.rh-page .rh-ripple--big {
+  animation-name: rh-ripple-big;
 }
-@keyframes ripple-big {
+@keyframes rh-ripple-big {
   from {
     transform: scale(0.2);
     opacity: 1;
@@ -299,9 +399,9 @@
 }
 
 /* 4. THE PROBLEM — descenso al agua eutrofizada --------------------------
-   Un único contenedor alto con gradiente vertical continuo: el agua se
-   oscurece a medida que bajas y avanza la eutrofización. */
-.problem {
+       Un único contenedor alto con gradiente vertical continuo: el agua se
+       oscurece a medida que bajas y avanza la eutrofización. */
+.rh-page .rh-problem {
   position: relative;
   min-height: var(--problem-height);
   background: linear-gradient(
@@ -316,8 +416,8 @@
   padding-bottom: 12vh;
 }
 /* Turbidez: una capa verde-oscura cuya opacidad sube con el scroll (JS fija
-   --murk entre 0 y 1). Refuerza la sensación de agua que se enturbia. */
-.problem__murk {
+       --murk entre 0 y 1). Refuerza la sensación de agua que se enturbia. */
+.rh-page .rh-problem__murk {
   position: absolute;
   inset: 0;
   pointer-events: none;
@@ -333,7 +433,7 @@
     radial-gradient(80% 30% at 50% 88%, rgba(24, 30, 16, 0.85), transparent 75%);
   transition: opacity 0.2s linear;
 }
-.problem__header {
+.rh-page .rh-problem__header {
   position: relative;
   z-index: 2;
   padding: 10vh 24px 4vh;
@@ -341,21 +441,21 @@
   max-width: 620px;
   margin: 0 auto;
 }
-.problem__eyebrow {
+.rh-page .rh-problem__eyebrow {
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: rgba(27, 35, 64, 0.65);
 }
-.problem__title {
+.rh-page .rh-problem__title {
   margin-top: 10px;
   font-size: clamp(2.2rem, 5vw, 3.4rem);
   color: var(--ink);
 }
 
 /* Eje científico: sigue el descenso con lecturas y se va "llenando" */
-.gauge {
+.rh-page .rh-gauge {
   position: absolute;
   left: 8%;
   top: 26vh;
@@ -368,7 +468,7 @@
   );
   z-index: 3;
 }
-.gauge__fill {
+.rh-page .rh-gauge__fill {
   position: absolute;
   left: -2px;
   top: 0;
@@ -383,8 +483,8 @@
   );
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.35);
 }
-.gauge::before,
-.gauge::after {
+.rh-page .rh-gauge::before,
+.rh-page .rh-gauge::after {
   content: "";
   position: absolute;
   left: 50%;
@@ -395,13 +495,13 @@
   background: var(--paper);
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.35);
 }
-.gauge::before {
+.rh-page .rh-gauge::before {
   top: -4px;
 }
-.gauge::after {
+.rh-page .rh-gauge::after {
   bottom: -4px;
 }
-.gauge__mark {
+.rh-page .rh-gauge__mark {
   position: absolute;
   left: 0;
   transform: translate(-10px, -50%);
@@ -409,7 +509,7 @@
   align-items: center;
   gap: 12px;
 }
-.gauge__dot {
+.rh-page .rh-gauge__dot {
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -420,7 +520,7 @@
     0 4px 12px rgba(0, 0, 0, 0.2);
 }
 /* Lecturas del eje: píldoras grandes y legibles sobre agua clara u oscura */
-.gauge__reading {
+.rh-page .rh-gauge__reading {
   padding: 7px 14px;
   border-radius: 999px;
   font-family: var(--font-display);
@@ -435,31 +535,31 @@
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
 }
-.gauge__reading--dark {
+.rh-page .rh-gauge__reading--dark {
   color: var(--ink);
   background: rgba(255, 255, 255, 0.82);
   border-color: rgba(255, 255, 255, 0.9);
 }
 
 /* Pasos narrativos */
-.beats {
+.rh-page .rh-beats {
   position: relative;
   z-index: 2;
 }
-.beat-row {
+.rh-page .rh-beat-row {
   min-height: var(--beat-row-height);
   display: flex;
   align-items: center;
 }
-.beat-row--01 {
+.rh-page .rh-beat-row--01 {
   align-items: flex-start;
   padding-top: 7vh;
 }
-.beat-row--04 {
+.rh-page .rh-beat-row--04 {
   align-items: flex-end;
 }
 
-.beat {
+.rh-page .rh-beat {
   position: relative;
   max-width: 550px;
   padding: 0 6vw;
@@ -469,29 +569,29 @@
     opacity 0.9s ease,
     transform 0.9s ease;
 }
-.beat.is-visible {
+.rh-page .rh-beat.rh-is-visible {
   opacity: 1;
   transform: none;
 }
-.beat--left {
+.rh-page .rh-beat--left {
   margin-left: 12vw;
   margin-right: auto;
 }
-.beat--right {
+.rh-page .rh-beat--right {
   margin-left: auto;
   margin-right: 8vw;
 }
-.beat--collapse {
+.rh-page .rh-beat--collapse {
   max-width: 660px;
   margin-inline: auto;
   text-align: center;
   padding: 0 24px;
 }
-.beat--collapse .beat__body {
+.rh-page .rh-beat--collapse .rh-beat__body {
   margin-inline: auto;
 }
 
-.beat__step {
+.rh-page .rh-beat__step {
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -499,14 +599,14 @@
   margin-bottom: 10px;
   color: rgba(255, 255, 255, 0.78);
 }
-.beat__text {
+.rh-page .rh-beat__text {
   font-family: var(--font-display);
   font-size: clamp(1.4rem, 3.4vw, 2rem);
   font-weight: 600;
   color: var(--paper);
   line-height: 1.25;
 }
-.beat__body {
+.rh-page .rh-beat__body {
   margin-top: 1.4rem;
   max-width: 34rem;
   font-size: clamp(0.95rem, 1.4vw, 1.08rem);
@@ -514,23 +614,23 @@
   color: rgba(255, 255, 255, 0.84);
 }
 /* Paso 1 sobre agua aún clara: texto en tinta */
-.beat--dark .beat__step {
+.rh-page .rh-beat--dark .rh-beat__step {
   color: rgba(27, 35, 64, 0.65);
 }
-.beat--dark .beat__text {
+.rh-page .rh-beat--dark .rh-beat__text {
   color: var(--ink);
 }
-.beat--dark .beat__body {
+.rh-page .rh-beat--dark .rh-beat__body {
   color: rgba(27, 35, 64, 0.78);
 }
 
 /* Elementos flotantes decorativos */
-.decor {
+.rh-page .rh-decor {
   position: absolute;
   pointer-events: none;
   z-index: 0;
 }
-.bubble {
+.rh-page .rh-bubble {
   border-radius: 50%;
   background: radial-gradient(
     circle at 30% 30%,
@@ -539,7 +639,7 @@
   );
   filter: blur(0.2px);
 }
-.molecule-wrap {
+.rh-page .rh-molecule-wrap {
   right: 8%;
   top: 55vh;
   width: clamp(190px, 16vw, 300px);
@@ -548,17 +648,17 @@
   align-items: center;
   justify-content: center;
 }
-.phosphate-img {
+.rh-page .rh-phosphate-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-.algae-wrap {
+.rh-page .rh-algae-wrap {
   left: 14%;
   top: 38%;
   width: clamp(450px, 27vw, 500px);
 }
-.algae-blob {
+.rh-page .rh-algae-blob {
   border-radius: 42% 58% 65% 35% / 45% 40% 60% 55%;
   background:
     radial-gradient(
@@ -569,198 +669,185 @@
     var(--algae);
   opacity: 0.55;
 }
-.microbe {
+.rh-page .rh-microbe {
   border-radius: 50%;
   background: var(--microbe);
   opacity: 0.7;
 }
 
 /* Parallax (JS fija --px/--py) */
-.parallax-decor {
+.rh-page .rh-parallax-decor {
   --px: 0px;
   --py: 0px;
   transform: translate3d(var(--px), var(--py), 0);
 }
-.algae-wrap.parallax-decor {
+.rh-page .rh-algae-wrap.rh-parallax-decor {
   transform: translate3d(var(--px), var(--py), 0) rotate(-13deg);
 }
 @media (prefers-reduced-motion: reduce) {
-  .parallax-decor {
+  .rh-page .rh-parallax-decor {
     transform: none !important;
   }
-  .algae-wrap.parallax-decor {
+  .rh-page .rh-algae-wrap.rh-parallax-decor {
     transform: rotate(-13deg) !important;
   }
-  .beat {
+  .rh-page .rh-beat {
     opacity: 1;
     transform: none;
   }
 }
 
 /* 4b. ESCENAS ILUSTRADAS — cada paso tiene una escena que avanza con el
-   scroll (JS fija --p entre 0 y 1 y actualiza cada elemento) */
-.beats {
+       scroll (JS fija --p entre 0 y 1 y actualiza cada elemento) */
+.rh-page .rh-beats {
   max-width: 1180px;
   margin: 0 auto;
   padding: 0 5vw 0 calc(8% + 48px);
 }
-.beat-row {
+.rh-page .rh-beat-row {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   align-items: center;
   gap: clamp(28px, 5vw, 80px);
 }
-.beat-row--01 {
+.rh-page .rh-beat-row--01 {
   align-items: center;
   padding-top: 4vh;
 }
-.beat-row--flip .beat {
+.rh-page .rh-beat-row--flip .rh-beat {
   order: 2;
 }
-.beats .beat,
-.beats .beat--left,
-.beats .beat--right {
+.rh-page .rh-beats .rh-beat,
+.rh-page .rh-beats .rh-beat--left,
+.rh-page .rh-beats .rh-beat--right {
   margin: 0;
   max-width: 520px;
   padding: 0;
 }
-.beat-row--04 {
+.rh-page .rh-beat-row--04 {
   grid-template-columns: minmax(0, 1fr);
   justify-items: center;
   align-content: end;
   gap: 36px;
 }
-.beats .beat--collapse {
+.rh-page .rh-beats .rh-beat--collapse {
   max-width: 660px;
 }
-.beat-row--04 .scene {
-  width: min(900px, 100%);
+.rh-page .rh-beat-row--04 .rh-scene {
+  width: min(880px, 100%);
+  aspect-ratio: 640 / 240;
 }
 
-.scene {
-  --scene-ink: var(--ink);
-  --scene-ink-soft: rgba(27, 35, 64, 0.72);
-  --scene-alert: #9a4526;
+.rh-page .rh-scene {
   position: relative;
   width: 100%;
   margin: 0;
+  aspect-ratio: 400 / 260;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 28px 60px rgba(14, 26, 10, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
   opacity: 0;
-  transform: translateY(24px);
+  transform: perspective(1000px) translateY(40px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
   transition:
-    opacity 1.1s ease,
-    transform 1.1s cubic-bezier(0.2, 0.7, 0.2, 1);
+    opacity 0.9s ease,
+    transform 0.5s ease;
 }
-.scene.is-visible {
+.rh-page .rh-scene.rh-is-visible {
   opacity: 1;
-  transform: none;
+  transform: perspective(1000px) rotateX(var(--tilt-x, 0deg))
+    rotateY(var(--tilt-y, 0deg));
 }
-#scene-3,
-#scene-4 {
-  --scene-ink: #ffffff;
-  --scene-ink-soft: rgba(255, 255, 255, 0.82);
-  --scene-alert: #f2c09d;
-}
-/* Lámina ilustrada: bordes difuminados en forma orgánica, sin marco ni sombra,
-   con textura de papel y lavado acuarelado (imágenes rasterizadas una vez). */
-.scene__art {
-  position: relative;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='b' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='2.6'/%3E%3C/filter%3E%3Cpath filter='url(%23b)' d='M6,15 C12,4 33,3 52,4 C72,5 91,5 95,20 C98,38 97,63 95,80 C92,95 71,97 50,96 C30,95 9,96 5,79 C3,60 2,31 6,15 Z'/%3E%3C/svg%3E")
-    center / 100% 100% no-repeat;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cfilter id='b' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='2.6'/%3E%3C/filter%3E%3Cpath filter='url(%23b)' d='M6,15 C12,4 33,3 52,4 C72,5 91,5 95,20 C98,38 97,63 95,80 C92,95 71,97 50,96 C30,95 9,96 5,79 C3,60 2,31 6,15 Z'/%3E%3C/svg%3E")
-    center / 100% 100% no-repeat;
-}
-.scene__art::before,
-.scene__art::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.scene__art::before {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='260' preserveAspectRatio='none'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.011 0.018' numOctaves='3' seed='5'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 0.96 0 0 0 1.6 -0.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E")
-    center / 100% 100%;
-  opacity: 0.18;
-}
-.scene__art::after {
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.22 0 0 0 0 0.14 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.5;
-  mix-blend-mode: multiply;
-}
-.scene__art > svg {
+.rh-page .rh-scene > svg {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 
-/* Pie de figura: lectura discreta, como en una lámina científica */
-.scene__hud {
+.rh-page .rh-scene__hud {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 12px;
-  padding: 4px 9% 0;
+  gap: 8px;
   pointer-events: none;
 }
-.scene__meter {
+.rh-page .rh-scene__meter {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  font-size: 0.74rem;
-  letter-spacing: 0.03em;
-  color: var(--scene-ink-soft);
+  gap: 1px;
+  padding: 8px 12px 9px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
 }
-.scene__meter strong {
+.rh-page .rh-scene__meter strong {
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: var(--scene-ink);
+  font-size: 1.05rem;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
-  transition: color 0.4s ease;
+  transition: color 0.3s ease;
 }
-.scene__meter strong.is-alert {
-  color: var(--scene-alert);
+.rh-page .rh-scene__meter strong.rh-is-alert {
+  color: var(--phosphate);
 }
-.scene__bar {
+.rh-page .rh-scene__bar {
   display: block;
-  width: 150px;
-  height: 3px;
-  margin-top: 6px;
-  border-radius: 3px;
+  width: 130px;
+  height: 4px;
+  margin-top: 5px;
+  border-radius: 4px;
   overflow: hidden;
-  background: color-mix(in srgb, var(--scene-ink) 16%, transparent);
+  background: rgba(27, 35, 64, 0.1);
 }
-.scene__bar i {
+.rh-page .rh-scene__bar i {
   display: block;
   height: 100%;
   width: calc(var(--fill, 0) * 100%);
   background: var(--bar, var(--phosphate));
-  border-radius: 3px;
+  border-radius: 4px;
 }
-.scene__note {
-  font-size: 0.7rem;
-  font-style: italic;
-  color: var(--scene-ink-soft);
+.rh-page .rh-scene__note {
+  padding: 4px 9px;
+  border-radius: 999px;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 /* Animaciones internas de las escenas */
-.vis {
+.rh-page .rh-vis {
   transition: opacity 0.6s ease;
 }
-.s1-stream {
-  animation: dash 0.7s linear infinite;
+.rh-page .rh-s1-stream {
+  animation: rh-dash 0.7s linear infinite;
 }
-@keyframes dash {
+@keyframes rh-dash {
   to {
     stroke-dashoffset: -20;
   }
 }
-.smoke {
+.rh-page .rh-smoke {
   opacity: 0;
   transform-box: fill-box;
   transform-origin: center;
-  animation: smoke 4.5s ease-out infinite;
+  animation: rh-smoke 4.5s ease-out infinite;
 }
-@keyframes smoke {
+@keyframes rh-smoke {
   0% {
     transform: translate(0, 0) scale(0.6);
     opacity: 0;
@@ -773,20 +860,20 @@
     opacity: 0;
   }
 }
-.p-pos {
+.rh-page .rh-p-pos {
   transition:
     transform 1.1s cubic-bezier(0.2, 0.7, 0.2, 1),
     opacity 0.6s ease;
 }
-.p-drift {
-  animation: p-drift 5s ease-in-out infinite alternate;
+.rh-page .rh-p-drift {
+  animation: rh-p-drift 5s ease-in-out infinite alternate;
 }
-@keyframes p-drift {
+@keyframes rh-p-drift {
   to {
     transform: translate(6px, -5px);
   }
 }
-.s1-plume {
+.rh-page .rh-s1-plume {
   transform-box: fill-box;
   transform-origin: 30% 20%;
   transition:
@@ -794,20 +881,20 @@
     opacity 0.6s ease;
 }
 
-.s2-blob {
+.rh-page .rh-s2-blob {
   transform-box: fill-box;
   transform-origin: center;
   transition: transform 0.5s ease;
 }
-.s2-fil {
+.rh-page .rh-s2-fil {
   transition: stroke-dashoffset 0.5s ease;
 }
-.s2-sway {
+.rh-page .rh-s2-sway {
   transform-box: fill-box;
   transform-origin: 50% 0%;
-  animation: sway 4s ease-in-out infinite alternate;
+  animation: rh-sway 4s ease-in-out infinite alternate;
 }
-@keyframes sway {
+@keyframes rh-sway {
   from {
     transform: rotate(-3deg);
   }
@@ -815,15 +902,15 @@
     transform: rotate(3deg);
   }
 }
-.s2-rays,
-.s2-sun {
+.rh-page .rh-s2-rays,
+.rh-page .rh-s2-sun {
   transition: opacity 0.5s ease;
 }
 
-.bub {
-  animation: rise 4s ease-in infinite;
+.rh-page .rh-bub {
+  animation: rh-rise 4s ease-in infinite;
 }
-@keyframes rise {
+@keyframes rh-rise {
   0% {
     transform: translateY(0);
     opacity: 0;
@@ -836,12 +923,12 @@
     opacity: 0;
   }
 }
-.flake {
+.rh-page .rh-flake {
   transform-box: fill-box;
   transform-origin: center;
-  animation: flake 6s linear infinite;
+  animation: rh-flake 6s linear infinite;
 }
-@keyframes flake {
+@keyframes rh-flake {
   0% {
     transform: translate(0, 0) rotate(0);
     opacity: 0;
@@ -854,12 +941,12 @@
     opacity: 0;
   }
 }
-.bact {
+.rh-page .rh-bact {
   transform-box: fill-box;
   transform-origin: center;
-  animation: wiggle 1.6s ease-in-out infinite alternate;
+  animation: rh-wiggle 1.6s ease-in-out infinite alternate;
 }
-@keyframes wiggle {
+@keyframes rh-wiggle {
   from {
     transform: rotate(-14deg);
   }
@@ -867,38 +954,34 @@
     transform: rotate(14deg) translateX(3px);
   }
 }
-.weed-sway {
-  transform-box: fill-box;
-  transform-origin: 50% 100%;
-  animation: sway 5s ease-in-out infinite alternate;
-}
-.s2-tint {
-  transition: opacity 0.5s ease;
+.rh-page .rh-s3-needle {
+  transform-box: view-box;
+  transition: transform 0.4s ease;
 }
 
-.fish-float {
+.rh-page .rh-fish-float {
   transition: transform 2.6s cubic-bezier(0.3, 0.1, 0.3, 1);
 }
-.fish-flip {
+.rh-page .rh-fish-flip {
   transform-box: fill-box;
   transform-origin: center;
   transition: transform 1.2s ease;
 }
-.fish.is-dead .fish-flip {
+.rh-page .rh-fish.rh-is-dead .rh-fish-flip {
   transform: rotate(180deg);
 }
-.fish:not(.is-dead) {
+.rh-page .rh-fish:not(.rh-is-dead) {
   cursor: pointer;
 }
-.fish:not(.is-dead):hover .fish-flip {
+.rh-page .rh-fish:not(.rh-is-dead):hover .rh-fish-flip {
   transform: scale(1.18);
 }
-.fish-swim {
+.rh-page .rh-fish-swim {
   transform-box: fill-box;
   transform-origin: center;
-  animation: patrol var(--dur, 7s) linear infinite;
+  animation: rh-patrol var(--dur, 7s) linear infinite;
 }
-@keyframes patrol {
+@keyframes rh-patrol {
   0% {
     transform: translateX(-36px) scaleX(1);
   }
@@ -915,38 +998,38 @@
     transform: translateX(-36px) scaleX(1);
   }
 }
-.fish-tail {
+.rh-page .rh-fish-tail {
   transform-box: fill-box;
   transform-origin: 100% 50%;
-  animation: tail 0.35s ease-in-out infinite alternate;
+  animation: rh-tail 0.35s ease-in-out infinite alternate;
 }
-@keyframes tail {
+@keyframes rh-tail {
   to {
     transform: scaleY(0.55);
   }
 }
-.fish.is-dead .fish-swim,
-.fish.is-dead .fish-tail {
+.rh-page .rh-fish.rh-is-dead .rh-fish-swim,
+.rh-page .rh-fish.rh-is-dead .rh-fish-tail {
   animation-play-state: paused;
 }
-.fish-body {
+.rh-page .rh-fish-body {
   transition: fill 1.4s ease;
 }
-.fish.is-dead .fish-body {
-  fill: #9b9c88;
+.rh-page .rh-fish.rh-is-dead .rh-fish-body {
+  fill: #8d9387;
 }
-.fish-x {
+.rh-page .rh-fish-x {
   opacity: 0;
   transition: opacity 0.6s ease;
 }
-.fish.is-dead .fish-x {
+.rh-page .rh-fish.rh-is-dead .rh-fish-x {
   opacity: 1;
 }
-.fish.is-dead .fish-eye {
+.rh-page .rh-fish.rh-is-dead .rh-fish-eye {
   opacity: 0;
 }
 
-.beat__cta {
+.rh-page .rh-beat__cta {
   margin-top: 1.6rem;
   display: inline-flex;
   align-items: center;
@@ -966,77 +1049,449 @@
     background 0.2s ease,
     transform 0.2s ease;
 }
-.beat__cta:hover {
+.rh-page .rh-beat__cta:hover {
   background: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scene {
+  .rh-page .rh-scene {
     opacity: 1;
     transform: none;
   }
 }
 
+/* 5. OLA DE TRANSICIÓN -------------------------------------------------- */
+.rh-page .rh-wave-transition {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: -1px;
+  margin-bottom: -2px;
+  background: var(--eutrophic-deep);
+}
+
+/* 6. OUR SOLUTION + VÍDEO ----------------------------------------------- */
+.rh-page .rh-solution {
+  background: linear-gradient(
+    to bottom,
+    var(--paper) 0%,
+    var(--paper-soft) 100%
+  );
+  padding: 4vh 24px 10vh;
+  text-align: center;
+  position: relative;
+}
+.rh-page .rh-solution__title {
+  margin-top: 10px;
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  color: var(--ink);
+}
+.rh-page .rh-solution__lede {
+  max-width: 620px;
+  margin: 22px auto 0;
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+}
+
+.rh-page .rh-promotion-video {
+  padding: clamp(36px, 5vw, 56px) 0 0;
+}
+.rh-page .rh-promotion-video__layout {
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+}
+.rh-page .rh-promotion-video__frame {
+  overflow: hidden;
+  border: 1px solid rgba(27, 35, 64, 0.12);
+  border-radius: var(--radius-lg);
+  background: var(--ink);
+  box-shadow: 0 24px 60px rgba(27, 35, 64, 0.14);
+}
+.rh-page .rh-promotion-video__frame video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
+.rh-page .rh-promotion-video__languages {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.rh-page .rh-promotion-video__language {
+  width: 80px;
+  min-height: 64px;
+  padding: 10px 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper-soft);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  transition:
+    transform 0.2s ease,
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+.rh-page .rh-promotion-video__language:hover {
+  transform: translateX(3px);
+  border-color: rgba(27, 35, 64, 0.3);
+}
+.rh-page .rh-promotion-video__language.rh-is-active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.rh-page .rh-promotion-video__language-name {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+@media (max-width: 720px) {
+  .rh-page .rh-promotion-video__layout {
+    grid-template-columns: 1fr;
+  }
+  .rh-page .rh-promotion-video__languages {
+    order: -1;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .rh-page .rh-promotion-video__language {
+    width: auto;
+    min-width: 84px;
+    min-height: 52px;
+  }
+  .rh-page .rh-promotion-video__language:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Corriente limpia: agua ya tratada */
+.rh-page .rh-clean-stream {
+  max-width: 560px;
+  height: 10px;
+  margin: 44px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--eutrophic) 0%,
+    var(--algae) 30%,
+    var(--water-mid) 60%,
+    var(--water-light) 80%,
+    var(--water-clear) 100%
+  );
+  position: relative;
+}
+.rh-page .rh-clean-stream::after {
+  content: " → ";
+  position: absolute;
+  top: 16px;
+  right: 0;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+/* 7. EXPLORE rePhlow! — botones finales -------------------------------- */
+.rh-page .rh-explore {
+  background: var(--paper-soft);
+  padding: 8vh 24px 12vh;
+}
+.rh-page .rh-explore__title {
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  color: var(--ink);
+  margin-bottom: 6vh;
+}
+.rh-page .rh-explore__group {
+  margin-bottom: 6vh;
+}
+.rh-page .rh-explore__group:last-child {
+  margin-bottom: 0;
+}
+.rh-page .rh-explore__group-title {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--ink-soft);
+  margin-bottom: 2.4vh;
+}
+.rh-page .rh-card-grid {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+.rh-page .rh-card {
+  flex: 1 1 168px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 136px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 16px 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: left;
+  gap: 24px;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.rh-page .rh-card--feature {
+  flex: 2 1 348px;
+  border-color: transparent;
+}
+.rh-page .rh-explore__group--engagement .rh-card {
+  flex-basis: 120px;
+  min-width: 0;
+}
+.rh-page .rh-explore__group--engagement .rh-card--feature {
+  flex-basis: 240px;
+}
+.rh-page .rh-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(27, 35, 64, 0.16);
+  box-shadow: 0 12px 24px rgba(27, 35, 64, 0.08);
+}
+.rh-page .rh-card__icon,
+.rh-page .rh-card__title {
+  position: relative;
+  z-index: 1;
+}
+.rh-page .rh-card__icon {
+  color: var(--ink-soft);
+}
+.rh-page .rh-card__icon svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+.rh-page .rh-card--feature .rh-card__icon {
+  color: #fffaf1;
+}
+.rh-page .rh-card__title {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  max-width: 14ch;
+}
+.rh-page .rh-card--feature .rh-card__title {
+  font-size: 1.12rem;
+  color: #fffaf1;
+  max-width: 18ch;
+}
+
+.rh-page .rh-explore__group-row {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+.rh-page .rh-explore__group-row .rh-explore__group {
+  margin-bottom: 0;
+}
+.rh-page .rh-explore__group-row .rh-card {
+  width: 100%;
+}
+
+/* Fondo de moléculas de cada tarjeta (lo dibuja JS) */
+.rh-page .rh-tmf-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  z-index: 0;
+}
+.rh-page .rh-tmf-layer--light {
+  background:
+    radial-gradient(
+      120% 100% at 10% -10%,
+      rgba(206, 234, 255, 0.62),
+      rgba(255, 250, 241, 0) 62%
+    ),
+    radial-gradient(
+      90% 85% at 95% 100%,
+      rgba(156, 198, 111, 0.16),
+      rgba(255, 250, 241, 0) 68%
+    ),
+    #fffaf1;
+}
+.rh-page .rh-tmf-layer--primary {
+  background: linear-gradient(135deg, #86b1d1, #9dc76f);
+}
+
+/* 8. FOOTER -------------------------------------------------------------- */
+
+/* 9. RESPONSIVE ---------------------------------------------------------- */
+@media (max-width: 900px) {
+  .rh-page .rh-gauge {
+    left: 6%;
+  }
+  .rh-page .rh-gauge__reading {
+    font-size: 0.92rem;
+    padding: 6px 12px;
+  }
+  .rh-page .rh-molecule-wrap {
+    width: 130px;
+    height: 130px;
+    right: 4%;
+  }
+}
+@media (max-width: 640px) {
+  .rh-page {
+    --problem-height: 320vh;
+    --beat-row-height: 62vh;
+  }
+
+  .rh-page .rh-beat,
+  .rh-page .rh-beat--left,
+  .rh-page .rh-beat--right {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90vw;
+    padding: 0 20px 0 36px;
+  }
+  .rh-page .rh-beat--collapse {
+    padding: 0 20px;
+  }
+  .rh-page .rh-algae-wrap {
+    width: 260px;
+    left: auto;
+    right: -18%;
+    top: 44%;
+    opacity: 0.45;
+  }
+  .rh-page .rh-molecule-wrap {
+    width: 110px;
+    height: 110px;
+    right: 2%;
+    top: 46vh;
+    opacity: 0.8;
+  }
+}
+@media (max-width: 520px) {
+  .rh-page .rh-card {
+    flex-basis: 132px;
+    min-height: 112px;
+  }
+  .rh-page .rh-card--feature {
+    flex-basis: 100%;
+  }
+  .rh-page .rh-explore__group--engagement .rh-card {
+    flex-basis: 132px;
+  }
+  .rh-page .rh-explore__group--engagement .rh-card--feature {
+    flex-basis: 100%;
+  }
+  .rh-page .rh-explore__group-row {
+    grid-template-columns: 1fr;
+    gap: 6vh;
+  }
+}
+
+/* Desplegable en móvil/táctil: se pinta en <body> para que no lo recorte
+       la fila con scroll horizontal (mismo motivo que en la wiki). */
+
 /* Escenas en pantallas estrechas: texto arriba, ilustración debajo */
 @media (max-width: 760px) {
-  .beats {
+  .rh-page .rh-beats {
     padding: 0 18px 0 42px;
   }
-  .beat-row {
+  .rh-page .rh-beat-row {
     grid-template-columns: 1fr;
     gap: 22px;
   }
-  .beat-row--flip .beat {
+  .rh-page .rh-beat-row--flip .rh-beat {
     order: 0;
   }
-  .beats .beat,
-  .beats .beat--left,
-  .beats .beat--right,
-  .beats .beat--collapse {
+  .rh-page .rh-beats .rh-beat,
+  .rh-page .rh-beats .rh-beat--left,
+  .rh-page .rh-beats .rh-beat--right,
+  .rh-page .rh-beats .rh-beat--collapse {
     max-width: none;
     margin: 0;
     padding: 0;
   }
-  .scene__hud {
-    padding: 2px 5% 0;
+  /* El indicador pasa debajo del dibujo para no taparlo */
+  .rh-page .rh-scene,
+  .rh-page .rh-beat-row--04 .rh-scene {
+    aspect-ratio: auto;
   }
-  .scene__meter strong {
-    font-size: 1.05rem;
+  .rh-page .rh-scene > svg {
+    height: auto;
   }
-  .scene__bar {
+  .rh-page .rh-scene__hud {
+    position: static;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.16);
+  }
+  .rh-page .rh-scene__bar {
     width: 96px;
   }
-  .hero__sky {
+  .rh-page .rh-hero__sky {
     padding-top: 104px;
   }
 }
 
+/* Lecturas del eje grandes también en pantallas medianas y móviles */
 @media (min-width: 761px) and (max-width: 1240px) {
-  .beats {
+  .rh-page .rh-beats {
     padding-left: calc(6% + 200px);
   }
 }
 @media (max-width: 760px) {
-  .beats {
+  .rh-page .rh-beats {
     padding-left: 50px;
   }
-  .gauge__mark {
+  .rh-page .rh-gauge__mark {
     left: 1.5px;
     flex-direction: column;
     gap: 8px;
     transform: translate(-50%, -11px);
   }
-  .gauge__dot {
+  .rh-page .rh-gauge__dot {
     width: 18px;
     height: 18px;
     border-width: 2px;
   }
   /* en móvil la lectura se escribe en vertical a lo largo del eje */
-  .gauge__reading {
+  .rh-page .rh-gauge__reading {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     font-size: 0.88rem;
     padding: 12px 5px;
   }
+}
+
+/* The promotion video is embedded from iGEM Video Universe (wiki rules). */
+.rh-page .rh-promotion-video__frame iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  background: #000;
 }
