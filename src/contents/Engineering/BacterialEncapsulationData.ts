@@ -157,7 +157,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "Stable dripping was maintained across the full range of flow rates tested, up to 3200 μL/min, and no transition to jetting was observed. Increasing the flow rate raised the rate of bead production and produced a small increase in bead size, from an equivalent diameter of 3.50 mm at 400 μL/min to 3.71 mm at 3200 μL/min, most of it at the two ends of the range. Bead shape did not deteriorate as the flow rate increased; it was instead poorest at the lowest flow rate tested, where several beads detached elongated rather than spherical, with far greater variability in shape between individual beads than in any other condition. From 500 μL/min upwards, all conditions produced regular and reproducible beads.",
         ),
         p(
-          "Crosslinking time had little effect on bead shape. Bead size remained broadly constant for crosslinking times up to 60 min, while the longest crosslinking time tested (90 min) produced slightly smaller beads, consistent with contraction of the alginate network during prolonged exposure to calcium. Detailed measurements are reported on the [Results](/results) page.",
+          "Crosslinking time had little effect on bead shape. Bead size remained broadly constant for crosslinking times up to 60 min, while the longest crosslinking time tested (90 min) produced slightly smaller beads, consistent with contraction of the alginate network during prolonged exposure to calcium. Detailed measurements are reported on the [Results](/results#encapsulation) page.",
         ),
       ]),
       phase("Learn", [
@@ -245,7 +245,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "The beads stored in industrial wastewater did not break or dissolve during storage, but they became more fragile, took on the brown colour of the wastewater and underwent clear shrinkage during the first day, after which they remained approximately constant in size until the end of the week.",
         ),
         p(
-          "In contrast, the beads stored in PBS showed a pronounced loss of structural integrity. During the first day of storage they swelled markedly and became less regular in shape. Thereafter they progressively dissolved, and some broke in half during storage or handling. By 48 h, approximately half of the beads could no longer be measured, and by 72 h none remained sufficiently intact for analysis. Beyond the first day the measurements no longer described whole beads, since a bead that had broken was recorded as two smaller ones, so PBS is reported qualitatively rather than as a size series. Overall, PBS resulted in a clear failure of bead preservation compared with water and industrial wastewater. Measurements for the other two media are reported on the [Results](/results) page.",
+          "In contrast, the beads stored in PBS showed a pronounced loss of structural integrity. During the first day of storage they swelled markedly and became less regular in shape. Thereafter they progressively dissolved, and some broke in half during storage or handling. By 48 h, approximately half of the beads could no longer be measured, and by 72 h none remained sufficiently intact for analysis. Beyond the first day the measurements no longer described whole beads, since a bead that had broken was recorded as two smaller ones, so PBS is reported qualitatively rather than as a size series. Overall, PBS resulted in a clear failure of bead preservation compared with water and industrial wastewater. Measurements for the other two media are reported on the [Results](/results#encapsulation) page.",
         ),
       ]),
       phase("Learn", [
@@ -564,7 +564,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "The incorporation of magnetite into the alginate phase provided sufficient contrast to distinguish the shell from the liquid core.",
         ),
         p(
-          "However, substantial variability was observed in the measured shell thicknesses, both between different points of the same capsule and between capsules produced under the same conditions. This variability was greater than expected and did not reveal a clear or consistent difference between the two flow-rate ratios. Detailed measurements are reported on the [Results](/results) page.",
+          "However, substantial variability was observed in the measured shell thicknesses, both between different points of the same capsule and between capsules produced under the same conditions. This variability was greater than expected and did not reveal a clear or consistent difference between the two flow-rate ratios. Detailed measurements are reported on the [Results](/results#encapsulation) page.",
         ),
       ]),
       phase("Learn", [
@@ -622,7 +622,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "No capsule ruptured or leaked at any load, in either batch, so the comparison rested on progressive deformation rather than on failure.",
         ),
         p(
-          "The ratio separated cleanly: every 6:1 condition outperformed its 4:1 counterpart except in two cases where the difference was within the variability between capsules. The outer flow rate did not separate the conditions in the same way, and the stored batch performed better than the fresh one rather than worse. Detailed measurements and the full ranking are reported on the [Results](/results) page.",
+          "The ratio separated cleanly: every 6:1 condition outperformed its 4:1 counterpart except in two cases where the difference was within the variability between capsules. The outer flow rate did not separate the conditions in the same way, and the stored batch performed better than the fresh one rather than worse. Detailed measurements and the full ranking are reported on the [Results](/results#encapsulation) page.",
         ),
       ]),
       phase("Learn", [
@@ -679,7 +679,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "Protocols for PBS and the sodium-free buffer can be found in the [Experiments](/experiments) page.",
         ),
         p(
-          "As in the bead preservation study, 10 capsules were placed in a container with 8 mL of the corresponding medium. All samples were kept at room temperature and photographed at 0, 24, 48 and 72 h, following the same imaging schedule used for the bead preservation study so that the two architectures could be compared. Capsules in untreated wastewater were also imaged after one week; the pH series was not imaged beyond 72 h, because capsules at the lowest pH values had become too fragile to handle and the comparison between pH values would have been lost. Basified wastewater dissolved or broke the capsules even earlier, so they were imaged until it was no longer posible ([see Results](/results)).",
+          "As in the bead preservation study, 10 capsules were placed in a container with 8 mL of the corresponding medium. All samples were kept at room temperature and photographed at 0, 24, 48 and 72 h, following the same imaging schedule used for the bead preservation study so that the two architectures could be compared. Capsules in untreated wastewater were also imaged after one week; the pH series was not imaged beyond 72 h, because capsules at the lowest pH values had become too fragile to handle and the comparison between pH values would have been lost. Basified wastewater dissolved or broke the capsules even earlier, so they were imaged until it was no longer posible ([see Results](/results#encapsulation)).",
         ),
       ]),
       phase("Test", [
@@ -693,7 +693,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "The two phosphate buffers behaved identically to each other at every dilution. At 1×, ½× and ¼×, capsules in both PBS and the sodium-free buffer broke down so rapidly that they could no longer be imaged after the first day. At ⅛×, capsules in both swelled during the first day and remained mostly intact over the three days monitored; those in PBS held that size, while those in the sodium-free buffer continued to swell.",
         ),
         p(
-          "All capsules stored in wastewater, whether untreated or basified, took on its brown colour within the first day. Those in untreated wastewater contracted and then remained constant, and although they did not break or dissolve during storage, they became noticeably more fragile than capsules stored in distilled water and some broke while being handled for imaging. The basified (pH 5) wastewaters were far more damaging. With NaOH and KOH, capsules lost their regular shape within the first day and progressively fragmented over the following days. With NH₄OH, they degraded most severely of all, losing their spherical shape entirely and disintegrating into a soft, paste-like mass. Detailed measurements are reported on the [Results](/results) page.",
+          "All capsules stored in wastewater, whether untreated or basified, took on its brown colour within the first day. Those in untreated wastewater contracted and then remained constant, and although they did not break or dissolve during storage, they became noticeably more fragile than capsules stored in distilled water and some broke while being handled for imaging. The basified (pH 5) wastewaters were far more damaging. With NaOH and KOH, capsules lost their regular shape within the first day and progressively fragmented over the following days. With NH₄OH, they degraded most severely of all, losing their spherical shape entirely and disintegrating into a soft, paste-like mass. Detailed measurements are reported on the [Results](/results#encapsulation) page.",
         ),
       ]),
       phase("Learn", [
@@ -766,7 +766,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "No magnetite was detected in the storage water on either Day 1 or Day 3, for either configuration: the absorbance of the magnetite-containing samples was equal to or marginally below that of the control. The calcium chloride bath collected after synthesis showed only a very small positive difference, identical for both configurations and close to the noise level of the measurement.",
         ),
         p(
-          "After dissolution in PBS, capsules containing magnetite in the alginate phase produced a clear absorbance increase across the whole visible range. Capsules containing magnetite in the core produced no detectable signal. The diluted magnetite reference suspension could not be distinguished from the blank. Detailed measurements are reported on the [Results](/results) page.",
+          "After dissolution in PBS, capsules containing magnetite in the alginate phase produced a clear absorbance increase across the whole visible range. Capsules containing magnetite in the core produced no detectable signal. The diluted magnetite reference suspension could not be distinguished from the blank. Detailed measurements are reported on the [Results](/results#encapsulation) page.",
         ),
       ]),
       phase("Learn", [

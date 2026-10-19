@@ -1,4 +1,11 @@
-import { useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { useLocation } from "react-router-dom";
 import {
   PageSectionNav,
   type PageSection,
@@ -116,6 +123,20 @@ function resultFolders(results: ResultData[]) {
 
 export function Results() {
   const [activeBlockId, setActiveBlockId] = useState(RESULT_BLOCKS[0].id);
+
+  /* A block has no route of its own -- it is client state -- so a link to
+     one (from Engineering, or anywhere else in the wiki) addresses it by
+     hash: /results#revalorisation. The same contract Engineering already
+     offers, and read the same way: reacting to location.hash rather than
+     reading it once covers a link followed while already on this page,
+     where the component never remounts. A hash that names no block (an
+     anchor inside the page, e.g. #activity) is left to the browser. */
+  const { hash } = useLocation();
+  useEffect(() => {
+    const id = hash.replace(/^#/, "");
+    if (!id || !RESULT_BLOCKS.some((block) => block.id === id)) return;
+    setActiveBlockId(id);
+  }, [hash]);
   const activeBlock =
     RESULT_BLOCKS.find((block) => block.id === activeBlockId) ??
     RESULT_BLOCKS[0];

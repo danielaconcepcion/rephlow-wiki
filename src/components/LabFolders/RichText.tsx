@@ -1,6 +1,8 @@
 import { Fragment, useContext } from "react";
 import type { ReactNode } from "react";
 
+import { Link } from "react-router-dom";
+
 import { CitationScope } from "./citationScope";
 import { asset } from "../../utils/asset";
 
@@ -89,15 +91,25 @@ function parse(text: string): ReactNode[] {
         ? rawHref
         : asset(rawHref);
       const downloadable = /\.(?:pdf|dna)$/i.test(rawHref);
+      /* A route of this wiki goes through the router. A bare <a href="/x">
+         leaves the site: the wiki is served under a base path, so the
+         browser asks the host for /x and lands outside the app, which is
+         neither the page meant nor a 404 the reader can read. */
       out.push(
         marked(
-          <a
-            className="lab-wikilink"
-            href={href}
-            download={downloadable || undefined}
-          >
-            <Rich text={label} />
-          </a>,
+          href.startsWith("/") ? (
+            <Link className="lab-wikilink" to={href}>
+              <Rich text={label} />
+            </Link>
+          ) : (
+            <a
+              className="lab-wikilink"
+              href={href}
+              download={downloadable || undefined}
+            >
+              <Rich text={label} />
+            </a>
+          ),
         ),
       );
     } else {

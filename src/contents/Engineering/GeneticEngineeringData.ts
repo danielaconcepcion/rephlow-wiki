@@ -184,7 +184,7 @@ export const CLONING_ITERATIONS: Iteration[] = [
       ]),
       phase("Test", [
         p(
-          "The first characterisation of the legacy stocks showed that **they were not equivalent starting materials** ([see Results](/results)):",
+          "The first characterisation of the legacy stocks showed that **they were not equivalent starting materials** ([see Results](/results#genetic-engineering)):",
         ),
         table(
           [
@@ -236,7 +236,7 @@ export const CLONING_ITERATIONS: Iteration[] = [
         p(
           "The **fresh miniprep round removed the uncertainty associated with long-term storage,** but the unexpectedly low post-purification yields showed the problem was not yet solved. Discovering that ethanol was missing from the wash buffers explained why apparently successful upstream reactions were yielding almost no recoverable DNA. Correcting the buffers restored the purification workflow, but the **first cloning attempts** then showed that **miniprep-derived DNA did not provide a comfortable margin for a workflow** involving preparative digestion, gel excision, purification, ligation and controls.",
         ),
-        p("The midipreps resolved this ([see results](/results)):"),
+        p("The midipreps resolved this ([see results](/results#genetic-engineering)):"),
         table(
           [
             "Plasmid preparation",
@@ -362,7 +362,7 @@ export const CLONING_ITERATIONS: Iteration[] = [
       ]),
       phase("Test", [
         p(
-          "We compared observed bands against fragment patterns predicted from the plasmid maps, asking not only whether DNA was present after digestion but whether the pattern was compatible with the intended cut and whether the product could be isolated clearly enough for preparative use **([See Results](/results))**",
+          "We compared observed bands against fragment patterns predicted from the plasmid maps, asking not only whether DNA was present after digestion but whether the pattern was compatible with the intended cut and whether the product could be isolated clearly enough for preparative use **([See Results](/results#genetic-engineering))**",
         ),
         p(
           "**pSEVA2513.** BamHI/HindIII digestion produced a major band compatible with the expected ~5.3 kb linear vector. The pSEVA2513 sample that accidentally received NcoI no longer produced this pattern; the unexpected result led us to identify the enzyme mix-up, discard the preparation and repeat the intended digestion.",
@@ -547,7 +547,7 @@ export const CLONING_ITERATIONS: Iteration[] = [
           "The first **low-quantity DNA ligation** produced no growth on **kanamycin**, but because DNA concentrations, restriction conditions and purification were all still unresolved at that stage, this failure could not be attributed specifically to **ligation efficiency**.",
         ),
         p(
-          "After the **Iteration 2–3 improvements**, colonies were recovered from the **sample ligation plates**, while the **vector-only control** produced only four very small colonies, showing the repeated sample assembly generated selectable transformants more efficiently than the no-insert control. This was a successful **assembly screen**, but not yet a successful **cloning result**: because **pSEVA2513** itself confers kanamycin resistance, and the original **pMK-RQ carrier backbone** was also kanamycin-resistant, antibiotic selection alone could not discriminate the intended recombinant from **background plasmids**, as the four control colonies demonstrated **([see results](/results))**.",
+          "After the **Iteration 2–3 improvements**, colonies were recovered from the **sample ligation plates**, while the **vector-only control** produced only four very small colonies, showing the repeated sample assembly generated selectable transformants more efficiently than the no-insert control. This was a successful **assembly screen**, but not yet a successful **cloning result**: because **pSEVA2513** itself confers kanamycin resistance, and the original **pMK-RQ carrier backbone** was also kanamycin-resistant, antibiotic selection alone could not discriminate the intended recombinant from **background plasmids**, as the four control colonies demonstrated **([see results](/results#genetic-engineering))**.",
         ),
         p(
           "The **PauI diagnostic test** showed that candidate plasmids did not produce the patterns expected for the intended ***ppk1*** or ***pstSCAB*** constructs and, importantly, did not correspond cleanly to the predicted **synthetic-carrier alternatives** either. This did not allow us to identify a single incorrect structure, but it did allow the key binary decision: the candidates did not satisfy our **molecular acceptance criterion** and could not be considered **verified constructs**. Several mechanisms remained compatible with the observed patterns, **residual uncut pSEVA2513**, **vector self-ligation**, **carrier-derived DNA carry-over**, incomplete or aberrant assembly, and the available evidence could not discriminate reliably between them, so no single mechanism was assigned as the proven cause.",
@@ -814,7 +814,7 @@ export const CLONING_ITERATIONS: Iteration[] = [
           ],
         ),
         p(
-          "The six candidate plasmids were digested for 2 h and analysed by 1% agarose electrophoresis. The resulting pattern identified colonies **11 and 15** as the strongest candidates for carrying the insert. ([See results](/results))",
+          "The six candidate plasmids were digested for 2 h and analysed by 1% agarose electrophoresis. The resulting pattern identified colonies **11 and 15** as the strongest candidates for carrying the insert. ([See results](/results#genetic-engineering))",
         ),
         p(
           "However, the **BamHI/HindIII pattern was considered supportive rather than definitive.** Because these were also the cloning enzymes, incomplete digestion or other plasmid conformations could complicate interpretation. We therefore introduced a second molecular test rather than treating the first compatible pattern as sufficient evidence.",
@@ -837,7 +837,7 @@ export const CLONING_ITERATIONS: Iteration[] = [
           "Despite damage to the agarose gel during image acquisition, both candidates showed a restriction pattern compatible with the expected recombinant architecture.",
         ),
         p(
-          "This represented the strongest molecular evidence obtained during the cycle. **The result supported the conclusion that candidates 11 and 15 contained a recombinant plasmid compatible with pSEVA2513·ppk1. ([See results](/results))**",
+          "This represented the strongest molecular evidence obtained during the cycle. **The result supported the conclusion that candidates 11 and 15 contained a recombinant plasmid compatible with pSEVA2513·ppk1. ([See results](/results#genetic-engineering))**",
         ),
       ]),
       phase("Learn", [
@@ -1000,7 +1000,7 @@ export const CRISPR_ITERATIONS: Iteration[] = [
       ]),
       phase("Test", [
         p(
-          "The first measurements showed substantial differences between preparations **([see results](/results)):**",
+          "The first measurements showed substantial differences between preparations **([see results](/results#genetic-engineering)):**",
         ),
         table(
           ["Preparation", "Concentration", "A260/A280", "A260/A230"],
@@ -1026,7 +1026,7 @@ export const CRISPR_ITERATIONS: Iteration[] = [
           ],
         ),
         p(
-          "pEX128 appeared substantially more **dilute** than either pMBEC2 preparation, but once we discovered the **ethanol error** in the miniprep workflow, this value could no longer be treated as a reliable characterisation of template recovery. The first **guide PCR** did not meet our predefined criterion: rather than three clear products assignable to the **~130–150 bp** guide modules, the gel showed predominantly **low-molecular-weight material** near the bottom, compatible with unincorporated primers, **primer-dimers**, short non-specific products, or degraded DNA; the gel alone could not distinguish between these **([see results](/results))**. Because the pEX128 template had been produced with an incorrectly prepared reagent, **this experiment could not be used to reject the guide design.**",
+          "pEX128 appeared substantially more **dilute** than either pMBEC2 preparation, but once we discovered the **ethanol error** in the miniprep workflow, this value could no longer be treated as a reliable characterisation of template recovery. The first **guide PCR** did not meet our predefined criterion: rather than three clear products assignable to the **~130–150 bp** guide modules, the gel showed predominantly **low-molecular-weight material** near the bottom, compatible with unincorporated primers, **primer-dimers**, short non-specific products, or degraded DNA; the gel alone could not distinguish between these **([see results](/results#genetic-engineering))**. Because the pEX128 template had been produced with an incorrectly prepared reagent, **this experiment could not be used to reject the guide design.**",
         ),
         p(
           "Purified products from this first PCR measured close to **0 ng/µL** for all three targets. Review of the clean-up procedure revealed the second error: the **ethanol-dependent purification reagent** had also been prepared incorrectly, so the near-zero readings could not discriminate between insufficient amplification and **DNA loss during purification**.",
@@ -1067,7 +1067,7 @@ export const CRISPR_ITERATIONS: Iteration[] = [
           "This represented a roughly **68- to 97-fold increase** for pEX128 and a **four- to five-fold increase** for pMBEC2, with consistently good **purity ratios** throughout, strong evidence that the incorrectly prepared miniprep reagent had been a major **technical limitation** in the first extraction, and that the initial PCR failure could not be used as evidence against the guide design until the **upstream workflow** had been corrected.",
         ),
         p(
-          "The repeated PCR, run with conditions matched to the **short amplicons**, produced strong, discrete bands for ***ppx***, ***ppkB*** and ***pitB*** at positions compatible with the expected **~130–150 bp products**; replicate reactions behaved similarly, and the **no-primer control** lacked a corresponding band. A **higher-molecular-weight band** was also observed in some reactions, plausibly residual **pEX128 template**, though this identity was not independently confirmed **([see results](/results))**.  The repeated experiment met the **building-block success criterion**: all three targets generated **reproducible candidate products** of the expected size, purified and taken forward to **Golden Gate assembly**, though this evidence remained limited to **fragment generation** and did not verify sequence, assembly order or editing function.",
+          "The repeated PCR, run with conditions matched to the **short amplicons**, produced strong, discrete bands for ***ppx***, ***ppkB*** and ***pitB*** at positions compatible with the expected **~130–150 bp products**; replicate reactions behaved similarly, and the **no-primer control** lacked a corresponding band. A **higher-molecular-weight band** was also observed in some reactions, plausibly residual **pEX128 template**, though this identity was not independently confirmed **([see results](/results#genetic-engineering))**.  The repeated experiment met the **building-block success criterion**: all three targets generated **reproducible candidate products** of the expected size, purified and taken forward to **Golden Gate assembly**, though this evidence remained limited to **fragment generation** and did not verify sequence, assembly order or editing function.",
         ),
       ]),
       phase("Learn", [
@@ -1178,7 +1178,7 @@ export const CRISPR_ITERATIONS: Iteration[] = [
           'The first **Golden Gate transformation did not behave according** to our expected screening logic: **no colonies were recovered from the sample plate**, and although colonies grew from the no-insert control, they did not display the clear green fluorescence expected of intact pMBEC2. This meant the experiment could not be interpreted as a simple "Golden Gate failed" result, the **absence of sample colonies could reflect inefficient assembly, poor transformation or another upstream variable**, while the unexpected control phenotype meant the plate could not independently show what a clearly fluorescent intact-pMBEC2 colony should look like under our imaging conditions.',
         ),
         p(
-          "We repeated the transformation with **unmodified pMBEC2 as a positive reference**. Colonies carrying intact pMBEC2 showed strong, clearly distinguishable **green fluorescence**, establishing that the competent cells could maintain the vector and that msfGFP fluorescence could be visualised clearly. Colonies were also recovered from the repeated Golden Gate transformation, but these lacked the strong fluorescence of the intact-vector control, a phenotype compatible with **replacement of the msfGFP cassette, though treated as a screening result rather than evidence of complete guide-array assembly**. Because the Golden Gate material could generate colonies in this repeat, the original empty sample plate could not be attributed uniquely to failed assembly chemistry **([see results](/results))**.",
+          "We repeated the transformation with **unmodified pMBEC2 as a positive reference**. Colonies carrying intact pMBEC2 showed strong, clearly distinguishable **green fluorescence**, establishing that the competent cells could maintain the vector and that msfGFP fluorescence could be visualised clearly. Colonies were also recovered from the repeated Golden Gate transformation, but these lacked the strong fluorescence of the intact-vector control, a phenotype compatible with **replacement of the msfGFP cassette, though treated as a screening result rather than evidence of complete guide-array assembly**. Because the Golden Gate material could generate colonies in this repeat, the original empty sample plate could not be attributed uniquely to failed assembly chemistry **([see results](/results#genetic-engineering))**.",
         ),
         p(
           "The **first colony PCR** using ***ppx*-Fwd** and ***pitB*-Rev** produced predominantly **low-molecular-weight material** rather than a discrete diagnostic product. Re-examining the construct explained why this could not be treated as a failed candidate plasmid: mapping both oligonucleotides against the full assembled ppx–ppkB–pitB sequence showed that each **primer had partial complementarity to several positions across the array**, not only to the single site at its intended end. These oligonucleotides had originally been designed as guide-building primers, not dedicated flanking primers for the complete assembled region, so their binding sites and orientations **did not guarantee the expected full-array amplicon**, the multiple internal binding sites offered an alternative explanation for the low-molecular-weight, non-diagnostic products observed. The material at the bottom of the gel could not be assigned definitively from electrophoresis alone (free primers, primer-dimers, short non-specific products from internal mispriming, or other short products are all compatible); what the gel established is that the **assay did not generate the predefined molecular readout required to verify the guide-array architecture.**",
