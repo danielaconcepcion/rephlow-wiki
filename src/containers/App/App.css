@@ -663,23 +663,28 @@ img {
   transition: transform 0.3s ease;
 }
 .card:hover .card__icon { transform: translateY(-3px) rotate(-1deg); }
+/* These sixteen icons are on iGEM Uploads, not in this repository: as
+   1536x1024 PNGs they were 9.5MB of the Pages artifact on their own,
+   which is most of what pushed it past the upload limit. Uploads
+   serves them re-encoded as AVIF, hence the extension (see
+   utils/asset.ts, which applies the same rule to every other image). */
 .card__icon svg { display: none; }
-.card__icon--project { background-image: url("../../assets/home-index/description.png"); }
-.card__icon--engineering { background-image: url("../../assets/home-index/engineering.png"); }
-.card__icon--model { background-image: url("../../assets/home-index/model.png"); }
-.card__icon--hardware { background-image: url("../../assets/home-index/hardware.png"); }
-.card__icon--experiments { background-image: url("../../assets/home-index/experiments.png"); }
-.card__icon--measurements { background-image: url("../../assets/home-index/measurements.png"); }
-.card__icon--results { background-image: url("../../assets/home-index/results.png"); }
-.card__icon--safety { background-image: url("../../assets/home-index/safety.png"); }
-.card__icon--hp { background-image: url("../../assets/home-index/human-practices.png"); }
-.card__icon--collab { background-image: url("../../assets/home-index/collaborations.png"); }
-.card__icon--education { background-image: url("../../assets/home-index/education.png"); }
-.card__icon--entrepreneurship { background-image: url("../../assets/home-index/entrepreneurship.png"); }
-.card__icon--sustain { background-image: url("../../assets/home-index/sustainability.png"); }
-.card__icon--contribution { background-image: url("../../assets/home-index/contribution.png"); }
-.card__icon--team { background-image: url("../../assets/home-index/team.png"); }
-.card__icon--medals { background-image: url("../../assets/home-index/medals.png"); }
+.card__icon--project { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/description.avif"); }
+.card__icon--engineering { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/engineering.avif"); }
+.card__icon--model { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/model.avif"); }
+.card__icon--hardware { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/hardware.avif"); }
+.card__icon--experiments { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/experiments.avif"); }
+.card__icon--measurements { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/measurements.avif"); }
+.card__icon--results { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/results.avif"); }
+.card__icon--safety { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/safety.avif"); }
+.card__icon--hp { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/human-practices.avif"); }
+.card__icon--collab { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/collaborations.avif"); }
+.card__icon--education { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/education.avif"); }
+.card__icon--entrepreneurship { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/entrepreneurship.avif"); }
+.card__icon--sustain { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/sustainability.avif"); }
+.card__icon--contribution { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/contribution.avif"); }
+.card__icon--team { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/team.avif"); }
+.card__icon--medals { background-image: url("https://static.igem.wiki/teams/6124/wiki/assets/home-index/medals.avif"); }
 
 .card__title {
   order: -1;
