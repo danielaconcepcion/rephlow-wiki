@@ -17,7 +17,8 @@ export { Safety } from "./Safety.tsx";
 // Engagement
 export { HumanPractices } from "./HumanPractices.tsx";
 export { CollaborationPartnership } from "./CollaborationPartnership.tsx";
-export { EducationCommunication } from "./EducationCommunication.tsx";
+// old page: export { EducationCommunication } from "./EducationCommunication.tsx";
+export { EducationBoard as EducationCommunication } from "./EducationBoard/EducationBoard.tsx";
 export { Entrepreneurship } from "./Entrepreneurship.tsx";
 export { Sustainability } from "./Sustainability.tsx";
 export { Contribution } from "./Contribution.tsx";

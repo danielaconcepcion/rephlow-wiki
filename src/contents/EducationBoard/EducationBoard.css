@@ -1,0 +1,451 @@
+/* Education & Communication: chalkboard timeline + activity dialogs.
+   Exported from the design HTML. The dialog styles are the Collaboration
+   ones (cp-*), scoped under .ec-dialog so both pages stay independent. */
+
+@keyframes ec-modal-in { 0% { opacity: 0; transform: translateY(10px) scale(0.98); } 100% { opacity: 1; transform: none; } }
+.ec-dialog .cp-modal__dialog { animation: ec-modal-in 0.25s ease; }
+.ec-dialog .cp-modal__body { -webkit-overflow-scrolling: touch; }
+.ec-dialog .ec-modal__photo img, .ec-dialog .cp-gallery__item img { cursor: zoom-in; }
+.ec-page .page-section-nav__link { cursor: pointer; }
+
+.ec-dialog.cp-modal { position: fixed; inset: 0px; z-index: 1100; display: flex; align-items: center; justify-content: center; padding: 24px 32px; font-family: var(--font-body); }
+.ec-dialog .cp-modal__backdrop { position: absolute; inset: 0px; background: rgba(10, 18, 22, 0.72); backdrop-filter: blur(3px); }
+.ec-dialog .cp-modal__dialog { position: relative; display: flex; flex-direction: column; width: min(880px, 100%); max-height: 88vh; background: var(--paper); border-radius: 14px; box-shadow: rgba(0, 0, 0, 0.5) 0px 30px 60px; }
+.ec-dialog .cp-modal__step { position: absolute; top: 50%; z-index: 10; width: 42px; height: 42px; border-radius: 50%; border: 0px; background: rgba(255, 255, 255, 0.94); color: var(--ink); font-size: 18px; cursor: pointer; box-shadow: rgba(0, 0, 0, 0.28) 0px 8px 20px; transform: translateY(-50%); transition: transform 0.15s; }
+.ec-dialog .cp-modal__step:hover { background: rgb(255, 255, 255); transform: translateY(-50%) scale(1.06); }
+.ec-dialog .cp-modal__step--prev { left: -20px; }
+.ec-dialog .cp-modal__step--next { right: -20px; }
+.ec-dialog .cp-modal__head { flex: 0 0 auto; position: relative; padding: 22px 60px 20px 28px; border-radius: 14px 14px 0px 0px; color: rgb(255, 255, 255); }
+.ec-dialog .cp-modal__title { margin: 0px; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.25rem, 2.4vw, 1.6rem); line-height: 1.2; color: rgb(255, 255, 255); }
+.ec-dialog .cp-modal__meta { display: flex; align-items: center; gap: 10px; margin: 6px 0px 0px; font-size: 0.82rem; color: rgba(255, 255, 255, 0.82); }
+.ec-dialog .cp-modal__counter { padding: 1px 9px; border-radius: 999px; background: rgba(255, 255, 255, 0.16); color: rgb(255, 255, 255); font-weight: 600; font-variant-numeric: tabular-nums; }
+.ec-dialog .cp-modal__close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0px; background: rgba(255, 255, 255, 0.12); color: rgb(255, 255, 255); font-size: 22px; line-height: 1; cursor: pointer; }
+.ec-dialog .cp-modal__close:hover { background: rgba(255, 255, 255, 0.24); }
+.ec-dialog .cp-modal__body { overflow-y: auto; padding: 28px clamp(20px, 4vw, 40px) 36px; color: var(--ink-soft); font-size: 1rem; line-height: 1.65; }
+.ec-dialog .cp-modal__body p { margin: 0px; }
+@media (max-width: 600px) {
+.ec-dialog.cp-modal { padding: 16px; }
+.ec-dialog .cp-modal__step { top: auto; bottom: -21px; transform: none; }
+.ec-dialog .cp-modal__step:hover { transform: scale(1.06); }
+.ec-dialog .cp-modal__step--prev { left: calc(50% - 50px); }
+.ec-dialog .cp-modal__step--next { right: calc(50% - 50px); }
+}
+.ec-dialog .cp-stack { display: flex; flex-direction: column; gap: 18px; }
+.ec-dialog .cp-kicker { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; color: rgb(110, 90, 150); }
+.ec-dialog .cp-lead { font-size: 1.05rem; color: var(--ink); text-wrap: pretty; }
+.ec-dialog .cp-carousel { display: flex; align-items: center; }
+.ec-dialog .cp-carousel__view { position: relative; flex: 1 1 auto; min-width: 0px; }
+.ec-dialog .cp-carousel__counter { position: absolute; right: 12px; bottom: 12px; padding: 3px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.85); border: 1px solid var(--line); backdrop-filter: blur(6px); box-shadow: var(--shadow-soft); font-size: 0.68rem; font-weight: 600; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.ec-dialog .cp-carousel__arrow { flex: 0 0 auto; z-index: 2; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; padding: 0px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(6px); box-shadow: var(--shadow-soft); color: var(--ink); cursor: pointer; transition: transform 0.15s, background-color 0.15s; }
+.ec-dialog .cp-carousel__arrow--prev { margin-right: -18px; }
+.ec-dialog .cp-carousel__arrow--next { margin-left: -18px; }
+.ec-dialog .cp-carousel__arrow:hover:not(:disabled) { background: var(--paper); transform: scale(1.06); }
+.ec-dialog .cp-carousel__arrow:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.ec-dialog .cp-carousel__arrow:disabled { opacity: 0.35; cursor: default; }
+.ec-dialog .cp-carousel__arrowhead { display: block; width: 9px; height: 14px; }
+@media (max-width: 600px) {
+.ec-dialog .cp-carousel__arrow { width: 32px; height: 32px; }
+.ec-dialog .cp-carousel__arrow--prev { margin-right: -12px; }
+.ec-dialog .cp-carousel__arrow--next { margin-left: -12px; }
+}
+.ec-dialog .cp-gallery { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.ec-dialog .cp-gallery::-webkit-scrollbar { display: none; }
+.ec-dialog .cp-gallery__item { flex: 0 0 auto; position: relative; margin: 0px; height: clamp(220px, 40vh, 380px); scroll-snap-align: start; border-radius: 12px; overflow: hidden; background: var(--paper-soft); }
+.ec-dialog .cp-gallery__item img { width: 100%; height: 100%; object-fit: cover; }
+@media (prefers-reduced-motion: reduce) {
+.ec-dialog .cp-modal__step { transition: none; }
+}
+
+.ec-page{font-family: var(--font-body); color: var(--ink);}
+.ec-col{display: flex; flex-direction: column; gap: 56px; box-sizing: border-box; width: 100%; min-width: 0px; max-width: 1120px; margin: 0px auto; padding: 6vh 20px 10vh;}
+.ec-intro{max-width: 790px; margin: 0px auto; font-size: 1.02rem; line-height: 1.72; text-align: justify; text-align-last: left; hyphens: auto;}
+.ec-intro strong{font-weight: 650;}
+.ec-board-scroll{margin: 0px -20px; padding: 0px 20px 8px; overflow: auto hidden; scrollbar-width: thin;}
+.ec-board{position: relative; container-type: inline-size; min-width: 920px; aspect-ratio: 1600 / 960;}
+.ec-object{position: absolute; z-index: 2; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--ink); transition: transform 0.25s, filter 0.25s;}
+.ec-object--paper{filter: drop-shadow(rgba(0, 0, 0, 0.5) 0px 9px 10px);}
+.ec-object:hover,.ec-object:focus-visible{z-index: 3; transform: translateY(-6px); filter: drop-shadow(rgba(255, 255, 255, 0.28) 0px 0px 8px);}
+.ec-object--paper:hover,.ec-object--paper:focus-visible{filter: drop-shadow(rgba(0, 0, 0, 0.55) 0px 20px 18px);}
+.ec-object:focus-visible{outline: none;}
+.ec-object:focus-visible .ec-object__tag{outline: 2px solid var(--ec-accent, #6e5a96); outline-offset: 3px;}
+.ec-art{container-type: inline-size; position: relative; display: block; width: 100%;}
+.ec-object__tag{display: inline-flex; align-items: center; gap: 0.7cqw 0.7cqw; margin-top: max(8px, 0.9cqw); padding: 0.45cqw 1.3cqw 0.45cqw 0.45cqw; border-radius: 999px; background: rgb(255, 255, 255); color: var(--ink); font: 600 max(9.5px,.92cqw) / 1.15 var(--font-body); white-space: nowrap; box-shadow: rgba(0, 0, 0, 0.25) 0px 3px 8px;}
+.ec-object__n{flex: 0 0 auto; display: flex; align-items: center; justify-content: center; width: max(18px, 1.9cqw); height: max(18px, 1.9cqw); border-radius: 50%; background: var(--ec-accent, #6e5a96); color: rgb(255, 255, 255); font: 600 max(9.5px,.85cqw) / 1 var(--font-display);}
+.ec-object__text{display: flex; flex-direction: column; gap: 0.1cqw 0.1cqw;}
+.ec-object__date{font-weight: 500; font-size: 0.86em; color: var(--ink-soft);}
+.ec-board--list{min-width: 0px; aspect-ratio: auto; border-radius: 8px; background: linear-gradient(160deg, rgb(47, 64, 56), rgb(34, 48, 41) 55%, rgb(43, 58, 51)); box-shadow: rgba(0, 0, 0, 0.45) 0px 0px 60px inset; padding: 22px 16px 26px; display: flex; flex-direction: column; gap: 14px;}
+.ec-board--list .ec-list-title{font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: rgba(244, 246, 238, 0.86); border-bottom: 1px solid rgba(244, 246, 238, 0.28); padding-bottom: 8px; margin: 0px 0px 4px;}
+.ec-list-item{display: grid; grid-template-columns: 26px 1fr; gap: 12px; align-items: baseline; border-left: 1px dashed rgba(240, 242, 232, 0.35); margin-left: 12px; padding: 9px 4px 9px 18px; text-decoration: none; color: rgba(244, 246, 238, 0.9);}
+.ec-list-item__index{display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid rgba(244, 246, 238, 0.5); border-radius: 50%; font: 700 .76rem/1 var(--font-display);}
+.ec-list-item__name{font: 700 .98rem/1.25 var(--font-display);}
+.ec-list-item__date{display: block; font-size: 0.78rem; opacity: 0.7;}
+.ec-board-frame{width: 100%;}
+.ec-hint{margin: -32px auto 0px; font-size: 0.9rem; color: var(--ink-soft); text-align: center;}
+.ec-modal__body p:not(.cp-kicker){text-align: justify; text-align-last: left; hyphens: auto;}
+.ec-entry__link{display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; font-weight: 600; color: var(--ec-accent, #6e5a96); text-decoration: none; border-bottom: 1px solid currentcolor;}
+.ec-modal__photo{align-self: center; max-width: 100%; margin: 4px 0px 0px; border-radius: 10px; overflow: hidden; background: var(--paper-soft); box-shadow: rgba(40, 15, 5, 0.14) 0px 6px 14px;}
+.ec-modal__photo img{display: block; width: 100%; height: 100%; object-fit: cover;}
+
+
+
+/* ==========================================================================
+   Pizarra en cuadricula  las mismas ilustraciones de la pizarra original,
+   pero a tamano grande; al pinchar se abre el desplegable (como en
+   Collaboration).
+   ========================================================================== */
+.ec-wall {
+  position: relative;
+  max-width: 1020px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 14px solid #7a5230;
+  padding: 26px clamp(20px, 4vw, 52px) 56px;
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.25), inset 0 0 80px rgba(0, 0, 0, 0.35), 0 24px 50px rgba(30, 20, 10, 0.25);
+  background:
+    radial-gradient(60% 45% at 18% 22%, rgba(255, 255, 255, 0.07), transparent 70%),
+    radial-gradient(50% 55% at 86% 78%, rgba(255, 255, 255, 0.05), transparent 70%),
+    radial-gradient(40% 30% at 55% 50%, rgba(255, 255, 255, 0.03), transparent 70%),
+    linear-gradient(160deg, #2f4136, #1f2c25);
+  color: rgba(244, 246, 238, 0.92);
+}
+.ec-wall::after {
+  /* repisa de la tiza */
+  content: "";
+  position: absolute;
+  left: 8%; right: 8%; bottom: 0;
+  height: 10px;
+  border-radius: 4px 4px 0 0;
+  background: #8a6038;
+  box-shadow: 0 -2px 0 rgba(0, 0, 0, 0.2);
+}
+.ec-wall__head { position: relative; z-index: 1; text-align: center; }
+.ec-wall__title {
+  display: inline-block;
+  margin: 0;
+  padding-bottom: 6px;
+  font-family: var(--font-chalk, "Kalam", "Segoe Print", cursive);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  color: #fff;
+  border-bottom: 2px dashed rgba(244, 246, 238, 0.45);
+}
+.ec-wall__sub {
+  position: relative;
+  z-index: 1;
+  margin: 10px 0 0;
+  font-family: var(--font-chalk, "Kalam", "Segoe Print", cursive);
+  font-size: 1.05rem;
+  opacity: 0.75;
+}
+
+.ec-wall__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 74px clamp(28px, 3.5vw, 52px);
+  align-items: end;
+  margin-top: 40px;
+  padding: 0 104px;
+  position: relative;
+}
+.ec-wall .ec-wall__item {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 46px;
+  left: auto; top: auto;
+  width: 100%;
+  justify-self: center;
+}
+.ec-wall .ec-art { width: calc(var(--art-w, 85%) * 0.82); }
+
+/* Etiqueta a tamano legible (en la pizarra original escalaba con el tablero) */
+.ec-wall .ec-object__tag {
+  gap: 10px;
+  margin-top: 18px;
+  padding: 6px 18px 6px 6px;
+  font: 600 0.92rem/1.2 var(--font-body);
+  white-space: normal;
+  text-align: left;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.ec-wall .ec-object__n {
+  width: 30px; height: 30px;
+  font: 700 0.88rem/1 var(--font-display);
+}
+.ec-wall .ec-object__text { gap: 2px; }
+.ec-wall .ec-object__date { font-size: 0.8rem; }
+.ec-wall .ec-object:hover .ec-object__tag,
+.ec-wall .ec-object:focus-visible .ec-object__tag {
+  background: var(--ec-accent, #6e5a96);
+  color: #fff;
+}
+.ec-wall .ec-object:hover .ec-object__date,
+.ec-wall .ec-object:focus-visible .ec-object__date { color: rgba(255, 255, 255, 0.8); }
+.ec-wall .ec-object:hover .ec-object__n,
+.ec-wall .ec-object:focus-visible .ec-object__n { background: #fff; color: var(--ec-accent, #6e5a96); }
+
+@media (max-width: 900px) {
+  .ec-wall__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .ec-wall { border-width: 10px; border-radius: 16px; padding: 22px 18px 44px; }
+  .ec-wall__grid { grid-template-columns: minmax(0, 1fr); gap: 44px; }
+  .ec-wall .ec-art { width: min(calc(var(--art-w, 85%) * 0.82), 220px); }
+}
+
+
+/* --- Linea del tiempo en tiza que recorre los objetos en zigzag --------- */
+.ec-chalk {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 0;
+}
+.ec-chalk__line {
+  fill: none;
+  stroke: rgba(244, 246, 238, 0.85);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: url(#ec-chalk-rough);
+}
+.ec-chalk__ghost {
+  fill: none;
+  stroke: rgba(244, 246, 238, 0.12);
+  stroke-width: 9;
+  stroke-linecap: round;
+}
+.ec-chalk__dot { fill: #f4d35e; stroke: #fff; stroke-width: 2; }
+.ec-chalk__label {
+  font-family: var(--font-chalk, "Kalam", "Segoe Print", cursive);
+  font-size: 17px;
+  fill: rgba(244, 246, 238, 0.85);
+}
+/* Animacion: la tiza se dibuja al llegar a la pizarra */
+.ec-wall .ec-chalk__line { transition: stroke-dashoffset 3.2s ease-in-out; }
+.ec-wall:not(.is-drawn) .ec-chalk__line { stroke-dashoffset: var(--len); }
+.ec-chalk__dot, .ec-chalk__label { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0.3); transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.ec-wall.is-drawn .ec-chalk__dot, .ec-wall.is-drawn .ec-chalk__label { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ec-wall .ec-chalk__line { transition: none; stroke-dashoffset: 0 !important; }
+  .ec-chalk__dot, .ec-chalk__label { opacity: 1; transform: none; transition: none; }
+}
+@media (max-width: 560px) {
+  .ec-wall__grid { padding: 0 0 0 30px; gap: 40px; }
+  .ec-wall .ec-wall__item { padding-bottom: 8px; }
+}
+
+/* --- Dibujos de tiza de relleno (como en la pizarra original) ----------- */
+.ec-decor { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.ec-doodle {
+  position: absolute;
+  color: rgba(244, 246, 238, 0.55);
+  font-family: var(--font-chalk, "Kalam", "Segoe Print", cursive);
+  line-height: 1.15;
+  filter: url(#ec-chalk-rough);
+}
+.ec-doodle svg { display: block; overflow: visible; }
+.ec-doodle--slot { opacity: 0; transition: opacity 0.6s ease 0.4s; }
+.ec-doodle--slot.is-placed { opacity: 1; }
+.ec-doodle--yellow { color: rgba(244, 211, 94, 0.7); }
+.ec-doodle--faint { color: rgba(244, 246, 238, 0.2); filter: url(#ec-chalk-rough) blur(0.6px); }
+.ec-doodle__txt { font-size: 15px; white-space: nowrap; }
+.ec-doodle__big { font-size: 19px; }
+.ec-smudge {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.07), transparent);
+  filter: blur(6px);
+}
+/* tizas y borrador sobre la repisa */
+.ec-ledge { position: absolute; bottom: 9px; right: 12%; display: flex; align-items: flex-end; gap: 10px; z-index: 2; }
+.ec-ledge__chalk { width: 34px; height: 7px; border-radius: 3px; background: #f4f2ea; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35); }
+.ec-ledge__chalk--y { width: 24px; background: #f4d35e; transform: rotate(-6deg); }
+.ec-ledge__eraser { width: 54px; height: 14px; border-radius: 3px; background: linear-gradient(#5b4632 0 55%, #d8d2c4 55%); box-shadow: 0 2px 3px rgba(0, 0, 0, 0.35); }
+
+@media (max-width: 900px) {
+  .ec-wall__grid { padding: 0 clamp(20px, 4vw, 40px); }
+  .ec-doodle--slot:not(.ec-doodle--faint) { display: none; }
+}
+@media (max-width: 560px) {
+  .ec-wall__grid { padding: 0 0 0 30px; }
+  .ec-doodle--head-r, .ec-doodle--head-l, .ec-doodle--faint { display: none; }
+}
+
+/* ==== Version divertida (paleta de la wiki) ============================== */
+.ec-doodle--blue { color: rgba(169, 205, 230, 0.8); }
+.ec-doodle--green { color: rgba(181, 217, 141, 0.8); }
+.ec-doodle--lilac { color: rgba(201, 186, 236, 0.8); }
+.ec-doodle--yellow { color: rgba(244, 211, 94, 0.75); }
+.ec-doodle--float svg { animation: ec-float 5s ease-in-out infinite alternate; }
+.ec-doodle--float:nth-child(odd) svg { animation-duration: 6.5s; animation-direction: alternate-reverse; }
+@keyframes ec-float { from { transform: translateY(-6px) rotate(-6deg); } to { transform: translateY(6px) rotate(8deg); } }
+.ec-doodle--spin svg { animation: ec-spin 18s linear infinite; }
+@keyframes ec-spin { to { transform: rotate(360deg); } }
+
+/* Titulo: subrayado ondulado de tiza amarilla y estrellitas */
+.ec-wall__title {
+  border-bottom: 0;
+  padding-bottom: 12px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10' viewBox='0 0 24 10'%3E%3Cpath d='M0 5 Q6 0 12 5 T24 5' fill='none' stroke='%23f4d35e' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x left bottom / 24px 10px;
+  position: relative;
+}
+.ec-wall__title::before, .ec-wall__title::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  font-size: 1.1rem;
+  color: #f4d35e;
+  animation: ec-twinkle 2.4s ease-in-out infinite;
+}
+.ec-wall__title::before { left: -30px; }
+.ec-wall__title::after { right: -30px; top: 18px; color: #a9cde6; animation-delay: 1.2s; }
+@keyframes ec-twinkle { 0%, 100% { opacity: 0.35; transform: scale(0.8) rotate(0); } 50% { opacity: 1; transform: scale(1.15) rotate(20deg); } }
+
+/* Chispas en los premios */
+.ec-sparkle {
+  position: absolute;
+  width: 7cqw; height: 7cqw;
+  min-width: 12px; min-height: 12px;
+  background: #fff4c2;
+  clip-path: polygon(50% 0, 61% 39%, 100% 50%, 61% 61%, 50% 100%, 39% 61%, 0 50%, 39% 39%);
+  animation: ec-twinkle 1.8s ease-in-out infinite;
+  pointer-events: none;
+}
+.ec-sparkle--2 { width: 5cqw; height: 5cqw; animation-delay: 0.9s; }
+
+/* Al pasar el raton: un meneo jugueton */
+.ec-wall .ec-object:hover .ec-art,
+.ec-wall .ec-object:focus-visible .ec-art { animation: ec-wiggle 0.55s ease; }
+@keyframes ec-wiggle { 0% { rotate: 0deg; } 25% { rotate: -4deg; } 50% { rotate: 3deg; } 75% { rotate: -1.5deg; } 100% { rotate: 0deg; } }
+
+/* Numeros de las etiquetas con los colores de las secciones de la wiki */
+.ec-wall__item:nth-child(4n + 1) .ec-object__n { background: #6E5A96; }
+.ec-wall__item:nth-child(4n + 2) .ec-object__n { background: #2b6caf; }
+.ec-wall__item:nth-child(4n + 3) .ec-object__n { background: #5d8f34; }
+.ec-wall__item:nth-child(4n + 4) .ec-object__n { background: #c9572f; }
+
+/* Puntos de la linea: blancos hasta que pasa la gotita */
+.ec-chalk__dot { fill: #e9ece0; stroke: #fff; transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1), fill 0.3s ease; }
+.ec-chalk__dot.is-lit { fill: #f4d35e; }
+.ec-wall__item.is-current .ec-object__tag { box-shadow: 0 0 0 4px rgba(244, 211, 94, 0.6), 0 3px 8px rgba(0, 0, 0, 0.25); }
+.ec-wall__item.is-current .ec-art { animation: ec-hop 0.6s ease; }
+@keyframes ec-hop { 0%, 100% { translate: 0 0; } 40% { translate: 0 -10px; } 70% { translate: 0 2px; } }
+
+/* La gotita */
+.ec-drop { opacity: 0; transition: opacity 0.5s ease; }
+.ec-wall.is-drawn.is-ready .ec-drop { opacity: 1; }
+.ec-drop__bob { animation: ec-bob 1.4s ease-in-out infinite alternate; }
+@keyframes ec-bob { from { transform: translateY(0) rotate(-4deg); } to { transform: translateY(-4px) rotate(4deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .ec-doodle--float svg, .ec-doodle--spin svg, .ec-sparkle, .ec-drop__bob,
+  .ec-wall__title::before, .ec-wall__title::after { animation: none; }
+  .ec-wall .ec-object:hover .ec-art, .ec-wall__item.is-current .ec-art { animation: none; }
+}
+@media (max-width: 900px) { .ec-doodle--float { display: none; } }
+
+/* ==== Iconos de tiza propios, mas grandes ================================ */
+.ec-wall .ec-art { width: 100% !important; }
+.ec-icon { display: block; width: 100%; height: auto; overflow: visible; }
+.ec-wall__grid { gap: 46px clamp(22px, 3vw, 40px) !important; padding: 0 96px !important; margin-top: 30px !important; }
+.ec-wall .ec-wall__item { padding-bottom: 42px; }
+.ec-wall .ec-object__tag { margin-top: 10px; }
+@media (max-width: 900px) { .ec-wall__grid { padding: 0 clamp(16px, 3vw, 32px) !important; } }
+@media (max-width: 560px) {
+  .ec-wall__grid { padding: 0 0 0 30px !important; gap: 36px !important; }
+  .ec-wall .ec-art { width: min(100%, 280px) !important; }
+}
+
+/* ==========================================================================
+   Pizarra apaisada (forma original): linea del tiempo horizontal ondulada,
+   actividades alternando arriba y abajo, iconos de tiza grandes.
+   ========================================================================== */
+.ec-wall--slate {
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1120px;
+  padding: 0 0 22px;
+  overflow: hidden;
+}
+.ec-slate-scroll { overflow-x: auto; overflow-y: hidden; scrollbar-width: thin; }
+.ec-slate {
+  position: relative;
+  container-type: inline-size;
+  min-width: 860px;
+  aspect-ratio: 1600 / 1000;
+}
+.ec-slate__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; z-index: 1; pointer-events: none; }
+.ec-slate__title {
+  position: absolute;
+  left: 0; right: 0; top: 2.4%;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-chalk, "Kalam", "Segoe Print", cursive);
+  font-weight: 700;
+  font-size: max(20px, 3.4cqw);
+  line-height: 1.2;
+  color: #fff;
+  z-index: 2;
+}
+.ec-slate__title span { padding-bottom: 0.25em; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='10' viewBox='0 0 24 10'%3E%3Cpath d='M0 5 Q6 0 12 5 T24 5' fill='none' stroke='%23f4d35e' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x left bottom / 24px 10px; }
+.ec-slate__sub {
+  position: absolute;
+  left: 0; right: 0; top: 9.4%;
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-chalk, "Kalam", "Segoe Print", cursive);
+  font-size: max(11px, 1.15cqw);
+  color: rgba(244, 246, 238, 0.6);
+  z-index: 2;
+}
+.ec-slate__decor { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.ec-slate__decor .ec-doodle { position: absolute; }
+.ec-slate__decor .ec-doodle svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ec-faint {
+  position: absolute;
+  margin: 0;
+  font-family: var(--font-chalk, "Kalam", "Segoe Print", cursive);
+  font-size: max(11px, 1.5cqw);
+  color: rgba(244, 246, 238, 0.18);
+  white-space: nowrap;
+  filter: blur(0.5px);
+  pointer-events: none;
+}
+.ec-slate__objects { position: absolute; inset: 0; z-index: 3; }
+.ec-slate .ec-object { position: absolute; }
+.ec-slate .ec-object__tag {
+  gap: 0.6cqw;
+  margin-top: 0.6cqw;
+  padding: 0.4cqw 1.2cqw 0.4cqw 0.4cqw;
+  font: 600 max(10px, 1.02cqw) / 1.2 var(--font-body);
+  white-space: nowrap;
+}
+.ec-slate .ec-object__n { width: max(18px, 2.1cqw); height: max(18px, 2.1cqw); font: 700 max(10px, 0.95cqw) / 1 var(--font-display); }
+.ec-slate .ec-object.is-current .ec-object__tag { box-shadow: 0 0 0 0.35cqw rgba(244, 211, 94, 0.65), 0 3px 8px rgba(0, 0, 0, 0.25); }
+.ec-slate .ec-object.is-current .ec-art { animation: ec-hop 0.6s ease; }
+
+/* linea, tallos, puntos, etiquetas */
+.ec-stem { fill: none; stroke: rgba(244, 246, 238, 0.4); stroke-width: 2.4; stroke-dasharray: 5 7; stroke-linecap: round; }
+.ec-slate .ec-chalk__line { stroke-width: 3.6; }
+.ec-slate .ec-chalk__ghost { stroke-width: 12; }
+.ec-chalk__arrow, .ec-chalk__break path { fill: none; stroke: rgba(244, 246, 238, 0.85); stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
+.ec-slate .ec-chalk__label { font-size: 26px; opacity: 1; transform: none; }
+.ec-slate .ec-chalk__label--small { font-size: 20px; fill: rgba(244, 246, 238, 0.45); }
+.ec-slate .ec-chalk__dot { opacity: 1; transform: none; stroke-width: 3; }
+
+/* tizas de colores en la repisa */
+.ec-wall--slate .ec-ledge { right: 9%; bottom: 7px; }
+.ec-ledge__chalk--p { width: 20px; background: #f4a7b9; transform: rotate(4deg); }
+.ec-ledge__chalk--b { width: 26px; background: #a9cde6; margin-left: 30px; }
+
+.ec-slate .ec-object__name { font-size: 1em; }
+.ec-slate .ec-object__date { font-size: 0.86em; }
+.ec-slate__swipe { display: none; margin: 8px 0 0; text-align: center; font-family: var(--font-chalk, "Kalam", "Segoe Print", cursive); color: rgba(244, 246, 238, 0.7); }
+@media (max-width: 900px) {
+  .ec-slate__swipe { display: block; }
+}
+
