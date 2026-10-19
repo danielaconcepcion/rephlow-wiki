@@ -7,14 +7,30 @@ import { Rich } from "./RichText";
 import { ZoomableImage } from "./ZoomableImage";
 import type { RecordTable, ResultData, ResultSubsection } from "./types";
 
+function EnzymeChips({ enzymes }: { enzymes?: ("DHAK" | "PPK2")[] }) {
+  if (!enzymes?.length) return null;
+  return (
+    <span className="experiment-card__enzymes">
+      {enzymes.map((enzyme) => (
+        <span
+          className={`experiment-chip experiment-chip--${enzyme.toLowerCase()}`}
+          key={enzyme}
+        >
+          {enzyme}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function Table({ table }: { table: RecordTable & { caption?: string } }) {
   return (
     <div className="result-table">
-      <p className="record-table__caption">
-        <Caption kind="Table" item={table} text={table.caption} />
-      </p>
       <div className="record-table-scroll">
         <table className="record-table">
+          <caption className="record-table__caption">
+            <Caption kind="Table" item={table} text={table.caption} />
+          </caption>
           <thead>
             <tr>
               {table.headers.map((header, index) => (
@@ -186,14 +202,49 @@ function FigureMatrix({
   );
 }
 
-function Subsection({ subsection }: { subsection: ResultSubsection }) {
-  const prose = (
-    <>
-      {subsection.body?.map((paragraph, index) => (
-        <p key={index}>
+function NarrativeParagraph({ text }: { text: string }) {
+  const lead = text.match(/^\*\*([^*]+[.!?])\*\*\s+(.*)$/s);
+
+  if (!lead) {
+    return (
+      <p>
+        <Rich text={text} />
+      </p>
+    );
+  }
+
+  const [, heading, paragraph] = lead;
+  return (
+    <div className="result-subsection__field result-subsection__field--narrative">
+      <h5>{heading}</h5>
+      {paragraph && (
+        <p>
           <Rich text={paragraph} />
         </p>
-      ))}
+      )}
+    </div>
+  );
+}
+
+function Subsection({
+  subsection,
+  narrative = false,
+}: {
+  subsection: ResultSubsection;
+  narrative?: boolean;
+}) {
+  const renderParagraph = (paragraph: string, index: number) =>
+    narrative ? (
+      <NarrativeParagraph text={paragraph} key={index} />
+    ) : (
+      <p key={index}>
+        <Rich text={paragraph} />
+      </p>
+    );
+
+  const prose = (
+    <>
+      {subsection.body?.map(renderParagraph)}
 
       {subsection.custom && (
         <figure className="record-figure record-figure--custom">
@@ -220,13 +271,12 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
         <Table table={table} key={index} />
       ))}
 
-      {subsection.bodyAfter?.map((paragraph, index) => (
-        <p key={index}>
-          <Rich text={paragraph} />
-        </p>
-      ))}
+      {subsection.bodyAfter?.map(renderParagraph)}
 
-      {subsection.observations && (
+      {narrative && subsection.observations && (
+        <NarrativeParagraph text={subsection.observations} />
+      )}
+      {!narrative && subsection.observations && (
         <div className="result-subsection__field">
           <h5>What was obtained</h5>
           <p>
@@ -235,7 +285,10 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
         </div>
       )}
 
-      {subsection.interpretation && (
+      {narrative && subsection.interpretation && (
+        <NarrativeParagraph text={subsection.interpretation} />
+      )}
+      {!narrative && subsection.interpretation && (
         <div className="result-subsection__field">
           <h5>What it means</h5>
           <p>
@@ -244,7 +297,10 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
         </div>
       )}
 
-      {subsection.expectation && (
+      {narrative && subsection.expectation && (
+        <NarrativeParagraph text={subsection.expectation} />
+      )}
+      {!narrative && subsection.expectation && (
         <div className="result-subsection__field">
           <h5>Was it expected?</h5>
           <p>
@@ -299,9 +355,12 @@ export function ResultCard({ data }: { data: ResultData }) {
   return (
     <article className="result-card">
       <header className="result-card__header">
-        <h3 className="result-card__title">
-          <Rich text={data.title} />
-        </h3>
+        <div className="experiment-card__titlerow">
+          <h3 className="result-card__title">
+            <Rich text={data.title} />
+          </h3>
+          <EnzymeChips enzymes={data.enzymes} />
+        </div>
         {data.description && (
           <p className="result-card__desc">
             <Rich text={data.description} />
@@ -336,9 +395,31 @@ export function ResultCard({ data }: { data: ResultData }) {
 
       <div className="result-card__subsections">
         {data.subsections.map((subsection) => (
-          <Subsection subsection={subsection} key={subsection.id} />
+          <Subsection
+            subsection={subsection}
+            narrative={data.narrative}
+            key={subsection.id}
+          />
         ))}
       </div>
+
+      {!!data.downloads?.length && (
+        <section className="result-card__downloads" aria-label="Downloads">
+          {data.downloads.map((download) => (
+            <a
+              className="record-download result-card__download"
+              href={asset(download.href)}
+              download
+              key={download.href}
+            >
+              <span>{download.label}</span>
+              <span className="result-card__download-format">
+                {download.format}
+              </span>
+            </a>
+          ))}
+        </section>
+      )}
 
       {!!data.discussion?.length && (
         <section className="result-card__discussion">

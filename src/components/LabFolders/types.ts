@@ -18,7 +18,7 @@ export interface FolderDef {
   id: string;
   label: string;
   /** "protocols" gets the fixed cross-block colour instead of the block accent. */
-  variant?: "protocols";
+  variant?: "protocols" | "supplementary";
   content: ReactNode;
   /** 1-indexed position in its own experiment sequence, shown as a small
    * numbered circle before the label so the workflow order reads at a
@@ -358,14 +358,29 @@ export interface ResultSubsection {
 export interface ResultData {
   id: string;
   tabLabel: string;
+  /** Supplementary tabs are unnumbered and use a quieter version of the
+   * block colour so they read as supporting material, not another step. */
+  tabVariant?: "supplementary";
   title: string;
+  /** Which enzyme(s) this result belongs to, using the same chips as the
+   * matching stage on the Experiments page. */
+  enzymes?: ("DHAK" | "PPK2")[];
   description?: string;
   /** Results pages state the aim on Experiments rather than per record, so
    * this is optional and usually unset. */
   aim?: string;
   background?: string[];
   subsections: ResultSubsection[];
+  /** Files that belong to this result record, presented as a compact
+   * download list. Paths outside assets/ are served from the wiki itself. */
+  downloads?: { label: string; href: string; format: string }[];
   discussion?: string[];
+  /** Render the three legacy result fields as continuous prose, without
+   * their old "What was obtained / What it means / Was it expected?"
+   * labels. Complete leading sentences in bold become the same small
+   * editorial headings those labels used, while the remaining text stays
+   * as prose. */
+  narrative?: boolean;
   /** Set when the source has the entry but has not written it up yet (its
    * "what was obtained" still reads [XXX]). The card then says so plainly
    * instead of the record looking finished-but-empty, and nothing is

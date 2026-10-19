@@ -555,6 +555,30 @@
   fill: color-mix(in srgb, var(--lab-protocols) 22%, var(--paper));
 }
 
+/* Supporting files belong to the same scientific block but are not one
+   more experimental step. Keep its hue, with less saturation and contrast. */
+.folder-tab--supplementary .folder-tab__shape path {
+  fill: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--folder-accent) 12%, #aeb4bb) var(--tab-shade, 34%),
+    var(--paper)
+  );
+}
+.folder-tab--supplementary.is-active .folder-tab__shape path {
+  fill: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--folder-accent) 12%, #aeb4bb) 32%,
+    var(--paper)
+  );
+}
+
+/* Scientific prose inside both folder systems uses the same justified
+   measure. Navigation and folder tabs sit outside these card surfaces. */
+.experiment-card,
+.result-card {
+  text-align: justify;
+}
+
 @media (max-width: 640px) {
   .folder-tab {
     padding: 0 2.5em;
@@ -930,6 +954,23 @@
 }
 .record-download:hover {
   background: rgba(27, 35, 64, 0.12);
+}
+
+.result-card__downloads {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 10px;
+}
+.result-card__download {
+  justify-content: space-between;
+  border: 1px solid rgba(27, 35, 64, 0.12);
+}
+.result-card__download-format {
+  flex: 0 0 auto;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 /* The named protocols an experiment actually used — one small download
@@ -1414,6 +1455,8 @@
   color: var(--ink-soft);
   font-size: 0.9rem;
   line-height: 1.55;
+  text-align: left;
+  caption-side: top;
 }
 
 @media (max-width: 640px) {

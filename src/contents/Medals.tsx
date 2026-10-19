@@ -249,14 +249,9 @@ export function Medals() {
                       <Link className="medals-link-btn" to="/">
                         Wiki
                       </Link>
-                      <a
-                        className="medals-link-btn"
-                        href="https://competition.igem.org/deliverables"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
+                      <Link className="medals-link-btn" to="/#promotion-video">
                         Project Promotion Video
-                      </a>
+                      </Link>
                       <a
                         className="medals-link-btn"
                         href="https://competition.igem.org/deliverables"
