@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { ExperimentSubBlock } from "../../components/LabFolders/types";
 
 /** An inline "[n]" citation, linking to that numbered entry in this
@@ -65,10 +66,137 @@ function Cite({ scope, n }: { scope: string; n: number }) {
  * the source.
  */
 
-export const ALGINATE_ENCAPSULATION_INTRO: string[] = [
+/** The lab protocols each experiment on this page actually used, as the
+ * source lists them under its own "Protocols" heading. Each renders as a
+ * download link under the record, the same way Revalorisation does it
+ * (placeholder PDF paths, as in the other blocks). The three that recur
+ * across nearly every experiment — the setup, the generic synthesis
+ * procedure and the injector cleaning — are kept as their own entries so
+ * each record can name exactly the set the source gives it. */
+const PROTOCOL: Record<string, { label: string; href: string }> = {
+  setup: {
+    label: "Setup for alginate bead or core-shell synthesis",
+    href: "assets/protocols/encapsulation-setup.pdf",
+  },
+  generic: {
+    label: "Generic protocol for bead and core-shell synthesis",
+    href: "assets/protocols/encapsulation-generic-synthesis.pdf",
+  },
+  "injector-cleaning": {
+    label: "Injector cleaning protocol",
+    href: "assets/protocols/encapsulation-injector-cleaning.pdf",
+  },
+  "pbs-recipe": {
+    label: "PBS (phosphate-buffered saline) recipe",
+    href: "assets/protocols/encapsulation-pbs-recipe.pdf",
+  },
+  "na-free-pbs-recipe": {
+    label: "Na-free PBS recipe",
+    href: "assets/protocols/encapsulation-na-free-pbs-recipe.pdf",
+  },
+  "picture-taking": {
+    label: "Standard picture taking",
+    href: "assets/protocols/encapsulation-standard-picture-taking.pdf",
+  },
+  "picture-analysis": {
+    label: "Standard picture analysis",
+    href: "assets/protocols/encapsulation-standard-picture-analysis.pdf",
+  },
+  ftir: {
+    label: "FTIR: determination of the M/G ratio of alginate",
+    href: "assets/protocols/encapsulation-ftir-mg-ratio.pdf",
+  },
+  "beads-drop-height": {
+    label: "Beads: drop height and concentration",
+    href: "assets/protocols/encapsulation-beads-drop-height-concentration.pdf",
+  },
+  "beads-flow-rate": {
+    label: "Beads: flow rate",
+    href: "assets/protocols/encapsulation-beads-flow-rate.pdf",
+  },
+  "beads-crosslinking-time": {
+    label: "Beads: crosslinking time",
+    href: "assets/protocols/encapsulation-beads-crosslinking-time.pdf",
+  },
+  "beads-preservation": {
+    label: "Beads: preservation",
+    href: "assets/protocols/encapsulation-beads-preservation.pdf",
+  },
+  "cs-jet-screening": {
+    label: "Core-shell: jet formation screening",
+    href: "assets/protocols/encapsulation-cs-jet-formation-screening.pdf",
+  },
+  "cs-flow-ratios": {
+    label: "Core-shell: flow-rate ratios and magnetite",
+    href: "assets/protocols/encapsulation-cs-flow-rate-ratios-magnetite.pdf",
+  },
+  "cs-freezing": {
+    label: "Core-shell: freezing and picture taking",
+    href: "assets/protocols/encapsulation-cs-freezing-picture-taking.pdf",
+  },
+  "cs-shell-thickness": {
+    label: "Core-shell: shell thickness picture analysis",
+    href: "assets/protocols/encapsulation-cs-shell-thickness-analysis.pdf",
+  },
+  "cs-mechanical": {
+    label: "Core-shell: mechanical resistance (compression assay)",
+    href: "assets/protocols/encapsulation-cs-mechanical-resistance.pdf",
+  },
+  "cs-mechanical-analysis": {
+    label: "Core-shell: picture analysis (mechanical resistance)",
+    href: "assets/protocols/encapsulation-cs-mechanical-picture-analysis.pdf",
+  },
+  "cs-preservation": {
+    label: "Core-shell: preservation",
+    href: "assets/protocols/encapsulation-cs-preservation.pdf",
+  },
+  containment: {
+    label: "Containment assay: UV-Vis of magnetite release",
+    href: "assets/protocols/encapsulation-containment-uv-vis-magnetite.pdf",
+  },
+  "tga-prep": {
+    label: "TGA: sample preparation",
+    href: "assets/protocols/encapsulation-tga-sample-preparation.pdf",
+  },
+  "sem-prep": {
+    label: "SEM: sample preparation and coating",
+    href: "assets/protocols/encapsulation-sem-sample-preparation-coating.pdf",
+  },
+};
+
+function protocolLinks(...names: string[]) {
+  return names.map((n) => PROTOCOL[n]);
+}
+
+export const ALGINATE_ENCAPSULATION_INTRO: ReactNode[] = [
   "Efficient bacterial encapsulation was essential to develop a biological module that combines **biosafety and structural stability**. Rather than relying on a single optimisation step, the encapsulation strategy was developed through a sequential experimental workflow in which the outcome of each stage guided the design of the next.",
-  "Upon contact with calcium ions, alginate rapidly forms a hydrogel through ionic crosslinking between its polymer chains according to the well-established **egg-box model [1]**. The relative proportion of **α-L-guluronic acid (G)** and **β-D-mannuronic acid (M)** residues strongly influences the mechanical properties of the resulting gel [2]. This property enables the formation of alginate beads by dripping an alginate solution into a calcium chloride bath under mild conditions, making alginate one of the most widely used materials for bacterial encapsulation [2-4]. However, obtaining beads with consistent size, shape and mechanical integrity requires careful optimisation of several synthesis parameters, including **alginate concentration**, **drop height**, **flow rate** and **crosslinking time**.",
-  "Building upon this optimised bead protocol, the system was then translated into a more advanced **core-shell architecture**, in which a **liquid calcium chloride core** is surrounded by an **alginate shell [3,4]**. Unlike conventional beads, core-shell capsule formation depends on the simultaneous control of two coaxial flows, making additional optimisation necessary. Parameters such as the **concentrations** of the inner calcium chloride and outer alginate solutions, the **outer-to-inner flow-rate ratio**, **storage conditions** and **mechanical resistance** were therefore systematically evaluated to obtain stable, reproducible capsules suitable for wastewater treatment.",
+  <>
+    Upon contact with calcium ions, alginate rapidly forms a hydrogel through
+    ionic crosslinking between its polymer chains according to the
+    well-established <strong>egg-box model</strong>{" "}
+    <Cite scope="encapsulation" n={1} />. The relative proportion of{" "}
+    <strong>α-L-guluronic acid (G)</strong> and{" "}
+    <strong>β-D-mannuronic acid (M)</strong> residues strongly influences the
+    mechanical properties of the resulting gel{" "}
+    <Cite scope="encapsulation" n={2} />. This property enables the formation
+    of alginate beads by dripping an alginate solution into a calcium chloride
+    bath under mild conditions, making alginate one of the most widely used
+    materials for bacterial encapsulation{" "}
+    <Cite scope="encapsulation" n={2} />, <Cite scope="encapsulation" n={3} />,{" "}
+    <Cite scope="encapsulation" n={4} />. However, obtaining beads with
+    consistent size, shape and mechanical integrity requires careful
+    optimisation of several synthesis parameters, including{" "}
+    <strong>alginate concentration</strong>, <strong>drop height</strong>,{" "}
+    <strong>flow rate</strong> and <strong>crosslinking time</strong>.
+  </>,
+  <>
+    Building upon this optimised bead protocol, the system was then translated
+    into a more advanced <strong>core-shell architecture</strong>, in which a{" "}
+    <strong>liquid calcium chloride core</strong> is surrounded by an{" "}
+    <strong>alginate shell</strong> <Cite scope="encapsulation" n={3} />,{" "}
+    <Cite scope="encapsulation" n={4} />. Unlike conventional beads, core-shell capsule formation depends on the simultaneous control of two coaxial flows, making additional optimisation necessary. Parameters such as the **concentrations** of the inner calcium chloride and outer alginate solutions, the **outer-to-inner flow-rate ratio**, **storage conditions** and **mechanical resistance** were therefore systematically evaluated to obtain stable, reproducible
+    capsules suitable for wastewater treatment.
+  </>,
   "Unless otherwise stated, all encapsulation experiments were performed using **sodium alginate from brown algae** (Sigma-Aldrich, A1112; lot 081M1381V), **anhydrous calcium chloride** (96%, extra pure, Acros Organics, 349615000; lot A0358796) and distilled water. Solutions were prepared immediately before use and delivered using **programmable infusion pumps** (KDS 200 dual-syringe pump, KD Scientific, and Fisherbrand KDS 100 single-syringe pump, Fisher Scientific) through plastic syringes (10 mL), connected via standard Luer connectors and flexible tubing to the dispensing outlet. Bead production used a single infusion pump, while core-shell production used both pumps and a **coaxial injector** (DMF-C01, Doxa Microfluidics; inner needle: 22G, 0.7 mm OD / 0.4 mm ID; outer needle: 17G, 1.4 mm OD / 1.1 mm ID). Capsule formation was carried out by dripping into a calcium chloride crosslinking bath under ambient laboratory conditions. When a parameter was investigated, all remaining synthesis conditions were kept constant unless explicitly indicated.",
   "Together, these experiments provided the experimental evidence required to develop an encapsulation platform suitable for the safe immobilisation of engineered bacteria and its integration into the rePhlow bioreactor.",
 ];
@@ -123,6 +251,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
     experiments: [
       {
         id: "ftir",
+        protocols: protocolLinks("ftir"),
         tabLabel: "FTIR",
         title: "Alginate characterisation by FTIR",
         body: [
@@ -148,6 +277,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                   ],
                   ["Spectral range", "400–4000 cm⁻¹"],
                   ["Resolution", "0.09 cm⁻¹"],
+                  ["Data spacing", "0.482 cm⁻¹"],
                   [
                     "Instrument",
                     "Nicolet iS50 FTIR spectrometer (Thermo Scientific, Inc.)",
@@ -187,6 +317,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
       },
       {
         id: "concentration-drop-height",
+        protocols: protocolLinks("beads-drop-height", "setup", "generic", "injector-cleaning", "picture-taking", "picture-analysis"),
         tabLabel: "Concentration/drop height",
         title: "Bead optimisation: alginate concentration and drop height",
         body: [
@@ -211,7 +342,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                     "2, 2.5, 3 and 3.5% (w/v)",
                   ],
                   ["Drop height", "Variable", "1, 2, 3, 4 and 5 cm"],
-                  ["CaCl₂ bath concentration", "Constant", "5% (w/v) [6]"],
+                  ["CaCl₂ bath concentration", "Constant", "5% (w/v)"],
                   ["Flow rate", "Constant", "600 μL/min"],
                   ["Crosslinking time", "Constant", "30 min"],
                 ],
@@ -228,6 +359,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
       },
       {
         id: "flow-rate",
+        protocols: protocolLinks("beads-flow-rate", "setup", "generic", "injector-cleaning", "picture-taking", "picture-analysis"),
         tabLabel: "Flow rate",
         title: "Bead optimisation: flow rate",
         body: [
@@ -238,7 +370,18 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "To evaluate this variable, beads were synthesised using the previously optimised alginate concentration and drop height while varying only the flow rate at which the alginate solution was dispensed through the infusion pump. All remaining synthesis parameters were kept constant. The flow rate was progressively increased up to **3200 μL/min**; the range was not extended further, as this value was already far above the flow rates typically reported in the literature for alginate bead extrusion.",
+              <>
+                To evaluate this variable, beads were synthesised using the
+                previously optimised alginate concentration and drop height
+                while varying only the flow rate at which the alginate
+                solution was dispensed through the infusion pump. All
+                remaining synthesis parameters were kept constant. The flow
+                rate was progressively increased up to{" "}
+                <strong>3200 μL/min</strong>; the range was not extended
+                further, as this value was already far above the flow rates
+                typically reported in the literature for alginate bead
+                extrusion <Cite scope="encapsulation" n={10} />.
+              </>,
             ],
             pairedResource: {
               kind: "table",
@@ -268,6 +411,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
       },
       {
         id: "crosslinking-time",
+        protocols: protocolLinks("beads-crosslinking-time", "setup", "generic", "injector-cleaning", "picture-taking", "picture-analysis"),
         tabLabel: "Crosslinking time",
         title: "Bead optimisation: crosslinking time",
         body: [
@@ -309,6 +453,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
       },
       {
         id: "storage-media",
+        protocols: protocolLinks("beads-preservation", "pbs-recipe", "picture-taking", "picture-analysis"),
         tabLabel: "Storage media",
         title: "Bead preservation under different storage media",
         body: [
@@ -380,6 +525,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
     experiments: [
       {
         id: "concentrations-screening",
+        protocols: protocolLinks("cs-jet-screening", "setup", "generic", "injector-cleaning"),
         tabLabel: "Concentrations screening",
         title: "Core-shell screening: alginate and CaCl₂ concentrations",
         body: [
@@ -436,32 +582,20 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
               kind: "table",
               table: {
                 caption:
-                  "∗Not all calcium chloride concentrations were evaluated for every alginate concentration. The screening was refined based on capsule or jet formation, as shown in this experimental matrix.",
+                  "Core-shell formation as a function of outer alginate and inner calcium chloride concentration. ✓ tested; ✗ not tested — no higher CaCl₂ concentration was tested once jetting appeared for a given alginate concentration. Remaining conditions were held constant: 5% (w/v) CaCl₂ bath, 3 cm drop height, Qₑ 600 μL/min, Qᵢ 200 μL/min (3:1) and 30 min crosslinking.",
                 headers: [
-                  "[Alg] (%)",
-                  "[CaCl₂] core (%)",
-                  "[CaCl₂] bath (%)",
-                  "Drop height (cm)",
-                  "Qᵢ (µL/min)",
-                  "Qₑ (µL/min)",
-                  "Ratio Qe:Qi",
-                  "Crosslinking time (min)",
+                  "[Alg] (% w/v)",
+                  "0%",
+                  "0.5%",
+                  "1%",
+                  "1.5%",
+                  "2%",
                 ],
                 rows: [
-                  ["2", "0", "5", "3", "200", "600", "3:1", "30"],
-                  ["2", "0.5", "5", "3", "200", "600", "3:1", "30"],
-                  ["2", "1", "5", "3", "200", "600", "3:1", "30"],
-                  ["2", "1.5", "5", "3", "200", "600", "3:1", "30"],
-                  ["2", "2", "5", "3", "200", "600", "3:1", "30"],
-                  ["2.5", "0", "5", "3", "200", "600", "3:1", "30"],
-                  ["2.5", "0.5", "5", "3", "200", "600", "3:1", "30"],
-                  ["2.5", "1", "5", "3", "200", "600", "3:1", "30"],
-                  ["3", "0", "5", "3", "200", "600", "3:1", "30"],
-                  ["3", "0.5", "5", "3", "200", "600", "3:1", "30"],
-                  ["3", "1", "5", "3", "200", "600", "3:1", "30"],
-                  ["3.5", "0", "5", "3", "200", "600", "3:1", "30"],
-                  ["3.5", "0.5", "5", "3", "200", "600", "3:1", "30"],
-                  ["3.5", "1", "5", "3", "200", "600", "3:1", "30"],
+                  ["2", "✓", "✓", "✓", "✓", "✓"],
+                  ["2.5", "✓", "✓", "✓", "✗", "✗"],
+                  ["3", "✓", "✓", "✓", "✗", "✗"],
+                  ["3.5", "✓", "✓", "✓", "✗", "✗"],
                 ],
               },
             },
@@ -470,6 +604,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
       },
       {
         id: "flow-rate-ratio",
+        protocols: protocolLinks("cs-flow-ratios", "setup", "generic", "injector-cleaning", "cs-freezing", "cs-shell-thickness"),
         tabLabel: "Out:in flow-rate ratio",
         title: "Core-shell optimisation: outer-to-inner flow-rate ratio",
         body: [
@@ -514,6 +649,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
       },
       {
         id: "containment",
+        protocols: protocolLinks("containment", "setup", "generic", "injector-cleaning", "picture-taking", "picture-analysis", "pbs-recipe"),
         tabLabel: "Containment",
         title: "Core-shell containment assessed with magnetite",
         body: [
@@ -557,6 +693,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
       },
       {
         id: "mechanical-resistance",
+        protocols: protocolLinks("cs-mechanical", "setup", "generic", "injector-cleaning", "cs-mechanical-analysis"),
         tabLabel: "Mechanical resistance",
         title: "Mechanical resistance of core-shell capsules",
         body: [
@@ -589,7 +726,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                   [
                     "Applied mass",
                     "Variable",
-                    "0.4, 1.4, 2.4, 5.4, 10.4 and 20.4 g",
+                    "0, 0.4, 1.4, 2.4, 5.4, 10.4 and 20.4 g",
                   ],
                   [
                     "Loading procedure",
@@ -610,6 +747,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
       },
       {
         id: "chemical-environment",
+        protocols: protocolLinks("cs-preservation", "pbs-recipe", "na-free-pbs-recipe", "setup", "generic", "injector-cleaning", "picture-taking", "picture-analysis"),
         tabLabel: "Chemical environment",
         title: "Core-shell preservation under different chemical environments",
         body: [
@@ -708,6 +846,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
     experiments: [
       {
         id: "tga-dsc",
+        protocols: protocolLinks("generic", "tga-prep"),
         tabLabel: "TGA-DSC",
         title: "Thermal characterisation (TGA-DSC)",
         body: [
@@ -739,14 +878,19 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                   [
                     "Sample mass",
                     "Variable",
-                    "11.22 and 11.75 mg (one hydrated capsule each); 1.30 mg (two dried capsules)",
+                    "11.220 and 11.748 mg (one hydrated capsule each); 1.300 mg (two dried capsules)",
                   ],
-                  ["Instrument", "Constant", "SDT Q600 (TA Instruments)"],
+                  [
+                    "Instrument",
+                    "Constant",
+                    "SDT Q600 (TA Instruments), software version 20.9",
+                  ],
                   [
                     "Temperature range",
                     "Constant",
                     "Room temperature to 495 °C; the first hydrated capsule was run to 673 °C to confirm that no further events occurred above 495 °C",
                   ],
+                  ["Heating rate", "Constant", "10 °C/min"],
                   ["Atmosphere", "Constant", "Nitrogen"],
                 ],
               },
@@ -783,6 +927,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
       },
       {
         id: "sem",
+        protocols: protocolLinks("generic", "sem-prep"),
         tabLabel: "Microscopy, SEM & EDS",
         title:
           "Microstructural, surface and elemental characterisation (optical microscopy, SEM and EDS)",
@@ -867,12 +1012,18 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                     "Constant",
                     "Optika microscope, 670×, before coating",
                   ],
-                  ["Conductive coating", "Constant", "Gold"],
+                  [
+                    "Conductive coating",
+                    "Constant",
+                    "Gold, sputter-coated for approximately 30 s at 10 mA, giving a nominal thickness of 2 to 5 nm",
+                  ],
                   [
                     "Instrument",
                     "Constant",
                     "JEOL JSM-IT700HR scanning electron microscope (Schottky field-emission source)",
                   ],
+                  ["Accelerating voltage", "Constant", "10.0 kV"],
+                  ["Working distance", "Constant", "9.8 to 10.4 mm"],
                   [
                     "Magnification",
                     "Variable",
@@ -911,6 +1062,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                     "Constant",
                     "Area spectrum, single acquisition",
                   ],
+                  ["Accelerating voltage", "Constant", "10.0 kV"],
                   [
                     "Quantification",
                     "Constant",
@@ -935,7 +1087,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
     // ExperimentSubBlock.outro).
     outro: [
       "The experiments on this page were chosen to answer a fixed sequence of questions rather than to characterise the system exhaustively, and each one exists because the next decision could not be made without it. The raw material was characterised first because every later result depends on what the alginate is. Beads came before capsules because four production variables can be separated in a single-phase system and cannot be separated in a coaxial one. Each variable was then tested until it either proved to matter or demonstrably did not, and the ones that did not, crosslinking time and the upper end of the flow-rate range, were dropped rather than optimised further. Where a measurement failed to discriminate, as shell thickness did, the response was to change the measurement rather than to repeat it with more replicates.",
-      "The scope was also set by the circumstances of the project rather than by what would be ideal. A mechanical assay built from calibrated masses, grid paper and a camera replaced an instrumented compression tester we did not have, and it answered the comparative question that needed answering even though it yields no modulus. Magnetite stood in for bacteria because the encapsulation setup sits in a physics laboratory with no biosafety containment, which is also why containment was validated with a conservative surrogate rather than with live cells. Dried specimens were used for thermal and electron imaging because no cryogenic or critical-point preparation was available, and the resulting limitations are stated rather than glossed. What is missing from this page is therefore missing for stated reasons, and in each case the experiment that would close the gap is named alongside the one that was done.",
+      "The scope was also set by the circumstances of the project rather than by what would be ideal. A mechanical assay built from calibrated masses, a coverslip and a camera replaced an instrumented compression tester we did not have, and it answered the comparative question that needed answering even though it yields no modulus. Magnetite stood in for bacteria because the encapsulation setup sits in a physics laboratory with no biosafety containment, which is also why containment was validated with a conservative surrogate rather than with live cells. Dried specimens were used for thermal and electron imaging because no cryogenic or critical-point preparation was available, and the resulting limitations are stated rather than glossed. What is missing from this page is therefore missing for stated reasons, and in each case the experiment that would close the gap is named alongside the one that was done.",
     ],
   },
 ];
