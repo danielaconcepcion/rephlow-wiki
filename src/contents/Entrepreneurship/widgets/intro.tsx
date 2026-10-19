@@ -33,10 +33,10 @@ export function FitTitle() {
   return (
     <h2 className="ent-title rv">
       <span className="ent-title__a" ref={a}>
-        Most technologies manage phosphorus.
+        Most technologies manage phosphorus,
       </span>
       <span className="ent-title__b" ref={b}>
-        rePhlow gives it a <em>second life</em>
+        rePhlow gives it a <em>second life</em>.
       </span>
     </h2>
   );
