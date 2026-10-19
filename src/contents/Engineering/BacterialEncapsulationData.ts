@@ -140,7 +140,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "The resulting beads were analysed to determine how the selected variables affected their morphology and reproducibility. Images were acquired using a digital microscope, equipped with a high-definition colour CMOS sensor and a high-speed digital signal processor (DSP), and analysed using ImageJ.",
         ),
         p(
-          "For all three experiments, 10 beads were measured per condition, using the Image-taking and Image-analysis protocols found in the Protocols page. Droplet formation at the outlet was also observed directly during production.",
+          "For all three experiments, 10 beads were measured per condition, using the Image-taking and Image-analysis protocols found in the [Experiments](/experiments) page. Droplet formation at the outlet was also observed directly during production.",
         ),
         p("The following parameters were quantified:"),
         ul([
@@ -221,7 +221,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
         ul([
           "water;",
           "industrial wastewater;",
-          "PBS, prepared according to the formulation described on the Protocols page.",
+          "PBS, prepared according to the formulation described on the [Experiments](/experiments) page.",
         ]),
         p(
           "For each storage medium, 10 beads were placed in a container with 8 mL of the corresponding medium and stored at room temperature.",
@@ -510,7 +510,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "All remaining synthesis parameters were kept constant (5% (w/v) external calcium chloride bath, 3 cm drop height and 30 min crosslinking time). 10 core-shells were produced per condition.",
         ),
         p(
-          "The capsules were then prepared for imaging following the core-shell image-taking protocol found in the Protocols page. Each capsule was frozen in liquid nitrogen and approximately bisected with a scalpel, and both halves were placed on a microscope slide and covered with a coverslip without applying pressure.",
+          "The capsules were then prepared for imaging following the core-shell image-taking protocol found in the [Experiments](/experiments) page. Each capsule was frozen in liquid nitrogen and approximately bisected with a scalpel, and both halves were placed on a microscope slide and covered with a coverslip without applying pressure.",
         ),
       ]),
       phase("Test", [
@@ -611,7 +611,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
           "For each condition in each batch, capsules were arranged in groups of three on a flat surface and covered with a microscope coverslip. Three groups were tested per condition, giving nine capsules per condition and batch.",
         ),
         p(
-          "Calibrated masses of 1, 2, 5, 10 and 20 g were then placed sequentially on top of the coverslip, each one removed before the next was added. Since the coverslip itself rests on the capsules, its mass (0.4 g) was included in every load, giving applied loads of 0.4, 1.4, 2.4, 5.4, 10.4 and 20.4 g. The capsules were photographed before any load was applied and again after each loading step, following the image-taking protocol found in the Protocols page.",
+          "Calibrated masses of 1, 2, 5, 10 and 20 g were then placed sequentially on top of the coverslip, each one removed before the next was added. Since the coverslip itself rests on the capsules, its mass (0.4 g) was included in every load, giving applied loads of 0.4, 1.4, 2.4, 5.4, 10.4 and 20.4 g. The capsules were photographed before any load was applied and again after each loading step, following the image-taking protocol found in the [Experiments](/experiments) page.",
         ),
       ]),
       phase("Test", [
@@ -671,12 +671,12 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
         p("Capsules were distributed among the following media:"),
         ul([
           "distilled water adjusted with HCl to pH 1.73, 3.00 and 5.00, plus untreated distilled water (pH 5.78);",
-          "PBS at 1×, ½×, ¼× and ⅛×, prepared according to the formulation on the Protocols page;",
+          "PBS at 1×, ½×, ¼× and ⅛×, prepared according to the formulation on the [Experiments](/experiments) page;",
           "a sodium-free phosphate buffer at the same four dilutions, prepared to match the ionic strength of each PBS dilution;",
           "industrial wastewater as received (pH 1.76) and basified to pH 5 with NaOH, KOH or NH₄OH.",
         ]),
         p(
-          "Protocols for PBS and the sodium-free buffer can be found in the Protocols page.",
+          "Protocols for PBS and the sodium-free buffer can be found in the [Experiments](/experiments) page.",
         ),
         p(
           "As in the bead preservation study, 10 capsules were placed in a container with 8 mL of the corresponding medium. All samples were kept at room temperature and photographed at 0, 24, 48 and 72 h, following the same imaging schedule used for the bead preservation study so that the two architectures could be compared. Capsules in untreated wastewater were also imaged after one week; the pH series was not imaged beyond 72 h, because capsules at the lowest pH values had become too fragile to handle and the comparison between pH values would have been lost. Basified wastewater dissolved or broke the capsules even earlier, so they were imaged until it was no longer posible ([see Results](/results)).",
@@ -684,7 +684,7 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
       ]),
       phase("Test", [
         p(
-          "Images were analysed in ImageJ following the image-analysis protocol found in the Protocols page, monitoring changes in capsule morphology, shell integrity, swelling, deformation and overall structural preservation over time. Projected area was used to follow swelling and contraction, sphericity to detect deformation, and visual inspection to record fragmentation or dissolution.",
+          "Images were analysed in ImageJ following the image-analysis protocol found in the [Experiments](/experiments) page, monitoring changes in capsule morphology, shell integrity, swelling, deformation and overall structural preservation over time. Projected area was used to follow swelling and contraction, sphericity to detect deformation, and visual inspection to record fragmentation or dissolution.",
         ),
         p(
           "pH alone did not compromise capsule integrity. Capsules held at the lowest pH contracted progressively over the three days monitored, while those at pH 3, 5 and 5.78 swelled moderately over the first days. All retained their shape, and none broke during the first three days, although with longer exposure those at the lowest pH values became too fragile to handle.",
