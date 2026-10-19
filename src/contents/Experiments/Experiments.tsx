@@ -36,6 +36,7 @@ import { EnzymeActivityGrid } from "./EnzymeActivityGrid";
 import { EcosystemMap } from "../../components/EcosystemMap";
 import { LabCornerIndex } from "../../components/LabFolders/LabCornerIndex";
 import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
+import functionalisedSphereSrc from "../../assets/experiments/enzymatic-immobilisation/functionalised-rephlow-sphere.svg";
 import "../../components/LabFolders/LabFolders.css";
 
 // Built once at module scope (stable array references — see
@@ -249,7 +250,30 @@ export function Experiments() {
                   narrow and centered like ProjectDescription's prose. */}
               {activeBlock.intro && (
                 <div className="lab-prose">
-                  {paragraphs(activeBlock.intro, "lab-block__intro")}
+                  {activeBlock.id === "enzymatic-immobilisation" &&
+                  Array.isArray(activeBlock.intro) ? (
+                    <>
+                      {paragraphs(
+                        activeBlock.intro.slice(0, 2),
+                        "lab-block__intro",
+                      )}
+                      <figure className="vsi-figure vsi-figure--full pd-figure">
+                        <img
+                          src={functionalisedSphereSrc}
+                          alt="Cross-sectional schematic of the functionalised rePhlow sphere showing surface hydrolysis of organophosphates, inward orthophosphate diffusion and intracellular polyphosphate storage by engineered PAO"
+                        />
+                        <figcaption className="vsi-figure__caption">
+                          {ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION}
+                        </figcaption>
+                      </figure>
+                      {paragraphs(
+                        activeBlock.intro.slice(2),
+                        "lab-block__intro",
+                      )}
+                    </>
+                  ) : (
+                    paragraphs(activeBlock.intro, "lab-block__intro")
+                  )}
                 </div>
               )}
 
@@ -311,31 +335,11 @@ export function Experiments() {
 
               {/* Enzymatic immobilisation's own conceptual "four parts of the
                   system" (PLA/PLC/NAP/Phytases) — same bespoke placement as
-                  Genetic engineering's five parts, above. The source mentions
-                  a schematic of "the functionalised rePhlow sphere" but never
-                  actually embeds it (an empty callout carrying only the
-                  figure's own caption) — kept honest as a real, captioned
-                  placeholder rather than silently dropped or faked. */}
+                  Genetic engineering's five parts, above. */}
               {activeBlock.id === "enzymatic-immobilisation" && (
                 <>
                   {/* The six-step figure, redrawn, with linked panels. */}
                   <EnzymaticWorkflow />
-                  <div className="lab-prose">
-                    <figure
-                      className="record-figure"
-                      style={{ margin: "8px 0 24px" }}
-                    >
-                      <div
-                        className="record-figure__placeholder"
-                        aria-hidden="true"
-                      >
-                        [ figure placeholder ]
-                      </div>
-                      <figcaption>
-                        {ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION}
-                      </figcaption>
-                    </figure>
-                  </div>
                   <section
                     className="lab-subblock"
                     aria-label="The four parts of the system"
