@@ -274,6 +274,9 @@ const Pages: Page[] = [
     component: Team,
     docTitle: "Team — rePhlow iGEM Wiki",
     hideHeader: true,
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 59,
   },
   {
     name: "Sponsors",
