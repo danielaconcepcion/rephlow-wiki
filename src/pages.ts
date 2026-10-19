@@ -251,7 +251,6 @@ const Pages: Page[] = [
     docTitle: "Sustainability — rePhlow iGEM Wiki",
     awards: [
       { label: "Best Sustainable Development Impact", variant: "prize",
-    hideHeader: true,
   },
     ],
     hideEyebrow: true,

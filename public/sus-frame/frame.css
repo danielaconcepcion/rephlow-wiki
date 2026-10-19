@@ -4,3 +4,8 @@ footer.site-footer,
 .adjacent-page-nav {
   display: none !important;
 }
+
+/* The wiki already draws the page header above the frame. */
+main.page-shell {
+  display: none !important;
+}
