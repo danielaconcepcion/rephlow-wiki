@@ -248,17 +248,6 @@ const STOPS: Stop[] = [
         text: "Here, eutrophication was no longer something associated only with internationally recognised environmental crises. During the visit, we observed cloudy water and visible signs consistent with algal proliferation. Rather than relying on visual impressions alone, we collected water samples from the reservoir for subsequent characterisation.",
       },
       {
-        type: "evidenceRow",
-        items: [
-          { label: "Data placeholder", text: "pH results" },
-          { label: "Data placeholder", text: "Dissolved oxygen results" },
-          {
-            label: "Data placeholder",
-            text: "Phosphorus concentration results",
-          },
-        ],
-      },
-      {
         type: "pullquote",
         text: "The visit marked an important change in how we approached environmental Human Practices: from seeing the problem to beginning to measure it.",
       },
@@ -284,11 +273,6 @@ const STOPS: Stop[] = [
         paragraphs: [
           "Combined with the process parameters shared with us by Bio-Oils, the environmental samples also gave us two complementary reference points for thinking about realistic testing conditions: one industrial and one environmental. The Bio-Oils data informed the synthetic wastewater conditions used in our laboratory work, while the reservoir samples provided an independent environmental reference against which we could contextualise the phosphorus problem.",
         ],
-      },
-      {
-        type: "evidence",
-        label: "Data placeholder",
-        text: "Composition of the synthetic wastewater stream built from Bio-Oils' effluent parameters.",
       },
       {
         type: "crosslink",

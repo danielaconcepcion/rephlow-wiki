@@ -474,8 +474,8 @@ export function ProjectDescription() {
                     RePhlow does not attempt to reproduce a conventional EBPR
                     plant.
                   </strong>{" "}
-                  Instead, it applies the same biological principle—microbial
-                  phosphate uptake and storage as polyphosphate—to a defined,
+                  Instead, it applies the same biological principle —microbial
+                  phosphate uptake and storage as polyphosphate— to a defined,
                   engineered bacterium immobilised within a modular system. The
                   aim is to make capture more controllable, compatible with
                   existing infrastructure and better connected to subsequent
@@ -968,7 +968,7 @@ export function ProjectDescription() {
                   in the
                   <SectionLink href="#enzyme">
                     {" "}
-                    enzyme immobilisation block
+                    enzyme immobilisation section
                   </SectionLink>
                   .
                 </p>
@@ -979,7 +979,7 @@ export function ProjectDescription() {
                     <>
                       <strong>Figure 1.</strong> Conventional alginate bead
                       (left) and the core-shell architecture selected for
-                      RePhlow (right).
+                      rePhlow (right).
                     </>
                   }
                   className="pd-figure--wide"
@@ -1036,7 +1036,7 @@ export function ProjectDescription() {
                   The engineered <em>Pseudomonas putida</em> described in the
                   <SectionLink href="#genetic">
                     {" "}
-                    genetic engineering block
+                    genetic engineering section
                   </SectionLink>{" "}
                   imports phosphorus as free orthophosphate. Acid degumming,
                   however, produces partially hydrolysed phospholipids, phytate
@@ -1189,7 +1189,7 @@ export function ProjectDescription() {
                   described in the
                   <SectionLink href="#encapsulation">
                     {" "}
-                    encapsulation block
+                    encapsulation section
                   </SectionLink>
                   . To develop the chemistry without confounding it with capsule
                   variability, we used
@@ -1904,7 +1904,7 @@ export function ProjectDescription() {
                   than producing one definitive answer, it allows us to{" "}
                   <strong>
                     compare alternatives, identify priorities and answer the
-                    practical questions shaping RePhlow&apos;s development
+                    practical questions shaping rePhlow&apos;s development
                   </strong>
                   .
                 </p>
