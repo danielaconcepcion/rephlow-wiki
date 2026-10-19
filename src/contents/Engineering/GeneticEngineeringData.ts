@@ -1,7 +1,7 @@
 /**
  * Genetic engineering content for the Engineering page — transcribed straight
  * from the team's own Notion write-up (the "Engineering / Genetic engineering"
- * page, exported 18 October 2026). The export's wording, emphasis,
+ * page, exported 19 October 2026). The export's wording, emphasis,
  * tables and figures are reproduced as they stand; the only thing left
  * out is the team's internal planning notes, and the one thing added is
  * a real link wherever the text points at another page of the wiki.
@@ -14,7 +14,7 @@ import { cell, figure, p, phase, table, ul, type Iteration } from "./dbtlData";
 
 export const CLONING_ITERATIONS: Iteration[] = [
   {
-    title: "(Verano 2025)",
+    title: "Polyphosphate accumulation study",
     phases: [
       phase("Design", [
         p(
@@ -961,8 +961,6 @@ export const CLONING_ITERATIONS: Iteration[] = [
         p(
           "The central engineering lesson from Cycle 4 was therefore: **Identify the earliest variable that limits interpretation** in each branch, and redesign that variable before adding further experimental complexity. A construct should only progress when **both sufficient material and sufficiently discriminating evidence are available to make the next result meaningful.**",
         ),
-        p("</aside>"),
-        p("<aside>"),
       ]),
     ],
   },
@@ -1393,26 +1391,6 @@ export const CRISPR_ITERATIONS: Iteration[] = [
         p(
           "Most importantly, we did not continue into Golden Gate with ambiguous PCR products. Doing so would have added assembly efficiency, transformation, fluorescence screening and construct validation as new variables while the identity of the guide fragments was unresolved. The next build should therefore focus specifically on **PCR specificity**.",
         ),
-        p("</aside>"),
-        p(
-          "Donde incluir el modelo: Utilizarlo para la justificación de genes.",
-        ),
-        ul(["Cloning: ppk1 y pstSCAB", "CRISPR: ppkB, ppx, pitB"]),
-        p(
-          '"Nuestra primera estrategia de clonación asumió...", añadir algo como: PPk1, ppk2 y ppx fueron r¡propuesto inciialmente por aurelio - fue posteriormente contrastada con el modelo metabólico a escala genómica, que confirmó que estas reacciones actúan como puntos de control del flujo hacia polifosfato bajo las condiciones simuladas',
-        ),
-        p(
-          'Si el análisis de flujos señaló *además* otras reacciones limitantes no consideradas por Aurelio (transportadores adicionales, rutas de exportación, etc: pstsCAB y pitB???.), eso sí es una influencia real y en el sentido correcto: *"el análisis de flujos del modelo completo permitió además identificar [X] como una reacción limitante adicional no contemplada en la primera priorización, lo cual está siendo evaluado para futuras iteraciones."*',
-        ),
-        p(
-          "Hemos pedido un constructo con ppk1 con pSEVA6313 en caso de la parte del clonaje no saliera bien: por ejemplo, si el core toy model o la cinética en COPASI sugieren que pstSCAB limita más que ppk1 bajo ciertas condiciones de medio, eso sí justificaría priorizar una construcción sobre otra en las próximas rondas.",
-        ),
-        p("Añadir otro bloque aqui que sea de modelo??"),
-        ul([
-          '**Iteración 1 (Design→Learn):** modelo genómico completo, testeando qué condiciones/ediciones alteran captación de P y acumulación de polyP. Aquí el "Learn" es justamente qué genes/reacciones emergen como candidatos → esto alimenta el Design de Cloning/CRISPR (punto de arriba).',
-          "**Iteración 2:** reducción a core toy model, con su propio criterio de éxito (¿el modelo reducido reproduce el comportamiento relevante del modelo completo?)",
-          '**Iteración 3:** cinética en COPASI, variando condiciones iniciales y parámetros — aquí el "Test" son las simulaciones de dinámica temporal, y el "Learn" son las hipótesis sobre comportamiento esperado que la parte experimental debería poder confirmar o refutar.',
-        ]),
       ]),
     ],
   },
