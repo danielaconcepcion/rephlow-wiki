@@ -637,6 +637,19 @@ export const DbtlCycle = forwardRef<
      * only that one's children instead of whichever spiral last happened
      * to compute iteration 0 (see Engineering.tsx's activeGroupKey). */
     onRangeChange?: (inRange: boolean) => void;
+    /** What this spiral calls its first iteration. Defaults to 1, which is
+     * what a block with a single spiral wants. A block whose threads are
+     * numbered continuously (Genetic engineering, Revalorisation) passes
+     * the running total instead, so the second spiral's first loop reads
+     * "Iteration 6" rather than a second "Iteration 1" -- the same way
+     * slicePalette() already makes its colour continue the first spiral's
+     * gradient instead of restarting it. A block whose threads are
+     * deliberately numbered independently (Enzymatic immobilisation) just
+     * leaves this at 1 on every spiral. Numbering only: the index this
+     * component works in is always 0-based and local to its own
+     * `iterations`, so pacing, geometry, colour and jumpToPhase are
+     * untouched by it. */
+    numberFrom?: number;
   }
 >(function DbtlCycle(
   {
@@ -644,6 +657,7 @@ export const DbtlCycle = forwardRef<
     iterations = ITERATIONS,
     onActiveChange,
     onRangeChange,
+    numberFrom = 1,
   },
   ref,
 ) {
@@ -1093,7 +1107,7 @@ export const DbtlCycle = forwardRef<
 
           <div className="dbtl-cycle__content" ref={contentRef}>
             <p className="dbtl-cycle__eyebrow">
-              Iteration {activeIteration + 1} · {activeIter.title}
+              Iteration {numberFrom + activeIteration} · {activeIter.title}
             </p>
             <div className="dbtl-cycle__phase-viewport">
               {exitingPhase && (
@@ -1177,7 +1191,7 @@ export const DbtlCycle = forwardRef<
               aria-hidden="true"
             >
               <p className="dbtl-cycle__eyebrow">
-                Iteration {activeIteration + 2} · {nextIter.title}
+                Iteration {numberFrom + activeIteration + 1} · {nextIter.title}
               </p>
               <h3 className="dbtl-cycle__phase-title">
                 {nextIter.phases[0].name}
@@ -1238,6 +1252,10 @@ export interface DbtlNavGroup {
   key: string;
   heading?: string;
   isActiveBranch: boolean;
+  /** This group's first iteration number -- the same value handed to its
+   * spiral's own `numberFrom` prop, so the nav and the spiral always agree
+   * on what an iteration is called. Omitted means 1. */
+  numberFrom?: number;
   palette: DbtlPalette;
   iterations: Iteration[];
   activeIteration: number;
@@ -1288,6 +1306,7 @@ export function DbtlSectionNav({ groups }: { groups: DbtlNavGroup[] }) {
     <nav className="dbtl-cycle__section-nav" aria-label="DBTL iterations">
       {groups.map((group) => {
         const total = group.iterations.length;
+        const numberFrom = group.numberFrom ?? 1;
         return (
           <div className="dbtl-cycle__section-nav-group" key={group.key}>
             {group.heading && (
@@ -1329,7 +1348,7 @@ export function DbtlSectionNav({ groups }: { groups: DbtlNavGroup[] }) {
                         }}
                       >
                         <span className="dbtl-cycle__section-nav-label">
-                          Iteration {i + 1}
+                          Iteration {numberFrom + i}
                         </span>
                         <span className="dbtl-cycle__section-nav-title">
                           {iter.title}

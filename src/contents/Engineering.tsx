@@ -38,7 +38,11 @@ import { ENGINEERING_BLOCKS } from "./Engineering/blocks";
  * palettes below are slicePalette() cuts of the same original 5-iteration
  * scale (positions 0-2 and 3-4 of it) rather than two independent ranges,
  * so the second spiral picks the gradient up exactly where the first left
- * off instead of restarting it.
+ * off instead of restarting it. Its two threads keep their own iteration
+ * numbering, restarting at 1 in each, unlike Genetic engineering and
+ * Revalorisation, which number continuously across their threads (see
+ * continuousNumbering in Engineering/blocks.ts and threadNumberFrom
+ * below).
  *
  * Revalorisation has its real 4-iteration write-up
  * (Engineering/RevalorisationData.ts) as one spiral, framed by its own
@@ -234,6 +238,26 @@ export function Engineering() {
     setThreadActive({});
   }, [activeTab]);
 
+  // Where each thread's iteration numbering starts. A block flagged
+  // `continuousNumbering` in blocks.ts counts straight on across its
+  // threads, so Genetic engineering's CRISPR spiral opens at "Iteration 6"
+  // rather than at a second "Iteration 1", and Revalorisation runs 1-12
+  // across its five lines of work -- matching the palette, which already
+  // continues across threads rather than restarting (see slicePalette).
+  // Every other block restarts each thread at 1, which is what Enzymatic
+  // immobilisation's two independently-numbered threads want and what a
+  // single-thread block (Bacterial encapsulation) gets either way. This is
+  // a label offset only: each spiral still indexes its own `iterations`
+  // from 0, so pacing, jumps and colour are untouched.
+  const threadNumberFrom: Record<string, number> = {};
+  let iterationsSoFar = 0;
+  for (const thread of block?.threads ?? []) {
+    threadNumberFrom[thread.key] = block?.continuousNumbering
+      ? iterationsSoFar + 1
+      : 1;
+    iterationsSoFar += thread.iterations.length;
+  }
+
   const navGroups: DbtlNavGroup[] = (block?.threads ?? []).map((thread) => ({
     key: thread.key,
     heading: thread.heading,
@@ -244,6 +268,7 @@ export function Engineering() {
       (activeThreadKey ?? block!.threads[0].key) === thread.key,
     palette: thread.palette,
     iterations: thread.iterations,
+    numberFrom: threadNumberFrom[thread.key],
     activeIteration: threadActive[thread.key]?.iteration ?? 0,
     activePhase: threadActive[thread.key]?.phase ?? 0,
     onJump: (iteration: number, phase: number) =>
@@ -322,6 +347,7 @@ export function Engineering() {
                       }}
                       palette={thread.palette}
                       iterations={thread.iterations}
+                      numberFrom={threadNumberFrom[thread.key]}
                       onActiveChange={(iteration, phase) =>
                         setThreadActive((current) => ({
                           ...current,

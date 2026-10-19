@@ -42,6 +42,16 @@ export interface BlockThread {
 export interface EngineeringBlock {
   /** The block's own opening paragraph, from its write-up. */
   intro?: string;
+  /** Whether the block's threads share one running iteration count
+   * (Genetic engineering: Cloning 1-5 then CRISPR 6-8; Revalorisation:
+   * 1-12 across its five lines of work) or each restart at 1 (Enzymatic
+   * immobilisation, whose two threads are deliberately numbered
+   * independently -- see its own write-up). Irrelevant to a block with a
+   * single thread, which is 1-based either way. Engineering.tsx turns this
+   * into the per-thread `numberFrom` it hands to each DbtlCycle and nav
+   * group; it changes the label only, never the 0-based index the spiral
+   * itself works in. */
+  continuousNumbering?: boolean;
   threads: BlockThread[];
 }
 
@@ -109,6 +119,7 @@ function threads(
 
 export const ENGINEERING_BLOCKS: Record<string, EngineeringBlock> = {
   "genetic-engineering": {
+    continuousNumbering: true,
     threads: threads("genetic-engineering", [
       { key: "cloning", heading: "Cloning", iterations: CLONING_ITERATIONS },
       { key: "crispr", heading: "CRISPR", iterations: CRISPR_ITERATIONS },
@@ -141,6 +152,7 @@ export const ENGINEERING_BLOCKS: Record<string, EngineeringBlock> = {
     ]),
   },
   revalorisation: {
+    continuousNumbering: true,
     intro:
       "The engineering of this block followed a design, build, test and learn cycle around a single goal: to turn the polyphosphate our bacteria accumulate into something of potential value, closing the cycle rather than leaving polyphosphate as a dead end, using commercial polyphosphate here so that the biochemistry could be characterised independently of bead recovery. The open question was where to start and how. It narrowed over twelve iterations, grouped into five lines of work, and in a direction we had not planned: what began as a question about designing a better enzyme became, for most of the season, a question about obtaining a working one. The useful engineering signal was rarely the first result of an experiment. It was how the question we were actually asking changed as each result came in.",
     threads: threads("revalorisation", [
