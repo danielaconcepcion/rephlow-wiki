@@ -2,6 +2,7 @@ import { Fragment, useContext } from "react";
 import type { ReactNode } from "react";
 
 import { CitationScope } from "./citationScope";
+import { asset } from "../../utils/asset";
 
 /**
  * Inline markup for the Results data files, which hold their prose as
@@ -22,7 +23,7 @@ import { CitationScope } from "./citationScope";
  * (see CitationScope); otherwise it is left as the plain text it is.
  */
 
-const TOKEN = /(\\\*|\*{1,3}|\[\d+(?:\s*[,–-]\s*\d+)*\])/g;
+const TOKEN = /(\\\*|\*{1,3}|\[[^\]]+\]\([^)]+\)|\[\d+(?:\s*[,–-]\s*\d+)*\])/g;
 
 function Citation({ raw }: { raw: string }) {
   const scope = useContext(CitationScope);
@@ -80,6 +81,25 @@ function parse(text: string): ReactNode[] {
       // asterisk on screen for any pair-matching reader.
       if (token.length !== 2) italic = !italic;
       if (token.length !== 1) bold = !bold;
+    } else if (/^\[[^\]]+\]\([^)]+\)$/.test(token)) {
+      const link = token.match(/^\[([^\]]+)\]\(([^)]+)\)$/)!;
+      const label = link[1];
+      const rawHref = link[2];
+      const href = /^(?:https?:|mailto:|#|\/)/.test(rawHref)
+        ? rawHref
+        : asset(rawHref);
+      const downloadable = /\.(?:pdf|dna)$/i.test(rawHref);
+      out.push(
+        marked(
+          <a
+            className="lab-wikilink"
+            href={href}
+            download={downloadable || undefined}
+          >
+            <Rich text={label} />
+          </a>,
+        ),
+      );
     } else {
       out.push(marked(<Citation raw={token} />));
     }

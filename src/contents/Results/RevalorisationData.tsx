@@ -48,7 +48,7 @@ const DESIGN_DSM: ResultData = {
       tables: [
         {
           caption:
-            "PROSS designs returned for DHAK from *C. freundii* DSM 30040, from the most conservative (21 substitutions) to the most aggressive (119). **Design 5**, a mid-range option with 56 substitutions (10.4%), was selected for expression. The full list of substitutions for every design is given in the supplementary material.",
+            "PROSS designs returned for DHAK from *C. freundii* DSM 30040, from the most conservative (21 substitutions) to the most aggressive (119). **Design 5**, a mid-range option with 56 substitutions (10.4%), was selected for expression. The full list of substitutions for every design is given in [*Supplementary_PROSS_list_of_mutations.*](supplementary/revalorisation/supplementary-pross-list-of-mutations.pdf)",
           headers: ["Design", "# Mutations", "% Mutations"],
           rows: [
             ["DHAK_3_design_1", "21", "3.91"],
@@ -73,7 +73,7 @@ const DESIGN_DSM: ResultData = {
       ],
       bodyAfter: [
         "**Why design 5.** The nine designs form a ladder, and the standard way to sample it is to order three constructs, one conservative, one intermediate and one aggressive, so that the trade-off between predicted stability and mutational load can be read directly from the bench. **Our budget allowed a single synthetic gene**, so the ladder had to be sampled once. We chose **design 5 (56 substitutions, 10.4%)** as a **mid-range compromise** between predicted stability gain and mutational load, and carried it forward with the wild type as reference. A conservative design risks gaining too little stability to measure, an aggressive one risks losing function outright, and the middle of the range is the position from which either outcome would still be informative.",
-        "**Checking the design before ordering it.** The design was superposed on the wild-type structure in PyMOL [2,3]. The **overall fold is unchanged**, with the K- and L-domains and the dimer interface preserved, and **none of the residues within 4 Å of AMP-PNP, DHA or Mg²⁺ carries a substitution**: the mutations sit on the surface and in the second shell, away from the catalytic and cofactor-binding regions. The server did what it was instructed to do, and the construct entered the bench round as a structurally conservative change on paper.",
+        "**Checking the design before ordering it.** The design was superposed on the wild-type structure in PyMOL [2,3]. The **overall fold is unchanged**, with the K- and L-domains and the dimer interface preserved, and **none of the residues within 4 Å of AMP-PNP, DHA or Mg²⁺ carries a substitution**: the mutations sit on the surface and in the second shell, away from the catalytic and cofactor-binding regions. The server did what it was instructed to do, and the construct entered the bench round as a structurally conservative change on paper. The final sequence is given in [*Suplementary_DHAK-PROSS_DMS 30040.dna.*](supplementary/revalorisation/dhak-pross-dsm-30040-parts.dna)",
       ],
     },
     {
@@ -92,9 +92,9 @@ const DESIGN_DSM: ResultData = {
       id: "pross-cycle-1-reading",
       continued: true,
       interpretation:
-        "That the fold is preserved and the active site untouched is the minimum condition for a design to be worth testing, and it was met. What it does not establish is function: a model superposes well because the backbone is predicted to fold the same way, not because the enzyme still turns over substrate.",
+        "That the fold is preserved and the active site untouched is the minimum condition for a design to be worth testing, and it was met. What it does not establish is function: a model superposes well because the backbone is predicted to fold the same way, not because the enzyme still turns over substrate. **Design 5 proved inactive when expressed** (see [Activity](#activity)), which is not a contradiction of this result but its limit, and it is what redirected the stabilisation effort onto the active CECT 4626 variant.",
       expectation:
-        "**Design 5 proved inactive when expressed**, which is not a contradiction of this result but its limit, and it is what redirected the stabilisation effort onto the active CECT 4626 variant. One process note for future teams: the PROSS server was down on the first attempt and the run had to be repeated, so the selected design comes from the second submission.",
+        "One process note for future teams: the PROSS server was down on the first attempt and the run had to be repeated, so the selected design comes from the second submission.",
     },
   ],
 };
@@ -109,7 +109,7 @@ const DESIGN_CECT: ResultData = {
       body: [
         "**Why a second design, and why on a different sequence.** Two results forced this round. Design 5 showed no measurable activity, so the mutational load carried on the reference sequence had disturbed function. More decisive, the **wild-type DSM 30040 construct was not expressing**, which left us with **no working control**: without an active reference we could not tell whether the inactivity came from the mutations or from the purification. The host laboratory already had an active DHAK, the **CECT 4626** variant, which had been shown to express and work. Moving the stabilisation onto that sequence was not a preference but the only route to a comparison that means anything, since a stabilised variant can only be judged against a wild type that works.",
         "**Why the most conservative design.** Again only one construct could be ordered, and two considerations pointed the same way. The first is the lesson from design 5: 56 substitutions were enough to abolish activity, so the next attempt had to carry far fewer. The second is specific to this round. The final construct does not carry the PROSS mutations alone; it carries them **on top of the ~22 positions at which CECT 4626 naturally differs** from the sequence the design was generated on, so the two sources of variation compound. Choosing **design 1 (21 substitutions, 3.9%)**, the most conservative of the nine, keeps the number of changes added on top of those natural differences to a minimum, so that the stabilised construct stays as close as possible to a sequence already known to be active.",
-        "**Result of the transfer.** The transfer was done position by position between the PROSS 1 design and the natural CECT 4626 sequence, and every differing position was assigned to one of three classes: **natural differences between the two strains**, **PROSS substitutions**, and **positions where a natural difference coincides with a PROSS substitution**. This third class is the most informative, since there the algorithm proposed a residue that evolution had already fixed in the active variant; those positions need no mutation at all and are the best-supported part of the design. A **codon-optimised gene** was generated and ordered for synthesis.",
+        "**Result of the transfer.** The transfer was done position by position between the PROSS 1 design and the natural CECT 4626 sequence, and every differing position was assigned to one of three classes: **natural differences between the two strains**, **PROSS substitutions**, and **positions where a natural difference coincides with a PROSS substitution**. This third class is the most informative, since there the algorithm proposed a residue that evolution had already fixed in the active variant; those positions need no mutation at all and are the best-supported part of the design. A **codon-optimised gene** was generated and ordered for synthesis; the final sequence is given in [*Suplementary_DHAK-PROSS-CECT4626.dna.*](supplementary/revalorisation/dhak-pross-cect-4626.dna)",
       ],
       figures: [
         {
@@ -209,6 +209,7 @@ const DESIGN_CHANNELLING: ResultData = {
 const DESIGN_SUPPLEMENTARY: ResultData = {
   id: "design-supplementary",
   tabLabel: "Supplementary material",
+  tabVariant: "supplementary",
   title: "Supplementary material",
   description:
     "Supporting files for the computational protein design rounds: the complete PROSS mutation list and the wild-type and stabilised DHAK sequences used for DSM 30040 and CECT 4626.",

@@ -10,11 +10,11 @@ import type { RecordTable, ResultData, ResultSubsection } from "./types";
 function Table({ table }: { table: RecordTable & { caption?: string } }) {
   return (
     <div className="result-table">
-      <p className="record-table__caption">
-        <Caption kind="Table" item={table} text={table.caption} />
-      </p>
       <div className="record-table-scroll">
         <table className="record-table">
+          <caption className="record-table__caption">
+            <Caption kind="Table" item={table} text={table.caption} />
+          </caption>
           <thead>
             <tr>
               {table.headers.map((header, index) => (

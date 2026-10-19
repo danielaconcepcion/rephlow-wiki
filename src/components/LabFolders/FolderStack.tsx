@@ -15,12 +15,17 @@ const TAB_SHADE_MIN = 42;
 const TAB_SHADE_MAX = 70;
 
 function accentOverrideFor(folder: FolderDef): AccentStyle | undefined {
-  return folder.variant === "protocols" ? ({ "--folder-accent": "var(--lab-protocols)" } as AccentStyle) : undefined;
+  return folder.variant === "protocols"
+    ? ({ "--folder-accent": "var(--lab-protocols)" } as AccentStyle)
+    : undefined;
 }
 
 function shadeFor(indexInRow: number, rowLength: number): number {
   if (rowLength <= 1) return TAB_SHADE_MIN;
-  return TAB_SHADE_MIN + ((TAB_SHADE_MAX - TAB_SHADE_MIN) * indexInRow) / (rowLength - 1);
+  return (
+    TAB_SHADE_MIN +
+    ((TAB_SHADE_MAX - TAB_SHADE_MIN) * indexInRow) / (rowLength - 1)
+  );
 }
 
 /** Splits folders into two rows balanced by *estimated* label width, not
@@ -44,7 +49,9 @@ function shadeFor(indexInRow: number, rowLength: number): number {
 function splitIntoRows(folders: FolderDef[]): [FolderDef[], FolderDef[]] {
   const CHAR_WIDTH = 6.6;
   const FIXED_BUDGET = 118; // shoulders + horizontal padding + order-number circle, per tab
-  const widths = folders.map((folder) => folder.label.length * CHAR_WIDTH + FIXED_BUDGET);
+  const widths = folders.map(
+    (folder) => folder.label.length * CHAR_WIDTH + FIXED_BUDGET,
+  );
   const total = widths.reduce((sum, w) => sum + w, 0);
 
   let splitIndex = folders.length;
@@ -84,13 +91,21 @@ function TwoRowTabs({
   folders: FolderDef[];
   active: FolderDef;
   ariaLabel: string;
-  renderTab: (folder: FolderDef, indexInRow: number, rowLength: number) => ReactNode;
+  renderTab: (
+    folder: FolderDef,
+    indexInRow: number,
+    rowLength: number,
+  ) => ReactNode;
 }) {
   const [rowA, rowB] = splitIntoRows(folders);
   const rowAIsFront = rowA.some((folder) => folder.id === active.id);
 
   return (
-    <div className="folder-stack__tabgroup" role="tablist" aria-label={ariaLabel}>
+    <div
+      className="folder-stack__tabgroup"
+      role="tablist"
+      aria-label={ariaLabel}
+    >
       {[rowA, rowB].map((row, rowIndex) => {
         const isFront = rowAIsFront ? rowIndex === 0 : rowIndex === 1;
         return (
@@ -102,7 +117,9 @@ function TwoRowTabs({
             key={rowIndex}
           >
             <div className="folder-stack__row-backdrop" aria-hidden="true" />
-            <div className="folder-stack__tabs">{row.map((folder, i) => renderTab(folder, i, row.length))}</div>
+            <div className="folder-stack__tabs">
+              {row.map((folder, i) => renderTab(folder, i, row.length))}
+            </div>
           </div>
         );
       })}
@@ -172,7 +189,9 @@ export function FolderStack({
     if (!container || !measure) return;
     function check() {
       if (!container || !measure) return;
-      setIsOverflowing(measure.scrollWidth > container.clientWidth - OVERFLOW_MARGIN);
+      setIsOverflowing(
+        measure.scrollWidth > container.clientWidth - OVERFLOW_MARGIN,
+      );
     }
     check();
     const observer = new ResizeObserver(check);
@@ -182,7 +201,9 @@ export function FolderStack({
 
   if (!active) return null;
 
-  const backFolders = folders.filter((folder) => folder.id !== active.id).slice(0, MAX_BACK_CARDS);
+  const backFolders = folders
+    .filter((folder) => folder.id !== active.id)
+    .slice(0, MAX_BACK_CARDS);
   const isTwoRow = folders.length >= 2 && isOverflowing;
 
   function renderTab(folder: FolderDef, indexInRow: number, rowLength: number) {
@@ -200,14 +221,16 @@ export function FolderStack({
         id={`folder-tab-${folder.id}`}
         aria-selected={isActive}
         aria-controls={`folder-panel-${folder.id}`}
-        className={`folder-tab${folder.variant === "protocols" ? " folder-tab--protocols" : ""}${
+        className={`folder-tab${folder.variant ? ` folder-tab--${folder.variant}` : ""}${
           isActive ? " is-active" : ""
         }`}
         style={style}
         onClick={() => setActiveId(folder.id)}
       >
         <FolderTabShape className="folder-tab__shape" />
-        {folder.order !== undefined && <span className="folder-tab__number">{folder.order}</span>}
+        {folder.order !== undefined && (
+          <span className="folder-tab__number">{folder.order}</span>
+        )}
         <span className="folder-tab__label">{folder.label}</span>
       </button>
     );
@@ -218,7 +241,11 @@ export function FolderStack({
       {/* Invisible, unwrapped clone of the tab row — see the overflow
           measurement above. Not real tabs: plain divs, no id/aria/click,
           so nothing here duplicates the real tabs' ids or picks up focus. */}
-      <div className="folder-stack__tabs-measure" ref={measureRef} aria-hidden="true">
+      <div
+        className="folder-stack__tabs-measure"
+        ref={measureRef}
+        aria-hidden="true"
+      >
         {folders.map((folder, index) => {
           const style: CSSVarStyle = {
             "--tab-shade": `${shadeFor(index, folders.length)}%`,
@@ -227,11 +254,13 @@ export function FolderStack({
           return (
             <div
               key={folder.id}
-              className={`folder-tab${folder.variant === "protocols" ? " folder-tab--protocols" : ""}`}
+              className={`folder-tab${folder.variant ? ` folder-tab--${folder.variant}` : ""}`}
               style={style}
             >
               <FolderTabShape className="folder-tab__shape" />
-              {folder.order !== undefined && <span className="folder-tab__number">{folder.order}</span>}
+              {folder.order !== undefined && (
+                <span className="folder-tab__number">{folder.order}</span>
+              )}
               <span className="folder-tab__label">{folder.label}</span>
             </div>
           );
@@ -239,10 +268,21 @@ export function FolderStack({
       </div>
 
       {isTwoRow ? (
-        <TwoRowTabs folders={folders} active={active} ariaLabel={ariaLabel} renderTab={renderTab} />
+        <TwoRowTabs
+          folders={folders}
+          active={active}
+          ariaLabel={ariaLabel}
+          renderTab={renderTab}
+        />
       ) : (
-        <div className="folder-stack__tabs" role="tablist" aria-label={ariaLabel}>
-          {folders.map((folder, index) => renderTab(folder, index, folders.length))}
+        <div
+          className="folder-stack__tabs"
+          role="tablist"
+          aria-label={ariaLabel}
+        >
+          {folders.map((folder, index) =>
+            renderTab(folder, index, folders.length),
+          )}
         </div>
       )}
 

@@ -555,6 +555,23 @@
   fill: color-mix(in srgb, var(--lab-protocols) 22%, var(--paper));
 }
 
+/* Supporting files belong to the same scientific block but are not one
+   more experimental step. Keep its hue, with less saturation and contrast. */
+.folder-tab--supplementary .folder-tab__shape path {
+  fill: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--folder-accent) 55%, #aeb2b5) var(--tab-shade, 34%),
+    var(--paper)
+  );
+}
+.folder-tab--supplementary.is-active .folder-tab__shape path {
+  fill: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--folder-accent) 55%, #aeb2b5) 22%,
+    var(--paper)
+  );
+}
+
 @media (max-width: 640px) {
   .folder-tab {
     padding: 0 2.5em;
@@ -1431,6 +1448,8 @@
   color: var(--ink-soft);
   font-size: 0.9rem;
   line-height: 1.55;
+  text-align: left;
+  caption-side: top;
 }
 
 @media (max-width: 640px) {

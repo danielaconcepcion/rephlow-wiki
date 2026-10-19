@@ -18,7 +18,7 @@ export interface FolderDef {
   id: string;
   label: string;
   /** "protocols" gets the fixed cross-block colour instead of the block accent. */
-  variant?: "protocols";
+  variant?: "protocols" | "supplementary";
   content: ReactNode;
   /** 1-indexed position in its own experiment sequence, shown as a small
    * numbered circle before the label so the workflow order reads at a
@@ -358,6 +358,9 @@ export interface ResultSubsection {
 export interface ResultData {
   id: string;
   tabLabel: string;
+  /** Supplementary tabs are unnumbered and use a quieter version of the
+   * block colour so they read as supporting material, not another step. */
+  tabVariant?: "supplementary";
   title: string;
   description?: string;
   /** Results pages state the aim on Experiments rather than per record, so
