@@ -22,6 +22,7 @@ export function SectionTabs({
       {tabs.map((tab) => (
         <button
           key={tab.id}
+          id={`section-tab-${tab.id}`}
           type="button"
           role="tab"
           aria-selected={tab.id === activeId}

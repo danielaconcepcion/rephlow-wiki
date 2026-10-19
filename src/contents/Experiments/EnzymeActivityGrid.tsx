@@ -41,9 +41,6 @@ export function EnzymeActivityGrid({ activities }: { activities: EnzymeActivity[
                 <strong>What we do to it, and why.</strong> {activity.whatWeDo}
               </p>
               <figure className="record-figure enzyme-card__sketch">
-                <div className="record-figure__placeholder" aria-hidden="true">
-                  [ concept sketch placeholder ]
-                </div>
                 <figcaption>{activity.storyboard}</figcaption>
               </figure>
             </div>

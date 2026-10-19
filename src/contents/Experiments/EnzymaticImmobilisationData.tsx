@@ -129,7 +129,12 @@ export const ENZYMATIC_IMMOBILISATION_INTRO: ReactNode[] = [
   </>,
   <>
     <strong>RePhlow</strong> closes this loop with modular spheres whose alginate core holds the engineered
-    phosphorus-accumulating organism (PAO, see the <strong>Genetic engineering</strong> block) and whose surface is{" "}
+    phosphorus-accumulating organism (PAO, see the{" "}
+    <a href="#genetic-engineering" className="lab-wikilink" onClick={(event) => {
+      event.preventDefault();
+      document.getElementById("section-tab-genetic-engineering")?.click();
+    }}><strong>Genetic engineering</strong></a>{" "}
+    block) and whose surface is{" "}
     <strong>functionalised with a panel of phosphohydrolases</strong>. These surface enzymes mineralise organic
     phosphorus into free orthophosphate, which the encapsulated <em>Pseudomonas putida</em> KT2440 then imports and
     locks away as polyphosphate. In other words, this block builds the enzymatic layer that feeds the engineered
