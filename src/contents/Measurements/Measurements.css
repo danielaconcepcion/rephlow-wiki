@@ -1532,3 +1532,76 @@
     border-radius: 22px;
   }
 }
+
+/* Figures: click to enlarge, with the caption (as on Experiments and
+   Results). The cursor is the whole affordance. */
+:where(.ms-page) .record-figure__photo--zoomable {
+  cursor: zoom-in;
+}
+:where(.ms-page) .record-figure__photo--zoomable:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+:where(.ms-page) .figure-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  place-items: center;
+  padding: clamp(12px, 3vw, 40px);
+  background: rgba(8, 25, 31, 0.78);
+  backdrop-filter: blur(8px);
+  cursor: zoom-out;
+}
+:where(.ms-page) .figure-lightbox__figure {
+  max-width: min(1180px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  cursor: default;
+}
+:where(.ms-page) .figure-lightbox__photo {
+  min-height: 0;
+  flex: 1;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  background: var(--paper, #fff);
+}
+:where(.ms-page) .figure-lightbox__caption {
+  flex: 0 0 auto;
+  max-height: 28vh;
+  overflow-y: auto;
+  padding: 14px 18px;
+  border-radius: 10px;
+  background: var(--paper, #fff);
+  color: var(--ink);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  text-align: left;
+}
+:where(.ms-page) .figure-lightbox__title {
+  display: block;
+  margin-bottom: 4px;
+}
+:where(.ms-page) .figure-lightbox__close {
+  position: absolute;
+  top: clamp(10px, 2vw, 22px);
+  right: clamp(10px, 2vw, 22px);
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--ink);
+  font: 400 2rem/1 var(--font-body);
+  cursor: pointer;
+}
+:where(.ms-page) .figure-lightbox__close:hover {
+  background: #fff;
+}

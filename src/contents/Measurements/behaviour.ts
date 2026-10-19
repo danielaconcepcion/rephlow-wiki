@@ -165,6 +165,12 @@ export function initMeasurements(root: HTMLElement): () => void {
     const target = event.target;
     if (!(target instanceof Element)) return;
 
+    // A figure: open it enlarged.
+    if (target instanceof HTMLImageElement && zoomables.includes(target)) {
+      openZoom(target);
+      return;
+    }
+
     // Block pills and the big map's spheres.
     const pill = target.closest<HTMLElement>(".section-tabs__btn");
     if (pill && pills.includes(pill)) {
@@ -264,6 +270,102 @@ export function initMeasurements(root: HTMLElement): () => void {
     }
   }
 
+  /* Figures open full-size on click (or Enter), with their caption, the
+     same way as on the wiki's Experiments and Results pages: closed by the
+     ×, by Escape or by a click on the dark background, with the page's
+     scroll locked while open. */
+  const zoomables = all<HTMLImageElement>(
+    "img.record-figure__photo, img.record-figure-group__photo",
+  );
+  zoomables.forEach((img) => {
+    img.classList.add("record-figure__photo--zoomable");
+    img.setAttribute("role", "button");
+    img.tabIndex = 0;
+    img.setAttribute("aria-label", `${img.alt || "Figure"}: click to enlarge`);
+  });
+
+  let lightbox: HTMLElement | null = null;
+  let previousOverflow = "";
+
+  function closeZoom() {
+    if (!lightbox) return;
+    lightbox.remove();
+    lightbox = null;
+    document.body.style.overflow = previousOverflow;
+    document.removeEventListener("keydown", onZoomKey);
+  }
+
+  function onZoomKey(event: KeyboardEvent) {
+    if (event.key === "Escape") closeZoom();
+  }
+
+  function openZoom(img: HTMLImageElement) {
+    closeZoom();
+    const item = img.closest(".record-figure-group__item");
+    const title = item
+      ?.querySelector(".record-figure-group__item-title")
+      ?.textContent?.trim();
+    const figure = img.closest("figure");
+    const caption = figure?.querySelector(":scope > figcaption");
+
+    const box = document.createElement("div");
+    box.className = "figure-lightbox";
+    box.setAttribute("role", "dialog");
+    box.setAttribute("aria-modal", "true");
+    box.setAttribute("aria-label", img.alt || title || "Figure");
+    box.addEventListener("mousedown", (event) => {
+      if (event.target === box) closeZoom();
+    });
+
+    const close = document.createElement("button");
+    close.type = "button";
+    close.className = "figure-lightbox__close";
+    close.setAttribute("aria-label", "Close the enlarged figure");
+    close.textContent = "×";
+    close.addEventListener("click", closeZoom);
+
+    const fig = document.createElement("figure");
+    fig.className = "figure-lightbox__figure";
+    const photo = document.createElement("img");
+    photo.className = "figure-lightbox__photo";
+    photo.src = img.currentSrc || img.src;
+    photo.alt = img.alt;
+    fig.appendChild(photo);
+    if (title || caption) {
+      const cap = document.createElement("figcaption");
+      cap.className = "figure-lightbox__caption";
+      if (title) {
+        const strong = document.createElement("strong");
+        strong.className = "figure-lightbox__title";
+        strong.textContent = title;
+        cap.appendChild(strong);
+      }
+      if (caption) {
+        Array.from(caption.childNodes).forEach((node) =>
+          cap.appendChild(node.cloneNode(true)),
+        );
+      }
+      fig.appendChild(cap);
+    }
+
+    box.append(close, fig);
+    root.appendChild(box);
+    lightbox = box;
+    previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onZoomKey);
+    close.focus();
+  }
+
+  function onZoomEnter(event: KeyboardEvent) {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const target = event.target;
+    if (target instanceof HTMLImageElement && zoomables.includes(target)) {
+      event.preventDefault();
+      openZoom(target);
+    }
+  }
+
   const miniCleanups: (() => void)[] = [];
   minis.forEach((mini) => {
     setMini(mini, false);
@@ -284,6 +386,7 @@ export function initMeasurements(root: HTMLElement): () => void {
   });
 
   root.addEventListener("click", onClick);
+  root.addEventListener("keydown", onZoomEnter);
   window.addEventListener("scroll", paintMini, { passive: true });
   window.addEventListener("resize", paintMini);
   paintMini();
@@ -293,6 +396,8 @@ export function initMeasurements(root: HTMLElement): () => void {
 
   return () => {
     root.removeEventListener("click", onClick);
+    root.removeEventListener("keydown", onZoomEnter);
+    closeZoom();
     window.removeEventListener("scroll", paintMini);
     window.removeEventListener("resize", paintMini);
     miniCleanups.forEach((cleanup) => cleanup());
