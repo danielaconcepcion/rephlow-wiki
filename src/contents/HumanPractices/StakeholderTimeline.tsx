@@ -3,13 +3,13 @@ import {
   CATEGORIES,
   CATEGORY_DESCRIPTIONS,
   EVENTS,
-  PENDING_ENTRIES,
-  USER_ROWS,
   type Category,
 } from "./StakeholderTimelineData";
 import { AccordionSection } from "./AccordionSection";
+import { StakeholderMatrix } from "./StakeholderMatrix";
 import { VoiceNetworkGlyph } from "./HeroObjects";
 import "./StakeholderTimeline.css";
+import "./StakeholderMatrix.css";
 
 type AccentStyle = CSSProperties & { "--cat-color": string };
 
@@ -48,12 +48,6 @@ export function StakeholderTimeline() {
       return;
     }
 
-    const firstPending = PENDING_ENTRIES.find(
-      (entry) => entry.category === category,
-    );
-    document
-      .getElementById(`hp-timeline-pending-${firstPending?.id}`)
-      ?.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
   useEffect(() => {
@@ -222,41 +216,8 @@ export function StakeholderTimeline() {
         </div>
       </div>
 
-      <div className="hp-timeline-pending">
-        <h4>Pending stakeholder entries</h4>
-        <p className="hp-timeline-pending__note">
-          These entries are referenced in our records but are missing a
-          confirmed date, name or full write-up. Flagged here rather than
-          filled in.
-        </p>
-        <ul>
-          {PENDING_ENTRIES.map((entry) => (
-            <li
-              key={entry.id}
-              id={`hp-timeline-pending-${entry.id}`}
-              className="hp-timeline-pending__item"
-              style={
-                { "--cat-color": CATEGORY_COLOR[entry.category] } as AccentStyle
-              }
-            >
-              <span className="hp-timeline-pending__dot" aria-hidden="true" />
-              <div>
-                <p className="hp-timeline-pending__name">
-                  {entry.name}{" "}
-                  <span className="hp-timeline-pending__category">
-                    · {entry.category}
-                  </span>
-                </p>
-                <p className="hp-timeline-pending__status">{entry.status}</p>
-                <p className="hp-timeline-pending__body">{entry.note}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-
       <div className="hp-users" id="s2-users">
-        <h3>Communities and potential users: summary table</h3>
+        <h3>Communities and potential users</h3>
         <p>
           As our Human Practices route expanded, we realised that asking whether
           rePhlow could remove and recover phosphorus was only part of the
@@ -281,28 +242,7 @@ export function StakeholderTimeline() {
           final user, but as a system that must create value, and avoid
           transferring risk, across several connected communities.
         </p>
-        <div className="hp-users__table-wrap">
-          <table className="hp-users__table">
-            <thead>
-              <tr>
-                <th>Stakeholder</th>
-                <th>Relationship with rePhlow</th>
-                <th>What matters most to them</th>
-                <th>What rePhlow must demonstrate</th>
-              </tr>
-            </thead>
-            <tbody>
-              {USER_ROWS.map((row) => (
-                <tr key={row.stakeholder}>
-                  <td>{row.stakeholder}</td>
-                  <td>{row.relationship}</td>
-                  <td>{row.matters}</td>
-                  <td>{row.mustDemonstrate}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <StakeholderMatrix />
         <h4>From one user to a network of users</h4>
         <p>
           This mapping reinforced a conclusion that emerged repeatedly

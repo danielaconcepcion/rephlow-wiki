@@ -4,7 +4,8 @@ import App from "./containers/App/App.tsx";
 import { BrowserRouter } from "react-router-dom";
 
 // Self-hosted replacements for the fonts.googleapis.com import the static
-// site used to load at runtime (Space Grotesk 500/600/700, Inter 400/500/600).
+// site used to load at runtime (Space Grotesk 500/600/700, Inter 400/500/600),
+// plus Kalam 400/700, the chalk hand on the Education & Communication board.
 // Vite bundles these into the build output, so no third-party font request
 // is made in production.
 import "@fontsource/space-grotesk/500.css";
@@ -13,6 +14,10 @@ import "@fontsource/space-grotesk/700.css";
 import "@fontsource/inter/400.css";
 import "@fontsource/inter/500.css";
 import "@fontsource/inter/600.css";
+import "@fontsource/kalam/latin-400.css";
+import "@fontsource/kalam/latin-ext-400.css";
+import "@fontsource/kalam/latin-700.css";
+import "@fontsource/kalam/latin-ext-700.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

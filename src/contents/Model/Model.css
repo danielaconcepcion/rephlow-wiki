@@ -6,8 +6,22 @@
    --section-nav-offset) — no new typography scale or layout system for the
    page chrome. The graph's own node/edge subsystem colors are generated
    programmatically in MetabolicNetworkGraph.tsx, since they encode a
-   categorical value (68 subsystems) with no natural fixed palette size.
+   categorical value (subsystem count varies per scenario) with no natural
+   fixed palette size.
    -------------------------------------------------------------------------- */
+
+/* Relative anchor for ModelBackground.tsx's absolutely-positioned decor
+   layer, sized to the full page-with-section-nav box (nav column and
+   content column both), sitting behind everything at z-index 0. */
+.model-page {
+  position: relative;
+}
+
+.model-page > .page-with-section-nav {
+  position: relative;
+  z-index: 1;
+}
+
 .model-network {
   padding: 6vh 20px 10vh;
   max-width: 1120px;
@@ -16,9 +30,8 @@
 }
 
 .model-network__intro {
-  max-width: 720px;
-  margin: 0 auto 32px;
-  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
 }
 
 .model-network__intro h2 {
@@ -30,6 +43,243 @@
   margin-top: 12px;
   color: var(--ink-soft);
   line-height: 1.65;
+  text-align: justify;
+  hyphens: none;
+}
+
+.model-network__subsection {
+  margin-top: 32px;
+  scroll-margin-top: var(--section-nav-offset);
+}
+
+.model-network__subsection > h3 {
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+
+.model-network__figure {
+  margin: 32px 0 0;
+}
+
+.model-network__figure figcaption {
+  max-width: 760px;
+  margin: 12px auto 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.model-network__figure figcaption strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+/* Section 3's static 2D charts (production envelopes, flux-change bars):
+   reused as-is from the notebook's own matplotlib export rather than
+   restyled, so they're kept at a contained, native-ish width instead of
+   stretching to the page's full 1120px measure. */
+.model-network__figure--compact {
+  max-width: 640px;
+  margin: 32px auto 0;
+}
+.model-network__figure--compact img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+}
+/* Figure 4b: a secondary normalization control, deliberately smaller than
+   the primary Figure 4a so it doesn't compete for attention. */
+.model-network__figure--small {
+  max-width: 420px;
+}
+/* Figure 6 (FVA | sampling): a wide two-panel comparison. */
+.model-network__figure--fva {
+  max-width: 860px;
+}
+
+.model-network__figure-caption-standalone {
+  max-width: 900px;
+  margin: 12px auto 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: center;
+}
+.model-network__figure-caption-standalone strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+/* Figures 4a/4b: a single side-by-side comparison rather than two
+   sequential figures. The simultaneous view (equal-molar vs. equal-carbon
+   uptake) is itself the argument, so both panels always render together,
+   sharing one legend and one synthesis paragraph below — no carousel/tab
+   control, since the comparison only works when both are visible at once. */
+.model-network__compare {
+  max-width: 1080px;
+  margin: 32px auto 0;
+}
+
+.model-network__compare-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.model-network__compare-panel {
+  min-width: 0;
+  padding: 0 28px;
+}
+
+.model-network__compare-panel + .model-network__compare-panel {
+  border-left: 1px solid var(--line);
+}
+
+.model-network__compare-panel h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+.model-network__compare-condition {
+  margin: 4px 0 16px;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.model-network__compare-panel figure {
+  margin: 0;
+}
+
+.model-network__compare-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 12px;
+}
+
+.model-network__compare-panel figcaption {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.model-network__compare-panel figcaption strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+.model-network__compare-reading {
+  margin: 14px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  text-align: justify;
+  hyphens: none;
+}
+
+.model-network__compare-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
+  max-width: 900px;
+  margin: 24px auto 0;
+}
+
+.model-network__compare-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.model-network__compare-legend-swatch {
+  width: 18px;
+  height: 3px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.model-network__compare-synthesis {
+  max-width: 760px;
+  margin: 20px auto 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  line-height: 1.65;
+  text-align: justify;
+  hyphens: none;
+}
+
+.model-network__compare-synthesis strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+@media (max-width: 700px) {
+  .model-network__compare-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .model-network__compare-panel {
+    padding: 0;
+  }
+  .model-network__compare-panel + .model-network__compare-panel {
+    padding-top: 28px;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+}
+
+/* Sibling of .model-network__intro for content that needs more than 760px
+   (the factor explorer's figures, the conclusions table) — same idea as
+   ProjectDescription's .vsi-wrap: a wider column for the parts that need
+   it, without widening the page's normal prose measure. */
+.model-network__wide {
+  max-width: 1120px;
+  margin-inline: auto;
+}
+
+.model-network__table-scroll {
+  max-width: 1000px;
+  margin: 20px auto 0;
+  overflow-x: auto;
+}
+
+.model-network__table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.model-network__table th,
+.model-network__table td {
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.model-network__table th {
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper-soft);
+}
+.model-network__table td {
+  color: var(--ink-soft);
 }
 
 .model-network__graph {
@@ -49,7 +299,9 @@
 .model-network__canvas-area {
   position: relative;
   flex: 1 1 auto;
-  min-height: 0; /* let this flex child shrink below the slider bar's height */
+  min-height: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .model-network__canvas {
@@ -60,157 +312,51 @@
   touch-action: none;
 }
 
-/* Objective-function control — the equation is the actual content (what's
-   being maximized, in the model's own terms); the track beneath it is
-   deliberately small and secondary, just the input for those coefficients.
-   Lives as a toolbar strip *inside* the same bordered/shadowed card as the
-   canvas (a flex sibling of .model-network__canvas-area, separated only by
-   a hairline) rather than floating above it, and everything is centered as
-   one compact block instead of stretching edge-to-edge. */
-.model-network__objective {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  padding: 16px 20px 14px;
-  border-bottom: 1px solid var(--line);
-  background: var(--paper);
-  user-select: none;
-}
-
-.model-network__objective-equation {
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: center;
-  column-gap: 0.45em;
-  row-gap: 2px;
-  font-family: var(--font-display);
-  font-size: clamp(0.92rem, 1.9vw, 1.05rem);
-  color: var(--ink);
-  text-align: center;
-}
-
-.model-network__objective-keyword {
-  font-size: 0.72em;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-
-.model-network__objective-term {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.3em;
-}
-
-.model-network__objective-coef {
-  display: inline-block;
-  min-width: 2.3em;
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.model-network__objective-operator {
-  color: var(--ink-soft);
-}
-
-.model-network__objective-var {
-  font-style: italic;
-}
-
-.model-network__objective-slider-track {
-  position: relative;
-  width: 100%;
-  max-width: 220px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  touch-action: none;
-}
-
-.model-network__objective-slider-track:focus-visible {
-  outline: none; /* the handle itself shows focus, see below */
-}
-
-.model-network__objective-slider-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 4px;
-  border-radius: 999px;
-  background: var(--line);
-  box-shadow: inset 0 1px 2px rgba(27, 35, 64, 0.12);
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
-.model-network__objective-slider-tick {
-  position: absolute;
-  top: 50%;
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--paper);
-  border: 2px solid var(--ink-soft);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  transition: transform 0.15s ease;
-}
-
-.model-network__objective-slider-tick[data-disabled] {
-  opacity: 0.4;
-}
-
-.model-network__objective-slider-handle {
-  position: absolute;
-  top: 50%;
-  width: 16px;
-  height: 16px;
-  border-radius: 999px;
-  background: var(--ink);
-  border: 3px solid var(--paper);
-  box-shadow: var(--shadow-soft);
-  transform: translate(-50%, -50%);
-  transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1), transform 0.15s ease;
-  /* The track (its positioned parent) owns all pointer interaction *and*
-     keyboard focus (role="slider" in MetabolicNetworkGraph.tsx) — the
-     handle stays click-through and is purely a visual indicator. */
-  pointer-events: none;
-}
-
-/* Hover/focus feedback signals "this is a control you can grab", not just
-   a static readout. */
-@media (hover: hover) {
-  .model-network__objective-slider-track:hover .model-network__objective-slider-handle {
-    transform: translate(-50%, -50%) scale(1.15);
-  }
-}
-
-.model-network__objective-slider-track:active .model-network__objective-slider-handle {
-  transform: translate(-50%, -50%) scale(1.05);
-}
-
-.model-network__objective-slider-track:focus-visible .model-network__objective-slider-handle {
-  outline: 2px solid var(--ink);
-  outline-offset: 3px;
-}
-
 .model-network__status {
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   margin: 0;
+  padding: 24px;
+  text-align: center;
   color: var(--ink-soft);
   font-size: 0.9rem;
+  background: var(--paper-soft);
+}
+
+.model-network__status--infeasible strong {
+  font-family: var(--font-display);
+  color: var(--phosphate);
+  font-size: 1rem;
+}
+
+.model-network__loading-pill,
+.model-network__error-pill {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 6;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-soft);
+}
+
+.model-network__loading-pill {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+
+.model-network__error-pill {
+  background: rgba(226, 84, 45, 0.12);
+  color: var(--phosphate);
+  border: 1px solid rgba(226, 84, 45, 0.3);
 }
 
 .model-network__tooltip {
@@ -241,9 +387,344 @@
   color: var(--ink-soft);
 }
 
+/* --------------------------------------------------------------------------
+   Filters sidebar — overlaid inside the graph card, right-aligned, never
+   affecting the page's own layout (it's position:absolute within
+   .model-network__canvas-area, which is already position:relative). Reuses
+   the same paper/line/shadow/radius tokens as every other card-like surface
+   on the wiki rather than inventing a new panel style.
+   -------------------------------------------------------------------------- */
+.model-network__sidebar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 10;
+  width: 272px;
+  max-width: calc(100% - 28px);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.model-network__sidebar.is-collapsed {
+  bottom: auto;
+}
+
+.model-network__sidebar-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 10px 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.model-network__sidebar-title {
+  flex: 1 1 auto;
+  font: 600 0.82rem var(--font-display);
+  color: var(--ink);
+}
+
+.model-network__sidebar-chevron,
+.model-network__sidebar-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+.model-network__sidebar-chevron:hover,
+.model-network__sidebar-icon-btn:hover {
+  background: rgba(27, 35, 64, 0.06);
+  color: var(--ink);
+}
+.model-network__sidebar-chevron:focus-visible,
+.model-network__sidebar-icon-btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+.model-network__sidebar-chevron svg {
+  transition: transform 0.15s ease;
+}
+.model-network__sidebar-chevron:not(.is-expanded) svg {
+  transform: rotate(-90deg);
+}
+
+.model-network__sidebar-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* --- Optimization priority: always visible, above the accordions --- */
+.model-network__sidebar-priority-title {
+  margin: 0 0 8px;
+  font: 700 0.68rem var(--font-body);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* --- Discrete slider, shared by the priority row and every
+   perturbation-value row. --- */
+.model-network__slider-track {
+  position: relative;
+  width: 100%;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  touch-action: none;
+}
+.model-network__slider-track:focus-visible {
+  outline: none; /* the handle itself shows focus, see below */
+}
+.model-network__slider-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--line);
+  box-shadow: inset 0 1px 2px rgba(27, 35, 64, 0.12);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.model-network__slider-tick {
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--paper);
+  border: 2px solid var(--ink-soft);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.model-network__slider-handle {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--ink);
+  border: 2px solid var(--paper);
+  box-shadow: var(--shadow-soft);
+  transform: translate(-50%, -50%);
+  transition: left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .model-network__slider-track:hover .model-network__slider-handle {
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+.model-network__slider-track:focus-visible .model-network__slider-handle {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.model-network__slider-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.model-network__slider-label {
+  font: 500 0.66rem var(--font-body);
+  color: var(--ink-soft);
+}
+.model-network__slider-label.is-active {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* --- Accordion: at most one section open at a time (enforced in
+   ScenarioSidebar.tsx, not by CSS) --- */
+.model-network__sidebar-accordion {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.model-network__accordion-section + .model-network__accordion-section {
+  border-top: 1px solid var(--line);
+}
+.model-network__accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 2px;
+  border: none;
+  background: transparent;
+  font: 600 0.78rem var(--font-body);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+.model-network__accordion-trigger:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.model-network__accordion-chevron {
+  flex: none;
+  color: var(--ink-soft);
+  transition: transform 0.15s ease;
+}
+.model-network__accordion-chevron.is-open {
+  transform: rotate(90deg);
+}
+.model-network__accordion-content {
+  padding: 0 2px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.model-network__row-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.model-network__row-select--column {
+  flex-direction: column;
+}
+.model-network__nested-control {
+  padding-left: 9px;
+  border-left: 1px solid var(--line);
+}
+.model-network__row-btn {
+  flex: 1 1 auto;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  font: 600 0.72rem var(--font-body);
+  color: var(--ink-soft);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  text-align: left;
+}
+.model-network__row-select:not(.model-network__row-select--column)
+  .model-network__row-btn {
+  align-items: center;
+  text-align: center;
+}
+.model-network__row-btn:hover {
+  border-color: var(--water-mid);
+  color: var(--ink);
+}
+.model-network__row-btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+.model-network__row-btn.is-active {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+.model-network__row-select--secondary {
+  gap: 5px;
+}
+.model-network__row-select--secondary .model-network__row-btn {
+  padding: 5px 8px;
+}
+.model-network__row-select--secondary .model-network__row-btn:hover {
+  border-color: rgba(74, 81, 112, 0.28);
+}
+.model-network__row-select--secondary .model-network__row-btn.is-active {
+  border-color: rgba(74, 81, 112, 0.28);
+  background: rgba(74, 81, 112, 0.14);
+  color: var(--ink);
+}
+.model-network__row-btn-note {
+  font-weight: 400;
+  font-size: 0.92em;
+  color: inherit;
+  opacity: 0.75;
+}
+
+.model-network__sidebar-unit,
+.model-network__sidebar-note {
+  margin: 0;
+  font: 400 0.68rem var(--font-body);
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* --- Predicted state: always visible, small type, end of panel --- */
+.model-network__predicted-state {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.model-network__predicted-state-title {
+  margin: 0 0 8px;
+  font: 700 0.68rem var(--font-body);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.model-network__predicted-state dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.model-network__predicted-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.72rem;
+}
+.model-network__predicted-row dt {
+  color: var(--ink-soft);
+}
+.model-network__predicted-row dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: right;
+}
+.model-network__predicted-row dd.is-infeasible {
+  color: var(--phosphate);
+}
+
 @media (max-width: 640px) {
   .model-network__graph {
     height: 60vh;
     min-height: 340px;
+  }
+
+  /* Drawer: wider, docked to the same card rather than floating free —
+     canvas and its touch interactions are completely untouched, only the
+     filters panel's own footprint changes. */
+  .model-network__sidebar {
+    top: 8px;
+    right: 8px;
+    left: 8px;
+    bottom: 8px;
+    width: auto;
+    max-width: none;
+  }
+
+  .model-network__sidebar.is-collapsed {
+    bottom: auto;
   }
 }

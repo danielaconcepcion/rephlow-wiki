@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { AccordionSection } from "./AccordionSection";
 import { RouteProgressGlyph } from "./HeroObjects";
-import { ProjectBlockLink } from "./ProjectBlockLink";
+import { ProjectBlockLink } from "../../components/ProjectBlockLink";
 import type { BlockId } from "../../components/OurSolutionVisualIndex/blocks";
 import "./ImplementationCheckpoints.css";
 
@@ -976,7 +976,7 @@ const RELATED_PAGES: Record<string, string> = {
   Safety: "/safety",
   Entrepreneurship: "/entrepreneurship",
   "Project description": "/project-description",
-  Measurement: "/measurements",
+  Measurement: "/measurement",
   Engineering: "/engineering",
   Results: "/results",
 };

@@ -1,0 +1,38 @@
+/* --------------------------------------------------------------------------
+   ModelBackground — decorative white molecule field behind the Model page
+   (see ModelBackground.tsx). "Edge" family, "secondary" palette from the
+   MoleculeField design system component.
+
+   The background wash is restructured (not just tweaked) from the
+   original diagonal secondary recipe: that diagonal linear-gradient put
+   its strongest blue (alpha .39) across the middle of the page, which is
+   why the page read as "mostly blue" overall. It's replaced here with one
+   symmetric left-to-right gradient that puts the strong blue only at the
+   outer edges, easing down — smoothly, no hard stop — to a warm, low-
+   alpha centre. The two radial corner glows (the palette's other
+   atmospheric accent) are unchanged, and still carry a trace of blue
+   toward the centre from the bottom-left corner, so the middle is
+   lighter/warmer without ever going flat white.
+   -------------------------------------------------------------------------- */
+.mfbg-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(130% 110% at 92% 2%, rgba(255, 250, 241, 0.66), rgba(255, 255, 255, 0) 58%),
+    radial-gradient(100% 90% at 4% 96%, rgba(134, 177, 209, 0.28), rgba(255, 255, 255, 0) 62%),
+    linear-gradient(
+      to right,
+      rgba(43, 108, 175, 0.34) 0%,
+      rgba(43, 108, 175, 0.13) 22%,
+      rgba(255, 250, 241, 0.62) 50%,
+      rgba(43, 108, 175, 0.13) 78%,
+      rgba(43, 108, 175, 0.34) 100%
+    );
+}
+
+.mfbg-decor {
+  will-change: transform;
+}

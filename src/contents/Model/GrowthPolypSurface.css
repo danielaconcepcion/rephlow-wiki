@@ -1,0 +1,56 @@
+/* --------------------------------------------------------------------------
+   GrowthPolypSurface — the Growth x Pi x PolyP 3D view (Model.tsx, section
+   3.1). Reuses global tokens only (--ink-soft, --line, --radius-lg,
+   --radius-md, --paper, --paper-soft, --shadow-card). The interactive WebGL
+   view and the static image are mutually exclusive by breakpoint, not both
+   shown at once: >=640px shows the rotatable Plotly surface; below that,
+   the notebook's own static render (gl3d touch support is inconsistent
+   enough on small/older devices to make a plain image the safer default).
+   -------------------------------------------------------------------------- */
+
+.growth-polyp-surface {
+  margin: 20px 0 0;
+}
+
+.growth-polyp-surface__interactive {
+  display: none;
+  width: 100%;
+  height: 62vh;
+  min-height: 420px;
+  max-height: 620px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper-soft);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.growth-polyp-surface__status {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px;
+  color: var(--ink-soft);
+}
+
+.growth-polyp-surface__static img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: 16px;
+}
+
+@media (min-width: 640px) {
+  .growth-polyp-surface__interactive {
+    display: flex;
+  }
+  .growth-polyp-surface__static {
+    display: none;
+  }
+}

@@ -1,15 +1,17 @@
+import type { Award } from "./components/AwardBadge";
 import {
   Home,
+  Design,
+  Protocols,
+  Sponsors,
   Team,
   Medals,
   ProjectDescription,
-  Design,
   Engineering,
   Model,
   Hardware,
   Experiments,
   Measurements,
-  Protocols,
   Results,
   Safety,
   HumanPractices,
@@ -18,8 +20,7 @@ import {
   Entrepreneurship,
   Sustainability,
   Contribution,
-  Attributions,
-  Sponsors,
+  ContentPatterns,
 } from "./contents";
 
 export interface Page {
@@ -37,6 +38,19 @@ export interface Page {
    * shared generic Header (page-shell > page-hero) is skipped for them.
    */
   hideHeader?: boolean;
+  hideEyebrow?: boolean;
+  /** Shrinks page-hero's padding/min-height so the header sits close to
+   * whatever comes right below it (e.g. Engineering/Experiments' ecosystem
+   * map, meant to fit in the initial viewport together with the header). */
+  compactHero?: boolean;
+  labHero?: boolean;
+  /** Opt-in "molecule field" header background (see Header.tsx) — the
+   * Claude Design MoleculeField edge/light treatment, currently used only
+   * by Experiments and Results. The number just seeds the composition. */
+  moleculeSeed?: number;
+  /** Medals and special prizes this page is judged for; Header renders
+   * them as badges above the title. */
+  awards?: Award[];
 }
 
 const Pages: Page[] = [
@@ -56,7 +70,11 @@ const Pages: Page[] = [
     /*An overview of the problem, motivation, and goals behind rePhlow.*/
     path: "/project-description",
     component: ProjectDescription,
+    hideEyebrow: true,
     docTitle: "Project Description — rePhlow iGEM Wiki",
+    awards: [{ label: "Bronze Medal", variant: "bronze" }],
+    labHero: true,
+    moleculeSeed: 17,
   },
   {
     name: "Design",
@@ -66,6 +84,9 @@ const Pages: Page[] = [
     path: "/design",
     component: Design,
     docTitle: "Design — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 13,
   },
   {
     name: "Engineering",
@@ -75,6 +96,10 @@ const Pages: Page[] = [
     path: "/engineering",
     component: Engineering,
     docTitle: "Engineering — rePhlow iGEM Wiki",
+    awards: [{ label: "Silver Medal", variant: "silver" }],
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 29,
   },
   {
     name: "Model",
@@ -102,15 +127,26 @@ const Pages: Page[] = [
     path: "/experiments",
     component: Experiments,
     docTitle: "Experiments — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 23,
   },
   {
     name: "Measurements",
     title: "Measurements",
     lead: "Measure. Understand. Improve.",
     /*A space for the measurements, characterization, and data collected during the project.*/
+    // iGEM's standard URL for the measurement award page is
+    // https://2026.igem.wiki/<team>/measurement — singular, and judged at
+    // that address, so that is where this page lives. /measurements still
+    // resolves to it (see App.tsx).
     path: "/measurement",
     component: Measurements,
     docTitle: "Measurements — rePhlow iGEM Wiki",
+    awards: [{ label: "Best Measurement", variant: "prize" }],
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 17,
   },
   {
     name: "Protocols",
@@ -120,6 +156,9 @@ const Pages: Page[] = [
     path: "/protocols",
     component: Protocols,
     docTitle: "Protocols — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 37,
   },
   {
     name: "Results",
@@ -129,24 +168,36 @@ const Pages: Page[] = [
     path: "/results",
     component: Results,
     docTitle: "Results — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 45,
   },
   {
     name: "Safety",
     title: "Safety",
     lead: "Responsible research.",
     /*A space for safety considerations, risk assessment, and responsible laboratory practices.*/
-    path: "/safety-and-security",
+    path: "/safety",
     component: Safety,
     docTitle: "Safety — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 61,
   },
   {
     name: "Human practices",
     title: "Human Practices",
     lead: "Science shaped by society.",
-    hideHeader: true,
     path: "/human-practices",
     component: HumanPractices,
     docTitle: "Human Practices — The Phosphorus Route — rePhlow iGEM Wiki",
+    awards: [
+      { label: "Silver Medal", variant: "silver" },
+      { label: "Best Integrated Human Practices", variant: "prize" },
+    ],
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 41,
   },
   {
     name: "Collaboration and Partnership",
@@ -156,15 +207,21 @@ const Pages: Page[] = [
     path: "/collaboration-partnership",
     component: CollaborationPartnership,
     docTitle: "Collaboration and Partnership — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 23,
   },
   {
     name: "Education and Communication",
     title: "Education and Communication",
     lead: "Learn. Share. Inspire.",
     /*A space for outreach, education, and communication activities.*/
-    path: "/education",
+    path: "/education-communication",
     component: EducationCommunication,
     docTitle: "Education and Communication — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 31,
   },
   {
     name: "Entrepreneurship",
@@ -183,6 +240,12 @@ const Pages: Page[] = [
     path: "/sustainability",
     component: Sustainability,
     docTitle: "Sustainability — rePhlow iGEM Wiki",
+    awards: [
+      { label: "Best Sustainable Development Impact", variant: "prize" },
+    ],
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 37,
   },
   {
     name: "Contribution",
@@ -192,6 +255,7 @@ const Pages: Page[] = [
     path: "/contribution",
     component: Contribution,
     docTitle: "Contribution — rePhlow iGEM Wiki",
+    awards: [{ label: "Bronze Medal", variant: "bronze" }],
   },
   {
     name: "Team",
@@ -203,15 +267,6 @@ const Pages: Page[] = [
     hideHeader: true,
   },
   {
-    name: "Attributions",
-    title: "Attributions",
-    lead: "Credit where it's due.",
-    /*A space for acknowledging the work and responsibilities of team members and contributors.*/
-    path: "/attributions",
-    component: Attributions,
-    docTitle: "Attributions — rePhlow iGEM Wiki",
-  },
-  {
     name: "Sponsors",
     title: "Sponsors",
     lead: "Made possible together.",
@@ -219,14 +274,33 @@ const Pages: Page[] = [
     path: "/sponsors",
     component: Sponsors,
     docTitle: "Sponsors — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 67,
   },
   {
     name: "Medals",
     title: "Medals",
-    lead: "",
+    lead: "A map of rePhlow's evidence for the 2026 medal criteria.",
     path: "/medals",
     component: Medals,
     docTitle: "Medals — rePhlow iGEM Wiki",
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 53,
+  },
+  {
+    // Internal reference page, deliberately not listed in Navbar.tsx's
+    // NAV_GROUPS — reachable only by direct URL. A catalogue of the
+    // wiki's own content patterns (tables, figures, math, code, cards,
+    // ...), meant as a starting point for still-mostly-empty pages, not
+    // as judged wiki content.
+    name: "Content Patterns",
+    title: "Content Patterns",
+    lead: "A field guide to how this wiki is built.",
+    path: "/content-patterns",
+    component: ContentPatterns,
+    docTitle: "Content Patterns — rePhlow iGEM Wiki (internal)",
     hideHeader: true,
   },
 ];

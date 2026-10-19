@@ -24,7 +24,6 @@ const NAV_GROUPS: NavGroup[] = [
     label: "Project",
     items: [
       { label: "Project description", path: "/project-description" },
-      { label: "Design", path: "/design" },
       { label: "Engineering", path: "/engineering" },
       { label: "Model", path: "/model" },
       { label: "Hardware", path: "/hardware" },
@@ -35,17 +34,22 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { label: "Experiments", path: "/experiments" },
       { label: "Measurements", path: "/measurement" },
-      { label: "Protocols", path: "/protocols" },
       { label: "Results", path: "/results" },
-      { label: "Safety", path: "/safety-and-security" },
+      { label: "Safety", path: "/safety" },
     ],
   },
   {
     label: "Engagement",
     items: [
       { label: "Human practices", path: "/human-practices" },
-      { label: "Collaboration and Partnership", path: "/collaboration-partnership" },
-      { label: "Education and Communication", path: "/education" },
+      {
+        label: "Collaboration and Partnership",
+        path: "/collaboration-partnership",
+      },
+      {
+        label: "Education and Communication",
+        path: "/education-communication",
+      },
       { label: "Entrepreneurship", path: "/entrepreneurship" },
       { label: "Sustainability", path: "/sustainability" },
       { label: "Contribution", path: "/contribution" },
@@ -53,11 +57,7 @@ const NAV_GROUPS: NavGroup[] = [
   },
   {
     label: "Team",
-    items: [
-      { label: "Team", path: "/team" },
-      { label: "Attributions", path: "/attributions" },
-      { label: "Sponsors", path: "/sponsors" },
-    ],
+    items: [{ label: "Team", path: "/team" }],
   },
   {
     label: "Judging",

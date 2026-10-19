@@ -51,7 +51,7 @@ export function Footer() {
               </a>
               <a
                 className="site-footer__social"
-                href="mailto:rephlow@ucm.com"
+                href="mailto:rephlow@example.com"
                 aria-label="Email"
               >
                 <svg

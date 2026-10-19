@@ -1,0 +1,26 @@
+/* Moved from HumanPractices.css (was .hp-project-block-link, fixed to the
+   Human Practices page's own colour variable) — same visual recipe, now
+   under the generic name and driven by --related-link-color so any page
+   can set its own accent per link. */
+
+.related-page-link {
+  color: var(--related-link-color);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--related-link-color) 45%, transparent);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.related-page-link:hover,
+.related-page-link:focus-visible {
+  color: color-mix(in srgb, var(--related-link-color) 78%, var(--ink));
+  border-bottom-color: currentColor;
+}
+
+.related-page-link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}

@@ -134,6 +134,11 @@
 .team-card--purple { background: linear-gradient(160deg, rgba(226, 215, 240, 0.62), rgba(226, 215, 240, 0.28)); }
 .team-card--green  { background: linear-gradient(160deg, rgba(214, 234, 210, 0.62), rgba(214, 234, 210, 0.28)); }
 .team-card--blue   { background: linear-gradient(160deg, rgba(198, 224, 244, 0.62), rgba(198, 224, 244, 0.28)); }
+/* Light coral — same treatment as the other tints (160deg, 0.62/0.28 alpha
+   over the same base RGB), just tuned to a pale version of --phosphate
+   (#E2542D) instead of a hand-picked hue, at roughly .team-card--pink's own
+   lightness/saturation so Hardware's card reads as "light" the same way. */
+.team-card--coral  { background: linear-gradient(160deg, rgba(252, 189, 172, 0.62), rgba(252, 189, 172, 0.28)); }
 .team-card--yellow { background: linear-gradient(160deg, rgba(255, 240, 199, 0.62), rgba(255, 240, 199, 0.28)); }
 .team-card--gray   { background: linear-gradient(160deg, rgba(228, 229, 233, 0.62), rgba(228, 229, 233, 0.28)); }
 

@@ -2,6 +2,22 @@
    hierarchy). Each section's own CSS file (WhyPhosphorus.css,
    DesignCompass.css, etc.) owns its visual identity. */
 
+/* The page's opening paragraph, under the shared lab hero (the same hero
+   Collaboration and Partnership uses): the editorial column and justified
+   setting of .cp-notion-intro. */
+.hp-page-intro {
+  max-width: 820px;
+  /* Clear of the hero above it, rather than tight under the lede. */
+  margin: 38px auto 0;
+  padding: 0 20px;
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.72;
+  text-align: justify;
+  text-align-last: center;
+  hyphens: auto;
+}
+
 .human-practices-sections {
   display: flex;
   flex-direction: column;
@@ -21,27 +37,8 @@
   border-top: 1px solid var(--line);
 }
 
-.hp-project-block-link {
-  color: var(--hp-block-color);
-  font-weight: 700;
-  text-decoration: none;
-  border-bottom: 1px solid
-    color-mix(in srgb, var(--hp-block-color) 45%, transparent);
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.hp-project-block-link:hover,
-.hp-project-block-link:focus-visible {
-  color: color-mix(in srgb, var(--hp-block-color) 78%, var(--ink));
-  border-bottom-color: currentColor;
-}
-
-.hp-project-block-link:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 3px;
-}
+/* .hp-project-block-link moved to src/components/ProjectBlockLink.css as
+   the generic .related-page-link (see ProjectBlockLink.tsx). */
 
 /* :first-of-type (not :first-child) so this still targets whichever
    .hp-section is visually first even with the RouteIndex block, which is
@@ -108,7 +105,6 @@
 .hp-compass__area > p:not(.hp-central-question),
 .hp-compass__intro,
 .hp-compass__prose,
-.hp-timeline-pending,
 .hp-users > h3,
 .hp-users > h4,
 .hp-users > p,
@@ -138,7 +134,6 @@
 .hp-timeline__panel
   > p:not(.hp-timeline__question):not(.hp-timeline__panel-meta),
 .hp-timeline__readmore p,
-.hp-timeline-pending__note,
 .hp-users > p,
 .hp-stop__content > p:not(.hp-stop__evidence-boundary):not(.hp-stop__crosslink),
 .hp-stepper > p,
@@ -166,7 +161,6 @@
   .hp-timeline__panel
     > p:not(.hp-timeline__question):not(.hp-timeline__panel-meta),
   .hp-timeline__readmore p,
-  .hp-timeline-pending__note,
   .hp-users > p,
   .hp-stop__content
     > p:not(.hp-stop__evidence-boundary):not(.hp-stop__crosslink),
@@ -178,4 +172,21 @@
   .hp-toolkit > p {
     text-align: left;
   }
+}
+
+/* Same inversion as Sustainability: white where the hero hands over, the
+   blue gathering at the foot of the page, in the same two tints (see
+   MoleculeBackdrop.css, left as it was for Project Description). */
+.human-practices-page .mbg-layer {
+  background:
+    radial-gradient(
+      120% 60% at 8% 100%,
+      rgba(206, 234, 255, 0.55),
+      rgba(255, 255, 255, 0) 60%
+    ),
+    radial-gradient(
+      90% 40% at 96% 88%,
+      rgba(156, 198, 111, 0.1),
+      rgba(255, 255, 255, 0) 62%
+    );
 }

@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Math.tsx — inline and display LaTeX (KaTeX). Reuses only global tokens
+   (--ink, --ink-soft, --microbe, --paper-soft, --line, --radius-md,
+   --shadow-card, --font-display, --font-body) — no page-local colours.
+   ========================================================================== */
+
+.tex-inline {
+  /* KaTeX sets its own line-height; nudge the inline span back onto the
+     surrounding text's baseline rhythm rather than bumping line-height. */
+  font-size: 1.02em;
+}
+
+/* The display-equation card: a numbered, citable object (journal-style),
+   not a plain centred formula. No accent edge/band — colour, where it
+   appears at all, is a soft fill plus a faintly tinted uniform border
+   (the same device Human Practices' .hp-framework-sequence__choice uses,
+   and this page's own .cp-note/.cp-summary). --microbe (the wiki's only
+   scientific-purple accent) marks it as analytical, distinct from the
+   phosphate red used for the site's central substance. */
+.tex-display {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  margin: 28px auto;
+  max-width: 100%;
+  padding: 30px 44px 24px;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--microbe) 8%, var(--paper)),
+    var(--paper-soft)
+  );
+  border: 1px solid color-mix(in srgb, var(--microbe) 20%, transparent);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+}
+
+.tex-display__expression {
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 2px;
+}
+
+/* KaTeX display mode already centres its own block; this just stops a
+   very wide expression's scrollbar from touching the card's own edge. */
+.tex-display__expression .katex-display {
+  margin: 0;
+}
+
+.tex-display__label {
+  justify-self: end;
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 600px) {
+  .tex-display {
+    padding: 24px 20px 20px;
+  }
+}

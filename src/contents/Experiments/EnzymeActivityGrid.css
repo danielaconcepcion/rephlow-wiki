@@ -1,0 +1,88 @@
+/* --------------------------------------------------------------------------
+   ENZYME ACTIVITY GRID — "The four parts of the system" (Enzyme production).
+   A static 2x2 grid — no click-to-expand — same card-frame language as
+   GeneSystemGrid.css / Model's .factor-explorer__frame (quiet tinted panel,
+   no shadow).
+   -------------------------------------------------------------------------- */
+.enzyme-activity-grid-frame {
+  padding: 24px 28px 28px;
+  margin: 8px 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper-soft);
+}
+
+.enzyme-activity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.enzyme-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--lab-line);
+  border-radius: 10px;
+  background: var(--paper);
+  padding: 16px 18px;
+}
+
+.enzyme-card__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.enzyme-card__marker {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  flex: 0 0 auto;
+  align-self: center;
+  background: var(--folder-accent);
+}
+
+.enzyme-card__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+.enzyme-card__full-name {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.enzyme-card__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.enzyme-card__field {
+  margin: 0 0 10px;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.enzyme-card__field strong { color: var(--ink); }
+.enzyme-card__field:last-of-type { margin-bottom: 0; }
+
+.enzyme-card__sketch {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--lab-line);
+}
+.enzyme-card__sketch .record-figure__placeholder {
+  aspect-ratio: 16 / 6;
+}
+
+@media (max-width: 640px) {
+  .enzyme-activity-grid-frame {
+    padding: 18px 18px 22px;
+  }
+  .enzyme-activity-grid {
+    grid-template-columns: 1fr;
+  }
+}

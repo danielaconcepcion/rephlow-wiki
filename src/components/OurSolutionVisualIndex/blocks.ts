@@ -25,7 +25,7 @@ export interface VisualIndexBlock {
   title: string;
   /** CSS color value (var(...) or literal hex) used for the accent dot, label, and card. */
   accent: string;
-  /** asset() path for the transparent overlay PNG. Absent for "model" (label-only, no overlay). */
+  /** asset() path for the transparent overlay image. */
   overlayImage?: string;
   box?: LayerBox;
   adjust?: LayerAdjust;
@@ -53,7 +53,7 @@ export const RAW_BLOCKS: VisualIndexBlock[] = [
     id: "hardware",
     order: 1,
     title: "Hardware",
-    accent: "var(--water-mid)",
+    accent: "var(--phosphate)",
     overlayImage: asset("assets/our-solution/hardware-clean.webp"),
     box: { l: 0.3, t: 0.06, w: 0.37, h: 0.45 },
     adjust: [-2.9, -0.3, 0.98],
@@ -66,7 +66,7 @@ export const RAW_BLOCKS: VisualIndexBlock[] = [
     id: "encapsulation",
     order: 2,
     title: "Bacterial encapsulation",
-    accent: "var(--algae)",
+    accent: "#1568a3",
     overlayImage: asset("assets/our-solution/bacteria-encapsulada.webp"),
     box: { l: 0.187, t: 0.555, w: 0.156, h: 0.3 },
     adjust: [-5.9, -3.7, 1.05],
@@ -79,7 +79,7 @@ export const RAW_BLOCKS: VisualIndexBlock[] = [
     id: "enzyme",
     order: 3,
     title: "Enzyme immobilisation",
-    accent: "var(--phosphate)",
+    accent: "var(--microbe)",
     overlayImage: asset("assets/our-solution/enzima-clean.webp"),
     box: { l: 0.21, t: 0.636, w: 0.3, h: 0.288 },
     adjust: [-8.28, -10, 1.21],
@@ -92,7 +92,7 @@ export const RAW_BLOCKS: VisualIndexBlock[] = [
     id: "genetic",
     order: 4,
     title: "Genetic engineering",
-    accent: "var(--microbe)",
+    accent: "var(--algae)",
     overlayImage: asset("assets/our-solution/bacteria-genetic.webp"),
     box: { l: 0.174, t: 0.635, w: 0.0723, h: 0.15 },
     adjust: [-0.1, -3.3, 1.87],
@@ -106,7 +106,9 @@ export const RAW_BLOCKS: VisualIndexBlock[] = [
     order: 5,
     title: "Model",
     accent: "var(--ink-soft)",
-    labelPos: { left: 87, top: 92 },
+    overlayImage: asset("assets/our-solution/model-clean.webp"),
+    box: { l: 0.765, t: 0.695, w: 0.17, h: 0.214 },
+    labelPos: { left: 77, top: 88 },
     description:
       "Genome-scale and kinetic models guide genetic edits, operating conditions and phosphate-accumulation performance.",
     sectionId: "model",
@@ -115,7 +117,7 @@ export const RAW_BLOCKS: VisualIndexBlock[] = [
     id: "revalorisation",
     order: 6,
     title: "Revalorisation",
-    accent: "#8A6D1A",
+    accent: "#c99a06",
     overlayImage: asset("assets/our-solution/revalorizacion-clean.webp"),
     box: { l: 0.49, t: 0.444, w: 0.49, h: 0.352 },
     adjust: [0.3, -2.4, 0.975],
@@ -146,8 +148,7 @@ export function getAdjustedBox(block: VisualIndexBlock): LayerBox | undefined {
 
 /**
  * z-index per block, derived by sorting blocks that have a box by area (w*h)
- * descending — larger overlays sit behind smaller ones. "model" has no box and
- * is excluded (it never renders a layer or hitbox).
+ * descending — larger overlays sit behind smaller ones.
  */
 export const LAYER_Z: Partial<Record<BlockId, number>> = (() => {
   const withArea = RAW_BLOCKS.filter((b) => b.box)

@@ -18,6 +18,7 @@ export function AccordionSection({
   onToggle,
   className = "",
   id,
+  background,
 }: {
   title: ReactNode;
   children: ReactNode;
@@ -29,6 +30,9 @@ export function AccordionSection({
    * content) so PageSectionNav anchors land on a stable target regardless
    * of open state. */
   id?: string;
+  /** Optional decorative layer painted behind the whole disclosure
+   * (trigger and open content), e.g. an EdgeMoleculeField. */
+  background?: ReactNode;
 }) {
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
   const isControlled = controlledOpen !== undefined;
@@ -45,8 +49,11 @@ export function AccordionSection({
   return (
     <div
       id={id}
-      className={`hp-accordion${open ? " is-open" : ""} ${className}`}
+      className={`hp-accordion${open ? " is-open" : ""}${
+        background ? " hp-accordion--decorated" : ""
+      } ${className}`}
     >
+      {background}
       <button
         type="button"
         className="hp-accordion__trigger"

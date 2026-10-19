@@ -3,6 +3,13 @@
    Keeps the existing visual-index component untouched and styles only the
    editorial copy, figures, tables and references around it.
    -------------------------------------------------------------------------- */
+
+/* The decor layer itself is the shared MoleculeBackdrop (see
+   .mbg-host in MoleculeBackdrop.css): it spans the full width of this
+   wrapper, not the narrower, centred .page-with-section-nav box, so its
+   molecule/blob field can use real page margins — including the space
+   behind the section nav. */
+
 .pd-content-wrap {
   padding: 6vh 20px 10vh;
 }
@@ -264,6 +271,29 @@
   max-width: 480px;
 }
 
+.pd-figure--sequence {
+  width: 100%;
+  max-width: 460px;
+}
+
+.pd-revalorisation-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  margin-top: 24px;
+}
+
+.pd-revalorisation-pair > p {
+  margin: 0;
+}
+
+.pd-content .pd-revalorisation-pair .pd-figure {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
 .pd-monomer-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -331,12 +361,47 @@
   border-bottom: 0;
 }
 
-.pd-references {
-  padding-top: 8px;
+.pd-table__row--addition td:nth-child(2) {
+  color: #235319;
+  font-weight: 700;
 }
 
-.pd-reference-group {
+.pd-table__row--inactivation td:nth-child(2) {
+  color: #910c12;
+  font-weight: 700;
+}
+
+.pd-table__strategy {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.pd-table__strategy::before {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+  background: currentColor;
+  content: "";
+}
+
+.pd-table__strategy--addition::before {
+  color: #235319;
+}
+
+.pd-table__strategy--inactivation::before {
+  color: #910c12;
+}
+
+.pd-references-accordion {
   margin-top: 42px;
+  background: color-mix(in srgb, var(--water-mid) 7%, transparent);
+  border: 1px solid rgba(27, 35, 64, 0.08);
+  border-radius: var(--radius-md);
+  padding: 4px 22px;
 }
 
 .pd-reference-list {
@@ -357,6 +422,16 @@
 
   .pd-content p {
     text-align: left;
+  }
+
+  .pd-revalorisation-pair {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .pd-content .pd-revalorisation-pair .pd-figure {
+    width: min(100%, 480px);
+    margin-inline: auto;
   }
 
   .pd-monomer-grid,
@@ -396,4 +471,14 @@
     width: min(150px, 46vw);
     margin: 18px auto 20px;
   }
+}
+
+/* A video figure sits in the same frame as an image one: the player fills
+   the figure's width and keeps the clip's own proportions. */
+.pd-content .pd-video-figure video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  background: #000;
 }

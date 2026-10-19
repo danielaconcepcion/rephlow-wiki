@@ -1,0 +1,232 @@
+import { useMemo, useRef, useState, type ReactNode } from "react";
+import { PageSectionNav, type PageSection } from "../../components/PageSectionNav";
+import { SectionTabs } from "../../components/LabFolders/SectionTabs";
+import { FolderStack } from "../../components/LabFolders/FolderStack";
+import { ResultCard } from "../../components/LabFolders/ResultCard";
+import { BlockReferences } from "../../components/LabFolders/BlockReferences";
+import { Rich } from "../../components/LabFolders/RichText";
+import { CitationScope } from "../../components/LabFolders/citationScope";
+import { NumberingContext, numberResults } from "../../components/LabFolders/numbering";
+import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
+import type { AccentStyle, ResultData } from "../../components/LabFolders/types";
+import { EcosystemMap } from "../../components/EcosystemMap";
+import { LabCornerIndex } from "../../components/LabFolders/LabCornerIndex";
+import { RESULT_BLOCKS } from "./data";
+import "../../components/LabFolders/LabFolders.css";
+
+/**
+ * Results is deliberately the same page as Experiments, one step later in
+ * the story: same four blocks, same glass-sphere visual index, same block
+ * pills, same lateral section nav, same folder decks. Only the card inside
+ * a folder differs (ResultCard rather than ExperimentCard), because what a
+ * reader does on this page — pick a block, find the step they care about,
+ * read its record — is the same thing they just did on Experiments.
+ *
+ * The structural pieces are therefore imported, not reimplemented:
+ * LAB_BLOCK_SPHERES is the same list Experiments draws its map from, and
+ * SectionTabs / PageSectionNav / FolderStack are the same components. See
+ * Experiments.tsx for the reasoning behind the nav tree and the no-block-
+ * heading choice, which this page follows rather than restating.
+ */
+
+// Built once at module scope — PageSectionNav requires a stable `sections`
+// reference (see its own note). Level 1 is the block's sub-blocks, which
+// are real scroll-anchored <section> ids; Level 2 is each sub-block's
+// results, which share one mounted slot in the deck and so re-trigger
+// their own folder tab instead of scrolling. A flat block puts its results
+// at Level 1 with the same wiring.
+const SECTIONS_BY_BLOCK: Record<string, PageSection[]> = Object.fromEntries(
+  RESULT_BLOCKS.map((block) => {
+    if (block.subBlocks) {
+      const sections: PageSection[] = block.subBlocks.map((subBlock) => ({
+        id: subBlock.id,
+        label: subBlock.heading.replace(/^\d+\.\s*/, ""),
+        children: [
+          ...(subBlock.results?.map((result) => ({
+            id: `${subBlock.id}--${result.id}`,
+            label: result.tabLabel,
+            onSelect: () => document.getElementById(`folder-tab-${result.id}`)?.click(),
+          })) ?? []),
+          ...(subBlock.references?.length
+            ? [{ id: `${subBlock.id}--references`, label: "References" }]
+            : []),
+        ],
+      }));
+      if (block.references?.length) {
+        sections.push({ id: `${block.id}--references`, label: "References" });
+      }
+      return [block.id, sections];
+    }
+    const sections: PageSection[] = (block.results ?? []).map((result) => ({
+      id: `${block.id}--${result.id}`,
+      label: result.tabLabel,
+      onSelect: () => document.getElementById(`folder-tab-${result.id}`)?.click(),
+    }));
+    if (block.references?.length) {
+      sections.push({ id: `${block.id}--references`, label: "References" });
+    }
+    return [block.id, sections];
+  }),
+);
+
+function paragraphs(text: ReactNode | ReactNode[] | undefined, className: string): ReactNode {
+  if (text === undefined || text === null) return null;
+  const list = Array.isArray(text) ? text : [text];
+  return list.map((paragraph, index) => (
+    <p className={className} key={index}>
+      <Rich text={paragraph} />
+    </p>
+  ));
+}
+
+function DeckPalette({ palette, children }: { palette?: "mostaza"; children: ReactNode }) {
+  if (!palette) return <>{children}</>;
+  return <div className={`lab-block--${palette}`}>{children}</div>;
+}
+
+function resultFolders(results: ResultData[]) {
+  return results.map((result, index) => ({
+    id: result.id,
+    label: result.tabLabel,
+    content: <ResultCard data={result} />,
+    order: index + 1,
+  }));
+}
+
+export function Results() {
+  const [activeBlockId, setActiveBlockId] = useState(RESULT_BLOCKS[0].id);
+  const activeBlock = RESULT_BLOCKS.find((block) => block.id === activeBlockId) ?? RESULT_BLOCKS[0];
+  const numbering = useMemo(
+    () => numberResults(activeBlock.subBlocks ?? [activeBlock]),
+    [activeBlock],
+  );
+  // The corner index's two landmarks -- see Experiments.tsx's own, and
+  // LabCornerIndex.
+  const menuRef = useRef<HTMLDivElement | null>(null);
+  const pageEndRef = useRef<HTMLDivElement | null>(null);
+
+  return (
+    <div className="lab-folders">
+      {/* Always-one-active, like Experiments: the map is a visual companion
+          to the pill nav below, so a null selection is ignored rather than
+          clearing the active block. */}
+      <EcosystemMap
+        items={LAB_BLOCK_SPHERES}
+        activeId={activeBlockId}
+        onSelect={(id) => id !== null && setActiveBlockId(id)}
+      />
+
+      {/* The corner "you are here" index, shown once the map above has
+          scrolled away -- same spheres, same colours and the same active
+          block, so either index switches the page the same way. */}
+      <LabCornerIndex
+        activeBlockId={activeBlockId}
+        onSelect={setActiveBlockId}
+        after={menuRef}
+        until={pageEndRef}
+      />
+
+      <div className="lab-folders__menu" ref={menuRef}>
+        <SectionTabs
+          tabs={RESULT_BLOCKS.map((block) => ({ id: block.id, label: block.label }))}
+          activeId={activeBlockId}
+          onChange={setActiveBlockId}
+          ariaLabel="Result blocks"
+        />
+      </div>
+
+      <div className="page-with-section-nav">
+        <PageSectionNav
+          key={activeBlock.id}
+          sections={SECTIONS_BY_BLOCK[activeBlock.id] ?? []}
+          ariaLabel={`Jump to a ${activeBlock.label} section`}
+        />
+
+        <div className="lab-content-wrap">
+          <NumberingContext.Provider value={numbering}>
+            <CitationScope.Provider
+              value={activeBlock.references?.length ? activeBlock.id : null}
+            >
+              <div
+                className="lab-block"
+                key={activeBlock.id}
+                style={{ "--folder-accent": activeBlock.accent } as AccentStyle}
+              >
+                {activeBlock.intro && (
+                  <div className="lab-prose">{paragraphs(activeBlock.intro, "lab-block__intro")}</div>
+                )}
+
+                {activeBlock.subBlocks
+                  ? activeBlock.subBlocks.map((subBlock) => (
+                      <section className="lab-subblock" id={subBlock.id} key={subBlock.id}>
+                        <div className="lab-prose">
+                          <h2 className="lab-subblock__heading">{subBlock.heading}</h2>
+                          {paragraphs(subBlock.intro, "lab-subblock__intro")}
+                        </div>
+                        {subBlock.results && (
+                          <DeckPalette palette={activeBlock.palette}>
+                            <FolderStack
+                              ariaLabel={`${subBlock.heading} results`}
+                              folders={resultFolders(subBlock.results)}
+                            />
+                          </DeckPalette>
+                        )}
+                        {subBlock.outro && (
+                          <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
+                        )}
+                        {!!subBlock.references?.length && (
+                          <BlockReferences
+                            id={`${subBlock.id}--references`}
+                            scope={`${activeBlock.id}-${subBlock.id}`}
+                            items={subBlock.references}
+                          />
+                        )}
+                      </section>
+                    ))
+                  : null}
+
+                {!activeBlock.subBlocks && (
+                  <DeckPalette palette={activeBlock.palette}>
+                    <FolderStack
+                      ariaLabel={`${activeBlock.label} results`}
+                      folders={resultFolders(activeBlock.results ?? [])}
+                    />
+                  </DeckPalette>
+                )}
+
+                {activeBlock.outro && (
+                  <section className="lab-subblock">
+                    <div className="lab-prose">
+                      <h2 className="lab-subblock__heading">Overall conclusion</h2>
+                      {paragraphs(activeBlock.outro, "lab-subblock__outro")}
+                    </div>
+                  </section>
+                )}
+
+                {/* One reference list for the whole block, folded away at
+                  the very bottom rather than tucked into each folder;
+                  "[n]" anywhere above links down to its entry and opens
+                  the list on the way (see BlockReferences). */}
+              {!!activeBlock.references?.length && (
+                <BlockReferences
+                  id={`${activeBlock.id}--references`}
+                  scope={activeBlock.id}
+                  items={activeBlock.references}
+                />
+              )}
+
+              </div>
+            </CitationScope.Provider>
+          </NumberingContext.Provider>
+        </div>
+      </div>
+
+      {/* Scroll-position sentinel only -- see Experiments.tsx's own. */}
+      <div
+        className="ecosystem-map-mini-sentinel"
+        ref={pageEndRef}
+        aria-hidden="true"
+      />
+    </div>
+  );
+}

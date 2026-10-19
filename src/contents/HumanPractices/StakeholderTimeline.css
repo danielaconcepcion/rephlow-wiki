@@ -339,61 +339,6 @@
 }
 
 /* --- Pending entries --- */
-.hp-timeline-pending {
-  margin: 30px 0;
-  padding: 20px 24px;
-  border: 1px dashed var(--line);
-  border-radius: var(--radius-lg);
-}
-.hp-timeline-pending h4 {
-  font-size: 1rem;
-  margin-bottom: 4px;
-}
-.hp-timeline-pending__note {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-  margin-bottom: 14px;
-}
-.hp-timeline-pending ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.hp-timeline-pending__item {
-  display: flex;
-  gap: 10px;
-}
-.hp-timeline-pending__dot {
-  width: 8px;
-  height: 8px;
-  margin-top: 6px;
-  border-radius: 50%;
-  background: var(--cat-color);
-  flex-shrink: 0;
-}
-.hp-timeline-pending__name {
-  font-weight: 600;
-  color: var(--ink);
-  font-size: 0.92rem;
-}
-.hp-timeline-pending__category {
-  font-weight: 400;
-  color: var(--ink-soft);
-}
-.hp-timeline-pending__status {
-  font-size: 0.78rem;
-  font-style: italic;
-  color: var(--ink-soft);
-  margin: 2px 0 4px;
-}
-.hp-timeline-pending__body {
-  font-size: 0.85rem;
-  color: var(--ink-soft);
-}
-
 /* --- Users table --- */
 .hp-users {
   margin-top: 34px;
@@ -483,4 +428,56 @@
   .hp-stakeholder-consent {
     padding: 18px;
   }
+}
+
+/* A table a stakeholder gave us, inside a full entry (e.g. Bio-Oils'
+   characterisation of their degumming effluent). */
+.hp-source-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+}
+
+.hp-source-table {
+  width: 100%;
+  min-width: 420px;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.hp-source-table caption {
+  caption-side: top;
+  padding: 10px 12px 6px;
+  text-align: left;
+  font-size: 0.76rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+.hp-source-table th,
+.hp-source-table td {
+  padding: 7px 12px;
+  border-top: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.hp-source-table thead th {
+  border-top: none;
+  background: var(--paper-soft);
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.hp-source-table tbody th {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.hp-source-table td {
+  color: var(--ink-soft);
 }

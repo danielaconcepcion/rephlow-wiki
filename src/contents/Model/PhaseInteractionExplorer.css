@@ -1,0 +1,136 @@
+/* --------------------------------------------------------------------------
+   PhaseInteractionExplorer — "Interactions between limiting factors"
+   (Model.tsx, section 2.3). Additive to FactorExplorer.css, which this
+   component imports and reuses directly (.factor-explorer__frame/tablist/
+   tab/panel/figure/arrow/counter/story-nav) so the card reads as a
+   continuation of 2.2 rather than a separate component. Only the
+   picker-specific pieces live here: the header row that pairs the tablist
+   with the always-visible tick nav, the anchor/available/unavailable tab
+   modifiers, and the placeholder/partial messages shown before a pair is
+   selected. Reuses global tokens only (--ink, --ink-soft, --line,
+   --radius-lg) — no new colors.
+   -------------------------------------------------------------------------- */
+
+.phase-explorer__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+.phase-explorer__header .factor-explorer__tablist {
+  flex: 1 1 auto;
+}
+
+/* Small five-tick bar, top-right of the card, always visible regardless of
+   selector state — a quiet secondary way to jump straight to any of the
+   five comparisons. */
+.phase-explorer__progress {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 5px;
+  padding-top: 4px;
+}
+.phase-explorer__progress-tick {
+  width: 16px;
+  height: 3px;
+  padding: 0;
+  border: none;
+  border-radius: 2px;
+  background: var(--line);
+  cursor: pointer;
+  transition: background-color 150ms ease, transform 150ms ease;
+}
+.phase-explorer__progress-tick:hover {
+  background: rgba(27, 35, 64, 0.3);
+}
+.phase-explorer__progress-tick:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+.phase-explorer__progress-tick[aria-current="true"] {
+  background: var(--ink);
+  transform: scaleY(1.4);
+}
+
+/* Anchor's valid partners get a small dot; incompatible factors dim. Both
+   layer on top of the plain/is-active states already defined for
+   .factor-explorer__tab. */
+.factor-explorer__tab.is-available {
+  position: relative;
+}
+.factor-explorer__tab.is-available::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--ink-soft);
+  transform: translateX(-50%);
+}
+.factor-explorer__tab.is-unavailable {
+  opacity: 0.35;
+}
+
+/* --- 0 selected --- */
+.phase-explorer__placeholder {
+  min-height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* --- 1 selected (anchor, no pair yet) --- */
+.phase-explorer__partial {
+  min-height: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.phase-explorer__partial-title {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  color: var(--ink);
+}
+.phase-explorer__partners {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+/* --- Figures: the phase-plane heatmaps render close to square, so at full
+   card width (900px) they'd otherwise blow up to nearly that size. Scoped
+   to .phase-explorer only — .factor-explorer__image-wrap's own rules in
+   FactorExplorer.css (used by 2.2's wide two-panel charts) stay untouched. */
+.phase-explorer .factor-explorer__figure-nav {
+  justify-content: center;
+}
+.phase-explorer .factor-explorer__image-wrap {
+  flex: 0 1 500px;
+  width: 100%;
+  max-width: 500px;
+}
+
+/* Small shared caption-style line under every phase-plane figure, replacing
+   the need for a legend box inside the plot itself. */
+.phase-explorer__legend {
+  max-width: 500px;
+  margin: 6px auto 0;
+  color: var(--ink-soft);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@media (max-width: 640px) {
+  .phase-explorer__header {
+    flex-direction: column;
+  }
+  .phase-explorer__progress {
+    padding-top: 0;
+  }
+}

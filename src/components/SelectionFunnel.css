@@ -1,0 +1,72 @@
+/* --------------------------------------------------------------------------
+   SELECTION FUNNEL — candidate-enzyme narrowing (Enzyme production block).
+   Five chevron-cut steps, colour-mixed from this block's own --folder-accent
+   (dark/muted at the wide end, full accent at the narrow end) rather than a
+   fixed palette, so it always themes to whichever block hosts it — same
+   convention as the folder tabs' own shade gradient (FolderStack.tsx).
+   -------------------------------------------------------------------------- */
+.selection-funnel {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.selection-funnel__step {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 22px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  text-align: center;
+  color: var(--paper);
+  background: color-mix(in srgb, var(--folder-accent) var(--funnel-mix, 60%), var(--ink));
+  clip-path: polygon(0 0, 100% 0, 86% 100%, 0 100%);
+}
+.selection-funnel__step:last-child {
+  clip-path: none;
+}
+
+.selection-funnel__label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.selection-funnel__value {
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  .selection-funnel {
+    flex-direction: column;
+    gap: 3px;
+  }
+  .selection-funnel__step {
+    clip-path: none !important;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+    padding: 12px 18px;
+  }
+  .selection-funnel__step:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: -11px;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid var(--ink);
+    opacity: 0.3;
+    z-index: 1;
+  }
+  .selection-funnel__value {
+    font-size: 1.1rem;
+  }
+}

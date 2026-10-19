@@ -72,7 +72,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m5", category: "members", isPlaceholder: false,
     name: "Irene Fiol Vega", education: "4th year Biochemistry student", role: "Finance coordinator",
-    facultyColor: "pink", image: "assets/team/irene.webp",
+    facultyColor: "blue", image: "assets/team/irene.webp",
     bio: "Irene studies Biochemistry and firmly believes that every problem can be improved with a well-designed spreadsheet. She enjoys bringing order to chaos, whether that means organising data or figuring out why an experiment refused to behave. Naturally curious, she loves understanding how things work, even if that sometimes means spending longer than expected solving a problem. Outside the lab, she enjoys artistic swimming, singing, and attempting to maintain a healthy work-life balance.",
     strength: "Seeing both the big picture and the tiny details.",
     weakness: "Badly designed spreadsheets. She feels personally offended by them.",
@@ -90,7 +90,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m7", category: "members", isPlaceholder: false,
     name: "Martina Grudsky Rojas", education: "4th year Biology student", role: "Social Media Coordinator",
-    facultyColor: "pink", image: "assets/team/martina.webp",
+    facultyColor: "blue", image: "assets/team/martina.webp",
     bio: "[Introduction with degree + personality.] [2–3 sentences describing what you are like, not what you do in the team.] Outside the lab, hobbies or personal fun fact.",
     strength: "[Funny but genuine strength.]",
     weakness: "[Funny, harmless weakness.]",
@@ -99,7 +99,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m8", category: "members", isPlaceholder: false,
     name: "Marina Delfa Lalaguna", education: "BSc in Chemistry & Biochemistry. MSc student in Industrial and Environmental Biotechnology.", role: "Hardware Coordinator",
-    facultyColor: "blue", image: "assets/team/marina.webp",
+    facultyColor: "coral", image: "assets/team/marina.webp",
     bio: "Marina studies an MSc in Industrial and Environmental Biotechnology. Graduated in Chemistry and Biochemistry, the lab is her natural habitat. Outgoing, calm, and always up to help or have a chat, she will adapt to different workflows, from engineering a bioreactor to pure synthetic biology; there is no boring science. As a fun fact, Mamma Mia being the biggest masterpiece ever created is a hill she is ready to die on.",
     strength: "She can troubleshoot an experiment over and over again if needed without losing her smile.",
     weakness: "She can track 30 different variables for a complex experiment, but will forget to bring her own keys from home.",
@@ -117,7 +117,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m9", category: "members", isPlaceholder: false,
     name: "Santiago Rodríguez Aranguren", education: "Materials Engineering student at Universidad Complutense de Madrid", role: "Hardware Prototyping Specialist",
-    facultyColor: "blue", image: "assets/team/santiago.webp",
+    facultyColor: "coral", image: "assets/team/santiago.webp",
     bio: "Santiago studies Materials Engineering at Universidad Complutense de Madrid and still uses the calculator for simple operations. He is not much of a talker, but he still cracks jokes in the lab to relieve stress and lighten the mood. Outside the lab he has an artistic side: he plays several instruments, such as the drums and guitar, and likes to paint in his free time.",
     strength: "Quick problem solver, proving to be the team’s resident MacGyver.",
     weakness: "Hey there! I am using WhatsApp.",
@@ -126,7 +126,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "m11", category: "members", isPlaceholder: false,
     name: "Silvia Yan García Velasco", education: "BSc in Design.", role: "Brand Identity Coordinator",
-    facultyColor: "red", image: "assets/team/silvia.webp",
+    facultyColor: "bottle", image: "assets/team/silvia.webp",
     bio: "Silvia is a Graphic and Digital Product Designer graduated in Design from Universidad Complutense de Madrid. She is pursuing a Master's in Interactive Design at Escuela Superior de Diseño de Madrid. Driven by an endless curiosity for visual strategy and 3D design, she’s a restless creative who tackles every challenge with the mindset that nothing is ever truly impossible. Outside the lab, she collects hobbies like side quests, from hitting the gym and videogames to painting and endless creative projects. Honestly, she has so many passions that a single lifetime barely feels like enough time for all of them.",
     strength: <><em>Relentless Determination.</em> She doesn't give up easily and always gets what she wants; not through brute force, but with a blend of charm, persistence, and creative problem-solving that turns every ‘no’ into a fully designed ‘yes’.</>,
     weakness: <><em>Chronic Multitasking.</em> Her brain permanently operates with 40 active browser tabs, three background renders, and a gym workout running all at the same time.</>,
@@ -203,7 +203,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "a7", category: "advisors", isPlaceholder: false,
     name: "Mª Carmen García Payo", education: "", role: "Advisor · Alginate encapsulation",
-    facultyColor: "pink", image: "assets/team/advisor-placeholder.png",
+    facultyColor: "blue", image: "assets/team/advisor-placeholder.png",
     bio: <>
       PhD from Universidad Complutense de Madrid with the thesis <em>‘Membrane distillation of aqueous alcohol solutions’</em> (1998). Associate Professor of Applied Physics in the Department of Structure of Matter, Thermal Physics and Electronics, Faculty of Physical Sciences, and researcher in the <strong>Membranes and Renewable Energies Research Group</strong>, with a focus on membrane-based separation processes, water treatment and sustainable energy applications.
     </>,
@@ -216,7 +216,7 @@ const TEAM_DATA: Person[] = [
   {
     id: "a8", category: "advisors", isPlaceholder: false,
     name: "Loreto García Fernández", education: "", role: "Advisor · Hardware",
-    facultyColor: "blue", image: "assets/team/advisor-placeholder.png",
+    facultyColor: "coral", image: "assets/team/advisor-placeholder.png",
     bio: <>
       PhD from Universidad Complutense de Madrid with the thesis <em>‘Design, preparation and characterisation of hollow-fibre membranes for desalination by membrane distillation’</em> (2017). Assistant Professor in the Department of Structure of Matter, Thermal Physics and Electronics, Faculty of Physical Sciences, and researcher in the <strong>Membranes and Renewable Energies Research Group</strong>, focusing on membrane development, membrane distillation, desalination and sustainable water-treatment technologies.
     </>,
@@ -258,6 +258,19 @@ const TEAM_DATA: Person[] = [
     strength: "", weakness: "", links: [],
     institutions: [
       { label: "Department of Biochemistry and Molecular Biology (BBM)", image: "assets/team/institutions/bbm-transparent.webp" },
+      { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.webp" },
+    ],
+  },
+  {
+    id: "a14", category: "advisors", isPlaceholder: false,
+    name: "Noemí Encinas García", education: "", role: "Advisor · Alginate encapsulation",
+    facultyColor: "blue", image: "assets/team/advisor-placeholder.png",
+    bio: <>
+      PhD from Universidad Carlos III de Madrid with the thesis <em>‘Surface modification of polymeric materials using cold plasma sources’</em> (2012). Permanent Lecturer in the Department of Chemical and Materials Engineering at the Faculty of Chemical Sciences, Universidad Complutense de Madrid, and researcher in the Surface Engineering and Nanostructured Materials Research Group. Her research focuses on nanostructured surfaces and coatings, corrosion protection, wettability, anti-biofouling materials, and surface characterisation.
+    </>,
+    strength: "", weakness: "",
+    links: [{ label: "ORCID iD", url: "https://orcid.org/0000-0002-6419-2852" }],
+    institutions: [
       { label: "Faculty of Chemical Sciences, UCM", image: "assets/team/institutions/facultad-ciencias-quimicas-ucm-transparent.webp" },
     ],
   },

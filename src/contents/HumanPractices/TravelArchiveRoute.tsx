@@ -2,6 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { asset } from "../../utils/asset";
 import { AccordionSection } from "./AccordionSection";
 import { PassportGlyph } from "./HeroObjects";
+import travelMap from "../../assets/human-practices/travel-archive-index/map.webp";
+import bioOilsLayer from "../../assets/human-practices/travel-archive-index/bio-oils.webp";
+import donanaLayer from "../../assets/human-practices/travel-archive-index/donana.webp";
+import marMenorLayer from "../../assets/human-practices/travel-archive-index/mar-menor.webp";
+import sanJuanLayer from "../../assets/human-practices/travel-archive-index/embalse-san-juan.webp";
+import cedexLayer from "../../assets/human-practices/travel-archive-index/cedex.webp";
+import repsolLayer from "../../assets/human-practices/travel-archive-index/repsol.webp";
+import beehivesLayer from "../../assets/human-practices/travel-archive-index/beehives.webp";
 import "./TravelArchiveRoute.css";
 
 /**
@@ -12,9 +20,9 @@ import "./TravelArchiveRoute.css";
  * disclosures, pull quotes and a route-progress bar — kept literally,
  * ported directly from the prototype rather than genericised. The
  * prototype's own sticky topbar (brand/progress/button) is dropped per the
- * approved brief; its side-nav becomes a secondary, page-local "route
- * stops" index (desktop sticky list / mobile <select>), entirely separate
- * from the shared PageSectionNav rendered by HumanPractices.tsx.
+ * approved brief; route navigation is provided by the responsive visual
+ * map index, entirely separate from the shared PageSectionNav rendered by
+ * HumanPractices.tsx.
  *
  * Photos: real Notion-attached photos exist for Embalse de San Juan, CEDEX
  * and Beehives (one each); every other photo slot — including the second,
@@ -47,6 +55,9 @@ type Block =
 
 interface Stop {
   id: string;
+  /** A stop still ahead of us: drawn with a dashed marker and card, and
+   * placed after the end-of-route card (see PLANNED_STOP). */
+  planned?: boolean;
   number: string;
   title: string;
   date: string;
@@ -64,8 +75,30 @@ const STOPS: Stop[] = [
     date: "March 2025",
     dateConfirmed: true,
     photos: [
-      { kind: "placeholder", caption: "Photo: rePhlow team at Bio-Oils Huelva" },
-      { kind: "placeholder", caption: "Photo: Doñana wetlands and estuarine system" },
+      {
+        kind: "real",
+        src: asset("assets/human-practices/travel-archive/bio-oils-01.webp"),
+        alt: "A storage tank carrying the Bio-Oils name at the Huelva plant.",
+        caption: "Bio-Oils Huelva",
+      },
+      {
+        kind: "real",
+        src: asset("assets/human-practices/travel-archive/bio-oils-02.webp"),
+        alt: "Process tanks and walkways at the Bio-Oils Huelva facility.",
+        caption: null,
+      },
+      {
+        kind: "real",
+        src: asset("assets/human-practices/travel-archive/donana-01.webp"),
+        alt: "A boardwalk crossing the pine woodland of the Doñana Natural Space.",
+        caption: "Doñana Natural Space",
+      },
+      {
+        kind: "real",
+        src: asset("assets/human-practices/travel-archive/donana-02.webp"),
+        alt: "The channels of the Doñana marshes seen from the air.",
+        caption: null,
+      },
     ],
     blocks: [
       {
@@ -75,9 +108,18 @@ const STOPS: Stop[] = [
       {
         type: "judgeScan",
         items: [
-          { label: "What we saw", text: "A real industrial process and the infrastructure a treatment module would have to fit around." },
-          { label: "Why it mattered", text: "Phosphorus stopped being an abstract wastewater parameter and became an operating problem." },
-          { label: "What it opened", text: "Follow the wider water system and understand the environmental context downstream." },
+          {
+            label: "What we saw",
+            text: "A real industrial process and the infrastructure a treatment module would have to fit around.",
+          },
+          {
+            label: "Why it mattered",
+            text: "Phosphorus stopped being an abstract wastewater parameter and became an operating problem.",
+          },
+          {
+            label: "What it opened",
+            text: "Follow the wider water system and understand the environmental context downstream.",
+          },
         ],
       },
       {
@@ -114,10 +156,7 @@ const STOPS: Stop[] = [
     date: "Date to confirm",
     dateConfirmed: false,
     dateNote: "Not documented in the current record",
-    photos: [
-      { kind: "placeholder", caption: "Photo: Mar Menor lagoon" },
-      { kind: "placeholder", caption: "Optional: archival/local team photo" },
-    ],
+    photos: [],
     blocks: [
       {
         type: "p",
@@ -145,9 +184,18 @@ const STOPS: Stop[] = [
       {
         type: "evidenceRow",
         items: [
-          { label: "Observed meaning", text: "Nutrient imbalance becomes visible ecological damage." },
-          { label: "Design implication", text: "Removal alone is not the end of the phosphorus story." },
-          { label: "Question opened", text: "Can recovery become part of environmental responsibility?" },
+          {
+            label: "Observed meaning",
+            text: "Nutrient imbalance becomes visible ecological damage.",
+          },
+          {
+            label: "Design implication",
+            text: "Removal alone is not the end of the phosphorus story.",
+          },
+          {
+            label: "Question opened",
+            text: "Can recovery become part of environmental responsibility?",
+          },
         ],
       },
     ],
@@ -161,19 +209,33 @@ const STOPS: Stop[] = [
     photos: [
       {
         kind: "real",
-        src: asset("assets/human-practices/travel-archive/embalse-san-juan-01.webp"),
+        src: asset(
+          "assets/human-practices/travel-archive/embalse-san-juan-01.webp",
+        ),
         alt: "María collecting a water sample.",
       },
       {
         kind: "real",
-        src: asset("assets/human-practices/travel-archive/embalse-san-juan-02.webp"),
+        src: asset(
+          "assets/human-practices/travel-archive/embalse-san-juan-02.webp",
+        ),
         alt: "Cloudy, algae-tinted water near the reservoir's shore.",
         caption: null,
       },
       {
         kind: "real",
-        src: asset("assets/human-practices/travel-archive/embalse-san-juan-03.webp"),
+        src: asset(
+          "assets/human-practices/travel-archive/embalse-san-juan-03.webp",
+        ),
         alt: "The Embalse de San Juan reservoir",
+      },
+      {
+        kind: "real",
+        src: asset(
+          "assets/human-practices/travel-archive/embalse-san-juan-04.webp",
+        ),
+        alt: "The reservoir's shoreline, with moored boats and exposed rock at a low water level.",
+        caption: null,
       },
     ],
     blocks: [
@@ -190,7 +252,10 @@ const STOPS: Stop[] = [
         items: [
           { label: "Data placeholder", text: "pH results" },
           { label: "Data placeholder", text: "Dissolved oxygen results" },
-          { label: "Data placeholder", text: "Phosphorus concentration results" },
+          {
+            label: "Data placeholder",
+            text: "Phosphorus concentration results",
+          },
         ],
       },
       {
@@ -239,6 +304,12 @@ const STOPS: Stop[] = [
     date: "1 October 2025",
     dateConfirmed: true,
     photos: [
+      {
+        kind: "real",
+        src: asset("assets/human-practices/travel-archive/cedex-01.webp"),
+        alt: "A CEDEX researcher explaining the laboratory's equipment to the team.",
+        caption: null,
+      },
       {
         kind: "real",
         src: asset("assets/human-practices/travel-archive/cedex-02.webp"),
@@ -292,9 +363,18 @@ const STOPS: Stop[] = [
       {
         type: "evidenceRow",
         items: [
-          { label: "What we saw", text: "Official-scale analytical infrastructure and workflows." },
-          { label: "What we realised", text: "Our assay is a working laboratory approximation, not a validated reference method." },
-          { label: "What it changed", text: "Implementation claims must be grounded in recognised analytical evidence." },
+          {
+            label: "What we saw",
+            text: "Official-scale analytical infrastructure and workflows.",
+          },
+          {
+            label: "What we realised",
+            text: "Our assay is a working laboratory approximation, not a validated reference method.",
+          },
+          {
+            label: "What it changed",
+            text: "Implementation claims must be grounded in recognised analytical evidence.",
+          },
         ],
       },
       {
@@ -311,8 +391,24 @@ const STOPS: Stop[] = [
     date: "21 October 2025",
     dateConfirmed: true,
     photos: [
-      { kind: "placeholder", caption: "Photo: rePhlow team during the Repsol visit" },
-      { kind: "placeholder", caption: "Photo: industrial facilities / visit" },
+      {
+        kind: "real",
+        src: asset("assets/human-practices/travel-archive/repsol-01.webp"),
+        alt: "The Repsol campus in Madrid.",
+        caption: "Repsol, Madrid",
+      },
+      {
+        kind: "real",
+        src: asset("assets/human-practices/travel-archive/repsol-02.webp"),
+        alt: "The rePhlow team and the Repsol specialists during the online session.",
+        caption: null,
+      },
+      {
+        kind: "real",
+        src: asset("assets/human-practices/travel-archive/repsol-03.webp"),
+        alt: "A second moment of the same session with the Repsol team.",
+        caption: null,
+      },
     ],
     blocks: [
       {
@@ -347,9 +443,18 @@ const STOPS: Stop[] = [
       {
         type: "questionChain",
         items: [
-          { label: "Bio-Oils", text: "What does the phosphorus problem actually look like in a real process?" },
-          { label: "CEDEX", text: "How would we prove that our treatment actually works?" },
-          { label: "Repsol", text: "Even if it works, what would be required for an industrial operator to consider using it?" },
+          {
+            label: "Bio-Oils",
+            text: "What does the phosphorus problem actually look like in a real process?",
+          },
+          {
+            label: "CEDEX",
+            text: "How would we prove that our treatment actually works?",
+          },
+          {
+            label: "Repsol",
+            text: "Even if it works, what would be required for an industrial operator to consider using it?",
+          },
         ],
       },
       {
@@ -390,7 +495,10 @@ const STOPS: Stop[] = [
       },
     ],
     blocks: [
-      { type: "p", text: "The last stop on our route took us away from wastewater entirely." },
+      {
+        type: "p",
+        text: "The last stop on our route took us away from wastewater entirely.",
+      },
       {
         type: "details",
         title: "What we did during the visit",
@@ -399,7 +507,10 @@ const STOPS: Stop[] = [
           "At first, this seemed almost disconnected from everything that had come before it.",
         ],
       },
-      { type: "pullquote", text: "Does phosphorus still matter when we leave wastewater behind?" },
+      {
+        type: "pullquote",
+        text: "Does phosphorus still matter when we leave wastewater behind?",
+      },
       {
         type: "p",
         text: "The answer brought the route full circle. Phosphorus is not intrinsically a pollutant. It is an essential nutrient for plant growth, root development and flowering. The same element that can contribute to eutrophication when excessive amounts accumulate in water is indispensable to the terrestrial vegetation on which pollinators ultimately depend.",
@@ -420,6 +531,127 @@ const STOPS: Stop[] = [
   },
 ];
 
+/** The stop we have not made yet. It closes the archive after the
+ * end-of-route card: everything in it is what we plan to do and ask, not
+ * something we have already seen. */
+const PLANNED_STOP: Stop = {
+  id: "next-bio-oils",
+  planned: true,
+  number: "07",
+  title: "Next stop: Bio-Oils Huelva",
+  date: "Planned visit",
+  dateConfirmed: false,
+  dateNote: "Date to be confirmed",
+  photos: [],
+  blocks: [
+    {
+      type: "pullquote",
+      text: "Every stop on our route so far has taken us to water. The next one takes us to where the phosphorus begins.",
+    },
+    {
+      type: "p",
+      text: "Bio-Oils has already given us a great deal: the phosphorus range, pH and temperature of their degumming effluent, and a sample of the real thing, in which our strain accumulated more phosphorus than the wild type and stayed alive. But a sample is a snapshot, and a snapshot is not a production line. We have not yet seen where the effluent comes from, how it changes over time, or the space in which it would have to be treated. We do not want to claim that our results will hold in a plant we have never walked through.",
+    },
+    { type: "p", text: "We plan to visit the Bio-Oils facility in Huelva to:" },
+    {
+      type: "judgeScan",
+      items: [
+        {
+          label: "Follow the stream",
+          text: "Trace the effluent from the phosphoric-acid dosing in the degumming stage to the point where it leaves the process.",
+        },
+        {
+          label: "Test our retrofit claim",
+          text: "Look at where a modular rePhlow unit could physically fit, in terms of space, access and connections to the existing line.",
+        },
+        {
+          label: "Capture the variability",
+          text: "If the company agrees, collect samples at different points of the process and at different moments, to see how our strain responds beyond a single sample.",
+        },
+        {
+          label: "Listen to the people who run it",
+          text: "Talk with operators and the environmental team about daily operation, containment and what they would need to see before trusting a living system inside their facility.",
+        },
+      ],
+    },
+    {
+      type: "details",
+      title: "What we hope to learn",
+      paragraphs: [
+        "Whether our results hold beyond a single sample: how much the effluent varies between batches, oil types and seasons, and which components may not have been present in the sample we tested, such as residual oils, solids, cleaning agents or occasional peaks.",
+        "Where rePhlow would physically fit: how much space, access and downtime a facility like theirs can realistically offer, and at which point of the treatment line a module would make the most sense.",
+        "What operating it day to day involves: who would run the unit, what monitoring they already do, and what they would expect from a system that contains living cells.",
+        "What would build or break their trust: the containment evidence, discharge-control data and cost figures they would need before considering a pilot.",
+        "Which rules actually apply to them: how their discharge permit and national and regional regulations relate to the limits we have referenced, so that we can verify our legal claims instead of assuming them.",
+      ],
+    },
+    {
+      type: "details",
+      title: "How it may change rePhlow",
+      paragraphs: [
+        "We go into this visit knowing that it may force us to change things, and we want it to. Depending on what we find:",
+        "Our test conditions. If the effluent varies more than our sample suggested, we will repeat our comparison with the wild type across that range. If our results hold, they will rest on much stronger evidence than a single sample.",
+        "Our modules. If space, downtime or operating constraints do not match our assumptions, we will rethink the modular layout, the size of the rotating-bed reactor and the order in which stages could be introduced.",
+        "Our containment strategy. If operators require stronger guarantees than the ones we currently offer, we will add monitoring or containment measures and reflect them in the Responsibility Checkpoint.",
+        "Our cost case. Real figures on what phosphorus management costs today would let us start the techno-economic assessment that is still open in our checkpoint, and replace \u201cwe cannot yet claim rePhlow is affordable\u201d with an actual comparison.",
+        "Our revalorisation route. Their view on recovering phosphorus as a product, or reusing it in their own process, will show whether our PPK2/DHAK pathway answers a real need or needs to be adjusted.",
+      ],
+    },
+    {
+      type: "p",
+      text: "During the visit we will also hold a new interview with the Bio-Oils team, building on the conversation we had with them in March 2025. We have prepared the following questions, which come directly from what we still do not know and from the open points in our Responsibility Checkpoint:",
+    },
+    {
+      type: "questionChain",
+      items: [
+        {
+          label: "Question 1",
+          text: "Our strain worked well in the sample you gave us. How representative is that sample of your effluent over time? What variation (batch, oil type, season, cleaning cycles, residual oils or solids) should we expect?",
+        },
+        {
+          label: "Question 2",
+          text: "Where in your treatment line would a modular unit make the most sense? What space, downtime and operating requirements could you realistically assume?",
+        },
+        {
+          label: "Question 3",
+          text: "Which discharge limits apply to you, and how do you expect them to change with Directive (EU) 2024/3019?",
+        },
+        {
+          label: "Question 4",
+          text: "What would worry you most about using a genetically modified organism inside your facility, and what containment evidence would you need to see?",
+        },
+        {
+          label: "Question 5",
+          text: "How much does managing phosphorus in this effluent cost you today, and what saving would justify adopting a new technology?",
+        },
+        {
+          label: "Question 6",
+          text: "Would you see value in recovering the phosphorus as a product, or would you prefer to reuse it within your own process?",
+        },
+      ],
+    },
+    {
+      type: "p",
+      text: "Once the interview has taken place, we will add it to Stakeholders & Voices \u2192 Industry in the same format as our other conversations: who we spoke to, when, what was said and what changed in rePhlow as a result.",
+    },
+    {
+      type: "evidence",
+      label: "Evidence boundary",
+      text: "This visit is the real test of the principle that has guided our design: rePhlow should slot into an existing line, not replace it. Until it takes place, our retrofit-compatibility claim rests on what Bio-Oils told us, not on what we have seen with our own eyes. We say so openly, and we count this visit as part of the route still to be walked. Whatever we learn will be recorded here, including the parts that do not support our design, and linked to the changes it produces in the project.",
+    },
+    {
+      type: "crosslink",
+      text: "See the initial interview with Bio-Oils Huelva (Industry, 20 March 2025) for the first technical exchange that led to this visit.",
+      target: "bio-oils",
+    },
+  ],
+};
+
+const ROUTE_OPEN = {
+  title: "Human Practices does not end here",
+  text: "For us, Human Practices was never a chapter that closes when the wiki is published. It is a way of working that grows with the project. Every conversation changed something in rePhlow, and this visit is one more stop on a route that is still open. We will keep listening to the people our technology could affect, going back to the places it could be used and updating our design, our Responsibility Checkpoint and this wiki as we learn. Because a project that stops listening stops being responsible, and we intend rePhlow to keep learning long after this competition.",
+};
+
 const ROUTE_BREAK = {
   title: "The route turns back towards implementation.",
   text: "After following phosphorus from industry into environmental contexts, our next stops asked whether a solution like rePhlow could actually be measured, validated and accepted inside real treatment infrastructure.",
@@ -427,45 +659,189 @@ const ROUTE_BREAK = {
 
 const FINAL_CARD = {
   eyebrow: "End of route",
-  title: "We were no longer asking only how to remove phosphorus from wastewater.",
+  title:
+    "We were no longer asking only how to remove phosphorus from wastewater.",
   text: "We were asking how to put it back in the right place.",
 };
 
-const STOP_IDS = STOPS.map((stop) => `s3-${stop.id}`);
+interface TravelIndexLayer {
+  id: string;
+  title: string;
+  stopId: string;
+  image: string;
+  description: string;
+  box: { left: number; top: number; width: number; height: number };
+}
 
-function useActiveStop(ids: string[]) {
-  const [active, setActive] = useState(ids[0] ?? "");
+/** Percentages of the original 7680 × 4320 map, calculated by matching
+ * each supplied transparent illustration against the baked map artwork. */
+const TRAVEL_INDEX_LAYERS: TravelIndexLayer[] = [
+  {
+    id: "bio-oils",
+    title: "Bio-Oils Huelva",
+    stopId: "bio-oils-donana",
+    image: bioOilsLayer,
+    description:
+      "The industrial starting point of our route and the process context rePhlow must fit into.",
+    box: { left: 21.0449, top: 68.2292, width: 14.7461, height: 13.7153 },
+  },
+  {
+    id: "donana",
+    title: "Doñana",
+    stopId: "bio-oils-donana",
+    image: donanaLayer,
+    description:
+      "The sensitive wetland context that connected an industrial discharge to a wider water system.",
+    box: { left: 37.207, top: 76.1285, width: 10.498, height: 9.0278 },
+  },
+  {
+    id: "mar-menor-index",
+    title: "Mar Menor",
+    stopId: "mar-menor",
+    image: marMenorLayer,
+    description:
+      "A visible example of the ecological consequences of prolonged nutrient imbalance.",
+    box: { left: 67.041, top: 71.0938, width: 16.3574, height: 10.8507 },
+  },
+  {
+    id: "san-juan-index",
+    title: "Embalse de San Juan",
+    stopId: "san-juan",
+    image: sanJuanLayer,
+    description:
+      "The stop where observation became environmental sampling and measurement.",
+    box: { left: 42.3828, top: 53.559, width: 12.6953, height: 9.9826 },
+  },
+  {
+    id: "cedex-index",
+    title: "CEDEX",
+    stopId: "cedex",
+    image: cedexLayer,
+    description:
+      "A research perspective on water quality, evidence and responsible interpretation.",
+    box: { left: 54.9316, top: 39.3229, width: 12.8906, height: 14.4097 },
+  },
+  {
+    id: "repsol-index",
+    title: "Repsol Technology Lab",
+    stopId: "repsol",
+    image: repsolLayer,
+    description:
+      "The industrial innovation stop where implementation and scale became concrete questions.",
+    box: { left: 28.7109, top: 40.9722, width: 9.2773, height: 13.7153 },
+  },
+  {
+    id: "beehives-index",
+    title: "Beehives",
+    stopId: "beehives",
+    image: beehivesLayer,
+    description:
+      "A final stop about circularity, ecosystems and learning from biological systems.",
+    box: { left: 41.8945, top: 28.2118, width: 12.5, height: 12.2396 },
+  },
+];
 
-  useEffect(() => {
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
-    if (!elements.length) return;
+function TravelArchiveIndex() {
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const activeLayer =
+    TRAVEL_INDEX_LAYERS.find((layer) => layer.id === activeId) ?? null;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const intersecting = entries.filter((entry) => entry.isIntersecting);
-        if (intersecting.length === 0) return;
-        const topMost = intersecting.reduce((a, b) =>
-          a.boundingClientRect.top < b.boundingClientRect.top ? a : b,
-        );
-        setActive(topMost.target.id);
-      },
-      { rootMargin: "-110px 0px -70% 0px", threshold: 0 },
-    );
+  return (
+    <div className="ta-map-index" aria-labelledby="ta-map-index-title">
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [ids]);
+      <div
+        className={`ta-map-index__illustration${activeLayer ? " is-active" : ""}`}
+        onMouseLeave={() => setActiveId(null)}
+      >
+        <img
+          className="ta-map-index__base"
+          src={travelMap}
+          alt="Map of Spain showing the six Travel Archive stops: Bio-Oils Huelva and Doñana, Mar Menor, Embalse de San Juan, CEDEX, Repsol and Beehives."
+        />
 
-  return active;
+        {TRAVEL_INDEX_LAYERS.map((layer) => {
+          const style = {
+            left: `${layer.box.left}%`,
+            top: `${layer.box.top}%`,
+            width: `${layer.box.width}%`,
+            height: `${layer.box.height}%`,
+          };
+          return (
+            <img
+              key={layer.id}
+              className={`ta-map-index__layer ta-map-index__layer--${layer.id}${activeId === layer.id ? " is-active" : ""}`}
+              src={layer.image}
+              alt=""
+              style={style}
+            />
+          );
+        })}
+
+        {TRAVEL_INDEX_LAYERS.map((layer) => {
+          const style = {
+            left: `${layer.box.left}%`,
+            top: `${layer.box.top}%`,
+            width: `${layer.box.width}%`,
+            height: `${layer.box.height}%`,
+          };
+          return (
+            <a
+              key={layer.id}
+              className="ta-map-index__hitbox"
+              href={`#s3-${layer.stopId}`}
+              aria-label={`${layer.title} — jump to this Travel Archive stop`}
+              aria-describedby={
+                activeId === layer.id ? "ta-map-index-card" : undefined
+              }
+              style={style}
+              onMouseEnter={() => setActiveId(layer.id)}
+              onFocus={() => setActiveId(layer.id)}
+              onBlur={() => setActiveId(null)}
+            />
+          );
+        })}
+
+        {activeLayer && (
+          <div
+            className="ta-map-index__card"
+            id="ta-map-index-card"
+            role="status"
+          >
+            <small>Travel Archive stop</small>
+            <strong>{activeLayer.title}</strong>
+            <span>{activeLayer.description}</span>
+            <span className="ta-map-index__card-cta">Open field record ↓</span>
+          </div>
+        )}
+      </div>
+
+      <nav
+        className="ta-map-index__mobile-links"
+        aria-label="Travel Archive map links"
+      >
+        <ul>
+          {STOPS.map((stop) => (
+            <li key={stop.id}>
+              <a href={`#s3-${stop.id}`}>
+                <span>{stop.number}</span>
+                {stop.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
 }
 
 function PhotoFigure({ photo, large }: { photo: Photo; large: boolean }) {
   if (photo.kind === "real") {
-    const captionText = photo.caption === null ? null : (photo.caption ?? photo.alt);
+    const captionText =
+      photo.caption === null ? null : (photo.caption ?? photo.alt);
     return (
-      <figure className={`hp-stop__photo${large ? " hp-stop__photo--large" : ""}`}>
+      <figure
+        className={`hp-stop__photo${large ? " hp-stop__photo--large" : ""}`}
+      >
         <img src={photo.src} alt={photo.alt} loading="lazy" />
         {captionText && (
           <figcaption>
@@ -488,6 +864,8 @@ function PhotoFigure({ photo, large }: { photo: Photo; large: boolean }) {
 }
 
 function StopPhotos({ photos }: { photos: Photo[] }) {
+  if (photos.length === 0) return null;
+
   // 3 photos (San Juan, CEDEX): one large lead photo on the left, the
   // other two stacked on the right — a compact mosaic with a fixed total
   // height, instead of a lead photo plus a full-width strip underneath
@@ -520,7 +898,11 @@ function StopPhotos({ photos }: { photos: Photo[] }) {
       className={`hp-stop__photo-grid${photos.length > 1 ? "" : " hp-stop__photo-grid--single"}`}
     >
       {photos.map((photo, i) => (
-        <PhotoFigure photo={photo} large={photos.length === 1 || i === 0} key={i} />
+        <PhotoFigure
+          photo={photo}
+          large={photos.length === 1 || i === 0}
+          key={i}
+        />
       ))}
     </div>
   );
@@ -531,7 +913,9 @@ function StopBlock({ block }: { block: Block }) {
     case "p":
       return <p>{block.text}</p>;
     case "pullquote":
-      return <blockquote className="hp-stop__pullquote">{block.text}</blockquote>;
+      return (
+        <blockquote className="hp-stop__pullquote">{block.text}</blockquote>
+      );
     case "judgeScan":
       return (
         <div className="hp-stop__scan-row">
@@ -596,7 +980,10 @@ function StopBlock({ block }: { block: Block }) {
 
 function StopCard({ stop }: { stop: Stop }) {
   return (
-    <article className="hp-stop" id={`s3-${stop.id}`}>
+    <article
+      className={`hp-stop${stop.planned ? " hp-stop--planned" : ""}`}
+      id={`s3-${stop.id}`}
+    >
       <div className="hp-stop__marker">{stop.number}</div>
       <div className="hp-stop__content">
         <div className="hp-stop__head">
@@ -624,7 +1011,6 @@ function StopCard({ stop }: { stop: Stop }) {
 export function TravelArchiveRoute() {
   const [progress, setProgress] = useState(0);
   const routeRef = useRef<HTMLDivElement>(null);
-  const activeStopId = useActiveStop(STOP_IDS);
 
   useEffect(() => {
     function onScroll() {
@@ -653,14 +1039,14 @@ export function TravelArchiveRoute() {
             <p className="ta-hero__lede">
               This is the field evidence generated by the team itself: the
               places we visited, the systems we observed, the samples we
-              collected and the environments in which we tried to understand
-              the phosphorus problem beyond the laboratory. It complements
+              collected and the environments in which we tried to understand the
+              phosphorus problem beyond the laboratory. It complements
               Stakeholders &amp; Voices, which contains what external
-              interlocutors told us. Where a field visit was also
-              associated with a stakeholder conversation, we document here
-              what we physically saw and link to the corresponding interview
-              rather than repeating it. Together, these stops became a route
-              through the phosphorus cycle itself.
+              interlocutors told us. Where a field visit was also associated
+              with a stakeholder conversation, we document here what we
+              physically saw and link to the corresponding interview rather than
+              repeating it. Together, these stops became a route through the
+              phosphorus cycle itself.
             </p>
           </div>
 
@@ -673,11 +1059,13 @@ export function TravelArchiveRoute() {
         <p>
           Together, these stops became a route through the phosphorus cycle
           itself: from the industrial streams where excess phosphorus is
-          generated, to the ecosystems that ultimately bear nutrient
-          pressure, and finally back into the treatment infrastructure where
-          rePhlow would have to operate.
+          generated, to the ecosystems that ultimately bear nutrient pressure,
+          and finally back into the treatment infrastructure where rePhlow would
+          have to operate.
         </p>
       </div>
+
+      <TravelArchiveIndex />
 
       <div className="hp-route-progress" aria-hidden="true">
         <div
@@ -686,49 +1074,7 @@ export function TravelArchiveRoute() {
         />
       </div>
 
-      <div className="hp-route-select">
-        <label className="hp-route-select__label" htmlFor="ta-stop-select">
-          Jump to a stop
-        </label>
-        <select
-          id="ta-stop-select"
-          value={activeStopId || STOP_IDS[0]}
-          onChange={(e) => {
-            window.location.hash = e.target.value;
-          }}
-        >
-          {STOPS.map((stop) => (
-            <option key={stop.id} value={`s3-${stop.id}`}>
-              {stop.title}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="hp-route-layout">
-        <aside className="hp-route-nav" aria-label="Travel Archive stops">
-          <h3>Route stops</h3>
-          <ul>
-            {STOPS.map((stop) => {
-              const targetId = `s3-${stop.id}`;
-              const isActive = activeStopId === targetId;
-              return (
-                <li key={stop.id}>
-                  <a
-                    href={`#${targetId}`}
-                    className={isActive ? "is-active" : ""}
-                    aria-current={isActive ? "true" : undefined}
-                  >
-                    <span className="hp-route-nav__dot" aria-hidden="true" />
-                    {stop.title}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </aside>
-
-        <div className="hp-route" ref={routeRef}>
+      <div className="hp-route" ref={routeRef}>
           {beforeBreak.map((stop) => (
             <StopCard stop={stop} key={stop.id} />
           ))}
@@ -745,7 +1091,12 @@ export function TravelArchiveRoute() {
           <div className="hp-route-final-wrap">
             <div className="hp-route-final__marker" aria-hidden="true">
               <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path d="M4 1v16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                <path
+                  d="M4 1v16"
+                  stroke="currentColor"
+                  strokeWidth="1.6"
+                  strokeLinecap="round"
+                />
                 <path
                   d="M4 2.2h10.5c.7 0 1 .8.5 1.3l-2.6 2.6 2.6 2.6c.5.5.2 1.3-.5 1.3H4V2.2Z"
                   fill="currentColor"
@@ -758,7 +1109,16 @@ export function TravelArchiveRoute() {
               <p>{FINAL_CARD.text}</p>
             </div>
           </div>
-        </div>
+
+          <StopCard stop={PLANNED_STOP} />
+
+          <div
+            className="hp-route-break hp-route-break--open"
+            id="s3-route-open"
+          >
+            <h3>{ROUTE_OPEN.title}</h3>
+            <p>{ROUTE_OPEN.text}</p>
+          </div>
       </div>
     </section>
   );

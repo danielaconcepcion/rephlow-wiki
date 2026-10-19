@@ -1,0 +1,32 @@
+/* --------------------------------------------------------------------------
+   TileMoleculeField — design-system MoleculeField, "distributed" family,
+   density "dense". See TileMoleculeField.tsx. Backgrounds are the design
+   system's own PAL.light / PAL.primary values, verbatim.
+   -------------------------------------------------------------------------- */
+.tmf-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.tmf-layer--light {
+  background:
+    radial-gradient(
+      120% 100% at 10% -10%,
+      rgba(206, 234, 255, 0.62),
+      rgba(255, 250, 241, 0) 62%
+    ),
+    radial-gradient(
+      90% 85% at 95% 100%,
+      rgba(156, 198, 111, 0.16),
+      rgba(255, 250, 241, 0) 68%
+    ),
+    #fffaf1;
+}
+
+.tmf-layer--primary {
+  background: linear-gradient(135deg, #86b1d1, #9dc76f);
+}
