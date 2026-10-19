@@ -24,7 +24,9 @@ import "./GrowthPolypSurface.css";
  * there, per the "static alternative or usable on mobile" requirement.
  */
 
-const DATA_URL = asset("assets/model/data/growth-polyp-pi-3d.json");
+// Uploaded to assets/model/, without the data/ subfolder this
+// repository kept it in.
+const DATA_URL = asset("assets/model/growth-polyp-pi-3d.json");
 const STATIC_IMAGE_URL = asset("assets/model/growth-polyp-pi-3d-static.png");
 
 type PlotlyModule = typeof import("plotly.js-gl3d-dist-min");
@@ -105,8 +107,8 @@ export function GrowthPolypSurface() {
         )}
         {status === "error" && (
           <p className="growth-polyp-surface__status">
-            The interactive surface could not be loaded. See the static
-            figure below.
+            The interactive surface could not be loaded. See the static figure
+            below.
           </p>
         )}
       </div>
