@@ -269,11 +269,10 @@ const Pages: Page[] = [
   {
     name: "Team",
     title: "Team",
-    lead: "Many backgrounds. One goal.",
+    lead: "The people behind rePhlow.",
     path: "/team",
     component: Team,
     docTitle: "Team — rePhlow iGEM Wiki",
-    hideHeader: true,
     hideEyebrow: true,
     labHero: true,
     moleculeSeed: 59,

@@ -20,6 +20,8 @@ import {
 } from "./dbtlData";
 import { asset } from "../../utils";
 import "./DbtlCycle.css";
+import { createPortal } from "react-dom";
+import { FigureLightbox, useFigureLightbox } from "../hardware/FigureLightbox.tsx";
 
 /**
  * Scroll-driven Design → Build → Test → Learn cycle. Reconstructed from a
@@ -686,6 +688,9 @@ export const DbtlCycle = forwardRef<
   const contentRef = useRef<HTMLDivElement | null>(null);
   const incomingContentRef = useRef<HTMLDivElement | null>(null);
   const cueRef = useRef<HTMLParagraphElement | null>(null);
+  // Reading view (expand button) and click-to-enlarge figures.
+  const [reader, setReader] = useState<{ iter: number; phase: number; color: string } | null>(null);
+  const lightbox = useFigureLightbox(rootRef);
 
   const [activeIteration, setActiveIteration] = useState(0);
   const [activePhase, setActivePhase] = useState(0);
@@ -1106,6 +1111,23 @@ export const DbtlCycle = forwardRef<
           </div>
 
           <div className="dbtl-cycle__content" ref={contentRef}>
+            <button
+              type="button"
+              className="dbtl-cycle__expand"
+              aria-label="Expand this section to read it"
+              title="Expand"
+              onClick={() =>
+                setReader({
+                  iter: activeIteration,
+                  phase: activePhase,
+                  color: rootRef.current?.style.getPropertyValue("--iter-color") || "",
+                })
+              }
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" />
+              </svg>
+            </button>
             <p className="dbtl-cycle__eyebrow">
               Iteration {numberFrom + activeIteration} · {activeIter.title}
             </p>
@@ -1227,6 +1249,15 @@ export const DbtlCycle = forwardRef<
           <p className="dbtl-cycle__scroll-cue" ref={cueRef}>
             Scroll <span>↓</span>
           </p>
+          <FigureLightbox {...lightbox} />
+          {reader && (
+            <DbtlReader
+              iterations={iterations}
+              numberFrom={numberFrom}
+              start={reader}
+              onClose={() => setReader(null)}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -1413,3 +1444,88 @@ export function DbtlSectionNav({ groups }: { groups: DbtlNavGroup[] }) {
 }
 
 export type { PhaseName };
+/** Large reading view for one phase, opened from the expand button in the
+ * corner of the spiral panel. Arrows (or the left/right keys) step through every phase of
+ * every iteration of this spiral; Esc or the backdrop closes it. Figures
+ * inside can be clicked to enlarge them with their caption. */
+function DbtlReader({
+  iterations,
+  numberFrom,
+  start,
+  onClose,
+}: {
+  iterations: Iteration[];
+  numberFrom: number;
+  start: { iter: number; phase: number; color: string };
+  onClose: () => void;
+}) {
+  const flatTotal = iterations.length * PHASE_COUNT;
+  const [pos, setPos] = useState(start.iter * PHASE_COUNT + start.phase);
+  const iter = Math.floor(pos / PHASE_COUNT);
+  const phase = pos % PHASE_COUNT;
+  const data = iterations[iter].phases[phase];
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const closeRef = useRef<HTMLButtonElement | null>(null);
+  const lightbox = useFigureLightbox(bodyRef);
+  const go = useCallback(
+    (d: number) => setPos((p) => Math.max(0, Math.min(flatTotal - 1, p + d))),
+    [flatTotal],
+  );
+
+  useEffect(() => {
+    const before = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      else if (e.key === "ArrowLeft") go(-1);
+      else if (e.key === "ArrowRight") go(1);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = overflow;
+      before?.focus?.();
+    };
+  }, [onClose, go]);
+
+  useEffect(() => {
+    if (bodyRef.current) bodyRef.current.scrollTop = 0;
+  }, [pos]);
+
+  return createPortal(
+    <div className="dbtl-reader" style={{ "--iter-color": start.color || "var(--ink)" } as IterColorStyle}>
+      <div className="dbtl-reader__backdrop" onClick={onClose} />
+      <div className="dbtl-reader__dialog" role="dialog" aria-modal="true" aria-labelledby="dbtl-reader-title">
+        <div className="dbtl-reader__head">
+          <p className="dbtl-reader__eyebrow">
+            Iteration {numberFrom + iter} &middot; {iterations[iter].title}
+          </p>
+          <h2 className="dbtl-reader__title" id="dbtl-reader-title">
+            {data.name}
+          </h2>
+          <button ref={closeRef} type="button" className="dbtl-reader__close" aria-label="Close" onClick={onClose}>
+            &times;
+          </button>
+        </div>
+        <div className="dbtl-reader__body dbtl-cycle__copy" ref={bodyRef}>
+          {data.blocks.map((block, k) => renderBlock(block, k))}
+        </div>
+        <div className="dbtl-reader__nav">
+          <button type="button" onClick={() => go(-1)} disabled={pos === 0} aria-label="Previous phase">
+            &larr; Previous
+          </button>
+          <span>
+            {phase + 1} / {PHASE_COUNT}
+          </span>
+          <button type="button" onClick={() => go(1)} disabled={pos === flatTotal - 1} aria-label="Next phase">
+            Next &rarr;
+          </button>
+        </div>
+      </div>
+      <FigureLightbox {...lightbox} />
+    </div>,
+    document.body,
+  );
+}
