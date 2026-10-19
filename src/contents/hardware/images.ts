@@ -1,11 +1,11 @@
-﻿/*
+/*
  * All images of the Hardware page (28 AVIF files, hardware-images.zip).
  *
  * Upload them to https://uploads.igem.org inside a folder "hardware".
  * Then EITHER set IMG_BASE once (if Uploads kept the file names),
  * OR paste the exact URL that Uploads gives you for each file below.
  */
-export const IMG_BASE = "https://static.igem.wiki/teams/6124/wiki/assets/hardware/";
+export const IMG_BASE = "https://static.igem.wiki/teams/6124/wiki/hardware/";
 
 export const IMAGES: Record<string, string> = {
   "hw-capsules-ab.avif": IMG_BASE + "hw-capsules-ab.avif",

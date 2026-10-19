@@ -5,7 +5,7 @@
  * https://uploads.igem.org inside the folder assets/sponsors.
  * To add, remove or reorder a sponsor, edit this list only.
  */
-export const SPONSORS_BASE = import.meta.env.DEV ? import.meta.env.BASE_URL + "assets/sponsors/" : "https://static.igem.wiki/teams/6124/wiki/assets/sponsors/";
+export const SPONSORS_BASE = import.meta.env.DEV ? import.meta.env.BASE_URL + "assets/sponsors/" : "https://static.igem.wiki/teams/6124/wiki/sponsors/";
 
 export type Sponsor = {
   name: string;
