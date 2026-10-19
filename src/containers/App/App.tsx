@@ -1,3 +1,4 @@
+import { SponsorsMarquee } from "../../components/SponsorsMarquee/SponsorsMarquee.tsx";
 import "./App.css";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { stringToSlug } from "../../utils";
@@ -109,6 +110,7 @@ const App = () => {
       </Routes>
 
       {/* MUST mention license AND have a link to team wiki's repository on gitlab.igem.org */}
+      <SponsorsMarquee />
       <Footer />
     </>
   );
