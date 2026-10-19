@@ -31,6 +31,14 @@
  * 150–250 MB across 152 files) but every run after that is close to
  * instant. Run directly for local inspection:
  * `node scripts/sync-metabolic-network-scenarios.mjs`
+ *
+ * TEMPORARY: `yarn build` no longer runs this. The 153 exports come to
+ * 70MB, and copying them into the Pages artifact took it past iGEM's
+ * upload limit — the deploy failed with a 413. They are going to iGEM
+ * Uploads instead; once they are there, scenarioData.ts should fetch
+ * them from static.igem.wiki through asset() like every other file and
+ * this script can go. Until then the Model page's network graph has no
+ * scenarios in the built site, and `yarn dev` still has them locally.
  */
 
 import { readdir, mkdir, copyFile, stat } from "node:fs/promises";
