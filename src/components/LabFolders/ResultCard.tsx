@@ -187,7 +187,7 @@ function FigureMatrix({
 }
 
 function NarrativeParagraph({ text }: { text: string }) {
-  const lead = text.match(/^\*\*([^*]+)\*\*\s*(.*)$/s);
+  const lead = text.match(/^\*\*([^*]+[.!?])\*\*\s+(.*)$/s);
 
   if (!lead) {
     return (
@@ -197,11 +197,7 @@ function NarrativeParagraph({ text }: { text: string }) {
     );
   }
 
-  const [, heading, rawRemainder] = lead;
-  const remainder = rawRemainder.replace(/^,\s*/, "");
-  const paragraph = rawRemainder.startsWith(",")
-    ? remainder.replace(/^./, (character) => character.toUpperCase())
-    : remainder;
+  const [, heading, paragraph] = lead;
   return (
     <div className="result-subsection__field result-subsection__field--narrative">
       <h5>{heading}</h5>
