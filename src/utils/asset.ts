@@ -19,10 +19,10 @@
  * there is nothing to go on, and leaving the name as it is is the
  * assumption that fails loudly rather than silently.
  *
- * Everything outside `assets/` stays on the wiki's own origin, under the
- * configured base path (see vite.config.ts). Right now that is only
- * `generated/scenarios/`, the Model page's scenario data, which the build
- * produces from `data/metabolic-network-scenarios` rather than uploaded.
+ * Anything outside `assets/` stays on the wiki's own origin, under the
+ * configured base path (see vite.config.ts). Nothing uses that branch at
+ * the moment — every file the wiki loads is on Uploads — but it is what a
+ * path served from the site itself would resolve through.
  */
 const UPLOADS = "https://static.igem.wiki/teams/6124/wiki/";
 

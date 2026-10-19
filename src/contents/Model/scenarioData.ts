@@ -3,12 +3,11 @@ import { asset } from "../../utils/asset";
 /**
  * Manifest-driven scenario data layer for the Model page's metabolic
  * network (./MetabolicNetworkGraph.tsx). Source of truth for every control
- * value, checkpoint, and predicted-state figure is
- * data/metabolic-network-scenarios/manifest.json (synced verbatim, not
- * transformed, into public/generated/scenarios/ by
- * scripts/sync-metabolic-network-scenarios.mjs — see that script's header
- * for why this pipeline no longer merges scenarios at build time like the
- * old generate-metabolic-network.mjs did).
+ * value, checkpoint, and predicted-state figure is manifest.json, which
+ * with the 153 scenario exports it indexes lives on iGEM Uploads (see
+ * uploadedAs below). data/metabolic-network-scenarios/ in this repository
+ * is the set those were uploaded from, kept as the source they came out
+ * of; nothing at build time reads it any more.
  *
  * Nothing here hardcodes a scenario's filename or count: every scenario is
  * looked up by matching the current UI selection (objective + at most one
@@ -43,8 +42,17 @@ export interface ManifestStrainDesign {
 
 export interface ManifestUi {
   objectives: ManifestObjective[];
-  uptakeCheckpoints: { oxygen: number[]; phosphate: number[]; ammonium: number[] };
-  uptakeReference: { carbon: number; oxygen: number; phosphate: number; ammonium: number };
+  uptakeCheckpoints: {
+    oxygen: number[];
+    phosphate: number[];
+    ammonium: number[];
+  };
+  uptakeReference: {
+    carbon: number;
+    oxygen: number;
+    phosphate: number;
+    ammonium: number;
+  };
   carbonSources: Record<string, ManifestCarbonSource>;
   strainDesigns: Record<string, ManifestStrainDesign>;
   ppk1CapacityMultipliers: number[];
@@ -93,7 +101,14 @@ export interface ManifestScenario {
 export interface Manifest {
   schemaVersion: number;
   generatedAt: string;
-  model: { file: string; reactionCount: number; metaboliteCount: number; geneCount: number; referenceGrowth: number; ppk1ReferenceFlux: number };
+  model: {
+    file: string;
+    reactionCount: number;
+    metaboliteCount: number;
+    geneCount: number;
+    referenceGrowth: number;
+    ppk1ReferenceFlux: number;
+  };
   selectionPolicy: ManifestSelectionPolicy;
   ui: ManifestUi;
   scenarios: ManifestScenario[];
@@ -124,7 +139,9 @@ export function resolveScenario(
 ): ManifestScenario | undefined {
   const { objective, perturbation } = selection;
   if (!perturbation) {
-    return manifest.scenarios.find((s) => s.objective === objective && s.group === "baseline");
+    return manifest.scenarios.find(
+      (s) => s.objective === objective && s.group === "baseline",
+    );
   }
   return manifest.scenarios.find(
     (s) =>
@@ -143,13 +160,29 @@ export function resolveScenario(
 // case).
 // ---------------------------------------------------------------------------
 
+/** Where the scenario exports live on iGEM Uploads.
+ *
+ * Uploads does not keep a file's name as given: it replaces a double
+ * underscore with a single dash and lower-cases the whole thing, so
+ * `objective-growth20__strain-doprP.json` is served as
+ * `objective-growth20-strain-doprp.json`. The manifest still lists the
+ * original names, so every fetch goes through this. Checked file by file
+ * against the server: all 153 answer on the rewritten name, each matching
+ * its local counterpart byte for byte.
+ */
+const SCENARIOS = "assets/model/metabolic-network-scenarios";
+
+function uploadedAs(file: string): string {
+  return `${SCENARIOS}/${file.split("__").join("-").toLowerCase()}`;
+}
+
 let manifestPromise: Promise<Manifest> | null = null;
 
 /** Fetches manifest.json exactly once per page load, however many
  * components/renders ask for it. */
 export function loadManifest(): Promise<Manifest> {
   if (!manifestPromise) {
-    manifestPromise = fetch(asset("generated/scenarios/manifest.json")).then((res) => {
+    manifestPromise = fetch(asset(`${SCENARIOS}/manifest.json`)).then((res) => {
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return res.json() as Promise<Manifest>;
     });
@@ -182,7 +215,10 @@ export interface RawScenarioFile {
 }
 
 const scenarioCache = new Map<string, RawScenarioFile>();
-const inFlight = new Map<string, { promise: Promise<RawScenarioFile>; controller: AbortController }>();
+const inFlight = new Map<
+  string,
+  { promise: Promise<RawScenarioFile>; controller: AbortController }
+>();
 
 /**
  * Fetches one scenario's raw Fluxer JSON by its manifest `file`, caching the
@@ -192,7 +228,10 @@ const inFlight = new Map<string, { promise: Promise<RawScenarioFile>; controller
  * is called is aborted — the caller only ever gets the most recently
  * requested scenario, never a stale one racing ahead of it.
  */
-export function loadScenario(file: string, staleController?: AbortController): Promise<RawScenarioFile> {
+export function loadScenario(
+  file: string,
+  staleController?: AbortController,
+): Promise<RawScenarioFile> {
   const cached = scenarioCache.get(file);
   if (cached) return Promise.resolve(cached);
 
@@ -201,7 +240,7 @@ export function loadScenario(file: string, staleController?: AbortController): P
 
   staleController?.abort();
   const controller = new AbortController();
-  const promise = fetch(asset(`generated/scenarios/${file}`), { signal: controller.signal })
+  const promise = fetch(asset(uploadedAs(file)), { signal: controller.signal })
     .then((res) => {
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return res.json() as Promise<RawScenarioFile>;
@@ -297,7 +336,10 @@ export interface ParsedScenarioGraph {
  * values regardless of whether the underlying scale shifted, so this has
  * no visible discontinuity beyond the intentional cross-fade.
  */
-export function parseScenarioGraph(raw: RawScenarioFile, subsystems: SubsystemRegistry): ParsedScenarioGraph {
+export function parseScenarioGraph(
+  raw: RawScenarioFile,
+  subsystems: SubsystemRegistry,
+): ParsedScenarioGraph {
   const nodeIds = new Set(raw.graph.nodes.map((n) => n.id));
 
   const nodes: ParsedNode[] = raw.graph.nodes.map((n) => {
@@ -322,8 +364,12 @@ export function parseScenarioGraph(raw: RawScenarioFile, subsystems: SubsystemRe
     };
   });
 
-  const validLinks = raw.graph.links.filter((l) => nodeIds.has(l.source) && nodeIds.has(l.target));
-  const magnitudes = validLinks.map((l) => l.fluxMagnitude).filter((m) => m > 0);
+  const validLinks = raw.graph.links.filter(
+    (l) => nodeIds.has(l.source) && nodeIds.has(l.target),
+  );
+  const magnitudes = validLinks
+    .map((l) => l.fluxMagnitude)
+    .filter((m) => m > 0);
   const logMin = magnitudes.length ? Math.log(Math.min(...magnitudes)) : 0;
   const logMax = magnitudes.length ? Math.log(Math.max(...magnitudes)) : 0;
   const logSpan = logMax - logMin || 1;

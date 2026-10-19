@@ -28,9 +28,8 @@ import { ScenarioSidebar } from "./ScenarioSidebar";
 /**
  * Genome-scale metabolic network for the Model page (./Model.tsx) — the
  * iJN1463 flux network, one manifest-described scenario at a time (see
- * ./scenarioData.ts for the manifest/fetch/cache layer and
- * scripts/sync-metabolic-network-scenarios.mjs for how the source Fluxer
- * exports become the per-scenario JSON this component fetches on demand).
+ * ./scenarioData.ts for the manifest/fetch/cache layer, and for where the
+ * per-scenario Fluxer exports this component fetches on demand live).
  *
  * Rendered on a plain <canvas> with a live d3-force simulation, mirroring
  * Fluxer's own interaction style, rather than through a graph library:
@@ -88,14 +87,21 @@ function formatFlux(value: number): string {
   const abs = Math.abs(value);
   if (abs === 0) return "0";
   if (abs < 1e-3 || abs >= 1e4) return value.toExponential(2);
-  return `${value.toPrecision(3)}`.replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "");
+  return `${value.toPrecision(3)}`
+    .replace(/(\.\d*?)0+$/, "$1")
+    .replace(/\.$/, "");
 }
 function capitalize(text: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 function nodeTooltipLines(n: SimNode): string[] {
   if (n.kind === "reaction") {
-    return [n.id, n.name, `Subsystem: ${n.subsystem ?? ""}`, `Flux: ${formatFlux(n.flux ?? 0)}`];
+    return [
+      n.id,
+      n.name,
+      `Subsystem: ${n.subsystem ?? ""}`,
+      `Flux: ${formatFlux(n.flux ?? 0)}`,
+    ];
   }
   const lines = [n.id, n.name];
   if (n.localization) lines.push(`Localization: ${capitalize(n.localization)}`);
@@ -131,7 +137,10 @@ const DRAG_ALPHA_TARGET = 0.3;
 const ANCHOR_STRENGTH = 0.6; // pulls the active objective's target reaction toward the graph center
 const RADIAL_STRENGTH = 0.02; // pulls every other active node gently toward that anchor
 
-function getEventPoint(event: MouseEvent | TouchEvent, canvas: HTMLCanvasElement): [number, number] {
+function getEventPoint(
+  event: MouseEvent | TouchEvent,
+  canvas: HTMLCanvasElement,
+): [number, number] {
   const rect = canvas.getBoundingClientRect();
   if ("touches" in event) {
     const t = event.touches[0] ?? event.changedTouches[0];
@@ -154,10 +163,12 @@ function endpointId(endpoint: SimNode | string): string {
 export function MetabolicNetworkGraph() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const applyScenarioRef = useRef<(parsed: ParsedScenarioGraph, anchorReactionId: string | null) => void>(
-    () => {},
+  const applyScenarioRef = useRef<
+    (parsed: ParsedScenarioGraph, anchorReactionId: string | null) => void
+  >(() => {});
+  const [status, setStatus] = useState<"loading" | "ready" | "error">(
+    "loading",
   );
-  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
   const [tooltip, setTooltip] = useState<Tooltip | null>(null);
   const [manifest, setManifest] = useState<Manifest | null>(null);
   const [selection, setSelection] = useState<ScenarioSelection | null>(null);
@@ -177,8 +188,12 @@ export function MetabolicNetworkGraph() {
     if (!ctx) return;
 
     const rootStyle = getComputedStyle(document.documentElement);
-    const metaboliteColor = (rootStyle.getPropertyValue("--ink-soft") || "#4A5170").trim();
-    const bodyFont = (rootStyle.getPropertyValue("--font-body") || "Inter, Segoe UI, sans-serif")
+    const metaboliteColor = (
+      rootStyle.getPropertyValue("--ink-soft") || "#4A5170"
+    ).trim();
+    const bodyFont = (
+      rootStyle.getPropertyValue("--font-body") || "Inter, Segoe UI, sans-serif"
+    )
       .replace(/['"]/g, "")
       .trim();
 
@@ -203,17 +218,30 @@ export function MetabolicNetworkGraph() {
     let hasFittedInitialView = false;
     let currentAnchorReactionId: string | null = null;
 
-    const simulation: Simulation<SimNode, SimLink> = forceSimulation<SimNode>([]);
-    const linkForce = forceLink<SimNode, SimLink>([]).id((d) => d.id).distance(LINK_DISTANCE);
+    const simulation: Simulation<SimNode, SimLink> = forceSimulation<SimNode>(
+      [],
+    );
+    const linkForce = forceLink<SimNode, SimLink>([])
+      .id((d) => d.id)
+      .distance(LINK_DISTANCE);
 
     function anchorForce(alpha: number) {
       if (!currentAnchorReactionId) return;
       const anchor = nodeById.get(currentAnchorReactionId);
-      if (!anchor || anchor.activeTarget !== 1 || anchor.x == null || anchor.y == null) return;
-      anchor.vx = (anchor.vx ?? 0) + (GRAPH_CENTER - anchor.x) * ANCHOR_STRENGTH * alpha;
-      anchor.vy = (anchor.vy ?? 0) + (GRAPH_CENTER - anchor.y) * ANCHOR_STRENGTH * alpha;
+      if (
+        !anchor ||
+        anchor.activeTarget !== 1 ||
+        anchor.x == null ||
+        anchor.y == null
+      )
+        return;
+      anchor.vx =
+        (anchor.vx ?? 0) + (GRAPH_CENTER - anchor.x) * ANCHOR_STRENGTH * alpha;
+      anchor.vy =
+        (anchor.vy ?? 0) + (GRAPH_CENTER - anchor.y) * ANCHOR_STRENGTH * alpha;
       for (const n of physicsNodes) {
-        if (n === anchor || n.activeTarget !== 1 || n.x == null || n.y == null) continue;
+        if (n === anchor || n.activeTarget !== 1 || n.x == null || n.y == null)
+          continue;
         n.vx = (n.vx ?? 0) + (anchor.x - n.x) * RADIAL_STRENGTH * alpha;
         n.vy = (n.vy ?? 0) + (anchor.y - n.y) * RADIAL_STRENGTH * alpha;
       }
@@ -221,7 +249,12 @@ export function MetabolicNetworkGraph() {
 
     simulation
       .force("link", linkForce)
-      .force("charge", forceManyBody<SimNode>().strength(CHARGE_STRENGTH).distanceMax(CHARGE_DISTANCE_MAX))
+      .force(
+        "charge",
+        forceManyBody<SimNode>()
+          .strength(CHARGE_STRENGTH)
+          .distanceMax(CHARGE_DISTANCE_MAX),
+      )
       .force("center", forceCenter(GRAPH_CENTER, GRAPH_CENTER))
       .force("anchor", anchorForce)
       .alpha(0)
@@ -259,7 +292,10 @@ export function MetabolicNetworkGraph() {
       .filter((event: MouseEvent | TouchEvent | WheelEvent) => {
         if (event.type === "wheel") return true;
         if ("button" in event && event.button) return false;
-        const [sx, sy] = getEventPoint(event as MouseEvent | TouchEvent, canvas);
+        const [sx, sy] = getEventPoint(
+          event as MouseEvent | TouchEvent,
+          canvas,
+        );
         return !hitTest(sx, sy);
       })
       .on("zoom", (event) => {
@@ -284,9 +320,16 @@ export function MetabolicNetworkGraph() {
         if (l.opacity <= 0.001) continue;
         const s = l.source as SimNode;
         const t = l.target as SimNode;
-        if (typeof s !== "object" || typeof t !== "object" || s.x == null || t.x == null) continue;
+        if (
+          typeof s !== "object" ||
+          typeof t !== "object" ||
+          s.x == null ||
+          t.x == null
+        )
+          continue;
         ctx!.globalAlpha = l.opacity;
-        ctx!.lineWidth = EDGE_WIDTH_MIN + l.renderFluxNorm * (EDGE_WIDTH_MAX - EDGE_WIDTH_MIN);
+        ctx!.lineWidth =
+          EDGE_WIDTH_MIN + l.renderFluxNorm * (EDGE_WIDTH_MAX - EDGE_WIDTH_MIN);
         ctx!.beginPath();
         ctx!.moveTo(s.x!, s.y!);
         ctx!.lineTo(t.x!, t.y!);
@@ -307,7 +350,12 @@ export function MetabolicNetworkGraph() {
         let offset: number;
         if (n.kind === "reaction") {
           ctx!.fillStyle = subsystemColor(n.subsystemIndex ?? -1);
-          ctx!.fillRect(x - REACTION_HALF_SIZE, y - REACTION_HALF_SIZE, REACTION_HALF_SIZE * 2, REACTION_HALF_SIZE * 2);
+          ctx!.fillRect(
+            x - REACTION_HALF_SIZE,
+            y - REACTION_HALF_SIZE,
+            REACTION_HALF_SIZE * 2,
+            REACTION_HALF_SIZE * 2,
+          );
           offset = REACTION_HALF_SIZE + 2;
         } else {
           ctx!.fillStyle = metaboliteColor;
@@ -342,7 +390,11 @@ export function MetabolicNetworkGraph() {
     }
     function retargetTooltip(n: SimNode) {
       const pos = screenPosOf(n);
-      if (lastTooltipPos && Math.abs(pos.x - lastTooltipPos.x) < 1.5 && Math.abs(pos.y - lastTooltipPos.y) < 1.5) {
+      if (
+        lastTooltipPos &&
+        Math.abs(pos.x - lastTooltipPos.x) < 1.5 &&
+        Math.abs(pos.y - lastTooltipPos.y) < 1.5
+      ) {
         return;
       }
       showTooltipFor(n);
@@ -439,7 +491,9 @@ export function MetabolicNetworkGraph() {
         physicsNodes.some((n) => n.activeTarget === 0 && n.opacity <= 0.001) ||
         physicsLinks.some((l) => l.activeTarget === 0 && l.opacity <= 0.001);
       if (hasFinishedExits) {
-        physicsNodes = physicsNodes.filter((n) => !(n.activeTarget === 0 && n.opacity <= 0.001));
+        physicsNodes = physicsNodes.filter(
+          (n) => !(n.activeTarget === 0 && n.opacity <= 0.001),
+        );
         const keepIds = new Set(physicsNodes.map((n) => n.id));
         physicsLinks = physicsLinks.filter(
           (l) =>
@@ -460,7 +514,12 @@ export function MetabolicNetworkGraph() {
       for (const pn of parsed.nodes) {
         let node = nodeById.get(pn.id);
         if (!node) {
-          node = { ...pn, opacity: 0, opacityFrom: 0, activeTarget: 1 } as SimNode;
+          node = {
+            ...pn,
+            opacity: 0,
+            opacityFrom: 0,
+            activeTarget: 1,
+          } as SimNode;
           nodeById.set(pn.id, node);
           topologyChanged = true;
         } else {
@@ -512,7 +571,9 @@ export function MetabolicNetworkGraph() {
         }
       }
 
-      physicsNodes = [...nodeById.values()].filter((n) => n.activeTarget === 1 || n.opacity > 0.001);
+      physicsNodes = [...nodeById.values()].filter(
+        (n) => n.activeTarget === 1 || n.opacity > 0.001,
+      );
       const physicsNodeIds = new Set(physicsNodes.map((n) => n.id));
       physicsLinks = [...linkById.values()].filter((l) => {
         if (l.activeTarget !== 1 && l.opacity <= 0.001) return false;
@@ -619,7 +680,8 @@ export function MetabolicNetworkGraph() {
   // fetch aborts whatever previous fetch was still in flight so a fast
   // double-selection can never let a stale response land after a newer
   // one (see loadScenario/abortInFlightScenarios in scenarioData.ts). ---
-  const activeScenario = manifest && selection ? resolveScenario(manifest, selection) : undefined;
+  const activeScenario =
+    manifest && selection ? resolveScenario(manifest, selection) : undefined;
   const subsystemsRef = useRef(new SubsystemRegistry());
 
   useEffect(() => {
@@ -642,15 +704,23 @@ export function MetabolicNetworkGraph() {
       .then((raw) => {
         if (cancelled) return;
         const parsed = parseScenarioGraph(raw, subsystemsRef.current);
-        const objective = manifest.ui.objectives.find((o) => o.id === activeScenario.objective);
+        const objective = manifest.ui.objectives.find(
+          (o) => o.id === activeScenario.objective,
+        );
         applyScenarioRef.current(parsed, objective?.target_reaction ?? null);
         setStatus("ready");
         setIsFetchingScenario(false);
       })
       .catch((err) => {
-        if (cancelled || (err instanceof DOMException && err.name === "AbortError")) return;
+        if (
+          cancelled ||
+          (err instanceof DOMException && err.name === "AbortError")
+        )
+          return;
         console.error("Failed to load scenario:", activeScenario.file, err);
-        setScenarioError("Could not load this scenario. The previous view is still shown.");
+        setScenarioError(
+          "Could not load this scenario. The previous view is still shown.",
+        );
         setIsFetchingScenario(false);
         if (status === "loading") setStatus("error");
       });
@@ -664,7 +734,9 @@ export function MetabolicNetworkGraph() {
   function handleSelectObjective(objectiveId: string) {
     setSelection((prev) => (prev ? { ...prev, objective: objectiveId } : prev));
   }
-  function handleSelectPerturbation(perturbation: ScenarioSelection["perturbation"]) {
+  function handleSelectPerturbation(
+    perturbation: ScenarioSelection["perturbation"],
+  ) {
     setSelection((prev) => (prev ? { ...prev, perturbation } : prev));
   }
   function handleReset() {
@@ -688,7 +760,10 @@ export function MetabolicNetworkGraph() {
         {infeasible && (
           <div className="model-network__status model-network__status--infeasible">
             <strong>Infeasible scenario</strong>
-            <span>{infeasible.label} has no feasible flux solution under these constraints.</span>
+            <span>
+              {infeasible.label} has no feasible flux solution under these
+              constraints.
+            </span>
           </div>
         )}
 
@@ -704,7 +779,10 @@ export function MetabolicNetworkGraph() {
         )}
 
         {tooltip && (
-          <div className="model-network__tooltip" style={{ left: tooltip.x, top: tooltip.y }}>
+          <div
+            className="model-network__tooltip"
+            style={{ left: tooltip.x, top: tooltip.y }}
+          >
             <strong>{tooltip.lines[0]}</strong>
             {tooltip.lines.slice(1).map((line) => (
               <span key={line}>{line}</span>
