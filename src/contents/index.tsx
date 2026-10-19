@@ -1,7 +1,6 @@
 export { Home } from "./Home.tsx";
 export { Design } from "./Design.tsx";
 export { Protocols } from "./Protocols.tsx";
-export { Attributions } from "./Attributions.tsx";
 export { Sponsors } from "./Sponsors.tsx";
 export { Team } from "./Team/Team.tsx";
 export { Medals } from "./Medals.tsx";

@@ -3,7 +3,6 @@ import {
   Home,
   Design,
   Protocols,
-  Attributions,
   Sponsors,
   Team,
   Medals,
@@ -266,18 +265,6 @@ const Pages: Page[] = [
     component: Team,
     docTitle: "Team — rePhlow iGEM Wiki",
     hideHeader: true,
-  },
-  {
-    name: "Attributions",
-    title: "Attributions",
-    lead: "Credit where it's due.",
-    /*A space for acknowledging the work and responsibilities of team members and contributors.*/
-    path: "/attributions",
-    component: Attributions,
-    docTitle: "Attributions — rePhlow iGEM Wiki",
-    hideEyebrow: true,
-    labHero: true,
-    moleculeSeed: 53,
   },
   {
     name: "Sponsors",
