@@ -93,13 +93,16 @@ export function FigureLightbox({
     document.body.style.overflow = "hidden";
     closeBtn.current?.focus();
     const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" && e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+      e.stopPropagation();
+      e.preventDefault();
       if (e.key === "Escape") handlers.current.close();
       if (e.key === "ArrowLeft") handlers.current.prev();
       if (e.key === "ArrowRight") handlers.current.next();
     };
-    window.addEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKey, true);
     return () => {
-      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("keydown", onKey, true);
       document.body.style.overflow = overflow;
       before?.focus?.();
     };

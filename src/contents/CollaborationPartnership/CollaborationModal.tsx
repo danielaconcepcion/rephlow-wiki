@@ -12,6 +12,9 @@ import {
   VISIBLE_ENTRIES,
 } from "./collaborationData";
 import type { EntryId, GalleryPhoto, GroupId, ProgrammeItem } from "./collaborationData";
+import { FigureLightbox, useFigureLightbox } from "../hardware/FigureLightbox.tsx";
+import { KickoffMaterials } from "../collaboration/CollabExtras.tsx";
+import { COLLAB_BASE, IQOG_PHOTOS } from "../collaboration/collabMedia.ts";
 
 /* --------------------------------------------------------------------------
    One dialog for every object on the tables. Prev/next (buttons or ←/→)
@@ -36,6 +39,7 @@ export function CollaborationModal({
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const lightbox = useFigureLightbox(bodyRef);
 
   const idx = VISIBLE_ENTRIES.findIndex((e) => e.id === openId);
   const cur = VISIBLE_ENTRIES[idx];
@@ -119,6 +123,7 @@ export function CollaborationModal({
 
         <div ref={bodyRef} className="cp-modal__body">
           <EntryBody id={cur.id} />
+          <FigureLightbox {...lightbox} />
         </div>
       </div>
     </div>
@@ -161,7 +166,7 @@ function Logo({ src, alt, height = 64 }: { src: string; alt: string; height?: nu
 }
 
 /** Dashed box naming a file the team still has to upload. */
-function Pending({ file, label, className = "" }: { file: string; label: string; className?: string }) {
+export function Pending({ file, label, className = "" }: { file: string; label: string; className?: string }) {
   return (
     <div className={`cp-slot ${className}`}>
       <span className="cp-slot__file">{file}</span>
@@ -222,9 +227,10 @@ function KickoffBody() {
         researchers and students could learn, exchange ideas, and explore the
         impact of science beyond the laboratory.
       </p>
-      <div className="cp-logo-row">
+      <div className="cp-logo-row cp-logo-row--single">
         <Logo src={IMG.sebbm} alt="SEBBM" height={72} />
-        <Pending file="sponsor-logos.png" label="Other sponsors" className="cp-slot--logo" />
+        <Logo src="https://static.igem.wiki/teams/6124/wiki/sponsors/ucm.avif" alt="Universidad Complutense de Madrid" height={72} />
+        <Logo src={IMG.compluemprende} alt="Compluemprende" height={72} />
         <Logo src={IMG.rephlow} alt="rePhlow" height={72} />
       </div>
 
@@ -243,6 +249,7 @@ function KickoffBody() {
       </div>
 
       <h3 className="cp-h3">Programme</h3>
+      <KickoffMaterials />
       <div role="tablist" aria-label="Meetup days" className="cp-days">
         {KICKOFF_DAYS.map((d, i) => (
           <button
@@ -590,6 +597,13 @@ function CbmBody() {
   );
 }
 
+/* IQOG-CSIC research stay photos (iGEM Uploads, folder collaboration) */
+const IQOG_GALLERY: GalleryPhoto[] = IQOG_PHOTOS.map((p) => ({
+  ...KICKOFF_GALLERY[0],
+  src: COLLAB_BASE + p.file,
+  ratio: p.ratio as unknown as GalleryPhoto["ratio"],
+}));
+
 function IqogBody() {
   return (
     <Stack>
@@ -610,6 +624,7 @@ function IqogBody() {
         with the collaboration of <strong>Eduardo García-Junceda</strong>, from the Advanced
         Biomaterials and Biotechnology group, and <strong>Dianelis Toledo Monterrey</strong>.
       </p>
+      <PhotoStrip photos={IQOG_GALLERY} alt="rePhlow team during the IQOG-CSIC research stay" />
       <p className="cp-thanks">
         We thank Israel, Eduardo and Dianelis for hosting us and for their
         guidance throughout the stay.
