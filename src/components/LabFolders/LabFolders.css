@@ -1681,6 +1681,39 @@
 }
 .result-card .record-figure__photo {
   margin-inline: auto;
+  /* A ceiling, not a size. Several of these sources are 1100 x 1300 or
+     larger, and at card width they fill a whole screen and push the prose
+     that reads them off the bottom. Capped, they stay at a size the page
+     can hold, and a click still opens the full image (ZoomableImage). */
+  max-height: 520px;
+}
+
+/* A figure and the table that reads it, side by side on one row: a gel
+   next to the table naming its lanes, or a short table next to its own
+   figure. Stacked, the two are read far apart and each leaves half the
+   card empty. The row centres them rather than forcing equal heights,
+   which would stretch whichever is shorter. */
+.result-subsection__pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+  margin-top: 20px;
+}
+.result-subsection__pair > .record-figure-grid,
+.result-subsection__pair > .result-table {
+  margin-top: 0;
+}
+.result-subsection__pair .record-figure:has(.record-figure__photo) {
+  min-width: 0;
+}
+.result-subsection__pair .record-figure__photo {
+  max-height: 600px;
+}
+@media (max-width: 900px) {
+  .result-subsection__pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* Tables size to their content rather than stretching every column across
