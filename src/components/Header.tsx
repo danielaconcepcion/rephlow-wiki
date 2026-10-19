@@ -10,9 +10,9 @@ interface HeaderProps {
  * - hideEyebrow: drop the "under construction" label.
  * - moleculeSeed: draw the molecule field background (same seed = same layout).
  */
-const HERO_OPTIONS: Record<string, { hideEyebrow?: boolean; moleculeSeed?: number }> = {
+const HERO_OPTIONS: Record<string, { hideEyebrow?: boolean; moleculeSeed?: number; award?: string }> = {
   Entrepreneurship: { hideEyebrow: true, moleculeSeed: 31 },
-  Measurements: { hideEyebrow: true, moleculeSeed: 17 },
+  Measurements: { hideEyebrow: true, moleculeSeed: 17, award: "Best Measurements" },
 };
 
 /* Molecule field: positions [x, y, scale] across the banner. */
@@ -104,6 +104,15 @@ export function Header({ title, lead }: HeaderProps) {
       >
         {!opt.hideEyebrow && (
           <p className="hero__eyebrow">Web page currently under construction!</p>
+        )}
+        {opt.award && (
+          <span style={{ position: "relative", zIndex: 1, display: "inline-flex", alignItems: "center", gap: 7, padding: "7px 16px", borderRadius: 999, fontFamily: "var(--font-body)", fontSize: ".78rem", fontWeight: 700, letterSpacing: ".07em", textTransform: "uppercase", color: "#a67c1e", background: "#f4d35e52", boxShadow: "inset 0 0 0 1px #a67c1e33" }}>
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ width: 14, height: 14, flex: "none" }}>
+              <circle cx="12" cy="9" r="6" />
+              <path d="M8.5 13.9 7 22l5-3 5 3-1.5-8.1" />
+            </svg>
+            {opt.award}
+          </span>
         )}
         <h1 className="page-hero__title">{title}</h1>
         <p className="page-hero__lede">{lead}</p>
