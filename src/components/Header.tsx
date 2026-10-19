@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
 import { HeaderMoleculeField } from "./HeaderMoleculeField";
-import { AwardBadge, type Award } from "./AwardBadge";
+import { AwardBadge, awardAnchor, type Award } from "./AwardBadge";
 import "./Header.css";
 
 interface HeaderProps {
@@ -53,7 +54,15 @@ export function Header({
         {awards && awards.length > 0 && (
           <div className="page-hero__awards">
             {awards.map((award) => (
-              <AwardBadge key={award.label} {...award} />
+              <Link
+                key={award.label}
+                to={`/medals#${award.variant === "prize" ? "gold-medal" : awardAnchor(award.label)}`}
+                className="page-hero__award-link"
+                title="See how we are judged"
+                aria-label={`${award.label}: go to the Judging page`}
+              >
+                <AwardBadge {...award} />
+              </Link>
             ))}
           </div>
         )}

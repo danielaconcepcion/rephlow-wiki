@@ -44,3 +44,27 @@
 .page-hero__awards [class*="--prize"] {
   background: #f4d35e57 !important;
 }
+
+/* Award badges link to the Judging (Medals) page */
+.page-hero__award-link {
+  display: inline-flex;
+  border-radius: 999px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+.page-hero__award-link:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.04);
+  box-shadow: 0 6px 16px rgba(27, 35, 64, 0.16);
+}
+.page-hero__award-link:focus-visible {
+  outline: 2px solid var(--ink, #1b2340);
+  outline-offset: 3px;
+}
+
+/* Room for the sticky navbar when scrolling to a medal on the Medals page */
+.medals-tier-badge[id] {
+  scroll-margin-top: 140px;
+}
