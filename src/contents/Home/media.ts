@@ -9,9 +9,9 @@
  * embedded iGEM player instead.
  */
 export const PROMO_VIDEOS = {
-  en: "https://static.igem.wiki/teams/6124/wiki/home/promotion-en.mp4",
-  es: "https://static.igem.wiki/teams/6124/wiki/home/promotion-es.mp4",
-  fr: "https://static.igem.wiki/teams/6124/wiki/home/promotion-fr.mp4",
+  en: "https://video.igem.org/download/web-videos/c88d5a44-f390-45f4-8b0f-668cd2492ef0-2160.mp4",
+  es: "https://video.igem.org/download/web-videos/f750d5be-55d3-4ba6-b429-07cf0d48166f-2160.mp4",
+  fr: "https://video.igem.org/download/web-videos/609f9a64-fa78-487a-a176-8c9133d7ec44-2160.mp4",
 };
 
 /**
