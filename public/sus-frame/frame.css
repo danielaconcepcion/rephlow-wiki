@@ -1,0 +1,6 @@
+/* Inside the wiki: its own navbar, footer and prev/next links are drawn by the wiki page around this frame. */
+nav.navbar,
+footer.site-footer,
+.adjacent-page-nav {
+  display: none !important;
+}
