@@ -362,6 +362,9 @@ export interface ResultData {
    * block colour so they read as supporting material, not another step. */
   tabVariant?: "supplementary";
   title: string;
+  /** Which enzyme(s) this result belongs to, using the same chips as the
+   * matching stage on the Experiments page. */
+  enzymes?: ("DHAK" | "PPK2")[];
   description?: string;
   /** Results pages state the aim on Experiments rather than per record, so
    * this is optional and usually unset. */

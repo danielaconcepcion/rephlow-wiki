@@ -7,6 +7,22 @@ import { Rich } from "./RichText";
 import { ZoomableImage } from "./ZoomableImage";
 import type { RecordTable, ResultData, ResultSubsection } from "./types";
 
+function EnzymeChips({ enzymes }: { enzymes?: ("DHAK" | "PPK2")[] }) {
+  if (!enzymes?.length) return null;
+  return (
+    <span className="experiment-card__enzymes">
+      {enzymes.map((enzyme) => (
+        <span
+          className={`experiment-chip experiment-chip--${enzyme.toLowerCase()}`}
+          key={enzyme}
+        >
+          {enzyme}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function Table({ table }: { table: RecordTable & { caption?: string } }) {
   return (
     <div className="result-table">
@@ -339,9 +355,12 @@ export function ResultCard({ data }: { data: ResultData }) {
   return (
     <article className="result-card">
       <header className="result-card__header">
-        <h3 className="result-card__title">
-          <Rich text={data.title} />
-        </h3>
+        <div className="experiment-card__titlerow">
+          <h3 className="result-card__title">
+            <Rich text={data.title} />
+          </h3>
+          <EnzymeChips enzymes={data.enzymes} />
+        </div>
         {data.description && (
           <p className="result-card__desc">
             <Rich text={data.description} />

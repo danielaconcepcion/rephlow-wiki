@@ -39,6 +39,7 @@ const DESIGN_DSM: ResultData = {
   id: "design-dhak-dsm-30040",
   tabLabel: "Stabilisation, DSM 30040",
   title: "In silico stabilisation of DHAK from *C. freundii* DSM 30040",
+  enzymes: ["DHAK"],
   subsections: [
     {
       id: "pross-cycle-1",
@@ -103,6 +104,7 @@ const DESIGN_CECT: ResultData = {
   id: "design-dhak-cect-4626",
   tabLabel: "Stabilisation, CECT 4626",
   title: "In silico stabilisation of DHAK CECT 4626",
+  enzymes: ["DHAK"],
   subsections: [
     {
       id: "pross-cycle-2",
@@ -131,6 +133,7 @@ const DESIGN_CHANNELLING: ResultData = {
   id: "design-channelling",
   tabLabel: "SpyTag/SpyCatcher",
   title: "Channelling the biocatalytic complex (SpyTag/SpyCatcher)",
+  enzymes: ["DHAK", "PPK2"],
   subsections: [
     {
       id: "spytag-spycatcher-round-1",
@@ -171,7 +174,6 @@ const DESIGN_CHANNELLING: ResultData = {
     },
     {
       id: "spytag-spycatcher-round-2",
-      continued: true,
       title: "Round 2: modelling the complete SpyTag/SpyCatcher system",
       body: [
         "The failure is not surprising once the nature of the system is considered. SpyTag and SpyCatcher are **two fragments of a single bacterial protein**, split by their designers into complementary halves; a model trained on natural proteins has no reason to fold one half correctly on its own. We therefore modelled each enzyme fused to the **complete SpyTag/SpyCatcher system**, each attached through the side that corresponds to it in the final construct, **PPK2 through the SpyCatcher and DHAK through the SpyTag**, and changed the prediction interface to **Boltz2** [7].",
@@ -249,6 +251,7 @@ const TRANSFORMATION: ResultData = {
   id: "gene-acquisition",
   tabLabel: "Transformation",
   title: "Gene acquisition and bacteria transformation",
+  enzymes: ["DHAK", "PPK2"],
   subsections: [
     {
       id: "transformation",
@@ -273,6 +276,7 @@ const GROWTH: ResultData = {
   id: "transformant-growth",
   tabLabel: "Growth",
   title: "Selection and growth of transformants",
+  enzymes: ["DHAK", "PPK2"],
   subsections: [
     {
       id: "growth",
@@ -290,6 +294,7 @@ const INDUCTION: ResultData = {
   id: "induction",
   tabLabel: "Induction",
   title: "Induction of expression",
+  enzymes: ["DHAK", "PPK2"],
   subsections: [
     {
       id: "induction",
@@ -307,6 +312,7 @@ const HARVEST: ResultData = {
   id: "harvest-lysis",
   tabLabel: "Harvest & lysis",
   title: "Harvest, lysis and crude extract",
+  enzymes: ["DHAK", "PPK2"],
   subsections: [
     {
       id: "biomass",
@@ -355,6 +361,7 @@ const SDS_PAGE: ResultData = {
   id: "sds-page-readout",
   tabLabel: "SDS-PAGE read-out",
   title: "Expression read-out by SDS-PAGE",
+  enzymes: ["DHAK", "PPK2"],
   description:
     "Production was read on polyacrylamide gels [9] of the crude extracts, which is where expression itself is visible. The gels are presented in the order they were run, because each one was the reason the next was needed. Some of these gels also carry purification fractions; those lanes are read in the purification block and are not discussed here.",
   subsections: [
@@ -546,6 +553,7 @@ const PURIFICATION_IMAC: ResultData = {
   id: "purification-imac",
   tabLabel: "IMAC",
   title: "Immobilised Metal Affinity Chromatography (Co²⁺-IDA-Agarose)",
+  enzymes: ["DHAK", "PPK2"],
   subsections: [
     {
       id: "imac-result",
@@ -593,6 +601,7 @@ const PURIFICATION_DIALYSIS: ResultData = {
   id: "purification-dialysis",
   tabLabel: "Dialysis",
   title: "Dialysis of IMAC eluates",
+  enzymes: ["DHAK", "PPK2"],
   subsections: [
     {
       id: "dialysis-result",
@@ -612,6 +621,7 @@ const PURIFICATION_EXPRESS_IMAC: ResultData = {
   id: "purification-express-imac",
   tabLabel: "Express IMAC",
   title: "Express Immobilised Metal Affinity Chromatography (Co²⁺-IDA-Agarose)",
+  enzymes: ["DHAK"],
   subsections: [
     {
       id: "express-imac-result",
@@ -640,6 +650,7 @@ const PURIFICATION_SEC: ResultData = {
   id: "purification-sec",
   tabLabel: "SEC (FPLC)",
   title: "Size-exclusion chromatography (FPLC)",
+  enzymes: ["DHAK"],
   subsections: [
     {
       id: "sec-result",
@@ -708,6 +719,7 @@ const PURIFIED_2012_STOCK: ResultData = {
   id: "purified-2012-stock",
   tabLabel: "Purifying the 2012 stock",
   title: "Purifying the CECT 4626 2012 stock",
+  enzymes: ["DHAK"],
   subsections: [
     {
       id: "sec-fractions",
@@ -788,6 +800,7 @@ const ACTIVE_DIALYSED_IMAC: ResultData = {
   id: "active-dialysed-imac",
   tabLabel: "Active IMAC eluate",
   title: "Dialysed IMAC eluate, DHAK CECT 4626 2012 stock",
+  enzymes: ["DHAK"],
   description:
     "This was a separate preparation produced from a fresh expression of the same 2012 stock and concentrated by centrifugal ultrafiltration after dialysis. The difference from the earlier inactive eluate was not controlled, so the comparison is descriptive rather than causal.",
   subsections: [
@@ -828,6 +841,7 @@ const DHAK_DSM: ResultData = {
   id: "dhak-dsm-30040",
   tabLabel: "DHAK DSM 30040",
   title: "DHAK wild type (*Citrobacter freundii* DSM 30040)",
+  enzymes: ["DHAK"],
   subsections: [
     {
       id: "dsm-activity",
@@ -853,6 +867,7 @@ const DHAK_2021: ResultData = {
   id: "dhak-cect-2021",
   tabLabel: "CECT 4626, 2021",
   title: "DHAK wild type (*Citrobacter freundii* CECT 4626, 2021 stock)",
+  enzymes: ["DHAK"],
   subsections: [
     {
       id: "cect-2021-activity",
@@ -878,6 +893,7 @@ const DHAK_2012: ResultData = {
   id: "dhak-cect-2012",
   tabLabel: "CECT 4626, 2012",
   title: "DHAK wild type (*Citrobacter freundii* CECT 4626, 2012 stock)",
+  enzymes: ["DHAK"],
   subsections: [
     {
       id: "cect-2012-first-batch",
@@ -950,6 +966,7 @@ const DHAK_PROSS: ResultData = {
   id: "dhak-pross-5",
   tabLabel: "DHAK PROSS 5",
   title: "DHAK PROSS 5 variant",
+  enzymes: ["DHAK"],
   subsections: [
     {
       id: "pross-activity",
@@ -975,6 +992,7 @@ const COUPLED_ASSAY: ResultData = {
   id: "coupled-assay",
   tabLabel: "Coupled assay",
   title: "Coupled DHAK–PPK2 assay, ATP regeneration from polyphosphate",
+  enzymes: ["DHAK", "PPK2"],
   subsections: [
     {
       id: "coupled-assay",
@@ -1006,6 +1024,7 @@ const COUPLED_ASSAY_ROUND_2: ResultData = {
   id: "coupled-assay-round-2",
   tabLabel: "Coupled assay — round 2",
   title: "Coupled DHAK–PPK2 assay, round 2 with purified enzymes",
+  enzymes: ["DHAK", "PPK2"],
   subsections: [
     {
       id: "coupled-assay-round-2",
