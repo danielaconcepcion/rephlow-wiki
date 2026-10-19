@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { initHome } from "./behaviour";
+import { ExploreIndex } from "./ExploreIndex";
 import { MARKUP } from "./markup";
 import { PROMO_VIDEOS, embedUrl, image, originalOf } from "./media";
 import "./Home.css";
@@ -16,13 +17,17 @@ import "./Home.css";
 export function Home() {
   const ref = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
-  const html = useMemo(
-    () =>
-      MARKUP.replace(/%IMG:([^%]+)%/g, (_, name: string) =>
-        image(name),
-      ).replace(/%BASE%/g, import.meta.env.BASE_URL),
-    [],
-  );
+  // Everything up to this page's own "Explore rePhlow!" section. The team
+  // asked for the previous Home's index grid instead, so that section is
+  // dropped here and <ExploreIndex /> renders in its place below (it is
+  // the last thing in MARKUP, so cutting at it loses nothing else).
+  const html = useMemo(() => {
+    const full = MARKUP.replace(/%IMG:([^%]+)%/g, (_, name: string) =>
+      image(name),
+    ).replace(/%BASE%/g, import.meta.env.BASE_URL);
+    const explore = full.indexOf('<section class="rh-explore"');
+    return explore === -1 ? full : full.slice(0, explore);
+  }, []);
 
   useEffect(() => {
     const el = ref.current;
@@ -51,10 +56,13 @@ export function Home() {
   }, [navigate]);
 
   return (
-    <div
-      className="rh-page"
-      ref={ref}
-      dangerouslySetInnerHTML={{ __html: html }}
-    />
+    <>
+      <div
+        className="rh-page"
+        ref={ref}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
+      <ExploreIndex />
+    </>
   );
 }
