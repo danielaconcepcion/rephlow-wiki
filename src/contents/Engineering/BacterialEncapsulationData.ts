@@ -785,7 +785,6 @@ export const BACTERIAL_ENCAPSULATION_ITERATIONS: Iteration[] = [
         p(
           "This was not done within the project for a practical reason rather than a scientific one. The encapsulation setup was installed in a physics laboratory, which has no biosafety containment, and the pumps, coaxial injector and associated equipment could not be easily relocated to a facility where engineered bacteria may be handled. Encapsulating live cells therefore requires either duplicating the setup in a suitable laboratory or establishing the necessary containment where it already stands, and this is the first thing we would arrange for a continuation of the work.",
         ),
-        p("</aside>"),
       ]),
     ],
   },

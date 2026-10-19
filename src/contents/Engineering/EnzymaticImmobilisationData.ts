@@ -188,8 +188,6 @@ export const ENZYME_PRODUCTION_ITERATIONS: Iteration[] = [
         p(
           "By the end of the production thread we had characterised enzymes but not in the quantities needed to explore immobilisation chemistry, and reproducing that chemistry on scarce, hard-won protein would have been wasteful. The next question was therefore not about the panel at all, but about how to develop the immobilisation chemistry on something plentiful. That became the starting condition for the immobilisation-chemistry thread.",
         ),
-        p("</aside>"),
-        p("<aside>"),
       ]),
     ],
   },
@@ -295,7 +293,6 @@ export const IMMOBILISATION_CHEMISTRY_ITERATIONS: Iteration[] = [
         p(
           "This chemistry, ionic adsorption followed by crosslinking in the closed conformation, is the one carried forward to the alginate-chitosan-genipin sphere, with **genipin**, a far less cytotoxic crosslinker compatible with the encapsulated bacteria, replacing glutaraldehyde. That transfer closes the loop with the Bacterial encapsulation and Genetic engineering blocks: the enzymes produced in the first thread, immobilised by the chemistry established in the second, form the functionalised surface that feeds phosphate to the engineered organism inside the sphere.",
         ),
-        p("</aside>"),
       ]),
     ],
   },

@@ -121,8 +121,6 @@ export const REVALORISATION_WILD_TYPE: Iteration[] = [
         p(
           "The conclusion does not depend on it. The 2012 extract is the **only DHAK preparation that is strongly and cleanly active** (R² = 1.00), and its rate is **two orders of magnitude above** the shallow trace of the DSM 30040 wild type (Figure 2) and the flat trace of the 2021 stock (Figure 4). That is exactly what is expected of CECT 4626 as the **most catalytically efficient DHAK on record**, and it is enough to select this stock as the **reference enzyme for the rest of the module**, carried forward through purification and into the coupled assay with PPK2.",
         ),
-        p("</aside>"),
-        p("<aside>"),
       ]),
     ],
   },
@@ -336,8 +334,6 @@ export const REVALORISATION_PROSS: Iteration[] = [
         p(
           "The time lost to the earlier failures was taken from this construct. The gene was ordered and the host transformed; only the measurements were left undone. The comparison against the unmodified CECT 4626 sequence is fully set up, and it is the first thing a future team can do.",
         ),
-        p("</aside>"),
-        p("<aside>"),
       ]),
     ],
   },
@@ -743,8 +739,6 @@ export const REVALORISATION_PURIFICATION: Iteration[] = [
         p(
           "What a future round should do first is **repeat this purification varying the batch and the concentration step one at a time**, and run the flow-through and wash lanes on the same gel, so that the step can be quantified rather than only shown to work.",
         ),
-        p("</aside>"),
-        p("<aside>"),
       ]),
     ],
   },
@@ -891,8 +885,6 @@ export const REVALORISATION_COUPLING: Iteration[] = [
         p(
           "The redesign **worked**, since the determination is linear, the standards resolve, and DHAP is measured directly rather than hitting a ceiling. Because only **1.7 mM ATP** was supplied, forming 16.44 and 49.15 mM DHAP means the **ATP pool was recycled about 10 times in R1 and about 29 times in R2**, so **ATP is regenerated** and the extent **scales with the polyphosphate supplied**, with R2 reaching essentially full conversion of the DHA. The question iteration 9 could not settle is now answered, and this configuration, **both enzymes purified with a small aliquot per well**, is the one carried forward as the working ATP-regenerating module. Polyphosphate was in **large excess throughout**, with only about **8 % of the phosphate supplied** transferred in either condition, so what limited R1 was the amount fed rather than the donor running out. Two limits qualify all of this. The determination was run **once per condition at a single time point**, with no replicates. And the experiment **carries no condition lacking PPK2**, so the recycling is inferred from the stoichiometry of the nucleotide supplied rather than measured against a non-regenerating control. Both are the first things a future round should close.",
         ),
-        p("</aside>"),
-        p("<aside>"),
       ]),
     ],
   },
@@ -1049,7 +1041,6 @@ export const REVALORISATION_MODELLING: Iteration[] = [
         p(
           "**Nothing reached the bench.** The **reciprocal assignment** (SpyCatcher on DHAK, SpyTag on PPK2) was never designed, only part of the possible terminus placements was modelled, and **no fusion was expressed or assayed**. The design is left documented so that a future team can build the constructs, check **each fusion on its own** for expression, solubility and retained activity against its **unfused enzyme as control**, and only then compare the assembled complex with the **free enzyme mixture** in the coupled assay, which is **the control that actually tells whether joining the enzymes helps**.",
         ),
-        p("</aside>"),
       ]),
     ],
   },
