@@ -9,7 +9,7 @@
  * embedded iGEM player instead.
  */
 export const PROMO_VIDEOS = {
-  en: "https://video.igem.org/w/wxiekbrLcc5LMAiE9HdqE4",
+  en: "https://video.igem.org/w/6WN9HQ1qUiuU1LJU2bsu2y",
   es: "https://video.igem.org/w/e9xeWTTuhNwzgft1iqLbAz",
   fr: "https://video.igem.org/w/cW2u3CgXF6AzAiTfBiZG4w",
 };
