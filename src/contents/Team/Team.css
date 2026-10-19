@@ -656,3 +656,11 @@ body.team-modal-open {
 .team-page .team-sticker img.is-broken {
   display: none;
 }
+
+/* Mentors: neutral card, not part of any area of the legend */
+.team-page .team-card--none {
+  background: linear-gradient(160deg, rgba(240, 236, 228, 0.75), rgba(240, 236, 228, 0.35));
+}
+.team-page .team-modal__dialog--none {
+  background: linear-gradient(160deg, rgba(240, 236, 228, 0.97), rgba(250, 248, 244, 0.97));
+}

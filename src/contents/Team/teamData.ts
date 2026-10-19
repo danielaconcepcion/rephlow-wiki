@@ -8,7 +8,7 @@ export const IMG_BASE = "https://static.igem.wiki/teams/6124/wiki/team/";
 export const img = (f: string): string => IMG_BASE + f;
 
 export type SectionId = "members" | "advisors" | "mentors";
-export type Color = "green" | "yellow" | "purple" | "blue" | "coral" | "gray" | "bottle";
+export type Color = "green" | "yellow" | "purple" | "blue" | "coral" | "gray" | "bottle" | "none";
 export type LogoKey =
   | "bbm"
   | "fcq"
@@ -437,7 +437,7 @@ export const PEOPLE: Record<SectionId, Person[]> = {
       slug: "elvira-mateos",
       logos: ["repet"],
       name: "Elvira Mateos García",
-      color: "blue",
+      color: "none",
       education: "Environmental biologist · Sustainability and bioeconomy",
       role: "Mentor · iGEM Madrid-UCM 2024",
       about: [
@@ -454,7 +454,7 @@ export const PEOPLE: Record<SectionId, Person[]> = {
       slug: "paula-sanchez-blanco",
       logos: ["repet"],
       name: "Paula Sánchez-Blanco Sánchez",
-      color: "blue",
+      color: "none",
       education: "Biochemistry · MSc in Bioeconomy and Biotechnology",
       role: "Mentor · iGEM Madrid-UCM 2024",
       about: [
@@ -471,7 +471,7 @@ export const PEOPLE: Record<SectionId, Person[]> = {
       slug: "alvaro-ferrero",
       logos: ["repet"],
       name: "Álvaro Ferrero Veintemilla",
-      color: "blue",
+      color: "none",
       education: "Materials scientist and engineer",
       role: "Mentor · iGEM Madrid-UCM 2024",
       about: [
