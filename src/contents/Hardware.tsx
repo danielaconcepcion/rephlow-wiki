@@ -1,28 +1,33 @@
-import { Callout } from "../components/Callout";
+import { useRef, type CSSProperties } from "react";
+import { HardwareContent } from "./hardware/HardwareContent.tsx";
+import { HardwareSectionNav } from "./hardware/HardwareSectionNav.tsx";
+import { useHardwareInteractions } from "./hardware/useHardwareInteractions.ts";
+import { img } from "./hardware/assets.ts";
+import { FigureLightbox, useFigureLightbox } from "./hardware/FigureLightbox.tsx";
+import "./hardware/Hardware.css";
 
+/*
+ * Hardware page (rePhlow · Madrid-UCM 2026).
+ * Navbar, footer and page header come from the wiki layout, as on the other pages.
+ */
 export function Hardware() {
+  const contentRef = useRef<HTMLElement>(null);
+  useHardwareInteractions(contentRef);
+  const lightbox = useFigureLightbox(contentRef);
+
+  const pageStyle = { "--hw-split-img": `url("${img("hw-fig04-reactors.avif")}")` } as CSSProperties;
+
   return (
-    <div className="content-page">
-      <div className="content-page__inner">
-        <Callout kind="purpose" label="Best Hardware">
-          <p>
-            This award is for teams who develop hardware for synthetic biology. Good iGEM hardware makes work with standard parts easier, faster, better, or more accessible: think a sensor that helps characterize parts, or a robot that automates experiments and cloning. Strong contenders demonstrate utility, user testing, and easy reproducibility.
-          </p>
-          <p>Ballot Questions:</p>
-            <ul>
-              <li>
-                Does the hardware you developed address a need or problem in synthetic biology?
-              </li>
-              <li>
-                Did the team conduct user testing and learn from user feedback?
-              </li>
-              <li>Did the team demonstrate utility and functionality in their hardware proof of concept?</li>
-              <li>
-                Is the documentation of the hardware system sufficient to enable reproduction by other teams?
-              </li>
-            </ul>
-        </Callout>
+    <div className="pd-page mbg-host hw-page" style={pageStyle}>
+      <div className="page-with-section-nav">
+        <HardwareSectionNav />
+        <div className="pd-content-wrap">
+          <article className="pd-content" id="hw-content" ref={contentRef}>
+            <HardwareContent />
+          </article>
+        </div>
       </div>
+      <FigureLightbox {...lightbox} />
     </div>
   );
 }

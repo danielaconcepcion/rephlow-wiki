@@ -113,15 +113,18 @@ const Pages: Page[] = [
     labHero: true,
     moleculeSeed: 73,
   },
-  {
-    name: "Hardware",
-    title: "Hardware",
-    lead: "From concept to device.",
-    /*A space for the hardware concepts, devices, or physical systems associated with the project.*/
-    path: "/hardware",
-    component: Hardware,
-    docTitle: "Hardware — rePhlow iGEM Wiki",
-  },
+       {
+       name: "Hardware",
+       title: "Hardware",
+       lead: "From concept to device.",
+       /*A space for the hardware concepts, devices, or physical systems associated with the project.*/
+       path: "/hardware",
+       component: Hardware,
+       docTitle: "Hardware — rePhlow iGEM Wiki",
+       hideEyebrow: true,
+       labHero: true,
+       moleculeSeed: 41,
+     },
   {
     name: "Experiments",
     title: "Experiments",
