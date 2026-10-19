@@ -957,6 +957,29 @@
   font-size: 0.74rem;
 }
 
+/* The supplementary files a result section offers, in the same pill row
+   as an experiment's protocols — with the air above that a figure or a
+   table would have got in its place. */
+.result-subsection__downloads {
+  margin-top: 20px;
+}
+.lab-subblock__downloads {
+  margin-top: 18px;
+}
+
+/* A cross-reference to another page of the wiki, written in the data as
+   a Markdown link. Blue and underlined, which is how the team's own
+   sources mark them, and how a reader tells a link from the bold runs
+   the same sentences are full of. */
+.lab-link {
+  color: var(--lab-link, #1f5fd0);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.lab-link:hover {
+  text-decoration-thickness: 2px;
+}
+
 .record-figure {
   margin: 0;
 }
@@ -1308,6 +1331,15 @@
   display: flex;
   flex-direction: column;
   gap: 22px;
+}
+
+/* Title and its enzyme chips on one line, exactly as the Experiments
+   cards set theirs (.experiment-card__titlerow). */
+.result-card__titlerow {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .result-card__title {

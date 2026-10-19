@@ -1,5 +1,6 @@
 import { Fragment, useContext } from "react";
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 import { CitationScope } from "./citationScope";
 
@@ -14,6 +15,9 @@ import { CitationScope } from "./citationScope";
  *                 a bold run ("**… from *Burkholderia cenocepacia***")
  *   \*         → a literal asterisk (a footnote marker, not a mark)
  *   [3], [1, 2], [4–6] → links to that block's reference list
+ *   [text](/engineering) → a cross-reference to another page of the
+ *                 wiki, which is what the sources mark by underlining in
+ *                 blue. A path routes in-app; a full URL opens outside.
  *
  * A run of asterisks toggles the marks it carries rather than being
  * matched as a pair, which is what makes the nested case above come out
@@ -22,7 +26,36 @@ import { CitationScope } from "./citationScope";
  * (see CitationScope); otherwise it is left as the plain text it is.
  */
 
-const TOKEN = /(\\\*|\*{1,3}|\[\d+(?:\s*[,–-]\s*\d+)*\])/g;
+const TOKEN =
+  /(\\\*|\*{1,3}|\[[^\]|]+\]\([^)\s]+\)|\[\d+(?:\s*[,–-]\s*\d+)*\])/g;
+
+/** A cross-reference written as a Markdown link. An in-site path goes
+ * through the router so the page does not reload; anything else is an
+ * ordinary external link. */
+function CrossLink({ raw }: { raw: string }) {
+  const split = raw.indexOf("](");
+  const label = raw.slice(1, split);
+  const href = raw.slice(split + 2, -1);
+  if (href.startsWith("/")) {
+    return (
+      <Link className="lab-link" to={href}>
+        {label}
+      </Link>
+    );
+  }
+  if (href.startsWith("#")) {
+    return (
+      <a className="lab-link" href={href}>
+        {label}
+      </a>
+    );
+  }
+  return (
+    <a className="lab-link" href={href} target="_blank" rel="noreferrer">
+      {label}
+    </a>
+  );
+}
 
 function Citation({ raw }: { raw: string }) {
   const scope = useContext(CitationScope);
@@ -80,6 +113,8 @@ function parse(text: string): ReactNode[] {
       // asterisk on screen for any pair-matching reader.
       if (token.length !== 2) italic = !italic;
       if (token.length !== 1) bold = !bold;
+    } else if (token.includes("](")) {
+      out.push(marked(<CrossLink raw={token} />));
     } else {
       out.push(marked(<Citation raw={token} />));
     }

@@ -349,6 +349,11 @@ export interface ResultSubsection {
    * funnel, which is a component rather than a screenshot so its numbers
    * stay legible at any width. Rendered with its own caption. */
   custom?: { node: ReactNode; caption?: string };
+  /** Supplementary files this section offers for download — a sequence
+   * map, a list of mutations — rendered as the same small pills the
+   * Experiments cards use for their protocols, under a plain-text label.
+   * `href` is a path under /public, resolved with asset(). */
+  downloads?: { label: string; href: string }[];
   observations?: string;
   interpretation?: string;
   /** "Was it expected, and why?" */
@@ -359,6 +364,10 @@ export interface ResultData {
   id: string;
   tabLabel: string;
   title: string;
+  /** Which enzyme(s) the record belongs to, shown as a chip beside the
+   * title — the same mark the sources put in the stage heading itself
+   * ("DHAK", "DHAK   PPK2"), and the same chip ExperimentData carries. */
+  enzymes?: ("DHAK" | "PPK2")[];
   description?: string;
   /** Results pages state the aim on Experiments rather than per record, so
    * this is optional and usually unset. */
@@ -385,6 +394,10 @@ export interface ResultSubBlock {
   intro?: ReactNode | ReactNode[];
   results?: ResultData[];
   outro?: ReactNode | ReactNode[];
+  /** Files the whole sub-block offers for download, listed after its
+   * outro the way the sources close a section with a "Supplementary"
+   * list. Same shape and same pills as ResultSubsection.downloads. */
+  downloads?: { label: string; href: string }[];
   /** Some Notion result sections restart their reference numbering. */
   references?: string[];
 }

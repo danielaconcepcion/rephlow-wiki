@@ -226,6 +226,24 @@ function Subsection({ subsection }: { subsection: ResultSubsection }) {
         </p>
       ))}
 
+      {!!subsection.downloads?.length && (
+        <div className="record-protocols result-subsection__downloads">
+          <span className="record-protocols__label">Supplementary:</span>
+          <div className="record-protocols__list">
+            {subsection.downloads.map((file, index) => (
+              <a
+                className="record-download record-download--compact"
+                href={asset(file.href)}
+                download
+                key={index}
+              >
+                {file.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
+
       {subsection.observations && (
         <div className="result-subsection__field">
           <h5>What was obtained</h5>
@@ -299,9 +317,23 @@ export function ResultCard({ data }: { data: ResultData }) {
   return (
     <article className="result-card">
       <header className="result-card__header">
-        <h3 className="result-card__title">
-          <Rich text={data.title} />
-        </h3>
+        <div className="result-card__titlerow">
+          <h3 className="result-card__title">
+            <Rich text={data.title} />
+          </h3>
+          {!!data.enzymes?.length && (
+            <span className="experiment-card__enzymes">
+              {data.enzymes.map((enzyme) => (
+                <span
+                  className={`experiment-chip experiment-chip--${enzyme.toLowerCase()}`}
+                  key={enzyme}
+                >
+                  {enzyme}
+                </span>
+              ))}
+            </span>
+          )}
+        </div>
         {data.description && (
           <p className="result-card__desc">
             <Rich text={data.description} />

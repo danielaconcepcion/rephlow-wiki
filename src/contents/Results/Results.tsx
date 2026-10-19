@@ -11,6 +11,7 @@ import { LAB_BLOCK_SPHERES } from "../../components/LabFolders/labBlockSpheres";
 import type { AccentStyle, ResultData } from "../../components/LabFolders/types";
 import { EcosystemMap } from "../../components/EcosystemMap";
 import { LabCornerIndex } from "../../components/LabFolders/LabCornerIndex";
+import { asset } from "../../utils/asset";
 import { RESULT_BLOCKS } from "./data";
 import "../../components/LabFolders/LabFolders.css";
 
@@ -173,6 +174,25 @@ export function Results() {
                         )}
                         {subBlock.outro && (
                           <div className="lab-prose">{paragraphs(subBlock.outro, "lab-subblock__outro")}</div>
+                        )}
+                        {!!subBlock.downloads?.length && (
+                          <div className="lab-prose">
+                            <div className="record-protocols lab-subblock__downloads">
+                              <span className="record-protocols__label">Supplementary:</span>
+                              <div className="record-protocols__list">
+                                {subBlock.downloads.map((file) => (
+                                  <a
+                                    className="record-download record-download--compact"
+                                    href={asset(file.href)}
+                                    download
+                                    key={file.href}
+                                  >
+                                    {file.label}
+                                  </a>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
                         )}
                         {!!subBlock.references?.length && (
                           <BlockReferences
