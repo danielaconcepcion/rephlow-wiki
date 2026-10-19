@@ -206,6 +206,42 @@ const DESIGN_CHANNELLING: ResultData = {
   ],
 };
 
+const DESIGN_SUPPLEMENTARY: ResultData = {
+  id: "design-supplementary",
+  tabLabel: "Supplementary material",
+  title: "Supplementary material",
+  description:
+    "Supporting files for the computational protein design rounds: the complete PROSS mutation list and the wild-type and stabilised DHAK sequences used for DSM 30040 and CECT 4626.",
+  subsections: [],
+  downloads: [
+    {
+      label: "PROSS list of mutations",
+      href: "supplementary/revalorisation/supplementary-pross-list-of-mutations.pdf",
+      format: "PDF",
+    },
+    {
+      label: "DHAK wild type — DSM 30040",
+      href: "supplementary/revalorisation/dhak-wt-dsm-30040-parts.dna",
+      format: "DNA",
+    },
+    {
+      label: "DHAK wild type — CECT 4626",
+      href: "supplementary/revalorisation/dhak-wt-cect-4626.dna",
+      format: "DNA",
+    },
+    {
+      label: "DHAK PROSS — DSM 30040",
+      href: "supplementary/revalorisation/dhak-pross-dsm-30040-parts.dna",
+      format: "DNA",
+    },
+    {
+      label: "DHAK PROSS — CECT 4626",
+      href: "supplementary/revalorisation/dhak-pross-cect-4626.dna",
+      format: "DNA",
+    },
+  ],
+};
+
 /* ---------- Enzyme expression ---------- */
 
 const TRANSFORMATION: ResultData = {
@@ -1056,7 +1092,12 @@ export const REVALORISATION_SUBBLOCKS: ResultSubBlock[] = [
     heading: "1. Computational protein design",
     intro:
       "Computational design served two purposes: a **DHAK that is more stable without losing activity**, and a **physical coupling of DHAK and PPK2** so that regenerated ATP passes directly from one active site to the other. The stabilisation line was first run on the reference DHAK and then rebuilt on the active variant once the activity assays had identified it, and the coupling line explored a **SpyTag/SpyCatcher fusion** in silico.",
-    results: [DESIGN_DSM, DESIGN_CECT, DESIGN_CHANNELLING].map(asNarrative),
+    results: [
+      DESIGN_DSM,
+      DESIGN_CECT,
+      DESIGN_CHANNELLING,
+      DESIGN_SUPPLEMENTARY,
+    ].map(asNarrative),
     outro:
       "**Conclusion.** Computational design delivered two outputs for the next build round. First, a **conservative PROSS stabilising set (design 1, 21 substitutions)** transferred onto the **active CECT 4626 DHAK**, chosen after the mid-range design 5 on the DSM 30040 reference proved inactive at the bench. The construct was synthesised, transformed and **expressed**, but the gene arrived late enough that **no activity measurement could be made before the wiki freeze**, so nothing is claimed here about whether the stabilisation works. Second, an **in silico model of a SpyTag/SpyCatcher-fused DHAK–PPK2 complex** with both folds preserved and a structured joining module, supporting direct channelling of the ATP intermediate. Both are **predictions awaiting experimental test**, and the transformed strain is available for a future team to take straight to expression.",
   },

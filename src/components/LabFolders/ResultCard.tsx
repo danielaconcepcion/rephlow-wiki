@@ -384,6 +384,24 @@ export function ResultCard({ data }: { data: ResultData }) {
         ))}
       </div>
 
+      {!!data.downloads?.length && (
+        <section className="result-card__downloads" aria-label="Downloads">
+          {data.downloads.map((download) => (
+            <a
+              className="record-download result-card__download"
+              href={asset(download.href)}
+              download
+              key={download.href}
+            >
+              <span>{download.label}</span>
+              <span className="result-card__download-format">
+                {download.format}
+              </span>
+            </a>
+          ))}
+        </section>
+      )}
+
       {!!data.discussion?.length && (
         <section className="result-card__discussion">
           <h4 className="record-rule-heading record-rule-heading--discussion">

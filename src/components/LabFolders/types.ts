@@ -365,6 +365,9 @@ export interface ResultData {
   aim?: string;
   background?: string[];
   subsections: ResultSubsection[];
+  /** Files that belong to this result record, presented as a compact
+   * download list. Paths outside assets/ are served from the wiki itself. */
+  downloads?: { label: string; href: string; format: string }[];
   discussion?: string[];
   /** Render the three legacy result fields as continuous prose, without
    * their old "What was obtained / What it means / Was it expected?"

@@ -932,6 +932,23 @@
   background: rgba(27, 35, 64, 0.12);
 }
 
+.result-card__downloads {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 10px;
+}
+.result-card__download {
+  justify-content: space-between;
+  border: 1px solid rgba(27, 35, 64, 0.12);
+}
+.result-card__download-format {
+  flex: 0 0 auto;
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 /* The named protocols an experiment actually used — one small download
    pill per protocol, wrapping onto as many lines as it needs, under a
    plain-text "Protocols:" label (not a heading — this sits alongside
