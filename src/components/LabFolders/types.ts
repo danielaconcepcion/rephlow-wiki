@@ -341,6 +341,12 @@ export interface ResultSubsection {
    * below it. */
   figuresAside?: boolean;
   tables?: (RecordTable & { caption?: string })[];
+  /** Put this section's figures and tables side by side on one row instead
+   * of stacking them - a gel beside the table that names its lanes, or a
+   * short table beside the figure it belongs with. Stacked, the two are
+   * read far apart and each wastes half the card's width. The value is the
+   * reading order across the row. */
+  pair?: "figure-table" | "table-figure";
   /** Prose that reads the figures and tables above it, rendered after them
    * — `body` always comes first. Saves splitting a record into a second
    * subsection just to put a paragraph below its table. */

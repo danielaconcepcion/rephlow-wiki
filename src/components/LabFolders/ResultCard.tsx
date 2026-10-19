@@ -242,6 +242,22 @@ function Subsection({
       </p>
     );
 
+  /* A figure and the table that reads it share one row only when the
+     section really has both; otherwise the ordinary stacked layout. */
+  const paired =
+    !!subsection.pair &&
+    !subsection.figuresAside &&
+    !!subsection.figures?.length &&
+    !!subsection.tables?.length;
+
+  const tables = (
+    <Fragment key="tables">
+      {subsection.tables?.map((table, index) => (
+        <Table table={table} key={index} />
+      ))}
+    </Fragment>
+  );
+
   const prose = (
     <>
       {subsection.body?.map(renderParagraph)}
@@ -261,15 +277,23 @@ function Subsection({
         </figure>
       )}
 
-      {!subsection.figuresAside && <FigureGrid subsection={subsection} />}
+      {paired ? (
+        <div className="result-subsection__pair">
+          {subsection.pair === "table-figure"
+            ? [tables, <FigureGrid subsection={subsection} key="figures" />]
+            : [<FigureGrid subsection={subsection} key="figures" />, tables]}
+        </div>
+      ) : (
+        <>
+          {!subsection.figuresAside && <FigureGrid subsection={subsection} />}
 
-      {subsection.figureMatrix && (
-        <FigureMatrix matrix={subsection.figureMatrix} />
+          {subsection.figureMatrix && (
+            <FigureMatrix matrix={subsection.figureMatrix} />
+          )}
+
+          {tables}
+        </>
       )}
-
-      {subsection.tables?.map((table, index) => (
-        <Table table={table} key={index} />
-      ))}
 
       {subsection.bodyAfter?.map(renderParagraph)}
 
@@ -321,7 +345,11 @@ function Subsection({
         }
         id={subsection.id}
       >
-        {subsection.title && <h4>{subsection.title}</h4>}
+        {subsection.title && (
+          <h4>
+            <Rich text={subsection.title} />
+          </h4>
+        )}
         {prose}
       </section>
     );
@@ -336,7 +364,11 @@ function Subsection({
       className="result-subsection result-subsection--aside"
       id={subsection.id}
     >
-      {subsection.title && <h4>{subsection.title}</h4>}
+      {subsection.title && (
+        <h4>
+          <Rich text={subsection.title} />
+        </h4>
+      )}
       <div className="result-subsection__main">{prose}</div>
       <div className="result-subsection__aside">
         <FigureGrid subsection={subsection} />
