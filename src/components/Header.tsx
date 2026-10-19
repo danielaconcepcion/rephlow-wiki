@@ -12,6 +12,7 @@ interface HeaderProps {
  */
 const HERO_OPTIONS: Record<string, { hideEyebrow?: boolean; moleculeSeed?: number }> = {
   Entrepreneurship: { hideEyebrow: true, moleculeSeed: 31 },
+  Measurements: { hideEyebrow: true, moleculeSeed: 17 },
 };
 
 /* Molecule field: positions [x, y, scale] across the banner. */
