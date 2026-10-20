@@ -80,13 +80,12 @@ function Cite({ scope, n }: { scope: string; n: number }) {
  *   "Protocols: …" line, which stays as plain text: Closing has no
  *   experiments of its own (see ExperimentSubBlock.experiments being
  *   optional), so there's no card to attach the links to.
- * - Inline "[n]" citation markers are real links everywhere they appear:
- *   at the step level they resolve against that step's own `references`
- *   list (Cite scope = the experiment id), and in a sub-block intro —
- *   which has no reference slot of its own — against the one shared,
- *   block-level list at the end (Cite scope = "genetic-engineering", see
- *   GENETIC_ENGINEERING_REFERENCES). No bracket number is left as plain
- *   text, and none points at a list that doesn't carry it.
+ * - Inline "[n]" citation markers are only turned into real `references`
+ *   entries at the step level, where ExperimentData actually has a place
+ *   to show them; the two sub-block intros also carry citations in the
+ *   source but there's no per-intro reference slot in this component
+ *   family, so those bracket numbers are kept as plain text rather than
+ *   invented into a dangling link.
  * - Two steps reference a table the source itself marks as not yet made
  *   ("[Tabla secuencias]", "[Tabla enzimas con tiempos y buffers]"). Both
  *   use `body` (see ExperimentData.body in types.ts) so the one paragraph
@@ -277,16 +276,7 @@ export const GENETIC_ENGINEERING_REFERENCES: string[] = refs(1, 2, 3, 4, 5, 6, 7
  * is reused across most of the Knocking-out steps. Labels are shortened,
  * English versions of the source's own (often Spanish) protocol names, per
  * a "(PDF)" download convention matching the rest of this component
- * family — ExperimentCard appends "(PDF)" itself, so it's left off here.
- *
- * Each `href` follows the `assets/protocols/<page>-<slug>.pdf` convention
- * already used by Alginate encapsulation and Revalorisation, and the slug
- * tracks the filename of the PDF actually attached to that step in the
- * Notion export (e.g. Protocol_4LB_Medium_Preparation.pdf →
- * genetic-engineering-protocol-4-lb-medium-preparation.pdf), so dropping
- * the team's own files into public/assets/protocols/ under those names is
- * all that's needed to make the links live. That folder is still empty, so
- * every href here is a placeholder — exactly as on the other two pages. */
+ * family — ExperimentCard appends "(PDF)" itself, so it's left off here. */
 const PROTOCOL: Record<string, { label: string; href: string }> = {
   PCR: { label: "PCR", href: "assets/protocols/genetic-engineering-pcr.pdf" },
   "Geles de agarosa": {
