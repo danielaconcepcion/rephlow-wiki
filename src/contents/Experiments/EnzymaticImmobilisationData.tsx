@@ -15,40 +15,74 @@ function Cite({ n }: { n: number }) {
   );
 }
 
-/** Named lab protocols for "Immobilisation chemistry" — same convention as
- * Genetic engineering's own PROTOCOL/protocolLinks: each renders as its own
- * "Protocols:" download link on the experiment card. No protocol document
- * exists yet for any of these (the source itself only says "see the
- * Protocols page [link pending]"), so labels and hrefs are topical
- * placeholders standing in for the eventual real names/files. */
+/** Named lab protocols used across this block — same convention as Genetic
+ * engineering's own PROTOCOL/protocolLinks: each renders as its own
+ * "Protocols:" download link on the experiment card.
+ *
+ * Keys are the source's own protocol numbers, and each `href` follows the
+ * `assets/protocols/<page>-<slug>.pdf` convention already used by Alginate
+ * encapsulation, Revalorisation and Genetic engineering, with the slug
+ * tracking the filename of the PDF actually attached to that step in the
+ * Notion export (e.g. 08_Protein_purification_IMAC.pdf →
+ * enzymatic-immobilisation-08-protein-purification-imac.pdf), so dropping
+ * the team's own files into public/assets/protocols/ under those names is
+ * all that's needed to make the links live. That folder is still empty, so
+ * every href here is a placeholder, exactly as on the other three pages.
+ *
+ * The one protocol document the source attaches but whose subject doesn't
+ * obviously match the step it hangs on is 01_In_silico_construct_design on
+ * "Computational modelling of the mechanism" — linked as the source has it
+ * (it is the team's own in-silico protocol) rather than second-guessed, and
+ * the actual PyMOL commands that step used are reproduced in the write-up
+ * itself, since the export now carries them in full. */
 const PROTOCOL: Record<string, { label: string; href: string }> = {
-  "lecitase-activity-assay": {
-    label: "Lecitase Ultra activity assay (pNPB)",
-    href: "assets/protocols/lecitase-activity-assay.pdf",
+  "01-in-silico-construct-design": {
+    label: "In silico construct design",
+    href: "assets/protocols/enzymatic-immobilisation-01-in-silico-construct-design.pdf",
   },
-  "manae-agarose-preparation": {
-    label: "MANAE-agarose support preparation",
-    href: "assets/protocols/manae-agarose-preparation.pdf",
+  "02-pcr": {
+    label: "PCR",
+    href: "assets/protocols/enzymatic-immobilisation-02-pcr.pdf",
   },
-  "immobilisation-strategy-a": {
-    label: "Covalent immobilisation (Strategy A)",
-    href: "assets/protocols/immobilisation-strategy-a.pdf",
+  "03-cloning": {
+    label: "Cloning",
+    href: "assets/protocols/enzymatic-immobilisation-03-cloning.pdf",
   },
-  "immobilisation-strategy-b": {
-    label: "Ionic adsorption + crosslinking (Strategy B)",
-    href: "assets/protocols/immobilisation-strategy-b.pdf",
+  "04-transformation-ecoli": {
+    label: "E. coli transformation",
+    href: "assets/protocols/enzymatic-immobilisation-04-transformation-ecoli.pdf",
   },
-  "detergent-effect-assay": {
-    label: "Detergent-effect assay (Triton X-100)",
-    href: "assets/protocols/detergent-effect-assay.pdf",
+  "05-expression-iptg-induction": {
+    label: "Expression: IPTG induction",
+    href: "assets/protocols/enzymatic-immobilisation-05-expression-iptg-induction.pdf",
   },
-  "immobilisation-yield-assay": {
-    label: "Immobilisation yield assay",
-    href: "assets/protocols/immobilisation-yield-assay.pdf",
+  "06-expression-zy-autoinduction": {
+    label: "Expression: ZY auto-induction",
+    href: "assets/protocols/enzymatic-immobilisation-06-expression-zy-autoinduction.pdf",
   },
-  "pymol-modelling-scripts": {
-    label: "PyMOL modelling scripts",
-    href: "assets/protocols/pymol-modelling-scripts.pdf",
+  "07-expression-test-soluble-insoluble": {
+    label: "Expression test: soluble and insoluble fractions",
+    href: "assets/protocols/enzymatic-immobilisation-07-expression-test-soluble-insoluble.pdf",
+  },
+  "08-protein-purification-imac": {
+    label: "Protein purification by IMAC",
+    href: "assets/protocols/enzymatic-immobilisation-08-protein-purification-imac.pdf",
+  },
+  "09-activity-assay-bis-pnpp": {
+    label: "Activity assay (bis-pNPP)",
+    href: "assets/protocols/enzymatic-immobilisation-09-activity-assay-bis-pnpp.pdf",
+  },
+  "10-protein-quantification-bradford": {
+    label: "Protein quantification (Bradford)",
+    href: "assets/protocols/enzymatic-immobilisation-10-protein-quantification-bradford.pdf",
+  },
+  "11-lecitase-ultra-characterisation": {
+    label: "Lecitase Ultra characterisation",
+    href: "assets/protocols/enzymatic-immobilisation-11-lecitase-ultra-characterisation.pdf",
+  },
+  "12-enzyme-immobilisation-manae": {
+    label: "Enzyme immobilisation on MANAE-agarose",
+    href: "assets/protocols/enzymatic-immobilisation-12-enzyme-immobilisation-manae.pdf",
   },
 };
 function protocolLinks(...names: string[]) {
@@ -100,22 +134,32 @@ function protocolLinks(...names: string[]) {
  *   own tabs aren't numbered 1-7 the same way the source's toggles were —
  *   not renamed to a tab label, since the instruction was to change
  *   nothing about the source's own wording.
- * - Every "Protocol: see the Protocols page [link pending]" / "PyMOL
- *   scripts: see the Protocols page [link pending]" line is dropped from the
- *   prose and replaced with a real `protocols` download-link field (see
- *   PROTOCOL/protocolLinks below), matching the convention already used in
- *   Genetic engineering — the source doesn't have real protocol documents
- *   yet either, so these point at the same kind of placeholder PDF paths
- *   Genetic engineering's own protocol links use, with topical placeholder
- *   titles standing in for the eventual real protocol names.
- * - Inline "[n]" citations are reproduced exactly as numbered in the
- *   source. The source's own numbering has a real inconsistency: several
- *   citations in "Sub-block 1: Enzyme production" don't match their
- *   listed reference (e.g. "EnzymeMiner [1]" in the text, but reference
- *   [1] in the list is an unrelated patent — EnzymeMiner is actually [2]).
- *   "Sub-block 2: Immobilisation chemistry"'s citations are internally
- *   consistent. This isn't fixed here — silently renumbering could get the
- *   intended mapping wrong — see the summary note back to the team instead.
+ * - Every "Protocol: see the Protocols page [link pending]" line is dropped
+ *   from the prose and replaced with a real `protocols` download-link field
+ *   (see PROTOCOL/protocolLinks above), matching the convention used in
+ *   Alginate encapsulation, Revalorisation and Genetic engineering. The
+ *   source now attaches its own numbered protocol PDFs to each step, so
+ *   every link here names a real document; the paths remain placeholders
+ *   only because public/assets/protocols/ is still empty, as on the other
+ *   three pages.
+ * - The PyMOL commands the modelling step used are reproduced verbatim as a
+ *   real code listing, with the team's own step comments, via a `custom`
+ *   paired resource (see PairedResource in types.ts) styled by .record-code.
+ *   It carries no caption deliberately: a command script isn't a figure, and
+ *   an uncaptioned `custom` resource is the one case numbering.ts skips when
+ *   assigning figure numbers.
+ * - Inline "[n]" citations are reproduced exactly as numbered in the source.
+ *   An earlier export had several citations in "Sub-block 1: Enzyme
+ *   production" pointing at the wrong listed reference ("EnzymeMiner [1]"
+ *   where the list's [1] is an unrelated patent); the current export has
+ *   fixed that, and the numbering now matches the reference list throughout.
+ *   Two entries in that list had lost co-authors along the way and are
+ *   corrected here against the published papers, [12] (Barbosa, O.) and [15]
+ *   (Mateo, C., Alonso-Morales, N. and Dellamora-Ortiz, G.).
+ * - The source's own closing section ("Conclussion") is reproduced as a
+ *   third, prose-only sub-block, exactly as Genetic engineering's closing
+ *   synthesis is (see ExperimentSubBlock.experiments being optional). Only
+ *   the heading's spelling is normalised.
  */
 
 export const ENZYMATIC_IMMOBILISATION_INTRO: ReactNode[] = [
@@ -267,6 +311,42 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
   },
 ];
 
+/** The PyMOL commands the modelling step actually ran, verbatim from the
+ * source (its own "#1./#2./#3." step comments included) — rendered as a
+ * real code listing rather than paraphrased, since the export now carries
+ * the script in full. See .record-code in LabFolders.css. */
+const PYMOL_SCRIPT = `#1. Clean, align the open shape over the closed one, and set base view
+Hide all
+align lecitase_abierta, lecitase_cerrada
+Gray80 color, all
+show cartoon, all
+
+#2. Selection and colouring of key residues
+#Acid Residues (Asp + Glu) - Color RED (Ionic Interaction)
+select acids, resn ASP+GLU
+Red color, acids
+Show sticks, acids
+Set stick_radius, 0.3, Acids
+#Lysines (Lys) - Color BLUE (Glutaraldehyde Covalent Anchor)
+select lysines, resn LYS
+Blue color, lysines
+Show sticks, lysines
+Set stick_radius, 0.3, Lysines
+#Catalytic Triad (Ser146, Asp201, His258) - Color MAGENTA
+Select Triada, Resi 146+201+258
+Show sticks, triad
+magenta, triad
+Set stick_radius, 0.3, Triad
+#Lid (Residues 80-95) - Color GREEN
+Select Cap, RESI 80-95
+Color Green, Lid
+
+#3. Show semi-transparent surface to see catalytic pocket and final view
+show surface, all
+Set Transparency, 0.4
+bg_color white
+Set ray_opaque_background, 0`;
+
 export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
   {
     id: "enzyme-production",
@@ -341,6 +421,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was a per-enzyme decision (tag position, vector and disulphide dependence) that pre-empted the main causes of insolubility.",
         ],
+        protocols: protocolLinks("01-in-silico-construct-design"),
       },
       {
         id: "genetic-constructs",
@@ -359,6 +440,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           "Inserts and vectors were then cut with FastDigest NdeI and HindIII, and the linearised vector was dephosphorylated with the thermosensitive alkaline phosphatase FastAP, a step included specifically to stop the vector re-circularising on itself without an insert and inflating the background. Fragments were gel-purified, and ligation was set at a 1:5 vector:insert molar ratio (NEBioCalculator) with T4 DNA ligase overnight at 16 ºC, a temperature that balances ligase activity against the annealing stability of the short cohesive ends.",
           "The expected outcome was a set of recombinant pET plasmids for each gene, in matched backbones and ready to transform.",
         ],
+        protocols: protocolLinks("02-pcr", "03-cloning"),
       },
       {
         id: "clone-verification",
@@ -392,6 +474,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was verified clones in the expression host, ready for induction.",
         ],
+        protocols: protocolLinks("04-transformation-ecoli"),
       },
       {
         id: "recombinant-expression",
@@ -413,6 +496,11 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was to select the higher-yielding regime. IPTG gave the stronger overexpression and was carried forward; it also revealed that the enzymes accumulated as inclusion bodies and that the two phospholipases C were cytotoxic to the host, which set up the next two experiments.",
         ],
+        protocols: protocolLinks(
+          "05-expression-iptg-induction",
+          "06-expression-zy-autoinduction",
+          "07-expression-test-soluble-insoluble",
+        ),
       },
       {
         id: "solubilisation",
@@ -472,6 +560,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             ],
           },
         ],
+        protocols: protocolLinks("08-protein-purification-imac"),
       },
       {
         id: "functional-characterisation",
@@ -510,6 +599,10 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             ],
           },
         ],
+        protocols: protocolLinks(
+          "09-activity-assay-bis-pnpp",
+          "10-protein-quantification-bradford",
+        ),
       },
     ],
     outro:
@@ -555,7 +648,10 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             <strong>981 U/mg</strong>) to serve as the baseline for every immobilisation yield.
           </>,
         ],
-        protocols: protocolLinks("lecitase-activity-assay"),
+        protocols: protocolLinks(
+          "11-lecitase-ultra-characterisation",
+          "10-protein-quantification-bradford",
+        ),
       },
       {
         id: "manae-agarose-prep",
@@ -574,7 +670,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             immobilisation strategies.
           </>,
         ],
-        protocols: protocolLinks("manae-agarose-preparation"),
+        protocols: protocolLinks("12-enzyme-immobilisation-manae"),
       },
       {
         id: "immobilisation-strategy-a",
@@ -594,7 +690,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             conformation at the moment of attachment.
           </>,
         ],
-        protocols: protocolLinks("immobilisation-strategy-a"),
+        protocols: protocolLinks("12-enzyme-immobilisation-manae"),
       },
       {
         id: "immobilisation-strategy-b",
@@ -613,7 +709,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             provided its orientation on the support is right.
           </>,
         ],
-        protocols: protocolLinks("immobilisation-strategy-b"),
+        protocols: protocolLinks("12-enzyme-immobilisation-manae"),
       },
       {
         id: "detergent-effect",
@@ -636,7 +732,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             route and harming the adsorption route.
           </>,
         ],
-        protocols: protocolLinks("detergent-effect-assay"),
+        protocols: protocolLinks("12-enzyme-immobilisation-manae"),
       },
       {
         id: "immobilisation-yield",
@@ -651,32 +747,106 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             support.
           </>,
         ],
-        protocols: protocolLinks("immobilisation-yield-assay"),
+        protocols: protocolLinks("12-enzyme-immobilisation-manae"),
       },
       {
         id: "computational-modelling",
         tabLabel: "Computational modelling",
         title: "Computational modelling of the mechanism",
-        description: [
-          "The aim was to explain, at the residue level, why the detergent effect reverses between the two strategies. The open and closed conformations of Lecitase® Ultra were aligned and coloured in PyMOL, mapping the catalytic triad (Ser146, Asp201, His258), the lid (residues 80 to 95), the reactive lysines nearest the active site (Lys24, Lys259) and the acidic crown at the base (Asp27, Glu56, Asp57, Asp62).",
-          <>
-            On the preactivated support, the detergent holds the lid open so the enzyme is locked in its active form,
-            whereas without detergent the closed enzyme is fixed through Lys24 and Lys259, jamming the lid shut and
-            explaining the low activity <Cite n={17} />. In the adsorption route the acidic crown anchors the enzyme
-            with its active site projected away from the surface, so without detergent the lid stays free to open,
-            whereas the detergent scrambles that electrostatic orientation and the subsequent crosslinking then
-            freezes a distorted arrangement <Cite n={18} />.
-          </>,
-          <>
-            The expected outcome was a structural model that fully accounts for the measured yields and points to
-            the closed-form adsorption route as the strategy to transfer to the sphere.
-          </>,
+        body: [
+          {
+            paragraphs: [
+              "The aim was to explain, at the residue level, why the detergent effect reverses between the two strategies. The open and closed conformations of Lecitase® Ultra were aligned and coloured in PyMOL, mapping the catalytic triad (Ser146, Asp201, His258), the lid (residues 80 to 95), the reactive lysines nearest the active site (Lys24, Lys259) and the acidic crown at the base (Asp27, Glu56, Asp57, Asp62).",
+              <>
+                On the preactivated support, the detergent holds the lid open so the enzyme is locked in its active
+                form, whereas without detergent the closed enzyme is fixed through Lys24 and Lys259, jamming the lid
+                shut and explaining the low activity <Cite n={17} />. In the adsorption route the acidic crown
+                anchors the enzyme with its active site projected away from the surface, so without detergent the
+                lid stays free to open, whereas the detergent scrambles that electrostatic orientation and the
+                subsequent crosslinking then freezes a distorted arrangement <Cite n={18} />.
+              </>,
+            ],
+          },
+          {
+            paragraphs: [
+              "The commands below are the ones actually run, exactly as recorded with the team's own step comments — the alignment and base view, then the residue selections that carry the argument (acids red, lysines blue, triad magenta, lid green), then the semi-transparent surface used to inspect the catalytic pocket.",
+            ],
+            pairedResource: {
+              kind: "custom",
+              node: (
+                <pre className="record-code" aria-label="PyMOL command script">
+                  {PYMOL_SCRIPT.split("\n").map((line, index) => (
+                    <span
+                      key={index}
+                      className={line.startsWith("#") ? "record-code__comment" : undefined}
+                    >
+                      {line}
+                      {"\n"}
+                    </span>
+                  ))}
+                </pre>
+              ),
+            },
+          },
+          {
+            paragraphs: [
+              <>
+                The expected outcome was a structural model that fully accounts for the measured yields and points
+                to the closed-form adsorption route as the strategy to transfer to the sphere.
+              </>,
+            ],
+          },
         ],
-        protocols: protocolLinks("pymol-modelling-scripts"),
+        protocols: protocolLinks("01-in-silico-construct-design"),
       },
     ],
     outro:
       "Using an inexpensive model support and glutaraldehyde as a stand-in for genipin let the two anchoring strategies be compared without spending resources on the full sphere; the detergent variable and the free-enzyme control were the minimum needed to interpret the yields, and the modelling was added only to explain the result.",
+  },
+  {
+    id: "enzymatic-immobilisation-conclusion",
+    heading: "3. Conclusion",
+    intro: [
+      <>
+        The experiments on this page are both <strong>necessary and sufficient</strong> for the objective of the
+        block, and they were ordered so that each one answered the question the next decision depended on. The
+        mining was done before anything was expressed, because committing to seven heterologous enzymes is only
+        worth it once the panel is matched to the real effluent and to the operating window, which is why the
+        catalytic-profile filter at pH 5.0 and 30 ºC, and not sequence availability, drove the selection. The
+        constructs were then designed in silico before any DNA was ordered, so that the folding environment each
+        enzyme would need could be anticipated rather than discovered from a failed expression round. Expression
+        separated what could be made from what could be folded, and the solubilisation effort was escalated only
+        as far as each target required and stopped once three enzymes were soluble, rather than pursued to
+        completeness: the enzymes that resisted, <strong>EstE1</strong> and <strong>AppA</strong>, were left as the
+        stated limit of the panel, and the cytotoxic phospholipases C were rerouted to cell-free expression rather
+        than forced through a host that could not make them. Nothing was characterised beyond what the system
+        required, a single affinity step rather than a full purification train, and activities reported as{" "}
+        <strong>specific activities normalised by protein</strong>, which is the measurement that actually ranks
+        the biocatalysts and the one that reversed the apparent order.
+      </>,
+      <>
+        The scope of the immobilisation work was set by the circumstances of the project as much as by what would
+        be ideal. The chemistry was developed on an inexpensive, previously optimised MANAE-agarose support with
+        glutaraldehyde standing in for the genipin of the final sphere, rather than on the costly
+        alginate-chitosan sphere itself, and on the commercial Lecitase Ultra, chosen as the most demanding model
+        enzyme so that a chemistry able to preserve its activity would generalise to the simpler, more hydrophilic
+        members of the panel. Each comparison carried the control that makes it interpretable: an enzyme-free
+        spontaneous-hydrolysis control in the activity assay, and a <strong>free-enzyme inactivation control</strong>{" "}
+        run alongside every immobilisation, so that a loss of activity could be attributed to the anchoring and
+        not to the buffer or to thermal denaturation. The two sub-blocks are mutually dependent and converge in a
+        single downstream step, since enzymes with no way to immobilise them for reuse, or an immobilisation
+        chemistry with no enzymes to fix, would each fall short of a functionalised sphere: the panel of
+        phosphohydrolases produced in the first is fixed, by the chemistry established in the second, onto the
+        surface of the PAO-loaded alginate-chitosan sphere, with <strong>genipin replacing glutaraldehyde</strong>{" "}
+        as a far less cytotoxic crosslinker.
+      </>,
+      <>
+        What is left undone is left for stated reasons, and in each case the experiment that would close the gap is
+        named: the winning strategy has been validated on the model enzyme and support but{" "}
+        <strong>not yet transferred to the panel enzymes on the real genipin sphere</strong>, and the phospholipase
+        activity still awaits its cell-free production.
+      </>,
+    ],
   },
 ];
 
@@ -692,20 +862,11 @@ export const ENZYMATIC_IMMOBILISATION_REFERENCES: string[] = [
   "[9] Studier, F. W. (2005). Protein production by auto-induction in high-density shaking cultures. Protein Expression and Purification, 41(1), 207-234. https://doi.org/10.1016/j.pep.2005.01.016",
   "[10] Porath, J., Carlsson, J., Olsson, I., & Belfrage, G. (1975). Metal chelate affinity chromatography, a new approach to protein fractionation. Nature, 258(5536), 598-599. https://doi.org/10.1038/258598a0",
   "[11] Andersch, M. A., & Szczypinski, A. J. (1947). Use of p-nitrophenylphosphate as the substrate in determination of serum acid phosphatase. American Journal of Clinical Pathology, 17(7), 571-574. https://doi.org/10.1093/ajcp/17.7_ts.571",
-  "[12] Virgen-Ortíz, J. J., dos Santos, J. C. S., Ortiz, C., Berenguer-Murcia, Á., Rodrigues, R. C., & Fernandez-Lafuente, R. (2019). Lecitase ultra: A phospholipase with great potential in biocatalysis. Molecular Catalysis, 473, 110405. https://doi.org/10.1016/j.mcat.2019.110405",
+  "[12] Virgen-Ortíz, J. J., dos Santos, J. C. S., Ortiz, C., Berenguer-Murcia, Á., Barbosa, O., Rodrigues, R. C., & Fernandez-Lafuente, R. (2019). Lecitase ultra: A phospholipase with great potential in biocatalysis. Molecular Catalysis, 473, 110405. https://doi.org/10.1016/j.mcat.2019.110405",
   "[13] Andrés-Sanz, D., Fresán, C., Fernández-Lorente, G., Rocha-Martín, J., & Guisán, J. M. (2021). Stabilization of Lecitase Ultra by immobilization and fixation of bimolecular aggregates: Release of omega-3 fatty acids by enzymatic hydrolysis of krill oil. Catalysts, 11(9), 1067. https://doi.org/10.3390/catal11091067",
   "[14] Ait Braham, S., Siar, E. H., Arana-Peña, S., Bavandi, H., Carballares, D., Morellon-Sterling, R., de Andrades, D., Kornecki, J. F., & Fernandez-Lafuente, R. (2021). Positive effect of glycerol on the stability of immobilized enzymes: Is it a universal fact? Process Biochemistry, 102, 108-121. https://doi.org/10.1016/j.procbio.2020.12.015",
-  "[15] López-Gallego, F., Betancor, L., Hidalgo, A., Alonso, N., Fernández-Lafuente, R., & Guisán, J. M. (2005). Enzyme stabilization by glutaraldehyde crosslinking of adsorbed proteins on aminated supports. Journal of Biotechnology, 119(1), 70-75. https://doi.org/10.1016/j.jbiotec.2005.05.021",
+  "[15] López-Gallego, F., Betancor, L., Mateo, C., Hidalgo, A., Alonso-Morales, N., Dellamora-Ortiz, G., Guisán, J. M., & Fernández-Lafuente, R. (2005). Enzyme stabilization by glutaraldehyde crosslinking of adsorbed proteins on aminated supports. Journal of Biotechnology, 119(1), 70-75. https://doi.org/10.1016/j.jbiotec.2005.05.021",
   "[16] Mateo, C., Bolivar, J. M., Godoy, C. A., Rocha-Martin, J., Pessela, B. C., Curiel, J. A., Muñoz, R., Guisan, J. M., & Fernández-Lorente, G. (2010). Improvement of enzyme properties with a two-step immobilization process on novel heterofunctional supports. Biomacromolecules, 11(11), 3112-3117. https://doi.org/10.1021/bm100916r",
   "[17] Rodrigues, R. C., Virgen-Ortíz, J. J., dos Santos, J. C. S., Berenguer-Murcia, Á., Alcántara, A. R., Barbosa, O., Ortiz, C., & Fernandez-Lafuente, R. (2019). Immobilization of lipases on hydrophobic supports: Immobilization mechanism, advantages, problems, and solutions. Biotechnology Advances, 37(5), 746-770. https://doi.org/10.1016/j.biotechadv.2019.04.003",
   "[18] Barbosa, O., Ortiz, C., Berenguer-Murcia, Á., Torres, R., Rodrigues, R. C., & Fernandez-Lafuente, R. (2014). Glutaraldehyde in bio-catalyst design: A useful crosslinker and a versatile tool in enzyme immobilization. RSC Advances, 4(4), 1583-1600. https://doi.org/10.1039/c3ra45991h",
 ];
-
-/** The source describes a schematic of "the functionalised rePhlow sphere"
- * (core PAO + surface enzyme panel) but never actually embeds it — the
- * Notion export carries only this caption in an otherwise empty callout.
- * Rendered as a real `image-placeholder` in Experiments.tsx, right after
- * the block intro — the exact case this component family's placeholder
- * system already existed for (see PairedResource in types.ts). */
-export const ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION =
-  "Schematic of the functionalised rePhlow sphere. In the core, the engineered PAO stores phosphorus as polyP; on the surface, the immobilised phosphohydrolase panel hydrolyses organophosphates from the degumming effluent, releasing free orthophosphate that diffuses inwards for assimilation. The arrows follow the phosphate: organic substrates are cleaved at the surface, and the resulting orthophosphate enters the core.";
