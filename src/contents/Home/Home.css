@@ -1193,16 +1193,6 @@
   );
   position: relative;
 }
-.rh-page .rh-clean-stream::after {
-  content: " → ";
-  position: absolute;
-  top: 16px;
-  right: 0;
-  font-size: 0.68rem;
-  letter-spacing: 0.06em;
-  color: var(--ink-soft);
-}
-
 /* 7. EXPLORE rePhlow! — botones finales -------------------------------- */
 .rh-page .rh-explore {
   background: var(--paper-soft);

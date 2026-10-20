@@ -35,6 +35,12 @@ export type Person = {
   logos?: LogoKey[];
   links: [string, string][];
   noPhoto?: boolean;
+  /** Overrides the photo this person's slug would resolve to. Needed only
+   * when a replacement upload has to be served under a different URL than
+   * `<slug>.avif` — for instance with a version marker, so that readers
+   * and caches holding the previous image fetch the new one instead of
+   * the copy they already have. */
+  photoUrl?: string;
 };
 
 export const SECTIONS: { id: SectionId; label: string }[] = [
@@ -216,6 +222,9 @@ export const PEOPLE: Record<SectionId, Person[]> = {
       slug: "daniela-concepcion",
       name: "Daniela Concepción Castanedo",
       color: "gray",
+      /* The replacement photo went up under its own name rather than
+         overwriting <slug>.avif, so it is named here explicitly. */
+      photoUrl: img("daniela-concepcion-nueva.avif"),
       education: "BSc in Physics. MSc student in Condensed Matter Physics and Biophysics.",
       role: "Wiki & Modelling Coordinator",
       roleText:

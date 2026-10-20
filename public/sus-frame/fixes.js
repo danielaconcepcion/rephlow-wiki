@@ -36,7 +36,7 @@
       }
       if (t === "Treated water out") {
         var b2 = d.parentElement;
-        b2.style.right = "7%"; b2.style.left = "auto";
+        b2.style.right = "13%"; b2.style.left = "auto";
         b2.style.top = "10.5%"; b2.style.width = "22%";
         b2.style.textAlign = "right";
         d.style.fontSize = "13.5px"; d.style.whiteSpace = "nowrap";

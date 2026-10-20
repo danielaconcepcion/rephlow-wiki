@@ -12,7 +12,8 @@ import "./Team.css";
  * The page header (title + molecules) comes from the wiki layout (pages.ts).
  */
 
-const photo = (p: Person) => (p.noPhoto ? null : img(`${p.slug}.avif`));
+const photo = (p: Person) =>
+  p.noPhoto ? null : (p.photoUrl ?? img(`${p.slug}.avif`));
 const sticker = (p: Person) => (p.noPhoto ? null : img(`${p.slug}-sticker.avif`));
 const hideBroken = (e: SyntheticEvent<HTMLImageElement>) => e.currentTarget.classList.add("is-broken");
 
