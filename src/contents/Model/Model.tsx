@@ -7,6 +7,9 @@ import { FactorExplorer } from "./FactorExplorer";
 import { PhaseInteractionExplorer } from "./PhaseInteractionExplorer";
 import { GrowthPolypSurface } from "./GrowthPolypSurface";
 import { FBAPrimer } from "./FBAPrimer";
+import { CoreFunnel } from "./CoreFunnel";
+import { AccordionSection } from "../HumanPractices/AccordionSection";
+import { DisplayMath } from "../../components/Math";
 import { ModelBackground } from "./ModelBackground";
 import { ModelWorkflow } from "./ModelWorkflow";
 import { asset } from "../../utils/asset";
@@ -21,6 +24,21 @@ const MetabolicNetworkGraph = lazy(() =>
     default: mod.MetabolicNetworkGraph,
   })),
 );
+
+/** Citation marker for section 4's own reference list. */
+function Cite({ n }: { n: number }) {
+  // The leading space is part of the marker: JSX drops the newline that
+  // separates it from the word before it, and "conditions[1]" reads as a
+  // typo rather than a citation.
+  return (
+    <>
+      {" "}
+      <a className="model-citation" href={`#model-ref-${n}`}>
+        [{n}]
+      </a>
+    </>
+  );
+}
 
 const MODEL_SECTIONS: PageSection[] = [
   {
@@ -62,6 +80,18 @@ const MODEL_SECTIONS: PageSection[] = [
       {
         id: "metabolic-redistribution",
         label: "Metabolic redistribution and flexibility",
+      },
+    ],
+  },
+  {
+    id: "kinetic-core",
+    label: "From a genome-scale model to a kinetic core",
+    children: [
+      { id: "active-metabolic-core", label: "The active metabolic core" },
+      { id: "metabolic-flexibility", label: "Preserving flexibility" },
+      {
+        id: "selecting-kinetic-reactions",
+        label: "Reactions required for kinetics",
       },
     ],
   },
@@ -735,6 +765,483 @@ export function Model() {
                 need to guarantee enough phosphate, usable carbon and
                 respiratory capacity to sustain both processes together.
               </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="kinetic-core" className="model-network">
+          <div className="model-network__intro">
+            <h2>4. From a genome-scale model to a kinetic core</h2>
+            <p>
+              Everything above is steady state. A constraint-based model
+              answers what flux distributions are possible, not how
+              concentrations move in time, and the questions this project
+              ends on — how fast phosphate is taken up, how far polyP
+              accumulates before the cell runs out of ATP — are questions
+              about time. Answering them needs a kinetic model: an
+              ordinary differential equation per species, a rate law per
+              reaction.
+            </p>
+            <p>
+              That cannot be written for the whole network. A rate law
+              carries several parameters, each of which has to be measured
+              or taken from the literature, and for most reactions of{" "}
+              <em>P. putida</em> those numbers do not exist; what exists is
+              scattered across organisms and conditions
+              <Cite n={1} />
+              <Cite n={2} />. Writing the full network down would not make
+              the model more faithful, only less identifiable: added
+              complexity that no experiment in reach could constrain
+              <Cite n={3} />. The usual answer is to reduce the network
+              first <Cite n={4} />, and the rest of this section is how that
+              reduction was done for polyP accumulation, and what it is
+              allowed to leave out.
+            </p>
+          </div>
+
+          <div className="model-network__wide">
+            <CoreFunnel />
+          </div>
+
+          <div className="model-network__intro">
+            <div
+              id="active-metabolic-core"
+              className="model-network__subsection"
+            >
+              <h3>4.1 Identifying the active metabolic core</h3>
+
+              <p>
+                The first observation is that most of the network does
+                nothing. Parsimonious FBA solves the usual linear problem
+                and then, among all the flux distributions that reach the
+                same optimum, picks the one of smallest total flux
+                <Cite n={5} /> — the proxy for a cell that does not run
+                enzymes it has no use for.
+              </p>
+            </div>
+          </div>
+
+          <div className="model-network__wide">
+            <DisplayMath
+              tex="\begin{aligned}\min_{\mathbf v}\ \sum_j |v_j| \quad &\text{subject to}\quad \mathbf{N}\mathbf{v}=\mathbf 0, \\[2pt] &\mathbf l \le \mathbf v \le \mathbf u, \quad Z = Z_{\max}\end{aligned}"
+              label="4"
+            />
+          </div>
+
+          <div className="model-network__intro">
+            <div className="model-network__subsection">
+              <p>
+                Solved for polyP synthesis on the 2,927 reactions of the
+                reconstruction used throughout this page, the parsimonious
+                solution puts flux through <strong>166 reactions</strong>,
+                5.67% of the network. Raise the bar from "non-zero" to
+                "carrying a flux worth modelling" — a threshold of 10⁻²
+                mmol gDW⁻¹ h⁻¹ — and what is left is{" "}
+                <strong>45 reactions</strong>, 1.54%. Below that threshold
+                a flux changes no concentration on the timescale of the
+                experiment; above it, the reaction is doing work.
+              </p>
+            </div>
+          </div>
+
+          <div className="model-network__wide">
+            <figure className="model-network__figure model-network__figure--compact model-network__figure--plate">
+              <img
+                src={asset("assets/model/pfba-fva-by-category.webp")}
+                alt="Stacked bar charts of the reactions active in pFBA and in FVA, grouped by functional category, at tolerances of 0, 0.01 and 0.1."
+              />
+              <figcaption>
+                <strong>Figure 8.</strong> Reactions active in pFBA and in
+                FVA, grouped by functional category, at three thresholds.
+                At 10⁻¹ the pFBA core is almost entirely central carbon
+                metabolism and transport, while FVA keeps a tail of
+                biosynthetic and detoxification routes. Figure from the
+                underlying thesis <Cite n={6} />; axis labels in Spanish.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div className="model-network__intro">
+            <div
+              id="metabolic-flexibility"
+              className="model-network__subsection"
+            >
+              <h3>4.2 Preserving metabolic flexibility</h3>
+
+              <p>
+                A parsimonious solution is one point, and as the previous
+                section already showed for Phase B, the optimum is not a
+                unique flux map. Flux variability analysis puts a number on
+                that: it maximises and minimises each reaction in turn while
+                holding the objective at (or near) its optimum
+                <Cite n={7} />, which gives the interval of fluxes the
+                reaction can take without the cell giving anything up.
+              </p>
+            </div>
+          </div>
+
+          <div className="model-network__wide">
+            <DisplayMath
+              tex="\begin{aligned}v_j^{\min},\, v_j^{\max} \;=\; \min_{\mathbf v} / \max_{\mathbf v}\ v_j \quad &\text{subject to}\quad \mathbf{N}\mathbf{v}=\mathbf 0, \\[2pt] &\mathbf l \le \mathbf v \le \mathbf u, \quad Z \ge \gamma Z_{\max}\end{aligned}"
+              label="5"
+            />
+          </div>
+
+          <div className="model-network__intro">
+            <div className="model-network__subsection">
+              <p>
+                The answer is that the network is far more flexible than the
+                parsimonious solution suggests:{" "}
+                <strong>1,985 reactions</strong>, 67.82% of the model, can
+                carry flux in some equally optimal state. Only one of them
+                is actually pinned to a single value. But flexibility is not
+                the same as relevance. Of those accessory reactions, 1,297
+                can only ever carry fluxes below 10⁻² mmol gDW⁻¹ h⁻¹, and
+                the routes that open up belong to lipid, cell-envelope,
+                amino-acid and nucleotide metabolism — alternatives that
+                reach the same optimum by a different path rather than
+                functions the reduced model would lose.
+              </p>
+            </div>
+          </div>
+
+          <div className="model-network__wide">
+            <div className="model-network__table-scroll">
+              <table className="model-network__table">
+                <caption className="model-network__table-caption">
+                  <strong>Table 1.</strong> Reactions counted as active by
+                  pFBA and by FVA, at three flux thresholds, out of the
+                  2,927 reactions of the model. "Fixed" and "variable" split
+                  the FVA-active reactions into those whose interval
+                  collapses to a point and those that retain a range.
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Method</th>
+                    <th scope="col">Reactions</th>
+                    <th scope="col">Threshold 0</th>
+                    <th scope="col">0.01</th>
+                    <th scope="col">0.1</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row" rowSpan={2}>
+                      pFBA
+                    </th>
+                    <td>Inactive</td>
+                    <td>2,761 (94.33%)</td>
+                    <td>2,882 (98.46%)</td>
+                    <td>2,882 (98.46%)</td>
+                  </tr>
+                  <tr>
+                    <td>Active</td>
+                    <td>166 (5.67%)</td>
+                    <td>45 (1.54%)</td>
+                    <td>45 (1.54%)</td>
+                  </tr>
+                  <tr>
+                    <th scope="row" rowSpan={4}>
+                      FVA
+                    </th>
+                    <td>Inactive</td>
+                    <td>942 (32.18%)</td>
+                    <td>2,228 (76.12%)</td>
+                    <td>2,853 (97.47%)</td>
+                  </tr>
+                  <tr>
+                    <td>Active</td>
+                    <td>1,985 (67.82%)</td>
+                    <td>699 (23.88%)</td>
+                    <td>74 (2.53%)</td>
+                  </tr>
+                  <tr>
+                    <td>— fixed</td>
+                    <td>1 (0.05%)</td>
+                    <td>4 (0.57%)</td>
+                    <td>35 (47.30%)</td>
+                  </tr>
+                  <tr>
+                    <td>— variable</td>
+                    <td>1,984 (99.95%)</td>
+                    <td>695 (99.43%)</td>
+                    <td>39 (52.70%)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="model-network__intro">
+            <div className="model-network__subsection">
+              <p>
+                Reading the two analyses together is what makes the
+                reduction defensible. Where FVA keeps a reaction with a real
+                range at the loosest tolerance, it keeps it in the
+                respiratory module and in redox balancing — the cell may use
+                a different electron-transport route or adjust the proton
+                gradient and still reach the same optimum. That is
+                flexibility the reduced model has to keep, and it is kept:
+                respiration enters the core as its own module rather than
+                being folded into the carbon pathways, precisely because the
+                respiratory reactions are not strictly coupled to them
+                <Cite n={8} />.
+              </p>
+            </div>
+
+            <div
+              id="selecting-kinetic-reactions"
+              className="model-network__subsection"
+            >
+              <h3>4.3 Selecting the reactions required for kinetics</h3>
+
+              <p>
+                Three questions are easy to confuse, and they give three
+                different sets of reactions:
+              </p>
+              <ul className="model-network__list">
+                <li>
+                  <strong>What the parsimonious solution needs.</strong> The
+                  166 reactions that carry flux — the cheapest way to reach
+                  the optimum, and nothing else.
+                </li>
+                <li>
+                  <strong>What FVA shows is available.</strong> The 1,985
+                  reactions that could carry flux in some equally optimal
+                  state — the shape of the solution space, not a route
+                  through it.
+                </li>
+                <li>
+                  <strong>What a kinetic description of polyP
+                  accumulation actually needs.</strong> The reactions whose
+                  flux is large enough to move a concentration, and whose
+                  rate law can be written: the 45 above 10⁻² mmol gDW⁻¹
+                  h⁻¹.
+                </li>
+              </ul>
+
+              <p>
+                The threshold is doing real work in that last step, so it is
+                worth saying why 10⁻² and not something else. Below it sit
+                1,297 of the FVA-accessory reactions and all of the
+                difference between the 166-reaction and 45-reaction cores —
+                fluxes three orders of magnitude under the phosphate uptake
+                that drives the system, which over the hours a batch run
+                lasts shift no pool the model tracks. Taking them in would
+                add parameters without adding behaviour. The 45 reactions
+                that survive are the ones the pFBA solution leans on, and
+                they fall into seven blocks, which are what the kinetic
+                model is built from:
+              </p>
+              <ul className="model-network__list">
+                <li>
+                  <strong>Transport of glucose, oxygen and phosphate</strong>{" "}
+                  — what crosses the membrane, including both the Pit
+                  symporter and the ABC-type Pst route.
+                </li>
+                <li>
+                  <strong>The Entner–Doudoroff pathway</strong> — the route{" "}
+                  <em>P. putida</em> actually uses for glucose
+                  <Cite n={9} />, rather than a textbook glycolysis.
+                </li>
+                <li>
+                  <strong>The TCA cycle</strong> — oxidation of acetyl-CoA
+                  and the supply of reducing equivalents.
+                </li>
+                <li>
+                  <strong>The respiratory chain</strong> — NADH
+                  dehydrogenase and cytochrome oxidase, kept as an
+                  independent module.
+                </li>
+                <li>
+                  <strong>ATP synthesis and maintenance</strong> — ATP
+                  synthase and the non-growth maintenance demand.
+                </li>
+                <li>
+                  <strong>Redox balancing</strong> — the transhydrogenase
+                  that trades NADH against NADPH.
+                </li>
+                <li>
+                  <strong>PolyP polymerisation</strong> — the PPK steps that
+                  turn ATP and phosphate into chain.
+                </li>
+              </ul>
+
+              <p>
+                Two things are deliberately absent. Biomass synthesis is
+                inactive under these conditions, so the branches that feed
+                precursors carry no flux (grey in Figure 9) and drop out of
+                the core; a version of the model that demands growth brings
+                them back, and would need them. And the pentose-phosphate
+                branches, which the same figure shows at zero flux here,
+                are part of the glucose-processing cycle this organism can
+                run <Cite n={9} /> but not of the state being described.
+                The reduction is specific to aerobic polyP accumulation
+                under a fixed medium; it is not a general-purpose small
+                model of <em>P. putida</em>.
+              </p>
+            </div>
+          </div>
+
+          <div className="model-network__wide">
+            <figure className="model-network__figure model-network__figure--compact model-network__figure--plate">
+              <img
+                src={asset("assets/model/active-core-map.webp")}
+                alt="Metabolic map of the 45 active reactions with their pFBA fluxes, grouped into respiration, the Entner-Doudoroff pathway, the TCA cycle, ATP synthesis and maintenance, transhydrogenase and polyphosphate synthesis."
+              />
+              <figcaption>
+                <strong>Figure 9.</strong> The 45-reaction core, with the
+                pFBA flux of each reaction in mmol gDW⁻¹ h⁻¹; line
+                thickness is flux and grey lines carry none. The functional
+                blocks of 4.3 are visible as groups: respiration (top
+                left), Entner–Doudoroff down the middle, the TCA cycle and
+                ATP synthase (right), polyP synthesis (bottom right).
+                Figure from the underlying thesis <Cite n={6} />; module
+                labels in Spanish.
+              </figcaption>
+            </figure>
+          </div>
+
+          <div className="model-network__intro">
+            <div className="model-network__subsection">
+              <p>
+                This is the model the kinetic work starts from: small enough
+                that every rate law can be written and every parameter
+                traced to a source, and chosen so that what it leaves out is
+                either negligible flux or an equivalent route to the same
+                optimum. What it cannot do is predict anything outside the
+                conditions it was reduced under — which is the honest cost
+                of the reduction, and the reason the selection above is
+                stated rather than assumed.
+              </p>
+            </div>
+
+            <div className="model-network__subsection">
+              <AccordionSection title="References">
+                <ol className="model-reference-list">
+                  <li id="model-ref-1">
+                    Tokic, M., Hatzimanikatis, V. &amp; Miskovic, L. (2020).
+                    Large-scale kinetic metabolic models of{" "}
+                    <em>Pseudomonas putida</em> KT2440 for consistent design
+                    of metabolic engineering strategies.{" "}
+                    <em>Biotechnology for Biofuels, 13</em> (1), 33. DOI:{" "}
+                    <a
+                      href="https://doi.org/10.1186/s13068-020-1665-7"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      10.1186/s13068-020-1665-7
+                    </a>
+                  </li>
+                  <li id="model-ref-2">
+                    Rutkis, R., Kalnenieks, U., Stalidzans, E. &amp; Fell, D.
+                    A. (2013). Kinetic modelling of the{" "}
+                    <em>Zymomonas mobilis</em> Entner–Doudoroff pathway:
+                    insights into control and functionality.{" "}
+                    <em>Microbiology, 159</em> (12), 2674–2689. DOI:{" "}
+                    <a
+                      href="https://doi.org/10.1099/mic.0.071340-0"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      10.1099/mic.0.071340-0
+                    </a>
+                  </li>
+                  <li id="model-ref-3">
+                    Hameri, T., Fengos, G. &amp; Hatzimanikatis, V. (2021).
+                    The effects of model complexity and size on metabolic
+                    flux distribution and control: case study in{" "}
+                    <em>Escherichia coli</em>.{" "}
+                    <em>BMC Bioinformatics, 22</em> (1), 134. DOI:{" "}
+                    <a
+                      href="https://doi.org/10.1186/s12859-021-04066-y"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      10.1186/s12859-021-04066-y
+                    </a>
+                  </li>
+                  <li id="model-ref-4">
+                    Singh, D. &amp; Lercher, M. J. (2019). Network reduction
+                    methods for genome-scale metabolic models.{" "}
+                    <em>Cellular and Molecular Life Sciences, 77</em> (3),
+                    481–488. DOI:{" "}
+                    <a
+                      href="https://doi.org/10.1007/s00018-019-03383-z"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      10.1007/s00018-019-03383-z
+                    </a>
+                  </li>
+                  <li id="model-ref-5">
+                    Schuetz, R., Kuepfer, L. &amp; Sauer, U. (2007).
+                    Systematic evaluation of objective functions for
+                    predicting intracellular fluxes in{" "}
+                    <em>Escherichia coli</em>.{" "}
+                    <em>Molecular Systems Biology, 3</em> (1), 119. DOI:{" "}
+                    <a
+                      href="https://doi.org/10.1038/msb4100162"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      10.1038/msb4100162
+                    </a>
+                  </li>
+                  <li id="model-ref-6">
+                    Concepción Castanedo, D. (2026).{" "}
+                    <em>
+                      Caracterización de flujos metabólicos y modelado
+                      cinético de la acumulación aerobia de polifosfato en
+                      bacterias
+                    </em>{" "}
+                    [Trabajo de Fin de Grado]. Universidad Complutense de
+                    Madrid, Facultad de Ciencias Físicas.
+                  </li>
+                  <li id="model-ref-7">
+                    Kenefake, D., Armingol, E., Lewis, N. E. &amp;
+                    Pistikopoulos, E. N. (2022). An improved algorithm for
+                    flux variability analysis.{" "}
+                    <em>BMC Bioinformatics, 23</em> (1), 550. DOI:{" "}
+                    <a
+                      href="https://doi.org/10.1186/s12859-022-05089-9"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      10.1186/s12859-022-05089-9
+                    </a>
+                  </li>
+                  <li id="model-ref-8">
+                    Burgard, A. P., Nikolaev, E. V., Schilling, C. H. &amp;
+                    Maranas, C. D. (2004). Flux coupling analysis of
+                    genome-scale metabolic network reconstructions.{" "}
+                    <em>Genome Research, 14</em> (2), 301–312. DOI:{" "}
+                    <a
+                      href="https://doi.org/10.1101/gr.1926504"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      10.1101/gr.1926504
+                    </a>
+                  </li>
+                  <li id="model-ref-9">
+                    Nikel, P. I., Chavarría, M., Fuhrer, T., Sauer, U. &amp;
+                    de Lorenzo, V. (2015). <em>Pseudomonas putida</em> KT2440
+                    metabolizes glucose through a cycle formed by enzymes of
+                    the Entner–Doudoroff, Embden–Meyerhof–Parnas and
+                    pentose phosphate pathways.{" "}
+                    <em>Journal of Biological Chemistry, 290</em>,
+                    25920–25932. DOI:{" "}
+                    <a
+                      href="https://doi.org/10.1074/jbc.M115.687749"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      10.1074/jbc.M115.687749
+                    </a>
+                  </li>
+                </ol>
+              </AccordionSection>
             </div>
           </div>
         </section>
