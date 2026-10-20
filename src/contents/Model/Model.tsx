@@ -8,6 +8,7 @@ import { PhaseInteractionExplorer } from "./PhaseInteractionExplorer";
 import { GrowthPolypSurface } from "./GrowthPolypSurface";
 import { FBAPrimer } from "./FBAPrimer";
 import { ModelBackground } from "./ModelBackground";
+import { ModelWorkflow } from "./ModelWorkflow";
 import { asset } from "../../utils/asset";
 import "./Model.css";
 
@@ -22,6 +23,10 @@ const MetabolicNetworkGraph = lazy(() =>
 );
 
 const MODEL_SECTIONS: PageSection[] = [
+  {
+    id: "model-workflow",
+    label: "Modelling workflow",
+  },
   {
     id: "fba-primer",
     label: "How flux balance analysis works",
@@ -75,7 +80,25 @@ export function Model() {
         />
 
         <main className="model-content-wrap">
-        <section id="fba-primer" className="model-network" ref={contentRef}>
+        <section id="model-workflow" className="model-network" ref={contentRef}>
+          <div className="model-network__intro">
+            <h2>From metabolic reconstruction to design decisions</h2>
+            <p>
+              Our modelling workflow links a genome-scale representation of
+              <em> Pseudomonas putida</em> KT2440 to the specific decisions
+              required to improve phosphate accumulation. Each stage narrows
+              the question: from identifying feasible metabolic states, to
+              testing individual limitations and interactions, and finally to
+              balancing PolyP production against the growth needed to sustain
+              the engineered chassis.
+            </p>
+          </div>
+          <div className="model-network__wide">
+            <ModelWorkflow />
+          </div>
+        </section>
+
+        <section id="fba-primer" className="model-network">
           <div className="model-network__intro">
             <h2>How flux balance analysis works</h2>
             <p>
