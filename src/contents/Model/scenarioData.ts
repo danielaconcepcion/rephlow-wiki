@@ -1,14 +1,9 @@
-import { asset } from "../../utils/asset";
-
 /**
  * Manifest-driven scenario data layer for the Model page's metabolic
  * network (./MetabolicNetworkGraph.tsx). Source of truth for every control
- * value, checkpoint, and predicted-state figure is
- * data/metabolic-network-scenarios/manifest.json (synced verbatim, not
- * transformed, into public/generated/scenarios/ by
- * scripts/sync-metabolic-network-scenarios.mjs — see that script's header
- * for why this pipeline no longer merges scenarios at build time like the
- * old generate-metabolic-network.mjs did).
+ * value, checkpoint, and predicted-state figure lives in iGEM Uploads and
+ * is fetched directly from static.igem.wiki. This keeps roughly 70 MB of
+ * generated network data out of the repository and Pages artifact.
  *
  * Nothing here hardcodes a scenario's filename or count: every scenario is
  * looked up by matching the current UI selection (objective + at most one
@@ -145,11 +140,19 @@ export function resolveScenario(
 
 let manifestPromise: Promise<Manifest> | null = null;
 
+const SCENARIO_BASE =
+  "https://static.igem.wiki/teams/6124/wiki/assets/model/metabolic-network-scenarios/";
+
+/** iGEM Uploads normalises underscores in uploaded filenames to hyphens. */
+function uploadedScenarioName(file: string): string {
+  return file.replace(/_+/g, "-");
+}
+
 /** Fetches manifest.json exactly once per page load, however many
  * components/renders ask for it. */
 export function loadManifest(): Promise<Manifest> {
   if (!manifestPromise) {
-    manifestPromise = fetch(asset("generated/scenarios/manifest.json")).then((res) => {
+    manifestPromise = fetch(`${SCENARIO_BASE}manifest.json`).then((res) => {
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return res.json() as Promise<Manifest>;
     });
@@ -201,7 +204,8 @@ export function loadScenario(file: string, staleController?: AbortController): P
 
   staleController?.abort();
   const controller = new AbortController();
-  const promise = fetch(asset(`generated/scenarios/${file}`), { signal: controller.signal })
+  const uploadedFile = uploadedScenarioName(file);
+  const promise = fetch(`${SCENARIO_BASE}${uploadedFile}`, { signal: controller.signal })
     .then((res) => {
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return res.json() as Promise<RawScenarioFile>;
