@@ -14,6 +14,10 @@
    layer, sized to the full page-with-section-nav box (nav column and
    content column both), sitting behind everything at z-index 0. */
 .model-page {
+  /* The lab pages' own hairline (see LabFolders.css): the figures here
+     use the same "photo on paper" chrome Experiments uses, rather than a
+     shadowed card of their own. */
+  --model-figure-line: rgba(27, 35, 64, 0.22);
   position: relative;
 }
 
@@ -61,18 +65,32 @@
   margin: 32px 0 0;
 }
 
-.model-network__figure figcaption {
+/* One caption treatment for every figure on this page — the static
+   plates, the funnel, the lumping toggle, the module diagram and the workflow — in the
+   lab pages' own italic (see LabFolders.css .record-figure figcaption),
+   so a figure reads the same wherever it sits. */
+.model-network__figure figcaption,
+.core-funnel figcaption,
+.lumped figcaption,
+.lumpmat figcaption,
+.model-page .wff__caption {
   max-width: 760px;
   margin: 12px auto 0;
   color: var(--ink-soft);
   font-size: 0.78rem;
+  font-style: italic;
   line-height: 1.5;
   text-align: center;
 }
 
-.model-network__figure figcaption strong {
+.model-network__figure figcaption strong,
+.core-funnel figcaption strong,
+.lumped figcaption strong,
+.lumpmat figcaption strong,
+.model-network__compare-panel figcaption strong {
   color: var(--ink);
   font-family: var(--font-display);
+  font-style: normal;
 }
 
 /* Section 3's static 2D charts (production envelopes, flux-change bars):
@@ -88,9 +106,9 @@
   width: 100%;
   height: auto;
   background: var(--paper);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
-  padding: 16px;
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
+  padding: 6px;
 }
 /* Figure 4b: a secondary normalization control, deliberately smaller than
    the primary Figure 4a so it doesn't compete for attention. */
@@ -168,22 +186,18 @@
   width: 100%;
   height: auto;
   background: var(--paper);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
-  padding: 12px;
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
+  padding: 6px;
 }
 
 .model-network__compare-panel figcaption {
   margin: 10px 0 0;
   color: var(--ink-soft);
   font-size: 0.78rem;
+  font-style: italic;
   line-height: 1.5;
   text-align: center;
-}
-
-.model-network__compare-panel figcaption strong {
-  color: var(--ink);
-  font-family: var(--font-display);
 }
 
 .model-network__compare-reading {
@@ -765,8 +779,8 @@
   justify-content: flex-end;
   min-width: 68px;
   padding: 9px 12px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
   background: var(--paper-soft);
 }
 .core-funnel__count {
@@ -868,11 +882,10 @@
   margin: 28px 0 0;
 }
 .lumped__diagram {
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
   background: var(--paper);
-  padding: 12px;
-  box-shadow: var(--shadow-soft);
+  padding: 10px;
 }
 .lumped__diagram svg {
   display: block;
@@ -913,7 +926,7 @@
 }
 .lumped__box {
   fill: var(--paper-soft);
-  stroke: var(--line);
+  stroke: var(--model-figure-line);
   stroke-width: 1;
   transition:
     fill 200ms ease,
@@ -948,10 +961,10 @@
 }
 
 .lumped__panel {
-  margin-top: 14px;
-  padding: 18px 20px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
+  margin-top: 12px;
+  padding: 16px 18px;
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
   background: var(--paper-soft);
 }
 .lumped__panel-title {
@@ -1010,11 +1023,10 @@
 .lumpmat {
   max-width: 1040px;
   margin: 26px auto 0;
-  padding: 20px 22px 18px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
+  padding: 16px 18px 14px;
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
   background: var(--paper);
-  box-shadow: var(--shadow-soft);
 }
 
 /* The two maps occupy the same box and cross-fade, so the toggle reads as
@@ -1086,18 +1098,6 @@
   font-size: 0.88rem;
   line-height: 1.6;
   color: var(--ink-soft);
-}
-.lumpmat figcaption {
-  max-width: 700px;
-  margin: 16px auto 0;
-  font-size: 0.78rem;
-  line-height: 1.5;
-  text-align: center;
-  color: var(--ink-soft);
-}
-.lumpmat figcaption strong {
-  color: var(--ink);
-  font-family: var(--font-display);
 }
 
 .model-network__table-note {

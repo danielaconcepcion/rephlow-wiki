@@ -5,35 +5,72 @@ import {
   Title,
   WorkflowFigure,
 } from "../Experiments/workflowFigures/shared";
-import { Bacterium, Flask } from "../Experiments/workflowFigures/parts";
+import {
+  Bacterium,
+  Flask,
+  Monitor,
+} from "../Experiments/workflowFigures/parts";
 
-const W = 340;
-const H = 330;
-const TITLE = 25;
+/* --------------------------------------------------------------------------
+   The modelling workflow, drawn in the same idiom as the Experiments
+   figures (see Experiments/workflowFigures): six panels on the same grid,
+   the same two washes alternating, the same block arrows between them, and
+   one short title and one short subtitle per panel.
+
+   The six panels are the six sections of this page, in the order the page
+   runs them, so each panel opens the section it stands for.
+   -------------------------------------------------------------------------- */
+
+const TITLE = 34;
+const SUB = 24;
+
+/** Panel geometry, copied from the Experiments grid so the two figures
+ * set at the same scale. */
+const COL = [
+  { x: 8, w: 484, cx: 250 },
+  { x: 530, w: 485, cx: 772 },
+  { x: 1061, w: 483, cx: 1302 },
+];
+const ROW = [
+  { y: 8, h: 314, title: 66, sub: 290 },
+  { y: 369, h: 313, title: 428, sub: 650 },
+];
 
 function Panel({
-  x,
-  y,
+  col,
+  row,
   fill,
   href,
   label,
   children,
 }: {
-  x: number;
-  y: number;
+  col: number;
+  row: number;
   fill: string;
   href: string;
   label: string;
   children: ReactNode;
 }) {
+  const { x, w } = COL[col];
+  const { y, h } = ROW[row];
   return (
-    <a className="wff-panel" href={href} aria-label={label}>
+    <a
+      className="wff-panel"
+      href={href}
+      aria-label={label}
+      onClick={(event) => {
+        event.preventDefault();
+        document
+          .getElementById(href.slice(1))
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }}
+    >
       <rect
         className="wff-panel__bg"
         x={x}
         y={y}
-        width={W}
-        height={H}
+        width={w}
+        height={h}
         rx={34}
         fill={fill}
       />
@@ -49,7 +86,7 @@ function Subtitle({
 }: {
   x: number;
   y: number;
-  children: ReactNode;
+  children: string;
 }) {
   return (
     <text
@@ -57,78 +94,111 @@ function Subtitle({
       y={y}
       textAnchor="middle"
       fontFamily="var(--font-body)"
-      fontSize={19}
-      fill={C.inkSoft}
+      fontSize={SUB}
+      fill={C.ink}
     >
       {children}
     </text>
   );
 }
 
-function Laptop({ x, y }: { x: number; y: number }) {
+/** A short polyphosphate chain: beads on a backbone, as the rest of the
+ * wiki draws it. */
+function PolyP({
+  x,
+  y,
+  count = 5,
+  r = 13,
+  gap = 25,
+}: {
+  x: number;
+  y: number;
+  count?: number;
+  r?: number;
+  gap?: number;
+}) {
   return (
     <g>
-      <rect x={x} y={y} width={230} height={158} rx={12} fill={C.ink} />
-      <rect
-        x={x + 13}
-        y={y + 13}
-        width={204}
-        height={132}
-        rx={5}
-        fill={C.white}
+      <line
+        x1={x}
+        y1={y}
+        x2={x + (count - 1) * gap}
+        y2={y}
+        stroke={C.gold}
+        strokeWidth={8}
       />
-      <path
-        d={`M${x + 70} ${y + 158}H${x + 160}L${x + 174} ${y + 184}H${x + 56}Z`}
-        fill={C.steelDark}
-      />
-      <rect
-        x={x + 42}
-        y={y + 181}
-        width={146}
-        height={10}
-        rx={5}
-        fill={C.ink}
-      />
-    </g>
-  );
-}
-
-function PolyP({ x, y, count = 5 }: { x: number; y: number; count?: number }) {
-  return (
-    <g>
-      {Array.from({ length: count - 1 }, (_, i) => (
-        <line
-          key={`l${i}`}
-          x1={x + i * 22}
-          y1={y}
-          x2={x + (i + 1) * 22}
-          y2={y}
-          stroke={C.gold}
-          strokeWidth={8}
-        />
-      ))}
       {Array.from({ length: count }, (_, i) => (
         <g key={i}>
           <circle
-            cx={x + i * 22}
+            cx={x + i * gap}
             cy={y}
-            r={12}
+            r={r}
             fill={C.gold}
             stroke={C.ink}
-            strokeWidth={2}
+            strokeWidth={2.4}
           />
           <text
-            x={x + i * 22}
-            y={y + 5}
+            x={x + i * gap}
+            y={y + r * 0.4}
             textAnchor="middle"
             fontFamily="var(--font-display)"
             fontWeight={700}
-            fontSize={13}
+            fontSize={r}
             fill={C.white}
           >
             P
           </text>
         </g>
+      ))}
+    </g>
+  );
+}
+
+/** Bare axes with the arrowheads the Experiments figures draw. */
+function Axes({
+  ox,
+  oy,
+  w,
+  h,
+}: {
+  ox: number;
+  oy: number;
+  w: number;
+  h: number;
+}) {
+  return (
+    <g>
+      <g stroke={C.ink} strokeWidth={3} fill="none">
+        <line x1={ox} y1={oy} x2={ox} y2={oy - h} />
+        <line x1={ox} y1={oy} x2={ox + w} y2={oy} />
+      </g>
+      <g fill={C.ink}>
+        <path
+          d={`M${ox},${oy - h - 12} L${ox - 7},${oy - h + 2} L${ox + 7},${oy - h + 2} Z`}
+        />
+        <path
+          d={`M${ox + w + 12},${oy} L${ox + w - 2},${oy - 7} L${ox + w - 2},${oy + 7} Z`}
+        />
+      </g>
+    </g>
+  );
+}
+
+/** A free curve over those axes — unlike the shared `Plot`, it does not
+ * have to start at the origin, so a falling series can be drawn. */
+function Curve({ color, pts }: { color: string; pts: [number, number][] }) {
+  return (
+    <g>
+      <path
+        d={`M${pts.map(([x, y]) => `${x},${y}`).join(" L")}`}
+        fill="none"
+        stroke={color}
+        strokeWidth={4}
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+      {pts.map(([x, y]) => (
+        <circle key={`${x}-${y}`} cx={x} cy={y} r={6.5} fill={color} />
       ))}
     </g>
   );
@@ -137,397 +207,315 @@ function PolyP({ x, y, count = 5 }: { x: number; y: number; count?: number }) {
 export function ModelWorkflow() {
   return (
     <WorkflowFigure
-      viewBox="0 0 1540 720"
-      label="Complete seven-stage modelling workflow, from genome-scale reconstruction through flux analysis and network reduction to kinetic simulations, sensitivity analysis and experimental design"
-      caption="The complete modelling workflow, connecting genome-scale metabolic capacity with a reduced kinetic description and the experimental measurements needed for the next DBTL iteration. Select a stage to open its analysis."
+      viewBox="0 0 1554 694"
+      label="Six-panel workflow diagram: flux balance analysis, the genome-scale metabolic map, environmental and capacity sensitivity, the growth and polyphosphate trade-off, reduction to an active kinetic core, and the reduced kinetic model"
+      caption="The six steps this page runs through, from the flux balance analysis behind the genome-scale map to the reduced kinetic model of phosphate accumulation. Select a panel to open its section."
     >
+      {/* 1. Flux balance — the optimum on the feasible flux space. */}
       <Panel
-        x={10}
-        y={10}
+        col={0}
+        row={0}
         fill={C.panelGreen}
-        href="#metabolic-network"
-        label="1. Genome-scale reconstruction"
+        href="#fba-primer"
+        label="1. Flux balance"
       >
-        <Title x={180} y={57} size={TITLE}>
-          1. Genome-scale model
+        <Title x={250} y={ROW[0].title} size={TITLE}>
+          1. Flux balance
         </Title>
+        <Monitor x={137} y={88} w={226} h={140}>
+          <polygon
+            points="168,202 188,146 242,114 306,128 334,184 290,210"
+            fill={C.blueLight}
+            stroke={C.blue}
+            strokeWidth={3}
+            strokeLinejoin="round"
+          />
+          <line
+            x1={210}
+            y1={184}
+            x2={294}
+            y2={138}
+            stroke={C.ink}
+            strokeWidth={3.5}
+            strokeLinecap="round"
+          />
+          <path d="M306,128 L288,132 L296,147 Z" fill={C.ink} />
+          <circle
+            cx={306}
+            cy={128}
+            r={11}
+            fill={C.gold}
+            stroke={C.ink}
+            strokeWidth={3}
+          />
+        </Monitor>
+        <Subtitle x={250} y={ROW[0].sub}>
+          FBA + pFBA + FVA
+        </Subtitle>
+      </Panel>
+
+      {/* 2. Genome-scale map — the reconstruction and what it accounts for. */}
+      <Panel
+        col={1}
+        row={0}
+        fill={C.panelSlate}
+        href="#metabolic-network"
+        label="2. Metabolic map"
+      >
+        <Title x={772} y={ROW[0].title} size={TITLE}>
+          2. Metabolic map
+        </Title>
+        <g stroke={C.ink} strokeWidth={2.6}>
+          <line x1={668} y1={112} x2={726} y2={99} />
+          <line x1={726} y1={99} x2={838} y2={104} />
+          <line x1={838} y1={104} x2={890} y2={130} />
+        </g>
+        <g fill={C.blue} stroke={C.ink} strokeWidth={2.6}>
+          <circle cx={668} cy={112} r={15} />
+          <circle cx={726} cy={99} r={12} />
+          <circle cx={838} cy={104} r={15} />
+          <circle cx={890} cy={130} r={12} />
+        </g>
         <Bacterium
-          x={178}
-          y={175}
-          len={185}
-          wid={104}
+          x={772}
+          y={182}
+          len={226}
+          wid={126}
           rot={-8}
           stroke={C.green}
           fill={C.greenLight}
           dna={C.green}
           flagella={14}
-          flagellaLen={18}
+          flagellaLen={20}
         />
-        <g fill={C.blue} stroke={C.ink} strokeWidth={2.2}>
-          <circle cx={90} cy={93} r={13} />
-          <circle cx={134} cy={83} r={11} />
-          <circle cx={230} cy={88} r={13} />
-          <circle cx={273} cy={112} r={11} />
-        </g>
-        <PolyP x={132} y={183} count={5} />
-        <Subtitle x={180} y={307}>
+        <PolyP x={722} y={190} count={5} />
+        <Subtitle x={772} y={ROW[0].sub}>
           iJN1463 reconstruction
         </Subtitle>
       </Panel>
-      <BlockArrow x={382} y={175} length={58} />
 
+      {/* 3. Sensitivity — the same network under different environments. */}
       <Panel
-        x={404}
-        y={10}
-        fill={C.panelBlue}
-        href="#phase-b-sensitivity"
-        label="2. Constraint-based analysis"
-      >
-        <Title x={574} y={57} size={TITLE}>
-          2. FBA and pFBA
-        </Title>
-        <Laptop x={459} y={79} />
-        <path
-          d="M482 210C512 193 526 166 550 149S605 109 662 104V219H482Z"
-          fill={C.blueLight}
-          opacity={0.88}
-        />
-        <path
-          d="M482 124C520 137 540 156 565 173S616 207 662 214V219H482Z"
-          fill={C.greenLight}
-          opacity={0.9}
-        />
-        <circle
-          cx={566}
-          cy={173}
-          r={13}
-          fill={C.gold}
-          stroke={C.ink}
-          strokeWidth={3}
-        />
-        <Subtitle x={574} y={307}>
-          Feasible metabolic states
-        </Subtitle>
-      </Panel>
-      <BlockArrow x={776} y={175} length={58} />
-
-      <Panel
-        x={798}
-        y={10}
+        col={2}
+        row={0}
         fill={C.panelGreen}
-        href="#growth-polyp-balance"
-        label="3. Environmental and phenotype landscapes"
+        href="#phase-b-sensitivity"
+        label="3. Sensitivity"
       >
-        <Title x={968} y={57} size={TITLE}>
-          3. Explore constraints
+        <Title x={1302} y={ROW[0].title} size={TITLE}>
+          3. Sensitivity
         </Title>
         <Flask
-          x={875}
-          top={91}
-          w={88}
-          h={150}
+          x={1214}
+          top={104}
+          w={92}
+          h={148}
           liquid={C.blueLight}
-          level={0.42}
+          level={0.4}
         />
         <Flask
-          x={968}
-          top={78}
-          w={102}
-          h={165}
+          x={1302}
+          top={92}
+          w={104}
+          h={160}
           liquid={C.greenLight}
           level={0.58}
         />
         <Flask
-          x={1064}
-          top={97}
-          w={84}
-          h={145}
+          x={1392}
+          top={108}
+          w={88}
+          h={144}
           liquid={C.yellow}
-          level={0.72}
+          level={0.74}
         />
-        <g transform="translate(851 250)">
-          {[38, 72, 118, 178].map((height, index) => (
-            <rect
-              key={height}
-              x={index * 54}
-              y={38 - height * 0.19}
-              width={36}
-              height={height * 0.19}
-              rx={4}
-              fill={[C.blue, C.green, C.gold, C.orange][index]}
-            />
-          ))}
-        </g>
-        <Subtitle x={968} y={307}>
-          Environment and growth–PolyP balance
+        <Subtitle x={1302} y={ROW[0].sub}>
+          environment + capacity limits
         </Subtitle>
       </Panel>
-      <BlockArrow x={1170} y={175} length={58} />
 
+      {/* 4. Trade-off — growth against polyphosphate accumulation. */}
       <Panel
-        x={1192}
-        y={10}
+        col={2}
+        row={1}
         fill={C.panelSlate}
-        href="#model-reduction"
-        label="4. Reduce the active network"
+        href="#growth-polyp-balance"
+        label="4. Trade-off"
       >
-        <Title x={1362} y={57} size={TITLE}>
-          4. Reduce the network
+        <Title x={1302} y={ROW[1].title} size={TITLE}>
+          4. Trade-off
         </Title>
-        <g transform="translate(1237 87)">
-          {[
-            [0, 24],
-            [0, 76],
-            [0, 128],
-            [62, 50],
-            [62, 104],
-          ].map(([cx, cy], i) => (
-            <circle
-              key={i}
-              cx={cx}
-              cy={cy}
-              r={13}
-              fill={C.blueLight}
-              stroke={C.ink}
-              strokeWidth={2.5}
-            />
-          ))}
-          <path
-            d="M20 18H82L112 67L82 116H20L49 67Z"
-            fill={C.white}
-            stroke={C.ink}
-            strokeWidth={3}
-          />
-          <path
-            d="M126 67H168"
-            stroke={C.ink}
-            strokeWidth={10}
-            strokeLinecap="round"
-          />
-          <path d="M168 47L205 67L168 87Z" fill={C.ink} />
-          <rect
-            x={218}
-            y={15}
-            width={74}
-            height={104}
-            rx={20}
-            fill={C.blue}
-            opacity={0.86}
-          />
-          <rect x={230} y={30} width={50} height={14} rx={7} fill={C.white} />
-          <rect
-            x={230}
-            y={59}
-            width={50}
-            height={14}
-            rx={7}
-            fill={C.greenLight}
-          />
-          <rect x={230} y={88} width={50} height={14} rx={7} fill={C.yellow} />
-        </g>
-        <Subtitle x={1362} y={281}>
-          pFBA → 45 reactions → lumping
-        </Subtitle>
-        <Subtitle x={1362} y={307}>
-          Functional core model
+        <Axes ox={1200} oy={614} w={212} h={146} />
+        <Curve
+          color={C.green}
+          pts={[
+            [1222, 486],
+            [1266, 500],
+            [1310, 540],
+            [1354, 578],
+            [1392, 596],
+          ]}
+        />
+        <Curve
+          color={C.gold}
+          pts={[
+            [1222, 596],
+            [1266, 580],
+            [1310, 544],
+            [1354, 504],
+            [1392, 484],
+          ]}
+        />
+        <Subtitle x={1302} y={ROW[1].sub}>
+          growth vs polyP accumulation
         </Subtitle>
       </Panel>
-      <BlockArrow x={1362} y={366} angle={90} length={58} />
 
+      {/* 5. Reduction — the active core, lumped into modules. */}
       <Panel
-        x={1192}
-        y={390}
-        fill={C.panelBlue}
-        href="#kinetic-model"
-        label="5. Build the kinetic model"
-      >
-        <Title x={1362} y={437} size={TITLE}>
-          5. Build kinetics
-        </Title>
-        <g>
-          <rect
-            x={1241}
-            y={462}
-            width={242}
-            height={150}
-            rx={12}
-            fill={C.white}
-            stroke={C.ink}
-            strokeWidth={3}
-          />
-          <text
-            x={1362}
-            y={505}
-            textAnchor="middle"
-            fontFamily="var(--font-display)"
-            fontSize={25}
-            fontStyle="italic"
-            fill={C.ink}
-          >
-            dx/dt = Nv(x,p)
-          </text>
-          <path
-            d="M1270 542H1454"
-            stroke={C.blueMid}
-            strokeWidth={9}
-            strokeLinecap="round"
-          />
-          <path
-            d="M1270 572H1408"
-            stroke={C.greenMid}
-            strokeWidth={9}
-            strokeLinecap="round"
-          />
-          <circle
-            cx={1452}
-            cy={572}
-            r={20}
-            fill={C.gold}
-            stroke={C.ink}
-            strokeWidth={3}
-          />
-          <text
-            x={1452}
-            y={579}
-            textAnchor="middle"
-            fontFamily="var(--font-display)"
-            fontWeight={700}
-            fontSize={18}
-            fill={C.white}
-          >
-            P
-          </text>
-        </g>
-        <Subtitle x={1362} y={687}>
-          Rate laws and COPASI model
-        </Subtitle>
-      </Panel>
-      <BlockArrow x={1170} y={555} angle={180} length={58} />
-
-      <Panel
-        x={798}
-        y={390}
+        col={1}
+        row={1}
         fill={C.panelGreen}
-        href="#kinetic-results"
-        label="6. Simulate dynamics and sensitivity"
+        href="#kinetic-core"
+        label="5. Reduction"
       >
-        <Title x={968} y={437} size={TITLE}>
-          6. Simulate and test
+        <Title x={772} y={ROW[1].title} size={TITLE}>
+          5. Reduction
         </Title>
-        <g>
-          <rect
-            x={840}
-            y={463}
-            width={256}
-            height={164}
-            rx={10}
-            fill={C.white}
-            stroke={C.ink}
-            strokeWidth={3}
-          />
-          <path
-            d="M858 597C890 583 902 544 928 521S979 486 1022 493S1061 540 1078 557"
-            fill="none"
-            stroke={C.blue}
-            strokeWidth={7}
-            strokeLinecap="round"
-          />
-          <path
-            d="M858 486C895 500 916 535 944 552S1010 579 1078 585"
-            fill="none"
-            stroke={C.green}
-            strokeWidth={7}
-            strokeLinecap="round"
-          />
-          <path
-            d="M858 606C894 605 918 592 947 566S1019 514 1078 510"
-            fill="none"
-            stroke={C.gold}
-            strokeWidth={7}
-            strokeLinecap="round"
-          />
-          {[0, 1, 2, 3, 4].map((row) =>
-            [0, 1, 2, 3, 4].map((col) => (
-              <rect
-                key={`${row}-${col}`}
-                x={858 + col * 22}
-                y={642 + row * 11}
-                width={18}
-                height={8}
-                rx={2}
-                fill={
-                  [C.blue, C.blueLight, C.white, C.yellow, C.orange][
-                    (row + col) % 5
-                  ]
-                }
-              />
-            )),
-          )}
+        <g fill={C.blueLight} stroke={C.ink} strokeWidth={2.6}>
+          {[
+            [634, 482],
+            [672, 496],
+            [628, 524],
+            [668, 540],
+            [636, 568],
+            [676, 584],
+            [648, 606],
+          ].map(([cx, cy]) => (
+            <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r={12} />
+          ))}
         </g>
-        <Subtitle x={968} y={687}>
-          Time courses and parameter sensitivity
-        </Subtitle>
-      </Panel>
-      <BlockArrow x={776} y={555} angle={180} length={58} />
-
-      <Panel
-        x={404}
-        y={390}
-        fill={C.panelSlate}
-        href="#kinetic-outlook"
-        label="7. Guide the next experimental iteration"
-      >
-        <Title x={574} y={437} size={TITLE}>
-          7. Guide experiments
-        </Title>
-        <Bacterium
-          x={526}
-          y={535}
-          len={126}
-          wid={72}
-          rot={-10}
-          stroke={C.green}
-          fill={C.greenLight}
-          dna={C.green}
-          flagella={11}
-          flagellaLen={14}
+        <path
+          d="M706 482H768L802 538L768 594H706L740 538Z"
+          fill={C.white}
+          stroke={C.ink}
+          strokeWidth={3}
         />
-        <PolyP x={485} y={541} count={4} />
-        <g transform="translate(619 470)">
-          <rect
-            x={0}
-            y={0}
-            width={92}
-            height={142}
-            rx={9}
-            fill={C.white}
+        <g>
+          <line
+            x1={818}
+            y1={538}
+            x2={852}
+            y2={538}
             stroke={C.ink}
-            strokeWidth={3}
-          />
-          <rect
-            x={23}
-            y={-8}
-            width={46}
-            height={18}
-            rx={7}
-            fill={C.steelDark}
-          />
-          <path
-            d="M18 43l14 14 27-31"
-            fill="none"
-            stroke={C.green}
             strokeWidth={9}
             strokeLinecap="round"
-            strokeLinejoin="round"
           />
-          <rect x={18} y={79} width={56} height={8} rx={4} fill={C.blueMid} />
-          <rect x={18} y={101} width={47} height={8} rx={4} fill={C.greenMid} />
-          <rect x={18} y={123} width={62} height={8} rx={4} fill={C.gold} />
+          <path d="M852,520 L886,538 L852,556 Z" fill={C.ink} />
         </g>
-        <Subtitle x={574} y={687}>
-          Prioritise measurements for DBTL
+        <rect
+          x={898}
+          y={484}
+          width={84}
+          height={110}
+          rx={20}
+          fill={C.blue}
+          opacity={0.86}
+        />
+        <rect x={912} y={500} width={56} height={16} rx={8} fill={C.white} />
+        <rect
+          x={912}
+          y={531}
+          width={56}
+          height={16}
+          rx={8}
+          fill={C.greenLight}
+        />
+        <rect x={912} y={562} width={56} height={16} rx={8} fill={C.yellow} />
+        <Subtitle x={772} y={ROW[1].sub}>
+          active core + lumping
         </Subtitle>
       </Panel>
+
+      {/* 6. Kinetics — the rate equations and the time courses they give. */}
+      <Panel
+        col={0}
+        row={1}
+        fill={C.panelSlate}
+        href="#reduced-kinetic-model"
+        label="6. Kinetics"
+      >
+        <Title x={250} y={ROW[1].title} size={TITLE}>
+          6. Kinetics
+        </Title>
+        <rect
+          x={116}
+          y={455}
+          width={268}
+          height={76}
+          rx={12}
+          fill={C.white}
+          stroke={C.ink}
+          strokeWidth={3}
+        />
+        <text
+          x={250}
+          y={504}
+          textAnchor="middle"
+          fontFamily="var(--font-display)"
+          fontSize={30}
+          fontStyle="italic"
+          fill={C.ink}
+        >
+          dX/dt = N v(X,p)
+        </text>
+        <g stroke={C.ink} strokeWidth={3} strokeLinecap="round">
+          <line x1={140} y1={548} x2={140} y2={620} />
+          <line x1={140} y1={620} x2={366} y2={620} />
+        </g>
+        <path
+          d="M144 612C168 596 188 570 216 562S292 557 362 556"
+          fill="none"
+          stroke={C.blue}
+          strokeWidth={6}
+          strokeLinecap="round"
+        />
+        <path
+          d="M144 616C190 614 220 606 252 592S330 554 356 542"
+          fill="none"
+          stroke={C.gold}
+          strokeWidth={6}
+          strokeLinecap="round"
+        />
+        <circle
+          cx={356}
+          cy={542}
+          r={13}
+          fill={C.gold}
+          stroke={C.ink}
+          strokeWidth={2.6}
+        />
+        <text
+          x={356}
+          y={547}
+          textAnchor="middle"
+          fontFamily="var(--font-display)"
+          fontWeight={700}
+          fontSize={13}
+          fill={C.white}
+        >
+          P
+        </text>
+        <Subtitle x={250} y={ROW[1].sub}>
+          rate laws + COPASI model
+        </Subtitle>
+      </Panel>
+
+      <BlockArrow x={511} y={165} />
+      <BlockArrow x={1038} y={165} />
+      <BlockArrow x={1302} y={345} angle={90} />
+      <BlockArrow x={1040} y={528} angle={180} />
+      <BlockArrow x={512} y={528} angle={180} />
     </WorkflowFigure>
   );
 }
