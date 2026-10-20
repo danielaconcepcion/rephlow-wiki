@@ -1,17 +1,17 @@
 image: node:22
 
+variables:
+  # The wiki previously contained large generated scenario exports. They are
+  # now served from static.igem.wiki, so CI only needs the current tree and
+  # should not download their blobs from recent history.
+  GIT_DEPTH: "1"
+
 pages:
   stage: build
-  cache:
-    - key:
-        files:
-          - yarn.lock
-      paths:
-        - .yarn-cache/
   before_script:
-    - echo 'yarn-offline-mirror ".yarn-cache/"' >> .yarnrc
-    - echo 'yarn-offline-mirror-pruning true' >> .yarnrc
-    - yarn install --frozen-lockfile
+    # node:22 already provides Yarn's package cache. Keeping a second offline
+    # mirror duplicated every dependency and exhausted the runner's disk.
+    - yarn install --frozen-lockfile --prefer-offline
   script:
     - yarn build
     - cp -a dist/. public/
