@@ -161,3 +161,27 @@
   var hint = document.getElementById("pv-hint");
   if (hint) hint.textContent = "The book opens here with your browser's PDF reader.";
 })();
+
+/* v7 (20 Oct): only documents that live in iGEM Uploads stay on this page.
+   The .zip, .pptx, .xlsx, .png and .py files are removed with their buttons. */
+(function () {
+  var GONE = ["file-parts", "asset-zip-blender", "file-pitch", "file-sf-calc", "file-mu-logo1", "file-mu-logo2",
+    "asset-script-01", "asset-script-02", "asset-script-03", "asset-script-04", "asset-script-05", "asset-script-06", "asset-script-07"];
+  function gone(id) { return id && GONE.indexOf(id) >= 0; }
+  try {
+    Object.keys(BUNDLES).forEach(function (k) {
+      BUNDLES[k].files = BUNDLES[k].files.filter(function (f) { return !gone(f[0]); });
+    });
+  } catch (e) { console.warn("[extra] bundles", e); }
+  // banners whose only purpose was a removed download go away, with their index entry
+  ["parts-files", "bl-kit"].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.remove();
+    document.querySelectorAll('.page-section-nav__link[data-jump="' + id + '"]').forEach(function (a) { (a.closest("li") || a).remove(); });
+  });
+  document.querySelectorAll("[data-dl],[data-code],[data-view],[data-open]").forEach(function (b) {
+    var id = b.getAttribute("data-dl") || b.getAttribute("data-code") || b.getAttribute("data-view") || b.getAttribute("data-open");
+    if (gone(id)) b.remove();
+  });
+  document.querySelectorAll(".cb-tile__actions").forEach(function (d) { if (!d.children.length) d.remove(); });
+})();
