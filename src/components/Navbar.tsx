@@ -62,11 +62,10 @@ const NAV_GROUPS: NavGroup[] = [
   {
     label: "Judging",
     items: [
-      { label: "Medals", path: "/medals", primary: true },
-      { label: "Human practices", path: "/human-practices", primary: false },
+      { label: "Judging", path: "/medals", primary: true },
       { label: "Measurements", path: "/measurement", primary: false },
-      { label: "Hardware", path: "/hardware", primary: false },
-      { label: "Model", path: "/model", primary: false },
+      { label: "Entrepreneurship", path: "/entrepreneurship", primary: false },
+      { label: "Sustainability", path: "/sustainability", primary: false },
     ],
   },
 ];

@@ -1522,6 +1522,21 @@ img {
   border-radius: var(--radius-lg);
   padding: 26px 24px;
   box-shadow: var(--shadow-card);
+  /* A prize badge elsewhere on the wiki links straight to this block, so
+     it is a scroll target and needs the sticky-nav clearance. */
+  scroll-margin-top: var(--section-nav-offset);
+}
+
+/* The badge is the button here, so the link itself adds nothing of its
+   own — no underline, no colour of its own. */
+.medals-gold-award__page-link {
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 999px;
+}
+.medals-gold-award__page-link:hover .medals-tier-badge,
+.medals-gold-award__page-link:focus-visible .medals-tier-badge {
+  filter: brightness(0.97);
 }
 
 .medals-gold-award__title {

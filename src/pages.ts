@@ -149,7 +149,9 @@ const Pages: Page[] = [
     path: "/measurement",
     component: Measurements,
     docTitle: "Measurements — rePhlow iGEM Wiki",
-    awards: [{ label: "Best Measurement", variant: "prize" }],
+    awards: [
+      { label: "Best Measurement", variant: "prize", anchor: "gold-measurement" },
+    ],
     hideEyebrow: true,
     labHero: true,
     moleculeSeed: 17,
@@ -232,7 +234,13 @@ const Pages: Page[] = [
     lead: "From lab to market.",
     /*A space for exploring the potential implementation and value of the project beyond the laboratory.*/
     path: "/entrepreneurship",
-    awards: [{ label: "Best Entrepreneurship", variant: "prize" }],
+    awards: [
+      {
+        label: "Best Entrepreneurship",
+        variant: "prize",
+        anchor: "gold-entrepreneurship",
+      },
+    ],
     component: Entrepreneurship,
     docTitle: "Entrepreneurship — rePhlow iGEM Wiki",
     hideEyebrow: true,
@@ -250,7 +258,11 @@ const Pages: Page[] = [
     /* The Medals page judges this prize on this page — see its
        "gold-sustainability" entry, whose pageLabel is Sustainability. */
     awards: [
-      { label: "Best Sustainable Development Impact", variant: "prize" },
+      {
+        label: "Best Sustainable Development Impact",
+        variant: "prize",
+        anchor: "gold-sustainability",
+      },
     ],
     hideEyebrow: true,
     labHero: true,

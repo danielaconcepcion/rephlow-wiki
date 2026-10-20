@@ -413,7 +413,10 @@ export const PEOPLE: Record<SectionId, Person[]> = {
       slug: "mercedes-echaide",
       logos: ["fcb"],
       name: "Mercedes Echaide",
-      color: "gray",
+      /* Institutional support rather than one of the seven project areas,
+         so she carries no area colour — the same "none" the mentors use,
+         which also keeps her out of the Model filter in the legend. */
+      color: "none",
       role: "Advisor · Institutional support",
       about: [
         "PhD from Universidad Politécnica de Madrid with the thesis “Study of meiotic errors in inbred lines of rye and in wheat–rye hybrids” (1995). Associate Professor in the Department of Biochemistry and Molecular Biology at the Faculty of Biological Sciences, Universidad Complutense de Madrid, and researcher in the BIOPHYS-Hub: Biophysics for Biotechnology and Biomedicine research group.",

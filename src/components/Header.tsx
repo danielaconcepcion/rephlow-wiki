@@ -56,7 +56,15 @@ export function Header({
             {awards.map((award) => (
               <Link
                 key={award.label}
-                to={`/medals#${award.variant === "prize" ? "gold-medal" : awardAnchor(award.label)}`}
+                /* A prize lands on its own block inside Gold when it names
+                   one (see Award.anchor); a medal tier derives its anchor
+                   from its label, as before. */
+                to={`/medals#${
+                  award.anchor ??
+                  (award.variant === "prize"
+                    ? "gold-medal"
+                    : awardAnchor(award.label))
+                }`}
                 className="page-hero__award-link"
                 title="See how we are judged"
                 aria-label={`${award.label}: go to the Judging page`}

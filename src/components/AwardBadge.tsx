@@ -9,6 +9,12 @@ export type AwardBadgeVariant = "bronze" | "silver" | "gold" | "prize";
 export type Award = {
   label: string;
   variant: AwardBadgeVariant;
+  /** Where this badge lands on the Medals page. A medal tier derives its
+   * own anchor from its label ("Silver Medal" → "silver-medal"), but a
+   * Special Prize is one block inside the Gold tier, so it names that
+   * block's id here (see BALLOT_AWARDS in Medals.tsx) and the reader
+   * arrives at their own award rather than at the top of Gold. */
+  anchor?: string;
 };
 
 const MEDAL_ICON = (

@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { PageSectionNav, type PageSection } from "../components/PageSectionNav";
 import { Rich } from "../components/LabFolders/RichText";
 import { AwardBadge } from "../components/AwardBadge";
@@ -203,6 +204,24 @@ const BALLOT_AWARDS: BallotAward[] = [
 ];
 
 export function Medals() {
+  /* A Special Prize badge on the page it is judged on links straight to
+     its own block inside Gold (see Award.anchor). The router changes the
+     URL without scrolling, and those blocks are plain sections rather
+     than AwardBadges, so nothing else brings them into view — this does.
+     The delay lets the tier panels lay out first, so the measured
+     position is the settled one. */
+  const { hash } = useLocation();
+  useEffect(() => {
+    const id = decodeURIComponent(hash.slice(1));
+    if (!id) return undefined;
+    const timer = window.setTimeout(() => {
+      document
+        .getElementById(id)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 350);
+    return () => window.clearTimeout(timer);
+  }, [hash]);
+
   return (
     <div className="medals-page">
       <div className="page-with-section-nav">
@@ -414,8 +433,16 @@ export function Medals() {
                     <h3 className="medals-gold-award__title">{award.award}</h3>
                     <p className="medals-gold-award__body">{award.body}</p>
                     <div className="medals-links">
-                      <Link className="medals-link-btn" to={award.page}>
-                        {award.pageLabel}
+                      {/* The same badge the judged page wears above its own
+                          title (see Header's awards), so the two read as one
+                          pairing: the badge there links here, this one links
+                          back. */}
+                      <Link
+                        className="medals-gold-award__page-link"
+                        to={award.page}
+                        aria-label={`${award.pageLabel}: see the page this award is judged on`}
+                      >
+                        <AwardBadge variant="prize" label={award.pageLabel} />
                       </Link>
                     </div>
 
