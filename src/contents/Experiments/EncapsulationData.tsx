@@ -68,99 +68,105 @@ function Cite({ scope, n }: { scope: string; n: number }) {
 
 /** The lab protocols each experiment on this page actually used, as the
  * source lists them under its own "Protocols" heading. Each renders as a
- * download link under the record, the same way Revalorisation does it
- * (placeholder PDF paths, as in the other blocks). The three that recur
+ * download link under the record, the same way Revalorisation does it.
+ * Every slug tracks the filename of the PDF the source actually attaches
+ * to that step, numbered as the source numbers it (01 … 22), so dropping
+ * the team's own files into public/assets/protocols/ under those names is
+ * all that is needed to make the links live; that folder is still empty,
+ * so the paths remain placeholders, as on the other blocks.
+ *
+ * The three that recur
  * across nearly every experiment — the setup, the generic synthesis
  * procedure and the injector cleaning — are kept as their own entries so
  * each record can name exactly the set the source gives it. */
 const PROTOCOL: Record<string, { label: string; href: string }> = {
   setup: {
     label: "Setup for alginate bead or core-shell synthesis",
-    href: "assets/protocols/encapsulation-setup.pdf",
+    href: "assets/protocols/encapsulation-01-setup-bead-or-core-shell-synthesis.pdf",
   },
   generic: {
     label: "Generic protocol for bead and core-shell synthesis",
-    href: "assets/protocols/encapsulation-generic-synthesis.pdf",
+    href: "assets/protocols/encapsulation-02-generic-protocol-bead-and-core-shell-synthesis.pdf",
   },
   "injector-cleaning": {
     label: "Injector cleaning protocol",
-    href: "assets/protocols/encapsulation-injector-cleaning.pdf",
+    href: "assets/protocols/encapsulation-03-injector-cleaning.pdf",
   },
   "pbs-recipe": {
     label: "PBS (phosphate-buffered saline) recipe",
-    href: "assets/protocols/encapsulation-pbs-recipe.pdf",
+    href: "assets/protocols/encapsulation-04-pbs-recipe.pdf",
   },
   "na-free-pbs-recipe": {
     label: "Na-free PBS recipe",
-    href: "assets/protocols/encapsulation-na-free-pbs-recipe.pdf",
+    href: "assets/protocols/encapsulation-05-na-free-pbs-recipe.pdf",
   },
   "picture-taking": {
     label: "Standard picture taking",
-    href: "assets/protocols/encapsulation-standard-picture-taking.pdf",
+    href: "assets/protocols/encapsulation-15-standard-picture-taking.pdf",
   },
   "picture-analysis": {
     label: "Standard picture analysis",
-    href: "assets/protocols/encapsulation-standard-picture-analysis.pdf",
+    href: "assets/protocols/encapsulation-16-standard-picture-analysis.pdf",
   },
   ftir: {
     label: "FTIR: determination of the M/G ratio of alginate",
-    href: "assets/protocols/encapsulation-ftir-mg-ratio.pdf",
+    href: "assets/protocols/encapsulation-20-ftir-determination-of-the-mg-ratio.pdf",
   },
   "beads-drop-height": {
     label: "Beads: drop height and concentration",
-    href: "assets/protocols/encapsulation-beads-drop-height-concentration.pdf",
+    href: "assets/protocols/encapsulation-06-beads-drop-height-and-concentration.pdf",
   },
   "beads-flow-rate": {
     label: "Beads: flow rate",
-    href: "assets/protocols/encapsulation-beads-flow-rate.pdf",
+    href: "assets/protocols/encapsulation-07-beads-flow-rate.pdf",
   },
   "beads-crosslinking-time": {
     label: "Beads: crosslinking time",
-    href: "assets/protocols/encapsulation-beads-crosslinking-time.pdf",
+    href: "assets/protocols/encapsulation-08-beads-crosslinking-time.pdf",
   },
   "beads-preservation": {
     label: "Beads: preservation",
-    href: "assets/protocols/encapsulation-beads-preservation.pdf",
+    href: "assets/protocols/encapsulation-09-beads-preservation.pdf",
   },
   "cs-jet-screening": {
     label: "Core-shell: jet formation screening",
-    href: "assets/protocols/encapsulation-cs-jet-formation-screening.pdf",
+    href: "assets/protocols/encapsulation-10-cs-jet-formation-screening.pdf",
   },
   "cs-flow-ratios": {
     label: "Core-shell: flow-rate ratios and magnetite",
-    href: "assets/protocols/encapsulation-cs-flow-rate-ratios-magnetite.pdf",
+    href: "assets/protocols/encapsulation-11-cs-flow-rate-ratios-magnetite.pdf",
   },
   "cs-freezing": {
     label: "Core-shell: freezing and picture taking",
-    href: "assets/protocols/encapsulation-cs-freezing-picture-taking.pdf",
+    href: "assets/protocols/encapsulation-17-cs-freezing-and-picture-taking.pdf",
   },
   "cs-shell-thickness": {
     label: "Core-shell: shell thickness picture analysis",
-    href: "assets/protocols/encapsulation-cs-shell-thickness-analysis.pdf",
+    href: "assets/protocols/encapsulation-18-cs-shell-thickness-picture-analysis.pdf",
   },
   "cs-mechanical": {
     label: "Core-shell: mechanical resistance (compression assay)",
-    href: "assets/protocols/encapsulation-cs-mechanical-resistance.pdf",
+    href: "assets/protocols/encapsulation-12-cs-mechanical-resistance-compression-assay.pdf",
   },
   "cs-mechanical-analysis": {
     label: "Core-shell: picture analysis (mechanical resistance)",
-    href: "assets/protocols/encapsulation-cs-mechanical-picture-analysis.pdf",
+    href: "assets/protocols/encapsulation-19-cs-picture-analysis-mechanical-resistance.pdf",
   },
   "cs-preservation": {
     label: "Core-shell: preservation",
-    href: "assets/protocols/encapsulation-cs-preservation.pdf",
+    href: "assets/protocols/encapsulation-13-cs-preservation.pdf",
   },
   containment: {
     label: "Containment assay: UV-Vis of magnetite release",
-    href: "assets/protocols/encapsulation-containment-uv-vis-magnetite.pdf",
+    href: "assets/protocols/encapsulation-14-containment-assay-uv-vis-magnetite-release.pdf",
   },
   "tga-prep": {
     label: "TGA: sample preparation",
-    href: "assets/protocols/encapsulation-tga-sample-preparation.pdf",
+    href: "assets/protocols/encapsulation-21-tga-sample-preparation.pdf",
   },
   "sem-prep": {
     label: "SEM: sample preparation and coating",
-    href: "assets/protocols/encapsulation-sem-sample-preparation-coating.pdf",
+    href: "assets/protocols/encapsulation-22-sem-sample-preparation-and-coating.pdf",
   },
 };
 
@@ -276,6 +282,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "FTIR acquisition parameters for the raw sodium alginate.",
                 headers: ["Parameter", "Value"],
                 rows: [
                   ["Sample form", "Sodium alginate powder"],
@@ -342,6 +350,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Synthesis conditions for the alginate-concentration and drop-height screening (variables in bold, remaining parameters held constant).",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   [
@@ -394,6 +404,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Synthesis conditions for the flow-rate experiment.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   ["Alginate concentration", "Constant", "3.5% (w/v)"],
@@ -436,6 +448,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Synthesis conditions for the crosslinking-time experiment.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   ["Alginate concentration", "Constant", "3.5% (w/v)"],
@@ -454,7 +468,15 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           {
             paragraphs: [
               "For each condition, **10 beads** were imaged after crosslinking and analysed using **ImageJ**, following the image-taking and image-analysis protocols described on the Protocols page. Bead size was characterised through the **projected area**, **perimeter**, **equivalent diameter (Deq)** and maximum (**Dmax**) and minimum (**Dmin**) **Feret diameters**, while bead shape was characterised through **sphericity (s = minor axis / major axis)**. Changes in bead size were used to assess compaction of the alginate network with increasing crosslinking time, and the variability between the beads of each condition was used as an indicator of reproducibility.",
-              "The expected outcome was to determine whether extending the crosslinking time produced measurable changes in bead morphology or compaction. If no significant differences were observed, the **30 min** crosslinking time commonly reported in the literature would be retained, as it would provide fully formed beads without unnecessarily extending production time.",
+              <>
+                The expected outcome was to determine whether extending the crosslinking time
+                produced measurable changes in bead morphology or compaction. If no significant
+                differences were observed, a crosslinking time of <strong>30 min</strong>, within
+                the range commonly reported in the literature{" "}
+                <Cite scope="encapsulation" n={3} />, <Cite scope="encapsulation" n={10} />,{" "}
+                <Cite scope="encapsulation" n={11} />, would be retained, as it would provide fully
+                formed beads without unnecessarily extending production time.
+              </>,
             ],
           },
         ],
@@ -492,7 +514,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
                 assess the effect of different storage media on alginate
                 integrity.
               </>,
-              "10 beads synthesised under the previously optimised conditions were transferred to each storage medium immediately after crosslinking. Their morphology was monitored by photographs taken after **0, 24, 48 and 72 h, and after one week**. Beads stored in **PBS lost their structural integrity** during the first days, and once a bead had broken each fragment was measured as a separate bead, so this medium was followed qualitatively rather than quantified; images from the remaining conditions were analysed quantitatively to compare the evolution of bead morphology over time.",
+              "10 beads synthesised under the previously optimised conditions were transferred to a container with 8 mL of each storage medium immediately after crosslinking, and kept at room temperature. Their morphology was monitored by photographs taken after **0, 24, 48 and 72 h, and after one week**. Beads stored in **PBS lost their structural integrity** during the first days, and once a bead had broken each fragment was measured as a separate bead, so this medium was followed qualitatively rather than quantified; images from the remaining conditions were analysed quantitatively to compare the evolution of bead morphology over time.",
             ],
           },
           {
@@ -500,6 +522,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Synthesis conditions and storage media for the bead preservation experiment.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   ["Alginate concentration", "Constant", "3.5% (w/v)"],
@@ -553,6 +577,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Synthesis conditions for the core-shell composition screening.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   [
@@ -577,6 +603,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
+              "Not all calcium chloride concentrations were evaluated for every alginate concentration. The screening was refined based on capsule or jet formation, as shown in the experimental matrix below.",
               "Capsule formation was assessed qualitatively by monitoring the stability of the dripping regime, the appearance of premature gelation at the nozzle tip and the transition from dripping to jetting. Conditions capable of producing stable core-shell dripping were selected for subsequent optimisation experiments.",
               "The expected outcome was to identify a **concentration window** that allowed stable core-shell production while avoiding premature gelation and nozzle obstruction. Establishing these conditions was essential before investigating additional variables, as successful capsule formation depends primarily on the physicochemical compatibility of the inner and outer solutions.",
             ],
@@ -590,7 +617,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
               kind: "table",
               table: {
                 caption:
-                  "Core-shell formation as a function of outer alginate and inner calcium chloride concentration. ✓ tested; ✗ not tested — no higher CaCl₂ concentration was tested once jetting appeared for a given alginate concentration. Remaining conditions were held constant: 5% (w/v) CaCl₂ bath, 3 cm drop height, Qₑ 600 μL/min, Qᵢ 200 μL/min (3:1) and 30 min crosslinking.",
+                  "Core-shell formation as a function of outer alginate and inner calcium chloride concentration. ✓ tested; ✗ not tested (no higher CaCl₂ concentration was tested once jetting appeared for a given alginate concentration).",
                 headers: [
                   "[Alg] (% w/v)",
                   "0%",
@@ -629,6 +656,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Synthesis conditions for the outer-to-inner flow-rate ratio optimisation.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   ["Alginate concentration", "Variable", "3.0 and 3.5% (w/v)"],
@@ -674,6 +703,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Conditions for the mechanical-resistance test.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   ["Alginate concentration", "Constant", "3.5% (w/v)"],
@@ -719,6 +750,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Synthesis conditions for the magnetite containment experiment.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   [
@@ -788,11 +821,13 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "Core-shell capsules synthesised under the optimal encapsulation conditions were incubated in five groups of media: **distilled water adjusted to pH 1.73, 3.00, 5.00 and 5.78** using HCl, serial dilutions of **phosphate-buffered saline (PBS: 1×, 1/2×, 1/4× and 1/8×)**, an equivalent **sodium-free phosphate buffer** with the same ionic strength and matching dilutions, **untreated industrial wastewater**, and the same wastewater **basified to pH 5** with each of the three bases mentioned. All remaining synthesis and storage conditions were kept constant throughout the study.",
+              "Core-shell capsules synthesised under the optimal encapsulation conditions were incubated in five groups of media: **distilled water adjusted to different pH values (1.73, 3.00, 5.00 and 5.78)** using HCl, serial dilutions of **phosphate-buffered saline (PBS: 1×, 1/2×, 1/4× and 1/8×)**, an equivalent **sodium-free phosphate buffer** with the same ionic strength and matching dilutions, **untreated industrial wastewater**, and the same wastewater **basified to pH 5** with each of the three bases mentioned. All remaining synthesis and storage conditions were kept constant throughout the study.",
             ],
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Media and capsule formulation for the core-shell preservation experiment.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   [
@@ -823,7 +858,7 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
           },
           {
             paragraphs: [
-              "Capsule integrity was monitored by photographing the capsules after **0, 24, 48 and 72 h, and 1 week** of incubation, allowing qualitative comparison of the progression of degradation under each chemical environment.",
+              "Capsule integrity was monitored by photographing the capsules after **0, 24, 48 and 72 h, and 1 week** of incubation, allowing qualitative and quantitative comparison of the progression of degradation under each chemical environment.",
               <>
                 The expected outcome was to isolate the specific effect of each
                 variable on capsule integrity. For pH alone, using the
@@ -871,6 +906,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Conditions for the thermal characterisation (TGA) runs.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   [
@@ -952,6 +989,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Conditions for the optical microscopy of dried capsules.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   ["Sample type", "Constant", "Dried core-shell capsules"],
@@ -1003,6 +1042,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Conditions for the SEM imaging of dried, gold-coated capsules.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   [
@@ -1053,6 +1094,8 @@ export const ALGINATE_ENCAPSULATION_SUBBLOCKS: ExperimentSubBlock[] = [
             pairedResource: {
               kind: "table",
               table: {
+                caption:
+                  "Conditions for the EDS analysis of the capsule surface.",
                 headers: ["Parameter", "Status", "Value"],
                 rows: [
                   [
