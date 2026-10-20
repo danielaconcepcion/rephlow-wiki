@@ -1534,6 +1534,14 @@ img {
   text-decoration: none;
   border-radius: 999px;
 }
+
+/* The same solid yellow a page header gives its prize badge (see the
+   override in Header.css), not the gold-into-green gradient the Gold
+   tier head wears. The badge here and the badge on the judged page are
+   meant to read as one and the same object, so they are filled alike. */
+.medals-gold-award__page-link .medals-tier-badge--prize {
+  background: #f4d35e57;
+}
 .medals-gold-award__page-link:hover .medals-tier-badge,
 .medals-gold-award__page-link:focus-visible .medals-tier-badge {
   filter: brightness(0.97);

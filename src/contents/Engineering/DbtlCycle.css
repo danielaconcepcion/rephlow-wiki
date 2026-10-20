@@ -88,6 +88,13 @@
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
+  /* The cycle's own sticky viewport is also positioned and comes later in
+     the document, so without a layer of its own this nav loses to it
+     wherever the two overlap and the arrows paint over the links. 20
+     clears everything inside the cycle (its content sits at 10, the
+     scroll cue at 15) while staying far below the site header (1000) and
+     the iteration reader (1200). */
+  z-index: 20;
 }
 .dbtl-cycle__section-nav-group + .dbtl-cycle__section-nav-group {
   margin-top: 20px;
