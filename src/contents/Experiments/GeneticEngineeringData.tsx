@@ -80,12 +80,13 @@ function Cite({ scope, n }: { scope: string; n: number }) {
  *   "Protocols: …" line, which stays as plain text: Closing has no
  *   experiments of its own (see ExperimentSubBlock.experiments being
  *   optional), so there's no card to attach the links to.
- * - Inline "[n]" citation markers are only turned into real `references`
- *   entries at the step level, where ExperimentData actually has a place
- *   to show them; the two sub-block intros also carry citations in the
- *   source but there's no per-intro reference slot in this component
- *   family, so those bracket numbers are kept as plain text rather than
- *   invented into a dangling link.
+ * - Inline "[n]" citation markers are real links everywhere they appear:
+ *   at the step level they resolve against that step's own `references`
+ *   list (Cite scope = the experiment id), and in a sub-block intro —
+ *   which has no reference slot of its own — against the one shared,
+ *   block-level list at the end (Cite scope = "genetic-engineering", see
+ *   GENETIC_ENGINEERING_REFERENCES). No bracket number is left as plain
+ *   text, and none points at a list that doesn't carry it.
  * - Two steps reference a table the source itself marks as not yet made
  *   ("[Tabla secuencias]", "[Tabla enzimas con tiempos y buffers]"). Both
  *   use `body` (see ExperimentData.body in types.ts) so the one paragraph
@@ -276,42 +277,90 @@ export const GENETIC_ENGINEERING_REFERENCES: string[] = refs(1, 2, 3, 4, 5, 6, 7
  * is reused across most of the Knocking-out steps. Labels are shortened,
  * English versions of the source's own (often Spanish) protocol names, per
  * a "(PDF)" download convention matching the rest of this component
- * family — ExperimentCard appends "(PDF)" itself, so it's left off here. */
+ * family — ExperimentCard appends "(PDF)" itself, so it's left off here.
+ *
+ * Each `href` follows the `assets/protocols/<page>-<slug>.pdf` convention
+ * already used by Alginate encapsulation and Revalorisation, and the slug
+ * tracks the filename of the PDF actually attached to that step in the
+ * Notion export (e.g. Protocol_4LB_Medium_Preparation.pdf →
+ * genetic-engineering-protocol-4-lb-medium-preparation.pdf), so dropping
+ * the team's own files into public/assets/protocols/ under those names is
+ * all that's needed to make the links live. That folder is still empty, so
+ * every href here is a placeholder — exactly as on the other two pages. */
 const PROTOCOL: Record<string, { label: string; href: string }> = {
-  PCR: { label: "PCR", href: "assets/protocols/pcr.pdf" },
-  "Geles de agarosa": { label: "Agarose gel", href: "assets/protocols/agarose-gel.pdf" },
+  PCR: { label: "PCR", href: "assets/protocols/genetic-engineering-pcr.pdf" },
+  "Geles de agarosa": {
+    label: "Agarose gel electrophoresis",
+    href: "assets/protocols/genetic-engineering-protocol-6-agarose-gel-electrophoresis.pdf",
+  },
   "Diamond Nucleic Acid Dye (Promega)": {
     label: "Diamond dye (Promega)",
-    href: "assets/protocols/diamond-dye-promega.pdf",
+    href: "assets/protocols/genetic-engineering-diamond-nucleic-acid-dye.pdf",
   },
   "Wizard SV Gel and PCR Clean-Up (Promega)": {
     label: "Gel/PCR clean-up (Promega)",
-    href: "assets/protocols/wizard-gel-pcr-cleanup.pdf",
+    href: "assets/protocols/genetic-engineering-wizard-sv-gel-pcr-cleanup.pdf",
   },
-  ligation: { label: "Ligation", href: "assets/protocols/ligation.pdf" },
+  ligation: {
+    label: "Restriction/ligation cloning",
+    href: "assets/protocols/genetic-engineering-protocol-8-restriction-ligation-cloning.pdf",
+  },
   "Transformación E. coli quimiocompetentes": {
-    label: "E. coli transformation",
-    href: "assets/protocols/ecoli-transformation.pdf",
+    label: "Chemical transformation of competent E. coli",
+    href: "assets/protocols/genetic-engineering-protocol-3-chemical-transformation-ecoli.pdf",
   },
   "Obtención E. coli quimiocompetentes": {
-    label: "E. coli competent cells",
-    href: "assets/protocols/ecoli-competent-cells.pdf",
+    label: "Chemically competent E. coli",
+    href: "assets/protocols/genetic-engineering-protocol-1-chemically-competent-ecoli.pdf",
   },
-  "Medios de cultivo": { label: "Culture media", href: "assets/protocols/culture-media.pdf" },
-  "Minis de colonias": { label: "Colony minipreps", href: "assets/protocols/colony-minipreps.pdf" },
-  "Miniprep kit": { label: "Miniprep (kit)", href: "assets/protocols/miniprep-kit.pdf" },
-  "Miniprep sin kit": { label: "Miniprep (no kit)", href: "assets/protocols/miniprep-no-kit.pdf" },
+  "Medios de cultivo": {
+    label: "LB medium preparation",
+    href: "assets/protocols/genetic-engineering-protocol-4-lb-medium-preparation.pdf",
+  },
+  "Minis de colonias": {
+    label: "Colony minipreps",
+    href: "assets/protocols/genetic-engineering-colony-minipreps.pdf",
+  },
+  "Miniprep kit": {
+    label: "PureYield plasmid miniprep (Promega)",
+    href: "assets/protocols/genetic-engineering-pureyield-plasmid-miniprep.pdf",
+  },
+  "Miniprep sin kit": {
+    label: "Miniprep (no kit)",
+    href: "assets/protocols/genetic-engineering-miniprep-no-kit.pdf",
+  },
   "internal sequencing submission SOP": {
     label: "Sequencing submission SOP",
-    href: "assets/protocols/sequencing-submission-sop.pdf",
+    href: "assets/protocols/genetic-engineering-sequencing-submission-sop.pdf",
   },
   "Obtención P. putida electrocompetentes": {
-    label: "P. putida electrocompetent cells",
-    href: "assets/protocols/pputida-electrocompetent-cells.pdf",
+    label: "Electrocompetent cell preparation",
+    href: "assets/protocols/genetic-engineering-protocol-2-electrocompetent-cells.pdf",
   },
-  "Geles de poliacrilamida": { label: "Polyacrylamide gel", href: "assets/protocols/polyacrylamide-gel.pdf" },
-  "internal guide-design SOP": { label: "Guide-design SOP", href: "assets/protocols/guide-design-sop.pdf" },
-  "Crispr Protocolo 2.0": { label: "CRISPR protocol 2.0", href: "assets/protocols/crispr-protocol-2.pdf" },
+  "Geles de poliacrilamida": {
+    label: "Polyacrylamide gel",
+    href: "assets/protocols/genetic-engineering-polyacrylamide-gel.pdf",
+  },
+  "internal guide-design SOP": {
+    label: "Guide-design SOP",
+    href: "assets/protocols/genetic-engineering-guide-design-sop.pdf",
+  },
+  "Crispr Protocolo 2.0": {
+    label: "CRISPR for Pseudomonas (supplementary)",
+    href: "assets/protocols/genetic-engineering-crispr-pseudomonas-supp.pdf",
+  },
+  "Ensayo de crecimiento microbiano": {
+    label: "Microbial growth assay",
+    href: "assets/protocols/genetic-engineering-protocol-7-microbial-growth-assay.pdf",
+  },
+  "Preparación del caudal acuoso sintético": {
+    label: "Synthetic aqueous stream preparation",
+    href: "assets/protocols/genetic-engineering-protocol-5-synthetic-aqueous-stream.pdf",
+  },
+  "Ensayo de fósforo intracelular (overplus, V2460)": {
+    label: "Intracellular phosphorus assay (overplus, V2460)",
+    href: "assets/protocols/genetic-engineering-protocol-9-phosphorus-assay-overplus.pdf",
+  },
 };
 function protocolLinks(...names: string[]) {
   return names.map((n) => PROTOCOL[n]);
@@ -321,40 +370,90 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
   {
     id: "polyphosphate-accumulation-study",
     heading: "0. Polyphosphate accumulation study",
-    intro: "These experiments establish in wild-type Pseudomonas putida KT2440 how much phosphorus cells take up and store as polyphosphate, how fast, and under which operating conditions accumulation is maximised. Wild type and an mCherry-tagged variant were used to standardise the intracellular-phosphorus assay before applying it to the engineered strains.",
+    intro: [
+      <>
+        These experiments establish, in wild-type <em>Pseudomonas putida</em> KT2440{" "}
+        <Cite scope="genetic-engineering" n={1} />, how much phosphorus the cells take up and store as
+        polyphosphate, how fast, and under which operating conditions this is maximised. Because the engineered
+        strains will later be judged by exactly this read-out, the experiments first build and standardise a
+        reproducible <strong>intracellular-phosphorus assay</strong>, then use it to characterise growth, the
+        kinetics of accumulation across media, and the two operating variables available in the real feed.
+      </>,
+      <>
+        Two variants were used: the <strong>wild type (WT)</strong> and an{" "}
+        <strong>mCherry-tagged variant (Cherry)</strong> for growth tracking. The application target is a{" "}
+        <strong>synthetic aqueous stream</strong> mimicking the phosphorus-rich effluent of biofuel production,
+        the context in which polyphosphate-based phosphorus recovery would operate{" "}
+        <Cite scope="genetic-engineering" n={2} />, <Cite scope="genetic-engineering" n={3} />.
+      </>,
+    ],
     experiments: [
       {
         id: "growth-characterisation-m9",
         tabLabel: "Growth in M9",
         title: "Growth characterisation of P. putida KT2440 in M9",
         description: [
-          "The mCherry variant was cultured in M9 and OD600 was followed across the 240 min assay window, defining the biomass trajectory in the minimal medium used as the maximal-stress reference.",
-          "The expected outcome was a defined OD600 trajectory confirming that cells remain measurable throughout the assay.",
+          "Before following accumulation over time, the growth trajectory of the cells in the minimal medium used as the maximal-stress reference (M9) had to be known, so that phosphorus values could be read against a defined biomass curve. The mCherry variant, which is easy to track, was cultured in M9 and OD600 was followed across the 240 min assay window.",
+          "The expected outcome was a defined OD600 trajectory over the assay window, confirming the cells remain measurable throughout.",
         ],
+        protocols: protocolLinks("Medios de cultivo", "Ensayo de crecimiento microbiano"),
       },
       {
         id: "polyphosphate-kinetics-media",
         tabLabel: "Accumulation kinetics",
         title: "Kinetics of polyphosphate accumulation across culture media",
-        description: "Cells grown in LB were shifted to M9, a synthetic industrial stream or LB and sampled from 0 to 240 min. At each time point, OD600 and intracellular phosphorus were measured in parallel. The synthetic stream contained citric acid, glycerol, soy lecithin, monopotassium phosphate, ammonium sulfate, sodium chloride, filtered used vegetable oil and Tween 80.",
+        description: [
+          <>
+            With the assay standardised, the kinetics of intracellular polyphosphate were compared across three
+            media that differ in nutrient availability. Cells grown in LB were shifted into each medium and
+            sampled over <strong>0 to 240 min</strong>; at each time point one aliquot gave OD600 and a paired
+            aliquot was processed through the assay. The comparison rests on the hypothesis that polyphosphate
+            accumulation is a <strong>nutrient-stress response</strong>{" "}
+            <Cite scope="polyphosphate-kinetics-media" n={2} />, so retention should scale inversely with
+            nutrient availability.
+          </>,
+          "The synthetic stream was prepared to mimic a biofuel-derived industrial feed: citric acid, glycerol, soy lecithin, monopotassium phosphate (the phosphate source), ammonium sulfate, sodium chloride, filtered used vegetable oil and Tween 80, with the pH adjusted as required.",
+          "The expected outcome was a monotonic trend, with the highest normalised polyphosphate in M9, the lowest in LB and an intermediate value in the synthetic stream.",
+        ],
         tables: [{
+          caption: "The three media compared, and the role each plays in the comparison.",
           headers: ["Medium", "Nutrient status", "Role"],
           rows: [
-            ["M9", "Minimal, maximal nutrient stress", "Positive control"],
+            ["M9", "Minimal, maximal nutrient stress", "Positive control, reference high-retention condition"],
             ["Synthetic stream", "Intermediate, application-relevant", "Condition to characterise and optimise"],
-            ["LB", "Rich, nutrient abundance", "Negative control"],
+            ["LB", "Rich, nutrient abundance", "Negative control, reference low-retention condition"],
           ],
         }],
+        references: refs(2),
+        protocols: protocolLinks(
+          "Medios de cultivo",
+          "Preparación del caudal acuoso sintético",
+          "Ensayo de fósforo intracelular (overplus, V2460)",
+        ),
       },
       {
         id: "operating-condition-optimisation",
         tabLabel: "pH and dilution",
-        title: "Operating-condition optimisation in the synthetic stream",
-        description: "The two variables available in the industrial feed, pH and dilution, were screened combinatorially, with M9 and LB retained as controls. The expected outcome was to identify the combination that maximises phosphorus retention.",
+        title: "Operating-condition optimisation, pH and dilution in the synthetic stream",
+        description: [
+          <>
+            Having established the medium trend, the two variables that the industrial feed actually allows to be
+            adjusted, <strong>pH</strong> and <strong>degree of dilution</strong>, were screened combinatorially
+            in the synthetic stream, with dilution standing in for nutrient limitation, since a more dilute feed
+            is a more nutrient-limited one. <strong>Four conditions</strong> crossed two pH values with two
+            dilutions, with M9 and LB retained as controls, each followed over the assay time course.
+          </>,
+          "The expected outcome was to identify the pH and dilution combination that maximises phosphorus retention in the application-relevant medium.",
+        ],
         tables: [{
+          caption: "The four pH and dilution combinations screened in the synthetic stream.",
           headers: ["Condition", "pH", "Dilution"],
           rows: [["A", "6", "1:1"], ["B", "6", "1:35"], ["C", "7", "1:1"], ["D", "7", "1:35"]],
         }],
+        protocols: protocolLinks(
+          "Medios de cultivo",
+          "Ensayo de fósforo intracelular (overplus, V2460)",
+        ),
       },
     ],
   },
@@ -677,7 +776,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           <>The expected outcome was a prioritised set of guides for <em>ppx</em>, <em>ppkB</em> and <em>pitB</em>.</>,
         ],
         references: refs(6, 8),
-        protocols: protocolLinks("internal guide-design SOP"),
+        protocols: protocolLinks("internal guide-design SOP", "Crispr Protocolo 2.0"),
       },
       {
         id: "knockout-grna-amplification",
