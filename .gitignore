@@ -48,3 +48,5 @@ ds-bundle/
 .design-sync/learnings/
 .design-sync/node_modules
 __pycache__/
+
+public/generated/scenarios/
