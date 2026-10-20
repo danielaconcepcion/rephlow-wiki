@@ -1,0 +1,115 @@
+
+/* ===================================================================
+   Review fixes - Diego, 19 Oct 2026.  Everything below is additive;
+   nothing above this block was restyled.
+   =================================================================== */
+
+/* -- C5 / C6: the two disclosures run the full width of the page ---- */
+.sus-design #r02-what-stays-open,
+.sus-design #r02-what-has-to-be-true-next{max-width:1192px}
+.sus-design #r02-what-stays-open .hp-accordion__content>p,
+.sus-design #r02-what-has-to-be-true-next .hp-accordion__content>p{
+  max-width:790px;margin-left:auto;margin-right:auto}
+
+/* -- C1: water flowing from the Vinesys end to the rePhlow end ------ */
+.sus-chain__drop{fill:#4FA3C4;opacity:0;
+  animation:sus-chain-flow 3.4s linear infinite}
+.sus-chain__drop:nth-of-type(2){animation-delay:1.13s}
+.sus-chain__drop:nth-of-type(3){animation-delay:2.26s}
+@keyframes sus-chain-flow{
+  0%{transform:translateX(0);opacity:0}
+  6%{opacity:.95}
+  94%{opacity:.95}
+  100%{transform:translateX(456px);opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .sus-chain__drop{animation:none;opacity:.8}}
+.rv-chain-in-panel{margin:4px 0 18px}
+
+/* -- C4: clickable regions over the Sustainability Model Canvas ----- */
+.rv-canvas-wrap{position:relative;display:block}
+.rv-hot{position:absolute;border:2px solid transparent;border-radius:10px;
+  background:transparent;cursor:pointer;padding:0;
+  transition:background .15s,border-color .15s,box-shadow .15s}
+.rv-hot:hover,.rv-hot:focus-visible{border-color:#1f6f7d;
+  background:rgba(31,111,125,.12);box-shadow:0 0 0 3px rgba(31,111,125,.18);
+  outline:none}
+.rv-hot__tip{position:absolute;left:50%;bottom:calc(100% + 6px);
+  transform:translateX(-50%);white-space:nowrap;font-family:var(--font-display);
+  font-size:12px;font-weight:600;color:#fff;background:#1f6f7d;
+  padding:3px 8px;border-radius:6px;opacity:0;pointer-events:none;
+  transition:opacity .15s}
+.rv-hot:hover .rv-hot__tip,.rv-hot:focus-visible .rv-hot__tip{opacity:1}
+.rv-hot__hint{margin:8px 0 0;font-size:13.5px;color:var(--ink-soft);
+  font-style:italic}
+
+/* -- C8: the two characterised profiles side by side ---------------- */
+.rv-fig-pair{display:grid;grid-template-columns:1fr 1fr;gap:22px;
+  align-items:start;margin:18px 0;max-width:1192px}
+.rv-fig-pair>figure{margin:0;min-width:0}
+.rv-fig-pair>figure>div{height:100%}
+@media (max-width:900px){.rv-fig-pair{grid-template-columns:1fr}}
+
+/* -- C7: the CEDEX loop, in the format of the meeting version ------- */
+.rv-loop{--l1:var(--line,#e6e8ec);--l2:rgba(27,35,64,.14);
+  --panel:rgba(31,111,125,.04);--surface:#fff;--surface-2:#f6f8f9;
+  --faint:var(--ink-soft,#5b6472);--green:#9CC66F;--sec:#1f6f7d;
+  --cyan:#1f6f7d;--navy:#1b2340;--danger:#c24a40;
+  border:1px solid var(--l2);border-radius:18px;background:var(--panel);
+  padding:18px;margin:16px 0;max-width:1192px}
+.rv-loop .loop-card{display:grid;grid-template-columns:150px 1fr;gap:18px;
+  align-items:start}
+.rv-loop .loop-card img{width:100%;max-width:150px;aspect-ratio:1;
+  object-fit:cover;object-position:top;border-radius:14px;
+  border:1px solid var(--l1);background:linear-gradient(160deg,#dcecf0,#f6fbfb)}
+.rv-loop .loop-card h4{font-size:1.15rem;margin:0;
+  font-family:var(--font-display);color:var(--ink)}
+.rv-loop .loop-card .nm{font-size:.8rem;color:var(--faint);margin-top:2px}
+.rv-loop .qcr{margin:12px 0 0;display:grid;grid-template-columns:auto 1fr;
+  gap:4px 14px;font-size:14.5px}
+.rv-loop .qcr dt{font-family:var(--font-display);font-weight:700;
+  color:var(--sec);white-space:nowrap}
+.rv-loop .qcr dd{margin:0;color:var(--ink-soft);line-height:1.6}
+.rv-loop .loop-steps{display:grid;grid-template-columns:repeat(5,1fr);
+  margin:22px 0 0;position:relative}
+.rv-loop .loop-steps::before{content:"";position:absolute;left:10%;right:10%;
+  top:17px;height:2px;background:var(--l2)}
+.rv-loop .ls{position:relative;background:none;border:none;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:3px;padding:0 4px;
+  text-align:center;color:var(--faint)}
+.rv-loop .ls::before{content:"";width:14px;height:14px;border-radius:50%;
+  background:var(--surface);border:2px solid var(--l2);margin:10px 0 6px;
+  position:relative;z-index:1;transition:background .2s,border-color .2s}
+.rv-loop .ls b{font-family:var(--font-display);font-size:.74rem;color:var(--ink)}
+.rv-loop .ls span{font-size:.78rem;line-height:1.25}
+.rv-loop .ls.on::before{background:var(--green);border-color:var(--green);
+  box-shadow:0 0 0 4px rgba(156,198,111,.25)}
+.rv-loop .ls.done::before{background:var(--sec);border-color:var(--sec)}
+.rv-loop .ls.on span,.rv-loop .ls.on b{color:var(--ink)}
+.rv-loop .loop-panels{background:var(--surface);border:1px solid var(--l1);
+  border-radius:14px;padding:6px 20px;margin-top:12px}
+.rv-loop .lp{display:none}
+.rv-loop .lp.on{display:block;animation:rv-fade .25s ease}
+@keyframes rv-fade{from{opacity:0;transform:translateY(-4px)}
+  to{opacity:1;transform:none}}
+.rv-loop .lp p{font-size:15px;line-height:1.72;color:var(--ink-soft);
+  margin:14px 0}
+.rv-loop .pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+  margin:14px 0 6px}
+.rv-loop .pil{border:1px solid var(--l2);
+  background:linear-gradient(180deg,var(--surface-2),var(--surface));
+  border-radius:10px 10px 4px 4px;padding:14px 6px 10px;cursor:pointer;
+  font-family:var(--font-display);font-weight:600;color:var(--navy);
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  min-height:76px;justify-content:flex-end;border-bottom:5px solid var(--navy)}
+.rv-loop .pil small{font-size:.62rem;color:var(--danger);font-weight:400}
+.rv-loop .pil.missing{border-style:dashed;
+  border-bottom:5px dashed var(--danger);color:var(--danger);
+  background:rgba(194,74,64,.04)}
+.rv-loop .pil.on{outline:2px solid var(--cyan);outline-offset:2px}
+.rv-loop .pil-note{font-size:.9rem;color:var(--ink);background:var(--surface-2);
+  border-radius:10px;padding:10px 12px;margin-bottom:6px;min-height:44px}
+.rv-loop .pil-note ul{margin:.3em 0 0;padding-left:1.1em}
+@media (max-width:760px){
+  .rv-loop .loop-card{grid-template-columns:1fr}
+  .rv-loop .ls span{display:none}
+  .rv-loop .pillars{grid-template-columns:repeat(2,1fr)}}

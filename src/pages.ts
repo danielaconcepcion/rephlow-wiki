@@ -249,9 +249,6 @@ const Pages: Page[] = [
     path: "/sustainability",
     component: Sustainability,
     docTitle: "Sustainability — rePhlow iGEM Wiki",
-    awards: [
-      { label: "Best Sustainable Development Impact", variant: "prize" },
-    ],
     hideEyebrow: true,
     labHero: true,
     moleculeSeed: 37,

@@ -68,3 +68,28 @@
 .medals-tier-badge[id] {
   scroll-margin-top: 140px;
 }
+
+/* References numbered [1], [2]... instead of 1., 2. (same style as Hardware) */
+ol.pd-reference-list:not(.hw-refs ol),
+ol:has(> li[id^="ref"]):not(.hw-refs ol) {
+  list-style: none !important;
+  counter-reset: wiki-ref;
+  padding-left: 22px !important;
+}
+ol.pd-reference-list:not(.hw-refs ol) > li,
+ol:has(> li[id^="ref"]):not(.hw-refs ol) > li {
+  position: relative;
+  counter-increment: wiki-ref;
+  padding-left: 42px;
+}
+ol.pd-reference-list:not(.hw-refs ol) > li::before,
+ol:has(> li[id^="ref"]):not(.hw-refs ol) > li::before {
+  content: "[" counter(wiki-ref) "]";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 700;
+  color: var(--link-green, #56732f);
+  font-variant-numeric: tabular-nums;
+}
+

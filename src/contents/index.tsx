@@ -20,7 +20,8 @@ export { CollaborationPartnership } from "./CollaborationPartnership.tsx";
 // old page: export { EducationCommunication } from "./EducationCommunication.tsx";
 export { EducationBoard as EducationCommunication } from "./EducationBoard/EducationBoard.tsx";
 export { Entrepreneurship } from "./Entrepreneurship.tsx";
-export { Sustainability } from "./Sustainability.tsx";
+// old page: export { Sustainability } from "./Sustainability.tsx";
+export { SustainabilityFrame as Sustainability } from "./SustainabilityFrame/SustainabilityFrame.tsx";
 export { Contribution } from "./Contribution.tsx";
 // Team
 // Internal (not exposed in the Navbar — see pages.ts)
