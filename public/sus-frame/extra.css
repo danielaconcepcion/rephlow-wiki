@@ -1,0 +1,409 @@
+/* ===== Changes requested on 20 Oct 2026 ===== */
+
+/* References numbered [1], [2]... instead of 1., 2. (same style as Hardware) */
+ol.pd-reference-list:not(.hw-refs ol),
+ol:has(> li[id^="ref"]):not(.hw-refs ol) {
+  list-style: none !important;
+  counter-reset: wiki-ref;
+  padding-left: 22px !important;
+}
+ol.pd-reference-list:not(.hw-refs ol) > li,
+ol:has(> li[id^="ref"]):not(.hw-refs ol) > li {
+  position: relative;
+  counter-increment: wiki-ref;
+  padding-left: 42px;
+}
+ol.pd-reference-list:not(.hw-refs ol) > li::before,
+ol:has(> li[id^="ref"]):not(.hw-refs ol) > li::before {
+  content: "[" counter(wiki-ref) "]";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-weight: 700;
+  color: var(--link-green, #56732f);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Goals 9 and 13: the SDG picture goes in the space under the goal 9 card */
+@media (min-width: 901px) {
+  .sus-design .sus-unclaimed {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+  .sus-design .sus-unclaimed > article:first-of-type {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .sus-design .sus-unclaimed > figure.sus-unclaimed__sdg {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+    align-self: start;
+    width: 190px;
+    margin: 18px 0 0;
+  }
+  .sus-design .sus-unclaimed > article:last-of-type {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
+/* CEDEX - Roberto Arranz: the paragraphs after the loop, as fold-out bubbles */
+.sus-design .rv-fold-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 790px;
+  margin: 12px auto 0;
+  padding: 15px 20px;
+  border: 1px solid var(--line, rgba(27, 35, 64, 0.09));
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(27, 35, 64, 0.06);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+.sus-design .rv-fold-head:hover {
+  border-color: rgba(31, 111, 125, 0.35);
+}
+.sus-design .rv-fold-head:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.sus-design .rv-fold-head svg {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  transition: transform 0.2s;
+}
+.sus-design .rv-fold-head.is-open svg {
+  transform: rotate(180deg);
+}
+.sus-design .rv-fold-head.is-open {
+  border-bottom-color: transparent;
+  border-radius: 18px 18px 0 0;
+  box-shadow: none;
+}
+.sus-design p.rv-fold-p {
+  box-sizing: border-box;
+  max-width: 790px !important;
+  margin: 0 auto !important;
+  padding: 0 20px 12px;
+  border-left: 1px solid var(--line, rgba(27, 35, 64, 0.09));
+  border-right: 1px solid var(--line, rgba(27, 35, 64, 0.09));
+  background: #fff;
+}
+.sus-design p.rv-fold-p--last {
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line, rgba(27, 35, 64, 0.09));
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 8px 24px rgba(27, 35, 64, 0.06);
+}
+.sus-design p.rv-fold-p[hidden] {
+  display: none !important;
+}
+.sus-design .rv-fold-lead {
+  display: none;
+}
+
+/* "What stays open" and "What has to be true next": fold-out bubbles, text aligned with the paragraphs above */
+.sus-design #r02-what-stays-open,
+.sus-design #r02-what-has-to-be-true-next {
+  box-sizing: border-box;
+  margin: 18px 0 !important;
+  padding: 4px 28px !important;
+  border: 1px solid var(--line, rgba(27, 35, 64, 0.09)) !important;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(27, 35, 64, 0.06);
+}
+.sus-design #r02-what-stays-open > .hp-accordion > .hp-accordion__trigger,
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion > .hp-accordion__trigger {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.sus-design #r02-what-stays-open .hp-accordion__content > p,
+.sus-design #r02-what-has-to-be-true-next .hp-accordion__content > p {
+  max-width: 790px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Reading 2 (life cycle assessment): no molecule pattern, and the whole bubble stands out */
+.sus-design .sus-lca-flagship {
+  background: linear-gradient(160deg, #eef5e4 0%, #f8fbf3 45%, #ffffff 100%) !important;
+  border: 2px solid rgba(124, 154, 78, 0.55) !important;
+  border-left: 6px solid #7c9a4e !important;
+  box-shadow: 0 16px 44px rgba(124, 154, 78, 0.2) !important;
+}
+.sus-design .sus-lca-flagship::before,
+.sus-design .sus-lca-flagship::after {
+  background-image: none !important;
+}
+
+/* ===== v2: horizontal SDG 9 + 13 picture, coloured fold-out bubbles ===== */
+@media (min-width: 901px) {
+  .sus-design .sus-unclaimed > figure.sus-unclaimed__sdg {
+    width: auto !important;
+    max-width: 100%;
+  }
+  .sus-design .sus-unclaimed > figure.sus-unclaimed__sdg img {
+    width: auto;
+    max-width: 100%;
+    max-height: 260px;
+  }
+}
+@media (max-width: 900px) {
+  .sus-design .sus-unclaimed__sdg {
+    max-width: 360px !important;
+  }
+}
+
+/* CEDEX folds: teal */
+.sus-design .rv-fold-head {
+  background: linear-gradient(135deg, #e3f0f2 0%, #eef6e6 100%);
+  border-color: rgba(31, 111, 125, 0.22);
+  border-left: 5px solid #1f6f7d;
+  color: #17525c;
+}
+.sus-design .rv-fold-head:hover {
+  background: linear-gradient(135deg, #d5eaee 0%, #e4f0d8 100%);
+}
+.sus-design .rv-fold-head svg {
+  color: #1f6f7d;
+}
+.sus-design p.rv-fold-p {
+  border-left: 5px solid #1f6f7d;
+  border-right-color: rgba(31, 111, 125, 0.22);
+  background: #fbfdfd;
+}
+.sus-design p.rv-fold-p--last {
+  border-bottom-color: rgba(31, 111, 125, 0.22);
+}
+
+/* "What stays open": amber */
+.sus-design #r02-what-stays-open {
+  background: linear-gradient(135deg, #fbf0e1 0%, #fffaf3 40%, #ffffff 100%);
+  border-color: rgba(191, 122, 46, 0.3) !important;
+  border-left: 6px solid #bf7a2e !important;
+}
+.sus-design #r02-what-stays-open > .hp-accordion > .hp-accordion__trigger,
+.sus-design #r02-what-stays-open > .hp-accordion > .hp-accordion__trigger .hp-accordion__title {
+  color: #8a5418;
+}
+
+/* "What has to be true next": green */
+.sus-design #r02-what-has-to-be-true-next {
+  background: linear-gradient(135deg, #ebf3df 0%, #f7fbf1 40%, #ffffff 100%);
+  border-color: rgba(124, 154, 78, 0.35) !important;
+  border-left: 6px solid #7c9a4e !important;
+}
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion > .hp-accordion__trigger,
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion > .hp-accordion__trigger .hp-accordion__title {
+  color: #4f6a2c;
+}
+
+/* ===== v3: disclosures like the closing reflection, 3 columns, image zoom ===== */
+.sus-design #r02-what-stays-open,
+.sus-design #r02-what-has-to-be-true-next {
+  max-width: none;
+  padding: 6px 20px !important;
+  border: 1px solid rgba(110, 90, 150, 0.3) !important;
+  border-left: 5px solid #6e5a96 !important;
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 140% at 100% 0%, #6e5a961a, #6e5a9600 55%),
+    radial-gradient(120% 140% at 0% 100%, #e2542d12, #e2542d00 55%),
+    linear-gradient(180deg, #6e5a9612, #fff0) !important;
+  box-shadow: var(--shadow-card, 0 8px 24px rgba(27, 35, 64, 0.06));
+}
+.sus-design #r02-what-stays-open > .hp-accordion > .hp-accordion__trigger,
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion > .hp-accordion__trigger,
+.sus-design #r02-what-stays-open .hp-accordion__title,
+.sus-design #r02-what-has-to-be-true-next .hp-accordion__title {
+  color: #4a3b6b !important;
+  font-weight: 700;
+}
+/* text uses the whole width of the bubble */
+.sus-design #r02-what-stays-open .hp-accordion__content > p,
+.sus-design #r02-what-has-to-be-true-next .hp-accordion__content > p {
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+/* the three groups side by side */
+@media (min-width: 761px) {
+  .sus-design #r02-what-has-to-be-true-next .hp-accordion__content > div {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+  .sus-design #r02-what-has-to-be-true-next .hp-accordion__content > div > div {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+}
+
+/* click-to-enlarge images */
+.sus-design figure img:not(button img),
+.sus-design .rv-loop .loop-card img {
+  cursor: zoom-in;
+}
+.rv-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 56px 16px 24px;
+  background: rgba(12, 17, 32, 0.92);
+  animation: rv-zoom-in 0.18s ease-out;
+}
+.rv-zoom__fig {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  max-width: min(1200px, 100%);
+  margin: 0;
+}
+.rv-zoom__img {
+  display: block;
+  max-width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #fff;
+}
+.rv-zoom__cap {
+  max-width: 900px;
+  max-height: 14vh;
+  overflow-y: auto;
+  color: #eef2f8;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  text-align: center;
+}
+.rv-zoom__cap a {
+  color: #9fd3f5;
+}
+.rv-zoom__close,
+.rv-zoom__nav {
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  line-height: 1;
+  cursor: pointer;
+}
+.rv-zoom__close:hover,
+.rv-zoom__nav:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+.rv-zoom__close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  font-size: 26px;
+}
+.rv-zoom__nav {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  font-size: 30px;
+}
+@media (max-width: 640px) {
+  .rv-zoom__nav { position: absolute; bottom: 14px; }
+  .rv-zoom__nav--prev { left: 16px; }
+  .rv-zoom__nav--next { right: 16px; }
+}
+@keyframes rv-zoom-in { from { opacity: 0; } }
+
+/* ===== v4: white CEDEX folds with teal stripe; light blue / light green disclosures ===== */
+.sus-design .rv-fold-head,
+.sus-design .rv-fold-head:hover {
+  background: #fff;
+}
+.sus-design .rv-fold-head:hover {
+  border-color: rgba(31, 111, 125, 0.4);
+}
+.sus-design p.rv-fold-p {
+  background: #fff;
+}
+.sus-design #r02-what-stays-open {
+  border: 1px solid rgba(20, 134, 168, 0.25) !important;
+  border-left: 5px solid #1486a8 !important;
+  background: #f3f9fc !important;
+}
+.sus-design #r02-what-stays-open > .hp-accordion > .hp-accordion__trigger,
+.sus-design #r02-what-stays-open .hp-accordion__title {
+  color: #0f5f78 !important;
+}
+.sus-design #r02-what-has-to-be-true-next {
+  border: 1px solid rgba(124, 154, 78, 0.3) !important;
+  border-left: 5px solid #7c9a4e !important;
+  background: #f6faf1 !important;
+}
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion > .hp-accordion__trigger,
+.sus-design #r02-what-has-to-be-true-next .hp-accordion__title {
+  color: #4f6a2c !important;
+}
+
+/* ===== v5: both large disclosures in light blue ===== */
+.sus-design #r02-what-has-to-be-true-next {
+  border: 1px solid rgba(20, 134, 168, 0.25) !important;
+  border-left: 5px solid #1486a8 !important;
+  background: #f3f9fc !important;
+}
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion > .hp-accordion__trigger,
+.sus-design #r02-what-has-to-be-true-next .hp-accordion__title {
+  color: #0f5f78 !important;
+}
+
+/* ===== v6: large disclosures white, only the title band in light blue ===== */
+.sus-design #r02-what-stays-open,
+.sus-design #r02-what-has-to-be-true-next {
+  overflow: hidden;
+  border: 1px solid rgba(20, 134, 168, 0.25) !important;
+  border-left: 5px solid #1486a8 !important;
+  background: #fff !important;
+}
+.sus-design #r02-what-stays-open > .hp-accordion > .hp-accordion__trigger,
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion > .hp-accordion__trigger {
+  box-sizing: content-box;
+  width: 100%;
+  margin: -6px -20px 0;
+  padding: 18px 20px !important;
+  background: #e8f3f8;
+}
+.sus-design #r02-what-stays-open > .hp-accordion:not(.is-open) > .hp-accordion__trigger,
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion:not(.is-open) > .hp-accordion__trigger {
+  margin-bottom: -6px;
+}
+.sus-design #r02-what-stays-open > .hp-accordion.is-open > .hp-accordion__trigger,
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion.is-open > .hp-accordion__trigger {
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(20, 134, 168, 0.18);
+}
+.sus-design #r02-what-stays-open > .hp-accordion > .hp-accordion__trigger .hp-accordion__title,
+.sus-design #r02-what-has-to-be-true-next > .hp-accordion > .hp-accordion__trigger .hp-accordion__title {
+  color: #0f5f78 !important;
+}
+/* the small fold-outs inside the three groups keep their normal colour */
+.sus-design #r02-what-has-to-be-true-next .sus-panel-accordion .hp-accordion__trigger,
+.sus-design #r02-what-has-to-be-true-next .sus-panel-accordion .hp-accordion__title {
+  color: var(--ink) !important;
+  font-weight: 600;
+}

@@ -50,7 +50,7 @@
      The water-chain diagram belongs inside the purple Vinesys panel,
      and the water should visibly travel from the Vinesys end to ours. */
   function fixWaterChain() {
-    var svg = document.querySelector("svg.sus-chain");
+    var svg = document.querySelector("svg.sus-chain:not(.rv-chain-in-panel)");
     if (!svg) return false;
     if (!svg.querySelector(".sus-chain__drop")) {
       var ns = "http://www.w3.org/2000/svg";
@@ -78,10 +78,15 @@
       panel = sib;
     }
     if (!panel) return false;
+    /* Show a copy inside the panel and hide the original: moving React's own
+       node made the whole page go blank when another target was opened. */
+    if (panel.querySelector(".rv-chain-in-panel")) return true;
     var anchor = panel.querySelector("p");
-    svg.classList.add("rv-chain-in-panel");
-    if (anchor && anchor.nextSibling) panel.insertBefore(svg, anchor.nextSibling);
-    else panel.appendChild(svg);
+    var copy = svg.cloneNode(true);
+    copy.classList.add("rv-chain-in-panel");
+    svg.style.display = "none";
+    if (anchor && anchor.nextSibling) panel.insertBefore(copy, anchor.nextSibling);
+    else panel.appendChild(copy);
     return true;
   }
 
@@ -254,9 +259,9 @@
     var pending = false;
     function apply() {
       pending = false;
-      var svg = document.querySelector("svg.sus-chain");
+      var svg = document.querySelector("svg.sus-chain:not(.rv-chain-in-panel)");
       if (!svg) return;
-      if (svg.closest(".sus-prose-panel")) return;   /* already moved */
+      if (svg.style.display === "none") return;   /* already moved */
       try { fixWaterChain(); } catch (e) { console.warn("[review fix] chain", e); }
     }
     new MutationObserver(function () {

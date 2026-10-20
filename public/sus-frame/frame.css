@@ -5,6 +5,15 @@ footer.site-footer,
   display: none !important;
 }
 
+/* The wiki page does the scrolling: no second scrollbar inside the frame. */
+html {
+  overflow: hidden !important;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
 /* The wiki already draws the page header above the frame. */
 main.page-shell {
   display: none !important;
