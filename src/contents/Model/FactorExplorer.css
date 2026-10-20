@@ -228,12 +228,16 @@
   margin: 10px auto 0;
   color: var(--ink-soft);
   font-size: 0.78rem;
+  /* italic, like every other figure caption on this page — see the shared
+     rule in Model.css */
+  font-style: italic;
   line-height: 1.5;
   text-align: center;
 }
 .factor-explorer__figure figcaption strong {
   color: var(--ink);
   font-family: var(--font-display);
+  font-style: normal;
 }
 
 .factor-explorer__body {

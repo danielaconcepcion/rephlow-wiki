@@ -1,0 +1,200 @@
+/* Section 6's time-course figures: the panel row, the scan slider and the
+   chart chrome shared by both. The figcaption itself is left to
+   Model.css, which sets one caption treatment for the whole page. */
+
+.dyn {
+  margin: 28px 0 8px;
+}
+
+.dyn__panels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.dyn__panels--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px;
+}
+
+.dyn__flux-panel {
+  min-width: 0;
+}
+
+/* The V_max,ATPS scan control. */
+.dyn__control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+.dyn__control label {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.dyn__control-name {
+  font-style: italic;
+}
+
+.dyn__control input[type="range"] {
+  flex: 1 1 180px;
+  max-width: 320px;
+  accent-color: #1568a3;
+}
+
+.dyn__control output {
+  font-variant-numeric: tabular-nums;
+}
+
+.dyn__control-note {
+  color: var(--ink);
+}
+
+/* --- the chart itself ---------------------------------------------------- */
+
+.tchart {
+  margin: 0;
+  min-width: 0;
+}
+
+.tchart__title {
+  margin: 0 0 4px;
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+}
+
+.tchart__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
+  background: var(--paper);
+  touch-action: pan-y;
+}
+
+.tchart__grid {
+  stroke: rgba(27, 35, 64, 0.1);
+  stroke-width: 1;
+}
+
+.tchart__axis {
+  stroke: var(--ink);
+  stroke-width: 1.2;
+}
+
+.tchart__tick {
+  font-family: var(--font-body);
+  font-size: 9px;
+  fill: var(--ink-soft);
+  text-anchor: end;
+}
+
+.tchart__tick--x {
+  text-anchor: middle;
+}
+
+.tchart__axis-label {
+  font-family: var(--font-body);
+  font-size: 9.5px;
+  fill: var(--ink-soft);
+  text-anchor: middle;
+}
+
+.tchart__line {
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.tchart__line--faint {
+  stroke-width: 0.8;
+  opacity: 0.26;
+}
+
+.tchart__cursor {
+  stroke: var(--ink);
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.5;
+}
+
+.tchart__dot {
+  stroke: var(--paper);
+  stroke-width: 1.2;
+}
+
+.tchart__readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  min-height: 34px;
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.tchart__readout strong {
+  color: var(--ink);
+}
+
+.tchart__readout-hint {
+  opacity: 0.7;
+}
+
+.tchart__readout-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.tchart__readout-item i {
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+}
+
+.tchart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 18px;
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  color: var(--ink-soft);
+}
+
+.tchart-legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+@media (max-width: 900px) {
+  .dyn__panels,
+  .dyn__panels--two {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+}

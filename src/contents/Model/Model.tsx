@@ -10,6 +10,7 @@ import { FBAPrimer } from "./FBAPrimer";
 import { CoreFunnel } from "./CoreFunnel";
 import { LumpedModel } from "./LumpedModel";
 import { LumpingMatrix } from "./LumpingMatrix";
+import { ConcentrationCourses, PhosphateFluxes } from "./Dynamics";
 import { AccordionSection } from "../HumanPractices/AccordionSection";
 import { DisplayMath, InlineMath } from "../../components/Math";
 import { ModelBackground } from "./ModelBackground";
@@ -105,6 +106,15 @@ const MODEL_SECTIONS: PageSection[] = [
       { id: "kinetic-equations", label: "The kinetic equations" },
       { id: "polyp-polymerisation", label: "PolyP polymerisation" },
       { id: "parameterisation", label: "Parameterisation and sources" },
+    ],
+  },
+  {
+    id: "dynamic-simulation",
+    label: "Simulating phosphate uptake and PolyP accumulation",
+    children: [
+      { id: "time-evolution", label: "Time evolution of the system" },
+      { id: "uptake-pulse", label: "A transient phosphate-uptake pulse" },
+      { id: "energy-polyp", label: "Energy availability and PolyP" },
     ],
   },
 ];
@@ -1740,6 +1750,196 @@ export function Model() {
                       >
                         10.1093/bioinformatics/btl485
                       </a>
+                    </li>
+                  </ol>
+                </AccordionSection>
+              </div>
+            </div>
+          </section>
+
+          <section id="dynamic-simulation" className="model-network">
+            <div className="model-network__intro">
+              <h2>6. Simulating phosphate uptake and PolyP accumulation</h2>
+              <p>
+                With the network reduced and the rate laws written down, the
+                model can finally be run. It is worth being explicit about what
+                we are asking of it at this stage: not a quantitative
+                prediction. The parameters come from several organisms and
+                several conditions (5.4), so a number this model produces is not
+                a number we would defend. What we <em>can</em> ask is whether
+                the system behaves the way a phosphate-accumulating organism is
+                supposed to behave — whether phosphate leaves the medium,
+                whether it ends up as polymer inside the cell, whether the
+                energy carriers stay physically sensible while it happens. That
+                is the test this section runs.
+              </p>
+            </div>
+
+            <div className="model-network__intro">
+              <div id="time-evolution" className="model-network__subsection">
+                <h3>6.1 Time evolution of the system</h3>
+
+                <p>
+                  The simulation follows the species that carry the phosphate
+                  and the energy to move it: phosphate in the medium and in the
+                  cytoplasm, the ATP/ADP and NADH/NAD⁺ pairs, the short chains
+                  PP<sub>i</sub> and PPP<sub>i</sub>, and the long-chain product
+                  PolyP₅₀. Their concentrations span four orders of magnitude,
+                  which is why Figure 12 is split across three vertical scales
+                  rather than compressed into one.
+                </p>
+              </div>
+            </div>
+
+            <div className="model-network__wide">
+              <ConcentrationCourses />
+            </div>
+
+            <div className="model-network__intro">
+              <div className="model-network__subsection">
+                <p>
+                  The qualitative picture is the one we were looking for.
+                  Phosphate is taken up progressively from the medium,
+                  cytoplasmic phosphate rises, and polyphosphate accumulates.
+                  Two checks on the arithmetic come for free: the sums ATP + ADP
+                  and NADH + NAD⁺ each stay constant for the whole run, so the
+                  model conserves its moieties, and it keeps doing so across
+                  every step of the parameter scan. A model that silently
+                  created or destroyed adenine nucleotides would be telling us
+                  nothing, however good the phosphate curves looked.
+                </p>
+
+                <p>
+                  The curves also flatten. The approach to a plateau is not the
+                  system running out of phosphate — it is the enzymes reaching
+                  the saturation region of their own kinetics. At low substrate
+                  concentrations (<InlineMath tex="[S] \ll K_m" />) a
+                  Michaelis–Menten reaction is approximately first order in
+                  substrate; as the enzyme saturates, the slope falls away until
+                  the rate approaches <InlineMath tex="V_{\max}" /> and the
+                  reaction becomes zero order <Cite n={16} />. The plateau in
+                  Figure 12 is that transition, read off a whole network rather
+                  than a single enzyme.
+                </p>
+              </div>
+
+              <div id="uptake-pulse" className="model-network__subsection">
+                <h3>6.2 A transient phosphate-uptake pulse</h3>
+
+                <p>
+                  The concentration curves hide the most interesting part of the
+                  dynamics, because a quantity that rises smoothly can be fed by
+                  a flux that does not. Figure 13 plots the fluxes themselves
+                  over the first 2 000 s — the three routes phosphate takes into
+                  the cell on one side, the three polymerisation steps on the
+                  other.
+                </p>
+              </div>
+            </div>
+
+            <div className="model-network__wide">
+              <PhosphateFluxes />
+            </div>
+
+            <div className="model-network__intro">
+              <div className="model-network__subsection">
+                <p>
+                  The P<sub>i</sub>/H⁺ symport opens with a sharp spike an order
+                  of magnitude above its own steady level, decays over a few
+                  hundred seconds and settles just below the passive diffusion
+                  flux; PPK, PPK2 and the elongation step follow it with a
+                  rounder pulse of their own, peaking around 100–200 s. The ABC
+                  transporter contributes essentially nothing over this window.
+                </p>
+
+                <p>
+                  That opening spike is the behaviour the whole project is built
+                  around. <strong>Luxury uptake</strong> — a cell transporting
+                  far more phosphate than its immediate growth requires, and
+                  storing the excess as polyphosphate — has been observed
+                  experimentally in batch cultures <Cite n={14} /> and described
+                  in kinetic models of phosphate-accumulating microalgae{" "}
+                  <Cite n={15} />. The reduced model reproduces it without
+                  having been built to: it falls out of a phosphate pool that
+                  starts far from equilibrium and a polymerisation sink that can
+                  absorb what comes in.
+                </p>
+              </div>
+
+              <div id="energy-polyp" className="model-network__subsection">
+                <h3>6.3 Energy availability shapes PolyP accumulation</h3>
+
+                <p>
+                  Every polymerisation step spends ATP, so the obvious
+                  expectation is that a cell better at regenerating ATP should
+                  accumulate more polyphosphate. We tested it directly by
+                  scanning <InlineMath tex="V_{\max,\mathrm{ATPS}}" /> — the
+                  capacity of ATP synthase — over 0.001–2 µmol L⁻¹ s⁻¹, chosen
+                  because it is one of the parameters the flux of PPK, PPK2 and
+                  PPK50r responds to most strongly. The slider on Figure 12
+                  steps through that scan.
+                </p>
+
+                <p>
+                  The expectation is wrong, and instructively so. Raising{" "}
+                  <InlineMath tex="V_{\max,\mathrm{ATPS}}" /> <em>lowers</em>{" "}
+                  the polyphosphate accumulated. The reason is that ATP synthase
+                  does not make ATP out of nothing: it spends the proton
+                  gradient. A more active synthase draws down the proton-motive
+                  force, and the P<sub>i</sub>/H⁺ symport — the route that
+                  brings most of the phosphate in — is driven by exactly that
+                  gradient. Its flux falls, phosphate entry becomes the limiting
+                  step, and the extra ATP has less substrate to work on.
+                </p>
+
+                <p>
+                  This is the kind of thing a kinetic model is for. A
+                  constraint-based picture of the same network treats ATP supply
+                  and phosphate transport as independent capacities; the dynamic
+                  model makes them compete for the same proton gradient, and the
+                  competition reverses the sign of the effect. For the design,
+                  it says that engineering ATP regeneration on its own is not a
+                  route to more polyP — the transport step has to be considered
+                  in the same breath.
+                </p>
+              </div>
+
+              <div className="model-network__subsection">
+                <AccordionSection title="References">
+                  <ol className="model-reference-list">
+                    <li id="model-ref-14">
+                      Plouviez, M., Fernández, E., Grossman, A. R., Sanz-Luque,
+                      E., Sells, M., Wheeler, D. &amp; Guieysse, B. (2021).
+                      Responses of <em>Chlamydomonas reinhardtii</em> during the
+                      transition from P-deficient to P-sufficient growth (the
+                      P-overplus response): The roles of the vacuolar transport
+                      chaperones and polyphosphate synthesis.{" "}
+                      <em>Journal of Phycology, 57</em> (3), 988–1003. DOI:{" "}
+                      <a
+                        href="https://doi.org/10.1111/jpy.13145"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        10.1111/jpy.13145
+                      </a>
+                    </li>
+                    <li id="model-ref-15">
+                      John, E. H. &amp; Flynn, K. J. (2000). Modelling phosphate
+                      transport and assimilation in microalgae; how much
+                      complexity is warranted?{" "}
+                      <em>Ecological Modelling, 125</em> (2–3), 145–157. DOI:{" "}
+                      <a
+                        href="https://doi.org/10.1016/s0304-3800(99)00178-7"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        10.1016/s0304-3800(99)00178-7
+                      </a>
+                    </li>
+                    <li id="model-ref-16">
+                      Doran, P. M. (2013).{" "}
+                      <em>Bioprocess Engineering Principles</em>. Academic
+                      Press.
                     </li>
                   </ol>
                 </AccordionSection>

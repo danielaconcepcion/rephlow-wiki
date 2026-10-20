@@ -66,13 +66,15 @@
 }
 
 /* One caption treatment for every figure on this page — the static
-   plates, the funnel, the lumping toggle, the module diagram and the workflow — in the
-   lab pages' own italic (see LabFolders.css .record-figure figcaption),
-   so a figure reads the same wherever it sits. */
+   plates, the funnel, the lumping toggle, the module diagram, the time
+   courses and the workflow — in the lab pages' own italic (see
+   LabFolders.css .record-figure figcaption), so a figure reads the same
+   wherever it sits. */
 .model-network__figure figcaption,
 .core-funnel figcaption,
 .lumped figcaption,
 .lumpmat figcaption,
+.dyn > figcaption,
 .model-page .wff__caption {
   max-width: 760px;
   margin: 12px auto 0;
@@ -87,6 +89,7 @@
 .core-funnel figcaption strong,
 .lumped figcaption strong,
 .lumpmat figcaption strong,
+.dyn > figcaption strong,
 .model-network__compare-panel figcaption strong {
   color: var(--ink);
   font-family: var(--font-display);
