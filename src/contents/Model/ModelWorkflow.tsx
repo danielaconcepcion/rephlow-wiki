@@ -2,21 +2,25 @@ import type { ReactNode } from "react";
 import {
   BlockArrow,
   C,
-  ThinArrow,
   Title,
   WorkflowFigure,
 } from "../Experiments/workflowFigures/shared";
+import { Bacterium, Flask } from "../Experiments/workflowFigures/parts";
 
-const TITLE = 27;
+const W = 340;
+const H = 330;
+const TITLE = 25;
 
-function ModelPanel({
+function Panel({
   x,
+  y,
   fill,
   href,
   label,
   children,
 }: {
   x: number;
+  y: number;
   fill: string;
   href: string;
   label: string;
@@ -27,9 +31,9 @@ function ModelPanel({
       <rect
         className="wff-panel__bg"
         x={x}
-        y={10}
-        width={340}
-        height={380}
+        y={y}
+        width={W}
+        height={H}
         rx={34}
         fill={fill}
       />
@@ -38,11 +42,94 @@ function ModelPanel({
   );
 }
 
-function Axis({ x, y }: { x: number; y: number }) {
+function Subtitle({
+  x,
+  y,
+  children,
+}: {
+  x: number;
+  y: number;
+  children: ReactNode;
+}) {
   return (
-    <g stroke={C.ink} strokeWidth={3} strokeLinecap="round">
-      <line x1={x} y1={y - 112} x2={x} y2={y} />
-      <line x1={x} y1={y} x2={x + 190} y2={y} />
+    <text
+      x={x}
+      y={y}
+      textAnchor="middle"
+      fontFamily="var(--font-body)"
+      fontSize={19}
+      fill={C.inkSoft}
+    >
+      {children}
+    </text>
+  );
+}
+
+function Laptop({ x, y }: { x: number; y: number }) {
+  return (
+    <g>
+      <rect x={x} y={y} width={230} height={158} rx={12} fill={C.ink} />
+      <rect
+        x={x + 13}
+        y={y + 13}
+        width={204}
+        height={132}
+        rx={5}
+        fill={C.white}
+      />
+      <path
+        d={`M${x + 70} ${y + 158}H${x + 160}L${x + 174} ${y + 184}H${x + 56}Z`}
+        fill={C.steelDark}
+      />
+      <rect
+        x={x + 42}
+        y={y + 181}
+        width={146}
+        height={10}
+        rx={5}
+        fill={C.ink}
+      />
+    </g>
+  );
+}
+
+function PolyP({ x, y, count = 5 }: { x: number; y: number; count?: number }) {
+  return (
+    <g>
+      {Array.from({ length: count - 1 }, (_, i) => (
+        <line
+          key={`l${i}`}
+          x1={x + i * 22}
+          y1={y}
+          x2={x + (i + 1) * 22}
+          y2={y}
+          stroke={C.gold}
+          strokeWidth={8}
+        />
+      ))}
+      {Array.from({ length: count }, (_, i) => (
+        <g key={i}>
+          <circle
+            cx={x + i * 22}
+            cy={y}
+            r={12}
+            fill={C.gold}
+            stroke={C.ink}
+            strokeWidth={2}
+          />
+          <text
+            x={x + i * 22}
+            y={y + 5}
+            textAnchor="middle"
+            fontFamily="var(--font-display)"
+            fontWeight={700}
+            fontSize={13}
+            fill={C.white}
+          >
+            P
+          </text>
+        </g>
+      ))}
     </g>
   );
 }
@@ -50,50 +137,258 @@ function Axis({ x, y }: { x: number; y: number }) {
 export function ModelWorkflow() {
   return (
     <WorkflowFigure
-      viewBox="0 0 1870 400"
-      label="Five-stage modelling workflow: define the metabolic system, calculate representative flux states, scan individual constraints, test interactions and translate predictions into design decisions"
-      caption="The modelling workflow used to move from a genome-scale reconstruction to testable decisions for phosphate accumulation. Select a stage to open the corresponding analysis."
+      viewBox="0 0 1540 720"
+      label="Complete seven-stage modelling workflow, from genome-scale reconstruction through flux analysis and network reduction to kinetic simulations, sensitivity analysis and experimental design"
+      caption="The complete modelling workflow, connecting genome-scale metabolic capacity with a reduced kinetic description and the experimental measurements needed for the next DBTL iteration. Select a stage to open its analysis."
     >
-      <ModelPanel
+      <Panel
         x={10}
+        y={10}
         fill={C.panelGreen}
-        href="#fba-primer"
-        label="1. Define the system"
+        href="#metabolic-network"
+        label="1. Genome-scale reconstruction"
       >
-        <Title x={180} y={58} size={TITLE}>
-          1. Define the system
+        <Title x={180} y={57} size={TITLE}>
+          1. Genome-scale model
         </Title>
-        <g transform="translate(180 202)">
-          {[
-            [-92, -58],
-            [0, -82],
-            [90, -48],
-            [-72, 36],
-            [22, 20],
-            [92, 70],
-          ].map(([cx, cy], index) => (
-            <circle
-              key={index}
-              cx={cx}
-              cy={cy}
-              r={index === 4 ? 22 : 15}
-              fill={index === 4 ? C.gold : C.white}
-              stroke={C.ink}
-              strokeWidth={3}
+        <Bacterium
+          x={178}
+          y={175}
+          len={185}
+          wid={104}
+          rot={-8}
+          stroke={C.green}
+          fill={C.greenLight}
+          dna={C.green}
+          flagella={14}
+          flagellaLen={18}
+        />
+        <g fill={C.blue} stroke={C.ink} strokeWidth={2.2}>
+          <circle cx={90} cy={93} r={13} />
+          <circle cx={134} cy={83} r={11} />
+          <circle cx={230} cy={88} r={13} />
+          <circle cx={273} cy={112} r={11} />
+        </g>
+        <PolyP x={132} y={183} count={5} />
+        <Subtitle x={180} y={307}>
+          iJN1463 reconstruction
+        </Subtitle>
+      </Panel>
+      <BlockArrow x={382} y={175} length={58} />
+
+      <Panel
+        x={404}
+        y={10}
+        fill={C.panelBlue}
+        href="#phase-b-sensitivity"
+        label="2. Constraint-based analysis"
+      >
+        <Title x={574} y={57} size={TITLE}>
+          2. FBA and pFBA
+        </Title>
+        <Laptop x={459} y={79} />
+        <path
+          d="M482 210C512 193 526 166 550 149S605 109 662 104V219H482Z"
+          fill={C.blueLight}
+          opacity={0.88}
+        />
+        <path
+          d="M482 124C520 137 540 156 565 173S616 207 662 214V219H482Z"
+          fill={C.greenLight}
+          opacity={0.9}
+        />
+        <circle
+          cx={566}
+          cy={173}
+          r={13}
+          fill={C.gold}
+          stroke={C.ink}
+          strokeWidth={3}
+        />
+        <Subtitle x={574} y={307}>
+          Feasible metabolic states
+        </Subtitle>
+      </Panel>
+      <BlockArrow x={776} y={175} length={58} />
+
+      <Panel
+        x={798}
+        y={10}
+        fill={C.panelGreen}
+        href="#growth-polyp-balance"
+        label="3. Environmental and phenotype landscapes"
+      >
+        <Title x={968} y={57} size={TITLE}>
+          3. Explore constraints
+        </Title>
+        <Flask
+          x={875}
+          top={91}
+          w={88}
+          h={150}
+          liquid={C.blueLight}
+          level={0.42}
+        />
+        <Flask
+          x={968}
+          top={78}
+          w={102}
+          h={165}
+          liquid={C.greenLight}
+          level={0.58}
+        />
+        <Flask
+          x={1064}
+          top={97}
+          w={84}
+          h={145}
+          liquid={C.yellow}
+          level={0.72}
+        />
+        <g transform="translate(851 250)">
+          {[38, 72, 118, 178].map((height, index) => (
+            <rect
+              key={height}
+              x={index * 54}
+              y={38 - height * 0.19}
+              width={36}
+              height={height * 0.19}
+              rx={4}
+              fill={[C.blue, C.green, C.gold, C.orange][index]}
             />
           ))}
-          <g stroke={C.blue} strokeWidth={6} strokeLinecap="round">
-            <line x1={-78} y1={-52} x2={-15} y2={-75} />
-            <line x1={15} y1={-76} x2={76} y2={-53} />
-            <line x1={-84} y1={-44} x2={-76} y2={20} />
-            <line x1={-58} y1={31} x2={0} y2={23} />
-            <line x1={16} y1={-64} x2={18} y2={-4} />
-            <line x1={42} y1={30} x2={78} y2={59} />
-          </g>
-          <circle cx={22} cy={20} r={8} fill={C.ink} />
+        </g>
+        <Subtitle x={968} y={307}>
+          Environment and growth–PolyP balance
+        </Subtitle>
+      </Panel>
+      <BlockArrow x={1170} y={175} length={58} />
+
+      <Panel
+        x={1192}
+        y={10}
+        fill={C.panelSlate}
+        href="#model-reduction"
+        label="4. Reduce the active network"
+      >
+        <Title x={1362} y={57} size={TITLE}>
+          4. Reduce the network
+        </Title>
+        <g transform="translate(1237 87)">
+          {[
+            [0, 24],
+            [0, 76],
+            [0, 128],
+            [62, 50],
+            [62, 104],
+          ].map(([cx, cy], i) => (
+            <circle
+              key={i}
+              cx={cx}
+              cy={cy}
+              r={13}
+              fill={C.blueLight}
+              stroke={C.ink}
+              strokeWidth={2.5}
+            />
+          ))}
+          <path
+            d="M20 18H82L112 67L82 116H20L49 67Z"
+            fill={C.white}
+            stroke={C.ink}
+            strokeWidth={3}
+          />
+          <path
+            d="M126 67H168"
+            stroke={C.ink}
+            strokeWidth={10}
+            strokeLinecap="round"
+          />
+          <path d="M168 47L205 67L168 87Z" fill={C.ink} />
+          <rect
+            x={218}
+            y={15}
+            width={74}
+            height={104}
+            rx={20}
+            fill={C.blue}
+            opacity={0.86}
+          />
+          <rect x={230} y={30} width={50} height={14} rx={7} fill={C.white} />
+          <rect
+            x={230}
+            y={59}
+            width={50}
+            height={14}
+            rx={7}
+            fill={C.greenLight}
+          />
+          <rect x={230} y={88} width={50} height={14} rx={7} fill={C.yellow} />
+        </g>
+        <Subtitle x={1362} y={281}>
+          pFBA → 45 reactions → lumping
+        </Subtitle>
+        <Subtitle x={1362} y={307}>
+          Functional core model
+        </Subtitle>
+      </Panel>
+      <BlockArrow x={1362} y={366} angle={90} length={58} />
+
+      <Panel
+        x={1192}
+        y={390}
+        fill={C.panelBlue}
+        href="#kinetic-model"
+        label="5. Build the kinetic model"
+      >
+        <Title x={1362} y={437} size={TITLE}>
+          5. Build kinetics
+        </Title>
+        <g>
+          <rect
+            x={1241}
+            y={462}
+            width={242}
+            height={150}
+            rx={12}
+            fill={C.white}
+            stroke={C.ink}
+            strokeWidth={3}
+          />
           <text
-            x={22}
-            y={27}
+            x={1362}
+            y={505}
+            textAnchor="middle"
+            fontFamily="var(--font-display)"
+            fontSize={25}
+            fontStyle="italic"
+            fill={C.ink}
+          >
+            dx/dt = Nv(x,p)
+          </text>
+          <path
+            d="M1270 542H1454"
+            stroke={C.blueMid}
+            strokeWidth={9}
+            strokeLinecap="round"
+          />
+          <path
+            d="M1270 572H1408"
+            stroke={C.greenMid}
+            strokeWidth={9}
+            strokeLinecap="round"
+          />
+          <circle
+            cx={1452}
+            cy={572}
+            r={20}
+            fill={C.gold}
+            stroke={C.ink}
+            strokeWidth={3}
+          />
+          <text
+            x={1452}
+            y={579}
             textAnchor="middle"
             fontFamily="var(--font-display)"
             fontWeight={700}
@@ -103,249 +398,136 @@ export function ModelWorkflow() {
             P
           </text>
         </g>
-        <text
-          x={180}
-          y={350}
-          textAnchor="middle"
-          fontFamily="var(--font-body)"
-          fontSize={21}
-          fill={C.inkSoft}
-        >
-          Genome-scale reconstruction
-        </text>
-      </ModelPanel>
+        <Subtitle x={1362} y={687}>
+          Rate laws and COPASI model
+        </Subtitle>
+      </Panel>
+      <BlockArrow x={1170} y={555} angle={180} length={58} />
 
-      <BlockArrow x={382} y={200} length={58} />
-
-      <ModelPanel
-        x={404}
-        fill={C.panelBlue}
-        href="#metabolic-network"
-        label="2. Calculate flux states"
+      <Panel
+        x={798}
+        y={390}
+        fill={C.panelGreen}
+        href="#kinetic-results"
+        label="6. Simulate dynamics and sensitivity"
       >
-        <Title x={574} y={58} size={TITLE}>
-          2. Calculate flux states
+        <Title x={968} y={437} size={TITLE}>
+          6. Simulate and test
         </Title>
-        <g transform="translate(476 104)">
-          <Axis x={0} y={170} />
+        <g>
+          <rect
+            x={840}
+            y={463}
+            width={256}
+            height={164}
+            rx={10}
+            fill={C.white}
+            stroke={C.ink}
+            strokeWidth={3}
+          />
           <path
-            d="M8 157C44 143 67 119 91 94S143 47 185 27"
+            d="M858 597C890 583 902 544 928 521S979 486 1022 493S1061 540 1078 557"
             fill="none"
             stroke={C.blue}
             strokeWidth={7}
             strokeLinecap="round"
           />
           <path
-            d="M10 52L60 83L105 101L151 129L185 157"
+            d="M858 486C895 500 916 535 944 552S1010 579 1078 585"
             fill="none"
             stroke={C.green}
             strokeWidth={7}
             strokeLinecap="round"
           />
-          <circle
-            cx={102}
-            cy={100}
-            r={13}
-            fill={C.gold}
-            stroke={C.ink}
-            strokeWidth={3}
-          />
-          <path d="M134 52l24 13-24 13Z" fill={C.ink} />
-          <line
-            x1={108}
-            y1={65}
-            x2={140}
-            y2={65}
-            stroke={C.ink}
-            strokeWidth={5}
-          />
-        </g>
-        <text
-          x={574}
-          y={350}
-          textAnchor="middle"
-          fontFamily="var(--font-body)"
-          fontSize={21}
-          fill={C.inkSoft}
-        >
-          FBA and parsimonious FBA
-        </text>
-      </ModelPanel>
-
-      <BlockArrow x={776} y={200} length={58} />
-
-      <ModelPanel
-        x={798}
-        fill={C.panelGreen}
-        href="#factor-explorer"
-        label="3. Scan individual constraints"
-      >
-        <Title x={968} y={58} size={TITLE}>
-          3. Scan constraints
-        </Title>
-        <g transform="translate(858 112)">
-          {[0, 1, 2, 3].map((row) => {
-            const y = row * 48;
-            const positions = [42, 122, 76, 158];
-            return (
-              <g key={row}>
-                <line
-                  x1={0}
-                  y1={y}
-                  x2={220}
-                  y2={y}
-                  stroke={C.steel}
-                  strokeWidth={7}
-                  strokeLinecap="round"
-                />
-                <circle
-                  cx={positions[row]}
-                  cy={y}
-                  r={15}
-                  fill={[C.blue, C.green, C.gold, C.orange][row]}
-                  stroke={C.ink}
-                  strokeWidth={3}
-                />
-              </g>
-            );
-          })}
-          <Axis x={15} y={235} />
           <path
-            d="M24 217C58 212 72 186 94 153S143 107 198 104"
+            d="M858 606C894 605 918 592 947 566S1019 514 1078 510"
             fill="none"
-            stroke={C.blue}
+            stroke={C.gold}
             strokeWidth={7}
             strokeLinecap="round"
           />
+          {[0, 1, 2, 3, 4].map((row) =>
+            [0, 1, 2, 3, 4].map((col) => (
+              <rect
+                key={`${row}-${col}`}
+                x={858 + col * 22}
+                y={642 + row * 11}
+                width={18}
+                height={8}
+                rx={2}
+                fill={
+                  [C.blue, C.blueLight, C.white, C.yellow, C.orange][
+                    (row + col) % 5
+                  ]
+                }
+              />
+            )),
+          )}
         </g>
-        <text
-          x={968}
-          y={350}
-          textAnchor="middle"
-          fontFamily="var(--font-body)"
-          fontSize={21}
-          fill={C.inkSoft}
-        >
-          Nutrients and capacities
-        </text>
-      </ModelPanel>
+        <Subtitle x={968} y={687}>
+          Time courses and parameter sensitivity
+        </Subtitle>
+      </Panel>
+      <BlockArrow x={776} y={555} angle={180} length={58} />
 
-      <BlockArrow x={1170} y={200} length={58} />
-
-      <ModelPanel
-        x={1192}
+      <Panel
+        x={404}
+        y={390}
         fill={C.panelSlate}
-        href="#phase-interactions"
-        label="4. Test factor interactions"
+        href="#kinetic-outlook"
+        label="7. Guide the next experimental iteration"
       >
-        <Title x={1362} y={58} size={TITLE}>
-          4. Test interactions
+        <Title x={574} y={437} size={TITLE}>
+          7. Guide experiments
         </Title>
-        <g transform="translate(1253 100)">
+        <Bacterium
+          x={526}
+          y={535}
+          len={126}
+          wid={72}
+          rot={-10}
+          stroke={C.green}
+          fill={C.greenLight}
+          dna={C.green}
+          flagella={11}
+          flagellaLen={14}
+        />
+        <PolyP x={485} y={541} count={4} />
+        <g transform="translate(619 470)">
           <rect
             x={0}
             y={0}
-            width={218}
-            height={218}
-            rx={8}
+            width={92}
+            height={142}
+            rx={9}
             fill={C.white}
             stroke={C.ink}
             strokeWidth={3}
           />
-          {Array.from({ length: 5 }, (_, row) =>
-            Array.from({ length: 5 }, (_, col) => {
-              const colors = [
-                C.bluePale,
-                C.blueLight,
-                C.greenLight,
-                C.yellow,
-                C.orange,
-              ];
-              return (
-                <rect
-                  key={`${row}-${col}`}
-                  x={10 + col * 41}
-                  y={10 + row * 41}
-                  width={35}
-                  height={35}
-                  rx={4}
-                  fill={colors[(row + col * 2) % colors.length]}
-                />
-              );
-            }),
-          )}
-          <ThinArrow x1={-8} y1={224} x2={210} y2={224} width={4} />
-          <ThinArrow x1={-8} y1={224} x2={-8} y2={8} width={4} />
-        </g>
-        <text
-          x={1362}
-          y={350}
-          textAnchor="middle"
-          fontFamily="var(--font-body)"
-          fontSize={21}
-          fill={C.inkSoft}
-        >
-          Pairwise phase landscapes
-        </text>
-      </ModelPanel>
-
-      <BlockArrow x={1564} y={200} length={58} />
-
-      <ModelPanel
-        x={1586}
-        fill={C.panelGreen}
-        href="#growth-polyp-balance"
-        label="5. Guide design decisions"
-      >
-        <Title x={1756} y={58} size={TITLE}>
-          5. Guide decisions
-        </Title>
-        <g transform="translate(1646 116)">
-          <Axis x={0} y={198} />
+          <rect
+            x={23}
+            y={-8}
+            width={46}
+            height={18}
+            rx={7}
+            fill={C.steelDark}
+          />
           <path
-            d="M7 187C43 181 80 166 112 137S165 70 188 24"
+            d="M18 43l14 14 27-31"
             fill="none"
-            stroke={C.blue}
-            strokeWidth={7}
+            stroke={C.green}
+            strokeWidth={9}
             strokeLinecap="round"
+            strokeLinejoin="round"
           />
-          {[
-            [24, 178],
-            [61, 164],
-            [98, 143],
-            [132, 111],
-            [165, 67],
-          ].map(([cx, cy], index) => (
-            <circle
-              key={index}
-              cx={cx}
-              cy={cy}
-              r={10}
-              fill={index === 3 ? C.gold : C.green}
-              stroke={C.ink}
-              strokeWidth={2.5}
-            />
-          ))}
-          <ThinArrow
-            x1={132}
-            y1={102}
-            x2={198}
-            y2={72}
-            width={5}
-            color={C.orange}
-          />
+          <rect x={18} y={79} width={56} height={8} rx={4} fill={C.blueMid} />
+          <rect x={18} y={101} width={47} height={8} rx={4} fill={C.greenMid} />
+          <rect x={18} y={123} width={62} height={8} rx={4} fill={C.gold} />
         </g>
-        <text
-          x={1756}
-          y={350}
-          textAnchor="middle"
-          fontFamily="var(--font-body)"
-          fontSize={21}
-          fill={C.inkSoft}
-        >
-          Growth–PolyP trade-offs
-        </text>
-      </ModelPanel>
+        <Subtitle x={574} y={687}>
+          Prioritise measurements for DBTL
+        </Subtitle>
+      </Panel>
     </WorkflowFigure>
   );
 }
