@@ -61,13 +61,33 @@ export function GrowthPolypSurface() {
         const figure = await response.json();
         if (cancelled || !containerRef.current) return;
 
+        // The notebook export has a fixed 720 px height. Keeping it inside a
+        // responsive, shorter container makes Plotly crop the lower axes and
+        // leaves the projected surface sitting too low. Let Plotly size itself
+        // from the container instead, then reserve a small lower margin and
+        // lift the 3D scene into the visible centre of the panel.
+        const responsiveLayout = { ...figure.layout };
+        delete responsiveLayout.height;
+        delete responsiveLayout.width;
+
         await Plotly.newPlot(
           containerRef.current,
           figure.data,
           {
-            ...figure.layout,
+            ...responsiveLayout,
             autosize: true,
             font: { family: "Inter, Helvetica, Arial, sans-serif", size: 12 },
+            margin: {
+              ...figure.layout.margin,
+              l: 20,
+              r: 135,
+              t: 80,
+              b: 36,
+            },
+            scene: {
+              ...figure.layout.scene,
+              domain: { x: [0, 1], y: [0.08, 1] },
+            },
           },
           {
             displaylogo: false,
