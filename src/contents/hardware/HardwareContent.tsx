@@ -787,16 +787,9 @@ function HardwareContentInner() {
           <h3>
             <span className="hw-num">2.3</span>Assembly, disassembly and concentricity check
           </h3>{" "}
-          <figure className="vsi-figure">
-            {" "}
-            <IgemVideo {...VIDEOS.video2} />{" "}
-            <figcaption>
-              <strong>Video 2.</strong> Assembly of the coaxial injector.
-            </figcaption>{" "}
-          </figure>{" "}
           <details className="hw-fold hw-fold--inner">
             <summary className="hw-fold__summary">
-              <span className="hw-fold__title">Points the video shows</span>
+              <span className="hw-fold__title">Key assembly points</span>
               <svg className="hw-chev" width="12" height="12" viewBox="0 0 10 10" aria-hidden="true">
                 <path
                   d="M2 3.5 L5 6.5 L8 3.5"
@@ -2089,14 +2082,14 @@ function HardwareContentInner() {
               {" "}
               <IgemVideo {...VIDEOS.video3} />{" "}
               <figcaption>
-                <strong>Video 3.</strong> Rotating-bed bioreactor during a preliminary test.
+                <strong>Video 2.</strong> Rotating-bed bioreactor during a preliminary test.
               </figcaption>{" "}
             </figure>{" "}
             <figure className="vsi-figure">
               {" "}
               <IgemVideo {...VIDEOS.video4} />{" "}
               <figcaption>
-                <strong>Video 4.</strong> Rotating-bed bioreactor at 120 rpm in dry conditions.
+                <strong>Video 3.</strong> Rotating-bed bioreactor at 120 rpm in dry conditions.
               </figcaption>{" "}
             </figure>{" "}
           </div>{" "}
@@ -2153,7 +2146,7 @@ function HardwareContentInner() {
           {" "}
           <IgemVideo {...VIDEOS.video5} />{" "}
           <figcaption>
-            <strong>Video 5.</strong> Animated render of the rotating-bed bioreactor assembly, produced in
+            <strong>Video 4.</strong> Animated render of the rotating-bed bioreactor assembly, produced in
             Blender with the scripts described below.
           </figcaption>{" "}
         </figure>{" "}

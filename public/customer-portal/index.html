@@ -4,14 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>rePhlow Customer Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
 <style>
-/* Fonts served by the wiki itself (no external requests) */
-@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("../frame-fonts/inter-400.woff2") format("woff2")}
-@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("../frame-fonts/inter-500.woff2") format("woff2")}
-@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("../frame-fonts/inter-600.woff2") format("woff2")}
-@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:500;font-display:swap;src:url("../frame-fonts/space-grotesk-500.woff2") format("woff2")}
-@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:600;font-display:swap;src:url("../frame-fonts/space-grotesk-600.woff2") format("woff2")}
-@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:700;font-display:swap;src:url("../frame-fonts/space-grotesk-700.woff2") format("woff2")}
 /* Design tokens taken from the Entrepreneurship page (rephlow_entrepreneurship_v10) */
 :root{
   --algae:#7c9a4e;--phosphate:#e2542d;
@@ -292,11 +288,11 @@ table.tbl td.num{font-family:var(--font-display);font-weight:600;white-space:now
           <div class="tbl-wrap"><table class="tbl">
             <thead><tr><th>Figure</th><th>Value</th><th>Source and status</th></tr></thead>
             <tbody>
-              <tr><td>Service contract</td><td class="num">€4,500 / month</td><td>rePhlow business plan (financial model). Planning assumption. Covers our estimated operating cost of €3,250 per contract-month (capsules, monitoring, maintenance).</td></tr>
+              <tr><td>Service contract</td><td class="num">€4,500 / month</td><td>rePhlow business plan (financial model). Planning assumption. Covers our estimated operating cost of €1,200 per contract-month (monitoring and maintenance); capsule replacement and energy (≈€1,400 per module per year) are costed separately in the model.</td></tr>
               <tr><td>Bioreactor module</td><td class="num">€19,000 / unit</td><td>rePhlow business plan (financial model). Set from a direct cost of €9,460 per ~0.1 m³ module, which gives a 50.2% gross margin (breakdown below). Price for the later direct-purchase stage.</td></tr>
               <tr><td>VAT</td><td class="num">21%</td><td>rePhlow business plan (financial model), Spanish general rate.</td></tr>
               <tr><td>Recovered phosphorus</td><td class="num">€2 / kg</td><td>rePhlow business plan (financial model), against an estimated recovery cost of €0.80/kg. Only materialises once recovery yield and purity are demonstrated.</td></tr>
-              <tr><td>Capsule lifetime</td><td class="num">2,160 reuse cycles</td><td>Key assumption of the financial model, not yet measured. Our sensitivity analysis shows that below 128 cycles the Year-5 gross margin turns negative, so capsule lifetime is the first thing the pilot must measure. Under Phosphorus-as-a-Service this risk stays with rePhlow, not with your site.</td></tr>
+              <tr><td>Capsule lifetime</td><td class="num">500 reuse cycles</td><td>Key assumption of the financial model, not yet measured. At 500 cycles the Year-5 gross margin is 54.7%; at 100 cycles it falls to 25.7%, and at 50 cycles it turns negative (−10.6%). Capsule lifetime is therefore the first thing the pilot must measure. Under Phosphorus-as-a-Service this risk stays with rePhlow, not with your site.</td></tr>
               <tr><td>Phosphorus captured</td><td class="num">≥70% removal</td><td>Development target from our MVP go/no-go criteria, not a measured result.</td></tr>
               <tr><td>Module throughput</td><td class="num">≈0.12 m³/h</td><td>rePhlow process model for a ~0.1 m³ rotating-bed module. Hydraulic retention time is still to be measured, so the module count is indicative.</td></tr>
               <tr><td>Performance fee</td><td class="num">to be agreed</td><td>Set per site, in €/m³ treated, €/kg P removed or a combination, after stream characterisation.</td></tr>
@@ -389,8 +385,8 @@ table.tbl td.num{font-family:var(--font-display);font-weight:600;white-space:now
   var VAT           = 0.21;   // RP_Assumptions!B6
   /* Reference only (shown in "Where these figures come from"):
      module direct cost €9,460 (RP_COGS!C17) → 50.2% margin (RP_Dashboard!B9);
-     service cost €3,250/contract-month (RP_COGS!C22); P recovery cost €0.80/kg (RP_COGS!C27);
-     capsule reuse cycles 2,160 (RP_Assumptions!B16). */
+     service cost €1,200/contract-month and P recovery cost €0.80/kg (Business Plan V3, RP_Extension);
+     capsule service life 500 cycles (V3 RP_Assumptions!B16; sensitivity in RP_Sensitivity). */
   /* ---- Technical planning values (development targets, not results) ---- */
   var REMOVAL       = 0.70;   // MVP target: >=70% phosphorus removal
   var MOD_FLOW      = 0.1176; // process model: m3/h treated per ~0.1 m3 module

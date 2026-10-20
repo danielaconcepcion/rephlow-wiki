@@ -300,9 +300,22 @@ export function Team() {
   const [open, setOpen] = useState<Person | null>(null);
   const closeModal = useCallback(() => setOpen(null), []);
 
+  const mainRef = useRef<HTMLDivElement | null>(null);
+
   const people = PEOPLE[active];
   const present = useMemo(() => new Set(people.map((p) => p.color)), [people]);
   const matches = filter ? people.filter((p) => p.color === filter).length : 0;
+
+  /* Picking an area highlights its people and dims the rest, but the first
+     highlighted card can be well below the fold, so the reader sees the
+     grid grey out with nothing to look at. Scroll to that first card once
+     the highlight has been applied. Clearing the filter scrolls nowhere —
+     the reader is already looking at what they wanted. */
+  useEffect(() => {
+    if (!filter) return;
+    const first = mainRef.current?.querySelector(".team-card.is-match");
+    first?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [filter, active]);
   const filterLabel = filter ? LEGEND.find(([c]) => c === filter)?.[1] : "";
 
   const hint = !filter
@@ -353,7 +366,7 @@ export function Team() {
           </p>
         </div>
 
-        <div className="team-main">
+        <div className="team-main" ref={mainRef}>
           <section
             key={active}
             className="team-panel"

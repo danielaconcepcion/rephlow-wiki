@@ -197,10 +197,7 @@ const Pages: Page[] = [
     path: "/human-practices",
     component: HumanPractices,
     docTitle: "Human Practices — The Phosphorus Route — rePhlow iGEM Wiki",
-    awards: [
-      { label: "Silver Medal", variant: "silver" },
-      { label: "Best Integrated Human Practices", variant: "prize" },
-    ],
+    awards: [{ label: "Silver Medal", variant: "silver" }],
     hideEyebrow: true,
     labHero: true,
     moleculeSeed: 41,
@@ -250,6 +247,11 @@ const Pages: Page[] = [
     path: "/sustainability",
     component: Sustainability,
     docTitle: "Sustainability — rePhlow iGEM Wiki",
+    /* The Medals page judges this prize on this page — see its
+       "gold-sustainability" entry, whose pageLabel is Sustainability. */
+    awards: [
+      { label: "Best Sustainable Development Impact", variant: "prize" },
+    ],
     hideEyebrow: true,
     labHero: true,
     moleculeSeed: 37,

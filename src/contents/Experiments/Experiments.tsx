@@ -209,7 +209,16 @@ export function Experiments() {
   const pageEndRef = useRef<HTMLDivElement | null>(null);
   // Figure and table numbers for the block on screen, restarting with it.
   const numbering = useMemo(
-    () => numberExperiments(activeBlock.subBlocks ?? [activeBlock]),
+    () =>
+      numberExperiments(
+        activeBlock.subBlocks ?? [activeBlock],
+        /* Enzymatic immobilisation's four activity diagrams are Figures 1
+           to 4 and sit above the decks (see EnzymeActivityGrid), so the
+           decks' own figures start at 5. */
+        activeBlock.id === "enzymatic-immobilisation"
+          ? ENZYME_ACTIVITIES.filter((activity) => activity.figure).length
+          : 0,
+      ),
     [activeBlock],
   );
 

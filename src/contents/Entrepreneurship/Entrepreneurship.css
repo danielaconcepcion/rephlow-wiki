@@ -20,6 +20,23 @@
 .ent,.ent *{box-sizing:border-box}
 .ent{scroll-behavior:smooth}
 .ent{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+
+/* Same backdrop treatment as Human Practices: white where the hero hands
+   over, the blue gathering at the foot of the page, in the same two tints
+   (see MoleculeBackdrop.css and HumanPractices.css). */
+.entrepreneurship-page .mbg-layer {
+  background:
+    radial-gradient(
+      120% 60% at 8% 100%,
+      rgba(206, 234, 255, 0.55),
+      rgba(255, 255, 255, 0) 60%
+    ),
+    radial-gradient(
+      90% 40% at 96% 88%,
+      rgba(156, 198, 111, 0.1),
+      rgba(255, 255, 255, 0) 62%
+    );
+}
 .ent h1,.ent h2,.ent h3,.ent h4{font-family:var(--font-display);margin:0;letter-spacing:-.01em}
 .ent p{margin:0;line-height:1.6}
 .ent a{color:inherit;text-decoration:none}

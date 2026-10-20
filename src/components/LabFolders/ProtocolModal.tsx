@@ -34,7 +34,50 @@ export function ProtocolModal({
     >
       <div className="protocol-modal__dialog">
         <div className="protocol-modal__bar">
-          <strong>{title}</strong>
+          <strong className="protocol-modal__title">{title}</strong>
+          {/* The same two actions the Entrepreneurship PDF viewer offers:
+              the embed alone can neither be saved nor opened full-size,
+              and a reader wanting to search, zoom or print the protocol
+              needs the browser's own PDF reader. */}
+          <div className="protocol-modal__tools">
+            <a className="protocol-modal__tool" href={src} download>
+              <svg
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+              </svg>
+              Download PDF
+            </a>
+            <a
+              className="protocol-modal__tool"
+              href={src}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5" />
+              </svg>
+              Open in browser
+            </a>
+          </div>
           <button
             className="protocol-modal__close"
             type="button"

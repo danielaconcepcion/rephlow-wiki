@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+
+import { asset } from "../../utils";
 import "./EnzymeActivityGrid.css";
 
 export interface EnzymeActivity {
@@ -7,6 +9,12 @@ export interface EnzymeActivity {
   fullName: string;
   whatItDoes: ReactNode;
   whatWeDo: ReactNode;
+  /** The bond-cleavage diagram the source prints inside this activity's
+   * section. These four sit outside the folder decks, so they are outside
+   * the automatic figure numbering (see numbering.ts, which walks the
+   * experiments) — hence the explicit `number`, which is also what lets
+   * the decks below carry on from 5 via numberExperiments' startFigure. */
+  figure?: { src: string; alt: string; caption: string; number: number };
 }
 
 /**
@@ -43,6 +51,21 @@ export function EnzymeActivityGrid({
               <p className="enzyme-card__field">
                 <strong>What we do to it, and why.</strong> {activity.whatWeDo}
               </p>
+              {activity.figure && (
+                <figure className="enzyme-card__figure">
+                  <img
+                    src={asset(activity.figure.src)}
+                    alt={activity.figure.alt}
+                    loading="lazy"
+                  />
+                  <figcaption>
+                    <strong className="record-caption__label">
+                      Figure {activity.figure.number}.
+                    </strong>{" "}
+                    {activity.figure.caption}
+                  </figcaption>
+                </figure>
+              )}
             </div>
           </div>
         ))}

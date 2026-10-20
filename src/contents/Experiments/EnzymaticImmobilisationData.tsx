@@ -209,7 +209,10 @@ export interface EnzymeActivity {
   fullName: string;
   whatItDoes: ReactNode;
   whatWeDo: ReactNode;
+  figure?: { src: string; alt: string; caption: string; number: number };
 }
+
+const IMG_DIR = "assets/experiments/enzymatic-immobilisation";
 
 /** The four catalytic activities — see EnzymeActivityGrid.tsx. */
 export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
@@ -222,7 +225,7 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         These hydrolases cleave the <strong>carboxylic ester bonds</strong> of glycerophospholipids. PLA1 (EC
         3.1.1.32) acts at the sn1 position and PLA2 (EC 3.1.1.4) at the sn2 position, releasing free fatty acids and
         lysophospholipids. Removing these acyl chains reduces the hydrophobicity and viscosity of the gums, so the
-        rest of the cocktail can reach the phosphate head group with less steric impediment.
+        rest of the cocktail can reach the phosphate head group with less steric impediment (Figure 1).
       </>
     ),
     whatWeDo: (
@@ -234,6 +237,13 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         parallel, a metagenomic esterase (EstE1) was produced recombinantly as a candidate PLA activity.
       </>
     ),
+    figure: {
+      src: `${IMG_DIR}/pla-cleavage-sites.png`,
+      alt: "Structure of a glycerophospholipid, with red dashed lines marking the sn1 and sn2 carboxylic ester bonds cleaved by PLA1 and PLA2",
+      caption:
+        "A phospholipid with two acyl chains; scissors snip the ester bonds at sn1 and sn2; the fatty acids drift off and a lysophospholipid is left behind, the gum visibly thinning.",
+      number: 1,
+    },
   },
   {
     id: "plc",
@@ -244,7 +254,7 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         Phospholipase C (EC 3.1.4.3) is a <strong>phosphodiesterase</strong> that breaks the ester bond between
         glycerol and the phosphate group. Its action releases a diacylglycerol (DAG), which stays in the oil phase
         and increases refined-oil yield, and a water-soluble phosphorylated head group (for example phosphocholine
-        or phosphoethanolamine) that passes into the aqueous phase in a much easier form to process.
+        or phosphoethanolamine) that passes into the aqueous phase in a much easier form to process (Figure 2).
       </>
     ),
     whatWeDo: (
@@ -259,6 +269,13 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         suited to toxic, membrane-associated proteins because it does not rely on host viability.
       </>
     ),
+    figure: {
+      src: `${IMG_DIR}/plc-cleavage-site.png`,
+      alt: "Structure of a glycerophospholipid, with a red dashed line marking the bond between the glycerol backbone and the phosphate group cleaved by phospholipase C",
+      caption:
+        "A glycerophospholipid; a cut falls between the glycerol backbone and the phosphate; the DAG stays in the oil layer while the phospho-head dissolves into the water below.",
+      number: 2,
+    },
   },
   {
     id: "nap",
@@ -269,7 +286,7 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         Acid phosphatases (EC 3.1.3.2) complete the mineralisation, releasing inorganic orthophosphate (Pi) from
         phosphate monoesters once the phospholipases have exposed them. The <strong>non-specific</strong> variants
         are ideal here because they keep their activity and structural stability across the pH 4.5 to 6.0 range
-        typical of the effluent after acid degumming, and they act on a wide range of substrates.
+        typical of the effluent after acid degumming, and they act on a wide range of substrates (Figure 3).
       </>
     ),
     whatWeDo: (
@@ -279,6 +296,13 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         out to be the most efficient biocatalyst per unit mass of the whole panel.
       </>
     ),
+    figure: {
+      src: `${IMG_DIR}/nap-phosphomonoester.png`,
+      alt: "Structure of a phosphate monoester, with a red dashed line marking the ester bond hydrolysed to release free orthophosphate",
+      caption:
+        "A phosphate monoester bobbing in solution; the terminal phosphate is snipped off and floats away as free orthophosphate, ready for uptake.",
+      number: 3,
+    },
   },
   {
     id: "phytases",
@@ -289,7 +313,7 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         Phytate (myo-inositol hexaphosphate) is the main phosphorus store in vegetable seeds, so it is constantly
         present in crude oils, and it resists common phosphatases because of its high negative charge density.
         Phytases release its six phosphate groups sequentially. They are classified as 3-phytases (EC 3.1.3.8) or
-        4/6-phytases (EC 3.1.3.26) depending on where they initiate hydrolysis on the inositol ring.
+        4/6-phytases (EC 3.1.3.26) depending on where they initiate hydrolysis on the inositol ring (Figure 4).
       </>
     ),
     whatWeDo: (
@@ -299,6 +323,13 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         stands alongside AphA as a key component for the recovery bioreactor.
       </>
     ),
+    figure: {
+      src: `${IMG_DIR}/phytate-inositol-hexaphosphate.png`,
+      alt: "Structure of phytate, a myo-inositol ring carrying six phosphate groups, each attached through a bond marked in red",
+      caption:
+        "A fully loaded inositol ring bristling with six phosphates; one by one the phosphates pop off around the ring until the ring is bare.",
+      number: 4,
+    },
   },
 ];
 
@@ -395,22 +426,38 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
         id: "structural-design",
         tabLabel: "Structural design",
         title: "In silico structural design of the constructs",
-        description: [
-          "Before ordering any DNA, we decided for each enzyme where to place the purification tag and whether it would need a special folding environment, because both decisions are far cheaper to make on a model than to correct after cloning.",
-          <>
-            Each sequence without a resolved structure was modelled by homology on <strong>SWISS-MODEL</strong>{" "}
-            <Cite n={5} /> and inspected in <strong>PyMOL</strong> <Cite n={6} /> for two things. First, the
-            accessibility of the N- and C-termini: the polyhistidine tag must sit on an exposed terminus so it can
-            reach the resin without occluding the active site, so the more exposed terminus set the vector,{" "}
-            <strong>pET-28a(+)</strong> for an N-terminal tag (introduced at the NdeI site with a downstream STOP
-            codon) or <strong>pET-22b(+)</strong> for a C-terminal tag <Cite n={7} />. Second, the presence of
-            structural disulphide bridges: pairs of cysteine sulphur atoms closer than 2.5 Å were flagged, because a
-            disulphide-dependent enzyme will not fold in the reducing cytoplasm of a standard strain and will instead
-            need an oxidising chassis. Mapping this in silico told us in advance which enzymes would later require
-            Rosetta-gami 2 or Origami 2, so the folding strategy was planned rather than discovered by trial and
-            error.
-          </>,
-          "The expected outcome was a per-enzyme decision (tag position, vector and disulphide dependence) that pre-empted the main causes of insolubility.",
+        body: [
+          {
+            paragraphs: [
+              "Before ordering any DNA, we decided for each enzyme where to place the purification tag and whether it would need a special folding environment, because both decisions are far cheaper to make on a model than to correct after cloning.",
+              <>
+                Each sequence without a resolved structure was modelled by homology on{" "}
+                <strong>SWISS-MODEL</strong> <Cite n={5} /> and inspected in <strong>PyMOL</strong>{" "}
+                <Cite n={6} /> for two things. First, the accessibility of the N- and C-termini: the
+                polyhistidine tag must sit on an exposed terminus so it can reach the resin without occluding the
+                active site, so the more exposed terminus set the vector, <strong>pET-28a(+)</strong> for an
+                N-terminal tag (introduced at the NdeI site with a downstream STOP codon) or{" "}
+                <strong>pET-22b(+)</strong> for a C-terminal tag <Cite n={7} /> (Figure 5). Second, the presence
+                of structural disulphide bridges: pairs of cysteine sulphur atoms closer than 2.5 Å were flagged,
+                because a disulphide-dependent enzyme will not fold in the reducing cytoplasm of a standard strain
+                and will instead need an oxidising chassis. Mapping this in silico told us in advance which
+                enzymes would later require Rosetta-gami 2 or Origami 2, so the folding strategy was planned
+                rather than discovered by trial and error.
+              </>,
+            ],
+            pairedResource: {
+              kind: "image",
+              src: `${IMG_DIR}/pet-vector-maps.png`,
+              alt: "Circular maps of the pET-22b(+) and pET-28a(+) vectors, showing the multiple cloning site, the NdeI and HindIII sites, the T7 promoter and terminator, the pelB signal sequence, the antibiotic resistance marker, the f1 origin and the 6xHis tag",
+              caption:
+                "Scheme of pET-22b(+) and pET-28a(+) vector. In detail, the multiple cloning site (MCS) (purple), the restriction sites used (black lines), the T7 promoter and terminator (orange), the pelB exporting sequence (blue), the antibiotic resistance (yellow), the f1 ori (green) and the 6xHis (magenta) are shown. Created with [BioRender.com](https://biorender.com/).",
+            },
+          },
+          {
+            paragraphs: [
+              "The expected outcome was a per-enzyme decision (tag position, vector and disulphide dependence) that pre-empted the main causes of insolubility.",
+            ],
+          },
         ],
         protocols: protocolLinks("01-in-silico-construct-design"),
       },
@@ -505,7 +552,7 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
             co-expressed, the ribosome-associated Trigger factor, which stabilises the emerging chain and prevents
             premature aggregation, and the GroES/GroEL complex, which encapsulates partly folded protein and lets it
             fold in an ATP-dependent cage away from the crowded cytoplasm. Finally, for the disulphide-dependent
-            enzymes flagged in the in-silico structural design, expression was moved to strains with an oxidising
+            enzymes flagged in Experiment 2, expression was moved to strains with an oxidising
             cytoplasm and rare-codon tRNAs (<strong>Origami 2, Rosetta-gami 2 and SHuffle T7</strong>, the last also
             co-expressing a disulphide isomerase); a codon analysis motivated this, since rare codons throttle both
             yield and folding. The cytotoxic phospholipases C were not forced through this pipeline but earmarked for
@@ -648,18 +695,27 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
         id: "manae-agarose-prep",
         tabLabel: "MANAE-agarose prep",
         title: "Preparation of the MANAE-agarose support",
-        description: [
-          <>
-            The aim was to build a cheap, reproducible model support on which to compare immobilisation chemistries
-            before committing to the alginate-chitosan-genipin sphere. MANAE-agarose was chosen because it is well
-            characterised and previously optimised <Cite n={14} />, and because glutaraldehyde on it plays the same
-            amino-crosslinking role that genipin will play on the final sphere, so the conclusions transfer.
-          </>,
-          "Starting from BCL agarose, the hydroxyls were first converted to epoxides with glycidol under alkaline reducing conditions, then oxidised with sodium periodate to give a glyoxyl (aldehyde) agarose. The aldehydes were reacted with an excess of ethylenediamine at pH 10, and the resulting Schiff bases were reduced with sodium borohydride, leaving the support decorated with positively charged secondary amino groups. Amination was carried out in an ice bath to control the exothermic reaction, and the support was washed sequentially at pH 9, pH 4 and with water to strip loosely bound reagents. The result is a positively charged support that adsorbs the acidic patches of a protein surface by ion exchange and, once activated with glutaraldehyde, can also bind it covalently.",
-          <>
-            The expected outcome was a MANAE-agarose support ready to serve as the common base for both
-            immobilisation strategies.
-          </>,
+        body: [
+          {
+            paragraphs: [
+              <>
+                The aim was to build a cheap, reproducible model support on which to compare immobilisation
+                chemistries before committing to the alginate-chitosan-genipin sphere. MANAE-agarose was chosen
+                because it is well characterised and previously optimised <Cite n={14} />, and because
+                glutaraldehyde on it plays the same amino-crosslinking role that genipin will play on the final
+                sphere, so the conclusions transfer.
+              </>,
+              "Starting from BCL agarose, the hydroxyls were first converted to epoxides with glycidol under alkaline reducing conditions, then oxidised with sodium periodate to give a glyoxyl (aldehyde) agarose. The aldehydes were reacted with an excess of ethylenediamine at pH 10, and the resulting Schiff bases were reduced with sodium borohydride, leaving the support decorated with positively charged secondary amino groups. Amination was carried out in an ice bath to control the exothermic reaction, and the support was washed sequentially at pH 9, pH 4 and with water to strip loosely bound reagents. The result is a positively charged support that adsorbs the acidic patches of a protein surface by ion exchange and, once activated with glutaraldehyde, can also bind it covalently.",
+              "The expected outcome was a MANAE-agarose support ready to serve as the common base for both immobilisation strategies (Figure 6).",
+            ],
+            pairedResource: {
+              kind: "image",
+              src: `${IMG_DIR}/immobilisation-strategies.png`,
+              alt: "Two routes from MANAE-agarose: the covalent route pre-activates the support with glutaraldehyde before adding the enzyme; the ionic route adsorbs the enzyme first and then crosslinks it with glutaraldehyde",
+              caption:
+                "**Schematic representation of two distinct enzyme immobilization strategies on MANAE agarose support using glutaraldehyde. Covalent Immobilization (Top Route):** MANAE agarose support is pre-activated with glutaraldehyde (**+Glut**) to introduce reactive aldehyde groups onto the support surface. The enzyme (**+Enzyme**) is then added to form direct covalent bonds with the activated matrix. **Ionic Adsorption followed by Crosslinking (Bottom Route):** The enzyme (**+Enzyme**) is first ionically adsorbed onto the positively charged MANAE agarose surface via electrostatic interactions. Subsequently, glutaraldehyde (**+Glut**) is introduced as a crosslinking agent to form intermolecular chemical linkages, stabilizing the adsorbed enzyme complex.",
+            },
+          },
         ],
         protocols: protocolLinks("12-enzyme-immobilisation-manae"),
       },
@@ -842,24 +898,24 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ExperimentSubBlock[] = [
 ];
 
 export const ENZYMATIC_IMMOBILISATION_REFERENCES: string[] = [
-  "[1] Dayton, C. L. G., Da Silva Galhardo, F., Barton, N., Hitchman, T., Lyon, J., O'Donoghue, E., & Wall, M. A. (2009). Oil degumming methods (Patent No. EP2488639A1). Google Patents. https://patents.google.com/patent/EP2488639A1/en",
-  "[2] Hon, J., Borko, S., Štourač, J., Prokop, Z., Zendulka, J., Bednář, D., Martínek, T., & Damborský, J. (2020). EnzymeMiner: Automated mining of soluble enzymes with diverse structures, catalytic properties, and stabilities. Nucleic Acids Research, 48(W1), W104-W109. https://doi.org/10.1093/nar/gkaa372",
-  "[3] Hauenstein, J., Jeske, L., Jäde, A., Krull, M., Dümmer, K., Koblitz, J., Tietz, A., Jahn, D., Reimer, L. C., & Bunk, B. (2026). BRENDA in 2026: A Global Core Biodata Resource for functional enzyme and metabolic data within the DSMZ Digital Diversity. Nucleic Acids Research, 54(D1), D527-D534. https://doi.org/10.1093/nar/gkaf1113",
-  "[4] The UniProt Consortium. (2025). UniProt: The Universal Protein Knowledgebase in 2025. Nucleic Acids Research, 53(D1), D609-D617. https://doi.org/10.1093/nar/gkae1010",
-  "[5] Waterhouse, A., Bertoni, M., Bienert, S., Studer, G., Tauriello, G., Gumienny, R., Heer, F. T., de Beer, T. A. P., Rempfer, C., Bordoli, L., Lepore, R., & Schwede, T. (2018). SWISS-MODEL: Homology modelling of protein structures and complexes. Nucleic Acids Research, 46(W1), W296-W303. https://doi.org/10.1093/nar/gky427",
-  "[6] Mura, C., McCrimmon, C. M., Vertrees, J., & Sawaya, M. R. (2010). An introduction to biomolecular graphics. PLoS Computational Biology, 6(8), e1000918. https://doi.org/10.1371/journal.pcbi.1000918",
+  "[1] Dayton CLG, Da Silva Galhardo F, Barton N, Hitchman T, Lyon J, O’donoghue E, et al. EP2488639A1 - Oil degumming methods - Google Patents [Internet]. 2009. Available from: https://patents.google.com/patent/EP2488639A1/en",
+  "[2] Hon J, Borko S, Stourac J, Prokop Z, Zendulka J, Bednar D, et al. EnzymeMiner: automated mining of soluble enzymes with diverse structures, catalytic properties and stabilities. Nucleic Acids Research [Internet]. 2020 Apr 29;48(W1):W104–9. Available from: https://doi.org/10.1093/nar/gkaa372",
+  "[3] Hauenstein J, Jeske L, Jäde A, Krull M, Dümmer K, Koblitz J, et al. BRENDA in 2026: a Global Core Biodata Resource for functional enzyme and metabolic data within the DSMZ Digital Diversity. Nucleic Acids Research [Internet]. 2025 Nov 6;54(D1):D527–34. Available from: https://doi.org/10.1093/nar/gkaf1113",
+  "[4] Bateman A, Martin MJ, Orchard S, Magrane M, Adesina A, Ahmad S, et al. UniProt: the Universal Protein Knowledgebase in 2025. Nucleic Acids Research [Internet]. 2024 Oct 16;53(D1):D609–17. Available from: https://doi.org/10.1093/nar/gkae1010",
+  "[5] Waterhouse A, Bertoni M, Bienert S, Studer G, Tauriello G, Gumienny R, et al. SWISS-MODEL: homology modelling of protein structures and complexes. Nucleic Acids Research [Internet]. 2018 May 7;46(W1):W296–303. Available from: https://doi.org/10.1093/nar/gky427",
+  "[6] Mura C, McCrimmon CM, Vertrees J, Sawaya MR. An introduction to biomolecular graphics. PLoS Computational Biology [Internet]. 2010 Aug 26;6(8):e1000918. Available from: https://doi.org/10.1371/journal.pcbi.1000918",
   "[7] Novagen. (2003). pET system manual (11th ed.). EMD Biosciences.",
-  "[8] Cline, J., Braman, J. C., & Hogrefe, H. H. (1996). PCR fidelity of Pfu DNA polymerase and other thermostable DNA polymerases. Nucleic Acids Research, 24(18), 3546-3551. https://doi.org/10.1093/nar/24.18.3546",
-  "[9] Studier, F. W. (2005). Protein production by auto-induction in high-density shaking cultures. Protein Expression and Purification, 41(1), 207-234. https://doi.org/10.1016/j.pep.2005.01.016",
-  "[10] Porath, J., Carlsson, J., Olsson, I., & Belfrage, G. (1975). Metal chelate affinity chromatography, a new approach to protein fractionation. Nature, 258(5536), 598-599. https://doi.org/10.1038/258598a0",
-  "[11] Andersch, M. A., & Szczypinski, A. J. (1947). Use of p-nitrophenylphosphate as the substrate in determination of serum acid phosphatase. American Journal of Clinical Pathology, 17(7), 571-574. https://doi.org/10.1093/ajcp/17.7_ts.571",
-  "[12] Virgen-Ortíz, J. J., dos Santos, J. C. S., Ortiz, C., Berenguer-Murcia, Á., Barbosa, O., Rodrigues, R. C., & Fernandez-Lafuente, R. (2019). Lecitase ultra: A phospholipase with great potential in biocatalysis. Molecular Catalysis, 473, 110405. https://doi.org/10.1016/j.mcat.2019.110405",
-  "[13] Andrés-Sanz, D., Fresán, C., Fernández-Lorente, G., Rocha-Martín, J., & Guisán, J. M. (2021). Stabilization of Lecitase Ultra by immobilization and fixation of bimolecular aggregates: Release of omega-3 fatty acids by enzymatic hydrolysis of krill oil. Catalysts, 11(9), 1067. https://doi.org/10.3390/catal11091067",
-  "[14] Ait Braham, S., Siar, E. H., Arana-Peña, S., Bavandi, H., Carballares, D., Morellon-Sterling, R., de Andrades, D., Kornecki, J. F., & Fernandez-Lafuente, R. (2021). Positive effect of glycerol on the stability of immobilized enzymes: Is it a universal fact? Process Biochemistry, 102, 108-121. https://doi.org/10.1016/j.procbio.2020.12.015",
-  "[15] López-Gallego, F., Betancor, L., Mateo, C., Hidalgo, A., Alonso-Morales, N., Dellamora-Ortiz, G., Guisán, J. M., & Fernández-Lafuente, R. (2005). Enzyme stabilization by glutaraldehyde crosslinking of adsorbed proteins on aminated supports. Journal of Biotechnology, 119(1), 70-75. https://doi.org/10.1016/j.jbiotec.2005.05.021",
-  "[16] Mateo, C., Bolivar, J. M., Godoy, C. A., Rocha-Martin, J., Pessela, B. C., Curiel, J. A., Muñoz, R., Guisan, J. M., & Fernández-Lorente, G. (2010). Improvement of enzyme properties with a two-step immobilization process on novel heterofunctional supports. Biomacromolecules, 11(11), 3112-3117. https://doi.org/10.1021/bm100916r",
-  "[17] Rodrigues, R. C., Virgen-Ortíz, J. J., dos Santos, J. C. S., Berenguer-Murcia, Á., Alcántara, A. R., Barbosa, O., Ortiz, C., & Fernandez-Lafuente, R. (2019). Immobilization of lipases on hydrophobic supports: Immobilization mechanism, advantages, problems, and solutions. Biotechnology Advances, 37(5), 746-770. https://doi.org/10.1016/j.biotechadv.2019.04.003",
-  "[18] Barbosa, O., Ortiz, C., Berenguer-Murcia, Á., Torres, R., Rodrigues, R. C., & Fernandez-Lafuente, R. (2014). Glutaraldehyde in bio-catalyst design: A useful crosslinker and a versatile tool in enzyme immobilization. RSC Advances, 4(4), 1583-1600. https://doi.org/10.1039/c3ra45991h",
+  "[8] Cline J. PCR fidelity of pfu DNA polymerase and other thermostable DNA polymerases. Nucleic Acids Research [Internet]. 1996 Sep 15;24(18):3546–51. Available from: https://doi.org/10.1093/nar/24.18.3546",
+  "[9] Studier FW. Protein production by auto-induction in high-density shaking cultures. Protein Expression and Purification [Internet]. 2005 Feb 8;41(1):207–34. Available from: https://doi.org/10.1016/j.pep.2005.01.016",
+  "[10] Porath J, Carlsson J, Olsson I, Belfrage G. Metal chelate affinity chromatography, a new approach to protein fractionation. Nature [Internet]. 1975 Dec 1;258(5536):598–9. Available from: https://doi.org/10.1038/258598a0",
+  "[11] Andersch MA, Szczypinski AJ. Use of P-Nitrophenylphosphate as the substrate in determination of serum acid phosphatase. American Journal of Clinical Pathology [Internet]. 1947 Jul 1;17(7_ts):571–4. Available from: https://doi.org/10.1093/ajcp/17.7_ts.571",
+  "[12] Virgen-Ortíz JJ, Santos JCSD, Ortiz C, Berenguer-Murcia Á, Barbosa O, Rodrigues RC, et al. Lecitase ultra: A phospholipase with great potential in biocatalysis. Molecular Catalysis [Internet]. 2019 May 21;473:110405. Available from: https://doi.org/10.1016/j.mcat.2019.110405",
+  "[13] Andrés-Sanz D, Fresan C, Fernández-Lorente G, Rocha-Martín J, Guisán JM. Stabilization of Lecitase Ultra® by immobilization and fixation of bimolecular aggregates. release of omega-3 fatty acids by enzymatic hydrolysis of krill oil. Catalysts [Internet]. 2021 Aug 31;11(9):1067. Available from: https://doi.org/10.3390/catal11091067",
+  "[14] Braham SA, Siar EH, Arana-Peña S, Bavandi H, Carballares D, Morellon-Sterling R, et al. Positive effect of glycerol on the stability of immobilized enzymes: Is it a universal fact? Process Biochemistry [Internet]. 2020 Dec 30;102:108–21. Available from: https://doi.org/10.1016/j.procbio.2020.12.015",
+  "[15] López-Gallego F, Betancor L, Mateo C, Hidalgo A, Alonso-Morales N, Dellamora-Ortiz G, et al. Enzyme stabilization by glutaraldehyde crosslinking of adsorbed proteins on aminated supports. Journal of Biotechnology [Internet]. 2005 Jul 22;119(1):70–5. Available from: https://doi.org/10.1016/j.jbiotec.2005.05.021",
+  "[16] Mateo C, Bolivar JM, Godoy CA, Rocha-Martin J, Pessela BC, Curiel JA, et al. Improvement of Enzyme Properties with a Two-Step Immobilizaton Process on Novel Heterofunctional Supports. Biomacromolecules [Internet]. 2010 Oct 14;11(11):3112–7. Available from: https://doi.org/10.1021/bm100916r",
+  "[17] Rodrigues RC, Virgen-Ortíz JJ, Santos JCSD, Berenguer-Murcia Á, Alcantara AR, Barbosa O, et al. Immobilization of lipases on hydrophobic supports: immobilization mechanism, advantages, problems, and solutions. Biotechnology Advances [Internet]. 2019 Apr 8;37(5):746–70. Available from: https://doi.org/10.1016/j.biotechadv.2019.04.003",
+  "[18] Barbosa O, Ortiz C, Berenguer-Murcia Á, Torres R, Rodrigues RC, Fernandez-Lafuente R. Glutaraldehyde in bio-catalysts design: a useful crosslinker and a versatile tool in enzyme immobilization. RSC Advances [Internet]. 2013 Oct 28;4(4):1583–600. Available from: https://doi.org/10.1039/c3ra45991h",
 ];
 
 /* Restored so Experiments.tsx builds again. */

@@ -1,26 +1,26 @@
 /* 3.2b Full financial plan (fold-out at the end of "Business model").
-   Every figure is a planning assumption of the rePhlow financial model.
+   Every figure is a planning assumption of the rePhlow financial model (Business Plan V3).
    Empty strings show as "—" until the value is confirmed. */
 
 const KPIS: [string, string, string][] = [
   ["Revenue, Year 10", "€933,660", "from €265,400 in Year 5"],
   ["EBITDA break-even", "Year 7", "+€94,947 in Year 7"],
-  ["Positive cash", "from Year 5", "with €1.09M of funding"],
+  ["Cash position", "Positive throughout", "except a dip to −€1,846 in month 24; net cash flow positive from Year 7"],
   ["Gross margin, Year 10", "58.3%", "hardware and service combined"],
 ];
 
 const EVOLUTION: [string, string, string, string][] = [
   ["Revenue", "€265,400", "€821,580", "€933,660"],
-  ["EBITDA", "", "+€94,947", "+€111,796"],
+  ["EBITDA", "−€193,276", "+€94,947", "+€111,796"],
 ];
 
 const MARGINS: [string, string, string][] = [
   ["Module price", "€19,000 / unit", "Set from direct cost to reach a 50% margin"],
   ["Module direct cost", "€9,460 / unit", "Alginate €30 and CaCl₂ €10 (calculated); bacterial culture €300, enzyme functionalisation €1,120, manufacture and assembly €8,000 (assumptions)"],
   ["Hardware gross margin", "50.2%", "Calculated: (19,000 − 9,460) / 19,000"],
-  ["Service contract", "€4,500 / month", "Assumption; operating cost €3,250 / month"],
+  ["Service contract", "€4,500 / month", "Assumption; operating cost €1,200 / month per contract (monitoring and maintenance), plus energy ≈ €1,400 per module per year"],
   ["Recovered phosphorus", "€2 / kg", "Assumption; recovery cost €0.80 / kg. Only once yield and purity are demonstrated"],
-  ["Revenue per installation", "≈ €58,354 / year", "Calculated by the model"],
+  ["Revenue per installation", "≈ €58,354 / year", "Calculated by the model (Year 10)"],
   ["Combined gross margin, Year 10", "58.3%", "Calculated by the model"],
 ];
 
@@ -31,14 +31,26 @@ const PILOT: [string, string, string][] = [
 
 /** [source, type, amount, year] */
 const FUNDING: [string, string, string, string][] = [
-  ["Founders", "Equity", "", ""],
-  ["Prizes", "Non-dilutive", "", ""],
-  ["NEOTEC (CDTI)", "Grant", "", ""],
-  ["Seed round", "Equity", "", ""],
-  ["ENISA", "Participative loan", "", ""],
-  ["LIFE programme (EU)", "Grant", "", ""],
+  ["Founders", "Equity", "€20,000", "Month 16"],
+  ["Prizes, sponsorship and UCM pre-incubation", "Non-dilutive", "€120,000", "Month 16"],
+  ["NEOTEC (CDTI)", "Grant", "€175,000", "Year 3"],
+  ["Seed round", "Equity", "€550,000", "Year 3"],
+  ["ENISA", "Participative loan (6%)", "€75,000", "Year 4, repaid Year 10"],
+  ["LIFE programme (EU)", "Grant", "€150,000", "Year 5"],
 ];
 const FUNDING_TOTAL = "€1,090,000";
+
+/** Capsule lifetime sensitivity: [reuse cycles, Year-5 gross margin]. 500 is the model assumption. */
+const SENSITIVITY: [string, string][] = [
+  ["50", "−10.6%"],
+  ["100", "25.7%"],
+  ["128", "33.6%"],
+  ["250", "47.5%"],
+  ["500", "54.7%"],
+  ["1,000", "58.4%"],
+  ["2,160", "60.3%"],
+];
+const ASSUMED_CYCLES = "500";
 
 const v = (s: string) => s || "—";
 
@@ -121,12 +133,40 @@ export function FinancialPlan() {
           </table>
         </div>
 
+        <h5>Sensitivity: capsule lifetime</h5>
+        <div className="tbl-wrap">
+          <table className="tbl">
+            <thead>
+              <tr>
+                <th>Reuse cycles</th>
+                {SENSITIVITY.map(([c]) => (
+                  <th key={c}>{c === ASSUMED_CYCLES ? `${c} (assumed)` : c}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="hl">
+                <td className="rowh">Gross margin, Year 5</td>
+                {SENSITIVITY.map(([c, m]) => (
+                  <td
+                    key={c}
+                    className="num"
+                    style={c === ASSUMED_CYCLES ? { fontWeight: 700, color: "var(--s3)" } : m.startsWith("−") ? { color: "var(--bad)" } : undefined}
+                  >
+                    {m}
+                  </td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
         <div className="ent-fin-key">
           <b>The assumption that matters most: capsule lifetime.</b> Our model assumes each enzyme-functionalised
-          capsule can be reused for 2,160 cycles before replacement. This has not been measured yet. Our sensitivity
-          analysis shows that below 128 cycles, the Year-5 gross margin turns negative. That makes capsule lifetime the
-          first thing our pilot must measure. Under Phosphorus-as-a-Service, this risk stays with rePhlow rather than
-          with the customer.
+          capsule can be reused for 500 cycles before replacement, which gives a Year-5 gross margin of 54.7%. This has
+          not been measured yet. At 100 cycles the margin falls to 25.7%, and at 50 cycles it turns negative (−10.6%).
+          That makes capsule lifetime the first thing our pilot must measure. Under Phosphorus-as-a-Service, this risk
+          stays with rePhlow rather than with the customer.
         </div>
       </div>
     </details>

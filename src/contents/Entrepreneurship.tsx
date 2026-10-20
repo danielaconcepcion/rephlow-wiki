@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { PageSectionNav } from "../components/PageSectionNav";
 import type { PageSection } from "../components/PageSectionNav";
+import { MoleculeBackdrop } from "../components/MoleculeBackdrop/MoleculeBackdrop";
 import "./Entrepreneurship/Entrepreneurship.css";
 import { ModalContext, UIContext } from "./Entrepreneurship/state";
 import type { UIState, UIValue } from "./Entrepreneurship/state";
@@ -158,6 +159,9 @@ export function Entrepreneurship() {
 
   /* Reveal-on-scroll for every .rv block. */
   const root = useRef<HTMLDivElement>(null);
+  /* The prose column, so the molecule backdrop can lean away from it —
+     the same thing Human Practices and Sustainability pass. */
+  const colRef = useRef<HTMLElement>(null);
   useEffect(() => {
     const els = root.current?.querySelectorAll(".rv");
     if (!els) return;
@@ -204,13 +208,20 @@ export function Entrepreneurship() {
   return (
     <UIContext.Provider value={uiCtx}>
       <ModalContext.Provider value={modalApi}>
-        <div className="ent" ref={root} onClick={onClick}>
+        <div
+          className="ent entrepreneurship-page mbg-host"
+          ref={root}
+          onClick={onClick}
+        >
+          {/* The same molecule-field backdrop Human Practices uses, tinted
+              to match it (see Entrepreneurship.css). */}
+          <MoleculeBackdrop contentRef={colRef} />
           <div className="page-with-section-nav ent-page">
             <PageSectionNav
               sections={SECTIONS}
               ariaLabel="Jump to a part of the Entrepreneurship page"
             />
-            <main className="ent-col">
+            <main className="ent-col" ref={colRef}>
               <Intro />
               <S1 />
               <S2 />

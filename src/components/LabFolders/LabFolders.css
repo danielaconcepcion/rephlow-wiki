@@ -406,6 +406,10 @@
 .folder-stack {
   position: relative;
   padding-bottom: 22px;
+  /* A workflow-figure panel scrolls here when it opens its folder (see
+     openExperiment in workflowFigures/palette.ts), so the deck needs the
+     same sticky-nav clearance every other scroll target on the page has. */
+  scroll-margin-top: var(--section-nav-offset);
 }
 
 /* Hidden probe for the single-row-vs-two-row decision (see FolderStack.tsx)
@@ -1117,6 +1121,17 @@
 .record-figure-group {
   margin: 0;
 }
+
+/* A wide resource (image-group or custom — see isWideResource in
+   ExperimentCard.tsx) renders stacked directly after the paragraphs that
+   introduce it, as a plain sibling with nothing between them, so an image
+   group's sub-titles start hard against the last line of prose. Give it
+   room to read as its own thing. In the paired layout the figure is the
+   first child of its own column, so this rule never fires there. */
+.experiment-card__desc + .record-figure,
+.experiment-card__desc + .record-figure-group {
+  margin-top: 26px;
+}
 .record-figure-group__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -1487,7 +1502,12 @@
   text-align: center;
   color: var(--ink-soft);
 }
-.pdf-viewer__download {
+/* "Download PDF" and "Open in browser", side by side under the embed —
+   they wrap onto two rows on a narrow screen rather than squeezing. */
+.pdf-viewer__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   align-self: flex-start;
 }
 
@@ -1530,6 +1550,60 @@
   gap: 20px;
   padding: 10px 12px 10px 22px;
   border-bottom: 1px solid var(--lab-line);
+}
+
+/* Title, then the two PDF actions, then the close button. The title is
+   what gives way when the bar runs out of room, so the actions stay
+   reachable on a narrow screen. */
+.protocol-modal__title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.protocol-modal__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+/* Same button as the Entrepreneurship PDF viewer's (.ent-portal-tool):
+   same pill, same 1.5px tinted border, same pale tinted fill and dark
+   tinted label. The one difference is the tint itself — that one hardcodes
+   its page's green, while this modal opens from four differently coloured
+   blocks, so it takes --folder-accent and reads as the block it came
+   from. */
+.protocol-modal__tool {
+  --tool-tint: var(--folder-accent, #5f7d36);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1.5px solid color-mix(in srgb, var(--tool-tint) 40%, transparent);
+  background: color-mix(in srgb, var(--tool-tint) 8%, #fff);
+  color: color-mix(in srgb, var(--tool-tint) 75%, #1b2340);
+  font-family: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.protocol-modal__tool:hover,
+.protocol-modal__tool:focus-visible {
+  background: color-mix(in srgb, var(--tool-tint) 16%, #fff);
+}
+
+@media (max-width: 560px) {
+  .protocol-modal__tool {
+    padding: 7px 10px;
+  }
+  .protocol-modal__tool svg {
+    display: none;
+  }
 }
 
 .protocol-modal__close {
@@ -1917,13 +1991,19 @@
   letter-spacing: 0.06em;
   white-space: nowrap;
 }
+/* One enzyme, one colour across the wiki: these are the same two shades
+   Measurements already gives DHAK and PPK2 (see Measurements.css), so a
+   reader meets the same chip on Experiments, Results and Measurements
+   instead of a different pair per page. The old PPK2 mustard was the
+   Revalorisation block's own accent (#b8790a), which left the chip
+   reading as part of the folder rather than as a label on it. */
 .experiment-chip--dhak {
-  color: #2e7d86;
-  background: rgba(46, 125, 134, 0.08);
+  color: #6b4e9a;
+  background: #6b4e9a1a;
 }
 .experiment-chip--ppk2 {
-  color: #b8790a;
-  background: rgba(184, 121, 10, 0.1);
+  color: #1568a3;
+  background: #1568a31a;
 }
 
 /* --------------------------------------------------------------------------

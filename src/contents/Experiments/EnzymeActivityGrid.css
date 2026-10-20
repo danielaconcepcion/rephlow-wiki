@@ -73,6 +73,37 @@
   margin-bottom: 0;
 }
 
+/* The bond-cleavage diagram each activity prints. These are small, mostly
+   white line drawings, so they get a paper panel to sit on rather than
+   floating on the card's own tint, and a modest cap on height so a tall
+   one (the phytate ring) does not tower over a wide one (the
+   phospholipids). */
+.enzyme-card__figure {
+  margin: 16px 0 0;
+}
+.enzyme-card__figure img {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  max-height: 200px;
+  object-fit: contain;
+  margin: 0 auto;
+  padding: 10px;
+  background: var(--paper, #fff);
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-md, 8px);
+}
+.enzyme-card__figure figcaption {
+  margin-top: 8px;
+  font-size: 0.74rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.enzyme-card__figure .record-caption__label {
+  font-style: normal;
+}
+
 @media (max-width: 640px) {
   .enzyme-activity-grid-frame {
     padding: 18px 18px 22px;

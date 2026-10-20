@@ -61,9 +61,15 @@ export function numberResults(
  */
 export function numberExperiments(
   groups: (ExperimentSubBlock | { experiments?: ExperimentData[] })[],
+  /** Figures already printed above the decks, which the decks carry on
+   * from. Enzymatic immobilisation prints four bond-cleavage diagrams in
+   * its "four parts of the system" grid before any experiment, and its
+   * prose then refers to "(Figure 5)" and "(Figure 6)" inside the decks,
+   * so those have to continue the same sequence rather than restart. */
+  startFigure = 0,
 ): Numbering {
   const numbers: Numbering = new Map();
-  let figure = 0;
+  let figure = startFigure;
   let table = 0;
   /* Reading order, foldable sections included: a figure inside a folded
      section is still the next figure in the record, whether or not the

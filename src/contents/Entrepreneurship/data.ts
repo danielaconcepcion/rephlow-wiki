@@ -2323,7 +2323,7 @@ export const SW = {
    ],
    [
     "Pilot capital requirement and unvalidated unit economics",
-    "Pilot capital requirement and unit economics not yet validated.",
+    "Pilot capital requirement and economics depend on capsule service life, not yet measured in real effluent.",
     "Our planning figures for the industrial pilot, the module price and the gross margin remain unvalidated at both laboratory and industrial pilot scale, and the cost of goods depends on three parameters we have not yet measured: encapsulated uptake relative to free cells, capsule service life and enzyme cost at kilogram scale. A full techno-economic assessment is a defined next step, but until it is completed the financial case rests on assumptions rather than evidence. The figures themselves, and what would have to happen to confirm each one, are set out in our <a href='#s3-model'><u>Business Model</u></a> section."
    ],
    [
