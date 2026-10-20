@@ -23,15 +23,16 @@ import { SelectionFunnel } from "../../components/SelectionFunnel";
  *
  * The source cites by numbers that belong to the Experiments page's own
  * reference list, so the numbers are dropped here and the citing sentences
- * keep their claims. As everywhere, these asset paths are development
- * stand-ins and still have to go through the iGEM uploads tool before the
- * Wiki Freeze.
+ * keep their claims.
  */
 
+/* One flat folder, not the three sub-folders this repository keeps these
+ * figures in: a sub-folder at this depth does not survive the upload, so
+ * every one of these files answered 403 while the twelve beside them
+ * answered 200. The two structure sets are distinguished by a prefix
+ * instead, since both held files of the same name and flattening them as
+ * they were would have left one set overwriting the other. */
 const FIGURES = "assets/results/enzymatic-immobilisation";
-const GELS = `${FIGURES}/gels`;
-const STRUCT_COLOUR = `${FIGURES}/structures-colored`;
-const STRUCT_CYS = `${FIGURES}/structures-cys-bridges`;
 
 export const ENZYMATIC_IMMOBILISATION_INTRO =
   "This block builds the enzymatic layer of the rePhlow sphere: a panel of phosphohydrolases is produced in *E. coli* and characterised, and the chemistry to immobilise it on the support is worked out on a model system with Lecitase® Ultra. Each record reports the outcome of the corresponding experiment on the Experiments page, following the same order and titles.";
@@ -135,43 +136,43 @@ const IN_SILICO: ResultData = {
       title: "Terminal accessibility and tag placement",
       figures: [
         {
-          src: `${STRUCT_COLOUR}/struct_A_estE1_MG.png`,
+          src: `${FIGURES}/struct-colour-a-este1-mg.png`,
           title: "(A) estE1_MG",
           alt: "EstE1_MG model coloured from blue at the N-terminus to red at the C-terminus.",
           caption: "",
         },
         {
-          src: `${STRUCT_COLOUR}/struct_B_plc_Tk.png`,
+          src: `${FIGURES}/struct-colour-b-plc-tk.png`,
           title: "(B) plc_Tk",
           alt: "Plc_Tk model coloured from blue at the N-terminus to red at the C-terminus.",
           caption: "",
         },
         {
-          src: `${STRUCT_COLOUR}/struct_C_appA_Yi.png`,
+          src: `${FIGURES}/struct-colour-c-appa-yi.png`,
           title: "(C) appA_Yi",
           alt: "AppA_Yi model coloured from blue at the N-terminus to red at the C-terminus.",
           caption: "",
         },
         {
-          src: `${STRUCT_COLOUR}/struct_D_phyA_Op.png`,
+          src: `${FIGURES}/struct-colour-d-phya-op.png`,
           title: "(D) phyA_Op",
           alt: "PhyA_Op model coloured from blue at the N-terminus to red at the C-terminus.",
           caption: "",
         },
         {
-          src: `${STRUCT_COLOUR}/struct_E_M2-32_MG.png`,
+          src: `${FIGURES}/struct-colour-e-m2-32-mg.png`,
           title: "(E) M2-32_MG",
           alt: "M2-32_MG model coloured from blue at the N-terminus to red at the C-terminus.",
           caption: "",
         },
         {
-          src: `${STRUCT_COLOUR}/struct_F_aphA_Ec.png`,
+          src: `${FIGURES}/struct-colour-f-apha-ec.png`,
           title: "(F) aphA_Ec",
           alt: "AphA_Ec model coloured from blue at the N-terminus to red at the C-terminus.",
           caption: "",
         },
         {
-          src: `${STRUCT_COLOUR}/struct_G_cerA_Bc.png`,
+          src: `${FIGURES}/struct-colour-g-cera-bc.png`,
           title: "(G) cerA_Bc",
           alt: "CerA_Bc model coloured from blue at the N-terminus to red at the C-terminus.",
           caption: "",
@@ -186,43 +187,43 @@ const IN_SILICO: ResultData = {
       title: "Structural disulphide bridges",
       figures: [
         {
-          src: `${STRUCT_CYS}/struct_A_estE1_MG.png`,
+          src: `${FIGURES}/struct-cys-a-este1-mg.png`,
           title: "(A) estE1_MG",
           alt: "EstE1_MG model with cysteine residues highlighted; no disulphide bridges.",
           caption: "",
         },
         {
-          src: `${STRUCT_CYS}/struct_B_plc_Tk.png`,
+          src: `${FIGURES}/struct-cys-b-plc-tk.png`,
           title: "(B) plc_Tk",
           alt: "Plc_Tk model with cysteine residues highlighted; no disulphide bridges.",
           caption: "",
         },
         {
-          src: `${STRUCT_CYS}/struct_C_appA_Yi.png`,
+          src: `${FIGURES}/struct-cys-c-appa-yi.png`,
           title: "(C) appA_Yi",
           alt: "AppA_Yi model with four disulphide bridges highlighted.",
           caption: "",
         },
         {
-          src: `${STRUCT_CYS}/struct_D_phyA_Op.png`,
+          src: `${FIGURES}/struct-cys-d-phya-op.png`,
           title: "(D) phyA_Op",
           alt: "PhyA_Op model with four disulphide bridges highlighted.",
           caption: "",
         },
         {
-          src: `${STRUCT_CYS}/struct_E_M2-32_MG.png`,
+          src: `${FIGURES}/struct-cys-e-m2-32-mg.png`,
           title: "(E) M2-32_MG",
           alt: "M2-32_MG model with two disulphide bridges highlighted.",
           caption: "",
         },
         {
-          src: `${STRUCT_CYS}/struct_F_aphA_Ec.png`,
+          src: `${FIGURES}/struct-cys-f-apha-ec.png`,
           title: "(F) aphA_Ec",
           alt: "AphA_Ec model with cysteine residues highlighted; no disulphide bridges.",
           caption: "",
         },
         {
-          src: `${STRUCT_CYS}/struct_G_cerA_Bc.png`,
+          src: `${FIGURES}/struct-cys-g-cera-bc.png`,
           title: "(G) cerA_Bc",
           alt: "CerA_Bc model with cysteine residues highlighted; no disulphide bridges.",
           caption: "",
@@ -290,7 +291,7 @@ const CONSTRUCTS: ResultData = {
       figuresAside: true,
       figures: [
         {
-          src: `${GELS}/gel_gene_amplification.png`,
+          src: `${FIGURES}/gel-gene-amplification.png`,
           alt: "Agarose gel of the gene amplification for cerA (873 bp) and aphA (735 bp).",
           caption:
             "1% (w/v) agarose gel of the gene amplification for cloning into the pET vectors, sized against the φ29 and λ molecular-weight markers.",
@@ -316,7 +317,7 @@ const TRANSFORMATION: ResultData = {
       figuresAside: true,
       figures: [
         {
-          src: `${GELS}/gel_colony_pcr.png`,
+          src: `${FIGURES}/gel-colony-pcr.png`,
           alt: "Agarose gel of the colony PCR for aphA (971 bp) and cerA (1050 bp).",
           caption:
             "1% (w/v) agarose gel of the colony PCR after ligation, verifying the insert against the φ29 and λ molecular-weight markers.",
@@ -343,25 +344,25 @@ const EXPRESSION: ResultData = {
       title: "IPTG against ZY auto-induction",
       figures: [
         {
-          src: `${GELS}/gel_A_iptg_total.png`,
+          src: `${FIGURES}/gel-a-iptg-total.png`,
           title: "(A) IPTG, total fraction",
           alt: "SDS-PAGE of IPTG induction, total fraction.",
           caption: "",
         },
         {
-          src: `${GELS}/gel_B_iptg_soluble.png`,
+          src: `${FIGURES}/gel-b-iptg-soluble.png`,
           title: "(B) IPTG, soluble fraction",
           alt: "SDS-PAGE of IPTG induction, soluble fraction.",
           caption: "",
         },
         {
-          src: `${GELS}/gel_C_autoinduction_total.png`,
+          src: `${FIGURES}/gel-c-autoinduction-total.png`,
           title: "(C) Auto-induction, total",
           alt: "SDS-PAGE of ZY auto-induction, total fraction.",
           caption: "",
         },
         {
-          src: `${GELS}/gel_D_autoinduction_soluble.png`,
+          src: `${FIGURES}/gel-d-autoinduction-soluble.png`,
           title: "(D) Auto-induction, soluble",
           alt: "SDS-PAGE of ZY auto-induction, soluble fraction.",
           caption: "",
@@ -378,7 +379,7 @@ const EXPRESSION: ResultData = {
       title: "The Addgene constructs, and PLC cytotoxicity",
       figures: [
         {
-          src: `${GELS}/gel_bl21_apha_cera.png`,
+          src: `${FIGURES}/gel-bl21-apha-cera.png`,
           alt: "SDS-PAGE of BL21 expression of aphA and cerA at 20 ºC, total and soluble fractions.",
           caption:
             "SDS-PAGE of the recombinant expression of the Addgene constructs under IPTG induction at 20 ºC. Lanes: (M) NZYBlue® marker; total (T) and soluble (S) fractions of pET-28a(+) (1); AphA (2); pET-22b(+) (3); CerA (4). The black arrows mark the band corresponding to the enzyme, where present.",
