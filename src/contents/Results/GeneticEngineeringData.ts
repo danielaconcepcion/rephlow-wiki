@@ -50,8 +50,6 @@ const ASSAY_STANDARDISATION: ResultData = {
   id: "assay-standardisation",
   tabLabel: "Assay standardisation",
   title: "Growth characterisation of *P. putida* KT2440 in M9",
-  description:
-    "Before any strain changes, the intracellular-phosphorus assay had to be made reproducible: the first phosphorus valuations produced erratic, non-linear standard curves and time courses with implausible or negative values.",
   narrative: true,
   subsections: [
     {
@@ -82,8 +80,6 @@ const KINETICS_ACROSS_MEDIA: ResultData = {
   id: "kinetics-across-media",
   tabLabel: "Kinetics across media",
   title: "Kinetics of polyphosphate accumulation across culture media",
-  description:
-    "M9 was chosen as the maximal-stress reference condition, so the question here was not whether the culture grows but whether it stays measurable across the assay window.",
   narrative: true,
   subsections: [
     {
@@ -115,8 +111,6 @@ const OPERATING_CONDITIONS: ResultData = {
   tabLabel: "Operating conditions",
   title:
     "Operating-condition optimisation, pH and dilution in the synthetic stream",
-  description:
-    "Four combinations of pH and dilution were screened in the synthetic stream, against M9 and LB as the high- and low-retention references.",
   narrative: true,
   subsections: [
     {
@@ -721,8 +715,6 @@ const CLOSING: ResultData = {
   id: "closing-chassis",
   tabLabel: "WT vs transformant",
   title: "Phosphorus accumulation, wild type against the *ppk1* transformant",
-  description:
-    "The functional read-out that the Cloning section's last step points to: the verified pSEVA2513·*ppk1* transformant assayed against the wild type over a two-hour time course, with the standardised assay from Section 0.",
   narrative: true,
   subsections: [
     {
@@ -803,10 +795,6 @@ const CLOSING: ResultData = {
       expectation:
         "",
     },
-  ],
-  discussion: [
-    "This is the first direct, functional evidence that the heterologous *ppk1* increases phosphorus accumulation in the chassis, exactly as the add-polyphosphate-synthesis-capacity arm of the rePhlow design predicts, and it shows that the standardised assay is sensitive enough to separate an engineered strain from the wild type, which is the read-out the rest of the project depends on.",
-    "The result rests on the choice of fitting window, which should be stated wherever the 1.7-fold is quoted and justified on its own terms rather than left implicit. What it does not yet show is the complete rePhlow phenotype, which needs *pstSCAB* and the *ppx⁻ ppkB⁻ pitB⁻* background; this result de-risks the central hypothesis and defines the phosphorus-capture read-out that feeds the downstream recovery and revalorisation work.",
   ],
 };
 
