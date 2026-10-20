@@ -52,11 +52,12 @@ const ASSAY_STANDARDISATION: ResultData = {
   title: "Growth characterisation of *P. putida* KT2440 in M9",
   description:
     "Before any strain changes, the intracellular-phosphorus assay had to be made reproducible: the first phosphorus valuations produced erratic, non-linear standard curves and time courses with implausible or negative values.",
+  narrative: true,
   subsections: [
     {
       id: "standard-curves",
       body: [
-        "After correcting the standard-curve preparation, the sample dilutions and the acid-hydrolysis handling, later runs gave usable, approximately linear standard curves (calibration across 0 to 1000 ng phosphate) and reproducible time courses. The two replicate curves were read separately rather than averaged, so that replicate agreement could be judged directly.",
+        "The first phosphorus valuations produced erratic, non-linear standard curves and time courses with implausible or negative values. After correcting the standard-curve preparation, the sample dilutions and the acid-hydrolysis handling, later runs gave usable, approximately linear standard curves (calibration across 0 to 1000 ng phosphate) and reproducible time courses (Figure 1).",
       ],
       figures: [
         {
@@ -68,11 +69,11 @@ const ASSAY_STANDARDISATION: ResultData = {
         },
       ],
       observations:
-        "Both replicates were approximately linear across the full 0 to 1000 ng calibration range (R² = 0.9994 and 0.9991) and agreed closely with each other at every standard.",
+        "These results showed that the main limitation at this stage was analytical rather than biological. The initial variability could not be interpreted as changes in phosphorus metabolism because the assay itself was not yet sufficiently robust. Standardising the procedure established a reproducible method for quantifying intracellular phosphorus and normalising it to biomass (mPi/OD₆₀₀). This is essential because it allows phosphorus retention to be compared independently of differences in cell density, both between environmental conditions and, later, between wild-type and engineered strains.",
       interpretation:
-        "These results showed that the main limitation at this stage was **analytical rather than biological**. The initial variability could not be interpreted as changes in phosphorus metabolism because the assay itself was not yet sufficiently robust. Standardising the procedure established a reproducible method for quantifying intracellular phosphorus and normalising it to biomass (mPi/OD₆₀₀). This is essential because it allows phosphorus retention to be compared independently of differences in cell density, both between environmental conditions and, later, between wild-type and engineered strains.",
-      expectation:
         "This was only partly expected. A colorimetric phosphate assay was expected to provide a suitable method for quantifying intracellular phosphorus, but the magnitude of the variability observed during the first measurements was not anticipated. Identifying sample preparation, dilution and hydrolysis as the main sources of variability demonstrated that the anomalous values originated from the analytical procedure rather than from the behaviour of *P. putida*. Consequently, the key outcome of this stage was not a particular phosphorus-retention value, but a validated and standardised analytical workflow on which all subsequent biological comparisons could be built.",
+      expectation:
+        "",
     },
   ],
 };
@@ -83,9 +84,13 @@ const KINETICS_ACROSS_MEDIA: ResultData = {
   title: "Kinetics of polyphosphate accumulation across culture media",
   description:
     "M9 was chosen as the maximal-stress reference condition, so the question here was not whether the culture grows but whether it stays measurable across the assay window.",
+  narrative: true,
   subsections: [
     {
       id: "m9-growth",
+      body: [
+        "In M9, OD₆₀₀ declined approximately linearly across the 240 min window, from about **0.84 to 0.62** (Figure 2).",
+      ],
       figures: [
         {
           src: `${FIGURES}/kt2440-growth-m9.svg`,
@@ -96,11 +101,11 @@ const KINETICS_ACROSS_MEDIA: ResultData = {
         },
       ],
       observations:
-        "In M9, OD₆₀₀ declined approximately linearly across the 240 min window, from **0.838 to 0.622**, a fitted slope of about −0.00082 OD₆₀₀ per minute.",
-      interpretation:
         "Under minimal-medium stress the population does not grow but persists and remains measurable, so phosphorus can be sampled and normalised to OD₆₀₀ across the whole time course.",
+      interpretation:
+        "M9 was chosen precisely as the maximal-stress reference, so a non-growing, slowly declining population is consistent with the intended condition and validates the assay window.",
       expectation:
-        "Yes. M9 was chosen precisely as the maximal-stress reference, so a non-growing, slowly declining population is consistent with the intended condition and validates the assay window.",
+        "",
     },
   ],
 };
@@ -112,16 +117,20 @@ const OPERATING_CONDITIONS: ResultData = {
     "Operating-condition optimisation, pH and dilution in the synthetic stream",
   description:
     "Four combinations of pH and dilution were screened in the synthetic stream, against M9 and LB as the high- and low-retention references.",
+  narrative: true,
   subsections: [
     {
       id: "ph-and-dilution",
+      body: [
+        "Both **pH and degree of dilution measurably changed retention**, and M9 again gave far higher normalised retention than any synthetic-stream condition. Among the four combinations, the less diluted, mildly acidic condition (pH 6, 1:1) tended to give the highest normalised retention and the more diluted conditions the lowest, but the differences did not resolve into a single clean optimum (Figure 3).",
+      ],
       figures: [
         {
           src: `${FIGURES}/phosphorus-operating-conditions.svg`,
           kind: "chart" as const,
           alt: "Two panels of normalised intracellular phosphorus against time for six conditions; the second panel clips the y-axis so the four screened conditions separate.",
           caption:
-            "Normalised intracellular phosphorus (mPi/OD600) across the screen. (A) All six conditions on a common axis, which the M9 reference dominates. (B) The same points with the y-axis clipped just above the highest screened condition, so the four separate; only the two reference media run off the axis.",
+            "Normalised intracellular phosphorus (mPi/OD600) for the four operating conditions (A) and zoomed (B) screened in the synthetic stream (A: pH 6, 1:1; B: pH 6, 1:35; C: pH 7, 1:1; D: pH 7, 1:35), with M9 shown as the high-retention reference.",
         },
       ],
       tables: [
@@ -168,11 +177,11 @@ const OPERATING_CONDITIONS: ResultData = {
         },
       ],
       observations:
-        "Both **pH and degree of dilution measurably changed retention**, and M9 again gave far higher normalised retention than any synthetic-stream condition. Among the four combinations, the less diluted, mildly acidic condition A (pH 6, 1:1) reached the highest values at 90 and 120 min and the more diluted conditions the lowest, but the differences did not resolve into a single clean optimum. Each point is a single measurement, so no error can be put on any of these values.",
+        "The two adjustable process variables both influence phosphorus retention, but because dilution changes nutrient limitation and available phosphate at the same time, the two effects are confounded and the form of the relationship could not be determined from this screen. The output is that both levers matter, not yet how.",
       interpretation:
-        "The two adjustable process variables both influence phosphorus retention, but because dilution changes nutrient limitation and available phosphate at the same time, the two effects are confounded and the form of the relationship could not be determined from this screen. The output is that both levers matter, not yet how — and with one measurement per point, the ranking between conditions should be read as a tendency rather than a measured difference.",
-      expectation:
         "That pH and dilution would affect retention was expected, and they did; what remained open, and was flagged as the next step, was the **type** of relationship, since decoupling nutrient stress from phosphate availability requires a dedicated design.",
+      expectation:
+        "",
     },
   ],
 };
@@ -183,9 +192,13 @@ const IN_SILICO_CASSETTES: ResultData = {
   id: "in-silico-cassettes",
   tabLabel: "In silico design",
   title: "In silico design of the expression cassettes",
+  narrative: true,
   subsections: [
     {
       id: "cassette-design",
+      body: [
+        "The three expression parts were finalised in silico in SnapGene, with the *ppk1* and *pstSCAB* coding sequences codon-optimised for *P. putida*, the canonical AGGAGG ribosome binding site, and the cloning sites matched to each backbone (BamHI and HindIII for pSEVA2513, EcoRI and KpnI for pSEVA6313). When the promoter route later proved impractical, the same stage also produced the amplification primers that build the RBS and the restriction sites onto the genes (see our Parts section) (Figures 4 to 6).",
+      ],
       figures: [
         {
           src: `${FIGURES}/cassette-map-ppk1.svg`,
@@ -207,11 +220,11 @@ const IN_SILICO_CASSETTES: ResultData = {
         },
       ],
       observations:
-        "The three expression parts were finalised in silico in SnapGene, with the *ppk1* and *pstSCAB* coding sequences codon-optimised for *P. putida*, the canonical AGGAGG ribosome binding site, and the cloning sites matched to each backbone (BamHI and HindIII for pSEVA2513, EcoRI and KpnI for pSEVA6313). When the promoter route later proved impractical, the same stage also produced the amplification primers that build the RBS and the restriction sites onto the genes.",
-      interpretation:
         "The parts were defined down to the base before any DNA was committed, and the design already carried the fallback that ended up being used: putting the regulatory sequence into the primers rather than relying on a separate promoter fragment.",
+      interpretation:
+        "The design stage carries no wet-lab uncertainty, so it produced exactly the assembly-ready sequences intended; the only foresight that mattered was anticipating that a very small promoter might not survive gel purification.",
       expectation:
-        "Yes. The design stage carries no wet-lab uncertainty, so it produced exactly the assembly-ready sequences intended; the only foresight that mattered was anticipating that a very small promoter might not survive gel purification.",
+        "",
     },
   ],
 };
@@ -220,14 +233,13 @@ const PART_ACQUISITION: ResultData = {
   id: "part-acquisition",
   tabLabel: "Part acquisition",
   title: "Part acquisition and amplification",
+  narrative: true,
   subsections: [
     {
       id: "legacy-stocks",
       title: "First trial: the starting material was the limitation",
       body: [
-        "The coding sequences arrived pre-cloned and sequence-verified (*ppk1* in pMK-RQ, *pstSCAB* in pOK-RQ, both kanamycin-resistant), together with the pEM7 promoter supplied in the small vector pMA-RQ.",
-        "The legacy pSEVA stocks from the previous trial were heterogeneous and of low purity (A260/A230 well below the clean-DNA range), so they were re-transformed into DH5α and re-prepared. The earliest preparations then gave near-zero yields, traced to a procedural fault: ethanol had not been added to the miniprep and clean-up wash buffers. This was corrected.",
-        "No gel photograph exists for this assessment — only degraded material was visible, so it was never imaged.",
+        "The coding sequences arrived pre-cloned and sequence-verified (*ppk1* in pMK-RQ, *pstSCAB* in pOK-RQ, both kanamycin-resistant) and the promoter pEM7 in the small vector pMA-RQ. In the first trial, the starting material was the limitation. The legacy pSEVA stocks from the previous trial were heterogeneous and of low purity (A₂₆₀/A₂₃₀ well below the clean-DNA range), so they were re-transformed into DH5α and re-prepared; and the earliest preparations gave near-zero yields, traced to a procedural fault, ethanol not having been added to the miniprep and clean-up wash buffers, which was then corrected.",
       ],
       tables: [
         {
@@ -266,6 +278,9 @@ const PART_ACQUISITION: ResultData = {
     },
     {
       id: "pfu-amplification",
+      body: [
+        "In the second trial, the inserts were no longer excised from the carriers but amplified directly: *ppk1* (about 2200 bp) and *pstSCAB* (about 3000 bp) were produced by Pfu PCR as clean, correctly sized products carrying the RBS and cloning sites (Figure 7).",
+      ],
       title: "Second trial: the inserts were amplified rather than excised",
       figures: [
         {
@@ -276,11 +291,11 @@ const PART_ACQUISITION: ResultData = {
         },
       ],
       observations:
-        "The inserts were no longer excised from the carriers but amplified directly: *ppk1* (about 2200 bp) and *pstSCAB* (about 3000 bp) were produced by Pfu PCR as clean, correctly sized products carrying the RBS and cloning sites.",
-      interpretation:
         "The genes are secure as verified stocks, but the promoter cannot be supplied as a purified fragment, so the RBS is carried in by the primers; and the alarming early yields were an analytical slip, not a problem with the constructs or the cells.",
+      interpretation:
+        "This was only partly expected. Obtaining the genes pre-cloned went as planned, but the heterogeneity of the legacy stocks and the missing-ethanol yields were unwelcome surprises that cost time. Identifying them as preparation faults, rather than design faults, was the useful outcome of this stage.",
       expectation:
-        "This was only partly expected. Obtaining the genes pre-cloned went as planned, but the heterogeneity of the legacy stocks and the missing-ethanol yields were unwelcome surprises that cost time. Identifying them as **preparation faults, rather than design faults**, was the useful outcome of this stage.",
+        "",
     },
   ],
 };
@@ -289,15 +304,15 @@ const PREPARATIVE_DIGESTION: ResultData = {
   id: "preparative-digestion",
   tabLabel: "Preparative digestion",
   title: "Preparative digestion of the vectors and inserts",
+  narrative: true,
   subsections: [
     {
       id: "first-trial-digestion",
       figuresColumns: 2,
       title: "First trial",
       body: [
-        "pSEVA2513 (about 5.3 kb) cut with BamHI and HindIII gave a clean, intense linear band of the expected size, and *ppk1* was released from pMK-RQ, although its bands in the 2 to 3 kb range overlap the carrier backbone on a 1% gel.",
-        "Two parts behaved badly. The pEM7 promoter band (about 77 bp) was never visible, running off the front of the gel even at high agarose percentage, so it could not be excised; and pSEVA6313 (about 3.0 kb) with EcoRI and KpnI was unreliable, giving incomplete digestion, a double band or only degradation, interpreted (with Álvaro Martínez del Pozo) as incomplete digestion or poor vector quality.",
-        "Because the *ppk1* insert co-migrates with its carrier, an additional NcoI digestion was introduced to separate them. A short incubation was not enough, but an **overnight NcoI digestion** gave a clean, excisable *ppk1* band — the one clearly favourable digestion result of the first trial.",
+        "In the first trial, pSEVA2513 (about 5.3 kb) cut with BamHI and HindIII gave a clean, intense linear band of the expected size, and *ppk1* was released from pMK-RQ, although its bands in the 2 to 3 kb range overlap the carrier backbone on a 1% gel (Figure 8). Two parts behaved badly. The pEM7 promoter band (about 77 bp) was never visible, running off the front of the gel even at high agarose percentage, so it could not be excised (Figure 9); and pSEVA6313 (about 3.0 kb) with EcoRI and KpnI was unreliable, giving incomplete digestion, a double band or only degradation, interpreted (with Álvaro Martínez del Pozo) as incomplete digestion or poor vector quality (Figure 10).",
+        "Because the *ppk1* insert co-migrates with its carrier, an additional NcoI digestion was introduced to separate them; a short incubation was not enough, but an overnight NcoI digestion gave a clean, excisable *ppk1* band (Figure 11). This was the one clearly favourable digestion result of the first trial.",
       ],
       figures: [
         {
@@ -328,6 +343,9 @@ const PREPARATIVE_DIGESTION: ResultData = {
     },
     {
       id: "second-trial-digestion",
+      body: [
+        "In the second trial the digestion was repeated on the PCR-amplified inserts and on fresh vector preparations, and this time it was clean across the board. On a single 1% gel (nine lanes), pSEVA2513 cut with BamHI and HindIII ran at about 5 kb, pSEVA6313 with EcoRI and KpnI at about 3 kb, the *ppk1* amplicon digested with BamHI and HindIII at about 2200 bp and the *pstSCAB* amplicon with BamHI and HindIII at about 3600 bp, alongside the undigested controls and the alternative *pstSCAB* and pSEVA6313 digests prepared for the promoter route; the bands of interest were excised and purified, eluting in 30 µL and quantified by NanoDrop (Figure 12).",
+      ],
       title: "Second trial",
       figures: [
         {
@@ -338,11 +356,11 @@ const PREPARATIVE_DIGESTION: ResultData = {
         },
       ],
       observations:
-        "Repeated on the PCR-amplified inserts and on fresh vector preparations, the digestion was **clean across the board**. On a single 1% gel (nine lanes), pSEVA2513 cut with BamHI and HindIII ran at about 5 kb, pSEVA6313 with EcoRI and KpnI at about 3 kb, the *ppk1* amplicon digested with BamHI and HindIII at about 2200 bp and the *pstSCAB* amplicon with BamHI and HindIII at about 3600 bp, alongside the undigested controls and the alternative *pstSCAB* and pSEVA6313 digests prepared for the promoter route. The bands of interest were excised and purified, eluting in 30 µL and quantified by NanoDrop.",
+        "",
       interpretation:
-        "The 2513 backbone and the *ppk1* insert can be prepared cleanly, provided NcoI and an overnight incubation are used to resolve *ppk1* from its carrier; the 631 digestion is not yet robust, and the promoter simply cannot be recovered by gel excision.",
+        "",
       expectation:
-        "A mixed outcome. The 2513 and *ppk1* preparations matched expectation once the extra NcoI step was added; the unreliable 631 digestion and the invisible promoter were not ideal and pointed to vector quality and fragment size as the real limiting factors.",
+        "",
     },
   ],
 };
@@ -351,13 +369,17 @@ const LIGATION: ResultData = {
   id: "ligation",
   tabLabel: "Ligation",
   title: "Ligation",
+  narrative: true,
   subsections: [
     {
       id: "ligation-reactions",
+      body: [
+        "In the first trial, *ppk1* and *pstSCAB* were ligated into pSEVA2513 with T4 DNA ligase at a 1:5 vector-to-insert molar ratio, overnight at 16 °C, with a vector-only control that gave only a few tiny colonies, showing low re-circularisation background. In the second trial the same chemistry was used with the PCR-amplified, freshly digested inserts; because the *pstSCAB* and pSEVA6313 preparations were at low concentration by NanoDrop, they were concentrated by a precipitation and centrifugation step before ligation, and the *ppk1*, *pstSCAB* and promoter-route reactions were set up overnight at 16 °C, each with its vector-only control. The clean control is the expected behaviour of a well-prepared ligation; whether the correct construct had actually formed was left to screening.",
+      ],
       observations:
-        "In the first trial, *ppk1* and *pstSCAB* were ligated into pSEVA2513 with T4 DNA ligase at a 1:5 vector-to-insert molar ratio, overnight at 16 ºC, with a vector-only control that gave only a few tiny colonies, showing low re-circularisation background. In the second trial the same chemistry was used with the PCR-amplified, freshly digested inserts; because the *pstSCAB* and pSEVA6313 preparations were at low concentration by NanoDrop, they were concentrated by a precipitation and centrifugation step before ligation, and the *ppk1*, *pstSCAB* and promoter-route reactions were set up overnight at 16 ºC, each with its vector-only control.",
+        "",
       interpretation:
-        "The clean control is the expected behaviour of a well-prepared ligation; whether the correct construct had actually formed was left to screening.",
+        "",
     },
   ],
 };
@@ -366,9 +388,14 @@ const ECOLI_TRANSFORMATION: ResultData = {
   id: "ecoli-transformation",
   tabLabel: "E. coli transformation",
   title: "Transformation into the *E. coli* cloning host",
+  narrative: true,
   subsections: [
     {
       id: "dh5a",
+      body: [
+        "In the first trial, the ligations were transformed into chemically competent *E. coli* DH5α. The *pstSCAB* reaction produced colonies, but the plates from the *ppk1* ligation did not grow, so that construct could not be carried forward from this trial.",
+        "In the second trial, five ligation products were transformed into DH5α (pSEVA2513·*ppk1*, pSEVA2513·*pstSCAB*, pSEVA6313·*pstSCAB* and the two vector-only controls); the sample plates grew healthy colonies on kanamycin, which were photographed and picked for screening (Figures 13 and 14).",
+      ],
       figures: [
         {
           src: `${FIGURES}/transformation-plates-gentamycin.jpg`,
@@ -384,9 +411,9 @@ const ECOLI_TRANSFORMATION: ResultData = {
         },
       ],
       observations:
-        "In the first trial, the ligations were transformed into chemically competent *E. coli* DH5α. The *pstSCAB* reaction produced colonies, but the plates from the *ppk1* ligation did not grow, so that construct could not be carried forward from this trial. In the second trial, five ligation products were transformed into DH5α (pSEVA2513·*ppk1*, pSEVA2513·*pstSCAB*, pSEVA6313·*pstSCAB* and the two vector-only controls); the sample plates grew healthy colonies on kanamycin, which were photographed and picked for screening.",
-      interpretation:
         "Transformation itself is reliable in this host; the first-trial *ppk1* no-growth reflected that particular ligation, and the second trial provided healthy candidate colonies for both constructs to take into screening.",
+      interpretation:
+        "",
     },
   ],
 };
@@ -395,9 +422,13 @@ const COLONY_SCREENING: ResultData = {
   id: "colony-screening",
   tabLabel: "Colony screening",
   title: "Colony screening and diagnostic verification",
+  narrative: true,
   subsections: [
     {
       id: "first-trial-screen",
+      body: [
+        "In the first trial, the candidate plasmids were checked by a diagnostic restriction digestion (lane order control, *ppk1* 1, *ppk1* 2, *pstSCAB* 1, *pstSCAB* 2), but the band pattern matched neither the intended construct nor the plausible carrier-derived alternatives, so no correct clone could be identified (Figure 15). This was the result that, together with the failed chassis transfer below, ended the first trial.",
+      ],
       title: "First trial: an inconclusive pattern",
       figures: [
         {
@@ -408,13 +439,13 @@ const COLONY_SCREENING: ResultData = {
         },
       ],
       observations:
-        "The candidate plasmids were checked by a diagnostic restriction digestion (lane order: control, *ppk1* 1, *ppk1* 2, *pstSCAB* 1, *pstSCAB* 2), but the band pattern matched neither the intended construct nor the plausible carrier-derived alternatives, so no correct clone could be identified. This was the result that, together with the failed chassis transfer, ended the first trial.",
+        "",
     },
     {
       id: "second-trial-screen",
       title: "Second trial: a decisive screen",
       body: [
-        "Candidate colonies were first triaged by colony PCR (lanes: *pstSCAB* colonies 2 to 9, 1 kb ladder, negative control, and *ppk1* colonies 10 to 15), which flagged the *ppk1* candidates. A first BamHI/HindIII diagnostic digestion was then run to distinguish empty vector (linearised) from insert-containing plasmid (two bands). Finally, a decisive XhoI digestion was chosen because XhoI cuts only within the *ppk1* insert, giving 1126 bp and 6312 bp against the 5314 bp of the empty vector.",
+        "In the second trial, screening was decisive. Candidate colonies were first triaged by colony PCR (lanes: *pstSCAB* colonies 2 to 9, 1 kb ladder, negative control, and *ppk1* colonies 10 to 15), which flagged the *ppk1* candidates (Figure 16). A first BamHI/HindIII diagnostic digestion was then run to distinguish empty vector (linearised) from insert-containing plasmid (two bands) (Figure 17). Finally, a decisive XhoI digestion was chosen because XhoI cuts only within the *ppk1* insert, giving 1126 bp and 6312 bp against the 5314 bp of the empty vector; clones 11 and 15 gave exactly this two-band pattern, confirming that pSEVA2513 carries *ppk1* (Figure 18). For *pstSCAB*, despite repeated attempts, including concentrating the insert with Centricon spin concentrators and adjusting the reaction, no correct construct could be obtained.",
       ],
       figures: [
         {
@@ -437,9 +468,9 @@ const COLONY_SCREENING: ResultData = {
         },
       ],
       observations:
-        "**Clones 11 and 15** gave exactly this two-band pattern, confirming that pSEVA2513 carries *ppk1*. For *pstSCAB*, despite repeated attempts, including concentrating the insert with Centricon spin concentrators and adjusting the reaction, no correct construct could be obtained.",
-      interpretation:
         "There is therefore a diagnostically verified pSEVA2513·*ppk1* plasmid, while the *pstSCAB* construct could not be completed. The first trial's unrecognisable pattern told us the gel-excision cloning had not produced the intended plasmid; the second trial, building the insert by PCR and using an insert-only diagnostic enzyme, gave an unambiguous confirmation of *ppk1*. The *pstSCAB* outcome shows the limitation there was getting enough clean insert into a productive ligation, which concentrating the fragment did not, on its own, solve.",
+      interpretation:
+        "",
     },
   ],
 };
@@ -448,15 +479,19 @@ const SEQUENCE_CONFIRMATION: ResultData = {
   id: "sequence-confirmation",
   tabLabel: "Sequence confirmation",
   title: "Sequence confirmation",
+  narrative: true,
   subsections: [
     {
       id: "sequencing",
-      observations:
+      body: [
         "The *ppk1* construct was confirmed at the restriction level by the insert-specific XhoI digestion, and Sanger or whole-plasmid sequencing of the verified clone is the next step.",
+      ],
+      observations:
+        "The construct is trustworthy enough structurally to carry forward, with sequence-level confirmation still to come; this is as expected, since the diagnostic digestion behaved as it should and justified moving on.",
       interpretation:
-        "The construct is trustworthy enough structurally to carry forward, with sequence-level confirmation still to come.",
+        "",
       expectation:
-        "Yes, as expected: the diagnostic digestion behaved as it should and justified moving on.",
+        "",
     },
   ],
 };
@@ -465,13 +500,18 @@ const PUTIDA_TRANSFORMATION: ResultData = {
   id: "putida-transformation",
   tabLabel: "P. putida transformation",
   title: "Transformation into *P. putida* KT2440",
+  narrative: true,
   subsections: [
     {
       id: "electroporation",
+      body: [
+        "In the first trial, *P. putida* KT2440 was electroporated with the then-unverified constructs and gave only wild-type growth, with no *ppk1* or *pstSCAB* transformants, which was consistent with the unresolved cloning.",
+        "In the second trial, with the verified pSEVA2513·*ppk1* construct in hand, a *P. putida* KT2440 transformant carrying *ppk1* was obtained and taken forward into the functional assay.",
+      ],
       observations:
-        "In the first trial, *P. putida* KT2440 was electroporated with the then-unverified constructs and gave only wild-type growth, with no *ppk1* or *pstSCAB* transformants, which was consistent with the unresolved cloning. In the second trial, with the verified pSEVA2513·*ppk1* construct in hand, a *P. putida* KT2440 transformant carrying *ppk1* was obtained and taken forward into the functional assay.",
+        "The first-trial absence of transformants followed directly from the cloning problem and from *P. putida* being hard to transform; once a trustworthy construct was used, the added *ppk1* machinery could finally be established in the chassis, exactly as the “verify first, then move to the chassis” logic intended.",
       interpretation:
-        "The first-trial absence of transformants followed directly from the cloning problem and from *P. putida* being hard to transform. Once a trustworthy construct was used, the added *ppk1* machinery could finally be established in the chassis, exactly as the verify-first-then-move-to-the-chassis logic intended.",
+        "",
     },
   ],
 };
@@ -482,9 +522,13 @@ const GUIDE_DESIGN: ResultData = {
   id: "guide-design",
   tabLabel: "Guide design",
   title: "In silico design of the base-editing guides",
+  narrative: true,
   subsections: [
     {
       id: "guides",
+      body: [
+        "Guides for *ppx*, *ppkB* and *pitB* were designed to introduce a premature stop codon (a CAA, CAG or CGA codon converted to a stop by a single C to T edit), placed early in each gene, within the editing window and beside a suitable NGG PAM, and screened for off-targets, with two or three guides per gene. The matching primers flank the gRNA scaffold in the template vector pEX128 and add the target-specific spacer and the Golden Gate (BsaI) ends (Figure 19). A prioritised, ready-to-amplify set of guides was available for all three targets, as expected.",
+      ],
       figures: [
         {
           src: `${FIGURES}/pex128-grna-map.svg`,
@@ -494,10 +538,10 @@ const GUIDE_DESIGN: ResultData = {
         },
       ],
       observations:
-        "Guides for *ppx*, *ppkB* and *pitB* were designed to introduce a premature stop codon (a CAA, CAG or CGA codon converted to a stop by a single C to T edit), placed early in each gene, within the editing window and beside a suitable NGG PAM, and screened for off-targets, with two or three guides per gene. The matching primers flank the gRNA scaffold in pEX128 and add the target-specific spacer and the Golden Gate (BsaI) ends.",
+        "",
       interpretation:
-        "A prioritised, ready-to-amplify set of guides was available for all three targets.",
-      expectation: "Yes, as expected.",
+        "",
+      expectation: "",
     },
   ],
 };
@@ -506,9 +550,13 @@ const GRNA_AMPLIFICATION: ResultData = {
   id: "grna-amplification",
   tabLabel: "gRNA amplification",
   title: "Amplification of the gRNA fragments",
+  narrative: true,
   subsections: [
     {
       id: "minipreps",
+      body: [
+        "The plasmid preparations feeding the assembly were first checked. The pEX128 and pMBEC2 minipreps were of good quality, with pMBEC2 at approximately 105 ng/µL and acceptable purity ratios, confirming suitable input material for the subsequent cloning steps (Figure 20).",
+      ],
       title: "Input plasmids",
       figures: [
         {
@@ -519,10 +567,13 @@ const GRNA_AMPLIFICATION: ResultData = {
         },
       ],
       observations:
-        "The plasmid preparations feeding the assembly were first checked. The pEX128 and pMBEC2 minipreps were of good quality, with pMBEC2 at approximately 105 ng/µL and acceptable purity ratios, confirming suitable input material for the subsequent cloning steps.",
+        "",
     },
     {
       id: "first-trial-pcr",
+      body: [
+        "In the first trial, the initial PCR yielded no recoverable product. This was traced to the same missing-ethanol wash issue identified during plasmid purification. Once this problem was corrected, the PCR produced strong, apparent defined bands at approximately 130–150 bp for *ppx*, *ppkB* and *pitB* in duplicate (Figure 21). No band was detected in the negative control used at the time, which lacked oligonucleotide primers, while a faint higher-molecular-weight band was attributed to residual pEX128 template. Based on these results, the amplification was initially considered successful. However, the negative control used in this first experiment was later recognised as insufficient, as the absence of primers prevents the detection of primer-derived or non-specific amplification products.",
+      ],
       title: "First trial",
       figures: [
         {
@@ -533,12 +584,15 @@ const GRNA_AMPLIFICATION: ResultData = {
         },
       ],
       observations:
-        "The initial PCR yielded no recoverable product, traced to the same missing-ethanol wash issue identified during plasmid purification. Once this problem was corrected, the PCR produced strong, apparently defined bands at approximately 130–150 bp for *ppx*, *ppkB* and *pitB* in duplicate. No band was detected in the negative control used at the time, which lacked oligonucleotide primers, while a faint higher-molecular-weight band was attributed to residual pEX128 template.",
+        "",
       interpretation:
-        "Based on these results, the amplification was initially considered successful. However, the negative control used in this first experiment was later recognised as **insufficient**, as the absence of primers prevents the detection of primer-derived or non-specific amplification products.",
+        "",
     },
     {
       id: "second-trial-pcr",
+      body: [
+        "In the second trial, the amplification was repeated using a more appropriate experimental design, including an individual no-template control (NTC) for each primer pair. In contrast to the previous experiment, the same low-molecular-weight band was observed in both the reactions containing pEX128 template and their corresponding no-template controls (Figure 22). Since this band was generated even in the absence of template DNA, it could not be confidently attributed to specific amplification from pEX128. Instead, the result is consistent with the formation of primer-derived or other non-specific amplification products, such as primer dimers. Therefore, the second trial did not provide reliable evidence of successful amplification of the intended gRNA fragments, and the PCR conditions require further optimisation before the products can be used for downstream assembly.",
+      ],
       title: "Second trial",
       figures: [
         {
@@ -549,9 +603,9 @@ const GRNA_AMPLIFICATION: ResultData = {
         },
       ],
       observations:
-        "The amplification was repeated using a more appropriate experimental design, including an individual no-template control (NTC) for each primer pair. In contrast to the previous experiment, the same low-molecular-weight band was observed in both the reactions containing pEX128 template and their corresponding no-template controls.",
+        "",
       interpretation:
-        "Since this band was generated even in the absence of template DNA, it could not be confidently attributed to specific amplification from pEX128. Instead, the result is consistent with the formation of primer-derived or other non-specific amplification products, such as **primer dimers**. The second trial therefore did not provide reliable evidence of successful amplification of the intended gRNA fragments, and the PCR conditions require further optimisation before the products can be used for downstream assembly.",
+        "",
     },
   ],
 };
@@ -560,15 +614,19 @@ const GOLDEN_GATE: ResultData = {
   id: "golden-gate",
   tabLabel: "Golden Gate assembly",
   title: "Golden Gate assembly into pMBEC2",
+  narrative: true,
   subsections: [
     {
       id: "assembly",
+      body: [
+        "In the first trial, each guide fragment was assembled into pMBEC2 by Golden Gate overnight, replacing the msfGFP marker with the guide. The input vector was of good quality (Figure 20), so the low yield of correct clones seen in the next step points to the assembly reaction or its screening rather than to the vector. This was partly expected: the vector preparation was as expected, while the low efficiency was not.",
+      ],
       observations:
-        "In the first trial, each guide fragment was assembled into pMBEC2 by Golden Gate overnight, replacing the msfGFP marker with the guide.",
+        "",
       interpretation:
-        "The input vector was of good quality, so the low yield of correct clones seen in the next step points to the assembly reaction or its screening rather than to the vector.",
+        "",
       expectation:
-        "This was partly expected: the vector preparation was as expected, while the low efficiency was not.",
+        "",
     },
   ],
 };
@@ -577,13 +635,13 @@ const FLUORESCENCE_SCREENING: ResultData = {
   id: "fluorescence-screening",
   tabLabel: "Fluorescence screening",
   title: "Transformation and fluorescence-assisted screening",
+  narrative: true,
   subsections: [
     {
       id: "screening",
       body: [
-        "In the first trial, the assembly was transformed into *E. coli* DH5α and gave only a few white (non-fluorescent) colonies. A colony PCR of the picked colonies gave only low, primer-level bands rather than the expected guide product; there is no photograph of that gel, since only degraded material was visible.",
-        "Beyond the inconclusive phenotypic screen, the colonies could not be verified at the molecular level. A re-examination of the assay explained why the primer-level bands observed with ppx-Fwd and pitB-Rev could not simply be treated as a failed candidate plasmid. These oligonucleotides had originally been designed as **guide-building primers** rather than dedicated primers flanking the complete assembled region.",
-        "Because they were located in nominally different parts of the guide system, their relative binding sites and orientations were not guaranteed to generate the single full-array amplicon that had been assumed.",
+        "In the first trial, the assembly was transformed into *E. coli* DH5α and gave only a few white (non-fluorescent) colonies. A colony PCR of the picked colonies gave only low, primer-level bands rather than the expected guide product. Crucially, the screen could not be read cleanly because the pMBEC2 positive control itself fluoresced only weakly, when it should have been as bright as the reference plate; with a dim control, white colonies are ambiguous, since they could carry the guide or simply be untransformed or unhealthy cells (Figure 23).",
+        "Beyond the inconclusive phenotypic screen, the colonies could not be verified at the molecular level. A re-examination of the assay explained why the primer-level bands observed with ppx-Fwd and pitB-Rev could not simply be treated as a failed candidate plasmid. These oligonucleotides had originally been designed as guide-building primers rather than dedicated primers flanking the complete assembled region. Because they were located in nominally different parts of the guide system, their relative binding sites and orientations were not guaranteed to generate the single full-array amplicon that had been assumed.",
       ],
       figures: [
         {
@@ -594,10 +652,10 @@ const FLUORESCENCE_SCREENING: ResultData = {
         },
       ],
       observations:
-        "Crucially, the screen could not be read cleanly because the pMBEC2 positive control itself fluoresced only weakly, when it should have been as bright as the reference plate. With a dim control, white colonies are ambiguous: they could carry the guide, or simply be untransformed or unhealthy cells.",
-      interpretation: "No guide plasmid could be confirmed.",
+        "No guide plasmid could be confirmed. This was not the intended outcome: a bright positive control and a clean set of white candidates were expected, and the weak control made the read uninterpretable, which (together with the contaminated second-trial PCR) is why no verified editor-plus-guide plasmid was obtained.",
+      interpretation: "",
       expectation:
-        "This was not the intended outcome: a bright positive control and a clean set of white candidates were expected, and the weak control made the read uninterpretable, which (together with the contaminated second-trial PCR) is why no verified editor-plus-guide plasmid was obtained.",
+        "",
     },
   ],
 };
@@ -612,6 +670,7 @@ function notReached(
     id,
     tabLabel,
     title,
+    narrative: true,
     subsections: [
       {
         id: `${id}-not-reached`,
@@ -664,6 +723,7 @@ const CLOSING: ResultData = {
   title: "Phosphorus accumulation, wild type against the *ppk1* transformant",
   description:
     "The functional read-out that the Cloning section's last step points to: the verified pSEVA2513·*ppk1* transformant assayed against the wild type over a two-hour time course, with the standardised assay from Section 0.",
+  narrative: true,
   subsections: [
     {
       id: "closing-calibration",
@@ -709,7 +769,7 @@ const CLOSING: ResultData = {
       id: "closing-accumulation",
       title: "Phosphorus accumulation relative to biomass",
       body: [
-        "Phosphorus was quantified at nine time points over two hours and normalised to OD₆₀₀. The per-time-point curves are noisy and the two strains overlap at several points, so the robust read-out is the rate rather than any single value.",
+        "Both WT and pS2513·*ppk1* strains accumulated phosphorus over the two hours, rising from a few hundred thousand ng per OD₆₀₀ at t = 0 to roughly 1.2 to 1.4 million ng per OD₆₀₀ by 120 min, and the transformant accumulated faster than the wild type: the fitted phosphorus-uptake rate was about 11,000 ng per OD₆₀₀ per minute for the transformant against about 6,450 for the wild type, a ratio of roughly 1.7 (Figure 26). The per-time-point curves are noisy and overlap at several points, so the robust read-out is the rate rather than any single value.",
       ],
       figures: [
         {
@@ -737,11 +797,11 @@ const CLOSING: ResultData = {
         },
       ],
       observations:
-        "Both strains accumulated phosphorus over the two hours, rising from a few hundred thousand ng per OD₆₀₀ at t = 0 to roughly 1.2 and 1.4 million ng per OD₆₀₀ by 120 min. Fitted over the final 45 minutes, the transformant took up phosphorus about **1.7 times faster** than the wild type (11 017 against 6 450 ng per OD₆₀₀ per minute). Fitted over the whole time course instead, the ranking reverses.",
+        "This is the first direct, functional evidence that the heterologous *ppk1* increases phosphorus accumulation in the chassis, exactly as the “add polyphosphate-synthesis capacity” arm of the rePhlow design predicts, and it shows that the standardised assay is sensitive enough to separate an engineered strain from the wild type, which is the read-out the rest of the project depends on.",
       interpretation:
-        "Over the window where both strains are accumulating steadily, carrying and expressing *ppk1* translates into a measurably faster rate. The reversal over the full window comes from the first hour, where the values move up and down without a consistent trend in either strain, so a straight line through all nine points is not describing accumulation.",
+        "This was expected in direction, and encouragingly so: PPK1 is the polyphosphate-synthesising engine, so a higher uptake rate in the transformant is what the design predicts. What it does not yet show is the complete rePhlow phenotype, which needs *pstSCAB* and the *ppx⁻ ppkB⁻ pitB⁻* background; this result de-risks the central hypothesis and defines the phosphorus-capture read-out that feeds the downstream recovery and revalorisation work.",
       expectation:
-        "Expected in direction, and encouragingly so: PPK1 is the polyphosphate-synthesising engine, so a higher uptake rate in the transformant is what the design predicts.",
+        "",
     },
   ],
   discussion: [
@@ -750,8 +810,10 @@ const CLOSING: ResultData = {
   ],
 };
 
-export const GENETIC_ENGINEERING_INTRO =
-  "This block reports the outcomes of the genetic-engineering work: building and verifying the two expression cassettes in *E. coli* before moving them into *P. putida* KT2440, installing the three markerless knock-outs by CRISPR base editing, and the final integration and phenotypic validation of the complete strain. Each record reports the outcome of the corresponding step on the Experiments page, following the same order and titles. For every step we answer three questions: what was obtained, what it means, and whether it matched what we expected.";
+export const GENETIC_ENGINEERING_INTRO = [
+  "This page reports the outcomes of the genetic engineering work: building and verifying the two expression cassettes in *E. coli* before moving them into *P. putida* KT2440, installing the three markerless knock-outs by CRISPR base editing, and the final integration and phenotypic validation of the complete strain. The design and rationale of each step are on the Experiments page (see [Experiments](/experiments#genetic-engineering)).",
+  "Each entry below reports the outcome of the corresponding step on the Experiments page, following the same order and titles. For every step we answer three questions: what was obtained, what it means, and whether it matched what we expected.",
+];
 
 export const GENETIC_ENGINEERING_SUBBLOCKS: ResultSubBlock[] = [
   {
@@ -783,7 +845,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ResultSubBlock[] = [
       PUTIDA_TRANSFORMATION,
     ],
     outro:
-      "The cloning strategy delivered the result that matters most at this stage: a diagnostically verified pSEVA2513·*ppk1* construct, a *P. putida* transformant carrying it, and a functional increase of about 1.7-fold in the phosphorus-uptake rate over the wild type across the 75 to 120 min window. The first trial, relying on excising the parts from their carriers and a promoter plasmid, exposed the bottlenecks (an unrecoverable 77 bp promoter, an unreliable pSEVA6313 digestion, inserts that co-migrate with their carriers, and a diagnostic pattern that never resolved); the second trial, amplifying the genes by PCR with the RBS built into the primers, cut and purified them cleanly and produced a verified construct. *pstSCAB* was pursued in parallel but, despite repeated attempts and concentrating the insert with Centricon spin concentrators, a correct construct could not be obtained. Completing *pstSCAB*, confirming *ppk1* by sequencing and combining both genes are the remaining tasks.",
+      "The cloning strategy delivered the result that matters most at this stage: a diagnostically verified pSEVA2513·*ppk1* construct, a *P. putida* transformant carrying it, and a functional increase of about 1.7-fold in the phosphorus-uptake rate over the wild type. The first trial, relying on excising the parts from their carriers and a promoter plasmid, exposed the bottlenecks (an unrecoverable 77 bp promoter, an unreliable pSEVA6313 digestion, inserts that co-migrate with their carriers, and a diagnostic pattern that never resolved); the second trial, amplifying the genes by PCR with the RBS built into the primers, cut and purified them cleanly and produced a verified construct. *pstSCAB* was pursued in parallel but, despite repeated attempts and concentrating the insert with Centricon spin concentrators, a correct construct could not be obtained. Completing *pstSCAB*, confirming *ppk1* by sequencing and combining both genes are the remaining tasks.",
   },
   {
     id: "knocking-out",
