@@ -57,9 +57,9 @@
    the space left before the end of the goal 13 card. */
 (function () {
   var SRCS = [
-    "img/sdg-9-13-horizontal.avif",
     "https://static.igem.wiki/teams/6124/wiki/sustainability/sdg-9-13-horizontal.avif",
-    "img/sdg-9-13-horizontal.webp"
+    "https://static.igem.wiki/teams/6124/wiki/sustainability/sdg-9-13-horizontal.avif",
+    "https://static.igem.wiki/teams/6124/wiki/sustainability/sdg-9-13-horizontal.webp"
   ];
   var tries = 0;
   function fit() {

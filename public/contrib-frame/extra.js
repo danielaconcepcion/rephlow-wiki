@@ -141,3 +141,23 @@
     };
   } catch (e) { console.warn("[extra] bundle", e); }
 })();
+
+/* v6 (20 Oct): the in-page PDF reader (pdf.js, 1.3 MB) is removed so the wiki
+   fits iGEM's publishing limit. PDFs open with the browser's own reader. */
+(function () {
+  try {
+    openPdf = async function (id, fn) {
+      mTitle.textContent = fn; mFile = [id, fn]; mText = null;
+      mCopy.hidden = true; mTab.hidden = false; mTab.href = assetUrl(id, fn);
+      mBody.className = "cb-modal__body is-pdf"; mBody.innerHTML = "";
+      mPager.hidden = true;
+      openModal();
+      viewerError(mBody, id, fn);
+    };
+    openProtocolBook = async function () {
+      viewerError($("#pv-stage"), "file-protocol", "rePhlow_Protocol_book.pdf");
+    };
+  } catch (e) { console.warn("[extra] pdf", e); }
+  var hint = document.getElementById("pv-hint");
+  if (hint) hint.textContent = "The book opens here with your browser's PDF reader.";
+})();
