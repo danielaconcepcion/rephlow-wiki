@@ -18,6 +18,9 @@ import "@fontsource/kalam/latin-400.css";
 import "@fontsource/kalam/latin-ext-400.css";
 import "@fontsource/kalam/latin-700.css";
 import "@fontsource/kalam/latin-ext-700.css";
+import { createElement as createZoomElement } from "react";
+import { createRoot as createZoomRoot } from "react-dom/client";
+import { ImageZoom } from "./components/ImageZoom/ImageZoom";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
@@ -26,3 +29,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </BrowserRouter>
   </React.StrictMode>,
 );
+
+
+// Picture viewer for the whole wiki (its own small root, outside the routes)
+const imageZoomHost = document.createElement("div");
+document.body.appendChild(imageZoomHost);
+createZoomRoot(imageZoomHost).render(createZoomElement(ImageZoom));

@@ -1065,3 +1065,42 @@
 .ent span.ic{display:inline-flex}
 /* Pop-ups sit above the wiki's floating navbar. */
 .ent .modal,.ent .lightbox{z-index:1200}
+
+/* 20 Oct: resources for other teams at the end of "The team implication" */
+.ent .ent-resources{margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.ent .ent-resources p{margin:0 0 14px}
+.ent .ent-pdfs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:6px}
+.ent .ent-pdfs .pdf-btn{margin-top:0;width:100%}
+@media(max-width:700px){.ent .ent-pdfs{grid-template-columns:1fr}}
+
+/* 20 Oct b: element cards under the stakeholder matrix only as tall as their text */
+.ent .grid4>.card{min-height:0!important;height:auto!important;aspect-ratio:auto!important;padding:16px 18px}
+.ent .grid4>.card>p{margin:0}
+
+/* 20 Oct b: resources bubble at the end of "The team implication" */
+.ent .ent-resbox{margin-top:26px;padding:18px 22px 20px;border-radius:22px;background:color-mix(in srgb,var(--s4) 9%,#fff);border:1.5px solid color-mix(in srgb,var(--s4) 35%,transparent)}
+.ent .ent-resbox__fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--s4)}
+.ent .ent-resbox__fold>summary::-webkit-details-marker{display:none}
+.ent .ent-resbox__fold>summary::after{content:"+";margin-left:auto;flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;background:color-mix(in srgb,var(--s4) 16%,#fff);transition:transform .25s}
+.ent .ent-resbox__fold[open]>summary::after{transform:rotate(45deg)}
+.ent .ent-resbox__body{margin-top:14px}
+.ent .ent-resbox__body p{margin:0 0 12px}
+.ent .ent-resbox .ent-pdfs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
+.ent .ent-resbox .pdf-btn{margin-top:0;width:100%;height:100%;padding:10px 12px 10px 10px;gap:10px;border-color:color-mix(in srgb,var(--s4) 30%,transparent);background:#fff}
+.ent .ent-resbox .pdf-btn b{font-size:.84rem;line-height:1.3}
+.ent .ent-resbox .pdf-btn small{font-size:.72rem}
+@media(max-width:1000px){.ent .ent-resbox .ent-pdfs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.ent .ent-resbox .ent-pdfs{grid-template-columns:1fr}}
+
+/* 20 Oct c: white bubble, mustard title band only; PDF buttons like the MVP one, in gold */
+.ent .ent-resbox{background:#fff;padding:0;overflow:hidden;border:1.5px solid color-mix(in srgb,var(--s4) 35%,transparent)}
+.ent .ent-resbox__fold>summary{padding:14px 18px 14px 22px;background:color-mix(in srgb,var(--s4) 14%,#fff)}
+.ent .ent-resbox__fold>summary::after{background:#fff}
+.ent .ent-resbox__body{margin:0;padding:18px 22px 4px}
+.ent .ent-resbox .ent-pdfs{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:16px 22px 20px}
+.ent .ent-resbox .pdf-btn{--c:var(--s4);width:auto;height:auto;margin:0;padding:8px 14px 8px 8px;gap:10px;border-radius:14px;border:1.5px solid color-mix(in srgb,var(--s4) 35%,transparent);background:color-mix(in srgb,var(--s4) 7%,#fff)}
+.ent .ent-resbox .pdf-btn .ic{width:32px!important;height:32px!important;border-radius:10px}
+.ent .ent-resbox .pdf-btn .ic svg{width:18px!important;height:18px!important}
+.ent .ent-resbox .pdf-btn b{font-size:.86rem;line-height:1.25;white-space:nowrap}
+.ent .ent-resbox .pdf-btn small{font-size:.72rem}
+@media(max-width:560px){.ent .ent-resbox .pdf-btn{width:100%}}

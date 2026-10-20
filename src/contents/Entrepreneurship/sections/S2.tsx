@@ -1,3 +1,4 @@
+import { IndexDrawing } from "../../../components/OurSolutionVisualIndex/IndexDrawing";
 import { CountUp, Icon, PdfButton, TabBtn, ToggleBtn } from "../ui";
 import { CmpTable, GoldenText, MbText, StageList, Stages } from "../widgets/s2";
 import { sx, A } from "../util";
@@ -59,15 +60,12 @@ export function S2() {
           </p>
           <Stages>
             <div className="stages__img">
-              <img
-                src={A("img/process.jpg")}
-                alt="rePhlow bioreactor: effluent enters the reactor basket with enzyme-coated capsules, passes an ultrafiltration unit and leaves as clean water; capsules are recovered and the polyphosphate is converted into a valuable product"
-              />{" "}
+              <IndexDrawing alt="rePhlow bioreactor: effluent enters the reactor basket with enzyme-coated capsules, passes an ultrafiltration unit and leaves as clean water; capsules are recovered and the polyphosphate is converted into a valuable product" />{" "}
               <TabBtn
                 k="st"
                 v="1"
                 className="hot"
-                style={{ left: "11%", top: "70%" }}
+                style={{ left: "38%", top: "72%" }}
                 aria-label="Stage 1"
               >
                 1
@@ -76,7 +74,7 @@ export function S2() {
                 k="st"
                 v="2"
                 className="hot"
-                style={{ left: "35%", top: "27%" }}
+                style={{ left: "21%", top: "64%" }}
                 aria-label="Stage 2"
               >
                 2
@@ -85,7 +83,7 @@ export function S2() {
                 k="st"
                 v="3"
                 className="hot"
-                style={{ left: "53.5%", top: "27%" }}
+                style={{ left: "38%", top: "27%" }}
                 aria-label="Stage 3"
               >
                 3
@@ -94,7 +92,7 @@ export function S2() {
                 k="st"
                 v="4"
                 className="hot"
-                style={{ left: "79%", top: "62%" }}
+                style={{ left: "81%", top: "57%" }}
                 aria-label="Stage 4"
               >
                 4

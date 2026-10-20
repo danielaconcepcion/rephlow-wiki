@@ -1,3 +1,4 @@
+import { useLayoutEffect as useLayoutEffectLoop } from "react";
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent, ReactNode } from "react";
 import { BH, DTL, MKT, PE, RINGC, SH, SHC, SM } from "../data";
@@ -396,5 +397,59 @@ export function Pestel({ more }: { more: ReactNode[] }) {
         </details>
       </div>
     </>
+  );
+}
+
+/* 1.1b Loop arrow from the last box back to "Extraction", drawn from the
+   real positions of the two boxes so it always starts and lands on them. */
+export function ChainLoop() {
+  const ref = useRef<SVGSVGElement>(null);
+  const [chain] = useUI<string>("chain");
+  const [g, setG] = useState({ w: 1000, a: 40, b: 960 });
+  useLayoutEffectLoop(() => {
+    const svg = ref.current;
+    const box = svg?.parentElement;
+    if (!svg || !box) return;
+    const measure = () => {
+      const steps = box.querySelectorAll<HTMLElement>(".pchain__row .pstep");
+      const r = svg.getBoundingClientRect();
+      if (steps.length < 2 || !r.width) return;
+      const s = steps[0].getBoundingClientRect();
+      const e = steps[steps.length - 1].getBoundingClientRect();
+      setG({
+        w: Math.round(r.width),
+        a: Math.round(s.left + s.width / 2 - r.left),
+        b: Math.round(e.left + e.width / 2 - r.left),
+      });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(box);
+    const late = window.setTimeout(measure, 1600);
+    document.fonts?.ready.then(measure);
+    return () => {
+      ro.disconnect();
+      window.clearTimeout(late);
+    };
+  }, [chain]);
+  const H = 46;
+  return (
+    <svg
+      ref={ref}
+      className="pchain__loop"
+      viewBox={`0 0 ${g.w} ${H}`}
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <path
+        id="loopPath"
+        d={`M${g.b} 2 C ${g.b} ${H - 2}, ${g.a} ${H - 2}, ${g.a} 15`}
+        fill="none"
+        stroke="var(--algae)"
+        strokeWidth="3"
+        strokeDasharray="8 8"
+      />
+      <polygon points={`${g.a - 8},15 ${g.a},1 ${g.a + 8},15`} fill="var(--algae)" />
+    </svg>
   );
 }

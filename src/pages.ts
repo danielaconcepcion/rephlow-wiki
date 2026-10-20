@@ -235,6 +235,7 @@ const Pages: Page[] = [
     lead: "From lab to market.",
     /*A space for exploring the potential implementation and value of the project beyond the laboratory.*/
     path: "/entrepreneurship",
+    awards: [{ label: "Best Entrepreneurship", variant: "prize" }],
     component: Entrepreneurship,
     docTitle: "Entrepreneurship — rePhlow iGEM Wiki",
     hideEyebrow: true,
