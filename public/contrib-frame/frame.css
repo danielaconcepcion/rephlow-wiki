@@ -1,0 +1,79 @@
+/* Inside the wiki: its own navbar, page header, footer and prev/next links are drawn by the wiki page around this frame. */
+nav.navbar,
+footer.site-footer,
+.adjacent-page-nav {
+  display: none !important;
+}
+/* The page header is collapsed rather than removed: its hidden SVG holds the
+   molecule shapes and colours that the content background reuses. */
+main.page-shell {
+  height: 0 !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+}
+
+/* The wiki page does the scrolling: no second scrollbar inside the frame. */
+html {
+  overflow: hidden !important;
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+/* Status filter (Parts) in a single row when there is room */
+@media (min-width: 1000px) {
+  .cb-legend {
+    flex-wrap: nowrap !important;
+    max-width: none !important;
+    gap: 8px !important;
+  }
+  .cb-legend__item {
+    padding: 6px 11px 6px 8px !important;
+  }
+}
+
+/* ===== 20 Oct: sticky side index, a bit lower; legend per family ===== */
+/* "overflow: hidden" here stopped the side index from staying in place */
+.lab-folders {
+  overflow: clip !important;
+}
+:root {
+  --section-nav-offset: 130px !important;
+}
+@media (min-width: 601px) {
+  .page-with-section-nav .page-section-nav {
+    margin-top: 48px;
+  }
+}
+.cb-legend--family {
+  margin: 14px 0 0 !important;
+  justify-content: flex-start !important;
+}
+#panel-parts .cb-hint {
+  margin: 8px 0 18px;
+  text-align: left;
+}
+.cb-open svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* v5 (20 Oct): PDFs from iGEM Uploads shown with the browser's PDF reader */
+.cb-pdf-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 62vh;
+  border: 0;
+  border-radius: 10px;
+  background: #fff;
+}
+.cb-modal__body.is-pdf:has(.cb-pdf-frame) {
+  display: flex;
+}
+.cb-modal__body.is-pdf .cb-pdf-frame {
+  flex: 1;
+}

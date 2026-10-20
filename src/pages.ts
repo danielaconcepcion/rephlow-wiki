@@ -262,6 +262,9 @@ const Pages: Page[] = [
     component: Contribution,
     docTitle: "Contribution — rePhlow iGEM Wiki",
     awards: [{ label: "Bronze Medal", variant: "bronze" }],
+    hideEyebrow: true,
+    labHero: true,
+    moleculeSeed: 47,
   },
   {
     name: "Team",

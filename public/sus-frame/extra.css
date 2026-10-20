@@ -407,3 +407,14 @@ ol:has(> li[id^="ref"]):not(.hw-refs ol) > li::before {
   color: var(--ink) !important;
   font-weight: 600;
 }
+
+/* v7 (20 Oct): the small fold-out bubbles after CEDEX - Roberto Arranz are
+   removed together with their text; the speech boxes over the room
+   illustrations are in italics. */
+.rv-fold-head,
+.rv-fold-p {
+  display: none !important;
+}
+.sus-stage-approach {
+  font-style: italic;
+}

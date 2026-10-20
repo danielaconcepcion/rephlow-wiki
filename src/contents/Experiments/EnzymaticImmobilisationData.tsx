@@ -870,3 +870,6 @@ export const ENZYMATIC_IMMOBILISATION_REFERENCES: string[] = [
   "[17] Rodrigues, R. C., Virgen-Ortíz, J. J., dos Santos, J. C. S., Berenguer-Murcia, Á., Alcántara, A. R., Barbosa, O., Ortiz, C., & Fernandez-Lafuente, R. (2019). Immobilization of lipases on hydrophobic supports: Immobilization mechanism, advantages, problems, and solutions. Biotechnology Advances, 37(5), 746-770. https://doi.org/10.1016/j.biotechadv.2019.04.003",
   "[18] Barbosa, O., Ortiz, C., Berenguer-Murcia, Á., Torres, R., Rodrigues, R. C., & Fernandez-Lafuente, R. (2014). Glutaraldehyde in bio-catalyst design: A useful crosslinker and a versatile tool in enzyme immobilization. RSC Advances, 4(4), 1583-1600. https://doi.org/10.1039/c3ra45991h",
 ];
+
+/* Restored so Experiments.tsx builds again. */
+export const ENZYMATIC_IMMOBILISATION_SCHEMATIC_CAPTION: ReactNode = null;

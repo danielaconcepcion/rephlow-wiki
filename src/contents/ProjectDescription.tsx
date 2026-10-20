@@ -128,17 +128,15 @@ function Figure({
 }
 
 function VideoFigure({
-  src,
-  poster,
-  label,
+  embedSrc,
+  title,
   caption,
   className = "",
 }: {
-  src: string;
-  poster: string;
-  /** Spoken description of what the animation shows, since a <video> has no
-   * alt text of its own. */
-  label: string;
+  /** video.igem.org embed URL */
+  embedSrc: string;
+  /** Accessible title describing the animation */
+  title: string;
   caption?: ReactNode;
   className?: string;
 }) {
@@ -146,24 +144,22 @@ function VideoFigure({
     <figure
       className={`vsi-figure vsi-figure--full pd-figure pd-video-figure ${className}`.trim()}
     >
-      <video
-        controls
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        poster={asset(poster)}
-        aria-label={label}
-      >
-        <source src={asset(src)} type="video/mp4" />
-        Your browser does not support embedded video.
-      </video>
+      <div className="pd-video-embed">
+        <iframe
+          title={title}
+          src={embedSrc}
+          allow="fullscreen; autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+          loading="lazy"
+        />
+      </div>
       {caption && (
         <figcaption className="vsi-figure__caption">{caption}</figcaption>
       )}
     </figure>
   );
 }
+
 
 function BlockIntro({
   image,
@@ -2177,9 +2173,8 @@ export function ProjectDescription() {
                   produced can be reused by PPK2 to regenerate ATP.
                 </p>
                 <VideoFigure
-                  src="assets/videos/ppk2-dhak-animation.mp4"
-                  poster="assets/project-description/ppk2-dhak-animation-poster.webp"
-                  label="3D molecular animation of the PPK2 and DHAK enzymatic cascade"
+                  embedSrc="https://video.igem.org/videos/embed/qbDyW61MPwpUSKJmswBfoT?muted=1&loop=1&title=0&warningTitle=0&peertubeLink=0&p2p=0"
+                  title="3D molecular animation of the PPK2 and DHAK enzymatic cascade"
                   className="pd-figure--pathway"
                   caption={
                     <>

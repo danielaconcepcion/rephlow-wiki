@@ -22,7 +22,8 @@ export { EducationBoard as EducationCommunication } from "./EducationBoard/Educa
 export { Entrepreneurship } from "./Entrepreneurship.tsx";
 // old page: export { Sustainability } from "./Sustainability.tsx";
 export { SustainabilityFrame as Sustainability } from "./SustainabilityFrame/SustainabilityFrame.tsx";
-export { Contribution } from "./Contribution.tsx";
+// old page: export { Contribution } from "./Contribution.tsx";
+export { ContributionFrame as Contribution } from "./ContributionFrame/ContributionFrame.tsx";
 // Team
 // Internal (not exposed in the Navbar — see pages.ts)
 export { ContentPatterns } from "./ContentPatterns.tsx";
