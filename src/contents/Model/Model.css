@@ -1004,126 +1004,54 @@
 }
 
 /* --------------------------------------------------------------------------
-   5.1 Lumping, in the stoichiometric matrix (LumpingMatrix.tsx)
+   5.1 Lumping: the two maps and the matrix (LumpingMatrix.tsx)
    -------------------------------------------------------------------------- */
 
 .lumpmat {
-  max-width: 720px;
+  max-width: 1040px;
   margin: 26px auto 0;
-  padding: 22px 24px 18px;
+  padding: 20px 22px 18px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--paper);
   box-shadow: var(--shadow-soft);
 }
-.lumpmat__stage {
+
+/* The two maps occupy the same box and cross-fade, so the toggle reads as
+   one network being regrouped rather than two pictures side by side. */
+.lumpmat__maps {
+  position: relative;
+  display: grid;
+}
+.lumpmat__map {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: auto;
+  max-height: 58vh;
+  object-fit: contain;
+  transition: opacity 420ms ease;
+}
+.lumpmat__map--lumped {
+  opacity: 0;
+}
+.lumpmat__maps.is-lumped .lumpmat__map--full {
+  opacity: 0;
+}
+.lumpmat__maps.is-lumped .lumpmat__map--lumped {
+  opacity: 1;
+}
+
+.lumpmat__controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
   flex-wrap: wrap;
+  gap: 10px 16px;
+  margin-top: 14px;
 }
-
-.lumpmat__matrix,
-.lumpmat__vector {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-.lumpmat__bracket {
-  font-size: 5.4rem;
-  font-weight: 200;
-  line-height: 0.82;
-  color: var(--ink-soft);
-  transform: scaleX(0.6);
-}
-
-.lumpmat__column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  width: 46px;
-  overflow: hidden;
-  transition:
-    width 420ms cubic-bezier(0.2, 0.7, 0.2, 1),
-    opacity 300ms ease;
-}
-.lumpmat__bar {
-  display: block;
-  width: 3px;
-  height: 92px;
-  border-radius: 3px;
-  background: var(--ink-soft);
-  opacity: 0.55;
-  transition: background 300ms ease;
-}
-.lumpmat__column--coupled .lumpmat__bar,
-.lumpmat__column--merging .lumpmat__bar {
-  background: var(--water-mid);
-  opacity: 1;
-}
-.lumpmat__label {
-  font-size: 0.9rem;
-  color: var(--ink);
-}
-.lumpmat__dots {
-  position: absolute;
-  margin-top: 40px;
-  color: var(--ink-soft);
-}
-.lumpmat__matrix.is-lumped .lumpmat__column--merging {
-  width: 0;
-  opacity: 0;
-}
-.lumpmat__matrix.is-lumped .lumpmat__column--coupled {
-  width: 62px;
-}
-
-.lumpmat__fluxes {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.9rem;
-}
-.lumpmat__flux {
-  height: 22px;
-  display: flex;
-  align-items: center;
-  transition:
-    height 420ms cubic-bezier(0.2, 0.7, 0.2, 1),
-    opacity 300ms ease;
-}
-.lumpmat__flux--coupled {
-  color: var(--ink);
-}
-.lumpmat__flux--dots {
-  color: var(--ink-soft);
-}
-.lumpmat__vector.is-lumped .lumpmat__flux--merging {
-  height: 0;
-  opacity: 0;
-}
-
-.lumpmat__maths {
-  margin-top: 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  text-align: center;
-}
-.lumpmat__reading {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  max-width: 560px;
-  font-size: 0.9rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
-}
-.lumpmat__reading span {
+.lumpmat__state {
+  margin: 0;
+  font-size: 0.82rem;
   color: var(--ink-soft);
 }
 .lumpmat__toggle {
@@ -1144,9 +1072,24 @@
   background: var(--paper);
   border-color: color-mix(in srgb, var(--ink) 25%, transparent);
 }
-.lumpmat figcaption {
+
+.lumpmat__maths {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.lumpmat__reading {
   max-width: 620px;
-  margin: 14px auto 0;
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.lumpmat figcaption {
+  max-width: 700px;
+  margin: 16px auto 0;
   font-size: 0.78rem;
   line-height: 1.5;
   text-align: center;
@@ -1155,4 +1098,23 @@
 .lumpmat figcaption strong {
   color: var(--ink);
   font-family: var(--font-display);
+}
+
+.model-network__table-note {
+  max-width: 760px;
+  margin: 10px auto 0;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.model-network__odes {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.model-network__odes .tex-display {
+  margin: 12px auto;
+}
+.lumped__net {
+  font-size: 0.86rem;
 }

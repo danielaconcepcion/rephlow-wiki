@@ -1,121 +1,122 @@
 import { useState } from "react";
-import { InlineMath } from "../../components/Math";
+import { DisplayMath, InlineMath } from "../../components/Math";
+import { asset } from "../../utils/asset";
 
 /**
- * What lumping does to the stoichiometric matrix, as one picture you can
- * flip: two reactions that every feasible solution forces to move
- * together stop being two columns and become one.
+ * Lumping, shown on both sides at once: the same flip turns the full
+ * 45-reaction map into the grouped one, and the stoichiometric matrix
+ * from two coupled columns into one effective column.
  *
- * The algebra is the team's own (see the thesis's reduction chapter):
- * if v₁ = α₁λ and v₂ = α₂λ for some common λ, then n₁v₁ + n₂v₂ =
- * λ(α₁n₁ + α₂n₂), so the pair contributes exactly what a single column
- * n_eff = α₁n₁ + α₂n₂ would, carrying flux λ. Nothing about the
- * network's capabilities is lost; one variable is.
+ * The algebra is the team's own, kept in their notation: if v₁ = α₁λ and
+ * v₂ = α₂λ for some common λ, then n₁v₁ + n₂v₂ = λ(α₁n₁ + α₂n₂), so the
+ * pair contributes exactly what a single column nᵉᶠᶠ = α₁n₁ + α₂n₂
+ * carrying flux λ would. Nothing the network can do is lost; one degree
+ * of freedom is.
  */
 
-const TAIL = ["3", "n"];
+/** The blue the team's own slide uses for the coupled columns. */
+const BLUE = "#1a3fd8";
+const c = (tex: string) => `\\color{${BLUE}}{${tex}}`;
+
+const MATRIX_BEFORE = `\\begin{pmatrix}
+${c("\\big|")} & ${c("\\big|")} & \\big| & & \\big|\\\\
+${c("\\mathbf{n}_1")} & ${c("\\mathbf{n}_2")} & \\mathbf{n}_3 & \\cdots & \\mathbf{n}_n\\\\
+${c("\\big|")} & ${c("\\big|")} & \\big| & & \\big|
+\\end{pmatrix}
+\\begin{pmatrix}
+${c("v_1")}\\\\
+${c("v_2")}\\\\
+v_3\\\\
+\\vdots\\\\
+v_n
+\\end{pmatrix}`;
+
+const MATRIX_AFTER = `\\begin{pmatrix}
+${c("\\vert")} & \\vert & & \\vert\\\\
+${c("\\mathbf{n}^{\\mathrm{eff}}")} & \\mathbf{n}_3 & \\cdots & \\mathbf{n}_n\\\\
+${c("\\vert")} & \\vert & & \\vert
+\\end{pmatrix}
+\\begin{pmatrix}
+${c("\\lambda")}\\\\
+v_3\\\\
+\\vdots\\\\
+v_n
+\\end{pmatrix}`;
+
+const COUPLING = c("v_1=\\alpha_1\\lambda \\qquad v_2=\\alpha_2\\lambda");
+const SUM = c(
+  "\\mathbf{n}_1 v_1+\\mathbf{n}_2 v_2=\\lambda\\,(\\alpha_1\\mathbf{n}_1+\\alpha_2\\mathbf{n}_2)",
+);
+const EFFECTIVE = c(
+  "\\mathbf{n}_{\\mathrm{eff}}=\\alpha_1\\mathbf{n}_1+\\alpha_2\\mathbf{n}_2",
+);
 
 export function LumpingMatrix() {
   const [lumped, setLumped] = useState(false);
 
   return (
     <figure className="lumpmat">
-      <div className="lumpmat__stage">
-        <div
-          className={`lumpmat__matrix${lumped ? " is-lumped" : ""}`}
-          aria-hidden="true"
-        >
-          <span className="lumpmat__bracket">(</span>
-
-          <span className="lumpmat__column lumpmat__column--coupled">
-            <span className="lumpmat__bar" />
-            <span className="lumpmat__label">
-              <InlineMath
-                tex={lumped ? "\\mathbf n^{\\mathrm{eff}}" : "\\mathbf n_1"}
-              />
-            </span>
-          </span>
-
-          <span className="lumpmat__column lumpmat__column--merging">
-            <span className="lumpmat__bar" />
-            <span className="lumpmat__label">
-              <InlineMath tex="\mathbf n_2" />
-            </span>
-          </span>
-
-          {TAIL.map((n, i) => (
-            <span className="lumpmat__column" key={n}>
-              {i === 1 && <span className="lumpmat__dots">⋯</span>}
-              <span className="lumpmat__bar" />
-              <span className="lumpmat__label">
-                <InlineMath tex={`\\mathbf n_${n}`} />
-              </span>
-            </span>
-          ))}
-
-          <span className="lumpmat__bracket">)</span>
-        </div>
-
-        <div
-          className={`lumpmat__vector${lumped ? " is-lumped" : ""}`}
-          aria-hidden="true"
-        >
-          <span className="lumpmat__bracket">(</span>
-          <span className="lumpmat__fluxes">
-            <span className="lumpmat__flux lumpmat__flux--coupled">
-              <InlineMath tex={lumped ? "\\lambda" : "v_1"} />
-            </span>
-            <span className="lumpmat__flux lumpmat__flux--merging">
-              <InlineMath tex="v_2" />
-            </span>
-            <span className="lumpmat__flux">
-              <InlineMath tex="v_3" />
-            </span>
-            <span className="lumpmat__flux lumpmat__flux--dots">⋮</span>
-            <span className="lumpmat__flux">
-              <InlineMath tex="v_n" />
-            </span>
-          </span>
-          <span className="lumpmat__bracket">)</span>
-        </div>
+      <div className={`lumpmat__maps${lumped ? " is-lumped" : ""}`}>
+        <img
+          className="lumpmat__map lumpmat__map--full"
+          src={asset("assets/model/core-map-big-labels.webp")}
+          alt="The 45 active reactions of the core, each drawn separately, with its pFBA flux."
+          loading="lazy"
+        />
+        <img
+          className="lumpmat__map lumpmat__map--lumped"
+          src={asset("assets/model/lumped-map.webp")}
+          alt="The same network after lumping: the Entner–Doudoroff sequence and the TCA cycle each drawn as one net reaction, respiration and the phosphate modules unchanged."
+          loading="lazy"
+        />
       </div>
 
-      <div className="lumpmat__maths">
-        {lumped ? (
-          <p className="lumpmat__reading">
-            <InlineMath tex="\mathbf n^{\mathrm{eff}} = \alpha_1\mathbf n_1 + \alpha_2\mathbf n_2" />
-            <span>
-              One column, one flux. The pair contributes exactly what it did —
-              the model has one variable fewer, and no reaction it could run
-              before has become impossible.
-            </span>
-          </p>
-        ) : (
-          <p className="lumpmat__reading">
-            <InlineMath tex="v_1 = \alpha_1\lambda,\quad v_2 = \alpha_2\lambda" />
-            <span>
-              Coupled: in every feasible solution the two fluxes are fixed
-              multiples of a common <InlineMath tex="\lambda" />, so{" "}
-              <InlineMath tex="\mathbf n_1 v_1 + \mathbf n_2 v_2 = \lambda\,(\alpha_1\mathbf n_1 + \alpha_2\mathbf n_2)" />
-              .
-            </span>
-          </p>
-        )}
-
+      <div className="lumpmat__controls">
         <button
           type="button"
           className="lumpmat__toggle"
           onClick={() => setLumped((v) => !v)}
           aria-pressed={lumped}
         >
-          {lumped ? "Show the two columns" : "Lump the coupled pair"}
+          {lumped ? "← Back to the 45 reactions" : "Lump the coupled subsets →"}
         </button>
+        <p className="lumpmat__state">
+          {lumped
+            ? "Grouped: MACRO_ED and MACRO_TCA, one net reaction each."
+            : "45 reactions, every step of ED and of the TCA cycle drawn on its own."}
+        </p>
+      </div>
+
+      <DisplayMath tex={lumped ? MATRIX_AFTER : MATRIX_BEFORE} />
+
+      <div className="lumpmat__maths">
+        {lumped ? (
+          <>
+            <InlineMath tex={EFFECTIVE} />
+            <p className="lumpmat__reading">
+              One column, one flux. The pair contributes exactly what it did —
+              the model has one variable fewer, and no reaction it could run
+              before has become impossible.
+            </p>
+          </>
+        ) : (
+          <>
+            <InlineMath tex={COUPLING} />
+            <InlineMath tex={SUM} />
+            <p className="lumpmat__reading">
+              Coupled: in every feasible solution the two fluxes are fixed
+              multiples of a common <InlineMath tex="\lambda" />, so their joint
+              contribution can be written with one column and one flux.
+            </p>
+          </>
+        )}
       </div>
 
       <figcaption>
-        <strong>Figure 10.</strong> Lumping, in the stoichiometric matrix: two
-        reactions coupled across the whole feasible set collapse into one
-        effective column carrying one flux.
+        <strong>Figure 10.</strong> Lumping, on both sides at once: the network
+        as 45 separate reactions and as grouped modules, and the same step in
+        the stoichiometric matrix. Maps from the thesis's own figures; labels in
+        Spanish.
       </figcaption>
     </figure>
   );

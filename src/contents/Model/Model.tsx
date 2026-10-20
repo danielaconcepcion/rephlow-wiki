@@ -1415,98 +1415,178 @@ export function Model() {
                   Each term saturates on its own substrate, so a module slows
                   down when any one of the things it needs runs short — which is
                   the behaviour the model exists to capture: polyP synthesis
-                  competing with everything else for the same ATP. The central
-                  blocks carry product inhibition on top of this (ATP, NADH and
-                  Q8H₂ slow the pathways that make them), and two modules depart
-                  from the form on purpose. ATP synthase is written as a{" "}
-                  <strong>reversible macroscopic law</strong>, with the proton
-                  gradient and the membrane potential left out of the
-                  description rather than modelled explicitly
-                  <Cite n={10} />; ATP maintenance is a{" "}
-                  <strong>fixed demand</strong>, not an enzyme. The laws of each
-                  module are listed below.
+                  competing with everything else for the same ATP. The two
+                  central blocks carry product inhibition on top of this, a
+                  factor <InlineMath tex="1/(1+[P_j]/K_{i,j})" /> for each of
+                  ATP, NADH and Q8H₂, so a pathway is slowed by what it has
+                  already made.
+                </p>
+
+                <p>
+                  Three processes are not written this way, and the reasons are
+                  physical rather than cosmetic. <strong>ATP synthase</strong>{" "}
+                  takes a reversible bi-bi law, so it can run in either
+                  direction; it is macroscopic on purpose, with the pH gradient
+                  and the membrane potential left out of the description rather
+                  than modelled explicitly
+                  <Cite n={3} />. The <strong>Pit symporter</strong> is
+                  reversible mass action in protons and phosphate on both sides
+                  of the membrane, which is what makes the proton gradient
+                  actually drive the uptake instead of being assumed away. And
+                  the movements that are not catalysed at all — phosphate,
+                  protons, O₂, CO₂ and water crossing between compartments — are{" "}
+                  <strong>linear diffusion</strong>. ATP maintenance, by
+                  contrast, is an ordinary saturating law in ATP
+                  <Cite n={10} />, not a constant drain. Every module's law is
+                  tabulated below.
                 </p>
               </div>
 
               <div className="model-network__subsection">
-                <AccordionSection title="Table 2 — Rate law of each module">
+                <AccordionSection title="Table 2 — Rate law of each flux">
                   <div className="model-network__table-scroll">
                     <table className="model-network__table">
                       <thead>
                         <tr>
-                          <th scope="col">Module</th>
+                          <th scope="col">Flux</th>
+                          <th scope="col">Law</th>
                           <th scope="col">Form</th>
-                          <th scope="col">Depends on</th>
-                          <th scope="col">Parameters</th>
+                          <th scope="col">After</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <th scope="row">Phosphate transport (Pit, Pst)</th>
+                          <th scope="row">
+                            <InlineMath tex="v_{\mathrm{ED}}" />
+                          </th>
+                          <td>
+                            <InlineMath tex="V_{\max}\prod_i \frac{[S_i]}{K_{m,i}+[S_i]}\prod_j \frac{1}{1+[P_j]/K_{i,j}}" />
+                          </td>
+                          <td>Multi-substrate with product inhibition</td>
+                          <td>—</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            <InlineMath tex="v_{\mathrm{TCA}}" />
+                          </th>
+                          <td>
+                            <InlineMath tex="V_{\max}\prod_i \frac{[S_i]}{K_{m,i}+[S_i]}\prod_j \frac{1}{1+[P_j]/K_{i,j}}" />
+                          </td>
+                          <td>Multi-substrate with product inhibition</td>
+                          <td>—</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            <InlineMath tex="v_{\mathrm{NDH}}" />
+                          </th>
+                          <td>
+                            <InlineMath tex="V_{\max}\frac{[\mathrm{NADH}]}{K_{m,\mathrm{NADH}}+[\mathrm{NADH}]}\frac{[\mathrm{Q8}]}{K_{m,\mathrm{Q8}}+[\mathrm{Q8}]}" />
+                          </td>
+                          <td>Two-substrate</td>
+                          <td>Hameri et al.</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            <InlineMath tex="v_{\mathrm{CYT}}" />
+                          </th>
+                          <td>
+                            <InlineMath tex="V_{\max}\frac{[\mathrm{Q8H_2}]}{K_{m}+[\mathrm{Q8H_2}]}\frac{[\mathrm{O_2}]}{K_{m,\mathrm{O_2}}+[\mathrm{O_2}]}" />
+                          </td>
+                          <td>Two-substrate</td>
+                          <td>Hameri et al.</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            <InlineMath tex="v_{\mathrm{ATPS}}" />
+                          </th>
+                          <td>
+                            <InlineMath tex="\frac{V^{f}\frac{[\mathrm{ADP}]}{K_{m,\mathrm{ADP}}}\frac{[\mathrm{P_i}]}{K_{m,\mathrm{P_i}}}-V^{b}\frac{[\mathrm{ATP}]}{K_{m,\mathrm{ATP}}}}{\left(1+\frac{[\mathrm{ADP}]}{K_{m,\mathrm{ADP}}}\right)\left(1+\frac{[\mathrm{P_i}]}{K_{m,\mathrm{P_i}}}\right)+\left(1+\frac{[\mathrm{ATP}]}{K_{m,\mathrm{ATP}}}\right)-1}" />
+                          </td>
+                          <td>Reversible bi-bi</td>
+                          <td>Hameri et al.</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            <InlineMath tex="v_{\mathrm{ATPM}}" />
+                          </th>
+                          <td>
+                            <InlineMath tex="V_{\mathrm{ATPM}}\frac{[\mathrm{ATP}]}{K_{m,\mathrm{ATP}}+[\mathrm{ATP}]}" />
+                          </td>
                           <td>Irreversible Michaelis–Menten</td>
-                          <td>external Pᵢ; ATP for the ABC route</td>
-                          <td>
-                            <InlineMath tex="V_{\max}, K_m" /> per route
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">Entner–Doudoroff (MACRO_ED)</th>
-                          <td>
-                            Multi-substrate Michaelis–Menten, product inhibition
-                          </td>
-                          <td>glucose, ADP, Pᵢ, NAD⁺, Q8</td>
-                          <td>
-                            <InlineMath tex="V_{\max}, K_{m,i}, K_i" />
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">TCA cycle (MACRO_TCA)</th>
-                          <td>
-                            Multi-substrate Michaelis–Menten, product inhibition
-                          </td>
-                          <td>pyruvate, ADP, Pᵢ, NAD⁺, Q8, H₂O</td>
-                          <td>
-                            <InlineMath tex="V_{\max}, K_{m,i}, K_i" />
-                          </td>
+                          <td>Nakano et al.</td>
                         </tr>
                         <tr>
                           <th scope="row">
-                            Respiratory chain (NADH16pp, CYTBO3_4pp)
+                            <InlineMath tex="v_{\mathrm{Pit}}" />
                           </th>
-                          <td>Multi-substrate Michaelis–Menten</td>
-                          <td>NADH and Q8; Q8H₂ and O₂</td>
                           <td>
-                            <InlineMath tex="V_{\max}, K_{m,i}" /> per complex
+                            <InlineMath tex="k_f[\mathrm{H^+_p}][\mathrm{P_{i,p}}]-k_r[\mathrm{H^+_c}][\mathrm{P_{i,c}}]" />
                           </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">ATP synthase (ATPS4rpp)</th>
-                          <td>Reversible, macroscopic</td>
-                          <td>ADP, Pᵢ, ATP, the proton gradient implicitly</td>
-                          <td>
-                            <InlineMath tex="V_{\max}, K_m, K_{eq}" />
-                          </td>
-                        </tr>
-                        <tr>
-                          <th scope="row">ATP maintenance (ATPM)</th>
-                          <td>Fixed demand</td>
-                          <td>ATP</td>
-                          <td>one constant</td>
+                          <td>Reversible mass action</td>
+                          <td>Hameri et al.</td>
                         </tr>
                         <tr>
                           <th scope="row">
-                            PolyP synthesis (PPK, PPK2, PPK50r)
+                            <InlineMath tex="v_{\mathrm{ABC}}" />
                           </th>
-                          <td>Multi-substrate Michaelis–Menten</td>
-                          <td>ATP and the chain being extended</td>
                           <td>
-                            <InlineMath tex="V_{\max}, K_{m,\mathrm{ATP}}, K_{m,n}" />{" "}
-                            per step
+                            <InlineMath tex="V_{\max}\frac{[\mathrm{ATP}]}{K_{m,\mathrm{ATP}}+[\mathrm{ATP}]}\frac{[\mathrm{P_i^e}]}{K_{m,\mathrm{P_i}}+[\mathrm{P_i^e}]}" />
                           </td>
+                          <td>Two-substrate</td>
+                          <td>—</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            <InlineMath tex="v_{\mathrm{PPK}},\ v_{\mathrm{PPK2}},\ v_{\mathrm{PPK50}}" />
+                          </th>
+                          <td>
+                            <InlineMath tex="V_{\max}\frac{[\mathrm{ATP}]}{K_{m,\mathrm{ATP}}+[\mathrm{ATP}]}\frac{[\mathrm{P}_n]}{K_{m,n}+[\mathrm{P}_n]}" />
+                          </td>
+                          <td>Two-substrate</td>
+                          <td>Hameri et al. (first two)</td>
+                        </tr>
+                        <tr>
+                          <th scope="row">
+                            <InlineMath tex="v_{\mathrm{diff}}" />
+                          </th>
+                          <td>
+                            <InlineMath tex="k\left([S^{\mathrm{out}}]-[S^{\mathrm{in}}]\right)" />
+                          </td>
+                          <td>Linear diffusion</td>
+                          <td>—</td>
                         </tr>
                       </tbody>
                     </table>
                   </div>
+                  <p className="model-network__table-note">
+                    "After" names where the functional form comes from; the
+                    constants themselves are a separate question, taken up in
+                    5.4. Diffusion applies to phosphate, protons, O₂, CO₂ and
+                    water between compartments.
+                  </p>
+                </AccordionSection>
+
+                <AccordionSection title="Table 3 — The differential equations">
+                  <p className="model-network__table-note">
+                    The reduced model in full: one equation per species, each
+                    the sum of the fluxes above weighted by their stoichiometry.
+                    The 47 on the elongation step is the forty-seven phosphates
+                    that step adds in one go.
+                  </p>
+                  <div className="model-network__odes">
+                    <DisplayMath tex="\frac{d[\mathrm{Q8H_2}]}{dt} = v_{\mathrm{NDH}} + v_{\mathrm{ED}} + v_{\mathrm{TCA}} - v_{\mathrm{CYT}}" />
+                    <DisplayMath tex="\frac{d[\mathrm{ATP}]}{dt} = v_{\mathrm{ATPS}} + v_{\mathrm{ED}} + v_{\mathrm{TCA}} - v_{\mathrm{ATPM}} - v_{\mathrm{ABC}} - v_{\mathrm{PPK}} - v_{\mathrm{PPK2}} - 47\,v_{\mathrm{PPK50}}" />
+                    <DisplayMath tex="\frac{d[\mathrm{P_{i,c}}]}{dt} = -v_{\mathrm{ATPS}} - v_{\mathrm{ED}} - v_{\mathrm{TCA}} + v_{\mathrm{ATPM}} + v_{\mathrm{Pit}} + 2\,v_{\mathrm{ABC}} - v_{\mathrm{PPK}}" />
+                    <DisplayMath tex="\frac{d[\mathrm{PP_i}]}{dt} = v_{\mathrm{PPK}} - v_{\mathrm{PPK2}}, \qquad \frac{d[\mathrm{PPP_i}]}{dt} = v_{\mathrm{PPK2}} - v_{\mathrm{PPK50}}, \qquad \frac{d[\mathrm{PolyP}_{50}]}{dt} = v_{\mathrm{PPK50}}" />
+                    <DisplayMath tex="\frac{d[\mathrm{NADH}]}{dt} = -v_{\mathrm{NDH}} + v_{\mathrm{ED}} + 4\,v_{\mathrm{TCA}}, \qquad \frac{d[\mathrm{Pyr}]}{dt} = 2\,v_{\mathrm{ED}} - v_{\mathrm{TCA}}" />
+                    <DisplayMath tex="\frac{d[\mathrm{H^+_p}]}{dt} = -4\,v_{\mathrm{ATPS}} + 3\,v_{\mathrm{NDH}} + 4\,v_{\mathrm{CYT}} + v_{\mathrm{H,diff}} - v_{\mathrm{Pit}}" />
+                  </div>
+                  <p className="model-network__table-note">
+                    Six of the sixteen equations, chosen because they carry the
+                    couplings the rest of the page talks about; the remaining
+                    ten — Q8, ADP, NAD⁺, external and periplasmic phosphate,
+                    glucose, O₂, CO₂ and water — follow the same pattern.
+                  </p>
                 </AccordionSection>
               </div>
 

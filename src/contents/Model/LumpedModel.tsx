@@ -21,6 +21,8 @@ interface Module {
   column: 0 | 1 | 2;
   row: number;
   reactions: string;
+  /** The net reaction the group collapses to, where it is a lump. */
+  net?: string;
   inputs: string;
   outputs: string;
   /** The rate law's shape, as TeX. */
@@ -39,15 +41,15 @@ const MODULES: Module[] = [
     column: 0,
     row: 0,
     reactions:
-      "MACRO_ED — one net reaction standing for the whole sequential ED route (glucose transport, GLCDpp, GNK, EDD, EDA and the lower EMP steps), which flux coupling shows operate as a unit.",
-    inputs: "glucose, ADP, Pᵢ, NAD⁺, Q8",
-    outputs: "pyruvate, ATP, NADH, Q8H₂, H₂O, H⁺",
-    law: "v = V_{\\max}\\,\\prod_i \\frac{[S_i]}{K_{m,i}+[S_i]}",
+      "Twelve reactions at one flux: GLCtex, GLCDpp, GLCNt2rpp, GNK, EDD, EDA, GAPD, PGK, PGM, ENO, PYK and the glucose exchange. Flux coupling makes them a unit — the route has no branch along the way that could drain it.",
+    net: "glucose + NAD⁺ + Pᵢ + Q8 + ADP + H₂O (periplasm) → 2 pyruvate + NADH + Q8H₂ + ATP + H₂O (cytoplasm) + 2 H⁺",
+    inputs: "glucose, NAD⁺, Pᵢ, Q8, ADP",
+    outputs: "pyruvate (×2), NADH, Q8H₂, ATP, H⁺",
+    law: "v = V_{\\max}^{\\mathrm{ED}} \\prod_{i} \\frac{[S_i]}{K_{m,i}+[S_i]} \\prod_{j} \\frac{1}{1+[P_j]/K_{i,j}}",
     lawNote:
-      "Irreversible multi-substrate Michaelis–Menten, with product inhibition by ATP, NADH and Q8H₂.",
-    parameters: "V_{\\max},\\ K_{m,i},\\ K_i",
-    parametersNote:
-      "one saturation constant per substrate, one inhibition constant per inhibiting product",
+      "Multi-substrate in glucose, NAD⁺, Q8, ADP and Pᵢ, divided by an inhibition term for each of ATP, NADH and Q8H₂ — the products that tell the pathway to slow down.",
+    parameters: "V_{\\max},\\ K_{m,i},\\ K_{i,j}",
+    parametersNote: "five saturation constants and three inhibition constants",
   },
   {
     id: "tca",
@@ -56,15 +58,15 @@ const MODULES: Module[] = [
     column: 0,
     row: 1,
     reactions:
-      "MACRO_TCA — pyruvate dehydrogenase and the full cycle (CS, ACONTa/b, ICDHyr, AKGDH, SUCOAS, SUCDi, FUM, MDH) as one net reaction, kept apart from ED because the cycle is not structurally coupled: it branches at the nodes that feed biomass precursors.",
-    inputs: "pyruvate, ADP, Pᵢ, NAD⁺, Q8, H₂O",
-    outputs: "CO₂ (×3), ATP, NADH (×4), Q8H₂, H⁺",
-    law: "v = V_{\\max}\\,\\prod_i \\frac{[S_i]}{K_{m,i}+[S_i]}",
+      "Eleven reactions at one flux: PDH, CS, ACONTa, ACONTb, ICDHyr, AKGDH, SUCOAS, SUCDi, FUM, MDH — and NADTRHD, the transhydrogenase, which the lump absorbs. Kept apart from ED because the cycle is not structurally coupled: it branches at the nodes that feed biomass precursors.",
+    net: "pyruvate + 4 NAD⁺ + Q8 + ADP + Pᵢ + 2 H₂O → 3 CO₂ + 4 NADH + Q8H₂ + ATP + 2 H⁺",
+    inputs: "pyruvate, NAD⁺, Q8, ADP, Pᵢ, H₂O",
+    outputs: "CO₂ (×3), NADH (×4), Q8H₂, ATP, H⁺",
+    law: "v = V_{\\max}^{\\mathrm{TCA}} \\prod_{i} \\frac{[S_i]}{K_{m,i}+[S_i]} \\prod_{j} \\frac{1}{1+[P_j]/K_{i,j}}",
     lawNote:
-      "Same multi-substrate form as ED, on pyruvate and the redox cofactors.",
-    parameters: "V_{\\max},\\ K_{m,i},\\ K_i",
-    parametersNote:
-      "one saturation constant per substrate, one inhibition constant per inhibiting product",
+      "The same form as ED, on pyruvate and the cofactors, inhibited by NADH, ATP and Q8H₂.",
+    parameters: "V_{\\max},\\ K_{m,i},\\ K_{i,j}",
+    parametersNote: "five saturation constants and three inhibition constants",
   },
   {
     id: "respiration",
@@ -73,12 +75,12 @@ const MODULES: Module[] = [
     column: 1,
     row: 0,
     reactions:
-      "NADH16pp (5.39) and CYTBO3_4pp (7.18), with O2tpp (3.59) bringing oxygen in. Kept as its own module: the respiratory reactions are not strictly coupled to the carbon routes, so the model can still trade redox state against the electron acceptor available.",
+      "NADH16pp (5.39) and CYTBO3_4pp (7.18), each with its own law, and oxygen reaching the cytoplasm by diffusion. Kept as its own module: the respiratory reactions are not strictly coupled to the carbon routes, so the model can still trade redox state against the electron acceptor available.",
     inputs: "NADH, Q8H₂, O₂, H⁺",
     outputs: "NAD⁺, Q8, H₂O, H⁺ pumped to the periplasm",
     law: "v = V_{\\max}\\,\\frac{[\\mathrm{NADH}]}{K_m+[\\mathrm{NADH}]}\\,\\frac{[\\mathrm{Q8}]}{K_m'+[\\mathrm{Q8}]}",
     lawNote:
-      "One multi-substrate term per complex — NADH and Q8 for the dehydrogenase, Q8H₂ and O₂ for the oxidase.",
+      "A two-substrate law per complex — NADH and Q8 for the dehydrogenase, Q8H₂ and O₂ for the oxidase. Both from the kinetic description of Hameri et al.",
     parameters: "V_{\\max},\\ K_{m,i}",
     parametersNote: "per substrate, for each of the two complexes",
   },
@@ -91,11 +93,13 @@ const MODULES: Module[] = [
     reactions: "ATPS4rpp — the proton-motive force spent back into ATP.",
     inputs: "ADP, Pᵢ, H⁺ (periplasm)",
     outputs: "ATP, H₂O, H⁺ (cytoplasm)",
-    law: "v = V_{\\max}\\left(\\frac{[\\mathrm{ADP}][\\mathrm{P_i}]}{K_{m}} - \\frac{[\\mathrm{ATP}]}{K_{eq}}\\right)",
+    law: "v = \\frac{V^{f}\\frac{[\\mathrm{ADP}]}{K_{m,\\mathrm{ADP}}}\\frac{[\\mathrm{P_i}]}{K_{m,\\mathrm{P_i}}} - V^{b}\\frac{[\\mathrm{ATP}]}{K_{m,\\mathrm{ATP}}}}{\\left(1+\\frac{[\\mathrm{ADP}]}{K_{m,\\mathrm{ADP}}}\\right)\\left(1+\\frac{[\\mathrm{P_i}]}{K_{m,\\mathrm{P_i}}}\\right)+\\left(1+\\frac{[\\mathrm{ATP}]}{K_{m,\\mathrm{ATP}}}\\right)-1}",
     lawNote:
-      "A reversible, macroscopic law: the pH gradient and the membrane potential are not modelled explicitly, so this is an effective description of the rotary mechanism, not a mechanistic one.",
-    parameters: "V_{\\max},\\ K_m,\\ K_{eq}",
-    parametersNote: "an equilibrium constant in place of the gradient",
+      "A reversible bi-bi law, so the enzyme can run either way. It is macroscopic on purpose: the pH gradient and the membrane potential are not modelled explicitly, so this describes the rotary mechanism's net effect, not the mechanism.",
+    parameters:
+      "V^{f},\\ V^{b},\\ K_{m,\\mathrm{ADP}},\\ K_{m,\\mathrm{P_i}},\\ K_{m,\\mathrm{ATP}}",
+    parametersNote:
+      "a forward and a backward maximal rate, three saturation constants",
   },
   {
     id: "maintenance",
@@ -104,14 +108,14 @@ const MODULES: Module[] = [
     column: 1,
     row: 2,
     reactions:
-      "ATPM — the non-growth-associated demand, the ATP the cell spends on staying alive rather than on building anything.",
+      "ATPM — the non-growth-associated demand, the ATP the cell spends on staying alive rather than on building anything. Not a constant drain: it saturates in ATP like any other hydrolysis.",
     inputs: "ATP, H₂O",
     outputs: "ADP, Pᵢ, H⁺",
-    law: "v = v_{\\mathrm{ATPM}}",
+    law: "v = V_{\\mathrm{ATPM}}\\,\\frac{[\\mathrm{ATP}]}{K_{m,\\mathrm{ATP}}+[\\mathrm{ATP}]}",
     lawNote:
-      "A fixed drain rather than a saturating law: it is a demand the model has to meet, not an enzyme it has to describe.",
-    parameters: "v_{\\mathrm{ATPM}}",
-    parametersNote: "a single constant demand",
+      "Irreversible Michaelis–Menten in ATP, after the hydrolysis kinetics of the rotary enzyme (Nakano et al.).",
+    parameters: "V_{\\mathrm{ATPM}},\\ K_{m,\\mathrm{ATP}}",
+    parametersNote: "one maximal rate and one saturation constant",
   },
   {
     id: "pi-transport",
@@ -120,15 +124,16 @@ const MODULES: Module[] = [
     column: 2,
     row: 0,
     reactions:
-      "PItex (7.00) and PIt2rpp (7.00), the low-affinity Pit symport driven by the proton gradient, and PIabc (3.00), the high-affinity ABC route that pays for its own uptake with ATP.",
+      "Three ways in, with three different laws: the Pit symporter (7.00), reversible and driven by the proton gradient; the ABC transporter (3.00), which pays for its own uptake with ATP; and passive diffusion across the outer membrane.",
     inputs: "Pᵢ (medium), H⁺ or ATP",
     outputs: "Pᵢ (cytoplasm), ADP, H⁺",
-    law: "v = V_{\\max}\\,\\frac{[\\mathrm{P_i}]}{K_m+[\\mathrm{P_i}]}",
+    law: "v_{\\mathrm{Pit}} = k_f[\\mathrm{H^+_p}][\\mathrm{P_{i,p}}] - k_r[\\mathrm{H^+_c}][\\mathrm{P_{i,c}}]",
     lawNote:
-      "Irreversible Michaelis–Menten on external phosphate; the ABC route carries a second term in ATP.",
-    parameters: "V_{\\max},\\ K_m",
+      "Reversible mass action for the symporter, so the proton gradient really drives it; a two-substrate saturating law in ATP and external Pᵢ for the ABC route; and a linear law for diffusion.",
+    parameters:
+      "k_f,\\ k_r,\\ V_{\\max}^{\\mathrm{ABC}},\\ K_{m,\\mathrm{ATP}},\\ K_{m,\\mathrm{P_i}},\\ k_{\\mathrm{P_i}}",
     parametersNote:
-      "per route — a low saturation constant for the ABC system, a high one for the symporter",
+      "two rate constants, the ABC route's three, and one diffusion coefficient",
   },
   {
     id: "polyp",
@@ -137,7 +142,7 @@ const MODULES: Module[] = [
     column: 2,
     row: 1,
     reactions:
-      "PPK (0.200), PPK2 (0.200) and PPK50r (0.200) — dimerisation, trimerisation and elongation, each spending one ATP per phosphate added.",
+      "PPK (0.200), PPK2 (0.200) and PPK50r (0.200) — dimerisation, trimerisation and elongation. The last one spends 47 ATP in a single step, which is what makes it a stand-in rather than a reaction.",
     inputs: "Pᵢ, ATP",
     outputs: "PPᵢ, PPPᵢ, PolyP₅₀, ADP",
     law: "v = V_{\\max}\\,\\frac{[\\mathrm{ATP}]}{K_{m,\\mathrm{ATP}}+[\\mathrm{ATP}]}\\,\\frac{[\\mathrm{P}_n]}{K_{m,n}+[\\mathrm{P}_n]}",
@@ -297,6 +302,12 @@ export function LumpedModel() {
         <dl className="lumped__fields">
           <dt>Grouped reactions</dt>
           <dd>{active.reactions}</dd>
+          {active.net && (
+            <>
+              <dt>Net reaction</dt>
+              <dd className="lumped__net">{active.net}</dd>
+            </>
+          )}
           <dt>In</dt>
           <dd>{active.inputs}</dd>
           <dt>Out</dt>
