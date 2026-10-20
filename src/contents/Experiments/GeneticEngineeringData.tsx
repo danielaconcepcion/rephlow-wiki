@@ -307,33 +307,13 @@ const PROTOCOL: Record<string, { label: string; href: string }> = {
     label: "LB medium preparation",
     href: "assets/protocols/genetic-engineering-protocol-4-lb-medium-preparation.pdf",
   },
-  "Minis de colonias": {
-    label: "Colony minipreps",
-    href: "assets/protocols/genetic-engineering-colony-minipreps.pdf",
-  },
   "Miniprep kit": {
     label: "PureYield plasmid miniprep (Promega)",
     href: "assets/protocols/genetic-engineering-pureyield-plasmid-miniprep.pdf",
   },
-  "Miniprep sin kit": {
-    label: "Miniprep (no kit)",
-    href: "assets/protocols/genetic-engineering-miniprep-no-kit.pdf",
-  },
-  "internal sequencing submission SOP": {
-    label: "Sequencing submission SOP",
-    href: "assets/protocols/genetic-engineering-sequencing-submission-sop.pdf",
-  },
   "Obtención P. putida electrocompetentes": {
     label: "Electrocompetent cell preparation",
     href: "assets/protocols/genetic-engineering-protocol-2-electrocompetent-cells.pdf",
-  },
-  "Geles de poliacrilamida": {
-    label: "Polyacrylamide gel",
-    href: "assets/protocols/genetic-engineering-polyacrylamide-gel.pdf",
-  },
-  "internal guide-design SOP": {
-    label: "Guide-design SOP",
-    href: "assets/protocols/genetic-engineering-guide-design-sop.pdf",
   },
   "Crispr Protocolo 2.0": {
     label: "CRISPR for Pseudomonas (supplementary)",
@@ -352,8 +332,11 @@ const PROTOCOL: Record<string, { label: string; href: string }> = {
     href: "assets/protocols/genetic-engineering-protocol-9-phosphorus-assay-overplus.pdf",
   },
 };
+/* An unknown name yields nothing rather than an undefined entry: a
+ * protocol the team decides not to publish is dropped from PROTOCOL, and
+ * the card simply shows one button fewer instead of breaking. */
 function protocolLinks(...names: string[]) {
-  return names.map((n) => PROTOCOL[n]);
+  return names.map((n) => PROTOCOL[n]).filter(Boolean);
 }
 
 export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
@@ -678,7 +661,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           </>,
           "The expected outcome was several independent clones per construct with the correct pattern.",
         ],
-        protocols: protocolLinks("PCR", "Minis de colonias", "Miniprep kit", "Miniprep sin kit", "Geles de agarosa"),
+        protocols: protocolLinks("PCR", "Miniprep kit", "Geles de agarosa"),
       },
       {
         id: "cloning-sequence-confirmation",
@@ -688,7 +671,6 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           "Clones that passed screening were confirmed by sequencing, because screening shows an insert of the right size and orientation but only sequencing rules out point mutations, indels or assembly scars that could inactivate the protein or shift the reading frame. Sanger sequencing of the cassette and its junctions, or whole-plasmid sequencing, was used, and only a clone matching the in-silico design exactly was carried forward.",
           <>The expected outcome was a <strong>sequence-verified expression plasmid</strong> for each gene.</>,
         ],
-        protocols: protocolLinks("internal sequencing submission SOP"),
       },
       {
         id: "cloning-pputida-transformation",
@@ -766,7 +748,7 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
           <>The expected outcome was a prioritised set of guides for <em>ppx</em>, <em>ppkB</em> and <em>pitB</em>.</>,
         ],
         references: refs(6, 8),
-        protocols: protocolLinks("internal guide-design SOP", "Crispr Protocolo 2.0"),
+        protocols: protocolLinks("Crispr Protocolo 2.0"),
       },
       {
         id: "knockout-grna-amplification",
