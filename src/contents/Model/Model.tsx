@@ -85,12 +85,12 @@ export function Model() {
             <h2>From metabolic reconstruction to design decisions</h2>
             <p>
               Our modelling workflow links a genome-scale representation of
-              <em> Pseudomonas putida</em> KT2440 to the specific decisions
-              required to improve phosphate accumulation. Each stage narrows
-              the question: from identifying feasible metabolic states, to
-              testing individual limitations and interactions, and finally to
-              balancing PolyP production against the growth needed to sustain
-              the engineered chassis.
+              <em> Pseudomonas putida</em> KT2440 to a reduced kinetic model
+              of phosphate accumulation. It moves from feasible metabolic
+              states and environmental constraints to network reduction,
+              time-dependent simulation and sensitivity analysis, ultimately
+              identifying the measurements needed for the next experimental
+              iteration.
             </p>
           </div>
           <div className="model-network__wide">
