@@ -451,9 +451,8 @@ const STOPS: Stop[] = [
     id: "beehives",
     number: "06",
     title: "Beehives",
-    date: "Date to confirm",
-    dateConfirmed: false,
-    dateNote: "Not documented in the current record",
+    date: "5 May 2026",
+    dateConfirmed: true,
     photos: [
       {
         kind: "real",
