@@ -494,7 +494,7 @@ const capsuleRow = (
 ) => ({
   label,
   figures: LOAD_STEPS.map((step) => ({
-    src: `${FIGURES}/mechanical/${storage}-${condition}-${step}.webp`,
+    src: `${FIGURES}/${storage}-${condition}-${step}.webp`,
     alt: `${storage === "fresh" ? "Freshly produced" : "Stored"} core-shell capsule (${
       condition === "best"
         ? "3.5% (w/v) alginate, 300/50 μL/min"
@@ -833,7 +833,7 @@ const SEM_PANELS: [string, string][] = [
 ];
 
 const SEM_FIGURES: FigureData[] = SEM_PANELS.map(([file, alt]) => ({
-  src: `${FIGURES}/sem/${file}.webp`,
+  src: `${FIGURES}/${file}.webp`,
   alt: `SEM micrograph of a dried, gold-coated core-shell capsule. ${alt}.`,
   caption: "",
 }));

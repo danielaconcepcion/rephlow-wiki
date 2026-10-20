@@ -498,17 +498,17 @@ export const GENETIC_ENGINEERING_SUBBLOCKS: ExperimentSubBlock[] = [
               kind: "image-group",
               images: [
                 {
-                  src: "assets/experiments/genetic-engineering/pS2513ppk1_Map.svg",
+                  src: "assets/experiments/genetic-engineering/ps2513ppk1-map.svg",
                   alt: "Map of the pSEVA2513 ppk1 expression construct.",
                   title: "pSEVA2513 · ppk1",
                 },
                 {
-                  src: "assets/experiments/genetic-engineering/pS6313SCAB_Map.svg",
+                  src: "assets/experiments/genetic-engineering/ps6313scab-map.svg",
                   alt: "Map of the pSEVA6313 pstSCAB expression construct.",
                   title: "pSEVA6313 · pstSCAB",
                 },
                 {
-                  src: "assets/experiments/genetic-engineering/pS2513ppk1_Map_XhoI.svg",
+                  src: "assets/experiments/genetic-engineering/ps2513ppk1-map-xhoi.svg",
                   alt: "XhoI restriction map of the pSEVA2513 ppk1 construct.",
                   title: "pSEVA2513 · ppk1 · XhoI",
                 },
