@@ -1,19 +1,14 @@
 /* --------------------------------------------------------------------------
    FBAPrimer — the "how FBA works" visual walkthrough that opens the Model
-   page's metabolic-modelling content. One fixed coordinate system whose
-   feasible-region shape is reshaped in place across five stages; see
-   FBAPrimer.tsx for the geometry. Reuses global tokens only (--ink,
+   page's metabolic-modelling content. Five supplied scientific panels are
+   presented one by one alongside their explanation. Reuses global tokens
+   only (--ink,
    --ink-soft, --line, --paper, --paper-soft, --radius-lg, --radius-md,
-   --shadow-card, --font-display, --font-body). The cyan/blue and red used
-   for the polytope and the objective are local to this component (no
-   existing token maps to "FBA feasible region" or "objective/optimum").
+   --shadow-card, --font-display, --font-body).
    -------------------------------------------------------------------------- */
 
 .fba-primer {
-  --fba-axis: var(--ink);
   --fba-blue: #3b6fa0;
-  --fba-blue-fill: rgba(59, 111, 160, 0.16);
-  --fba-red: #b23a2e;
 
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
@@ -26,81 +21,24 @@
 
 .fba-primer__figure {
   border-radius: var(--radius-lg);
-  background: var(--paper);
-  box-shadow: var(--shadow-card);
-  padding: 12px;
+  background: transparent;
+  padding: 0;
   outline: none;
   touch-action: pan-y;
 }
 
 .fba-primer__figure:focus-visible {
-  box-shadow:
-    var(--shadow-card),
-    0 0 0 2px var(--fba-blue);
+  outline: 2px solid var(--fba-blue);
+  outline-offset: 6px;
 }
 
-.fba-primer__svg {
+.fba-primer__image {
   display: block;
-  width: 100%;
+  width: min(100%, 360px);
   height: auto;
-}
-
-.fba-primer__axes line {
-  stroke: var(--fba-axis);
-  stroke-width: 1.4;
-}
-
-.fba-primer__axis-arrow {
-  fill: var(--fba-axis);
-}
-
-.fba-primer__axis-label {
-  fill: var(--fba-axis);
-  font-family: var(--font-body);
-  font-size: 15px;
-  font-style: italic;
-}
-
-.fba-primer__dash {
-  stroke: var(--fba-blue);
-  stroke-width: 1.2;
-  stroke-dasharray: 5 4;
-  transition: opacity 0.25s ease;
-}
-
-.fba-primer__dash-arrow {
-  fill: var(--fba-blue);
-}
-
-.fba-primer__shape {
-  fill: var(--fba-blue-fill);
-  stroke: none;
-}
-
-.fba-primer__shape-edge {
-  fill: none;
-  stroke: var(--fba-blue);
-  stroke-width: 1.3;
-  stroke-linejoin: round;
-}
-
-.fba-primer__opt-edge {
-  stroke: var(--fba-red);
-  stroke-width: 3.2;
-  stroke-linecap: round;
-  transition: opacity 0.3s ease;
-}
-
-.fba-primer__opt-drop {
-  stroke: var(--fba-red);
-  stroke-width: 1.2;
-  stroke-dasharray: 3 3;
-  transition: opacity 0.3s ease;
-}
-
-.fba-primer__opt-point {
-  fill: var(--fba-red);
-  transition: opacity 0.3s ease;
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin: 0 auto;
 }
 
 .fba-primer__panel {
@@ -178,41 +116,21 @@
   }
 }
 
-.fba-primer__toggle {
-  margin-top: 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.85rem;
+.fba-primer__pfba {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
 }
 
-.fba-primer__toggle button {
-  border: none;
-  background: none;
-  padding: 0;
-  color: var(--ink-soft);
-  cursor: pointer;
-  font: inherit;
-  text-decoration: underline;
-  text-decoration-color: transparent;
-  text-underline-offset: 3px;
-  transition:
-    color 0.15s ease,
-    text-decoration-color 0.15s ease;
-}
-
-.fba-primer__toggle button:hover {
-  color: var(--ink);
-}
-
-.fba-primer__toggle button.is-active {
+.fba-primer__pfba h5 {
+  margin: 0 0 8px;
   color: var(--ink);
   font-family: var(--font-display);
-  text-decoration-color: var(--fba-red);
+  font-size: 0.95rem;
 }
 
-.fba-primer__toggle-sep {
-  color: var(--line);
+.fba-primer__equation--secondary {
+  margin-top: 10px;
 }
 
 .fba-primer__nav {
