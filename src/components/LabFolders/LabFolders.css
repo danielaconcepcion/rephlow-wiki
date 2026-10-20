@@ -1732,6 +1732,9 @@
 .result-table .record-table {
   width: auto;
   max-width: 100%;
+  /* A table narrower than the card sits in the middle of the column, not
+     against its left edge. Its own layout is untouched. */
+  margin-inline: auto;
 }
 .result-table .record-table td,
 .result-table .record-table th {
@@ -1793,6 +1796,9 @@
    heading on the page — with only a chevron added to say it opens. */
 .lab-refs {
   padding-top: 0;
+  /* The closing paragraph of a section and the references fold read as one
+     block when they touch; this is the gap that tells them apart. */
+  margin-top: 28px;
 }
 .lab-refs__summary {
   display: flex;

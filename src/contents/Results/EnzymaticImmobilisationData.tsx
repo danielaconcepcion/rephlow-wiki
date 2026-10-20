@@ -602,9 +602,11 @@ const STRATEGY_A: ResultData = {
   tabLabel: "Strategy A",
   title:
     "Immobilisation strategy A, covalent attachment on a preactivated support",
+  narrative: true,
   subsections: [
     {
       id: "preactivated-covalent",
+      figuresAside: true,
       body: [
         "On the glutaraldehyde-pre-activated support, immobilisation was clearly better **with 0.1% Triton X-100**, reaching almost 80% yield and an immobilised activity of about **0.0053 U**, while without the detergent the retention was poor (Figure 14).",
       ],
@@ -630,9 +632,11 @@ const STRATEGY_B: ResultData = {
   tabLabel: "Strategy B",
   title:
     "Immobilisation strategy B, ionic adsorption and subsequent crosslinking",
+  narrative: true,
   subsections: [
     {
       id: "adsorption-crosslink",
+      figuresAside: true,
       body: [
         "The adsorption-then-crosslink route was best **without Triton X-100**, again reaching almost 80% yield but with an immobilised activity of about **0.0448 U**, roughly **ten times** that of the pre-activated covalent route from the same amount of enzyme and support (Figure 15).",
       ],
