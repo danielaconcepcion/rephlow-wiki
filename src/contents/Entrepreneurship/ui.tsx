@@ -265,7 +265,19 @@ export function PdfButton({
     e.preventDefault();
     modal.open(
       <>
-        <h3 className="modal__t">{title}</h3>
+        <div className="ent-portal-head">
+          <h3 className="modal__t">{title}</h3>
+          <div className="ent-portal-tools">
+            <a className="ent-portal-tool" href={pdf} download target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
+              Download PDF
+            </a>
+            <a className="ent-portal-tool" href={pdf} target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5" /></svg>
+              Open in browser
+            </a>
+          </div>
+        </div>
         <object
           className="pdf-viewer__frame"
           data={pdf}
@@ -280,11 +292,6 @@ export function PdfButton({
             instead.
           </p>
         </object>
-        <p style={{ marginTop: 12 }}>
-          <a className="btn dl" href={pdf} download>
-            Download PDF
-          </a>
-        </p>
       </>,
       "#2E7D86",
       true,

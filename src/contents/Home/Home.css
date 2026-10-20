@@ -1495,3 +1495,7 @@
   border: 0;
   background: #000;
 }
+
+/* 20 Oct m: home title line as plain bold text in rePhlow blue (no bubble) */
+.rh-hero__eyebrow{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;font-weight:800!important;color:#315065!important}
+.rh-hero__eyebrow::before,.rh-hero__eyebrow::after{display:none!important}

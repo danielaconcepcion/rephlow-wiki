@@ -43,22 +43,45 @@ function PortalViewer() {
   );
 }
 
-export function PortalButton() {
+function useOpenPortal() {
   const modal = useModal();
+  return () => modal.open(<PortalViewer />, "#5f7d36", true);
+}
+
+/** Small button version (kept for reuse). */
+export function PortalButton() {
+  const open = useOpenPortal();
   return (
-    <button
-      type="button"
-      className="pdf-btn"
-      onClick={(e) => {
-        e.preventDefault();
-        modal.open(<PortalViewer />, "#5f7d36", true);
-      }}
-    >
+    <button type="button" className="pdf-btn" onClick={(e) => { e.preventDefault(); open(); }}>
       <Icon n="euro" />
       <span>
         <b>Customer portal (demo)</b>
         <small>Open the portal viewer</small>
       </span>
     </button>
+  );
+}
+
+/** Bubble under "Business model": title, short description and "Open demo". */
+export function PortalCard() {
+  const open = useOpenPortal();
+  return (
+    <article id="s3-portal" className="sub rv ent-portal-card">
+      <div className="ent-portal-card__txt">
+        <span className="eyebrow">Customer portal &middot; demo</span>
+        <h3>rePhlow Customer Portal</h3>
+        <p>
+          How a customer would meet rePhlow: describe an effluent, size the number of modules, compare
+          Phosphorus-as-a-Service with direct purchase and get an indicative first-year quotation built on the
+          figures of our financial model. A demonstration only: no order is placed and no data leaves the page.
+        </p>
+      </div>
+      <button type="button" className="ent-portal-open" onClick={open}>
+        Open demo
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </button>
+    </article>
   );
 }

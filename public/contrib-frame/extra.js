@@ -185,3 +185,24 @@
   });
   document.querySelectorAll(".cb-tile__actions").forEach(function (d) { if (!d.children.length) d.remove(); });
 })();
+
+/* v8 (20 Oct): the complete self-funding budget (PDF in iGEM Uploads) goes into the
+   self-funding pack, and every "The pack holds..." line is rewritten from the packs
+   as they are now (the .xlsx calculator is no longer in it). */
+(function () {
+  try {
+    FILES["file-sf-budget"] = "https://static.igem.wiki/teams/6124/wiki/contrubutions/igem-self-funding-budget-complete.pdf";
+    var b = BUNDLES["file-selffund"];
+    if (b && !b.files.some(function (f) { return f[0] === "file-sf-budget"; })) {
+      b.files.push(["file-sf-budget", "iGEM self-funding budget (complete).pdf"]);
+    }
+    document.querySelectorAll("[data-bundle]").forEach(function (btn) {
+      var pack = BUNDLES[btn.getAttribute("data-bundle")];
+      var guide = btn.closest(".cb-guide");
+      var p = guide && guide.querySelector(".cb-pack");
+      if (!pack || !p) return;
+      p.innerHTML = "<b>The pack holds " + pack.files.length + " files:</b> " +
+        pack.files.map(function (f) { return esc(f[1]); }).join(" · ");
+    });
+  } catch (e) { console.warn("[extra] v8", e); }
+})();

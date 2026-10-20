@@ -68,6 +68,22 @@ export function ContributionFrame() {
       fromPage();
     };
 
+    // Arriving with an anchor (e.g. /contribution#howto-4 from Entrepreneurship):
+    // open the tab that holds that block and scroll the wiki page down to it.
+    const jump = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      if (!id || !doc || !win) return;
+      const el = doc.getElementById(id);
+      if (!el) return;
+      const panel = el.closest(".cb-panel");
+      const fw = win as Window & { setActive?: (s: string) => void };
+      if (panel && panel.id.startsWith("panel-") && (panel as HTMLElement).hidden) fw.setActive?.(panel.id.slice(6));
+      window.setTimeout(() => {
+        fitHeight();
+        const y = wrapTop() + el.getBoundingClientRect().top + (win?.scrollY ?? 0) - 140;
+        window.scrollTo({ top: Math.max(0, y), behavior: "instant" });
+      }, 350);
+    };
     const onClick = (e: MouseEvent) => {
       const target = e.target as Element | null;
       if (!target || typeof target.closest !== "function") return;
@@ -107,6 +123,8 @@ export function ContributionFrame() {
       ro.observe(doc.documentElement);
       if (doc.body) ro.observe(doc.body);
       fitHeight();
+      window.setTimeout(jump, 150);
+      window.setTimeout(jump, 1300);
     };
 
     frame.addEventListener("load", attach);
