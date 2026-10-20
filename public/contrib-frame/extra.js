@@ -108,7 +108,7 @@
   document.querySelectorAll("[data-thumb]").forEach(function (el) {
     var id = el.getAttribute("data-thumb");
     if (!THUMBS[id]) return;
-    el.style.backgroundImage = 'url("thumbs/thumb-' + id.replace("file-", "") + '.webp")';
+    el.style.backgroundImage = 'url("https://static.igem.wiki/teams/6124/wiki/contrubutions/thumb-' + id.replace("file-", "") + '.webp")';
     el.style.backgroundSize = "cover";
     el.style.backgroundPosition = "top center";
   });

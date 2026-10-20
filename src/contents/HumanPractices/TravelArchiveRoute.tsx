@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { asset } from "../../utils/asset";
 import { AccordionSection } from "./AccordionSection";
 import { PassportGlyph } from "./HeroObjects";
-import travelMap from "../../assets/human-practices/travel-archive-index/map.webp";
+const travelMap = "https://static.igem.wiki/teams/6124/wiki/human-practices/map.webp"; // served from iGEM Uploads
 import bioOilsLayer from "../../assets/human-practices/travel-archive-index/bio-oils.webp";
 import donanaLayer from "../../assets/human-practices/travel-archive-index/donana.webp";
 import marMenorLayer from "../../assets/human-practices/travel-archive-index/mar-menor.webp";

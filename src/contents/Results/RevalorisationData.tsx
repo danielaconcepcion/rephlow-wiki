@@ -251,7 +251,7 @@ const DESIGN_SUPPLEMENTARY: ResultData = {
   downloads: [
     {
       label: "Suplementary_PROSS_list_of_mutations",
-      href: "supplementary/revalorisation/supplementary-pross-list-of-mutations.pdf",
+      href: "https://static.igem.wiki/teams/6124/wiki/suplementary/supplementary-pross-list-of-mutations.pdf",
       format: "PDF",
     },
     {
