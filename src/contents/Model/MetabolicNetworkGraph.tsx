@@ -111,7 +111,9 @@ const EDGE_WIDTH_MIN = 0.2;
 const EDGE_WIDTH_MAX = 2.6;
 const HIT_RADIUS_PX = 10; // screen pixels; converted to graph-space via /transform.k
 const GRAPH_PADDING = 24;
+const INITIAL_VIEW_SCALE = 0.75;
 const SCENARIO_TRANSITION_MS = 350;
+const DEFAULT_OBJECTIVE = "growth20";
 
 // Physics tuning: link/repulsion values chosen for a readable density,
 // independent of any particular starting layout or scenario's node count.
@@ -546,7 +548,9 @@ export function MetabolicNetworkGraph() {
           (viewport.width - GRAPH_PADDING * 2) / graphW,
           (viewport.height - GRAPH_PADDING * 2) / graphH,
         );
-        const initialK = Math.max(0.15, Math.min(8, fitScale || 1));
+        // Leave more breathing room than a tight fit so the network's
+        // overall topology is legible before the user starts exploring.
+        const initialK = Math.max(0.15, Math.min(8, (fitScale || 1) * INITIAL_VIEW_SCALE));
         const cx = (minX + maxX) / 2;
         const cy = (minY + maxY) / 2;
         transform = zoomIdentity
@@ -603,7 +607,7 @@ export function MetabolicNetworkGraph() {
       .then((m) => {
         if (cancelled) return;
         setManifest(m);
-        setSelection({ objective: "polyp", perturbation: null });
+        setSelection({ objective: DEFAULT_OBJECTIVE, perturbation: null });
       })
       .catch((err) => {
         console.error("Failed to load metabolic network manifest:", err);
@@ -669,7 +673,7 @@ export function MetabolicNetworkGraph() {
   }
   function handleReset() {
     if (!manifest) return;
-    setSelection({ objective: "polyp", perturbation: null });
+    setSelection({ objective: DEFAULT_OBJECTIVE, perturbation: null });
   }
 
   return (

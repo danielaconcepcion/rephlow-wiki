@@ -225,8 +225,8 @@ export function ScenarioSidebar({
           type="button"
           className="model-network__sidebar-icon-btn"
           onClick={onReset}
-          aria-label="Reset to PolyP + WT baseline"
-          title="Reset to PolyP + WT baseline"
+          aria-label="Reset to 20% optimization priority + WT baseline"
+          title="Reset to 20% optimization priority + WT baseline"
         >
           <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true">
             <polyline
