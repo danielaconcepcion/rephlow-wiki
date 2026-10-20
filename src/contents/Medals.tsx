@@ -35,8 +35,8 @@ type BallotAward = {
   questions: BallotQuestion[];
 };
 
-const HP = "/human-practices";
 const SUS = "/sustainability";
+const ENT = "/entrepreneurship";
 
 const BALLOT_AWARDS: BallotAward[] = [
   {
@@ -72,75 +72,65 @@ const BALLOT_AWARDS: BallotAward[] = [
     ],
   },
   {
-    id: "gold-ihp",
-    award: "Best Integrated Human Practices",
-    body: "Stakeholder input from wastewater treatment and biodiesel production contexts shaped rePhlow's direction and implementation.",
-    page: HP,
-    pageLabel: "Human Practices",
+    id: "gold-entrepreneurship",
+    award: "Best Entrepreneurship",
+    body: "A modular phosphorus-recovery platform taken from a first industrial customer to a costed development plan, with its risks and limits stated.",
+    page: ENT,
+    pageLabel: "Entrepreneurship",
     questions: [
       {
         question:
-          "How well was their Human Practices work integrated throughout the project?",
+          "Have we discovered our first potential customers and identified unmet needs not yet covered by existing solutions?",
         answer:
-          "Human Practices shaped rePhlow from the very beginning. Through our **rePhlow Guiding Compass**, based on the AREA framework, Anticipate→Reflect→Engage→Act, we translated stakeholder feedback into concrete engineering decisions. This led us to replace our initial three-organism consortium with a single *P. putida* KT2440 chassis and rethink our encapsulation strategy towards a core-shell design. **Human Practices did not simply evaluate rePhlow; it helped us design it.**",
+          "We identified **Bio-Oils Huelva as our first prospective customer** through a structured market discovery process combining **TAM–SAM–SOM analysis, competitor benchmarking and a seven-criterion beachhead market assessment**. Comparing agro-industrial facilities, multinational operators and municipal treatment plants allowed us to prioritise market accessibility and technological readiness over market size. Direct collaboration with Bio-Oils, including access to operational information and wastewater samples, helped us translate unmet industrial needs into **SMART development objectives**. We identified a clear opportunity for modular phosphorus treatment that combines removal, recovery and valorisation rather than treating phosphorus solely as waste.",
         see: {
-          section: "1. The Guiding Compass",
-          page: HP,
-          label: "Human Practices",
+          section: "1. Unmet Needs & First Customer",
+          page: ENT,
+          label: "Entrepreneurship",
         },
       },
       {
         question:
-          "How thoughtfully was it implemented? How well did they explain the context, rationale, and prior work?",
+          "Have we shown that our solution is possible, scalable and inventive?",
         answer:
-          "We began our **Phosphorus Route** at the Mar Menor, expanding our investigation to Brittany and Lake Erie to understand the global dimensions of eutrophication. By examining existing environmental strategies and phosphorus recovery technologies, we identified where synthetic biology could provide meaningful added value. Our engagement with Bio-Oils then connected this opportunity to a real industrial challenge, ensuring that rePhlow emerged from an identified need rather than a predetermined technology.",
+          "We developed rePhlow as an **integrated, modular biotechnology platform** combining enzymatic phosphorus release, biological polyphosphate accumulation, physical containment and downstream valorisation. Our **5 L Minimum Viable Product (MVP)** defines three testable hypotheses and clear go/no-go criteria, while deliberately postponing non-essential features until core performance is validated. We assessed our differentiation through **competitive positioning and an innovation strategy**, identifying how our dual-value approach could distinguish rePhlow from conventional treatments. Modularity and our proposed **Phosphorus-as-a-Service model** provide a pathway towards industrial scalability without assuming that laboratory feasibility already guarantees commercial success.",
         see: {
-          section: "0. Why we followed phosphorus",
-          page: HP,
-          label: "Human Practices",
+          section: "2. Scalable, Possible & Inventive",
+          page: ENT,
+          label: "Entrepreneurship",
         },
       },
       {
         question:
-          "To what extent did they convince you that their Human Practices activities helped create a project that is responsible and good for the world?",
+          "Have we presented logical product development plans with realistic milestones, timelines, resources and risks?",
         answer:
-          "Responsibility guided our decisions throughout rePhlow's development. Our Responsibility Checkpoint critically examined biosafety, environmental impact, affordability and accessibility, distinguishing between challenges addressed and those requiring further validation. These considerations directly informed our encapsulation strategy and approach to industrial implementation. Rather than claiming to have solved every challenge, we made our limitations transparent and established a foundation for responsible future development.",
+          "We developed a **TRL-based development roadmap**, combining a quarter-by-quarter Gantt chart with **stage-gate milestones** that depend on experimental evidence rather than deadlines alone. Our plan progresses from laboratory validation to a **5 L integrated prototype**, industrial piloting and eventual commercial deployment, identifying the resources and capabilities required at each stage. We also developed a **Risk Assessment Plan covering 30 risks across seven categories**, with mitigation measures, measurable triggers and contingency actions. Four critical experimental measurements determine whether we can advance, ensuring that our timeline, investment requirements and scale-up decisions remain grounded in technical feasibility.",
         see: {
-          section:
-            "4. From Design to Implementation – Responsibility checkpoint",
-          page: HP,
-          label: "Human Practices",
-        },
-      },
-      {
-        question: "How well did it incorporate different stakeholder views?",
-        answer:
-          "We engaged with stakeholders across **industry, science, public institutions and local communities**, including Bio-Oils, Repsol, CEDEX, academic specialists and people directly affected by eutrophication. Each perspective contributed different priorities, from operational feasibility and biosafety to environmental protection and community concerns. We systematically mapped these perspectives and documented their influence on our decisions, ensuring that stakeholder engagement resulted in meaningful changes rather than simply collecting opinions.",
-        see: {
-          section: "2. Stakeholders & Voices",
-          page: HP,
-          label: "Human Practices",
+          section: "3. Product Development Plan",
+          page: ENT,
+          label: "Entrepreneurship",
         },
       },
       {
         question:
-          "To what extent is the Human Practices work documented so that others can build upon it?",
+          "Have we outlined the skills, capabilities and stakeholders required to be credible in developing our solution further?",
         answer:
-          "We documented our entire Human Practices journey, connecting stakeholder interactions, ethical reflections and engineering decisions through traceable evidence. Beyond sharing our experience, we developed **eight reusable tools**, including our AREA-based Guiding Compass, Responsibility Checkpoint, technology maturity framework and stakeholder-interview template. These resources allow other iGEM teams to adapt our approach to their own challenges, turning our Human Practices work into a practical contribution to the wider synthetic biology community.",
+          "We conducted a **Skill Gap Analysis** to identify the expertise required to transform rePhlow into a commercially viable biotechnology. This guided our expansion from **eight to eleven multidisciplinary members**, strengthening capabilities in industrial biotechnology, encapsulation, modelling and communication. We complemented our internal expertise with a network of scientific advisers, industrial collaborators and entrepreneurship mentors, while developing our business capabilities through **Fábrica UCM, APTenisa and the iGEM Entrepreneurship Bootcamp**. We also identified the regulatory, financial and commercial competencies that must be incorporated as we progress towards industrial deployment.",
         see: {
-          section: "5. What the route revealed – Tools other teams can reuse",
-          page: HP,
-          label: "Human Practices",
+          section: "4. Skills, Capabilities & Stakeholders",
+          page: ENT,
+          label: "Entrepreneurship",
         },
       },
       {
-        question: "How inspiring an example is it to others?",
+        question:
+          "Have we considered the positive and negative long-term impacts of our fully developed solution?",
         answer:
-          "Through our **Phosphorus Route**, we demonstrated that responsible innovation requires listening, questioning assumptions and embracing change. Moving from an ambitious three-organism consortium to a more focused and scientifically interpretable design showed us that revising an initial idea can be a sign of progress. By openly sharing our decisions, challenges and lessons, we hope to inspire other teams to see Human Practices not as an additional requirement, but as a driving force behind better engineering.",
+          "We assessed rePhlow's **long-term commercial, environmental and social implications**, recognising that a successful business must create value beyond its immediate customers. Our proposed model could reduce industrial treatment costs, recover phosphorus for higher-value applications and generate recurring revenue through biological consumables and technical services. However, we also examined potential barriers, including **high initial investment, regulatory authorisation, capsule replacement costs, unequal market accessibility and environmental trade-offs**. By connecting these uncertainties to our business assumptions and future validation requirements, we developed a strategy that considers both the opportunities and consequences of industrial expansion.",
         see: {
-          section: "3. Travel Archive",
-          page: HP,
-          label: "Human Practices",
+          section: "5. Positive & Negative Impact",
+          page: ENT,
+          label: "Entrepreneurship",
         },
       },
     ],
