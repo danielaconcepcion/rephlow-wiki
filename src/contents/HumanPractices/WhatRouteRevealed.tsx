@@ -324,10 +324,7 @@ export function WhatRouteRevealed() {
           </div>
         </dl>
         <p className="hp-route-revealed__closing">
-          Human Practices gave us the map of the problem. Integrated Human
-          Practices changed the route of the project, turning every stop, every
-          conversation, and every piece of evidence gathered along the way into
-          a design decision, not just a story to tell afterwards.
+          Human Practices gave us the map of the problem, but it also helped us navigate the journey. Every conversation, every perspective, and every piece of evidence brought us closer to understanding real-world needs, shaping rePhlow into a project grounded in meaningful dialogue, responsibility, and real-world impact.
         </p>
       </div>
     </section>
