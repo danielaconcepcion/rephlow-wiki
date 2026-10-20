@@ -6,6 +6,7 @@ import { AccordionSection } from "./HumanPractices/AccordionSection";
 import { MoleculeBackdrop } from "../components/MoleculeBackdrop/MoleculeBackdrop";
 import { asset } from "../utils/asset";
 import "./ProjectDescription.css";
+import { PdFigureZoom } from "./PdFigureZoom";
 
 type CitationGroup = "problem" | "enzyme" | "genetic" | "revalorisation";
 
@@ -106,7 +107,7 @@ function Figure({
   className?: string;
 }) {
   const figureAsset = (path: string) =>
-    asset(path.includes("/") ? path : `assets/project-description/${path}`);
+    /^https?:\/\//.test(path) ? path : asset(path.includes("/") ? path : `assets/project-description/${path}`);
   const image = fallbackSrc ? (
     <picture>
       <source srcSet={figureAsset(src)} type="image/svg+xml" />
@@ -218,6 +219,7 @@ export function ProjectDescription() {
 
   return (
     <div className="pd-page mbg-host">
+      <PdFigureZoom />
       <MoleculeBackdrop contentRef={contentRef} />
       <div className="page-with-section-nav">
         <PageSectionNav
@@ -370,7 +372,7 @@ export function ProjectDescription() {
                     }
                   />
                   <Figure
-                    src="IMG_3864.webp"
+                    src="https://static.igem.wiki/teams/6124/wiki/project-description/img-3864-1.avif"
                     alt="Dense green algal bloom covering part of a water surface"
                     className="pd-problem-card pd-problem-card--contain"
                     caption={
