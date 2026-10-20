@@ -101,6 +101,11 @@
 .model-network__figure--fva {
   max-width: 860px;
 }
+/* Section 4's two plates: a dense reaction map and a three-panel bar
+   chart, both unreadable at the 640px the section-3 charts use. */
+.model-network__figure--plate {
+  max-width: 1120px;
+}
 
 .model-network__figure-caption-standalone {
   max-width: 900px;
@@ -727,4 +732,130 @@
   .model-network__sidebar.is-collapsed {
     bottom: auto;
   }
+}
+
+/* --------------------------------------------------------------------------
+   4. From a genome-scale model to a kinetic core
+   -------------------------------------------------------------------------- */
+
+/* The funnel (see CoreFunnel.tsx): four stages, each a plain bar with its
+   count inside and its reading beside it — a diagram, not a chart. */
+.core-funnel {
+  max-width: 760px;
+  margin: 24px auto 0;
+}
+.core-funnel__stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.core-funnel__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 46%) 1fr;
+  align-items: center;
+  column-gap: 18px;
+  row-gap: 2px;
+}
+.core-funnel__bar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 68px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper-soft);
+}
+.core-funnel__count {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.core-funnel__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.core-funnel__label {
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.core-funnel__note {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+.core-funnel__arrow {
+  grid-column: 1;
+  justify-self: center;
+  font-size: 0.9rem;
+  line-height: 1;
+  color: var(--ink-soft);
+}
+
+/* Citations and the reference list of section 4 — the same quiet
+   treatment the lab pages use, kept local to this page. */
+.model-citation {
+  color: var(--phosphate);
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+}
+.model-citation:hover,
+.model-citation:focus-visible {
+  text-decoration: underline;
+}
+.model-reference-list {
+  margin: 0;
+  padding: 4px 0 8px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+  .core-funnel__stage {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+  }
+  .core-funnel__bar {
+    width: 100% !important;
+    justify-content: flex-start;
+  }
+  .core-funnel__arrow {
+    justify-self: flex-start;
+  }
+}
+
+/* Lists in section 4's prose, and the caption that titles a table. */
+.model-network__list {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+.model-network__list strong {
+  color: var(--ink);
+}
+.model-network__table-caption {
+  caption-side: top;
+  margin-bottom: 10px;
+  text-align: left;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.model-network__table-caption strong {
+  color: var(--ink);
 }
