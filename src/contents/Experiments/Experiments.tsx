@@ -1,4 +1,11 @@
-import { useMemo, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { useLocation } from "react-router-dom";
 import {
   PageSectionNav,
   type PageSection,
@@ -180,6 +187,18 @@ function experimentFolders(experiments: ExperimentData[]) {
 
 export function Experiments() {
   const [activeBlockId, setActiveBlockId] = useState(EXPERIMENT_BLOCKS[0].id);
+
+  /* A block has no route of its own -- it is client state -- so a link to
+     one (from Results, or anywhere else in the wiki) addresses it by hash:
+     /experiments#revalorisation. The same contract Engineering and Results
+     already offer, read the same way. A hash that names no block is left
+     to the browser. */
+  const { hash } = useLocation();
+  useEffect(() => {
+    const id = hash.replace(/^#/, "");
+    if (!id || !EXPERIMENT_BLOCKS.some((block) => block.id === id)) return;
+    setActiveBlockId(id);
+  }, [hash]);
   const activeBlock =
     EXPERIMENT_BLOCKS.find((block) => block.id === activeBlockId) ??
     EXPERIMENT_BLOCKS[0];

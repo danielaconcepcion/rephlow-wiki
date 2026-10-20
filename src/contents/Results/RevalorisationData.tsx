@@ -23,7 +23,7 @@ import type {
 const FIGURES = "assets/results/revalorisation";
 
 export const REVALORISATION_INTRO = [
-  "This page reports the outcomes of the revalorisation work: designing a stabilised DHAK and a fused DHAK–PPK2 complex in silico, producing both enzymes in *E. coli* BL21(DE3) from gene to clarified cell-free extract, purifying them, and measuring the activity of each enzyme alone and of the two coupled, where PPK2 regenerates from polyphosphate the ATP that DHAK spends to phosphorylate dihydroxyacetone. The design and rationale of each step are on the Experiments page (see [Experiments](/experiments)).",
+  "This page reports the outcomes of the revalorisation work: designing a stabilised DHAK and a fused DHAK–PPK2 complex in silico, producing both enzymes in *E. coli* BL21(DE3) from gene to clarified cell-free extract, purifying them, and measuring the activity of each enzyme alone and of the two coupled, where PPK2 regenerates from polyphosphate the ATP that DHAK spends to phosphorylate dihydroxyacetone. The design and rationale of each step are on the Experiments page (see [Experiments](/experiments#revalorisation)).",
   "Each entry below reports the outcome of the corresponding step on the Experiments page, following the same order and titles. For every step we answer three questions: what was obtained, what it means, and whether it matched what we expected. Within each block the results are given in the order they were obtained, because each one decided what was tried next.",
 ];
 
