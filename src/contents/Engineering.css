@@ -188,10 +188,6 @@
    deliberately plain typographic links, not the pill/card treatment a
    generic pagination control would use, so it reads as an editorial
    footnote pointing onward rather than an app-style "next page" bar. */
-.engineering-block-nav-sentinel {
-  height: 1px;
-}
-
 .engineering-block-nav {
   display: flex;
   align-items: center;

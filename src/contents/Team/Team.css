@@ -61,6 +61,27 @@
   padding-bottom: 10vh;
 }
 
+.team-group-photo {
+  width: min(calc(100% - 48px), 1320px);
+  margin: 0 auto 44px;
+}
+
+.team-group-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: #fff;
+}
+
+.team-group-photo figcaption {
+  margin-top: 10px;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
 .team-panel {
   opacity: 1;
   transform: translateY(0);

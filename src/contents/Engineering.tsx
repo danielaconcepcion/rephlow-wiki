@@ -6,6 +6,7 @@ import {
 } from "../components/EcosystemMap";
 import { asset } from "../utils";
 import { EcosystemMapMini } from "../components/EcosystemMapMini";
+import { useCornerIndexVisible } from "../components/useCornerIndexVisible";
 import "../components/LabFolders/LabFolders.css";
 import "./Engineering.css";
 import {
@@ -18,10 +19,11 @@ import {
 import { ENGINEERING_BLOCKS } from "./Engineering/blocks";
 
 /**
- * Five sub-pages. Tab switching is pure client state (no route change) —
+ * Four sub-pages — the same four wet-lab blocks Experiments and Results
+ * are built from. Tab switching is pure client state (no route change) —
  * the index between them is the shared EcosystemMap component (see
  * src/components/EcosystemMap.tsx), same visual language and behaviour as
- * Experiments' own, with a fifth sphere (Hardware) added.
+ * Experiments' own.
  *
  * Bacterial encapsulation has the team's real 5-iteration write-up
  * (Engineering/BacterialEncapsulationData.ts) as one DBTL spiral, remounted
@@ -40,18 +42,21 @@ import { ENGINEERING_BLOCKS } from "./Engineering/blocks";
  *
  * Revalorisation has its real 4-iteration write-up
  * (Engineering/RevalorisationData.ts) as one spiral, framed by its own
- * intro and closing Reflection. Hardware still uses the generic placeholder
- * content in Engineering/dbtlData.ts.
+ * intro and closing Reflection.
  */
-// The five Engineering tabs as glass spheres — see EcosystemMap's own doc
+// The four Engineering tabs as glass spheres — see EcosystemMap's own doc
 // comment for the shared component's behaviour. Colours and illustrations
-// reuse Experiments' own ecosystem map wherever the block is the same —
-// see Experiments.tsx's own comment for why encapsulation/revalorisation
-// are pushed away from --lab-encapsulation/the original mustard. Hardware
-// is new to this page, so it gets its own coral accent (--phosphate,
-// otherwise unused by either map now that Revalorisation uses gold) and
-// its own reactor/filter illustration (assets/experiments/ecosystem-map/
-// hardware.png) rather than the generic bolt icon tried first.
+// are Experiments' own ecosystem map's, block for block — see
+// Experiments.tsx's own comment for why encapsulation/revalorisation are
+// pushed away from --lab-encapsulation/the original mustard.
+//
+// A fifth sphere, Hardware, used to sit between Enzymatic immobilisation
+// and Revalorisation on placeholder content; that block is not part of
+// the project's engineering work, so it is gone and the four that remain
+// take the same four slots (left/top and physics anchor) Experiments'
+// own four-sphere map uses, rather than keeping the five-sphere spacing
+// with a hole in it. Each keeps its own width/imageSize, which are tuned
+// to its illustration, not to its position.
 const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
   {
     id: "genetic-engineering",
@@ -59,11 +64,11 @@ const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
     color: "#3f7d4a",
     image: "assets/experiments/ecosystem-map/bacteria.png",
     alt: "Engineered bacterium illustration",
-    left: 2,
-    top: 30,
+    left: 4.2,
+    top: 28,
     width: 12.5,
     imageSize: 84,
-    home: [50, 190],
+    home: [140, 175],
   },
   {
     id: "bacterial-encapsulation",
@@ -71,11 +76,11 @@ const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
     color: "#1568a3",
     image: "assets/experiments/ecosystem-map/alginate.png",
     alt: "Alginate capsule illustration",
-    left: 22.5,
-    top: 6,
+    left: 29.4,
+    top: 4,
     width: 13,
     imageSize: 88,
-    home: [320, 80],
+    home: [450, 90],
   },
   {
     id: "enzymatic-immobilisation",
@@ -83,23 +88,11 @@ const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
     color: "#6b4e9a",
     image: "assets/experiments/ecosystem-map/enzyme.png",
     alt: "Protein ribbon structure illustration",
-    left: 43,
-    top: 40,
+    left: 53.1,
+    top: 38,
     width: 12,
     imageSize: 80,
-    home: [590, 220],
-  },
-  {
-    id: "hardware",
-    label: ["Hardware"],
-    color: "var(--phosphate)",
-    image: "assets/experiments/ecosystem-map/hardware.png",
-    alt: "Reactor filter cartridge illustration",
-    left: 63.5,
-    top: 16,
-    width: 12.5,
-    imageSize: 82,
-    home: [860, 130],
+    home: [760, 215],
   },
   {
     id: "revalorisation",
@@ -107,11 +100,11 @@ const ENGINEERING_ECOSYSTEM_ITEMS: EcosystemMapItem[] = [
     color: "#c99a06",
     image: "assets/experiments/ecosystem-map/revalorisation.png",
     alt: "Star illustration",
-    left: 84,
-    top: 24,
+    left: 78.8,
+    top: 17,
     width: 12.5,
     imageSize: 70,
-    home: [1130, 170],
+    home: [1090, 140],
   },
 ];
 
@@ -164,25 +157,6 @@ export function Engineering() {
     return () => document.removeEventListener("click", handleHeroClick);
   }, []);
 
-  // The persistent corner sphere (EcosystemMapMini) only makes sense once
-  // the full-size index has scrolled out of view — otherwise the same
-  // block would be shown twice at once. `top < 0` (not just "not
-  // intersecting", which is also true before the page has scrolled at
-  // all) is what actually means "scrolled past", not "not reached yet".
-  const [pastIndex, setPastIndex] = useState(false);
-  useEffect(() => {
-    const el = dividerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setPastIndex(entry.boundingClientRect.top < 0),
-      {
-        threshold: 0,
-      },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
   // The lateral DbtlSectionNav (below) no longer needs a scroll-visibility
   // signal of its own at all -- it's now a structural grid item
   // (.engineering-nav-layout, rendered below) sticky-positioned exactly
@@ -192,31 +166,21 @@ export function Engineering() {
   // decide when it starts/stops sticking — no IntersectionObserver, no
   // JS visibility state, matching Experiments/Project Description exactly.
 
-  // Marks "reached the end of this block's own content" -- a sentinel
-  // sitting right above the prev/next footer nav (see the render below),
-  // so it comes into view exactly when the last DbtlCycle's tall
-  // sticky-scroller has fully scrolled past. That is also the moment the
-  // corner EcosystemMapMini (a "back to the full map" affordance) should
-  // step aside for the footer nav instead of overlapping it. Unlike
-  // pastIndex above, this sentinel lives inside the per-tab conditional and
-  // is a fresh DOM node on every tab switch, so the effect re-subscribes on
-  // `activeTab` (and resets to false first -- otherwise the new tab would
-  // briefly inherit the previous tab's "reached the end" state).
-  const [pastBlockEnd, setPastBlockEnd] = useState(false);
+  // When the corner EcosystemMapMini is on screen: once the divider under
+  // the full-size map has scrolled past -- otherwise the same block would
+  // be shown twice at once -- and until the sentinel just above this
+  // block's prev/next footer nav comes into view, which is the moment that
+  // nav becomes the thing to look at and the corner would only overlap it.
+  // See useCornerIndexVisible, the same gate Experiments, Measurements and
+  // Results use (through LabCornerIndex). That sentinel lives inside the
+  // per-tab conditional and so is a fresh node on every switch, which is
+  // what `resetKey` re-measures against.
   const blockEndRef = useRef<HTMLDivElement | null>(null);
-  useEffect(() => {
-    setPastBlockEnd(false);
-    const el = blockEndRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setPastBlockEnd(entry.isIntersecting),
-      {
-        threshold: 0,
-      },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [activeTab]);
+  const cornerIndexVisible = useCornerIndexVisible({
+    after: dividerRef,
+    until: blockEndRef,
+    resetKey: activeTab,
+  });
 
   // Switching tabs swaps in a completely different DbtlCycle (a different
   // spiral, a different total scroll length) via its `key` — if the page
@@ -318,7 +282,7 @@ export function Engineering() {
           items={ENGINEERING_ECOSYSTEM_ITEMS}
           activeId={activeTab}
           onSelect={handleTabChange}
-          visible={pastIndex && !pastBlockEnd}
+          visible={cornerIndexVisible}
         />
       )}
       {activeTab === null ? (
@@ -389,12 +353,12 @@ export function Engineering() {
 
       {activeTab && (prevBlock || nextBlock) && (
         <>
-          {/* Purely a scroll-position sentinel -- see the pastBlockEnd
-              effect above. Sits right before the nav it gates so "reached
-              the end" and "the nav is now the thing to look at" are the
-              same moment. */}
+          {/* Purely a scroll-position sentinel -- the `until` landmark of
+              the corner index's gate above. Sits right before the nav it
+              gates so "reached the end" and "the nav is now the thing to
+              look at" are the same moment. */}
           <div
-            className="engineering-block-nav-sentinel"
+            className="ecosystem-map-mini-sentinel"
             ref={blockEndRef}
             aria-hidden="true"
           />

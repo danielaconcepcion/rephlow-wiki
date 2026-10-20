@@ -153,6 +153,14 @@ function textWordCount(text: string): number {
   return matches ? matches.length : 0;
 }
 
+/** A table's header as rows, whether it was written as one row or
+ * several (see TableBlock.headers). */
+function headerRows(headers: string[] | string[][]): string[][] {
+  return Array.isArray(headers[0])
+    ? (headers as string[][])
+    : [headers as string[]];
+}
+
 function blockWeight(block: ContentBlock): number {
   if (block.type === "p") return textWordCount(block.text);
   if (block.type === "ul") {
@@ -164,8 +172,9 @@ function blockWeight(block: ContentBlock): number {
   if (block.type === "figure") {
     return FIGURE_WEIGHT + textWordCount(block.caption);
   }
-  const headerWords = block.headers.reduce(
-    (sum, h) => sum + textWordCount(h),
+  const rows = headerRows(block.headers);
+  const headerWords = rows.reduce(
+    (sum, row) => sum + row.reduce((s, h) => s + textWordCount(h), 0),
     0,
   );
   const cellWords = block.rows.reduce(
@@ -173,7 +182,8 @@ function blockWeight(block: ContentBlock): number {
       sum + row.reduce((rowSum, c) => rowSum + textWordCount(c.text), 0),
     0,
   );
-  const cellCount = block.rows.length * block.headers.length;
+  const columns = Math.max(...rows.map((row) => row.length));
+  const cellCount = block.rows.length * columns;
   return headerWords + cellWords + cellCount * TABLE_CELL_BONUS;
 }
 
@@ -485,12 +495,34 @@ export function renderRich(text: string): ReactNode[] {
   return nodes;
 }
 
-/** How many columns the header at `i` covers: itself plus the empty
- * cells that follow it (Notion's export of a merged header cell). */
-function headerSpan(headers: string[], i: number): number {
-  let span = 1;
-  while (i + span < headers.length && !headers[i + span].trim()) span++;
-  return span;
+/** One header row's cells, with the merges the source table had.
+ *
+ * Notion exports a cell merged across columns as its label followed by
+ * empty cells, so a label absorbs the empties after it. A run of empties
+ * with no label to its left is different: it is a genuinely blank corner
+ * cell — the stub above a cross-tabulation's row labels — and has to be
+ * emitted as a blank `<th>` spanning that run. Dropping it, as this used
+ * to, left the header row short by exactly those columns and slid every
+ * label left of where its data actually sits. */
+function headerCells(headers: string[]): { text: string; span: number }[] {
+  const out: { text: string; span: number }[] = [];
+  let i = 0;
+  while (i < headers.length) {
+    let span = 1;
+    while (i + span < headers.length && !headers[i + span].trim()) span++;
+    if (headers[i].trim()) {
+      out.push({ text: headers[i], span });
+      i += span;
+    } else {
+      // A run of empties starts here and nothing precedes it to absorb
+      // them, so they are one blank cell that wide.
+      let run = 1;
+      while (i + run < headers.length && !headers[i + run].trim()) run++;
+      out.push({ text: "", span: run });
+      i += run;
+    }
+  }
+  return out;
 }
 
 function renderBlock(block: ContentBlock, blockKey: number): ReactNode {
@@ -532,30 +564,44 @@ function renderBlock(block: ContentBlock, blockKey: number): ReactNode {
       )}
       <table className="dbtl-cycle__table">
         <thead>
-          <tr>
-            {/* A header cell that Notion merged across columns exports as
-                the label followed by empty cells, so an empty header is
-                read back as "part of the one before it". */}
-            {block.headers.map((header, i) =>
-              header.trim() ? (
-                <th key={i} colSpan={headerSpan(block.headers, i)}>
-                  {renderRich(header)}
+          {/* One header row, or several where the columns are a scale
+              under a shared title — see TableBlock.headers. */}
+          {headerRows(block.headers).map((headerRow, hi) => (
+            <tr key={hi}>
+              {headerCells(headerRow).map((h, i) => (
+                <th key={i} colSpan={h.span > 1 ? h.span : undefined}>
+                  {renderRich(h.text)}
                 </th>
-              ) : null,
-            )}
-          </tr>
+              ))}
+            </tr>
+          ))}
         </thead>
         <tbody>
           {block.rows.map((row, ri) => (
             <tr key={ri}>
-              {row.map((c, ci) => (
-                <td
-                  key={ci}
-                  className={c.tone ? `dbtl-cycle__cell--${c.tone}` : undefined}
-                >
-                  {renderRich(c.text)}
-                </td>
-              ))}
+              {row.map((c, ci) =>
+                c.head ? (
+                  <th
+                    key={ci}
+                    scope="row"
+                    rowSpan={c.rowSpan}
+                    colSpan={c.colSpan}
+                  >
+                    {renderRich(c.text)}
+                  </th>
+                ) : (
+                  <td
+                    key={ci}
+                    rowSpan={c.rowSpan}
+                    colSpan={c.colSpan}
+                    className={
+                      c.tone ? `dbtl-cycle__cell--${c.tone}` : undefined
+                    }
+                  >
+                    {renderRich(c.text)}
+                  </td>
+                ),
+              )}
             </tr>
           ))}
         </tbody>
