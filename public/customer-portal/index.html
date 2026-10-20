@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rePhlow Customer Portal</title>
+<style>
+/* Fonts served by the wiki itself (no external requests) */
+@font-face{font-family:"Inter";font-style:normal;font-weight:400;font-display:swap;src:url("../frame-fonts/inter-400.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:500;font-display:swap;src:url("../frame-fonts/inter-500.woff2") format("woff2")}
+@font-face{font-family:"Inter";font-style:normal;font-weight:600;font-display:swap;src:url("../frame-fonts/inter-600.woff2") format("woff2")}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:500;font-display:swap;src:url("../frame-fonts/space-grotesk-500.woff2") format("woff2")}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:600;font-display:swap;src:url("../frame-fonts/space-grotesk-600.woff2") format("woff2")}
+@font-face{font-family:"Space Grotesk";font-style:normal;font-weight:700;font-display:swap;src:url("../frame-fonts/space-grotesk-700.woff2") format("woff2")}
+/* Design tokens taken from the Entrepreneurship page (rephlow_entrepreneurship_v10) */
+:root{
+  --algae:#7c9a4e;--phosphate:#e2542d;
+  --ink:#1b2340;--ink-soft:#4a5170;--paper:#ffffff;--paper-soft:#f7fafb;--line:rgba(27,35,64,.08);
+  --font-display:"Space Grotesk","Segoe UI",sans-serif;--font-body:"Inter","Segoe UI",sans-serif;
+  --shadow-card:0 8px 22px rgba(27,35,64,.08);
+  --s1:#2E7D86;--s2:#6E5A96;--s3:#5f7d36;--gold:#c9962b;
+  --ok-bg:#e6f4ea;--mid-bg:#fdf3dc;
+  --c:var(--s1);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:28px}
+body{margin:0;font-family:var(--font-body);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;line-height:1.6}
+h1,h2,h3,h4,h5{font-family:var(--font-display);margin:0;letter-spacing:-.01em}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+
+/* ---------- page layout with sidebar index (wiki .page-with-section-nav) ---------- */
+.page-with-section-nav{display:grid;grid-template-columns:clamp(150px,17vw,210px) minmax(0,1fr);align-items:start;gap:40px;max-width:1260px;margin:0 auto;padding:0 20px}
+.page-section-nav{position:sticky;top:28px;align-self:start;margin-top:48px}
+.page-section-nav__label{display:block;padding:0 16px 10px;font-size:.7rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-soft)}
+.page-section-nav__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;border-left:2px solid var(--line)}
+.page-section-nav__link{display:block;padding:8px 16px;margin-left:-2px;border-left:2px solid transparent;font-size:.85rem;font-weight:600;color:var(--ink-soft);text-decoration:none;transition:color .15s,border-color .15s}
+.page-section-nav__link:hover{color:var(--ink)}
+.page-section-nav__link.is-active{color:var(--ink);border-left-color:var(--ink)}
+.page-section-nav__top{display:block;width:100%;margin-top:8px;padding:10px 16px 0;border:none;border-top:1px solid var(--line);background:none;font-size:.72rem;font-weight:500;color:var(--ink-soft);opacity:.7;text-align:left;cursor:pointer}
+.page-section-nav__top:hover{color:var(--ink);opacity:1}
+
+/* ---------- content column + cards (wiki .ent-col / .sub) ---------- */
+.ent-col{min-width:0;max-width:940px;padding:48px 0 64px;display:flex;flex-direction:column;gap:24px}
+.ent-col p{margin:0;font-size:1rem;line-height:1.72}
+.ent-col p+p{margin-top:12px}
+.title-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.title-row h1{font-size:clamp(1.9rem,4vw,2.6rem);line-height:1.1}
+.demo{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 11px;border-radius:999px;background:var(--mid-bg);color:#6b5210;border:1px solid #f0dca8;white-space:nowrap}
+.sub{background:#fff;border:1px solid rgba(27,35,64,.10);border-radius:20px;box-shadow:0 18px 44px rgba(27,35,64,.09),0 2px 6px rgba(27,35,64,.04);padding:clamp(20px,3.2vw,34px)}
+.sub>header{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--c)}
+.sub h2{font-size:clamp(1.3rem,2.2vw,1.65rem);line-height:1.2}
+.sub h5{font-size:.98rem;margin:0 0 6px}
+.note{margin-top:14px!important;padding:12px 16px;border-radius:14px;background:var(--paper-soft);border:1px solid var(--line);font-size:.86rem!important;line-height:1.6!important;color:var(--ink-soft)}
+.note.warn{background:var(--mid-bg);border-color:#f0dca8;color:#6b5210}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid rgba(27,35,64,.14);background:#fff;font-size:.86rem;font-weight:600;cursor:pointer;transition:all .2s}
+.btn:hover{border-color:var(--c);color:var(--c)}
+.btn.on{background:var(--c);border-color:var(--c);color:#fff}
+.btn.solid{background:var(--ink);border-color:var(--ink);color:#fff;padding:12px 22px;font-size:.92rem}
+.btn.solid:hover{background:var(--s1);border-color:var(--s1);color:#fff}
+.panel{border-radius:18px;border:1.5px solid color-mix(in srgb,var(--c) 38%,transparent);background:color-mix(in srgb,var(--c) 6%,#fff);padding:20px;box-shadow:0 8px 22px rgba(27,35,64,.06);animation:fadeDown .35s ease}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.eq{margin:0 0 14px;padding:13px 18px;border-radius:16px;background:color-mix(in srgb,var(--c) 72%,#1b2340);color:#fff;font-family:var(--font-display);text-align:center;font-size:1rem}
+.eq .res{color:#b9e48f}
+ul.clean{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px}
+ul.clean li{position:relative;padding-left:22px;font-size:.92rem;line-height:1.55}
+ul.clean li::before{content:"";position:absolute;left:4px;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--c)}
+
+/* ---------- portal overview ---------- */
+.uses{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.uses a{display:flex;flex-direction:column;gap:6px;height:100%;padding:14px 16px;border-radius:16px;background:color-mix(in srgb,var(--s1) 5%,#fff);border:1px solid color-mix(in srgb,var(--s1) 22%,transparent);text-decoration:none;transition:border-color .2s,transform .2s}
+.uses a:hover{border-color:var(--s1);transform:translateY(-2px)}
+.uses b{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--s1);color:#fff;font-family:var(--font-display);font-size:.78rem}
+.uses strong{font-family:var(--font-display);font-size:.95rem;line-height:1.3}
+.uses span{font-size:.82rem;line-height:1.5;color:var(--ink-soft)}
+
+/* ---------- stream ---------- */
+.stream{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:12px;align-items:end;padding:16px;border-radius:18px;background:var(--paper-soft);border:1px solid var(--line)}
+.f{display:flex;flex-direction:column;gap:6px;min-width:0}
+.f label{font-size:.78rem;font-weight:600}
+.f input,.f select,.f textarea{width:100%;min-width:0;padding:10px 12px;border-radius:12px;border:1px solid rgba(27,35,64,.16);background:#fff;font-size:.92rem;transition:border-color .15s,box-shadow .15s}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--s1);box-shadow:0 0 0 3px #e3f2f1}
+.f input[type=number]{font-variant-numeric:tabular-nums;font-weight:600}
+.f textarea{min-height:84px;resize:vertical;line-height:1.5}
+.stream .btn{padding:10px 14px;font-size:.8rem}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+.kpi{padding:14px 16px;border-radius:16px;background:#fff;border:1px solid rgba(27,35,64,.12);box-shadow:0 6px 16px rgba(27,35,64,.06);min-width:0}
+.kpi .k{font-family:var(--font-display);font-weight:700;font-size:1.45rem;line-height:1.1;font-variant-numeric:tabular-nums;word-break:break-word}
+.kpi .l{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
+.kpi .u{font-size:.76rem;color:var(--ink-soft);margin-top:3px;line-height:1.4}
+.kpi.hi{background:color-mix(in srgb,var(--s1) 8%,#fff);border-color:color-mix(in srgb,var(--s1) 32%,transparent)}
+.kpi.hi .k{color:var(--s1)}
+.kpi.gr{background:color-mix(in srgb,var(--s3) 8%,#fff);border-color:color-mix(in srgb,var(--s3) 32%,transparent)}
+.kpi.gr .k{color:var(--s3)}
+
+/* ---------- option tabs ---------- */
+.opt-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:14px}
+.opt-tabs .btn{flex:1 1 260px;justify-content:space-between;text-align:left;padding:14px 18px;border-radius:16px}
+.opt-tabs .btn small{font-weight:600;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}
+
+/* ---------- indicative quotation (old portal .summary, restyled) ---------- */
+.quote{border-radius:18px;border:1px solid rgba(27,35,64,.12);background:#fff;box-shadow:var(--shadow-card);overflow:hidden}
+.quote__head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 20px;padding:16px 22px;background:color-mix(in srgb,var(--c) 7%,#fff);border-bottom:1px solid var(--line)}
+.quote__head div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.quote__head span{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.quote__head b{font-family:var(--font-display);font-size:.95rem;font-weight:600}
+.quote__body{padding:8px 22px 18px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:11px 0;border-bottom:1px solid var(--line);font-size:.92rem}
+.row span:first-child{color:var(--ink-soft)}
+.row span:first-child b{color:var(--ink);font-weight:600}
+.row span:last-child{font-family:var(--font-display);font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
+.row .tbd{font-family:var(--font-body)!important;font-weight:600;font-size:.78rem;color:#7a5a08;background:var(--mid-bg);padding:2px 9px;border-radius:999px}
+.row .inc{font-family:var(--font-body)!important;font-weight:600;font-size:.78rem;color:#24683a;background:var(--ok-bg);padding:2px 9px;border-radius:999px}
+.row.sub-t{border-bottom:0;padding-top:14px}
+.row.sub-t span:first-child{color:var(--ink);font-weight:600}
+.row.total{border-top:2px solid var(--c);border-bottom:0;margin-top:2px;padding-top:14px}
+.row.total span:first-child{color:var(--ink);font-weight:700;font-size:1rem}
+.row.total span:last-child{font-size:1.4rem;color:var(--c)}
+.ref{margin-top:14px;padding:12px 16px;border-radius:14px;background:color-mix(in srgb,var(--s3) 6%,#fff);border:1px solid color-mix(in srgb,var(--s3) 24%,transparent)}
+.ref .eyebrow{font-size:.68rem;color:var(--s3)}
+.ref .row{font-size:.86rem;padding:8px 0}
+.ref .row:last-child{border-bottom:0}
+.quote__foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:16px}
+.quote__foot p{font-size:.84rem!important;color:var(--ink-soft);flex:1 1 280px}
+
+/* ---------- accordion + table (wiki details.acc / table.tbl) ---------- */
+details.acc{border-radius:18px;border:1px solid rgba(27,35,64,.12);background:#fff;margin-top:14px;overflow:hidden;box-shadow:0 6px 18px rgba(27,35,64,.06)}
+details.acc>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:15px 20px;font-family:var(--font-display);font-weight:600;font-size:1rem;background:color-mix(in srgb,var(--c) 6%,#fff)}
+details.acc>summary::-webkit-details-marker{display:none}
+details.acc>summary::after{content:"+";margin-left:auto;font-size:1.3rem;color:var(--c);transition:transform .25s}
+details.acc[open]>summary{border-bottom:1px solid var(--line)}
+details.acc[open]>summary::after{transform:rotate(45deg)}
+details.acc>.acc-body{padding:16px 20px 20px;animation:fadeDown .35s ease}
+.tbl-wrap{overflow-x:auto;border-radius:16px;border:1px solid var(--line)}
+table.tbl{width:100%;border-collapse:collapse;font-size:.86rem;line-height:1.5;background:#fff}
+table.tbl th{background:color-mix(in srgb,var(--c) 12%,#fff);text-align:left;font-family:var(--font-display);font-weight:600;font-size:.78rem;padding:11px 14px;border-bottom:1px solid var(--line)}
+table.tbl td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+table.tbl tr:last-child td{border-bottom:0}
+table.tbl td:first-child{font-weight:600;white-space:nowrap}
+table.tbl td.num{font-family:var(--font-display);font-weight:600;white-space:nowrap}
+
+/* ---------- next steps ---------- */
+.journey{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:j}
+.journey li{padding:16px;border-radius:18px;background:#fff;border:1px solid rgba(27,35,64,.12);box-shadow:var(--shadow-card);min-width:0}
+.journey li::before{counter-increment:j;content:counter(j);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--c);color:#fff;font-family:var(--font-display);font-weight:700;font-size:.82rem;margin-bottom:10px}
+.journey li.later::before{background:#fff;color:var(--c);border:2px solid var(--c)}
+.journey p{font-size:.85rem!important;line-height:1.55!important;color:var(--ink-soft)}
+.journey .when{display:block;margin-top:10px;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--c)}
+
+/* ---------- request form ---------- */
+.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.form-grid .wide{grid-column:1/-1}
+.checks{display:flex;flex-direction:column;gap:12px;margin-top:18px;padding:18px 20px;border-radius:16px;background:var(--mid-bg);border:1px solid #f0dca8}
+.check{display:flex;gap:11px;align-items:flex-start;font-size:.9rem;line-height:1.55;cursor:pointer}
+.check input{margin-top:.3em;flex:none;width:17px;height:17px;accent-color:var(--s1)}
+.recap{margin-top:18px;padding:14px 18px;border-radius:16px;background:color-mix(in srgb,var(--s1) 6%,#fff);border:1px solid color-mix(in srgb,var(--s1) 28%,transparent);font-size:.9rem;line-height:1.6}
+.recap b{font-family:var(--font-display)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:18px}
+.toast{margin-top:16px;padding:14px 16px;border-radius:14px;font-size:.9rem;line-height:1.55;animation:fadeDown .35s ease}
+.toast.bad{background:var(--mid-bg);border:1px solid #f0dca8;color:#6b5210}
+.toast.good{background:var(--ok-bg);border:1px solid #bfe0c8;color:#24683a}
+
+.foot{font-size:.82rem!important;color:var(--ink-soft);line-height:1.6!important;padding:4px 4px 0}
+
+@media (max-width:980px){
+  .uses,.journey{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stream{grid-template-columns:1fr 1fr}
+  .stream .btn{grid-column:1/-1;justify-content:center}
+  .form-grid{grid-template-columns:1fr 1fr}
+  ul.clean{grid-template-columns:1fr}
+}
+@media (max-width:700px){
+  .page-with-section-nav{display:block;padding:0}
+  .page-section-nav{position:sticky;top:0;z-index:20;margin:0;padding:10px 12px;background:rgba(255,255,255,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .page-section-nav__label,.page-section-nav__top{display:none}
+  .page-section-nav__list{flex-direction:row;gap:4px;border:none;overflow-x:auto;scrollbar-width:none}
+  .page-section-nav__list::-webkit-scrollbar{display:none}
+  .page-section-nav__link{flex-shrink:0;padding:7px 13px;margin-left:0;border-left:none;border-radius:999px;white-space:nowrap;font-size:.8rem}
+  .page-section-nav__link.is-active{background:var(--ink);color:#fff}
+  html{scroll-padding-top:64px}
+  .ent-col{padding:24px 16px 48px}
+}
+@media (max-width:520px){
+  .uses,.journey,.form-grid,.stream{grid-template-columns:1fr}
+  .kpi .k{font-size:1.25rem}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media print{
+  .page-section-nav,#overview,#stream,#option,#journey,#request,.quote__foot .btn,details.acc{display:none!important}
+  .page-with-section-nav{display:block}
+  .sub{box-shadow:none}
+}
+</style>
+</head>
+<body>
+
+<div class="page-with-section-nav">
+
+  <nav class="page-section-nav" aria-label="Customer portal sections">
+    <span class="page-section-nav__label">Customer portal</span>
+    <ul class="page-section-nav__list">
+      <li><a class="page-section-nav__link" href="#overview">Overview</a></li>
+      <li><a class="page-section-nav__link" href="#stream">1. Your stream</a></li>
+      <li><a class="page-section-nav__link" href="#option">2. Adoption option</a></li>
+      <li><a class="page-section-nav__link" href="#quotation">3. Indicative quotation</a></li>
+      <li><a class="page-section-nav__link" href="#journey">4. Next steps</a></li>
+      <li><a class="page-section-nav__link" href="#request">5. Request a review</a></li>
+    </ul>
+    <button type="button" class="page-section-nav__top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><span aria-hidden="true">↑</span> Back to top</button>
+  </nav>
+
+  <main class="ent-col">
+
+    <div class="title-row" id="top">
+      <h1>Customer portal</h1>
+      <span class="demo">Demo · no orders placed</span>
+    </div>
+
+    <!-- ============ OVERVIEW ============ -->
+    <section id="overview" class="sub" style="--c:var(--s1)">
+      <header><span class="eyebrow">What this portal does</span><h2>From your effluent to an indicative quotation</h2></header>
+      <ol class="uses">
+        <li><a href="#stream"><b>1</b><strong>Size your stream</strong><span>Three values give the module count and the phosphorus captured.</span></a></li>
+        <li><a href="#option"><b>2</b><strong>Choose how to adopt</strong><span>Phosphorus-as-a-Service now, or direct purchase at a later stage.</span></a></li>
+        <li><a href="#quotation"><b>3</b><strong>See your quotation</strong><span>An indicative first-year cost, ready to save as a PDF.</span></a></li>
+        <li><a href="#request"><b>4</b><strong>Request a review</strong><span>Open a technical review of your stream. Nothing is committed.</span></a></li>
+      </ol>
+      <p class="note warn">rePhlow is at TRL 2–3. Prices are planning assumptions from our business plan and performance values are development targets, not guaranteed results. The product and business model are described on our Entrepreneurship page.</p>
+    </section>
+
+    <!-- ============ 1. STREAM ============ -->
+    <section id="stream" class="sub" style="--c:var(--s1)">
+      <header><span class="eyebrow">1 · Your stream</span><h2>Describe the effluent to treat</h2></header>
+      <div class="stream">
+        <div class="f"><label for="q">Flow to treat (m³/h)</label><input id="q" type="number" min="0.1" max="100" step="0.1" value="1.2" inputmode="decimal"></div>
+        <div class="f"><label for="c">Total phosphorus (mg P/L)</label><input id="c" type="number" min="1" max="10000" step="10" value="2290" inputmode="decimal"></div>
+        <div class="f"><label for="h">Operating hours per year</label><input id="h" type="number" min="100" max="8760" step="100" value="7000" inputmode="numeric"></div>
+        <button class="btn" type="button" id="reset">Reset example</button>
+      </div>
+      <div class="kpis" aria-live="polite">
+        <div class="kpi"><div class="l">Modules</div><div class="k" id="kMod">—</div><div class="u">indicative sizing</div></div>
+        <div class="kpi"><div class="l">Volume treated</div><div class="k" id="kVol">—</div><div class="u">m³ per year</div></div>
+        <div class="kpi hi"><div class="l">Phosphorus captured</div><div class="k" id="kP">—</div><div class="u">kg P per year, at the ≥70% target</div></div>
+        <div class="kpi gr"><div class="l">Value if recovered</div><div class="k" id="kPv">—</div><div class="u">per year, at €2/kg recovered P</div></div>
+      </div>
+    </section>
+
+    <!-- ============ 2. OPTION ============ -->
+    <section id="option" class="sub" style="--c:var(--s1)">
+      <header><span class="eyebrow">2 · Adoption option</span><h2>How would you like to adopt rePhlow?</h2></header>
+      <div class="opt-tabs" role="tablist">
+        <button class="btn on" type="button" role="tab" aria-selected="true" data-plan="paas">Phosphorus-as-a-Service <small>★ Recommended now</small></button>
+        <button class="btn" type="button" role="tab" aria-selected="false" data-plan="buy">Direct purchase <small>Later stage</small></button>
+      </div>
+      <div class="panel" id="planPanel">
+        <div class="eq" id="planEq"></div>
+        <ul class="clean" id="planList"></ul>
+      </div>
+    </section>
+
+    <!-- ============ 3. QUOTATION ============ -->
+    <section id="quotation" class="sub" style="--c:var(--s1)">
+      <header><span class="eyebrow">3 · Indicative quotation</span><h2>Your first-year estimate</h2></header>
+      <div class="quote">
+        <div class="quote__head">
+          <div><span>Reference</span><b id="qRef">—</b></div>
+          <div><span>Date</span><b id="qDate">—</b></div>
+          <div><span>Option</span><b id="qPlan">—</b></div>
+          <div><span>Stream</span><b id="qStream">—</b></div>
+        </div>
+        <div class="quote__body">
+          <div id="lines"></div>
+          <div class="ref">
+            <span class="eyebrow">For reference · not invoiced</span>
+            <div id="refLines"></div>
+          </div>
+        </div>
+      </div>
+      <div class="quote__foot">
+        <p id="qNote">Indicative only. Final pricing depends on the characterisation of your effluent.</p>
+        <button class="btn" type="button" id="print">Save quotation as PDF</button>
+      </div>
+
+      <details class="acc">
+        <summary>Where these figures come from</summary>
+        <div class="acc-body">
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>Figure</th><th>Value</th><th>Source and status</th></tr></thead>
+            <tbody>
+              <tr><td>Service contract</td><td class="num">€4,500 / month</td><td>rePhlow business plan (financial model). Planning assumption. Covers our estimated operating cost of €3,250 per contract-month (capsules, monitoring, maintenance).</td></tr>
+              <tr><td>Bioreactor module</td><td class="num">€19,000 / unit</td><td>rePhlow business plan (financial model). Set from a direct cost of €9,460 per ~0.1 m³ module, which gives a 50.2% gross margin (breakdown below). Price for the later direct-purchase stage.</td></tr>
+              <tr><td>VAT</td><td class="num">21%</td><td>rePhlow business plan (financial model), Spanish general rate.</td></tr>
+              <tr><td>Recovered phosphorus</td><td class="num">€2 / kg</td><td>rePhlow business plan (financial model), against an estimated recovery cost of €0.80/kg. Only materialises once recovery yield and purity are demonstrated.</td></tr>
+              <tr><td>Capsule lifetime</td><td class="num">2,160 reuse cycles</td><td>Key assumption of the financial model, not yet measured. Our sensitivity analysis shows that below 128 cycles the Year-5 gross margin turns negative, so capsule lifetime is the first thing the pilot must measure. Under Phosphorus-as-a-Service this risk stays with rePhlow, not with your site.</td></tr>
+              <tr><td>Phosphorus captured</td><td class="num">≥70% removal</td><td>Development target from our MVP go/no-go criteria, not a measured result.</td></tr>
+              <tr><td>Module throughput</td><td class="num">≈0.12 m³/h</td><td>rePhlow process model for a ~0.1 m³ rotating-bed module. Hydraulic retention time is still to be measured, so the module count is indicative.</td></tr>
+              <tr><td>Performance fee</td><td class="num">to be agreed</td><td>Set per site, in €/m³ treated, €/kg P removed or a combination, after stream characterisation.</td></tr>
+            </tbody>
+          </table></div>
+
+          <h5 style="margin:20px 0 8px">How the module price is built</h5>
+          <div class="tbl-wrap"><table class="tbl">
+            <thead><tr><th>Direct cost per module</th><th>€ / unit</th><th>Basis</th></tr></thead>
+            <tbody>
+              <tr><td>Sodium alginate</td><td class="num">€30</td><td>Calculated from the encapsulation recipe.</td></tr>
+              <tr><td>CaCl₂</td><td class="num">€10</td><td>Calculated from the encapsulation recipe.</td></tr>
+              <tr><td>Bacterial culture</td><td class="num">€300</td><td>Assumption: growth medium and incubation.</td></tr>
+              <tr><td>Enzyme functionalisation</td><td class="num">€1,120</td><td>Assumption: enzyme panel fixed to the capsules.</td></tr>
+              <tr><td>Manufacture and assembly</td><td class="num">€8,000</td><td>Assumption: reactor hardware and assembly.</td></tr>
+              <tr><td>Total direct cost</td><td class="num">€9,460</td><td>Sale price €19,000 → €9,540 gross margin per unit (50.2%).</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </details>
+    </section>
+
+    <!-- ============ 4. NEXT STEPS ============ -->
+    <section id="journey" class="sub" style="--c:var(--s1)">
+      <header><span class="eyebrow">4 · Next steps</span><h2>From request to contract</h2></header>
+      <ol class="journey">
+        <li><h5>Technical review</h5><p>You share flow, phosphorus load and discharge conditions; we check the fit with your treatment line.</p><span class="when">Now</span></li>
+        <li><h5>Stream characterisation</h5><p>Your samples are fractionated by phosphorus form, which sets the enzyme panel and the performance fee.</p><span class="when">Before any agreement</span></li>
+        <li><h5>Host-site pilot</h5><p>One unit installed in bypass and operated by rePhlow for twelve months. The pilot measures capsule lifetime, the assumption our economics depend on most.</p><span class="when">Phase 3 · from 2028</span></li>
+        <li class="later"><h5>Service contract or purchase</h5><p>Continue as a service, or buy modules once serial manufacture and a performance record exist.</p><span class="when">Phase 4 · from mid-2029</span></li>
+      </ol>
+    </section>
+
+    <!-- ============ 5. REQUEST ============ -->
+    <section id="request" class="sub" style="--c:var(--s1)">
+      <header><span class="eyebrow">5 · Request a technical review</span><h2>Tell us about your site</h2></header>
+      <p>Nothing is committed here. A request opens a technical review of your stream; any pilot agreement is signed separately.</p>
+
+      <form id="order" novalidate style="margin-top:18px">
+        <div class="form-grid">
+          <div class="f"><label for="org">Company</label><input id="org" autocomplete="organization" placeholder="Registered company name"></div>
+          <div class="f"><label for="name">Contact *</label><input id="name" autocomplete="name" placeholder="Name and role"></div>
+          <div class="f"><label for="mail">Email *</label><input id="mail" type="email" autocomplete="email" placeholder="name@company.com"></div>
+          <div class="f"><label for="who">You are</label>
+            <select id="who">
+              <option value="A">Agro-industrial or biofuel refiner</option>
+              <option value="B">Private wastewater operator</option>
+              <option value="C">Phosphorus user (recovered P only)</option>
+            </select>
+          </div>
+          <div class="f"><label for="stage">Stream origin</label>
+            <select id="stage">
+              <option>Acid degumming, after centrifugation</option>
+              <option>Water degumming</option>
+              <option>Combined refinery effluent</option>
+              <option>Other agro-industrial effluent</option>
+            </select>
+          </div>
+          <div class="f"><label for="site">Site location</label><input id="site" placeholder="Town or province"></div>
+          <div class="f wide"><label for="notes">Anything we should know about the stream</label><textarea id="notes" placeholder="Variability, temperature, pH, current treatment, discharge route…"></textarea></div>
+        </div>
+
+        <div class="checks" id="checks">
+          <span class="eyebrow" style="--c:#7a5a08">Before a pilot can proceed</span>
+          <label class="check"><input type="checkbox" id="k1"><span>Our site holds an integrated environmental (IED) permit covering this discharge, and we can share its conditions.</span></label>
+          <label class="check"><input type="checkbox" id="k2"><span>We understand that hosting the reactor requires a contained-use notification for our installation under Directive 2009/41/EC before first use.</span></label>
+          <label class="check"><input type="checkbox" id="k3"><span>We understand rePhlow is at TRL 2–3: performance figures are development targets, not guaranteed results.</span></label>
+        </div>
+
+        <div class="recap" id="recap"></div>
+
+        <div class="actions">
+          <button class="btn solid" type="submit">Request technical review</button>
+        </div>
+        <div class="toast" id="toast" hidden></div>
+      </form>
+    </section>
+
+    <p class="foot"><strong>Demonstration portal built for the iGEM 2026 wiki of Madrid-UCM.</strong> No order is placed, no payment is taken and no data leaves this page. rePhlow is a university research project at TRL 2–3, not a company selling equipment.</p>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  /* ---- Inputs from the rePhlow financial model (Business_Plan_RePhlow_v2.xlsx) ---- */
+  var SERVICE_MONTH = 4500;   // RP_Revenue!C16  service price, €/month per contract
+  var MODULE_PRICE  = 19000;  // RP_Revenue!C11  bioreactor unit price, €/unit
+  var P_PRICE       = 2;      // RP_Revenue!C21  recovered phosphorus, €/kg
+  var VAT           = 0.21;   // RP_Assumptions!B6
+  /* Reference only (shown in "Where these figures come from"):
+     module direct cost €9,460 (RP_COGS!C17) → 50.2% margin (RP_Dashboard!B9);
+     service cost €3,250/contract-month (RP_COGS!C22); P recovery cost €0.80/kg (RP_COGS!C27);
+     capsule reuse cycles 2,160 (RP_Assumptions!B16). */
+  /* ---- Technical planning values (development targets, not results) ---- */
+  var REMOVAL       = 0.70;   // MVP target: >=70% phosphorus removal
+  var MOD_FLOW      = 0.1176; // process model: m3/h treated per ~0.1 m3 module
+  var DEF = {q:1.2, c:2290, h:7000};
+
+  var plan = 'paas';
+  var $ = function(id){return document.getElementById(id)};
+  var fmt = function(n,d){return n.toLocaleString('en-GB',{maximumFractionDigits:d||0,minimumFractionDigits:d||0})};
+  var eur = function(n,d){return '€'+fmt(n,d)};
+  var TBD='<span class="tbd">to be agreed</span>', INC='<span class="inc">included</span>';
+  function row(a,b,cls){return '<div class="row'+(cls?' '+cls:'')+'"><span>'+a+'</span><span>'+b+'</span></div>'}
+
+  var today=new Date();
+  $('qDate').textContent=today.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  $('qRef').textContent='RPH-DEMO-'+today.toISOString().slice(2,10).replace(/-/g,'');
+
+  function read(){
+    var q=parseFloat($('q').value), c=parseFloat($('c').value), h=parseFloat($('h').value);
+    return {q:isFinite(q)&&q>0?q:0.1, c:isFinite(c)&&c>0?c:1, h:isFinite(h)&&h>0?Math.min(h,8760):100};
+  }
+  function calc(){
+    var s=read();
+    var vol=s.q*s.h;                       // m3/yr
+    var pKg=vol*s.c/1000*REMOVAL;          // m3 x mg/L = g ; /1000 = kg
+    var mod=Math.max(1,Math.ceil(s.q/MOD_FLOW));
+    var fee=SERVICE_MONTH*12;
+    var net=plan==='paas'?fee:mod*MODULE_PRICE+fee;
+    return {s:s,vol:vol,pKg:pKg,pVal:pKg*P_PRICE,mod:mod,fee:fee,modCost:mod*MODULE_PRICE,net:net,vat:net*VAT};
+  }
+
+  function render(){
+    var r=calc(), L=[], R=[];
+    $('kMod').textContent=r.mod;
+    $('kVol').textContent=fmt(r.vol);
+    $('kP').textContent=fmt(r.pKg);
+    $('kPv').textContent=eur(r.pVal);
+
+    /* option panel */
+    if(plan==='paas'){
+      $('planEq').innerHTML='Annual service fee <span class="res">+</span> Performance-based fee';
+      $('planList').innerHTML=['rePhlow installs, owns and operates the unit','No capital expenditure on your side',
+        'Capsules, monitoring and maintenance included','Recovered phosphorus offered back to your process first']
+        .map(function(t){return '<li>'+t+'</li>'}).join('');
+    }else{
+      $('planEq').innerHTML='Modules <span class="res">+</span> Service and maintenance contract';
+      $('planList').innerHTML=['You own and operate the modules','Capacity grows by adding units',
+        'Capsules, monitoring and maintenance under contract','Available once serial manufacture and a performance record exist']
+        .map(function(t){return '<li>'+t+'</li>'}).join('');
+    }
+
+    /* quotation */
+    $('qPlan').textContent=plan==='paas'?'Phosphorus-as-a-Service':'Direct purchase';
+    $('qStream').textContent=fmt(r.s.q,1)+' m³/h · '+fmt(r.s.c)+' mg P/L';
+    if(plan==='paas'){
+      L.push(row('<b>Annual service fee</b> · 12 × '+eur(SERVICE_MONTH)+' / month',eur(r.fee)));
+      L.push(row('Performance fee · per m³ treated and/or kg P removed',TBD));
+      L.push(row('Capsule supply and replacement, monitoring and maintenance',INC));
+      L.push(row('Capital expenditure for your site','€0'));
+      $('qNote').textContent='Indicative only. The performance fee is set after characterisation of your effluent and is not included in the total.';
+    }else{
+      L.push(row('<b>Bioreactor modules</b> · '+r.mod+' × '+eur(MODULE_PRICE),eur(r.modCost)));
+      L.push(row('Service and maintenance contract · 12 × '+eur(SERVICE_MONTH)+' / month',eur(r.fee)));
+      L.push(row('Site integration and terminal ultrafiltration',TBD));
+      $('qNote').textContent='Indicative only. Site integration is quoted after a site survey and is not included in the total. We recommend starting with Phosphorus-as-a-Service.';
+    }
+    L.push(row('Subtotal, excluding VAT',eur(r.net),'sub-t'));
+    L.push(row('VAT (21%)',eur(r.vat)));
+    L.push(row('First-year total',eur(r.net+r.vat),'total'));
+    $('lines').innerHTML=L.join('');
+
+    R.push(row('Volume treated',fmt(r.vol)+' m³ / yr'));
+    R.push(row('Phosphorus captured at the ≥70% target',fmt(r.pKg)+' kg P / yr'));
+    R.push(row(plan==='paas'?'Service fee per m³ treated':'Year-1 cost per m³ treated, excl. VAT',eur(r.net/r.vol,2)+' / m³'));
+    R.push(row('Value of the phosphorus, if fully recovered at €2/kg',eur(r.pVal)+' / yr'));
+    $('refLines').innerHTML=R.join('');
+
+    recap(r);
+  }
+
+  function recap(r){
+    r=r||calc();
+    if($('who').value==='C'){
+      $('recap').innerHTML='<b>Your enquiry:</b> supply of recovered phosphorus. Volumes depend on the treatment sites we operate; we will contact you about research-scale or pilot-scale quantities.';
+      return;
+    }
+    $('recap').innerHTML='<b>Your enquiry:</b> '+(plan==='paas'?'Phosphorus-as-a-Service':'Direct purchase')+
+      ' for '+fmt(r.s.q,1)+' m³/h at '+fmt(r.s.c)+' mg P/L, about '+r.mod+' module'+(r.mod>1?'s':'')+
+      '. Indicative first-year total '+eur(r.net+r.vat)+' including VAT (quotation '+$('qRef').textContent+').';
+  }
+
+  ['q','c','h'].forEach(function(id){$(id).addEventListener('input',render)});
+  $('reset').addEventListener('click',function(){$('q').value=DEF.q;$('c').value=DEF.c;$('h').value=DEF.h;render()});
+  document.querySelectorAll('.opt-tabs .btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      plan=b.dataset.plan;
+      document.querySelectorAll('.opt-tabs .btn').forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-selected',on)});
+      var p=$('planPanel'); p.style.animation='none'; void p.offsetWidth; p.style.animation='';
+      render();
+    });
+  });
+  $('who').addEventListener('change',function(){
+    var c=$('who').value==='C';
+    $('stage').disabled=c; $('checks').hidden=c; recap();
+  });
+  $('print').addEventListener('click',function(){window.print()});
+
+  $('order').addEventListener('submit',function(e){
+    e.preventDefault();
+    var t=$('toast'), miss=[], c=$('who').value==='C';
+    if(!$('name').value.trim()) miss.push('a contact name');
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test($('mail').value.trim())) miss.push('a valid email address');
+    if(!c && !($('k1').checked&&$('k2').checked&&$('k3').checked)) miss.push('the three pilot conditions confirmed');
+    t.hidden=false;
+    if(miss.length){
+      t.className='toast bad';
+      t.innerHTML='<strong>Not sent.</strong> A real request would need '+miss.join(', ')+'.';
+    }else{
+      var r=calc();
+      t.className='toast good';
+      t.innerHTML='<strong>Demonstration only: nothing was sent.</strong> On a live portal this would open a technical review for '+
+        ($('org').value.trim()||'your company')+(c?' about recovered phosphorus supply.':' covering about '+r.mod+' module'+(r.mod>1?'s':'')+' and '+fmt(r.vol)+' m³ a year.');
+    }
+  });
+
+  /* sidebar: highlight the section in view */
+  var links=[].slice.call(document.querySelectorAll('.page-section-nav__link'));
+  var ids=links.map(function(l){return l.getAttribute('href').slice(1)});
+  function spy(){
+    var y=window.innerHeight*0.35, cur=ids[0];
+    ids.forEach(function(id){var el=$(id); if(el && el.getBoundingClientRect().top<=y) cur=id;});
+    if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4) cur=ids[ids.length-1];
+    links.forEach(function(l){
+      var on=l.getAttribute('href')==='#'+cur;
+      if(on && !l.classList.contains('is-active') && l.scrollIntoView && window.innerWidth<=700){
+        l.parentNode.parentNode.scrollTo({left:l.offsetLeft-12,behavior:'smooth'});
+      }
+      l.classList.toggle('is-active',on);
+    });
+  }
+  window.addEventListener('scroll',spy,{passive:true});
+  window.addEventListener('resize',spy);
+  render(); spy();
+})();
+</script>
+</body>
+</html>

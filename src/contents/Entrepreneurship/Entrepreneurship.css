@@ -1104,3 +1104,41 @@
 .ent .ent-resbox .pdf-btn b{font-size:.86rem;line-height:1.25;white-space:nowrap}
 .ent .ent-resbox .pdf-btn small{font-size:.72rem}
 @media(max-width:560px){.ent .ent-resbox .pdf-btn{width:100%}}
+
+/* 20 Oct d: Business model - full financial plan fold + PDF / portal buttons (section 3 colour) */
+.ent .ent-finplan{margin-top:22px;border-radius:20px;border:1.5px solid color-mix(in srgb,var(--s3) 35%,transparent);background:#fff;overflow:hidden}
+.ent .ent-finplan>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:14px 18px 14px 22px;background:color-mix(in srgb,var(--s3) 13%,#fff);font-family:var(--font-display);font-weight:700;font-size:1.15rem;color:var(--s3)}
+.ent .ent-finplan>summary::-webkit-details-marker{display:none}
+.ent .ent-finplan>summary::after{content:"+";margin-left:auto;flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:1.4rem;background:#fff;transition:transform .25s}
+.ent .ent-finplan[open]>summary::after{transform:rotate(45deg)}
+.ent .ent-finplan__body{padding:18px 22px 22px;--c:var(--s3)}
+.ent .ent-finplan__body h4{margin:0 0 8px}
+.ent .ent-finplan__body h5{margin:20px 0 0}
+.ent .ent-fin-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 4px}
+.ent .ent-fin-kpi{padding:14px 16px;border-radius:16px;background:color-mix(in srgb,var(--s3) 7%,#fff);border:1px solid color-mix(in srgb,var(--s3) 28%,transparent);min-width:0}
+.ent .ent-fin-kpi .l{font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
+.ent .ent-fin-kpi .k{font-family:var(--font-display);font-weight:700;font-size:1.45rem;line-height:1.1;color:var(--s3)}
+.ent .ent-fin-kpi .u{font-size:.76rem;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+.ent .ent-finplan table.tbl td.num{font-family:var(--font-display);font-weight:600;white-space:nowrap}
+.ent .ent-fin-key{margin-top:18px;padding:14px 18px;border-radius:16px;background:#fdf3dc;border:1px solid #f0dca8;color:#5c4510;font-size:.92rem;line-height:1.6}
+.ent .ent-fin-key b{color:#3d2e0a}
+.ent .ent-s3-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.ent .ent-s3-actions .pdf-btn{--c:var(--s3);margin-top:0;border-color:color-mix(in srgb,var(--s3) 35%,transparent);background:color-mix(in srgb,var(--s3) 7%,#fff)}
+.ent .ent-s3-actions .pdf-btn.is-soon{opacity:.6;cursor:default;transform:none;box-shadow:none}
+@media(max-width:820px){.ent .ent-fin-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.ent .ent-fin-kpis{grid-template-columns:1fr}}
+.ent-portal-frame{display:block;width:100%;height:min(75vh,820px);border:0;border-radius:12px;background:#fff}
+
+/* 20 Oct e: financial plan fold styled like the folds above it; portal viewer tools */
+.ent .ent-finplan2 .ent-finplan__body{--c:var(--s3)}
+.ent-portal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.ent-portal-head .modal__t{margin:0}
+.ent-portal-tools{display:flex;gap:8px;flex-wrap:wrap}
+.ent-portal-tool{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;border:1.5px solid color-mix(in srgb,#5f7d36 40%,transparent);background:color-mix(in srgb,#5f7d36 8%,#fff);color:#3f5a22;font-size:.84rem;font-weight:600;text-decoration:none;cursor:pointer;font-family:inherit}
+.ent-portal-tool:hover{background:color-mix(in srgb,#5f7d36 16%,#fff)}
+.ent-portal-frame{height:min(72vh,800px)}
+
+/* 20 Oct f: every card in a 2/3/4-column grid only as tall as its content */
+.ent .grid2>.card,.ent .grid3>.card,.ent .grid4>.card{min-height:0!important;height:auto!important;aspect-ratio:auto!important}
+.ent .grid2,.ent .grid3,.ent .grid4{align-items:stretch}
+.ent .grid2>.card>:last-child,.ent .grid3>.card>:last-child,.ent .grid4>.card>:last-child{margin-bottom:0}
