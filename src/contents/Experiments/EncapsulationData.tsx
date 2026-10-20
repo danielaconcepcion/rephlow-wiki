@@ -194,8 +194,16 @@ export const ALGINATE_ENCAPSULATION_INTRO: ReactNode[] = [
     into a more advanced <strong>core-shell architecture</strong>, in which a{" "}
     <strong>liquid calcium chloride core</strong> is surrounded by an{" "}
     <strong>alginate shell</strong> <Cite scope="encapsulation" n={3} />,{" "}
-    <Cite scope="encapsulation" n={4} />. Unlike conventional beads, core-shell capsule formation depends on the simultaneous control of two coaxial flows, making additional optimisation necessary. Parameters such as the **concentrations** of the inner calcium chloride and outer alginate solutions, the **outer-to-inner flow-rate ratio**, **storage conditions** and **mechanical resistance** were therefore systematically evaluated to obtain stable, reproducible
-    capsules suitable for wastewater treatment.
+    <Cite scope="encapsulation" n={4} />. Unlike conventional
+    beads, core-shell capsule formation depends on the simultaneous control
+    of two coaxial flows, making additional optimisation necessary.
+    Parameters such as the <strong>concentrations</strong> of the inner
+    calcium chloride and outer alginate solutions, the{" "}
+    <strong>outer-to-inner flow-rate ratio</strong>,{" "}
+    <strong>storage conditions</strong> and{" "}
+    <strong>mechanical resistance</strong> were therefore systematically
+    evaluated to obtain stable, reproducible capsules suitable for
+    wastewater treatment.
   </>,
   "Unless otherwise stated, all encapsulation experiments were performed using **sodium alginate from brown algae** (Sigma-Aldrich, A1112; lot 081M1381V), **anhydrous calcium chloride** (96%, extra pure, Acros Organics, 349615000; lot A0358796) and distilled water. Solutions were prepared immediately before use and delivered using **programmable infusion pumps** (KDS 200 dual-syringe pump, KD Scientific, and Fisherbrand KDS 100 single-syringe pump, Fisher Scientific) through plastic syringes (10 mL), connected via standard Luer connectors and flexible tubing to the dispensing outlet. Bead production used a single infusion pump, while core-shell production used both pumps and a **coaxial injector** (DMF-C01, Doxa Microfluidics; inner needle: 22G, 0.7 mm OD / 0.4 mm ID; outer needle: 17G, 1.4 mm OD / 1.1 mm ID). Capsule formation was carried out by dripping into a calcium chloride crosslinking bath under ambient laboratory conditions. When a parameter was investigated, all remaining synthesis conditions were kept constant unless explicitly indicated.",
   "Together, these experiments provided the experimental evidence required to develop an encapsulation platform suitable for the safe immobilisation of engineered bacteria and its integration into the rePhlow bioreactor.",
