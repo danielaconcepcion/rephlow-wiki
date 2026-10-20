@@ -1,4 +1,12 @@
 /* Hardware page styles */
+.hw-page {
+  position: relative;
+}
+.hw-page > .page-with-section-nav,
+.hw-page > .figure-lightbox {
+  position: relative;
+  z-index: 1;
+}
 .hw-page .pd-content {
   max-width: 1000px;
 }

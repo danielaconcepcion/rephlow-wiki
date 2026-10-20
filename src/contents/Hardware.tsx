@@ -4,6 +4,7 @@ import { HardwareSectionNav } from "./hardware/HardwareSectionNav.tsx";
 import { useHardwareInteractions } from "./hardware/useHardwareInteractions.ts";
 import { img } from "./hardware/assets.ts";
 import { FigureLightbox, useFigureLightbox } from "./hardware/FigureLightbox.tsx";
+import { ModelBackground } from "./Model/ModelBackground.tsx";
 import "./hardware/Hardware.css";
 
 /*
@@ -18,7 +19,8 @@ export function Hardware() {
   const pageStyle = { "--hw-split-img": `url("${img("hw-fig04-reactors.avif")}")` } as CSSProperties;
 
   return (
-    <div className="pd-page mbg-host hw-page" style={pageStyle}>
+    <div className="pd-page hw-page" style={pageStyle}>
+      <ModelBackground contentRef={contentRef} density="dense" />
       <div className="page-with-section-nav">
         <HardwareSectionNav />
         <div className="pd-content-wrap">
