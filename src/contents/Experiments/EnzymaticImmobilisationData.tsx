@@ -209,7 +209,6 @@ export interface EnzymeActivity {
   fullName: string;
   whatItDoes: ReactNode;
   whatWeDo: ReactNode;
-  storyboard: ReactNode;
 }
 
 /** The four catalytic activities — see EnzymeActivityGrid.tsx. */
@@ -235,8 +234,6 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         parallel, a metagenomic esterase (EstE1) was produced recombinantly as a candidate PLA activity.
       </>
     ),
-    storyboard:
-      "a phospholipid with two acyl chains; scissors snip the ester bonds at sn1 and sn2; the fatty acids drift off and a lysophospholipid is left behind, the gum visibly thinning.",
   },
   {
     id: "plc",
@@ -262,8 +259,6 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         suited to toxic, membrane-associated proteins because it does not rely on host viability.
       </>
     ),
-    storyboard:
-      "a glycerophospholipid; a cut falls between the glycerol backbone and the phosphate; the DAG stays in the oil layer while the phospho-head dissolves into the water below.",
   },
   {
     id: "nap",
@@ -284,8 +279,6 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         out to be the most efficient biocatalyst per unit mass of the whole panel.
       </>
     ),
-    storyboard:
-      "a phosphate monoester bobbing in solution; the terminal phosphate is snipped off and floats away as free orthophosphate, ready for uptake.",
   },
   {
     id: "phytases",
@@ -306,8 +299,6 @@ export const ENZYME_ACTIVITIES: EnzymeActivity[] = [
         stands alongside AphA as a key component for the recovery bioreactor.
       </>
     ),
-    storyboard:
-      "a fully loaded inositol ring bristling with six phosphates; one by one the phosphates pop off around the ring until the ring is bare.",
   },
 ];
 

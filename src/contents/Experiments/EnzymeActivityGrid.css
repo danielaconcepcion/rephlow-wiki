@@ -66,16 +66,11 @@
   line-height: 1.6;
   color: var(--ink-soft);
 }
-.enzyme-card__field strong { color: var(--ink); }
-.enzyme-card__field:last-of-type { margin-bottom: 0; }
-
-.enzyme-card__sketch {
-  margin-top: 12px;
-  padding-top: 12px;
-  border-top: 1px dashed var(--lab-line);
+.enzyme-card__field strong {
+  color: var(--ink);
 }
-.enzyme-card__sketch .record-figure__placeholder {
-  aspect-ratio: 16 / 6;
+.enzyme-card__field:last-of-type {
+  margin-bottom: 0;
 }
 
 @media (max-width: 640px) {
