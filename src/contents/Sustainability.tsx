@@ -1903,8 +1903,8 @@ export function Sustainability() {
                 textWrap: "pretty",
               }}
             >
-              To keep ourselves honest, we needed an external framework: The
-              United Nations Sustainable Development Goals give us that —
+              To keep ourselves honest, we needed an external framework; The
+              United Nations Sustainable Development Goals give us that:
               seventeen goals and one hundred and sixty-nine targets, agreed
               internationally, that no team can quietly rewrite to fit its own
               project. So instead of asking whether rePhlow <em>feels </em>
@@ -2498,7 +2498,7 @@ export function Sustainability() {
                             run through the facility’s own discharge permit and
                             through national implementation, and which of them
                             applies depends on whether the effluent goes to a
-                            municipal collector or straight to a watercourse — a
+                            municipal collector or straight to a watercourse, a
                             distinction CEDEX drew for us explicitly. We
                             designed rePhlow for an industrial setting because
                             that is where phosphorus is most concentrated and
@@ -2515,7 +2515,7 @@ export function Sustainability() {
                               textWrap: "pretty",
                             }}
                           >
-                            This goal also applies to our biological design — a
+                            This goal also applies to our biological design: a
                             living engineered organism introduced into a waste
                             stream is precisely the kind of material this target
                             exists to govern, which is why containment is a
@@ -2664,7 +2664,7 @@ export function Sustainability() {
                             }}
                           >
                             There is also a biological reason this goal belongs
-                            here rather than as an afterthought to goal 6 —
+                            here rather than as an afterthought to goal 6:
                             coastal eutrophication isn’t just phosphorus-driven,
                             in marine and estuarine systems, nitrogen is the
                             common limiting nutrient. Controlling only one of
@@ -2729,15 +2729,20 @@ export function Sustainability() {
                   </div>
                 </div>
                 <p className="sus-unclaimed__text">
-                  Goal 9 is the one we reach without aiming at it. Modularity
-                  was not adopted to upgrade industrial infrastructure; it was
-                  adopted because Bio-Oils told us a mid-sized producer cannot
-                  shut down a line to rebuild a treatment plant around an
-                  experiment. The result happens to be what target 9.4 asks for
-                  — a retrofit that raises resource efficiency without replacing
-                  what is already there — but it was a commercial constraint
-                  before it was a sustainability contribution, and we would
-                  rather say so than claim the goal as an intention.
+                  Goal 9 is one we achieve through the practical decisions 
+                  that shape our approach. Modularity emerged from our 
+                  collaboration with Bio-Oils and our shared understanding 
+                  of the operational needs of a mid-sized producer, where 
+                  maintaining production continuity is essential when 
+                  testing new solutions. This approach allows us to 
+                  integrate improvements into existing infrastructure, 
+                  enhancing resource efficiency without the need for a 
+                  complete replacement. As a result, our model aligns with 
+                  target 9.4 by supporting the modernization of industrial 
+                  processes through more efficient and sustainable 
+                  technologies. While sustainability was not the initial 
+                  driver behind modularity, it has become a valuable 
+                  outcome of a solution designed to meet real operational needs.
                 </p>
                 <p className="sus-unclaimed__text">
                   Target 9.5 we touch only in the ordinary way any student
@@ -3093,7 +3098,7 @@ export function Sustainability() {
                   </a>{" "}
                   rePhlow needs capsules, a reactor, and someone trained to run
                   it. If our technology works, the facilities that adopt it
-                  first will be well-resourced and in well-regulated countries —
+                  first will be well-resourced and in well-regulated countries;
                   a cost to the objectives of goals 9 and 10 to build
                   sustainable infrastructure everywhere, regardless of cost.
                 </p>
@@ -3716,7 +3721,7 @@ export function Sustainability() {
                     >
                       “The goals are on the wall in the lobby. This room is
                       where we show you who put them there. Every change on this
-                      map came from someone outside the lab — follow the pipes
+                      map came from someone outside the lab. Follow the pipes
                       to the control panel when you are done.”
                     </p>
                     <p
@@ -4218,7 +4223,7 @@ export function Sustainability() {
                       }}
                     >
                       That our endpoint was wrong: the enzyme recycles ATP, so
-                      accumulation was never the destination — and polyphosphate
+                      accumulation was never the destination, and polyphosphate
                       is by far the cheapest phosphate donor available for
                       regenerating it.
                     </td>
@@ -4583,8 +4588,8 @@ export function Sustainability() {
                     color: "var(--ink-soft)",
                   }}
                 >
-                  Our account rests on three pillars — technical, economic,
-                  environmental — and treats the fourth, the social one, as
+                  Our account rests on three pillars: technical, economic,
+                  environmental; and treats the fourth, the social one, as
                   communication rather than as a design constraint.
                 </div>
               </div>
@@ -4656,7 +4661,7 @@ export function Sustainability() {
               <strong style={{ color: "var(--ink)", fontWeight: "600" }}>
                 The pillar we had written as an afterthought.
               </strong>{" "}
-              Roberto set out sustainability as four pillars — technical,
+              Roberto set out sustainability as four pillars: technical,
               economic, environmental and social. We had written three. Our
               social evidence amounted to one conversation with a reservoir
               resident, and we had treated acceptance as something that follows
@@ -4677,7 +4682,7 @@ export function Sustainability() {
               of discovering them on site. For rePhlow he named three: rejection
               of a bacterial process as such, the complexity of the mechanism
               compared with dosing a chemical, and the ordinary nuisances of a
-              treatment plant — odour, sludge handling — that decide whether
+              treatment plant (odour, sludge handling) that decide whether
               neighbours accept a facility regardless of what it removes.
             </p>
             <p
@@ -4712,7 +4717,7 @@ export function Sustainability() {
               structural integrity under reactor conditions (see Hardware), but
               not service life. Until we can state it, we cannot state a
               replacement rate, and without a replacement rate our life cycle
-              assessment rests on an assumption rather than a measurement —
+              assessment rests on an assumption rather than a measurement;
               which matters, because bead production dominates our carbon
               footprint (Room 03).
             </p>
@@ -4742,7 +4747,7 @@ export function Sustainability() {
               </a>{" "}
               Applied to phosphorus, if mineral fertiliser were required to
               contain a fraction of nutrient recovered from wastewater, the
-              demand would follow — and it would be demand for a pure product,
+              demand would follow; and it would be demand for a pure product,
               which is precisely what distinguishes biological recovery from
               iron-bound chemical sludge. He contrasted this with the current
               practice of returning chemical sludge to agriculture, which he
@@ -4787,7 +4792,7 @@ export function Sustainability() {
               Roberto pointed out that the urban wastewater framework governs
               urban discharges, not industrial ones, and that what determines
               the requirement for an industrial discharge is concentration and
-              flow — with very high or very low flow treated as distinct cases.
+              flow, with very high or very low flow treated as distinct cases.
               Where effluent goes directly to a watercourse, a concentration and
               quality study is carried out. We have gone back to Room 01 to
               check that our claim about regulatory pressure reaching industrial
@@ -4864,7 +4869,7 @@ export function Sustainability() {
                   Everyone who redrew this project evaluates technology for a
                   living: a public water body, two large operators, three
                   academics. Not one of them would have to run the reactor at
-                  three in the morning. The pattern is not random — it runs
+                  three in the morning. The pattern is not random, it runs
                   along the line of who we found easy to approach. A student
                   team writes to an institution more readily than to a plant
                   operator on shift, and our evidence base shows it.
@@ -4957,7 +4962,7 @@ export function Sustainability() {
               operational. Nothing here is new ambition: every item is a
               question already raised on this page, by an instrument or by a
               person, and left open on purpose. They are grouped by what they
-              would settle, and several of them chain — the bench items feed the
+              would settle, and several of them chain: the bench items feed the
               evidence items, and the evidence items are what the people items
               would judge.
             </p>
@@ -5089,7 +5094,7 @@ export function Sustainability() {
                   <p className="sus-panel-accordion__body">
                     Requested by Roberto Arranz. A decarbonising grid does not
                     improve process efficiency, which is what target 7.3
-                    actually measures, but it does change the climate reading —
+                    actually measures, but it does change the climate reading
                     and we should know by how much before we describe the energy
                     interaction as fixed.
                   </p>
@@ -5151,7 +5156,7 @@ export function Sustainability() {
                     technology that current law cannot yet frame gets trialled
                     and then approved on the evidence. For a contained organism
                     that must demonstrate non-release over years rather than
-                    weeks, it is not one route among several — it is the route.
+                    weeks, it is not one route among several: it is the route.
                     Identifying the programme to apply to is a concrete next
                     step rather than a hope.
                   </p>
