@@ -28,6 +28,7 @@ import type {
 import { EcosystemMap } from "../../components/EcosystemMap";
 import { LabCornerIndex } from "../../components/LabFolders/LabCornerIndex";
 import { RESULT_BLOCKS } from "./data";
+import { EnzymeViewerCard } from "./EnzymeViewerCard";
 import "../../components/LabFolders/LabFolders.css";
 
 /**
@@ -231,6 +232,7 @@ export function Results() {
                             {paragraphs(subBlock.outro, "lab-subblock__outro")}
                           </div>
                         )}
+                        {subBlock.id === "immobilisation-chemistry" && <EnzymeViewerCard />}
                         {!!subBlock.references?.length && (
                           <BlockReferences
                             id={`${subBlock.id}--references`}

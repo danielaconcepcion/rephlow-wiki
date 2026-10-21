@@ -1,0 +1,122 @@
+/* Results > Enzymatic immobilisation: enzyme viewer bubble and pop-up (block colour #6b4e9a) */
+.ezv-card-portal {
+  --ezv-c: #6b4e9a;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 36px auto 8px;
+  padding: 26px 30px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--ezv-c) 62%, #120a1f), color-mix(in srgb, var(--ezv-c) 44%, #120a1f));
+  box-shadow: 0 18px 40px color-mix(in srgb, var(--ezv-c) 32%, transparent);
+  color: #fff;
+}
+.ezv-card-portal__txt { flex: 1; min-width: 0; }
+.ezv-card-portal__eyebrow {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ddd0f0;
+}
+.ezv-card-portal h3 {
+  margin: 4px 0 8px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: #fff;
+}
+.ezv-card-portal p { margin: 0; color: rgba(255, 255, 255, 0.88); line-height: 1.6; }
+.ezv-card-portal__open {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border: 0;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ezv-c);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.ezv-card-portal__open:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.26); }
+@media (max-width: 700px) {
+  .ezv-card-portal { flex-direction: column; align-items: flex-start; padding: 22px; }
+}
+
+.ezv-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(18, 12, 30, 0.6);
+  backdrop-filter: blur(3px);
+}
+.ezv-modal__box {
+  width: min(1200px, 100%);
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 20px 20px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+.ezv-modal__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.ezv-modal__head h3 { margin: 0; font-family: var(--font-display); font-size: 1.2rem; color: var(--ink); }
+.ezv-modal__tools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.ezv-modal__tool {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1.5px solid color-mix(in srgb, #6b4e9a 40%, transparent);
+  background: color-mix(in srgb, #6b4e9a 8%, #fff);
+  color: #4b3470;
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+.ezv-modal__tool:hover { background: color-mix(in srgb, #6b4e9a 16%, #fff); }
+.ezv-modal__close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid color-mix(in srgb, #6b4e9a 40%, transparent);
+  background: #fff;
+  color: #4b3470;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.ezv-modal__frame {
+  display: block;
+  width: 100%;
+  height: min(78vh, 860px);
+  border: 0;
+  border-radius: 12px;
+  background: #fff;
+}
+@media (max-width: 600px) {
+  .ezv-modal { padding: 8px; }
+  .ezv-modal__box { padding: 12px; }
+  .ezv-modal__frame { height: 75vh; }
+}
