@@ -206,48 +206,42 @@
   } catch (e) { console.warn("[extra] v8", e); }
 })();
 
-/* v10 (21 Oct): the Blender toolkit is back. Uploads does not take .py/.md/.txt, so the
-   7 scripts, README and LICENSE live in one JSON file in iGEM Uploads; each file is read
-   from it, single scripts download with their own name, and "Download all (.zip)"
-   builds rephlow-blender-tools-v1.0.zip in the page. */
+/* v11 (21 Oct): the Blender toolkit as PDFs in iGEM Uploads (one per script). Each card
+   opens its PDF like every other document on this page, with Open in browser and
+   Download; "Download all (.zip)" builds rephlow-blender-tools-v1.0.zip with the seven. */
 (function () {
   try {
-    var SRC = "https://static.igem.wiki/teams/6124/wiki/contrubutions/rephlow-blender-tools.json";
-    var NAME = {
-      "asset-script-01": "01_procedural_hydrogel_generator.py",
-      "asset-script-02": "02_procedural_perforated_mesh.py",
-      "asset-script-03": "03_macro_studio_lighting_rig.py",
-      "asset-script-04": "04_optimized_particle_instancing.py",
-      "asset-script-05": "05_parametric_hardware_engraving.py",
-      "asset-script-06": "06_procedural_mesh_slicer.py",
-      "asset-script-07": "07_automated_infinite_rotation.py",
-      "asset-bl-readme": "README.md",
-      "asset-bl-license": "LICENSE"
+    var PDF = {
+      "asset-script-01": ["https://static.igem.wiki/teams/6124/wiki/contrubutions/rephlow-blender-01-procedural-hydrogel-generator.pdf", "01_procedural_hydrogel_generator.pdf"],
+      "asset-script-02": ["https://static.igem.wiki/teams/6124/wiki/contrubutions/rephlow-blender-02-procedural-perforated-mesh.pdf", "02_procedural_perforated_mesh.pdf"],
+      "asset-script-03": ["https://static.igem.wiki/teams/6124/wiki/contrubutions/rephlow-blender-03-macro-studio-lighting-rig.pdf", "03_macro_studio_lighting_rig.pdf"],
+      "asset-script-04": ["https://static.igem.wiki/teams/6124/wiki/contrubutions/rephlow-blender-04-optimized-particle-instancing.pdf", "04_optimized_particle_instancing.pdf"],
+      "asset-script-05": ["https://static.igem.wiki/teams/6124/wiki/contrubutions/rephlow-blender-05-parametric-hardware-engraving.pdf", "05_parametric_hardware_engraving.pdf"],
+      "asset-script-06": ["https://static.igem.wiki/teams/6124/wiki/contrubutions/rephlow-blender-06-procedural-mesh-slicer.pdf", "06_procedural_mesh_slicer.pdf"],
+      "asset-script-07": ["https://static.igem.wiki/teams/6124/wiki/contrubutions/rephlow-blender-07-automated-infinite-rotation.pdf", "07_automated_infinite_rotation.pdf"]
     };
-    Object.keys(NAME).forEach(function (id) { FILES[id] = SRC; });
-    var pack = null;
-    function blText(id) {
-      if (!pack) pack = fetch(SRC).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
-      return pack.then(function (j) { var t = j.files[NAME[id]]; if (t == null) throw new Error("missing " + NAME[id]); return t; });
+    var OPEN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>';
+    Object.keys(PDF).forEach(function (id) {
+      FILES[id] = PDF[id][0];
+      var fn = PDF[id][1];
+      var btn = document.querySelector('[data-code="' + id + '"],[data-view="' + id + '"]');
+      var box = btn && btn.closest(".cb-tile__actions");
+      if (!box) return;
+      box.innerHTML =
+        '<button class="btn btn--ghost" data-view="' + id + '" data-fn="' + fn + '">' + svg("eye") + 'View the PDF</button>' +
+        '<a class="btn btn--ghost cb-open" data-open="' + id + '" href="' + PDF[id][0] + '" target="_blank" rel="noopener">' + OPEN + 'Open in browser</a>' +
+        '<button class="btn btn--primary" data-dl="' + id + '" data-fn="' + fn + '">' + svg("down") + '.pdf</button>';
+      var tile = box.closest(".cb-tile");
+      var name = tile && tile.querySelector(".cb-tile__fn");
+      if (name) name.textContent = fn;
+    });
+    BUNDLES["asset-zip-blender"] = { zip: "rephlow-blender-tools-v1.0.zip", files: Object.keys(PDF).map(function (id) { return [id, "rephlow-blender-tools-v1.0/" + PDF[id][1]]; }) };
+    var kit = document.getElementById("bl-kit");
+    if (kit) {
+      var b = kit.querySelector("[data-dl],[data-bundle]");
+      if (b) { b.removeAttribute("data-dl"); b.setAttribute("data-bundle", "asset-zip-blender"); }
+      var p = kit.querySelector(".cb-banner__txt p");
+      if (p) p.textContent = "The seven scripts, each as a PDF with its full code and comments, in one archive. Or take a single script from its card.";
     }
-    var plainBytes = getBytes;
-    getBytes = function (id) {
-      if (!NAME[id]) return plainBytes(id);
-      return blText(id).then(function (t) { return new TextEncoder().encode(t); });
-    };
-    var DIR = "rephlow-blender-tools-v1.0/";
-    BUNDLES["asset-zip-blender"] = { zip: "rephlow-blender-tools-v1.0.zip", files: Object.keys(NAME).map(function (id) { return [id, DIR + NAME[id]]; }) };
-    var b = document.querySelector('[data-dl="asset-zip-blender"]');
-    if (b) { b.removeAttribute("data-dl"); b.setAttribute("data-bundle", "asset-zip-blender"); }
-    var plainDownload = download;
-    download = function (id, fn) {
-      if (!NAME[id]) return plainDownload(id, fn);
-      getBytes(id).then(function (bytes) {
-        var url = URL.createObjectURL(new Blob([bytes], { type: "text/plain" }));
-        var a = document.createElement("a"); a.href = url; a.download = fn || NAME[id];
-        document.body.appendChild(a); a.click();
-        setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 600);
-      }).catch(function (e) { console.warn("[extra] v10", e); });
-    };
-  } catch (e) { console.warn("[extra] v10", e); }
+  } catch (e) { console.warn("[extra] v11", e); }
 })();
