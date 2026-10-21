@@ -524,8 +524,12 @@ function HardwareContentInner() {
           <figure className="vsi-figure">
             {" "}
             <img
-              src={img("hw-fig02-block-flow.avif")}
-              alt="Block flow diagram: influent, upstream treatment to be defined, rotating-bed bioreactor, ultrafiltration, permeate; with core-shell production, revalorisation stream and residual stream."
+              /* Same drawing as Figure 6: this is the final block flow
+                 diagram, shown here first and again in Section 3 as the
+                 outcome of the consultation. One upload, used twice, so the
+                 two can never drift apart. */
+              src={img("hw-fig06-final-bfd-v2.avif")}
+              alt="Block flow diagram: influent, upstream treatment to be defined, bioreactor, ultrafiltration, permeate; with core-shell production, revalorisation stream and residual stream."
             />{" "}
             <figcaption>
               <strong>Figure 2.</strong> Block flow diagram of the rePhlow process. The phosphorus-rich
@@ -1267,7 +1271,7 @@ function HardwareContentInner() {
               <figure className="vsi-figure">
                 {" "}
                 <img
-                  src={img("hw-fig05-initial-bfd.avif")}
+                  src={img("hw-fig05-initial-bfd-v2.avif")}
                   alt="Initial block flow diagram with a stirred-tank bioreactor and a Y-type mesh filter."
                   loading="lazy"
                 />{" "}
@@ -1291,15 +1295,19 @@ function HardwareContentInner() {
               <figure className="vsi-figure">
                 {" "}
                 <img
-                  src={img("hw-fig06-final-bfd.avif")}
-                  alt="Final block flow diagram with the rotating-bed bioreactor."
+                  src={img("hw-fig06-final-bfd-v2.avif")}
+                  alt="Final block flow diagram: the Y-type mesh filter is gone and the capsules leave the bioreactor with the basket."
                   loading="lazy"
                 />{" "}
                 <figcaption>
-                  <strong>Figure 6.</strong> Final block flow diagram, after consultation. The stirred tank is
-                  replaced by the <strong>rotating-bed bioreactor (2)</strong> and the Y-type mesh filter
-                  disappears, because the capsules are withdrawn with the basket <strong>(6)</strong>. The
-                  upstream conditioning stage is drawn with a dashed outline because it is not yet defined (
+                  <strong>Figure 6.</strong> Final block flow diagram, after consultation. The{" "}
+                  <strong>Y-type mesh filter disappears</strong>: the capsules are no longer separated from
+                  the outlet stream, but withdrawn from the bioreactor <strong>(2)</strong> itself with the
+                  basket, and leave as the revalorisation stream <strong>(6)</strong>. The outlet stream{" "}
+                  <strong>(3)</strong> therefore passes straight to the ultrafiltration module, which still
+                  removes the remaining debris and acts as the second containment barrier, and leaves the
+                  system as permeate <strong>(4)</strong>. The upstream conditioning stage is drawn with a
+                  dashed outline because it is not yet defined (
                   <a className="vsi-wikilink" href="#next">
                     Section 6
                   </a>

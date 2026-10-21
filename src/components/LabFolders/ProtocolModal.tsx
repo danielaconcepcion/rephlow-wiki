@@ -1,3 +1,4 @@
+import { createPortal } from "react-dom";
 import { useEffect } from "react";
 
 export function ProtocolModal({
@@ -22,7 +23,7 @@ export function ProtocolModal({
     };
   }, [onClose]);
 
-  return (
+  return createPortal(
     <div
       className="protocol-modal"
       role="dialog"
@@ -102,6 +103,7 @@ export function ProtocolModal({
           </p>
         </object>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }

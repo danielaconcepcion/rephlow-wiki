@@ -93,3 +93,6 @@ ol:has(> li[id^="ref"]):not(.hw-refs ol) > li::before {
   font-variant-numeric: tabular-nums;
 }
 
+/* 21 Oct a: references only in the References section, not at the foot of each folder */
+.experiment-card__footer .record-references{display:none!important}
+.experiment-card__footer:not(:has(.record-protocols)){display:none!important}

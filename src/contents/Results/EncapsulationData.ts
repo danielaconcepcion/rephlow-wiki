@@ -349,6 +349,8 @@ const BEAD_PRESERVATION: ResultData = {
       continued: true,
       figures: [
         {
+          src: `${FIGURES}/results-equivalent-diameter-storage.avif`,
+          alt: "Equivalent diameter of alginate beads stored in water and in industrial wastewater over one week.",
           caption:
             "Equivalent diameter of 3.5% (w/v) alginate beads stored in water and industrial wastewater over time (mean ± SD, n = 10). PBS is not shown, as the beads had disintegrated and fragment measurements are not comparable.",
         },
@@ -434,12 +436,6 @@ const CORE_SHELL_SCREENING: ResultData = {
       body: [
         "Stable dripping was observed for all alginate concentrations when the inner phase contained 0 or 0.5% (w/v) CaCl₂. With 2% (w/v) alginate, stable dripping was maintained up to 1.5% (w/v) CaCl₂, and jetting only appeared at 2% (w/v). For 2.5, 3 and 3.5% (w/v) alginate, however, jetting already appeared at 1% (w/v) CaCl₂, so higher calcium concentrations were not tested for these alginate concentrations. Whenever jetting occurred, alginate gelled and accumulated at the tip of the injector, preventing the detachment of discrete drops.",
       ],
-      figures: [
-        {
-          caption:
-            "Representative images of the outlet of the coaxial injector under stable dripping and under jetting, showing discrete drop detachment in the first case and the continuous stream associated with alginate accumulation at the tip in the second.",
-        },
-      ],
     },
     {
       id: "jetting-discussion",
@@ -521,14 +517,21 @@ const CORE_SHELL_MECHANICAL: ResultData = {
   subsections: [
     {
       id: "mechanical-normalisation",
+      figuresColumns: 2,
       figures: [
         {
           src: `${FIGURES}/mechanical-sphericity-load.png`,
           alt: "Sphericity retained under increasing compressive load for fresh and stored capsules, one line per flow condition.",
-          caption:
-            "Sphericity retained under increasing compressive load, normalised to the unloaded value of each condition (s/s₀, mean ± SD). Top, freshly prepared capsules and bottom, capsules stored in distilled water for one week. One line per flow condition.",
+          caption: "",
+        },
+        {
+          src: `${FIGURES}/results-sphericity-load-stored-1-week.avif`,
+          alt: "Sphericity retained under increasing load for capsules stored one week, one line per flow condition.",
+          caption: "",
         },
       ],
+      figuresCaption:
+        "Sphericity retained under increasing compressive load, normalised to the unloaded value of each condition (s/s\u2080, mean \u00b1 SD). Top, freshly prepared capsules and bottom, capsules stored in distilled water for one week. One line per flow condition.",
       bodyAfter: [
         "As set out at the top of this page, sphericity under load is reported relative to each condition's unloaded value (s/s₀). What is compared is therefore how much of its own shape each condition keeps, so a capsule that started slightly elongated is not penalised for it.",
       ],
@@ -588,14 +591,21 @@ const CORE_SHELL_CONTAINMENT: ResultData = {
   subsections: [
     {
       id: "magnetite-spectra",
+      figuresColumns: 1,
       figures: [
         {
           src: `${FIGURES}/magnetite-absorbance-spectra.png`,
           alt: "Absorbance spectra of the synthesis bath, storage water and the PBS used to dissolve the capsules, with and without magnetite.",
-          caption:
-            "Absorbance spectra of the calcium chloride synthesis bath, the storage water after one and three days, and PBS after dissolution of the capsules, for capsules without magnetite (control), with magnetite in the core and with magnetite in the alginate shell. Top: Raw spectra, together with the reference spectrum of the magnetite suspension. Bottom: Corrected spectra, obtained by subtracting from each magnetite-containing sample the spectrum of the corresponding control without magnetite; the magnetite reference has no control and appears in both. Spectra were recorded from 200 to 1000 nm; both panels show the 250–1000 nm range, below which the signal is dominated by instrumental noise. The dashed lines (450 and 600 nm) indicate the interval used for quantification.",
+          caption: "",
+        },
+        {
+          src: `${FIGURES}/results-magnetite-corrected-spectra.avif`,
+          alt: "Corrected absorbance spectra after subtracting the control without magnetite.",
+          caption: "",
         },
       ],
+      figuresCaption:
+        "Absorbance spectra of the calcium chloride synthesis bath, the storage water after one and three days, and PBS after dissolution of the capsules, for capsules without magnetite (control), with magnetite in the core and with magnetite in the alginate shell. Top: Raw spectra, together with the reference spectrum of the magnetite suspension. Bottom: Corrected spectra, obtained by subtracting from each magnetite-containing sample the spectrum of the corresponding control without magnetite; the magnetite reference has no control and appears in both. Spectra were recorded from 200 to 1000 nm; both panels show the 250\u20131000 nm range, below which the signal is dominated by instrumental noise. The dashed lines (450 and 600 nm) indicate the interval used for quantification.",
       bodyAfter: [
         "Capsule material and magnetite absorb in different regions, which is what makes the measurement possible. Capsules without magnetite, measured in each of the three media, absorbed almost entirely below approximately 250 nm, while the magnetite reference absorbed broadly and almost featurelessly across the whole ultraviolet and visible range. In the visible region the capsule material therefore contributes nothing, and any absorbance above that of the control can be attributed to magnetite. The reference suspensions are the one exception to that treatment: they have no no-magnetite control of their own, so their values are raw absorbances rather than differences, and they serve only to establish what magnetite looks like in this measurement.",
       ],

@@ -590,7 +590,7 @@ const LECITASE: ResultData = {
         },
       ],
       observations:
-        "This fixed a well-defined baseline of concentration and activity for this chimeric lipase-phospholipase [1]. The values are consistent with a concentrated commercial stock, so the outcome was expected; the practical points were finding the dilution that sat in the linear range and adopting the butyrate ester pNPB as a fast, continuous reporter of activity [2], which is the read-out every immobilisation time course below depends on.",
+        "This fixed a well-defined baseline of concentration and activity for this chimeric lipase-phospholipase [16]. The values are consistent with a concentrated commercial stock, so the outcome was expected; the practical points were finding the dilution that sat in the linear range and adopting the butyrate ester pNPB as a fast, continuous reporter of activity [17], which is the read-out every immobilisation time course below depends on.",
       interpretation: "",
       expectation: "",
     },
@@ -619,7 +619,7 @@ const STRATEGY_A: ResultData = {
         },
       ],
       observations:
-        "What this says is that direct covalent attachment preserves activity only if the enzyme is held open, by the detergent, at the moment it is fixed, and is otherwise largely inactive, a sensitivity characteristic of lipases anchored through residues near a mobile lid [4], with glutaraldehyde acting as the amino-reactive crosslinker that fixes them [5].",
+        "What this says is that direct covalent attachment preserves activity only if the enzyme is held open, by the detergent, at the moment it is fixed, and is otherwise largely inactive, a sensitivity characteristic of lipases anchored through residues near a mobile lid [19], with glutaraldehyde acting as the amino-reactive crosslinker that fixes them [20].",
       interpretation:
         "A stable derivative was expected from a multipoint covalent attachment, so that much matched; the informative and less welcome part was the strong dependence on detergent and the low absolute activity even at about 80% yield, and it is this that motivated trying the second strategy rather than optimising the first.",
       expectation: "",
@@ -649,7 +649,7 @@ const STRATEGY_B: ResultData = {
         },
       ],
       observations:
-        "Pre-orienting the enzyme by ionic adsorption before forcing the covalent bond preserves far more activity, the glutaraldehyde also crosslinking lysines of neighbouring enzymes to consolidate the pre-oriented layer and capture further monomers from solution [3], which is the basis of this two-step design on aminated supports [6].",
+        "Pre-orienting the enzyme by ionic adsorption before forcing the covalent bond preserves far more activity, the glutaraldehyde also crosslinking lysines of neighbouring enzymes to consolidate the pre-oriented layer and capture further monomers from solution [18], which is the basis of this two-step design on aminated supports [21].",
       interpretation:
         "The direction was expected, a two-step route being the gentler one, but the magnitude was not: the roughly tenfold gain, and the fact that the detergent preference reversed relative to Strategy A, went beyond what was anticipated and became the headline result of the block.",
       expectation: "",
@@ -668,9 +668,9 @@ const DETERGENT: ResultData = {
       observations:
         "Taken together, the two strategies show that the detergent has **opposite effects**: it improves the pre-activated covalent route but harms the ionic-adsorption route, which is best in plain buffer.",
       interpretation:
-        "The surfactant is therefore neither universally good nor bad; it helps only when the aim is to trap the open form on a pre-activated surface, and it interferes when a correct electrostatic orientation is what matters, an effect tied to the enzyme's dimerisation and interfacial activation [7].",
+        "The surfactant is therefore neither universally good nor bad; it helps only when the aim is to trap the open form on a pre-activated surface, and it interferes when a correct electrostatic orientation is what matters, an effect tied to the enzyme's dimerisation and interfacial activation [22].",
       expectation:
-        "A detergent effect was expected, given the enzyme's tendency to aggregate through its exposed hydrophobic regions [7], but the clean reversal between the two geometries was the key, non-obvious finding, and it is exactly what the modelling was then brought in to explain.",
+        "A detergent effect was expected, given the enzyme's tendency to aggregate through its exposed hydrophobic regions [22], but the clean reversal between the two geometries was the key, non-obvious finding, and it is exactly what the modelling was then brought in to explain.",
     },
   ],
 };
@@ -737,7 +737,7 @@ const MODELLING: ResultData = {
         },
       ],
       observations:
-        "The activity differences are therefore **structural, not random**: they follow from where the enzyme is anchored relative to its lid [4], and from whether the support acts as a lock on the open form or a brake on the closed one [6], [5]. This is what makes the closed-form adsorption route the one to transfer to the sphere. The model was built to test the interfacial-activation and dimerisation hypothesis, and it reproduced the measured yields at the residue level, so the result was the expected one in the strong sense that it turned an empirical preference into a mechanistic one.",
+        "The activity differences are therefore **structural, not random**: they follow from where the enzyme is anchored relative to its lid [19], and from whether the support acts as a lock on the open form or a brake on the closed one [21], [20]. This is what makes the closed-form adsorption route the one to transfer to the sphere. The model was built to test the interfacial-activation and dimerisation hypothesis, and it reproduced the measured yields at the residue level, so the result was the expected one in the strong sense that it turned an empirical preference into a mechanistic one.",
       interpretation: "",
       expectation: "",
     },
@@ -762,14 +762,17 @@ const ENZYME_PRODUCTION_REFERENCES = [
   "[15] Andersch MA, Szczypinski AJ. Use of P-Nitrophenylphosphate as the substrate in determination of serum acid phosphatase*. American Journal of Clinical Pathology [Internet]. 1947 Jul 1;17(7_ts):571–4. Available from: https://doi.org/10.1093/ajcp/17.7_ts.571",
 ];
 
+/* 21 Oct: one reference list for the whole block, shown in Section 2's fold-out:
+ * Section 1 keeps [1]-[15], Section 2 continues at [16]. */
 const IMMOBILISATION_REFERENCES = [
-  "[1] Virgen-Ortíz JJ, Santos JCSD, Ortiz C, Berenguer-Murcia Á, Barbosa O, Rodrigues RC, et al. Lecitase ultra: A phospholipase with great potential in biocatalysis. Molecular Catalysis [Internet]. 2019 May 21;473:110405. Available from: https://doi.org/10.1016/j.mcat.2019.110405",
-  "[2] Braham SA, Siar EH, Arana-Peña S, Bavandi H, Carballares D, Morellon-Sterling R, et al. Positive effect of glycerol on the stability of immobilized enzymes: Is it a universal fact? Process Biochemistry [Internet]. 2020 Dec 30;102:108–21. Available from: https://doi.org/10.1016/j.procbio.2020.12.015",
-  "[3] López-Gallego F, Betancor L, Mateo C, Hidalgo A, Alonso-Morales N, Dellamora-Ortiz G, et al. Enzyme stabilization by glutaraldehyde crosslinking of adsorbed proteins on aminated supports. Journal of Biotechnology [Internet]. 2005 Jul 22;119(1):70–5. Available from: https://doi.org/10.1016/j.jbiotec.2005.05.021",
-  "[4] Rodrigues RC, Virgen-Ortíz JJ, Santos JCSD, Berenguer-Murcia Á, Alcantara AR, Barbosa O, et al. Immobilization of lipases on hydrophobic supports: immobilization mechanism, advantages, problems, and solutions. Biotechnology Advances [Internet]. 2019 Apr 8;37(5):746–70. Available from: https://doi.org/10.1016/j.biotechadv.2019.04.003",
-  "[5] Barbosa O, Ortiz C, Berenguer-Murcia Á, Torres R, Rodrigues RC, Fernandez-Lafuente R. Glutaraldehyde in bio-catalysts design: a useful crosslinker and a versatile tool in enzyme immobilization. RSC Advances [Internet]. 2013 Oct 28;4(4):1583–600. Available from: https://doi.org/10.1039/c3ra45991h",
-  "[6] Mateo C, Bolivar JM, Godoy CA, Rocha-Martin J, Pessela BC, Curiel JA, et al. Improvement of Enzyme Properties with a Two-Step Immobilizaton Process on Novel Heterofunctional Supports. Biomacromolecules [Internet]. 2010 Oct 14;11(11):3112–7. Available from: https://doi.org/10.1021/bm100916r",
-  "[7] Andrés-Sanz D, Fresan C, Fernández-Lorente G, Rocha-Martín J, Guisán JM. Stabilization of Lecitase Ultra® by immobilization and fixation of bimolecular aggregates. release of omega-3 fatty acids by enzymatic hydrolysis of krill oil. Catalysts [Internet]. 2021 Aug 31;11(9):1067. Available from: https://doi.org/10.3390/catal11091067",
+  ...ENZYME_PRODUCTION_REFERENCES,
+  "[16] Virgen-Ortíz JJ, Santos JCSD, Ortiz C, Berenguer-Murcia Á, Barbosa O, Rodrigues RC, et al. Lecitase ultra: A phospholipase with great potential in biocatalysis. Molecular Catalysis [Internet]. 2019 May 21;473:110405. Available from: https://doi.org/10.1016/j.mcat.2019.110405",
+  "[17] Braham SA, Siar EH, Arana-Peña S, Bavandi H, Carballares D, Morellon-Sterling R, et al. Positive effect of glycerol on the stability of immobilized enzymes: Is it a universal fact? Process Biochemistry [Internet]. 2020 Dec 30;102:108–21. Available from: https://doi.org/10.1016/j.procbio.2020.12.015",
+  "[18] López-Gallego F, Betancor L, Mateo C, Hidalgo A, Alonso-Morales N, Dellamora-Ortiz G, et al. Enzyme stabilization by glutaraldehyde crosslinking of adsorbed proteins on aminated supports. Journal of Biotechnology [Internet]. 2005 Jul 22;119(1):70–5. Available from: https://doi.org/10.1016/j.jbiotec.2005.05.021",
+  "[19] Rodrigues RC, Virgen-Ortíz JJ, Santos JCSD, Berenguer-Murcia Á, Alcantara AR, Barbosa O, et al. Immobilization of lipases on hydrophobic supports: immobilization mechanism, advantages, problems, and solutions. Biotechnology Advances [Internet]. 2019 Apr 8;37(5):746–70. Available from: https://doi.org/10.1016/j.biotechadv.2019.04.003",
+  "[20] Barbosa O, Ortiz C, Berenguer-Murcia Á, Torres R, Rodrigues RC, Fernandez-Lafuente R. Glutaraldehyde in bio-catalysts design: a useful crosslinker and a versatile tool in enzyme immobilization. RSC Advances [Internet]. 2013 Oct 28;4(4):1583–600. Available from: https://doi.org/10.1039/c3ra45991h",
+  "[21] Mateo C, Bolivar JM, Godoy CA, Rocha-Martin J, Pessela BC, Curiel JA, et al. Improvement of Enzyme Properties with a Two-Step Immobilizaton Process on Novel Heterofunctional Supports. Biomacromolecules [Internet]. 2010 Oct 14;11(11):3112–7. Available from: https://doi.org/10.1021/bm100916r",
+  "[22] Andrés-Sanz D, Fresan C, Fernández-Lorente G, Rocha-Martín J, Guisán JM. Stabilization of Lecitase Ultra® by immobilization and fixation of bimolecular aggregates. release of omega-3 fatty acids by enzymatic hydrolysis of krill oil. Catalysts [Internet]. 2021 Aug 31;11(9):1067. Available from: https://doi.org/10.3390/catal11091067",
 ];
 
 export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ResultSubBlock[] = [
@@ -793,7 +796,6 @@ export const ENZYMATIC_IMMOBILISATION_SUBBLOCKS: ResultSubBlock[] = [
     ],
     outro:
       "**Conclusion.** This block takes the panel from database to characterised biocatalyst with no redundant step: the activities were matched to the real effluent, the constructs were designed to pre-empt insolubility, and only the rescue strategies actually needed were used. Its logic is cumulative rather than a list of separate experiments, each result deciding the next, and it hands the immobilisation block both a set of target enzymes and a clear reason to develop the chemistry on a model enzyme first.",
-    references: ENZYME_PRODUCTION_REFERENCES,
   },
   {
     id: "immobilisation-chemistry",

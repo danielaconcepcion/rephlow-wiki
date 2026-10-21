@@ -56,10 +56,6 @@ export function GeneSystemGrid({ parts }: { parts: GenePart[] }) {
                     <p className="gene-card__field">
                       <strong>What we do to it, and why.</strong> {part.whatWeDo}
                     </p>
-                    <p className="gene-card__storyboard">
-                      <span className="gene-card__storyboard-label">Concept sketch, not yet illustrated —</span>{" "}
-                      {part.storyboard}
-                    </p>
                   </div>
                 </div>
               </div>

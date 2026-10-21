@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -426,6 +427,64 @@ function MalagaBody() {
   );
 }
 
+/* PDF button that opens the viewer on top of the card (like Entrepreneurship) */
+function CpPdfButton({ src, title, label, page }: { src: string; title: string; label: string; page?: number }) {
+  const [open, setOpen] = useState(false);
+  const view = page ? src + "#page=" + page : src;
+  useEffect(() => {
+    if (!open) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape" || e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.stopImmediatePropagation();
+        if (e.key === "Escape") setOpen(false);
+      }
+    }
+    window.addEventListener("keydown", onKey, true);
+    return () => window.removeEventListener("keydown", onKey, true);
+  }, [open]);
+  return (
+    <>
+      <button type="button" className="cp-pdf-btn" onClick={() => setOpen(true)}>
+        <span className="cp-pdf-btn__ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></svg></span>
+        <span>
+          <b>{label}</b>
+          <small>Open the PDF viewer</small>
+        </span>
+      </button>
+      {open &&
+        createPortal(
+          <div className="cp-pdfm" onClick={() => setOpen(false)}>
+            <div className="cp-pdfm__box" role="dialog" aria-modal="true" aria-label={title} onClick={(e) => e.stopPropagation()}>
+              <div className="cp-pdf__head">
+                <p className="cp-pdf__title">{title}</p>
+                <div className="cp-pdf__tools">
+                  <a className="cp-pdf__tool" href={src} download target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>
+                    Download PDF
+                  </a>
+                  <a className="cp-pdf__tool" href={view} target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5" /></svg>
+                    Open in browser
+                  </a>
+                  <button type="button" className="cp-pdf__close" aria-label="Close the PDF viewer" onClick={() => setOpen(false)}>
+                    &times;
+                  </button>
+                </div>
+              </div>
+              <object className="cp-pdf__frame" data={view} type="application/pdf" aria-label={title}>
+                <p className="cp-pdf__fallback">
+                  The embedded viewer isn't available here.{" "}
+                  <a href={src} download>Download the PDF</a> instead.
+                </p>
+              </object>
+            </div>
+          </div>,
+          document.body,
+        )}
+    </>
+  );
+}
+
 function MspBody() {
   return (
     <Stack>
@@ -469,6 +528,12 @@ function MspBody() {
         judged against, which is a different discipline from writing for the
         wiki.
       </p>
+      <CpPdfButton
+        src="https://static.igem.wiki/teams/6124/wiki/collaboration/msp-vector-volume-5-october-2026.pdf"
+        title="Vector Journal, Volume 5 (October 2026)"
+        label="Vector Journal, Volume 5"
+        page={6}
+      />
     </Stack>
   );
 }

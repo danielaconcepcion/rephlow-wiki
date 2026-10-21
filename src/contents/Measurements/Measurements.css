@@ -1605,3 +1605,56 @@
 :where(.ms-page) .figure-lightbox__close:hover {
   background: #fff;
 }
+
+/* 21 Oct c: text justified everywhere, moderate figure size, Figure 5 with two
+   stacked charts and Figure 6 as the same photo matrix as Results */
+:where(.ms-page) :is(p, li, figcaption):not(.record-figure-matrix__column-head):not(.record-figure-matrix__row-head) {
+  text-align: justify;
+  hyphens: auto;
+}
+:where(.ms-page) :is(td, th) p { text-align: inherit; }
+:where(.ms-page) .record-figure__photo:not(.record-figure-matrix__photo) {
+  width: auto;
+  max-width: 100%;
+  max-height: 460px;
+  margin-inline: auto;
+  object-fit: contain;
+}
+:where(.ms-page) .ms-figure-stack .record-figure__photo + .record-figure__photo { margin-top: 10px; }
+:where(.ms-page) .record-figure-matrix { margin: 18px 0 0; }
+:where(.ms-page) .record-figure-matrix__grid {
+  display: grid;
+  grid-template-columns: max-content repeat(var(--matrix-columns), minmax(0, 1fr));
+  gap: 8px 10px;
+  align-items: center;
+}
+:where(.ms-page) .record-figure-matrix__column-head,
+:where(.ms-page) .record-figure-matrix__row-head {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--ink);
+}
+:where(.ms-page) .record-figure-matrix__column-head { text-align: center; }
+:where(.ms-page) .record-figure-matrix__row-head { text-align: right; padding-right: 4px; }
+:where(.ms-page) .record-figure-matrix__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--paper);
+  border: 1px solid var(--lab-line);
+  border-radius: var(--radius-md, 8px);
+  padding: 4px;
+}
+:where(.ms-page) .record-figure-matrix > figcaption {
+  margin-top: 12px;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--ink-soft);
+}
+@media (max-width: 700px) {
+  :where(.ms-page) .record-figure-matrix__grid { gap: 4px; }
+  :where(.ms-page) .record-figure-matrix__row-head { font-size: 0.65rem; }
+  :where(.ms-page) .record-figure-matrix__column-head { font-size: 0.6rem; }
+}

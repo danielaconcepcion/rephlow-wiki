@@ -2123,3 +2123,6 @@
   border-left: 1px solid var(--lab-line);
   border-radius: 0;
 }
+
+/* 21 Oct b: protocol viewer above the navbar and every other layer */
+.protocol-modal{z-index:2147483000!important}

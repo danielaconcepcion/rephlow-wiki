@@ -26,11 +26,12 @@ export const VIDEOS: Record<"video1" | "video2" | "video3" | "video4" | "video5"
 export const FILES = { py: pyUrl, ino: inoUrl };
 
 /*
- * 3D-printable parts. The STL files were not inside the HTML export:
- * upload soporte_del_motor.stl and UNO_R2_MOUNT.stl to the same "hardware"
- * folder on iGEM Uploads and check the final URL (copy it from Uploads).
+ * 3D-printable parts, in the same "hardware" folder on iGEM Uploads as the
+ * images. Both were replaced with revised geometry; Uploads serves a name
+ * it already holds rather than overwriting it, so the new files went up
+ * under their own "-v2" names and are named here explicitly.
  */
 export const STL = {
-  motorSupport: img("soporte_del_motor.stl"),
-  arduinoMount: img("UNO_R2_MOUNT.stl"),
+  motorSupport: img("soporte-del-motor-v2.stl"),
+  arduinoMount: img("uno-r2-mount-v2.stl"),
 };
