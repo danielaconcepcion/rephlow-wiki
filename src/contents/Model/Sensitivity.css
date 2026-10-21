@@ -192,11 +192,6 @@
   font-style: italic;
 }
 
-.scan__chart {
-  max-width: 620px;
-  margin: 0 auto;
-}
-
 .sr-only {
   position: absolute;
   width: 1px;

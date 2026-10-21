@@ -231,54 +231,78 @@ export function ParameterScans() {
         </output>
       </div>
 
-      <div className="scan__chart">
-        <TimeChart
-          title={`Fluxes at ${
-            value >= 0.01 ? value.toFixed(2) : value.toFixed(3)
-          } ${scan.unit}`}
-          xMax={scan.xMax}
-          yMax={scan.yMax}
-          xTicks={[
-            0,
-            scan.xMax / 4,
-            scan.xMax / 2,
-            (scan.xMax * 3) / 4,
-            scan.xMax,
-          ]}
-          yTicks={[
-            0,
-            scan.yMax / 4,
-            scan.yMax / 2,
-            (scan.yMax * 3) / 4,
-            scan.yMax,
-          ]}
-          series={[
-            ...scan.series.flatMap((s) =>
-              s.steps
-                .map((pts, i) => ({ pts, i }))
-                .filter(({ pts, i }) => i !== step && pts.length > 0)
-                .map(({ pts, i }) => ({
-                  id: `${s.id}-${i}`,
-                  label: s.label,
-                  color: s.color,
-                  pts,
-                  faint: true,
-                  silent: true,
-                })),
-            ),
-            ...scan.series
-              .filter((s) => s.steps[step].length > 0)
-              .map((s) => ({
-                id: s.id,
-                label: s.label,
-                color: s.color,
-                pts: s.steps[step],
-              })),
-          ]}
-          yLabel="Flux [mmol gDW⁻¹ h⁻¹]"
-          readoutUnit="mmol gDW⁻¹ h⁻¹"
-          hint
-        />
+      <div className="dyn__panels dyn__panels--two">
+        {(
+          [
+            {
+              key: "full",
+              title: "All fluxes",
+              xMax: scan.xMaxFull,
+              yMax: scan.yMaxFull,
+              xTicks: [0, 250, 500, 750, 1000] as number[],
+              yTicks: [0, 1, 2, 3, 4, 5] as number[],
+              pick: (sr: (typeof scan.series)[number]) => sr.full,
+            },
+            {
+              key: "zoom",
+              title: "Polymerisation fluxes",
+              xMax: scan.xMax,
+              yMax: scan.yMax,
+              xTicks: [
+                0,
+                scan.xMax / 4,
+                scan.xMax / 2,
+                (scan.xMax * 3) / 4,
+                scan.xMax,
+              ] as number[],
+              yTicks: [
+                0,
+                scan.yMax / 4,
+                scan.yMax / 2,
+                (scan.yMax * 3) / 4,
+                scan.yMax,
+              ] as number[],
+              pick: (sr: (typeof scan.series)[number]) => sr.steps,
+            },
+          ] as const
+        ).map((panel, panelIndex) => (
+          <div key={panel.key} className="dyn__flux-panel">
+            <TimeChart
+              title={panel.title}
+              xMax={panel.xMax}
+              yMax={panel.yMax}
+              xTicks={panel.xTicks}
+              yTicks={panel.yTicks}
+              series={[
+                ...scan.series.flatMap((sr) =>
+                  panel
+                    .pick(sr)
+                    .map((pts, i) => ({ pts, i }))
+                    .filter(({ pts, i }) => i !== step && pts.length > 0)
+                    .map(({ pts, i }) => ({
+                      id: `${sr.id}-${i}`,
+                      label: sr.label,
+                      color: sr.color,
+                      pts,
+                      faint: true,
+                      silent: true,
+                    })),
+                ),
+                ...scan.series
+                  .filter((sr) => panel.pick(sr)[step].length > 0)
+                  .map((sr) => ({
+                    id: sr.id,
+                    label: sr.label,
+                    color: sr.color,
+                    pts: panel.pick(sr)[step],
+                  })),
+              ]}
+              yLabel="Flux [mmol gDW⁻¹ h⁻¹]"
+              readoutUnit="mmol gDW⁻¹ h⁻¹"
+              hint={panelIndex === 0}
+            />
+          </div>
+        ))}
       </div>
 
       <ChartLegend items={scan.series} />
@@ -288,9 +312,10 @@ export function ParameterScans() {
         Figure 14 ranks highest: the capacity of the terminal oxidase, the
         capacity of ATP synthase, and the oxygen the cell starts with. Each scan
         has eleven steps, spaced logarithmically across the interval the tabs
-        name; the ten not selected stay in the background. These are the zoomed
-        panels, on the scale of the polymerisation fluxes. Read back from our
-        own COPASI output.
+        name, and the ten steps not selected stay in the background. The left
+        panel is every flux on one scale, where the phosphate symport dominates
+        and its spike is clipped; the right one is the same run on the scale of
+        the polymerisation fluxes. Read back from our own COPASI output.
       </figcaption>
     </figure>
   );

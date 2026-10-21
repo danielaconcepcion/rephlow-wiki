@@ -34,6 +34,7 @@ const COL = [
 const ROW = [
   { y: 8, h: 314, title: 66, sub: 290 },
   { y: 369, h: 313, title: 428, sub: 650 },
+  { y: 730, h: 313, title: 789, sub: 1011 },
 ];
 
 function Panel({
@@ -207,9 +208,9 @@ function Curve({ color, pts }: { color: string; pts: [number, number][] }) {
 export function ModelWorkflow() {
   return (
     <WorkflowFigure
-      viewBox="0 0 1554 694"
-      label="Six-panel workflow diagram: flux balance analysis, the genome-scale metabolic map, environmental and capacity sensitivity, the growth and polyphosphate trade-off, reduction to an active kinetic core, and the reduced kinetic model"
-      caption="The six steps this page runs through, from the flux balance analysis behind the genome-scale map to the reduced kinetic model of phosphate accumulation. Select a panel to open its section."
+      viewBox="0 0 1554 1055"
+      label="Nine-panel workflow diagram: flux balance analysis, the genome-scale metabolic map, environmental and capacity sensitivity, the growth and polyphosphate trade-off, reduction to an active kinetic core, the reduced kinetic model, the simulated dynamics, the sensitivity analysis, and the experiments the model points at"
+      caption="The nine steps this page runs through, from the flux balance analysis behind the genome-scale map to the measurements the finished model asks for. Select a panel to open its section."
     >
       {/* 1. Flux balance — the optimum on the feasible flux space. */}
       <Panel
@@ -511,11 +512,150 @@ export function ModelWorkflow() {
         </Subtitle>
       </Panel>
 
+      {/* 7. Dynamics: the model finally run forward in time. */}
+      <Panel
+        col={0}
+        row={2}
+        fill={C.panelGreen}
+        href="#dynamic-simulation"
+        label="7. Dynamics"
+      >
+        <Title x={250} y={ROW[2].title} size={TITLE}>
+          7. Dynamics
+        </Title>
+        <Axes ox={146} oy={978} w={210} h={152} />
+        <path
+          d="M150 972C166 930 182 896 206 882S268 870 356 866"
+          fill="none"
+          stroke={C.blue}
+          strokeWidth={6}
+          strokeLinecap="round"
+        />
+        <path
+          d="M150 976C186 972 214 958 248 934S324 886 356 876"
+          fill="none"
+          stroke={C.gold}
+          strokeWidth={6}
+          strokeLinecap="round"
+        />
+        <path
+          d="M160 976C164 918 170 906 178 906S190 936 196 966"
+          fill="none"
+          stroke={C.orange}
+          strokeWidth={5}
+          strokeLinecap="round"
+        />
+        <Subtitle x={250} y={ROW[2].sub}>
+          uptake + polyP over time
+        </Subtitle>
+      </Panel>
+      <BlockArrow x={511} y={886} />
+
+      {/* 8. Control: which parameters the behaviour hangs on. */}
+      <Panel
+        col={1}
+        row={2}
+        fill={C.panelSlate}
+        href="#sensitivity-analysis"
+        label="8. Control"
+      >
+        <Title x={772} y={ROW[2].title} size={TITLE}>
+          8. Control
+        </Title>
+        <g>
+          {[0, 1, 2, 3].map((r) =>
+            [0, 1, 2, 3, 4].map((c) => {
+              const v = [
+                [0.1, 0.5, 0.2, 0.9, 0.3],
+                [0.4, 0.15, 0.75, 0.25, 0.1],
+                [0.2, 0.85, 0.3, 0.45, 0.6],
+                [0.55, 0.25, 0.1, 0.35, 0.2],
+              ][r][c];
+              return (
+                <rect
+                  key={`${r}-${c}`}
+                  x={660 + c * 46}
+                  y={836 + r * 36}
+                  width={40}
+                  height={30}
+                  rx={4}
+                  fill={(r + c) % 3 === 0 ? C.orange : C.blue}
+                  opacity={0.12 + v * 0.8}
+                />
+              );
+            }),
+          )}
+          <rect
+            x={660 + 3 * 46 - 4}
+            y={836 - 4}
+            width={48}
+            height={38}
+            rx={6}
+            fill="none"
+            stroke={C.ink}
+            strokeWidth={4}
+          />
+        </g>
+        <Subtitle x={772} y={ROW[2].sub}>
+          scaled sensitivities + scans
+        </Subtitle>
+      </Panel>
+      <BlockArrow x={1038} y={886} />
+
+      {/* 9. Experiments: what the model asks the lab to measure. */}
+      <Panel
+        col={2}
+        row={2}
+        fill={C.panelGreen}
+        href="#model-to-experiments"
+        label="9. Experiments"
+      >
+        <Title x={1302} y={ROW[2].title} size={TITLE}>
+          9. Experiments
+        </Title>
+        <Flask
+          x={1240}
+          top={840}
+          w={92}
+          h={146}
+          liquid={C.greenLight}
+          level={0.5}
+        />
+        <g transform="translate(1316 838)">
+          <rect
+            x={0}
+            y={0}
+            width={92}
+            height={148}
+            rx={9}
+            fill={C.white}
+            stroke={C.ink}
+            strokeWidth={3}
+          />
+          <rect x={23} y={-9} width={46} height={18} rx={7} fill={C.steelDark} />
+          <path
+            d="M18 46l14 14 27-31"
+            fill="none"
+            stroke={C.green}
+            strokeWidth={9}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <rect x={18} y={84} width={56} height={9} rx={4.5} fill={C.blueMid} />
+          <rect x={18} y={106} width={47} height={9} rx={4.5} fill={C.greenMid} />
+          <rect x={18} y={128} width={62} height={9} rx={4.5} fill={C.gold} />
+        </g>
+        <Subtitle x={1302} y={ROW[2].sub}>
+          what to measure next
+        </Subtitle>
+      </Panel>
+
       <BlockArrow x={511} y={165} />
       <BlockArrow x={1038} y={165} />
       <BlockArrow x={1302} y={345} angle={90} />
       <BlockArrow x={1040} y={528} angle={180} />
       <BlockArrow x={512} y={528} angle={180} />
+      <BlockArrow x={250} y={706} angle={90} />
     </WorkflowFigure>
   );
 }
