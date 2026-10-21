@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { InlineMath } from "../../components/Math";
 
 /**
@@ -15,6 +15,8 @@ import { InlineMath } from "../../components/Math";
 interface Module {
   id: string;
   title: string;
+  /** The module's colour, used for its box and its panel accent. */
+  color: string;
   /** pFBA flux, mmol gDW⁻¹ h⁻¹, as the lumped map reports it. */
   flux: string;
   column: 0 | 1 | 2;
@@ -35,6 +37,7 @@ interface Module {
 const MODULES: Module[] = [
   {
     id: "ed",
+    color: "#09519d",
     title: "Glucose uptake and Entner–Doudoroff",
     flux: "0.599",
     column: 0,
@@ -52,6 +55,7 @@ const MODULES: Module[] = [
   },
   {
     id: "tca",
+    color: "#476cff",
     title: "TCA cycle",
     flux: "1.20",
     column: 0,
@@ -69,6 +73,7 @@ const MODULES: Module[] = [
   },
   {
     id: "respiration",
+    color: "#e5a7ca",
     title: "Respiratory chain",
     flux: "5.39 / 7.18",
     column: 1,
@@ -85,6 +90,7 @@ const MODULES: Module[] = [
   },
   {
     id: "atp-synthase",
+    color: "#cb3c5b",
     title: "ATP synthase",
     flux: "11.9",
     column: 1,
@@ -102,6 +108,7 @@ const MODULES: Module[] = [
   },
   {
     id: "maintenance",
+    color: "#2a60d2",
     title: "ATP maintenance",
     flux: "0.920",
     column: 1,
@@ -118,6 +125,7 @@ const MODULES: Module[] = [
   },
   {
     id: "pi-transport",
+    color: "#d35c7c",
     title: "Phosphate transport",
     flux: "7.00 / 3.00",
     column: 2,
@@ -136,6 +144,7 @@ const MODULES: Module[] = [
   },
   {
     id: "polyp",
+    color: "#426891",
     title: "PolyP synthesis",
     flux: "0.200",
     column: 2,
@@ -158,9 +167,9 @@ const COLUMN_TITLES = ["Carbon", "Energy and redox", "Phosphorus"];
 const W = 960;
 const COL_X = [40, 350, 660];
 const BOX_W = 260;
-const BOX_H = 96;
-const ROW_Y = [70, 206, 342];
-const H = 470;
+const BOX_H = 114;
+const ROW_Y = [74, 224, 374];
+const H = 506;
 
 function boxOf(m: Module) {
   return { x: COL_X[m.column], y: ROW_Y[m.row], w: BOX_W, h: BOX_H };
@@ -197,7 +206,8 @@ export function LumpedModel() {
   const active = MODULES.find((m) => m.id === activeId) ?? MODULES[0];
 
   return (
-    <figure className="lumped">
+    <figure className="lumped model-figbox">
+      <div className="lumped__layout">
       <div className="lumped__diagram">
         <svg
           viewBox={`0 0 ${W} ${H}`}
@@ -223,7 +233,7 @@ export function LumpedModel() {
               key={title}
               className="lumped__column-title"
               x={COL_X[i]}
-              y={38}
+              y={40}
             >
               {title}
             </text>
@@ -254,6 +264,7 @@ export function LumpedModel() {
               <g
                 key={m.id}
                 className={`lumped__module${on ? " is-active" : ""}`}
+                style={{ "--mod": m.color } as CSSProperties}
                 tabIndex={0}
                 role="button"
                 aria-pressed={on}
@@ -276,17 +287,17 @@ export function LumpedModel() {
                   height={box.h}
                   rx={14}
                 />
-                <text className="lumped__flux" x={box.x + 16} y={box.y + 30}>
+                <text className="lumped__flux" x={box.x + 16} y={box.y + 34}>
                   {m.flux}
                 </text>
-                <text className="lumped__unit" x={box.x + 16} y={box.y + 46}>
+                <text className="lumped__unit" x={box.x + 16} y={box.y + 54}>
                   mmol gDW⁻¹ h⁻¹
                 </text>
                 <foreignObject
                   x={box.x + 14}
-                  y={box.y + 52}
+                  y={box.y + 62}
                   width={box.w - 28}
-                  height={box.h - 56}
+                  height={box.h - 66}
                 >
                   <span className="lumped__title">{m.title}</span>
                 </foreignObject>
@@ -296,7 +307,11 @@ export function LumpedModel() {
         </svg>
       </div>
 
-      <div className="lumped__panel" aria-live="polite">
+      <div
+        className="lumped__panel"
+        aria-live="polite"
+        style={{ "--mod": active.color } as CSSProperties}
+      >
         <h4 className="lumped__panel-title">{active.title}</h4>
         <dl className="lumped__fields">
           <dt>Grouped reactions</dt>
@@ -322,6 +337,7 @@ export function LumpedModel() {
             <span className="lumped__law-note">{active.parametersNote}</span>
           </dd>
         </dl>
+      </div>
       </div>
 
       <figcaption>

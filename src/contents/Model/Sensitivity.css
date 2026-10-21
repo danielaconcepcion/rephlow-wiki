@@ -69,8 +69,9 @@
 }
 
 .hm__cell {
-  width: 34px;
-  height: 21px;
+  width: 26px;
+  height: 26px;
+  font-size: 0.58rem;
   text-align: center;
   color: var(--ink);
   border: 1px solid rgba(255, 255, 255, 0.55);
@@ -85,6 +86,52 @@
 .hm__cell:focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: -2px;
+}
+
+/* The colour scale the cells are read with: the same diverging ramp
+   cellColour() builds, printed once so a reader does not have to infer it
+   from the numbers. */
+.hm__scale {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+.hm__scale-ramp {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 210px;
+}
+
+.hm__scale-bar {
+  display: block;
+  height: 11px;
+  border-radius: 3px;
+  border: 1px solid var(--model-figure-line);
+  background: linear-gradient(
+    to right,
+    rgba(198, 60, 42, 0.9),
+    rgba(198, 60, 42, 0.08),
+    rgba(21, 104, 163, 0.08),
+    rgba(21, 104, 163, 0.9)
+  );
+}
+
+.hm__scale-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.66rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.hm__scale-ticks i {
+  font-style: normal;
 }
 
 .hm__readout {

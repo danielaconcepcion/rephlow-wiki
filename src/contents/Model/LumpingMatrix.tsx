@@ -55,7 +55,7 @@ export function LumpingMatrix() {
   const [lumped, setLumped] = useState(false);
 
   return (
-    <figure className="lumpmat">
+    <figure className="lumpmat model-figbox">
       <div className={`lumpmat__maps${lumped ? " is-lumped" : ""}`}>
         <img
           className="lumpmat__map lumpmat__map--full"

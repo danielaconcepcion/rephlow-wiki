@@ -42,7 +42,7 @@ export function ConcentrationCourses() {
   const [step, setStep] = useState(SCAN_STEPS - 1);
 
   return (
-    <figure className="dyn" id="concentration-courses">
+    <figure className="dyn model-figbox" id="concentration-courses">
       <div className="dyn__control">
         <label htmlFor="vmax-scan">
           <span className="dyn__control-name">V</span>
@@ -113,6 +113,7 @@ export function ConcentrationCourses() {
               readoutUnit="µmol L⁻¹"
               compactTicks
               hint={panelIndex === 0}
+              height={380}
             />
           );
         })}
@@ -140,7 +141,7 @@ export function ConcentrationCourses() {
  * other, on the two scales they need. */
 export function PhosphateFluxes() {
   return (
-    <figure className="dyn" id="phosphate-fluxes">
+    <figure className="dyn model-figbox" id="phosphate-fluxes">
       <div className="dyn__panels dyn__panels--two">
         {FLUX_PANELS.map((panel, panelIndex) => (
           <div key={panel.id} className="dyn__flux-panel">

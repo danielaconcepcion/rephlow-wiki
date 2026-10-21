@@ -45,7 +45,7 @@ export function SensitivityHeatmap() {
       : null;
 
   return (
-    <figure className="hm" id="sensitivity-map">
+    <figure className="hm model-figbox" id="sensitivity-map">
       <div className="hm__scroll">
         <table className="hm__table">
           <caption className="sr-only">
@@ -109,6 +109,19 @@ export function SensitivityHeatmap() {
         </table>
       </div>
 
+      <div className="hm__scale">
+        <span>the parameter lowers the flux</span>
+        <span className="hm__scale-ramp">
+          <span className="hm__scale-bar" aria-hidden="true" />
+          <span className="hm__scale-ticks">
+            <i>−1.5</i>
+            <i>0</i>
+            <i>+1.5</i>
+          </span>
+        </span>
+        <span>raises it</span>
+      </div>
+
       <div className="hm__readout">
         {reading ? (
           <>
@@ -142,7 +155,7 @@ export function SensitivityHeatmap() {
 /** Figure 15 — when each parameter matters, over the run. */
 export function SensitivityCourses() {
   return (
-    <figure className="dyn" id="sensitivity-courses">
+    <figure className="dyn model-figbox" id="sensitivity-courses">
       <div className="dyn__panels">
         {SENS_PANELS.map((panel, i) => (
           <div key={panel.id} className="dyn__flux-panel">
@@ -182,7 +195,7 @@ export function ParameterScans() {
   const value = scan.values[step];
 
   return (
-    <figure className="dyn" id="parameter-scans">
+    <figure className="dyn model-figbox" id="parameter-scans">
       <div className="scan__tabs" role="tablist" aria-label="Scanned parameter">
         {SCAN_DEFS.map((s, i) => (
           <button

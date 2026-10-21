@@ -3,7 +3,7 @@
    Model.css, which sets one caption treatment for the whole page. */
 
 .dyn {
-  margin: 28px 0 8px;
+  margin: 0;
 }
 
 .dyn__panels {
@@ -197,7 +197,16 @@
   gap: 6px;
 }
 
-@media (max-width: 900px) {
+/* The panels of a figure are a row, not a stack: they are read against one
+   another, so they stay side by side until the column is genuinely too
+   narrow for three charts, and each panel scrolls nothing. */
+@media (max-width: 760px) {
+  .dyn__panels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
   .dyn__panels,
   .dyn__panels--two {
     grid-template-columns: minmax(0, 1fr);

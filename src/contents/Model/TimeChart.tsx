@@ -20,10 +20,8 @@ export interface ChartSeries {
 }
 
 const W = 380;
-const H = 250;
 const PAD = { l: 48, r: 12, t: 10, b: 36 };
 const PW = W - PAD.l - PAD.r;
-const PH = H - PAD.t - PAD.b;
 
 /** Axis numbers at the sizes these panels are read at: 12 000 is noise,
  * 12k is a number. */
@@ -64,6 +62,7 @@ export function TimeChart({
   readoutUnit,
   compactTicks = false,
   hint = false,
+  height = 250,
 }: {
   title: string;
   xMax: number;
@@ -81,7 +80,11 @@ export function TimeChart({
   compactTicks?: boolean;
   /** Only the first panel of a row spells out what the read-out is for. */
   hint?: boolean;
+  /** Panel height in viewBox units; 380 makes the panel square. */
+  height?: number;
 }) {
+  const H = height;
+  const PH = H - PAD.t - PAD.b;
   const clip = useId().replace(/:/g, "");
   const svgRef = useRef<SVGSVGElement>(null);
   const [hover, setHover] = useState<number | null>(null);
