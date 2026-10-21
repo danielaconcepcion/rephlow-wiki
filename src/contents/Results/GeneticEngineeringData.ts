@@ -571,7 +571,7 @@ const GRNA_AMPLIFICATION: ResultData = {
       title: "First trial",
       figures: [
         {
-          src: `${FIGURES}/grna-amplification-first-trial.jpg`,
+          src: `${FIGURES}/grna-amplification-first-trial-2.avif`,
           alt: "Agarose gel of the first-trial gRNA amplification showing bands at about 130 to 150 bp.",
           caption:
             "First-trial gRNA amplification showing defined bands at approximately 130–150 bp for *ppx*, *ppkB* and *pitB* in duplicate. The negative control used in this experiment lacked oligonucleotide primers and therefore could not assess primer-derived amplification. The faint higher-molecular-weight band was attributed to residual pEX128 template.",
@@ -765,27 +765,11 @@ const CLOSING: ResultData = {
       ],
       figures: [
         {
-          src: `${FIGURES}/phosphorus-wild-type-vs-ppk1.svg`,
+          src: "https://static.igem.wiki/teams/6124/wiki/measurements/polyp-uptake-biomass-normalised-intracellular-phosphorus-content-over.avif",
           kind: "chart" as const,
           alt: "Normalised phosphorus of the wild type and the ppk1 transformant over 120 minutes, with error bars and a fitted line drawn only across the shaded 75 to 120 minute window.",
           caption:
             "Phosphorus accumulation relative to biomass. Means with the SD of their replicates. The dotted least-squares line is drawn only across the shaded 75 to 120 min window, which is the stretch the quoted uptake rates are fitted over.",
-        },
-      ],
-      tables: [
-        {
-          caption:
-            "Fitted uptake rates, in ng per OD₆₀₀ per minute, over each window.",
-          headers: [
-            "Strain",
-            "Uptake rate, 75–120 min",
-            "Uptake rate, 0–120 min",
-          ],
-          rows: [
-            ["Wild type", "6 450", "5 839"],
-            ["*ppk1* transformant", "11 017", "4 424"],
-            ["Ratio, transformant to wild type", "1.71", "0.76"],
-          ],
         },
       ],
       observations:

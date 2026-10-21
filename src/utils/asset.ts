@@ -43,6 +43,7 @@ const AT_UPLOADS_ROOT: Record<string, string> = {
 };
 
 export function asset(path: string): string {
+  if (/^https?:\/\//.test(path)) return path;
   const atRoot = AT_UPLOADS_ROOT[path];
   if (atRoot) return `${UPLOADS}${atRoot}`;
 
