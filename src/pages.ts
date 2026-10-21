@@ -254,8 +254,8 @@ const Pages: Page[] = [
     /*A space for the sustainability context and environmental relevance of rePhlow.*/
     path: "/sustainability",
     component: Sustainability,
-    docTitle: "Sustainability — rePhlow iGEM Wiki",
-    /* The Medals page judges this prize on this page — see its
+    docTitle: "Sustainability, rePhlow iGEM Wiki",
+    /* The Medals page judges this prize on this page, see its
        "gold-sustainability" entry, whose pageLabel is Sustainability. */
     awards: [
       {

@@ -165,8 +165,7 @@
 /* v7 (20 Oct): only documents that live in iGEM Uploads stay on this page.
    The .zip, .pptx, .xlsx, .png and .py files are removed with their buttons. */
 (function () {
-  var GONE = ["file-parts", "asset-zip-blender", "file-pitch", "file-sf-calc", "file-mu-logo1", "file-mu-logo2",
-    "asset-script-01", "asset-script-02", "asset-script-03", "asset-script-04", "asset-script-05", "asset-script-06", "asset-script-07"];
+  var GONE = ["file-parts", "file-pitch", "file-sf-calc", "file-mu-logo1", "file-mu-logo2"];
   function gone(id) { return id && GONE.indexOf(id) >= 0; }
   try {
     Object.keys(BUNDLES).forEach(function (k) {
@@ -174,7 +173,7 @@
     });
   } catch (e) { console.warn("[extra] bundles", e); }
   // banners whose only purpose was a removed download go away, with their index entry
-  ["parts-files", "bl-kit"].forEach(function (id) {
+  ["parts-files"].forEach(function (id) {
     var el = document.getElementById(id);
     if (el) el.remove();
     document.querySelectorAll('.page-section-nav__link[data-jump="' + id + '"]').forEach(function (a) { (a.closest("li") || a).remove(); });
@@ -205,4 +204,50 @@
         pack.files.map(function (f) { return esc(f[1]); }).join(" · ");
     });
   } catch (e) { console.warn("[extra] v8", e); }
+})();
+
+/* v10 (21 Oct): the Blender toolkit is back. Uploads does not take .py/.md/.txt, so the
+   7 scripts, README and LICENSE live in one JSON file in iGEM Uploads; each file is read
+   from it, single scripts download with their own name, and "Download all (.zip)"
+   builds rephlow-blender-tools-v1.0.zip in the page. */
+(function () {
+  try {
+    var SRC = "https://static.igem.wiki/teams/6124/wiki/contrubutions/rephlow-blender-tools.json";
+    var NAME = {
+      "asset-script-01": "01_procedural_hydrogel_generator.py",
+      "asset-script-02": "02_procedural_perforated_mesh.py",
+      "asset-script-03": "03_macro_studio_lighting_rig.py",
+      "asset-script-04": "04_optimized_particle_instancing.py",
+      "asset-script-05": "05_parametric_hardware_engraving.py",
+      "asset-script-06": "06_procedural_mesh_slicer.py",
+      "asset-script-07": "07_automated_infinite_rotation.py",
+      "asset-bl-readme": "README.md",
+      "asset-bl-license": "LICENSE"
+    };
+    Object.keys(NAME).forEach(function (id) { FILES[id] = SRC; });
+    var pack = null;
+    function blText(id) {
+      if (!pack) pack = fetch(SRC).then(function (r) { if (!r.ok) throw new Error("HTTP " + r.status); return r.json(); });
+      return pack.then(function (j) { var t = j.files[NAME[id]]; if (t == null) throw new Error("missing " + NAME[id]); return t; });
+    }
+    var plainBytes = getBytes;
+    getBytes = function (id) {
+      if (!NAME[id]) return plainBytes(id);
+      return blText(id).then(function (t) { return new TextEncoder().encode(t); });
+    };
+    var DIR = "rephlow-blender-tools-v1.0/";
+    BUNDLES["asset-zip-blender"] = { zip: "rephlow-blender-tools-v1.0.zip", files: Object.keys(NAME).map(function (id) { return [id, DIR + NAME[id]]; }) };
+    var b = document.querySelector('[data-dl="asset-zip-blender"]');
+    if (b) { b.removeAttribute("data-dl"); b.setAttribute("data-bundle", "asset-zip-blender"); }
+    var plainDownload = download;
+    download = function (id, fn) {
+      if (!NAME[id]) return plainDownload(id, fn);
+      getBytes(id).then(function (bytes) {
+        var url = URL.createObjectURL(new Blob([bytes], { type: "text/plain" }));
+        var a = document.createElement("a"); a.href = url; a.download = fn || NAME[id];
+        document.body.appendChild(a); a.click();
+        setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 600);
+      }).catch(function (e) { console.warn("[extra] v10", e); });
+    };
+  } catch (e) { console.warn("[extra] v10", e); }
 })();

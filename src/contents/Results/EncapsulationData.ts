@@ -531,7 +531,7 @@ const CORE_SHELL_MECHANICAL: ResultData = {
         },
       ],
       figuresCaption:
-        "Sphericity retained under increasing compressive load, normalised to the unloaded value of each condition (s/s\u2080, mean \u00b1 SD). Top, freshly prepared capsules and bottom, capsules stored in distilled water for one week. One line per flow condition.",
+        "Sphericity retained under increasing compressive load, normalised to the unloaded value of each condition (s/s\u2080, mean \u00b1 SD). Left, freshly prepared capsules and right, capsules stored in distilled water for one week. One line per flow condition.",
       bodyAfter: [
         "As set out at the top of this page, sphericity under load is reported relative to each condition's unloaded value (s/s₀). What is compared is therefore how much of its own shape each condition keeps, so a capsule that started slightly elongated is not penalised for it.",
       ],
