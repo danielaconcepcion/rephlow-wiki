@@ -1,0 +1,119 @@
+/* Section 4.3's two lists as cards (see CoreBlocks.tsx). The seven blocks
+   share their colours with Figure 11's modules, so the same thing is the
+   same colour wherever the page names it. */
+
+.coreset {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: coreset;
+}
+
+.coreset__card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 18px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+}
+
+/* The 45 are the answer the section is after, so they get the weight. */
+.coreset__card--lead {
+  border-color: color-mix(in srgb, var(--ink) 35%, transparent);
+  background: var(--paper-soft);
+}
+
+.coreset__count {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.coreset__unit {
+  margin-top: 2px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.coreset__title {
+  margin-top: 12px;
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+
+.coreset__body {
+  margin-top: 6px;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.coreblocks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coreblocks__card {
+  position: relative;
+  padding: 14px 16px 15px 18px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--mod);
+  border-radius: var(--radius-md);
+  background: var(--paper);
+  transition:
+    background 200ms ease,
+    border-color 200ms ease;
+}
+
+.coreblocks__card:hover,
+.coreblocks__card:focus-visible {
+  background: color-mix(in srgb, var(--mod) 9%, var(--paper));
+  border-color: color-mix(in srgb, var(--mod) 45%, transparent);
+  border-left-color: var(--mod);
+  outline: none;
+}
+
+.coreblocks__dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 7px;
+  border-radius: 50%;
+  background: var(--mod);
+  vertical-align: 1px;
+}
+
+.coreblocks__title {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.coreblocks__body {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.83rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 820px) {
+  .coreset {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -17,6 +17,7 @@ import {
   SensitivityHeatmap,
 } from "./Sensitivity";
 import { DbtlLoop } from "./DbtlLoop";
+import { CoreBlocks, ReactionSets } from "./CoreBlocks";
 import { AccordionSection } from "../HumanPractices/AccordionSection";
 import { DisplayMath, InlineMath } from "../../components/Math";
 import { ModelBackground } from "./ModelBackground";
@@ -932,23 +933,6 @@ export function Model() {
               </div>
             </div>
 
-            <div className="model-network__wide">
-              <figure className="model-network__figure model-network__figure--compact model-network__figure--plate">
-                <img
-                  src={asset("assets/model/pfba-fva-by-category.webp")}
-                  alt="Stacked bar charts of the reactions active in pFBA and in FVA, grouped by functional category, at tolerances of 0, 0.01 and 0.1."
-                />
-                <figcaption>
-                  <strong>Figure 8.</strong> Reactions active in pFBA and in
-                  FVA, grouped by functional category, at three thresholds. At
-                  10⁻¹ the pFBA core is almost entirely central carbon
-                  metabolism and transport, while FVA keeps a tail of
-                  biosynthetic and detoxification routes. Figure from the our
-                  own constraint-based analysis; axis labels in Spanish.
-                </figcaption>
-              </figure>
-            </div>
-
             <div className="model-network__intro">
               <div
                 id="metabolic-flexibility"
@@ -1060,6 +1044,24 @@ export function Model() {
               </div>
             </div>
 
+            <div className="model-network__wide">
+              <figure className="model-network__figure model-network__figure--compact model-network__figure--plate">
+                <img
+                  src={asset("assets/model/pfba-fva-by-category.webp")}
+                  alt="Stacked bar charts of the reactions active in pFBA and in FVA, grouped by functional category, at tolerances of 0, 0.01 and 0.1."
+                />
+                <figcaption>
+                  <strong>Figure 8.</strong> Table 1 by functional category: the
+                  reactions active in pFBA and in FVA at the same three
+                  thresholds, split by what they do rather than only counted. At
+                  10⁻¹ the pFBA core is almost entirely central carbon
+                  metabolism and transport, while FVA keeps a tail of
+                  biosynthetic and detoxification routes. Figure from our own
+                  constraint-based analysis; axis labels in Spanish.
+                </figcaption>
+              </figure>
+            </div>
+
             <div className="model-network__intro">
               <div className="model-network__subsection">
                 <p>
@@ -1087,28 +1089,7 @@ export function Model() {
                   Three questions are easy to confuse, and they give three
                   different sets of reactions:
                 </p>
-                <ul className="model-network__list">
-                  <li>
-                    <strong>What the parsimonious solution needs.</strong> The
-                    166 reactions that carry flux: the cheapest way to reach the
-                    optimum, and nothing else.
-                  </li>
-                  <li>
-                    <strong>What FVA shows is available.</strong> The 1,985
-                    reactions that could carry flux in some equally optimal
-                    state: the shape of the solution space, not a route through
-                    it.
-                  </li>
-                  <li>
-                    <strong>
-                      What a kinetic description of polyP accumulation actually
-                      needs.
-                    </strong>{" "}
-                    The reactions whose flux is large enough to move a
-                    concentration, and whose rate law can be written: the 45
-                    above 10⁻² mmol gDW⁻¹ h⁻¹.
-                  </li>
-                </ul>
+                <ReactionSets />
 
                 <p>
                   The threshold is doing real work in that last step, so it is
@@ -1119,41 +1100,14 @@ export function Model() {
                   system, which over the hours a batch run lasts shift no pool
                   the model tracks. Taking them in would add parameters without
                   adding behaviour. The 45 reactions that survive are the ones
-                  the pFBA solution leans on, and they fall into seven blocks,
-                  which are what the kinetic model is built from:
+                  the pFBA solution leans on, and they fall into{" "}
+                  <strong>seven blocks</strong>, which are what the kinetic
+                  model is built from. They carry the colours their modules
+                  carry in Figure 11, and the Entner–Doudoroff route is the one{" "}
+                  <em>P. putida</em> actually uses for glucose <Cite n={16} />,
+                  rather than a textbook glycolysis:
                 </p>
-                <ul className="model-network__list">
-                  <li>
-                    <strong>Transport of glucose, oxygen and phosphate</strong>:
-                    what crosses the membrane, including both the Pit symporter
-                    and the ABC-type Pst route.
-                  </li>
-                  <li>
-                    <strong>The Entner–Doudoroff pathway</strong>: the route{" "}
-                    <em>P. putida</em> actually uses for glucose
-                    <Cite n={16} />, rather than a textbook glycolysis.
-                  </li>
-                  <li>
-                    <strong>The TCA cycle</strong>: oxidation of acetyl-CoA and
-                    the supply of reducing equivalents.
-                  </li>
-                  <li>
-                    <strong>The respiratory chain</strong>: NADH dehydrogenase
-                    and cytochrome oxidase, kept as an independent module.
-                  </li>
-                  <li>
-                    <strong>ATP synthesis and maintenance</strong>: ATP synthase
-                    and the non-growth maintenance demand.
-                  </li>
-                  <li>
-                    <strong>Redox balancing</strong>: the transhydrogenase that
-                    trades NADH against NADPH.
-                  </li>
-                  <li>
-                    <strong>PolyP polymerisation</strong>: the PPK steps that
-                    turn ATP and phosphate into chain.
-                  </li>
-                </ul>
+                <CoreBlocks />
 
                 <p>
                   Two things are deliberately absent. Biomass synthesis is
@@ -1174,7 +1128,7 @@ export function Model() {
             <div className="model-network__wide">
               <figure className="model-network__figure model-network__figure--compact model-network__figure--plate">
                 <img
-                  src={asset("assets/model/active-core-map.webp")}
+                  src={asset("assets/model/core-map-big-labels.webp")}
                   alt="Metabolic map of the 45 active reactions with their pFBA fluxes, grouped into respiration, the Entner-Doudoroff pathway, the TCA cycle, ATP synthesis and maintenance, transhydrogenase and polyphosphate synthesis."
                 />
                 <figcaption>

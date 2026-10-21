@@ -56,21 +56,6 @@ export function LumpingMatrix() {
 
   return (
     <figure className="lumpmat model-figbox">
-      <div className={`lumpmat__maps${lumped ? " is-lumped" : ""}`}>
-        <img
-          className="lumpmat__map lumpmat__map--full"
-          src={asset("assets/model/core-map-big-labels.webp")}
-          alt="The 45 active reactions of the core, each drawn separately, with its pFBA flux."
-          loading="lazy"
-        />
-        <img
-          className="lumpmat__map lumpmat__map--lumped"
-          src={asset("assets/model/lumped-map.webp")}
-          alt="The same network after lumping: the Entner–Doudoroff sequence and the TCA cycle each drawn as one net reaction, respiration and the phosphate modules unchanged."
-          loading="lazy"
-        />
-      </div>
-
       <div className="lumpmat__controls">
         <button
           type="button"
@@ -87,28 +72,60 @@ export function LumpingMatrix() {
         </p>
       </div>
 
-      <DisplayMath tex={lumped ? MATRIX_AFTER : MATRIX_BEFORE} />
+      <div className="lumpmat__split">
+        <div className={`lumpmat__maps${lumped ? " is-lumped" : ""}`}>
+          <img
+            className="lumpmat__map lumpmat__map--full"
+            src={asset("assets/model/core-map-big-labels.webp")}
+            alt="The 45 active reactions of the core, each drawn separately, with its pFBA flux."
+            loading="lazy"
+          />
+          <img
+            className="lumpmat__map lumpmat__map--lumped"
+            src={asset("assets/model/lumped-map.webp")}
+            alt="The same network after lumping: the Entner–Doudoroff sequence and the TCA cycle each drawn as one net reaction, respiration and the phosphate modules unchanged."
+            loading="lazy"
+          />
+        </div>
 
-      <div className="lumpmat__maths">
-        {lumped ? (
-          <>
-            <InlineMath tex={EFFECTIVE} />
-            <p className="lumpmat__reading">
-              One column, one flux. The pair contributes exactly what it did, and the model has one variable fewer, and no reaction it could run
-              before has become impossible.
-            </p>
-          </>
-        ) : (
-          <>
-            <InlineMath tex={COUPLING} />
-            <InlineMath tex={SUM} />
-            <p className="lumpmat__reading">
-              Coupled: in every feasible solution the two fluxes are fixed
-              multiples of a common <InlineMath tex="\lambda" />, so their joint
-              contribution can be written with one column and one flux.
-            </p>
-          </>
-        )}
+        <div className="lumpmat__algebra">
+          {/* Both matrices stay mounted and cross-fade: the full one
+              compresses horizontally as it leaves and the lumped one
+              expands into place, so the two coupled columns are seen to
+              close up rather than simply being swapped. */}
+          <div className={`lumpmat__matrix${lumped ? " is-lumped" : ""}`}>
+            <div className="lumpmat__state-math lumpmat__state-math--before">
+              <DisplayMath tex={MATRIX_BEFORE} />
+            </div>
+            <div className="lumpmat__state-math lumpmat__state-math--after">
+              <DisplayMath tex={MATRIX_AFTER} />
+            </div>
+          </div>
+
+          <div className="lumpmat__maths">
+            {lumped ? (
+              <>
+                <InlineMath tex={EFFECTIVE} />
+                <p className="lumpmat__reading">
+                  One column, one flux. The pair contributes exactly what it
+                  did, and the model has one variable fewer, and no reaction it
+                  could run before has become impossible.
+                </p>
+              </>
+            ) : (
+              <>
+                <InlineMath tex={COUPLING} />
+                <InlineMath tex={SUM} />
+                <p className="lumpmat__reading">
+                  Coupled: in every feasible solution the two fluxes are fixed
+                  multiples of a common <InlineMath tex="\lambda" />, so their
+                  joint contribution can be written with one column and one
+                  flux.
+                </p>
+              </>
+            )}
+          </div>
+        </div>
       </div>
 
       <figcaption>

@@ -71,7 +71,7 @@
    LabFolders.css .record-figure figcaption), so a figure reads the same
    wherever it sits. */
 .model-network__figure figcaption,
-.core-funnel figcaption,
+.corebar > figcaption,
 .lumped figcaption,
 .lumpmat figcaption,
 .dyn > figcaption,
@@ -87,7 +87,7 @@
 }
 
 .model-network__figure figcaption strong,
-.core-funnel figcaption strong,
+.corebar > figcaption strong,
 .lumped figcaption strong,
 .lumpmat figcaption strong,
 .dyn > figcaption strong,
@@ -759,130 +759,6 @@
 
 /* The funnel (see CoreFunnel.tsx): four stages, each a plain bar with its
    count inside and its reading beside it — a diagram, not a chart. */
-.core-funnel {
-  max-width: 760px;
-  margin: 24px auto 0;
-}
-.core-funnel__stages {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.core-funnel__stage {
-  display: grid;
-  grid-template-columns: minmax(0, 46%) 1fr;
-  align-items: center;
-  column-gap: 18px;
-  row-gap: 2px;
-}
-.core-funnel__bar {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-width: 68px;
-  padding: 9px 12px;
-  border: 1px solid var(--model-figure-line);
-  border-radius: 8px;
-  background: var(--paper-soft);
-}
-.core-funnel__count {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--ink);
-  font-variant-numeric: tabular-nums;
-}
-.core-funnel__text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.core-funnel__label {
-  font-size: 0.92rem;
-  color: var(--ink);
-}
-.core-funnel__note {
-  font-size: 0.78rem;
-  color: var(--ink-soft);
-}
-.core-funnel__arrow {
-  grid-column: 1;
-  justify-self: center;
-  font-size: 0.9rem;
-  line-height: 1;
-  color: var(--ink-soft);
-}
-
-/* Citations and the reference list of section 4 — the same quiet
-   treatment the lab pages use, kept local to this page. */
-.model-citation {
-  color: var(--phosphate);
-  text-decoration: none;
-  font-variant-numeric: tabular-nums;
-}
-.model-citation:hover,
-.model-citation:focus-visible {
-  text-decoration: underline;
-}
-.model-reference-list {
-  margin: 0;
-  padding: 4px 0 8px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 0.82rem;
-  line-height: 1.55;
-  color: var(--ink-soft);
-  overflow-wrap: anywhere;
-}
-
-@media (max-width: 640px) {
-  .core-funnel__stage {
-    grid-template-columns: 1fr;
-    row-gap: 6px;
-  }
-  .core-funnel__bar {
-    width: 100% !important;
-    justify-content: flex-start;
-  }
-  .core-funnel__arrow {
-    justify-self: flex-start;
-  }
-}
-
-/* Lists in section 4's prose, and the caption that titles a table. */
-.model-network__list {
-  margin: 10px 0 0;
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--ink-soft);
-}
-.model-network__list strong {
-  color: var(--ink);
-}
-.model-network__table-caption {
-  caption-side: top;
-  margin-bottom: 10px;
-  text-align: left;
-  font-size: 0.82rem;
-  line-height: 1.55;
-  color: var(--ink-soft);
-}
-.model-network__table-caption strong {
-  color: var(--ink);
-}
-
-/* --------------------------------------------------------------------------
-   5. The reduced kinetic model — the lumped-module diagram
-   -------------------------------------------------------------------------- */
-
 .lumped {
   margin: 28px 0 0;
 }
@@ -1053,10 +929,65 @@
 .lumpmat {
   max-width: 1040px;
   margin: 26px auto 0;
-  padding: 16px 18px 14px;
-  border: 1px solid var(--model-figure-line);
-  border-radius: 8px;
-  background: var(--paper);
+}
+
+/* Map on one side, matrix on the other: the toggle changes both at once,
+   so the two have to be in view together for the point to land. */
+.lumpmat__split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.lumpmat__algebra {
+  min-width: 0;
+}
+
+/* The two matrices share a cell and cross-fade, and while they do the
+   full one compresses horizontally while the lumped one expands into
+   place: the two coupled columns are seen to close up rather than being
+   swapped out. */
+.lumpmat__matrix {
+  display: grid;
+  align-items: center;
+}
+.lumpmat__state-math {
+  grid-area: 1 / 1;
+  transform-origin: left center;
+  transition:
+    opacity 420ms ease,
+    transform 420ms cubic-bezier(0.3, 0, 0.2, 1);
+}
+.lumpmat__state-math--before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.lumpmat__state-math--after {
+  opacity: 0;
+  transform: scaleX(1.18);
+}
+.lumpmat__matrix.is-lumped .lumpmat__state-math--before {
+  opacity: 0;
+  transform: scaleX(0.78);
+}
+.lumpmat__matrix.is-lumped .lumpmat__state-math--after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lumpmat__state-math {
+    transition: opacity 120ms ease;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .lumpmat__split {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* The two maps occupy the same box and cross-fade, so the toggle reads as
@@ -1064,12 +995,16 @@
 .lumpmat__maps {
   position: relative;
   display: grid;
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
+  background: var(--paper);
+  padding: 8px;
 }
 .lumpmat__map {
   grid-area: 1 / 1;
   width: 100%;
   height: auto;
-  max-height: 58vh;
+  max-height: 46vh;
   object-fit: contain;
   transition: opacity 420ms ease;
 }
@@ -1089,7 +1024,7 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: 10px 16px;
-  margin-top: 14px;
+  margin: 0;
 }
 .lumpmat__state {
   margin: 0;
@@ -1120,6 +1055,7 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  margin-top: 10px;
   text-align: center;
 }
 .lumpmat__reading {
@@ -1183,5 +1119,147 @@
 @media (max-width: 700px) {
   .model-figbox {
     padding: 18px 14px 16px;
+  }
+}
+
+/* Figure 7: the reduction on a logarithmic axis (see CoreFunnel.tsx). */
+.corebar {
+  margin: 26px auto 0;
+}
+
+.corebar__plot {
+  position: relative;
+}
+
+.corebar__grid {
+  position: absolute;
+  inset: 0 0 34px 42%;
+  pointer-events: none;
+}
+
+.corebar__gridline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(27, 35, 64, 0.12);
+}
+
+.corebar__rows {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.corebar__row {
+  display: grid;
+  grid-template-columns: 42% minmax(0, 1fr);
+  align-items: center;
+  gap: 0;
+}
+
+.corebar__text {
+  padding-right: 16px;
+  text-align: right;
+}
+
+.corebar__label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+
+.corebar__note {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.corebar__track {
+  position: relative;
+  height: 30px;
+}
+
+/* The bar is measured against the axis, so it is positioned against the
+   track rather than laid out beside its label: a flex sibling would shrink
+   it and the bar would stop agreeing with the gridlines. */
+.corebar__bar {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  height: 20px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, #09519d 65%, transparent),
+    #09519d
+  );
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.corebar__count {
+  padding-right: 9px;
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+.corebar__share {
+  position: absolute;
+  top: 9px;
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.corebar__axis {
+  position: relative;
+  height: 20px;
+  margin: 10px 0 0 42%;
+  border-top: 1px solid var(--model-figure-line);
+}
+
+.corebar__tick {
+  position: absolute;
+  top: 4px;
+  transform: translateX(-50%);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.corebar__axis-label {
+  margin: 2px 0 0 42%;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 760px) {
+  .corebar__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+  .corebar__text {
+    padding-right: 0;
+    text-align: left;
+  }
+  .corebar__grid {
+    inset: 0 0 34px 0;
+  }
+  .corebar__axis,
+  .corebar__axis-label {
+    margin-left: 0;
   }
 }
