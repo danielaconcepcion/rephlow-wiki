@@ -161,3 +161,10 @@
   white-space: nowrap;
   border: 0;
 }
+
+/* Figure 17 is a two-column figure, so it is set narrower than the
+   six-panel workflow at the top of the page; left at the shared .wff
+   width it would print its titles at twice the body size. */
+.dbtl .wff {
+  max-width: 790px;
+}

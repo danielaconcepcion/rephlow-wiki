@@ -16,6 +16,7 @@ import {
   SensitivityCourses,
   SensitivityHeatmap,
 } from "./Sensitivity";
+import { DbtlLoop } from "./DbtlLoop";
 import { AccordionSection } from "../HumanPractices/AccordionSection";
 import { DisplayMath, InlineMath } from "../../components/Math";
 import { ModelBackground } from "./ModelBackground";
@@ -129,6 +130,19 @@ const MODEL_SECTIONS: PageSection[] = [
       { id: "ranking-parameters", label: "Ranking influential parameters" },
       { id: "when-matters", label: "When does each parameter matter?" },
       { id: "testing-parameters", label: "Testing the top parameters" },
+    ],
+  },
+  {
+    id: "model-to-experiments",
+    label: "From model predictions to experiments",
+    children: [
+      { id: "experimental-priorities", label: "Experimental priorities" },
+      {
+        id: "parameters-to-calibrate",
+        label: "Parameters requiring calibration",
+      },
+      { id: "dbtl-loop", label: "Closing the DBTL loop" },
+      { id: "scope-and-limitations", label: "Scope and limitations" },
     ],
   },
 ];
@@ -2187,6 +2201,250 @@ export function Model() {
                     </li>
                   </ol>
                 </AccordionSection>
+              </div>
+            </div>
+          </section>
+
+          <section id="model-to-experiments" className="model-network">
+            <div className="model-network__intro">
+              <h2>8. From model predictions to experiments</h2>
+              <p>
+                Everything before this section was analysis. This one is the
+                reason we did it. A model that cannot change what we put in the
+                lab notebook has not earned its place on a wiki, so the question
+                here is narrow and practical: given what sections 4 to 7 found,
+                what should we measure first, which numbers should we pin down,
+                and what would the next version of this model know that this one
+                does not?
+              </p>
+            </div>
+
+            <div className="model-network__intro">
+              <div
+                id="experimental-priorities"
+                className="model-network__subsection"
+              >
+                <h3>8.1 Experimental priorities</h3>
+
+                <p>
+                  The sensitivity map is a ranking of parameters, but a
+                  parameter is not a measurement. Each row below turns one
+                  finding of this page into something a person can actually do
+                  at a bench, and says what that measurement buys.
+                </p>
+              </div>
+            </div>
+
+            <div className="model-network__wide">
+              <div className="model-network__table-scroll">
+                <table className="model-network__table">
+                  <caption className="model-network__table-caption">
+                    <strong>Table 4.</strong> What the model says, what to
+                    measure because of it, and what the measurement constrains.
+                    The order is ours: it runs from the measurements that need
+                    only a sampling plan to the ones that need equipment.
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Model insight</th>
+                      <th scope="col">Experimental measurement</th>
+                      <th scope="col">Why it matters</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">
+                        Phosphate uptake limits PolyP formation
+                      </th>
+                      <td>Extracellular Pᵢ over time</td>
+                      <td>Estimates transport capacity</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        Luxury uptake produces a transient peak
+                      </th>
+                      <td>High-frequency early sampling</td>
+                      <td>Tests the predicted transient</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        PPK fluxes are highly parameter-sensitive
+                      </th>
+                      <td>PolyP accumulation time course</td>
+                      <td>Calibrates polymerisation kinetics</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">
+                        ATP regeneration strongly affects the response
+                      </th>
+                      <td>ATP/ADP ratio</td>
+                      <td>Constrains energetic parameters</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Oxygen controls respiratory support</th>
+                      <td>Dissolved oxygen and oxygen uptake rate</td>
+                      <td>Constrains respiratory capacity</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div className="model-network__intro">
+              <div className="model-network__subsection">
+                <p>
+                  Two of these deserve emphasis. The first and second rows are
+                  the same experiment run at two time scales, and the sampling
+                  plan is the whole experiment: Figure 13 puts the transport
+                  spike in the first few hundred seconds, so a run sampled every
+                  half hour would show a smooth uptake curve and miss the
+                  prediction entirely. If the transient is there, only dense
+                  early sampling will find it; if it is not, that is the
+                  cleanest way this model can be shown to be wrong.
+                </p>
+              </div>
+
+              <div
+                id="parameters-to-calibrate"
+                className="model-network__subsection"
+              >
+                <h3>8.2 Parameters requiring calibration</h3>
+
+                <p>
+                  Section 7 ranked the parameters; this is the shortlist in the
+                  order we would work through it. The{" "}
+                  <strong>
+                    capacity of the terminal oxidase and of ATP synthase
+                  </strong>{" "}
+                  come first, because they move nearly every row of the
+                  sensitivity map and because both are currently borrowed
+                  values. The <strong>initial redox and oxygen state</strong>{" "}
+                  comes next: these are not fitted parameters at all but
+                  starting conditions, and they carry sensitivities as large as
+                  the kinetic constants do — the model is as sensitive to how
+                  the experiment begins as to what the enzymes can do. Then the{" "}
+                  <strong>
+                    polyP enzymes' affinity for ATP and their{" "}
+                    <InlineMath tex="V_{\max}" />
+                  </strong>
+                  , which control their own fluxes tightly. And finally the{" "}
+                  <strong>symport capacity</strong>, which is the one the
+                  extracellular phosphate curve speaks to most directly.
+                </p>
+
+                <p>
+                  Worth repeating from 5.4: a lumped module's constants are{" "}
+                  <strong>effective parameters</strong>. They describe a group
+                  of reactions, not one enzyme, so no database will ever hold
+                  them. They can only be determined from a time course of the
+                  system itself — which is precisely what Table 4 asks for.
+                </p>
+
+                <p>
+                  There is also one prediction we would want tested before
+                  trusting, because it is the one that surprised us.{" "}
+                  <strong>
+                    More ATP synthase capacity need not mean more phosphate
+                    entering the cell.
+                  </strong>{" "}
+                  The chain is short: raising{" "}
+                  <InlineMath tex="V_{\max,\mathrm{ATPS}}" /> does improve ATP
+                  regeneration, and every polymerisation step spends ATP — so
+                  far, so intuitive. But ATP synthase pays for that ATP with the
+                  proton gradient, and the P<sub>i</sub>/H⁺ symport is driven by
+                  the same gradient. Drawing it down slows phosphate entry,
+                  entry becomes limiting, and the accumulated polyP falls rather
+                  than rises. Sections 6.3 and 7.3 both show it, from the
+                  concentration courses and from the scans. If it holds
+                  experimentally, it changes the design: engineering ATP
+                  regeneration on its own would be the wrong lever, and
+                  transport has to be engineered with it.
+                </p>
+              </div>
+
+              <div id="dbtl-loop" className="model-network__subsection">
+                <h3>8.3 Closing the Design–Build–Test–Learn loop</h3>
+
+                <p>
+                  Put together, these sections are one turn of a loop rather
+                  than a result. The model made a prediction; the prediction
+                  selected a measurement; the measurement will fix a parameter;
+                  the fixed parameter will make the next prediction sharper.
+                  That is the DBTL cycle with the modelling step doing real work
+                  in it — deciding what the Test phase is for, instead of
+                  explaining the results afterwards.
+                </p>
+              </div>
+            </div>
+
+            <div className="model-network__wide">
+              <DbtlLoop />
+            </div>
+
+            <div className="model-network__intro">
+              <div
+                id="scope-and-limitations"
+                className="model-network__subsection"
+              >
+                <h3>8.4 Scope, limitations and the next iteration</h3>
+
+                <p>
+                  An honest account of what this model cannot do is part of the
+                  result, not an apology for it:
+                </p>
+
+                <ul className="model-network__list">
+                  <li>
+                    The genome-scale model's answers depend on the{" "}
+                    <strong>objective function and the bounds</strong> imposed
+                    on it. Different choices give different "active" networks.
+                  </li>
+                  <li>
+                    The reduced network{" "}
+                    <strong>excludes biosynthetic branches</strong> that are
+                    active under growth conditions. It describes a cell
+                    accumulating phosphate, not a cell doing everything at once.
+                  </li>
+                  <li>
+                    Some parameters come from{" "}
+                    <strong>
+                      related species rather than from <em>P. putida</em> KT2440
+                    </strong>
+                    , and a borrowed constant is an assumption, not a
+                    measurement.
+                  </li>
+                  <li>
+                    ATP synthase and the proton-motive force are represented{" "}
+                    <strong>effectively</strong> — as a rate law and a proton
+                    balance, not as a mechanistic account of the membrane.
+                  </li>
+                  <li>
+                    There is{" "}
+                    <strong>no explicit genetic or enzymatic regulation</strong>
+                    . Every enzyme in the model has a fixed capacity; a real
+                    cell changes its own.
+                  </li>
+                  <li>
+                    The <strong>full aerobic/anaerobic cycle</strong> that an
+                    EBPR process runs on is not modelled yet. This is the
+                    aerobic half.
+                  </li>
+                  <li>
+                    The model <strong>needs calibration</strong> before it can
+                    be used as a quantitatively predictive tool. Everything in
+                    sections 6 and 7 is qualitative behaviour and relative
+                    ranking, which is what it was built to give.
+                  </li>
+                </ul>
+
+                <p>
+                  Which is the right note to end on.{" "}
+                  <strong>
+                    The model is not presented as a finished predictor, but as
+                    an experimentally testable framework that identifies which
+                    measurements will make the next iteration more informative.
+                  </strong>
+                </p>
               </div>
             </div>
           </section>
