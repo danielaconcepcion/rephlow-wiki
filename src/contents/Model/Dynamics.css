@@ -87,6 +87,12 @@
   touch-action: pan-y;
 }
 
+.tchart__zero {
+  stroke: var(--ink);
+  stroke-width: 1;
+  opacity: 0.45;
+}
+
 .tchart__grid {
   stroke: rgba(27, 35, 64, 0.1);
   stroke-width: 1;

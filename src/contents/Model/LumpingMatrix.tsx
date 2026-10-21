@@ -115,8 +115,8 @@ export function LumpingMatrix() {
       <figcaption>
         <strong>Figure 10.</strong> Lumping, on both sides at once: the network
         as 45 separate reactions and as grouped modules, and the same step in
-        the stoichiometric matrix. Maps from the thesis's own figures; labels in
-        Spanish.
+        the stoichiometric matrix. Maps from our own COBRApy analysis; labels
+        in Spanish.
       </figcaption>
     </figure>
   );

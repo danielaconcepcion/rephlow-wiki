@@ -1,9 +1,9 @@
-/* Generated from the vector curves of the project's own COPASI figures
-   (the thesis's Figures 9 and 10): every point here is read back off
-   those plots, not re-simulated and not invented. Concentrations in
-   µmol L⁻¹, fluxes in µmol s⁻¹, time in seconds.
+/* Generated from the vector curves of our own COPASI plots: every point
+   here is read back off those plots, not re-simulated and not invented.
+   Concentrations in µmol L⁻¹, fluxes in µmol s⁻¹, time in seconds.
 
-   Figure 9 is a parameter scan of V_max,ATPS over 0.001–2 µmol L⁻¹ s⁻¹;
+   The concentration courses come from a parameter scan of V_max,ATPS over
+   0.001–2 µmol L⁻¹ s⁻¹;
    the original encodes the scanned value in line thickness, so the six
    steps are recoverable in order but their individual values are not. */
 
@@ -11,6 +11,11 @@ export type Point = [number, number];
 
 /** How many steps the V_max,ATPS scan has, lowest first. */
 export const SCAN_STEPS = 6;
+
+/** The scanned values, in µmol L⁻¹ s⁻¹. The original encodes the scanned
+ * value in line thickness and its six widths are evenly spaced, so the six
+ * steps are taken as evenly spaced across the stated 0.001–2 interval. */
+export const SCAN_VALUES = [0.001, 0.4, 0.8, 1.2, 1.6, 2.0];
 
 export interface SpeciesDef {
   id: string;

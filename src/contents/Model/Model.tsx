@@ -11,6 +11,11 @@ import { CoreFunnel } from "./CoreFunnel";
 import { LumpedModel } from "./LumpedModel";
 import { LumpingMatrix } from "./LumpingMatrix";
 import { ConcentrationCourses, PhosphateFluxes } from "./Dynamics";
+import {
+  ParameterScans,
+  SensitivityCourses,
+  SensitivityHeatmap,
+} from "./Sensitivity";
 import { AccordionSection } from "../HumanPractices/AccordionSection";
 import { DisplayMath, InlineMath } from "../../components/Math";
 import { ModelBackground } from "./ModelBackground";
@@ -115,6 +120,15 @@ const MODEL_SECTIONS: PageSection[] = [
       { id: "time-evolution", label: "Time evolution of the system" },
       { id: "uptake-pulse", label: "A transient phosphate-uptake pulse" },
       { id: "energy-polyp", label: "Energy availability and PolyP" },
+    ],
+  },
+  {
+    id: "sensitivity-analysis",
+    label: "What controls PolyP accumulation?",
+    children: [
+      { id: "ranking-parameters", label: "Ranking influential parameters" },
+      { id: "when-matters", label: "When does each parameter matter?" },
+      { id: "testing-parameters", label: "Testing the top parameters" },
     ],
   },
 ];
@@ -880,8 +894,8 @@ export function Model() {
                   FVA, grouped by functional category, at three thresholds. At
                   10⁻¹ the pFBA core is almost entirely central carbon
                   metabolism and transport, while FVA keeps a tail of
-                  biosynthetic and detoxification routes. Figure from the
-                  underlying thesis <Cite n={6} />; axis labels in Spanish.
+                  biosynthetic and detoxification routes. Figure from the our
+                  own constraint-based analysis; axis labels in Spanish.
                 </figcaption>
               </figure>
             </div>
@@ -899,7 +913,7 @@ export function Model() {
                   unique flux map. Flux variability analysis puts a number on
                   that: it maximises and minimises each reaction in turn while
                   holding the objective at (or near) its optimum
-                  <Cite n={7} />, which gives the interval of fluxes the
+                  <Cite n={6} />, which gives the interval of fluxes the
                   reaction can take without the cell giving anything up.
                 </p>
               </div>
@@ -1010,7 +1024,7 @@ export function Model() {
                   as its own module rather than being folded into the carbon
                   pathways, precisely because the respiratory reactions are not
                   strictly coupled to them
-                  <Cite n={8} />.
+                  <Cite n={7} />.
                 </p>
               </div>
 
@@ -1068,7 +1082,7 @@ export function Model() {
                   <li>
                     <strong>The Entner–Doudoroff pathway</strong> — the route{" "}
                     <em>P. putida</em> actually uses for glucose
-                    <Cite n={9} />, rather than a textbook glycolysis.
+                    <Cite n={8} />, rather than a textbook glycolysis.
                   </li>
                   <li>
                     <strong>The TCA cycle</strong> — oxidation of acetyl-CoA and
@@ -1100,7 +1114,7 @@ export function Model() {
                   them back, and would need them. And the pentose-phosphate
                   branches, which the same figure shows at zero flux here, are
                   part of the glucose-processing cycle this organism can run{" "}
-                  <Cite n={9} /> but not of the state being described. The
+                  <Cite n={8} /> but not of the state being described. The
                   reduction is specific to aerobic polyP accumulation under a
                   fixed medium; it is not a general-purpose small model of{" "}
                   <em>P. putida</em>.
@@ -1121,8 +1135,7 @@ export function Model() {
                   are visible as groups: respiration (top left),
                   Entner–Doudoroff down the middle, the TCA cycle and ATP
                   synthase (right), polyP synthesis (bottom right). Figure from
-                  the underlying thesis <Cite n={6} />; module labels in
-                  Spanish.
+                  our own pFBA solution; module labels in Spanish.
                 </figcaption>
               </figure>
             </div>
@@ -1214,16 +1227,6 @@ export function Model() {
                       </a>
                     </li>
                     <li id="model-ref-6">
-                      Concepción Castanedo, D. (2026).{" "}
-                      <em>
-                        Caracterización de flujos metabólicos y modelado
-                        cinético de la acumulación aerobia de polifosfato en
-                        bacterias
-                      </em>{" "}
-                      [Trabajo de Fin de Grado]. Universidad Complutense de
-                      Madrid, Facultad de Ciencias Físicas.
-                    </li>
-                    <li id="model-ref-7">
                       Kenefake, D., Armingol, E., Lewis, N. E. &amp;
                       Pistikopoulos, E. N. (2022). An improved algorithm for
                       flux variability analysis. <em>BMC Bioinformatics, 23</em>{" "}
@@ -1236,7 +1239,7 @@ export function Model() {
                         10.1186/s12859-022-05089-9
                       </a>
                     </li>
-                    <li id="model-ref-8">
+                    <li id="model-ref-7">
                       Burgard, A. P., Nikolaev, E. V., Schilling, C. H. &amp;
                       Maranas, C. D. (2004). Flux coupling analysis of
                       genome-scale metabolic network reconstructions.{" "}
@@ -1249,7 +1252,7 @@ export function Model() {
                         10.1101/gr.1926504
                       </a>
                     </li>
-                    <li id="model-ref-9">
+                    <li id="model-ref-8">
                       Nikel, P. I., Chavarría, M., Fuhrer, T., Sauer, U. &amp;
                       de Lorenzo, V. (2015). <em>Pseudomonas putida</em> KT2440
                       metabolizes glucose through a cycle formed by enzymes of
@@ -1304,7 +1307,7 @@ export function Model() {
                   Which reactions may be grouped is not a matter of taste. Flux
                   coupling analysis asks whether two reactions are forced to
                   move together in every feasible steady state
-                  <Cite n={8} />, and for <em>P. putida</em> it gives a clear
+                  <Cite n={7} />, and for <em>P. putida</em> it gives a clear
                   answer: the sequential steps of the{" "}
                   <strong>Entner–Doudoroff pathway are coupled</strong> — the
                   route has no branch along the way that could drain it, so
@@ -1350,7 +1353,7 @@ export function Model() {
                 <p>
                   <strong>Respiration stays separate</strong>, and deliberately.
                   The respiratory reactions are not strictly coupled to the
-                  carbon routes <Cite n={8} />, so keeping oxidative
+                  carbon routes <Cite n={7} />, so keeping oxidative
                   phosphorylation as its own module is what lets the model
                   adjust its redox and energy balance to the electron acceptor
                   it actually has — exactly the flexibility FVA showed was real
@@ -1447,7 +1450,7 @@ export function Model() {
                   protons, O₂, CO₂ and water crossing between compartments — are{" "}
                   <strong>linear diffusion</strong>. ATP maintenance, by
                   contrast, is an ordinary saturating law in ATP
-                  <Cite n={10} />, not a constant drain. Every module's law is
+                  <Cite n={9} />, not a constant drain. Every module's law is
                   tabulated below.
                 </p>
               </div>
@@ -1609,7 +1612,7 @@ export function Model() {
                 <p>
                   PolyP is a linear polymer of orthophosphates, and the chains
                   bacteria build are long — up to roughly a thousand units{" "}
-                  <Cite n={11} />. A model that followed every chain length
+                  <Cite n={10} />. A model that followed every chain length
                   would need a state variable per length; the distribution at
                   equilibrium is exponential,{" "}
                   <InlineMath tex="[a_n] = K\exp(-n/n_0)" />, with the
@@ -1655,7 +1658,7 @@ export function Model() {
                   hardest part of this kind of model, and the place where it is
                   easiest to be dishonest about how much is known. The values
                   used here were taken from the literature and from enzyme
-                  databases, principally BRENDA <Cite n={12} />, under an
+                  databases, principally BRENDA <Cite n={11} />, under an
                   explicit rule: prefer the measurement closest to this organism
                   and this function. In order, <em>P. putida</em> KT2440 first;
                   then other <em>Pseudomonas</em>, mainly <em>P. aeruginosa</em>
@@ -1684,7 +1687,7 @@ export function Model() {
 
               <div className="model-network__subsection">
                 <p>
-                  The simulations themselves run in COPASI <Cite n={13} />, on
+                  The simulations themselves run in COPASI <Cite n={12} />, on
                   the reduced network described above; the constraint-based work
                   of the earlier sections used COBRApy, with the maps drawn in
                   Escher.
@@ -1694,7 +1697,7 @@ export function Model() {
               <div className="model-network__subsection">
                 <AccordionSection title="References">
                   <ol className="model-reference-list">
-                    <li id="model-ref-10">
+                    <li id="model-ref-9">
                       Nakano, A., Kishikawa, J.-I., Mitsuoka, K. &amp; Yokoyama,
                       K. (2023). Mechanism of ATP hydrolysis dependent rotation
                       of bacterial ATP synthase.{" "}
@@ -1707,7 +1710,7 @@ export function Model() {
                         10.1038/s41467-023-39742-5
                       </a>
                     </li>
-                    <li id="model-ref-11">
+                    <li id="model-ref-10">
                       Tobin, K. M., McGrath, J. W., Mullan, A., Quinn, J. P.
                       &amp; O'Connor, K. E. (2006). Polyphosphate accumulation
                       by <em>Pseudomonas putida</em> CA-3 and other
@@ -1723,7 +1726,7 @@ export function Model() {
                         10.1128/aem.02007-06
                       </a>
                     </li>
-                    <li id="model-ref-12">
+                    <li id="model-ref-11">
                       Hauenstein, J., Jeske, L., Jäde, A., Krull, M., Dümmer,
                       K., Koblitz, J., Tietz, A., Jahn, D., Reimer, L. C. &amp;
                       Bunk, B. (2025). BRENDA in 2026: a Global Core Biodata
@@ -1738,7 +1741,7 @@ export function Model() {
                         10.1093/nar/gkaf1113
                       </a>
                     </li>
-                    <li id="model-ref-13">
+                    <li id="model-ref-12">
                       Hoops, S., Sahle, S., Gauges, R., Lee, C., Pahle, J.,
                       Simus, N., Singhal, M., Xu, L., Mendes, P. &amp; Kummer,
                       U. (2006). COPASI — a COmplex PAthway SImulator.{" "}
@@ -1817,7 +1820,7 @@ export function Model() {
                   Michaelis–Menten reaction is approximately first order in
                   substrate; as the enzyme saturates, the slope falls away until
                   the rate approaches <InlineMath tex="V_{\max}" /> and the
-                  reaction becomes zero order <Cite n={16} />. The plateau in
+                  reaction becomes zero order <Cite n={15} />. The plateau in
                   Figure 12 is that transition, read off a whole network rather
                   than a single enzyme.
                 </p>
@@ -1857,9 +1860,9 @@ export function Model() {
                   around. <strong>Luxury uptake</strong> — a cell transporting
                   far more phosphate than its immediate growth requires, and
                   storing the excess as polyphosphate — has been observed
-                  experimentally in batch cultures <Cite n={14} /> and described
+                  experimentally in batch cultures <Cite n={13} /> and described
                   in kinetic models of phosphate-accumulating microalgae{" "}
-                  <Cite n={15} />. The reduced model reproduces it without
+                  <Cite n={14} />. The reduced model reproduces it without
                   having been built to: it falls out of a phosphate pool that
                   starts far from equilibrium and a polymerisation sink that can
                   absorb what comes in.
@@ -1907,7 +1910,7 @@ export function Model() {
               <div className="model-network__subsection">
                 <AccordionSection title="References">
                   <ol className="model-reference-list">
-                    <li id="model-ref-14">
+                    <li id="model-ref-13">
                       Plouviez, M., Fernández, E., Grossman, A. R., Sanz-Luque,
                       E., Sells, M., Wheeler, D. &amp; Guieysse, B. (2021).
                       Responses of <em>Chlamydomonas reinhardtii</em> during the
@@ -1923,7 +1926,7 @@ export function Model() {
                         10.1111/jpy.13145
                       </a>
                     </li>
-                    <li id="model-ref-15">
+                    <li id="model-ref-14">
                       John, E. H. &amp; Flynn, K. J. (2000). Modelling phosphate
                       transport and assimilation in microalgae; how much
                       complexity is warranted?{" "}
@@ -1936,10 +1939,251 @@ export function Model() {
                         10.1016/s0304-3800(99)00178-7
                       </a>
                     </li>
-                    <li id="model-ref-16">
+                    <li id="model-ref-15">
                       Doran, P. M. (2013).{" "}
                       <em>Bioprocess Engineering Principles</em>. Academic
                       Press.
+                    </li>
+                  </ol>
+                </AccordionSection>
+              </div>
+            </div>
+          </section>
+
+          <section id="sensitivity-analysis" className="model-network">
+            <div className="model-network__intro">
+              <h2>
+                7. Parameter sensitivity analysis: what controls PolyP
+                accumulation?
+              </h2>
+              <p>
+                Section 5 was honest about where the numbers in this model come
+                from: several organisms, several conditions, and in places an
+                estimate. That is not a reason to throw the model away — it is a
+                reason to ask it a different question. Not{" "}
+                <em>what will happen</em>, but{" "}
+                <em>which numbers decide what happens</em>. A parameter the
+                model barely responds to does not need measuring; one it hangs
+                on does. Sensitivity analysis is how we tell them apart, and it
+                is what turns a loosely parameterised model into a list of
+                experiments.
+              </p>
+            </div>
+
+            <div className="model-network__intro">
+              <div
+                id="ranking-parameters"
+                className="model-network__subsection"
+              >
+                <h3>7.1 Ranking influential parameters</h3>
+
+                <p>
+                  The analysis is <strong>local</strong>: each parameter is
+                  nudged slightly around the values the model already uses, and
+                  we watch what the fluxes do. It says how the system responds
+                  near the operating point it is in, not across the whole
+                  parameter space — a cheap question with a useful answer, and
+                  the right one when the operating point is what we are
+                  designing around <Cite n={16} />.
+                </p>
+
+                <p>
+                  Comparing the answers is the part that needs care. A{" "}
+                  <InlineMath tex="V_{\max}" /> is a rate, a{" "}
+                  <InlineMath tex="K_m" /> is a concentration, an initial O₂ is
+                  another concentration again, and they differ by orders of
+                  magnitude. Shifting each by the same absolute amount compares
+                  nothing. So the sensitivities are <strong>scaled</strong> —
+                  relative change against relative change, which is
+                  dimensionless and therefore comparable:
+                </p>
+              </div>
+            </div>
+
+            <div className="model-network__wide">
+              <DisplayMath
+                tex="\widetilde{S}_{ij}(t) = \frac{p_j}{X_i(t)}\,\frac{\partial X_i(t)}{\partial p_j} = \frac{\partial \ln X_i(t)}{\partial \ln p_j}"
+                label="9"
+              />
+            </div>
+
+            <div className="model-network__intro">
+              <div className="model-network__subsection">
+                <p>
+                  Read it as an elasticity:{" "}
+                  <InlineMath tex="\widetilde{S} = 1" /> means a 1 % rise in the
+                  parameter gives a 1 % rise in the flux, and a negative value
+                  means the flux falls. Figure 14 puts every flux against every
+                  parameter that moves it.
+                </p>
+              </div>
+            </div>
+
+            <div className="model-network__wide">
+              <SensitivityHeatmap />
+            </div>
+
+            <div className="model-network__intro">
+              <div className="model-network__subsection">
+                <p>Reading it module by module:</p>
+
+                <ul className="model-network__list">
+                  <li>
+                    <strong>PolyP polymerisation.</strong> The polymerisation
+                    parameters control the polymerisation fluxes, as they should
+                    — PPK2's <InlineMath tex="K_{m,\mathrm{ATP}}" /> at −0.84 on
+                    its own flux, PPK's <InlineMath tex="V_{\max}" /> at +0.83
+                    on its own. But notice how <em>local</em> that control is:
+                    these entries barely touch any other row. The polymerisation
+                    enzymes set their own rates and little else.
+                  </li>
+                  <li>
+                    <strong>Respiration.</strong> The terminal oxidase is the
+                    opposite — its <InlineMath tex="V_{\max}" /> moves almost
+                    every row in the table, from the TCA cycle (+1.22) to
+                    phosphate symport (+1.03) to all three polymerisation steps
+                    (+0.43). The single largest entry in the whole map,{" "}
+                    <strong>+1.45</strong>, is phosphate symport against the
+                    initial oxygen.
+                  </li>
+                  <li>
+                    <strong>ATP synthesis.</strong> ATP synthase's{" "}
+                    <InlineMath tex="V_{\max}" /> is near-total control of its
+                    own flux (+0.99) and a firm +0.66 on the polymerisation
+                    steps — but only +0.17 on symport, which is the asymmetry
+                    section 6.3 turned on.
+                  </li>
+                  <li>
+                    <strong>Phosphate transport.</strong> The symport row is the
+                    busiest in the map: it responds to something in every
+                    module. Phosphate entry is where the rest of the network
+                    makes itself felt.
+                  </li>
+                  <li>
+                    <strong>Initial redox conditions.</strong> The quinone and
+                    NADH pools the simulation starts from are not a formality.
+                    Starting NADH alone carries −0.48 on the TCA flux and −0.46
+                    on Entner–Doudoroff, and the initial Q8H₂ carries −0.89 on
+                    symport.
+                  </li>
+                </ul>
+
+                <p>
+                  Which gives the result this section exists for.{" "}
+                  <strong>
+                    PolyP accumulation is controlled not only by the
+                    polymerisation enzymes, but also by phosphate transport,
+                    respiratory capacity and ATP regeneration.
+                  </strong>{" "}
+                  Over-expressing PPK1 is not, on this evidence, a route to a
+                  better accumulator on its own — the map says the cell's energy
+                  and transport machinery has at least as much say.
+                </p>
+              </div>
+
+              <div id="when-matters" className="model-network__subsection">
+                <h3>7.2 When does each parameter matter?</h3>
+
+                <p>
+                  A single number per parameter hides something, because
+                  sensitivity is not constant: a parameter can dominate early
+                  and stop mattering later. So the same analysis was run through
+                  the time course, for the three polymerisation fluxes against
+                  the five parameters each responds to most.
+                </p>
+              </div>
+            </div>
+
+            <div className="model-network__wide">
+              <SensitivityCourses />
+            </div>
+
+            <div className="model-network__intro">
+              <div className="model-network__subsection">
+                <p>
+                  PPK and PPK2 have almost the same shape — both dominated by
+                  the polyP module's own parameters and by the capacity of ATP
+                  synthase, both swinging hard between roughly 400 and 1 000 s
+                  and settling afterwards. PPK50r is the odd one out: its
+                  sensitivities are smaller, its evolution is damped, and what
+                  drives it is energetic and respiratory rather than
+                  polymerising — ATP synthase and the oxidase, not PPK.
+                </p>
+
+                <p>
+                  The window where everything swings is not arbitrary. It is the
+                  approach to the plateau of Figure 12 — the transition out of
+                  the first-order regime and into substrate saturation. That is
+                  when the model is poised between regimes, and it is when the
+                  parameters decide the outcome. Before and after it, they
+                  mostly do not.
+                </p>
+              </div>
+
+              <div
+                id="testing-parameters"
+                className="model-network__subsection"
+              >
+                <h3>7.3 Testing the most influential parameters</h3>
+
+                <p>
+                  The map ranks; a scan tests. The three quantities it puts at
+                  the top — the capacity of the terminal oxidase, the capacity
+                  of ATP synthase, and the oxygen the cell starts with — were
+                  each swept across their plausible range, with the whole time
+                  course recomputed at every value.
+                </p>
+              </div>
+            </div>
+
+            <div className="model-network__wide">
+              <ParameterScans />
+            </div>
+
+            <div className="model-network__intro">
+              <div className="model-network__subsection">
+                <p>
+                  The behaviour follows what <InlineMath tex="V_{\max}" /> and{" "}
+                  <InlineMath tex="K_m" /> mean physically: one sets the ceiling
+                  on a rate, the other sets where and how sharply the reaction
+                  turns over between regimes. Raising{" "}
+                  <InlineMath tex="V_{\max,\mathrm{CYT}}" /> or the initial O₂
+                  softens the decay of the fluxes over time, though PPK, PPK2
+                  and PPK50r respond to both only moderately. Raising{" "}
+                  <InlineMath tex="V_{\max,\mathrm{ATPS}}" /> raises the
+                  polymerisation fluxes, as more ATP regeneration should — and
+                  then, exactly as in 6.3, costs the proton gradient that drives
+                  P<sub>i</sub>/H⁺ symport, so phosphate entry decays and the
+                  accumulated polyP falls. The scan is where that trade-off
+                  becomes visible as a mechanism rather than an anomaly.
+                </p>
+
+                <p>
+                  So the practical output of this section is a list, in order:
+                  the parameters worth measuring in our own system are the
+                  oxidase and ATP synthase capacities, the starting redox and
+                  oxygen state, and the polyP enzymes' affinity for ATP. Those
+                  are the numbers that would turn this from a design-stage
+                  instrument into a predictive one.
+                </p>
+              </div>
+
+              <div className="model-network__subsection">
+                <AccordionSection title="References">
+                  <ol className="model-reference-list">
+                    <li id="model-ref-16">
+                      Mendes, P., Hoops, S., Sahle, S., Gauges, R., Dada, J.
+                      &amp; Kummer, U. (2009). Computational modeling of
+                      biochemical networks using COPASI. In I. V. Maly (Ed.),{" "}
+                      <em>Systems Biology</em> (Methods in Molecular Biology,
+                      Vol. 500, pp. 17–59). Humana Press. DOI:{" "}
+                      <a
+                        href="https://doi.org/10.1007/978-1-59745-525-1_2"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        10.1007/978-1-59745-525-1_2
+                      </a>
                     </li>
                   </ol>
                 </AccordionSection>

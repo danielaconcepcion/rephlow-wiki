@@ -3,6 +3,7 @@ import {
   COURSE_PANELS,
   FLUX_PANELS,
   SCAN_STEPS,
+  SCAN_VALUES,
   SPECIES,
   type Point,
 } from "./dynamicsData";
@@ -57,13 +58,13 @@ export function ConcentrationCourses() {
           onChange={(event) => setStep(Number(event.target.value))}
         />
         <output htmlFor="vmax-scan">
-          step {step + 1} of {SCAN_STEPS}
+          {SCAN_VALUES[step] < 0.01
+            ? SCAN_VALUES[step].toFixed(3)
+            : SCAN_VALUES[step].toFixed(2)}{" "}
+          µmol L⁻¹ s⁻¹
           <span className="dyn__control-note">
-            {step === 0
-              ? " — lowest"
-              : step === SCAN_STEPS - 1
-                ? " — highest"
-                : ""}
+            {" "}
+            ({step + 1}/{SCAN_STEPS})
           </span>
         </output>
       </div>
@@ -127,9 +128,9 @@ export function ConcentrationCourses() {
         <strong>Figure 12.</strong> Concentration time courses of the reduced
         model, split across three vertical scales so the millimolar pools and
         the short phosphate chains can both be read. The slider steps through
-        the V<sub>max, ATPS</sub> scan (0.001–2 µmol L⁻¹ s⁻¹, six steps, lowest
-        first); the five steps not selected stay in the background. Redrawn from
-        the curves of our own COPASI run.
+        the V<sub>max, ATPS</sub> scan — six values evenly spaced across 0.001–2
+        µmol L⁻¹ s⁻¹ — and the five steps not selected stay in the background.
+        Redrawn from the curves of our own COPASI run.
       </figcaption>
     </figure>
   );

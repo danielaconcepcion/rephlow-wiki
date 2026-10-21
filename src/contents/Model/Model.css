@@ -75,6 +75,7 @@
 .lumped figcaption,
 .lumpmat figcaption,
 .dyn > figcaption,
+.hm > figcaption,
 .model-page .wff__caption {
   max-width: 760px;
   margin: 12px auto 0;
@@ -90,6 +91,7 @@
 .lumped figcaption strong,
 .lumpmat figcaption strong,
 .dyn > figcaption strong,
+.hm > figcaption strong,
 .model-network__compare-panel figcaption strong {
   color: var(--ink);
   font-family: var(--font-display);

@@ -7,10 +7,9 @@ import { InlineMath } from "../../components/Math";
  * or tap — the reactions that were grouped into it, what goes in and
  * out, the shape of its rate law and the parameters that law carries.
  *
- * Redrawn from the thesis's own lumped map rather than reproduced: the
- * geometry here is the wiki's (three columns — carbon, energy,
- * phosphorus — in the order the cell uses them), while the groupings,
- * stoichiometry and fluxes are the thesis's.
+ * Redrawn rather than reproduced: the geometry here is the wiki's (three
+ * columns — carbon, energy, phosphorus — in the order the cell uses
+ * them), while the groupings, stoichiometry and fluxes are our own.
  */
 
 interface Module {
@@ -329,20 +328,8 @@ export function LumpedModel() {
         <strong>Figure 11.</strong> The reduced model after lumping, with the
         pFBA flux of each module. Hover, tap or tab through a module to see what
         was grouped into it, what it consumes and produces, and the shape of its
-        rate law. Redrawn from the thesis's own lumped map <Cite n={6} />.
+        rate law. Redrawn from our own lumped map.
       </figcaption>
     </figure>
-  );
-}
-
-/** Local to this file: section 5's citations point at the same list. */
-function Cite({ n }: { n: number }) {
-  return (
-    <>
-      {" "}
-      <a className="model-citation" href={`#model-ref-${n}`}>
-        [{n}]
-      </a>
-    </>
   );
 }

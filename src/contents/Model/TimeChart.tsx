@@ -54,6 +54,7 @@ function at(pts: Point[], t: number): number | null {
 export function TimeChart({
   title,
   xMax,
+  yMin = 0,
   yMax,
   xTicks,
   yTicks,
@@ -66,6 +67,8 @@ export function TimeChart({
 }: {
   title: string;
   xMax: number;
+  /** Sensitivities run either side of zero; concentrations do not. */
+  yMin?: number;
   yMax: number;
   xTicks: number[];
   yTicks: number[];
@@ -84,7 +87,7 @@ export function TimeChart({
   const [hover, setHover] = useState<number | null>(null);
 
   const px = (t: number) => PAD.l + (t / xMax) * PW;
-  const py = (v: number) => PAD.t + PH - (v / yMax) * PH;
+  const py = (v: number) => PAD.t + PH - ((v - yMin) / (yMax - yMin)) * PH;
   const d = (pts: Point[]) =>
     pts.length
       ? `M${pts.map(([t, v]) => `${px(t).toFixed(1)},${py(v).toFixed(1)}`).join(" L")}`
@@ -169,6 +172,15 @@ export function TimeChart({
           x2={PAD.l + PW}
           y2={PAD.t + PH}
         />
+        {yMin < 0 && yMax > 0 && (
+          <line
+            className="tchart__zero"
+            x1={PAD.l}
+            y1={py(0)}
+            x2={PAD.l + PW}
+            y2={py(0)}
+          />
+        )}
 
         <g clipPath={`url(#${clip})`}>
           {series.map((s, i) => (

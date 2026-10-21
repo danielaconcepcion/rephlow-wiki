@@ -1,0 +1,163 @@
+/* Section 7's heatmap. The time-course figures reuse Dynamics.css; only
+   the table and the scan tabs are new here. */
+
+.hm {
+  margin: 28px 0 8px;
+}
+
+.hm__scroll {
+  overflow-x: auto;
+  border: 1px solid var(--model-figure-line);
+  border-radius: 8px;
+  background: var(--paper);
+}
+
+.hm__table {
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: 0.64rem;
+  font-variant-numeric: tabular-nums;
+  margin: 0 auto;
+}
+
+.hm__corner {
+  background: var(--paper);
+}
+
+.hm__group {
+  padding: 8px 6px 6px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink);
+  border-bottom: 1px solid var(--model-figure-line);
+  white-space: nowrap;
+}
+
+.hm__group + .hm__group {
+  border-left: 1px solid var(--model-figure-line);
+}
+
+.hm__param {
+  padding: 0 0 6px;
+  font-weight: 400;
+  color: var(--ink-soft);
+  vertical-align: bottom;
+  height: 92px;
+}
+
+/* The parameter names are long and the columns are 34px wide, so they are
+   set on their side, as the original prints them. */
+.hm__param span {
+  display: block;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  margin: 0 auto;
+}
+
+.hm__flux {
+  padding: 0 8px 0 10px;
+  text-align: right;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  position: sticky;
+  left: 0;
+  background: var(--paper);
+}
+
+.hm__cell {
+  width: 34px;
+  height: 21px;
+  text-align: center;
+  color: var(--ink);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  cursor: default;
+}
+
+.hm__cell--on {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.hm__cell:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.hm__readout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  min-height: 34px;
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+}
+
+.hm__readout strong {
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+
+.hm__readout-group {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgba(27, 35, 64, 0.06);
+  font-size: 0.7rem;
+}
+
+.hm__readout-hint {
+  opacity: 0.7;
+}
+
+/* --- the scan selector --------------------------------------------------- */
+
+.scan__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.scan__tab {
+  padding: 7px 14px;
+  border: 1px solid var(--model-figure-line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.scan__tab--on {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.scan__tab-name {
+  font-style: italic;
+}
+
+.scan__chart {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
