@@ -43,8 +43,7 @@ const STEPS: StepMeta[] = [
         Internal metabolite pools change far faster than growth or the external
         environment, so FBA treats the network as being at steady state: at
         every metabolite, production and consumption balance exactly. This
-        single linear condition confines <em>v</em> to a subspace of the
-        original flux space — sketched here as a plane through the origin.
+        single linear condition confines <em>v</em> to a subspace of the original flux space, sketched here as a plane through the origin.
       </p>
     ),
     equation: <><em>N</em><em>v</em> = 0, where <em>N</em> is the stoichiometric matrix</>,
@@ -75,8 +74,7 @@ const STEPS: StepMeta[] = [
         carry. Depending on the reaction, that bound can represent nutrient
         availability in the medium, the reaction&apos;s own catalytic capacity,
         or a gene deletion enforced by fixing <em>v</em><sub>i</sub> = 0.
-        Adding these bounds closes the unbounded cone into a finite, convex
-        polyhedron — the feasible flux space.
+        Adding these bounds closes the unbounded cone into a finite, convex polyhedron: the feasible flux space.
       </p>
     ),
     equation: <>lb<sub>i</sub> ≤ <em>v</em><sub>i</sub> ≤ ub<sub>i</sub></>,
@@ -88,9 +86,7 @@ const STEPS: StepMeta[] = [
     question: "Which flux distribution does FBA actually choose?",
     body: (
       <p>
-        FBA searches the feasible polyhedron for the flux distribution that
-        optimizes a chosen objective — growth, PolyP synthesis, or any other
-        flux of interest. The optimum is not necessarily a single point: it
+        FBA searches the feasible polyhedron for the flux distribution that optimizes a chosen objective: growth, PolyP synthesis, or any other flux of interest. The optimum is not necessarily a single point: it
         can be an entire face or edge of the polyhedron, meaning several flux
         distributions score equally well.
       </p>
@@ -176,8 +172,7 @@ export function FBAPrimer() {
               <p>
                 Because many flux distributions can be equally optimal, pFBA
                 (parsimonious FBA) adds a second, smaller optimization: among
-                all optimal solutions, it picks the one with the smallest total
-                flux — a proxy for minimizing overall enzyme usage. This is the
+                all optimal solutions, it picks the one with the smallest total flux, a proxy for minimizing overall enzyme usage. This is the
                 criterion used throughout this page whenever a single flux
                 distribution, rather than a range, is reported.
               </p>

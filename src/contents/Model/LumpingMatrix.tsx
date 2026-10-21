@@ -94,8 +94,7 @@ export function LumpingMatrix() {
           <>
             <InlineMath tex={EFFECTIVE} />
             <p className="lumpmat__reading">
-              One column, one flux. The pair contributes exactly what it did —
-              the model has one variable fewer, and no reaction it could run
+              One column, one flux. The pair contributes exactly what it did, and the model has one variable fewer, and no reaction it could run
               before has become impossible.
             </p>
           </>

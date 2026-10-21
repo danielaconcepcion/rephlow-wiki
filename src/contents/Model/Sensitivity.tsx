@@ -117,7 +117,7 @@ export function SensitivityHeatmap() {
             </strong>
             <span className="hm__readout-group">{reading.group}</span>
             <span>
-              S̃ = {reading.value.toFixed(2)} — a 1 % rise in the parameter
+              S̃ = {reading.value.toFixed(2)}, so a 1 % rise in the parameter
               {reading.value > 0 ? " raises " : " lowers "}
               the flux by {Math.abs(reading.value).toFixed(2)} %
             </span>
@@ -167,7 +167,7 @@ export function SensitivityCourses() {
         <strong>Figure 15.</strong> Scaled sensitivities of the three
         polymerisation fluxes over the run, each against the five parameters it
         responds to most. The window where the curves swing hardest is the
-        approach to the plateau of Figure 12 — the transition into substrate
+        approach to the plateau of Figure 12: the transition into substrate
         saturation. Read back from our own COPASI output.
       </figcaption>
     </figure>

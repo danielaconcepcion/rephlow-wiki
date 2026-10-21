@@ -22,7 +22,7 @@ const STAGES = [
   {
     count: "45",
     label: "above 10⁻² mmol gDW⁻¹ h⁻¹",
-    note: "1.54% — the kinetically relevant core",
+    note: "1.54%, the kinetically relevant core",
     width: 36,
   },
   {

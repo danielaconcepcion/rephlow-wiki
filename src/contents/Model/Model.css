@@ -1123,3 +1123,16 @@
 .lumped__net {
   font-size: 0.86rem;
 }
+
+/* Model identifiers (reaction and exchange ids as the reconstruction
+   writes them) are set apart from the prose, so DM_ppi50_c reads as a
+   name rather than a typo. */
+.model-page code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(27, 35, 64, 0.06);
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+  font-size: 0.88em;
+  color: var(--ink);
+  white-space: nowrap;
+}

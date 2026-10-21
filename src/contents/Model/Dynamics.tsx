@@ -128,8 +128,8 @@ export function ConcentrationCourses() {
         <strong>Figure 12.</strong> Concentration time courses of the reduced
         model, split across three vertical scales so the millimolar pools and
         the short phosphate chains can both be read. The slider steps through
-        the V<sub>max, ATPS</sub> scan — six values evenly spaced across 0.001–2
-        µmol L⁻¹ s⁻¹ — and the five steps not selected stay in the background.
+        the V<sub>max, ATPS</sub> scan (six values evenly spaced across 0.001–2
+        µmol L⁻¹ s⁻¹), and the five steps not selected stay in the background.
         Redrawn from the curves of our own COPASI run.
       </figcaption>
     </figure>
@@ -168,7 +168,7 @@ export function PhosphateFluxes() {
       <figcaption>
         <strong>Figure 13.</strong> Phosphate fluxes over the first 2 000 s: the
         three routes phosphate takes into the cell, and the three steps that
-        polymerise it. Note the two vertical scales — the symport spike is an
+        polymerise it. Note the two vertical scales: the symport spike is an
         order of magnitude above everything else, and is clipped at the top of
         its panel. Redrawn from the curves of our own COPASI run.
       </figcaption>

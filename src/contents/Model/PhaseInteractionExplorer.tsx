@@ -81,18 +81,14 @@ const COMPARISONS: Comparison[] = [
           This plane optimizes PolyP flux directly, without the 10% residual-
           growth floor used in 2.1–2.2, over glucose uptake from 0–20 and
           oxygen uptake from 0–30 mmol gDW⁻¹ h⁻¹. Below a glucose uptake of
-          roughly 2–3 mmol gDW⁻¹ h⁻¹, PolyP stays low regardless of how much
-          oxygen is available — glucose is the binding constraint throughout
-          that region, and no amount of respiratory capacity compensates for
+          roughly 2–3 mmol gDW⁻¹ h⁻¹, PolyP stays low regardless of how much oxygen is available: glucose is the binding constraint throughout that region, and no amount of respiratory capacity compensates for
           it.
         </p>
         <p>
           The line of optimality reflects that: it climbs almost vertically
           from the origin up to roughly 25–27 mmol gDW⁻¹ h⁻¹ of oxygen
           uptake, then turns sharply and runs nearly flat out to the highest
-          glucose values tested. Past that bend, more glucose uptake no
-          longer raises the optimum — the model has already reached its
-          respiratory ceiling, and oxygen becomes the limiting variable
+          glucose values tested. Past that bend, more glucose uptake no longer raises the optimum, because the model has already reached its respiratory ceiling, and oxygen becomes the limiting variable
           instead.
         </p>
       </>
@@ -119,9 +115,7 @@ const COMPARISONS: Comparison[] = [
           away from that diagonal, leaves PolyP essentially flat.
         </p>
         <p>
-          In other words, phosphate is not a self-sufficient driver of PolyP
-          accumulation in this plane — extra phosphate only translates into
-          extra PolyP if carbon uptake increases roughly in proportion.
+          In other words, phosphate is not a self-sufficient driver of PolyP accumulation in this plane: extra phosphate only translates into extra PolyP if carbon uptake increases roughly in proportion.
           Neither variable saturates on its own within the tested range;
           each additional increment of phosphate has to be matched by more
           glucose to be exploited.
@@ -144,17 +138,13 @@ const COMPARISONS: Comparison[] = [
       <>
         <p>
           Over phosphate 0–300 and oxygen 0–100 mmol gDW⁻¹ h⁻¹, the line of
-          optimality rises from the origin and bends flat at an oxygen
-          uptake of roughly 35–40 — noticeably higher than the ≈30 mmol
-          gDW⁻¹ h⁻¹ plateau seen for oxygen alone in 2.2, since this plane
+          optimality rises from the origin and bends flat at an oxygen uptake of roughly 35–40, noticeably higher than the ≈30 mmol gDW⁻¹ h⁻¹ plateau seen for oxygen alone in 2.2, since this plane
           has no residual-growth requirement diverting flux away from PolyP.
           Past a phosphate uptake of roughly 140–150, the optimum no longer
           moves with more phosphate once that oxygen level is met.
         </p>
         <p>
-          This mirrors the individual-factor pattern from 2.2 — phosphate
-          supplies the material for the polymer, oxygen supplies the
-          respiratory capacity to assimilate it — but shows directly that
+          This mirrors the individual-factor pattern from 2.2 (phosphate supplies the material for the polymer, oxygen supplies the respiratory capacity to assimilate it), but shows directly that
           the two thresholds are coupled: reaching the higher phosphate
           ceiling in this plane requires more oxygen than either 1-D scan
           implied on its own.
@@ -180,18 +170,15 @@ const COMPARISONS: Comparison[] = [
           reference PPK1 capacity (1×) corresponds to a PPK50r flux of
           approximately 2.0 mmol gDW⁻¹ h⁻¹, and the line of optimality shows
           that the PPK1 multiplier required to fully exploit a given
-          phosphate uptake scales almost linearly with it — reaching exactly
-          1× at a phosphate uptake of 100 mmol gDW⁻¹ h⁻¹, the Phase B
+          phosphate uptake scales almost linearly with it, reaching exactly 1× at a phosphate uptake of 100 mmol gDW⁻¹ h⁻¹, the Phase B
           reference Pi bound used throughout this page.
         </p>
         <p>
           Beyond a phosphate uptake of roughly 130 mmol gDW⁻¹ h⁻¹, the
           required PPK1 multiplier plateaus at approximately 1.4×, and PolyP
-          itself levels off at approximately 2.59 mmol gDW⁻¹ h⁻¹ — the same
-          ceiling reached by phosphate alone at 150 mmol gDW⁻¹ h⁻¹ in 2.2.
+          itself levels off at approximately 2.59 mmol gDW⁻¹ h⁻¹, the same ceiling reached by phosphate alone at 150 mmol gDW⁻¹ h⁻¹ in 2.2.
           In other words, PPK1 capacity is limiting only up to the point
-          where it matches available phosphate; past that point, phosphate
-          supply — not PPK1 — sets the ceiling, and the reference 1× capacity
+          where it matches available phosphate; past that point, phosphate supply (not PPK1) sets the ceiling, and the reference 1× capacity
           is already sufficient for the Phase B medium as defined.
         </p>
       </>
@@ -218,20 +205,16 @@ const COMPARISONS: Comparison[] = [
           sweeps ATPM demand from its reference value of 0.92 mmol gDW⁻¹ h⁻¹
           up to the Phase B feasible maximum of 122. At low demand, an
           oxygen uptake of roughly 29–33 mmol gDW⁻¹ h⁻¹ is already enough to
-          reach the same ≈2.0 mmol gDW⁻¹ h⁻¹ ceiling seen for oxygen alone
-          in 2.2 — respiration is not yet the limiting factor.
+          reach the same ≈2.0 mmol gDW⁻¹ h⁻¹ ceiling seen for oxygen alone in 2.2, so respiration is not yet the limiting factor.
         </p>
         <p>
           Past an ATPM demand of roughly 26–31, the line of optimality
           settles at an oxygen uptake of 37.5 and stays there for the rest
-          of the range: additional oxygen — even up to the 100 mmol gDW⁻¹
-          h⁻¹ tested here — no longer restores the PolyP ceiling. PolyP
+          of the range: additional oxygen, even up to the 100 mmol gDW⁻¹ h⁻¹ tested here, no longer restores the PolyP ceiling. PolyP
           instead declines steadily with rising ATPM demand, reaching
           approximately 0.13 mmol gDW⁻¹ h⁻¹ at the highest demand tested,
           matching the ATP-maintenance scan in 2.2 exactly. Respiratory
-          capacity can compensate for moderate energetic burden, but past
-          that point the burden itself — not oxygen availability — is what
-          limits PolyP accumulation.
+          capacity can compensate for moderate energetic burden, but past that point the burden itself, not oxygen availability, is what limits PolyP accumulation.
         </p>
       </>
     ),

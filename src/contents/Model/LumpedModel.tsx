@@ -40,13 +40,13 @@ const MODULES: Module[] = [
     column: 0,
     row: 0,
     reactions:
-      "Twelve reactions at one flux: GLCtex, GLCDpp, GLCNt2rpp, GNK, EDD, EDA, GAPD, PGK, PGM, ENO, PYK and the glucose exchange. Flux coupling makes them a unit — the route has no branch along the way that could drain it.",
+      "Twelve reactions at one flux: GLCtex, GLCDpp, GLCNt2rpp, GNK, EDD, EDA, GAPD, PGK, PGM, ENO, PYK and the glucose exchange. Flux coupling makes them a unit, because the route has no branch along the way that could drain it.",
     net: "glucose + NAD⁺ + Pᵢ + Q8 + ADP + H₂O (periplasm) → 2 pyruvate + NADH + Q8H₂ + ATP + H₂O (cytoplasm) + 2 H⁺",
     inputs: "glucose, NAD⁺, Pᵢ, Q8, ADP",
     outputs: "pyruvate (×2), NADH, Q8H₂, ATP, H⁺",
     law: "v = V_{\\max}^{\\mathrm{ED}} \\prod_{i} \\frac{[S_i]}{K_{m,i}+[S_i]} \\prod_{j} \\frac{1}{1+[P_j]/K_{i,j}}",
     lawNote:
-      "Multi-substrate in glucose, NAD⁺, Q8, ADP and Pᵢ, divided by an inhibition term for each of ATP, NADH and Q8H₂ — the products that tell the pathway to slow down.",
+      "Multi-substrate in glucose, NAD⁺, Q8, ADP and Pᵢ, divided by an inhibition term for each of ATP, NADH and Q8H₂, the products that tell the pathway to slow down.",
     parameters: "V_{\\max},\\ K_{m,i},\\ K_{i,j}",
     parametersNote: "five saturation constants and three inhibition constants",
   },
@@ -57,7 +57,7 @@ const MODULES: Module[] = [
     column: 0,
     row: 1,
     reactions:
-      "Eleven reactions at one flux: PDH, CS, ACONTa, ACONTb, ICDHyr, AKGDH, SUCOAS, SUCDi, FUM, MDH — and NADTRHD, the transhydrogenase, which the lump absorbs. Kept apart from ED because the cycle is not structurally coupled: it branches at the nodes that feed biomass precursors.",
+      "Eleven reactions at one flux: PDH, CS, ACONTa, ACONTb, ICDHyr, AKGDH, SUCOAS, SUCDi, FUM, MDH, plus NADTRHD, the transhydrogenase, which the lump absorbs. Kept apart from ED because the cycle is not structurally coupled: it branches at the nodes that feed biomass precursors.",
     net: "pyruvate + 4 NAD⁺ + Q8 + ADP + Pᵢ + 2 H₂O → 3 CO₂ + 4 NADH + Q8H₂ + ATP + 2 H⁺",
     inputs: "pyruvate, NAD⁺, Q8, ADP, Pᵢ, H₂O",
     outputs: "CO₂ (×3), NADH (×4), Q8H₂, ATP, H⁺",
@@ -79,7 +79,7 @@ const MODULES: Module[] = [
     outputs: "NAD⁺, Q8, H₂O, H⁺ pumped to the periplasm",
     law: "v = V_{\\max}\\,\\frac{[\\mathrm{NADH}]}{K_m+[\\mathrm{NADH}]}\\,\\frac{[\\mathrm{Q8}]}{K_m'+[\\mathrm{Q8}]}",
     lawNote:
-      "A two-substrate law per complex — NADH and Q8 for the dehydrogenase, Q8H₂ and O₂ for the oxidase. Both from the kinetic description of Hameri et al.",
+      "A two-substrate law per complex: NADH and Q8 for the dehydrogenase, Q8H₂ and O₂ for the oxidase. Both from the kinetic description of Hameri et al.",
     parameters: "V_{\\max},\\ K_{m,i}",
     parametersNote: "per substrate, for each of the two complexes",
   },
@@ -89,7 +89,7 @@ const MODULES: Module[] = [
     flux: "11.9",
     column: 1,
     row: 1,
-    reactions: "ATPS4rpp — the proton-motive force spent back into ATP.",
+    reactions: "ATPS4rpp, the proton-motive force spent back into ATP.",
     inputs: "ADP, Pᵢ, H⁺ (periplasm)",
     outputs: "ATP, H₂O, H⁺ (cytoplasm)",
     law: "v = \\frac{V^{f}\\frac{[\\mathrm{ADP}]}{K_{m,\\mathrm{ADP}}}\\frac{[\\mathrm{P_i}]}{K_{m,\\mathrm{P_i}}} - V^{b}\\frac{[\\mathrm{ATP}]}{K_{m,\\mathrm{ATP}}}}{\\left(1+\\frac{[\\mathrm{ADP}]}{K_{m,\\mathrm{ADP}}}\\right)\\left(1+\\frac{[\\mathrm{P_i}]}{K_{m,\\mathrm{P_i}}}\\right)+\\left(1+\\frac{[\\mathrm{ATP}]}{K_{m,\\mathrm{ATP}}}\\right)-1}",
@@ -107,7 +107,7 @@ const MODULES: Module[] = [
     column: 1,
     row: 2,
     reactions:
-      "ATPM — the non-growth-associated demand, the ATP the cell spends on staying alive rather than on building anything. Not a constant drain: it saturates in ATP like any other hydrolysis.",
+      "ATPM, the non-growth-associated demand, the ATP the cell spends on staying alive rather than on building anything. Not a constant drain: it saturates in ATP like any other hydrolysis.",
     inputs: "ATP, H₂O",
     outputs: "ADP, Pᵢ, H⁺",
     law: "v = V_{\\mathrm{ATPM}}\\,\\frac{[\\mathrm{ATP}]}{K_{m,\\mathrm{ATP}}+[\\mathrm{ATP}]}",
@@ -141,7 +141,7 @@ const MODULES: Module[] = [
     column: 2,
     row: 1,
     reactions:
-      "PPK (0.200), PPK2 (0.200) and PPK50r (0.200) — dimerisation, trimerisation and elongation. The last one spends 47 ATP in a single step, which is what makes it a stand-in rather than a reaction.",
+      "PPK (0.200), PPK2 (0.200) and PPK50r (0.200): dimerisation, trimerisation and elongation. The last one spends 47 ATP in a single step, which is what makes it a stand-in rather than a reaction.",
     inputs: "Pᵢ, ATP",
     outputs: "PPᵢ, PPPᵢ, PolyP₅₀, ADP",
     law: "v = V_{\\max}\\,\\frac{[\\mathrm{ATP}]}{K_{m,\\mathrm{ATP}}+[\\mathrm{ATP}]}\\,\\frac{[\\mathrm{P}_n]}{K_{m,n}+[\\mathrm{P}_n]}",
@@ -202,7 +202,7 @@ export function LumpedModel() {
         <svg
           viewBox={`0 0 ${W} ${H}`}
           role="img"
-          aria-label="The reduced model after lumping: seven modules in three columns — carbon, energy and redox, and phosphorus — connected by what each hands to the next."
+          aria-label="The reduced model after lumping: seven modules in three columns (carbon, energy and redox, and phosphorus) connected by what each hands to the next."
         >
           <defs>
             <marker

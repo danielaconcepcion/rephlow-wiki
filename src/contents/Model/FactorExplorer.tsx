@@ -61,9 +61,7 @@ const FACTORS: FactorPanel[] = [
     body: (
       <>
         <p>
-          We examined five carbon sources available in the Phase B model —
-          glucose, acetate, glycerol, succinate and pyruvate — progressively
-          increasing each source's maximum uptake.
+          We examined five carbon sources available in the Phase B model (glucose, acetate, glycerol, succinate and pyruvate), progressively increasing each source's maximum uptake.
         </p>
         <p>
           PolyP capacity increased with carbon availability for every substrate,
@@ -72,8 +70,7 @@ const FACTORS: FactorPanel[] = [
           glycerol at 8, succinate at 10, pyruvate at 12 and acetate at 20.
           Oxygen demand rose alongside PolyP production until each source
           reached its own saturation point; beyond that, more carbon did not
-          raise PolyP further because phosphate uptake — capped at the Phase B
-          reference bound — took over as the binding constraint.
+          raise PolyP further because phosphate uptake, capped at the Phase B reference bound, took over as the binding constraint.
         </p>
         <p>
           These uptake bounds should not be read as a normalized ranking of
@@ -99,8 +96,7 @@ const FACTORS: FactorPanel[] = [
         Below an ammonium uptake capacity of approximately 0.1 mmol gDW⁻¹ h⁻¹
         the model could not satisfy the residual-growth requirement at all. Once
         that minimum nitrogen supply was reached, maximizing PolyP gave almost
-        the same capacity across the remaining ammonium range — nitrogen
-        availability had little direct effect once growth was feasible.
+        the same capacity across the remaining ammonium range: nitrogen availability had little direct effect once growth was feasible.
       </p>
     ),
     supplementary: (
@@ -126,7 +122,7 @@ const FACTORS: FactorPanel[] = [
         </p>
         <p>
           The <em>minimum</em> PolyP flux compatible with near-maximal growth
-          remained zero throughout — PolyP production was never required to
+          remained zero throughout: PolyP production was never required to
           sustain biomass formation. The <em>maximum</em> feasible PolyP flux,
           however, was close to 2 mmol gDW⁻¹ h⁻¹ under strong nitrogen
           limitation and progressively approached zero as nitrogen availability
@@ -187,8 +183,7 @@ const FACTORS: FactorPanel[] = [
         gDW⁻¹ h⁻¹, beyond which the optimum remained close to the same 2 mmol
         gDW⁻¹ h⁻¹ ceiling seen elsewhere. Together with the phosphate scan, this
         shows that phosphate supplies the direct material for polymer formation
-        while respiration supplies the energetic capacity to sustain it — each
-        is beneficial only while it remains the active limitation.
+        while respiration supplies the energetic capacity to sustain it, and each is beneficial only while it remains the active limitation.
       </p>
     ),
   },
@@ -246,9 +241,7 @@ const FACTORS: FactorPanel[] = [
         </p>
         <p>
           PPK1 is therefore essential for PolyP synthesis in the model, but its
-          reference capacity is already sufficient to reach the optimum allowed
-          by the surrounding metabolic network — increasing PPK1 capacity alone
-          would not improve accumulation unless another limiting condition were
+          reference capacity is already sufficient to reach the optimum allowed by the surrounding metabolic network: increasing PPK1 capacity alone would not improve accumulation unless another limiting condition were
           also relaxed. The capacity multipliers are modelling parameters and
           should not be interpreted as experimentally calibrated expression fold
           changes.

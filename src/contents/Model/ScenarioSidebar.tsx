@@ -48,7 +48,7 @@ function prettifyUnit(raw: string | null | undefined): string {
 }
 
 function formatMetric(value: number | null | undefined): string {
-  if (value == null) return "—";
+  if (value == null) return "n/a";
   if (value === 0) return "0";
   const abs = Math.abs(value);
   const text =
@@ -363,7 +363,7 @@ export function ScenarioSidebar({
                 >
                   {manifest.ui.strainDesigns.wt.label}
                   <span className="model-network__row-btn-note">
-                    Reference — baseline scenario
+                    Reference: baseline scenario
                   </span>
                 </button>
                 <button
@@ -467,7 +467,7 @@ export function ScenarioSidebar({
                   {predictedState
                     ? predictedState.status.charAt(0).toUpperCase() +
                       predictedState.status.slice(1)
-                    : "—"}
+                    : "n/a"}
                 </dd>
               </div>
               <div className="model-network__predicted-row">
